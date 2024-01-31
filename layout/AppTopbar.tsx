@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import AppBreadcrumb from "./AppBreadCrumb";
 import { LayoutContext } from "./context/layoutcontext";
+import Alarmbell from "./AlarmBell/Alarmbell";
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { onMenuToggle, showProfileSidebar, showConfigSidebar } =
@@ -36,14 +37,10 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             <div className="topbar-end">
                 <ul className="topbar-menu">
                     <li className="topbar-search">
-                        <span className="p-input-icon-left">
-                            <i className="pi pi-search"></i>
-                            <InputText
-                                type="text"
-                                placeholder="Search"
-                                className="w-12rem sm:w-full"
-                            />
+                    <span >
+                            <Alarmbell/>
                         </span>
+
                     </li>
                     <li className="ml-3">
                         <Button
