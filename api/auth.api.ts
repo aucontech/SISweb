@@ -24,3 +24,4 @@ export const refreshToken = (
 export const getCurrentUser = (): Promise<any> => {
     return httpApi.get<any>("/auth/user");
 };
+

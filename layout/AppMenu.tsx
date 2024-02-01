@@ -17,6 +17,11 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-image",
                     to: "/dashboard-banking",
                 },
+                {
+                    label: "View Alarm",
+                    icon: "pi pi-fw pi-image",
+                    to: "/notifications/center",
+                },
             ],
         },
         {
