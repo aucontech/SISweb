@@ -111,7 +111,7 @@ const ReadAllAlarms = () => {
 
               setData(updateTable)
 
-fetchData()
+                fetchData()
                 
             }
            

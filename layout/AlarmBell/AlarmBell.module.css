@@ -1,0 +1,43 @@
+.buttonViewAll {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.overlayPanel {
+    width: 400px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.alarmEmpty {
+    text-align: center;
+}
+
+.totalCount {
+    background: #ef4444;
+    border-radius: 50px;
+    width: 17px;
+    height: 17px;
+    align-items: center;    
+    position: relative;
+    left: 30px;
+    bottom: 12px;
+    
+    
+}
+
+.totalCount_p{
+    font-size: 10px;
+    text-align: center;
+    color: white;
+}
+.subject{
+    font-size: 15px;
+    font-weight: 600;
+    color:#036E9B ;
+
+}

@@ -152,6 +152,8 @@ const UnReadAlarms = () => {
                          body={idBodyTemplate}
                          headerClassName="white-space-nowrap w-4"
                      ></Column>
+
+                     
                  
                  </DataTable>
    
