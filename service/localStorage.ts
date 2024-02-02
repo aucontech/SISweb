@@ -6,6 +6,14 @@ export const readToken = (): string | null => {
     return localStorage.getItem("accessToken") || null;
 };
 
+export const persistRefreshToken = (token: any): void => {
+    localStorage.setItem("refreshToken", token);
+};
+
+export const readRefreshToken = (): string | null => {
+    return localStorage.getItem("refreshToken") || null;
+};
+
 // export const persistUser = (user: UserModel): void => {
 //     localStorage.setItem("user", JSON.stringify(user));
 // };

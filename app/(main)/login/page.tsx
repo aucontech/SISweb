@@ -10,7 +10,7 @@ import { httpApi } from "@/api/http.api";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
 import { UIUtils } from "@/service/Utils";
-import { persistToken } from "@/service/localStorage";
+import { persistRefreshToken, persistToken } from "@/service/localStorage";
 import useAuth from "@/hook/useAuth";
 import Router from "next/router";
 
@@ -34,6 +34,7 @@ const Login: Page = () => {
             .then((resp) => resp.data)
             .then((resp) => {
                 persistToken(resp.token);
+                persistRefreshToken(resp.refreshToken);
                 router.push("/");
             })
             .catch((err) => {

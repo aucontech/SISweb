@@ -4,10 +4,7 @@ import AppMenu from "./AppMenu";
 import { LayoutContext } from "./context/layoutcontext";
 import { MenuProvider } from "./context/menucontext";
 import { LayoutState } from "../types/layout";
-
-
-
-
+import Image from "next/image";
 const AppSidebar = () => {
     const { setLayoutState } = useContext(LayoutContext);
     const anchor = () => {
@@ -17,24 +14,23 @@ const AppSidebar = () => {
         }));
     };
 
-
     return (
         <>
             <div className="sidebar-header">
                 <Link href="/" className="app-logo">
+                    <Image
+                        src="/layout/imgGas/1sojitz.png"
+                        width={80}
+                        height={50}
+                        alt="Picture of the author"
+                    />
 
-                <img style={{width:60}}
-                
-                src="/layout/imgGas/1sojitz.png"
-                alt="Profile"
-            />
-                <img style={{width:80}}
-                
-                                src="/layout/imgGas/daigaslogo.png"
-                                alt="Profile"
-                            />
-
-
+                    <Image
+                        src="/layout/imgGas/daigaslogo.png"
+                        width={80}
+                        height={40}
+                        alt="Picture of the author"
+                    />
                 </Link>
                 <button
                     className="layout-sidebar-anchor p-link z-2 mb-2"

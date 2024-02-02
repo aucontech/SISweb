@@ -16,8 +16,8 @@ import { InputText } from "primereact/inputtext";
 
 const ReadAllAlarms = () => {
     const [data, setData] = useState<string[]>([]);
-    console.log('data: ', data);
-    const [currentPage, setCurrentPage] = useState(0); 
+    console.log("data: ", data);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const [searchText, setSearchText] = useState("");
 
@@ -30,17 +30,16 @@ const ReadAllAlarms = () => {
         },
     };
 
-        const fetchData = async () => {
-            try {
-                const res = await http.get(getReadAllAlarms, headerToken);
+    const fetchData = async () => {
+        try {
+            const res = await http.get(getReadAllAlarms, headerToken);
 
-                setData(res.data.data);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+            setData(res.data.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
     useEffect(() => {
-
         fetchData();
     }, []);
 
@@ -67,13 +66,8 @@ const ReadAllAlarms = () => {
         return <>{rowData.text}</>;
     };
     const idBodyTemplate = (rowData: Demo.Payment) => {
-        return (
-            <>
-                {rowData.id}
-            </>
-        );
+        return <>{rowData.id}</>;
     };
-
 
     const renderHeader = () => {
         return (
@@ -100,45 +94,46 @@ const ReadAllAlarms = () => {
         );
     });
 
-
-    const handleDelete = async (id : string) => {
+    const handleDelete = async (id: string) => {
         try {
             const confirmed = window.confirm("Bạn có chắn chắn muốn xóa? ");
             if (confirmed) {
-              await http.delete(`/notification/${id}`, headerToken);
-              const updateTable = data.filter((item)=>item.id !== id)
-              console.log('updateTable: ', updateTable);
+                await http.delete(`/notification/${id}`, headerToken);
+                const updateTable = data.filter((item) => item.id !== id);
+                console.log("updateTable: ", updateTable);
 
-              setData(updateTable)
+                setData(updateTable);
 
-                fetchData()
-                
+                fetchData();
             }
-           
         } catch (error) {
-            console.error('Error deleting data:', error);
+            console.error("Error deleting data:", error);
         }
     };
 
-    const deleteButtonTemplate = ( rowData :string) => {
+    const deleteButtonTemplate = (rowData: string) => {
         return (
-            <Button onClick={() => handleDelete(rowData.id)} icon="pi pi-trash" className="p-button-rounded p-button-danger" />
+            <Button
+                onClick={() => handleDelete(rowData.id)}
+                icon="pi pi-trash"
+                className="p-button-rounded p-button-danger"
+            />
         );
     };
-    
 
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <DataTable
-                paginator rows={10} rowsPerPageOptions={[5, 10, 25, 50]}
+                    paginator
+                    rows={10}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
                     header={renderHeader()}
                     value={filteredData.map((item, index) => ({
                         createdTime: item.createdTime,
                         subject: item.subject,
                         text: item.text,
-                         id:item.id.id
-
+                        id: item.id.id,
                     }))}
                     className="datatable-responsive"
                     emptyMessage="No products found."
@@ -168,12 +163,11 @@ const ReadAllAlarms = () => {
                          body={idBodyTemplate}
                          headerClassName="white-space-nowrap w-4"
                      ></Column> */}
-                       <Column
+                    <Column
                         header="Edit"
                         body={deleteButtonTemplate}
                         headerClassName="white-space-nowrap w-4"
                     ></Column>
-
                 </DataTable>
             </div>
         </div>
