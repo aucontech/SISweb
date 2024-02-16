@@ -153,7 +153,7 @@ function List() {
     };
 
     const header = renderHeader();
-
+    console.log(customers);
     return (
         <div className="card">
             <DataTable

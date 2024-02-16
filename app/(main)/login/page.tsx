@@ -38,6 +38,7 @@ const Login: Page = () => {
                 router.push("/");
             })
             .catch((err) => {
+                console.log(err);
                 UIUtils.showError({
                     error: err?.message,
                     toast: toast.current,

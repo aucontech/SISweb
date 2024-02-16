@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { readToken } from "@/service/localStorage";
-//import { getCurrentUser } from "@/api/auth.api";
+import { getCurrentUser } from "@/api/auth.api";
 interface User {}
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -8,9 +8,9 @@ const useAuth = () => {
     useEffect(() => {
         const token = readToken();
         console.log(token);
-        if (token) {
+        if (token && token !== "undefined") {
             setIsAuthenticated(true);
-            // getCurrentUser();
+            getCurrentUser();
         }
     }, []);
 
