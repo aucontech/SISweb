@@ -1,50 +1,85 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
+import { readToken } from "@/service/localStorage";
 
 export default function Alarmbell() {
-    const op = useRef(null);
+    let token: string | null = "";
+    if (typeof window !== "undefined") {
+        token = readToken();
+    }
+    const url = `${process.env.baseUrlWebsocketAlarmBell}${token}`;
+
+    const op = useRef<OverlayPanel>(null);
     const router = useRouter();
+    interface Notification {
+        subject: string;
+        text: string;
+        // Các thuộc tính khác của notification nếu có
+    }
 
-    const subjects = [
-        {
-            subject: "Subject 1",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-            subject: "Subject 2",
-            text: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-        {
-            subject: "Subject 3",
-            text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-            subject: "Subject 4",
-            text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        },
-        {
-            subject: "Subject 5",
-            text: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        },
-        {
-            subject: "Subject 6",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-        {
-            subject: "Subject 7",
-            text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-            subject: "Subject 8",
-            text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        },
-    ];
+    interface WebSocketMessage {
+        update: any;
+        cmdUpdateType: string;
+        notifications: Notification[];
+        totalUnreadCount: string;
+    }
+    const ws = useRef<WebSocket | null>(null);
+    const [data, setData] = useState<WebSocketMessage[]>([]);
+    const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
+    const [obj1Processed, setObj1Processed] = useState<boolean>(false);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
 
-    const dataAlarm = subjects.slice(0, 6).map((item, index) => (
+    useEffect(() => {
+        ws.current = new WebSocket(url);
+
+        const obj1 = { unreadCountSubCmd: { cmdId: 1 } };
+
+        ws.current.onopen = () => {
+            console.log("WebSocket connection opened.");
+            ws.current?.send(JSON.stringify(obj1));
+        };
+
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+
+        return () => {
+            console.log("Cleaning up WebSocket connection.");
+            ws.current?.close();
+        };
+    }, [url]);
+
+    useEffect(() => {
+        const obj3 = { unsubCmd: { cmdId: 1 } };
+        const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
+
+        if (ws.current) {
+            ws.current.onmessage = (evt) => {
+                const dataReceive = JSON.parse(evt.data) as WebSocketMessage;
+                if (dataReceive.update !== null) {
+                    setTotalUnreadCount(dataReceive.totalUnreadCount);
+                    setData([...data, dataReceive]);
+                    setObj1Processed(true);
+                } else if (
+                    dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
+                    dataReceive.notifications
+                ) {
+                    setNotifications(dataReceive.notifications);
+                }
+            };
+        }
+
+        if (obj1Processed) {
+            ws.current?.send(JSON.stringify(obj3));
+            ws.current?.send(JSON.stringify(obj2));
+        }
+    }, [totalUnreadCount, obj1Processed]);
+
+    const dataAlarm = notifications.slice(0, 6).map((item, index) => (
         <div key={index} style={{ padding: "0px 10px" }}>
             <div>
                 <p className={styles.subject}>{item.subject}</p>
@@ -53,10 +88,11 @@ export default function Alarmbell() {
             </div>
         </div>
     ));
-    const subjectCount = subjects.length;
-    let totalSubjectDisplay = subjectCount;
+    const subjectCount = notifications.length;
+    let totalSubjectDisplay: string | number = subjectCount;
+
     if (subjectCount > 99) {
-        totalSubjectDisplay = "999+";
+        totalSubjectDisplay = "99+";
     }
 
     const totalCount =
@@ -74,8 +110,8 @@ export default function Alarmbell() {
                 )}
                 <i
                     className="pi pi-bell"
-                    style={{ fontSize: "1.5rem" }}
-                    onClick={(e) => op.current.toggle(e)}
+                    style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                    onClick={(e) => op?.current?.toggle(e)}
                 />
             </div>
             <OverlayPanel style={{ marginLeft: 10 }} ref={op}>

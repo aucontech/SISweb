@@ -24,5 +24,8 @@ export const readRefreshToken = (): string | null => {
 //     return userStr ? JSON.parse(userStr) : testUser;
 // };
 
-export const deleteToken = (): void => localStorage.removeItem("accessToken");
+export const deleteToken = (): void => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+};
 export const deleteUser = (): void => localStorage.removeItem("user");

@@ -10,7 +10,11 @@ const useAuth = () => {
         console.log(token);
         if (token && token !== "undefined") {
             setIsAuthenticated(true);
-            getCurrentUser();
+            getCurrentUser()
+                .then((resp) => console.log(resp))
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     }, []);
 

@@ -3,6 +3,7 @@ import {
     persistRefreshToken,
     persistToken,
     readToken,
+    deleteToken,
 } from "@/service/localStorage";
 import { refreshTokenFun } from "./auth.api";
 import { readRefreshToken } from "@/service/localStorage";
@@ -55,6 +56,7 @@ httpApi.interceptors.response.use(
                     // Retry the request with the new token
                     return httpApi(originalRequest);
                 } catch (refreshError) {
+                    deleteToken();
                     return Promise.reject(refreshError); // If token refresh fails, reject the promise
                 }
             } else {
