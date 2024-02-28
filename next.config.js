@@ -2,7 +2,7 @@
 const nextConfig = {
     env: {
         baseUrlApi: "http://ewon-vpn.ddns.net:8200/api",
-        baseUrlWebsocket: "http://ewon-vpn.ddns.net:8200",
+        baseUrlWebsocket: "ws://ewon-vpn.ddns.net:8200/api/ws/plugins",
         baseUrlWebsocketAlarmBell:
             "ws://ewon-vpn.ddns.net:8200/api/ws/plugins/notifications?token=",
         baseUrlWebsocketTelemetry:

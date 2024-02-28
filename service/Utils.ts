@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 const showError = ({
     error,
     summary,
@@ -76,5 +77,17 @@ const showWarning = ({
     }
 };
 
+const getUnixTimeMilliseconds = () => new Date().getTime();
+
+const formatUnixTimeToString = (unixTime: any, fmt?: any) => {
+    const date = new Date(unixTime);
+    if (fmt) {
+        return format(date, fmt);
+    }
+    fmt = "dd-MM-yyyy HH:mm:ss";
+    return format(date, fmt);
+};
+
 const UIUtils = { showError, showInfo, showWarning };
-export { UIUtils };
+const Utils = { formatUnixTimeToString, getUnixTimeMilliseconds };
+export { UIUtils, Utils };

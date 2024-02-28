@@ -6,14 +6,17 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { InputText } from "primereact/inputtext";
+import { Utils } from "@/service/Utils";
 interface Props {
     unreadOnly: boolean;
 }
 const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
-    // const unreadOnly = unreadOnly || false;
     const [notifications, setNotifications] = useState<any>();
     const toast = useRef<Toast>(null);
     const [totalElements, setTotalElements] = useState<number>(0);
+    const [textSearch, setTextSearch] = useState<string>("");
+    const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout | null>(null);
     const [lazyState, setlazyState] = useState({
         first: 0,
         rows: 10,
@@ -27,16 +30,22 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
             pageSize,
             page,
             unreadOnly,
+            sortOrder,
+            textSearch,
         }: {
             pageSize: number;
             page: number;
             unreadOnly: boolean;
+            sortOrder?: string;
+            textSearch: string;
         }) => {
             getNotifications({
                 pageSize,
                 page,
                 sortProperty: "createdTime",
+                sortOrder: "DESC",
                 unreadOnly,
+                textSearch,
             })
                 .then((resp) => resp.data)
                 .then((res) => {
@@ -60,16 +69,35 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
         });
     };
 
+    const _renderCreatedTime = (row: any) => {
+        let createdTime = row.createdTime;
+        return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
+    };
+
     useEffect(() => {
-        _fetchDataNotification({
-            pageSize: lazyState.rows,
-            page: lazyState.page,
-            unreadOnly,
-        });
-    }, [lazyState]);
+        if (typingTimer) {
+            clearTimeout(typingTimer);
+        }
+
+        const timer = setTimeout(() => {
+            _fetchDataNotification({
+                pageSize: lazyState.rows,
+                page: lazyState.page,
+                unreadOnly,
+                textSearch,
+            });
+        }, 300);
+
+        setTypingTimer(timer);
+
+        return () => {
+            if (typingTimer) {
+                clearTimeout(typingTimer);
+            }
+        };
+    }, [lazyState, textSearch]);
     const _onInvsPaging = (event: any) => {
         setlazyState(event);
-        // console.log(event);
     };
     const deleteButtonTemplate = (rowData: any) => {
         return (
@@ -80,7 +108,26 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
             />
         );
     };
-    console.log(totalElements);
+    const handleSearchInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setTextSearch(e.target.value);
+    };
+    const renderSearch = () => {
+        return (
+            <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i className="pi pi-search"></i>
+                    <InputText
+                        placeholder="Global Search"
+                        value={textSearch}
+                        onChange={handleSearchInputChange}
+                        className="w-full"
+                    />
+                </span>
+            </div>
+        );
+    };
     return (
         <div className="card">
             <Toast ref={toast} />
@@ -89,7 +136,7 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                 <DataTable
                     rows={lazyState.rows}
                     rowsPerPageOptions={[5, 10, 25, 50]}
-                    // header={renderHeader()}
+                    header={renderSearch}
                     value={notifications}
                     paginator
                     lazy={true}
@@ -100,15 +147,18 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                     totalRecords={totalElements}
                     first={lazyState.first}
                     dataKey="id"
-                    //onPageCh
                     onPage={_onInvsPaging}
                 >
                     <Column
                         sortable
-                        field="createdTime"
                         header="Created Time"
-                        // body={nameBodyTemplate}
+                        body={_renderCreatedTime}
                         headerClassName="white-space-nowrap w-4"
+                    ></Column>
+                    <Column
+                        field="type"
+                        header="Type"
+                        // headerClassName="white-space-nowrap w-4"
                     ></Column>
                     <Column
                         field="subject"
@@ -122,12 +172,6 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                         // body={dateBodyTemplate}
                         headerClassName="white-space-nowrap w-4"
                     ></Column>
-                    {/* <Column
-                 field="id"
-                 header="Id"
-                 body={idBodyTemplate}
-                 headerClassName="white-space-nowrap w-4"
-             ></Column> */}
                     <Column
                         header="Edit"
                         body={deleteButtonTemplate}

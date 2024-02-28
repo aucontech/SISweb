@@ -9,7 +9,7 @@ export interface LoginResponse {
 }
 
 export interface RefreshTokenRequest {
-    refreshToken: string;
+    refreshToken: string | null;
 }
 export const login = (loginPayload: LoginRequest): Promise<LoginResponse> => {
     return httpApi.post<LoginResponse>("/auth/login", { ...loginPayload });

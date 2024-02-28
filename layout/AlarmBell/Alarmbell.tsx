@@ -136,7 +136,7 @@ export default function Alarmbell() {
                     )}
                     <div style={{ padding: 20 }}>
                         <Button
-                            onClick={() => router.push("/notifications/center")}
+                            onClick={() => router.push("/notifications")}
                             className={styles.buttonViewAll}
                         >
                             View All

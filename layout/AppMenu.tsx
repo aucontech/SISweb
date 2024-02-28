@@ -18,9 +18,19 @@ const AppMenu = () => {
                     to: "/dashboard-banking",
                 },
                 {
+                    label: "Realtime Monitoring",
+                    icon: "pi pi-fw pi-image",
+                    to: "/realtimemonitoring",
+                },
+                {
                     label: "Notifications center",
                     icon: "pi pi-fw pi-image",
                     to: "/notifications",
+                },
+                {
+                    label: "Devices",
+                    icon: "pi pi-fw pi-image",
+                    to: "/devices",
                 },
             ],
         },
