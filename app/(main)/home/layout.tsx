@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import Layout from "../../layout/layout";
-import AppWrapper from "./AppWrapper";
+import Layout from "../../../layout/layout";
+
 interface MainLayoutProps {
     children: React.ReactNode;
 }
@@ -26,9 +26,5 @@ export const metadata: Metadata = {
 };
 
 export default function MainLayout({ children }: MainLayoutProps) {
-    return (
-        <AppWrapper>
-            <Layout>{children}</Layout>
-        </AppWrapper>
-    );
+    return <Layout>{children}</Layout>;
 }

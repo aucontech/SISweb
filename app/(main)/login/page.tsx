@@ -23,12 +23,7 @@ const Login: Page = () => {
     const router = useRouter();
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "dark";
-    const { isAuthenticated } = useAuth();
-    useEffect(() => {
-        if (isAuthenticated) {
-            router.push("/");
-        }
-    }, [router, isAuthenticated]);
+
     const _onLogin = () => {
         login({ username: username, password: password })
             .then((resp) => resp.data)
