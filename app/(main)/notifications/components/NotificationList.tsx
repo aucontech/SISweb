@@ -129,7 +129,7 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
         );
     };
     return (
-        <div className="card">
+        <div className="card" style={{ width: "100%" }}>
             <Toast ref={toast} />
             <ConfirmDialog />
             <div>

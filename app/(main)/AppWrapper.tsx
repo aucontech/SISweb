@@ -6,45 +6,57 @@ import {
     persistToken,
     readRefreshToken,
 } from "@/service/localStorage";
-import Router, { useRouter } from "next/navigation";
-import Login from "./login/page";
+import { useRouter } from "next/navigation";
 import { ProgressSpinner } from "primereact/progressspinner";
 
 interface AppWrapperProps {
     children: ReactNode;
 }
 const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useRouter(); // Use useRouter hook for redirection
+
     const _checkSession = useCallback(async () => {
         try {
+            setIsLoading(true);
             const user = await getCurrentUser();
             console.log(user);
             if (user) {
-                setIsAuthenticated(true);
+                // If the user is authenticated, do nothing here
             }
         } catch (error: any) {
             console.log(error);
+            let shouldRedirect = false;
             if (error?.response?.data?.errorCode === 11) {
                 let refreshToken = readRefreshToken();
                 try {
                     const res = await refreshTokenFun({ refreshToken });
                     if (res) {
-                        persistToken(res.token);
-                        persistRefreshToken(res.refreshToken);
-                        setIsAuthenticated(true);
+                        console.log("refresh successful", res);
+                        persistToken(res.data?.token);
+                        persistRefreshToken(res.data?.refreshToken);
+                        // If refreshToken is successful, do nothing here
                     } else {
-                        setIsAuthenticated(false);
+                        console.log("Refresh token unsuccessful");
+                        shouldRedirect = true;
                     }
                 } catch (error) {
-                    setIsAuthenticated(false);
+                    shouldRedirect = true;
                 }
+            } else if (error?.response?.data?.errorCode === 10) {
+                shouldRedirect = true;
+            }
+
+            if (shouldRedirect) {
+                router.push("/login"); // Redirect to login page
             }
         } finally {
-            setIsLoading(false); // End loading
+            setIsLoading(false);
         }
-    }, []);
+    }, [router]);
+
     useEffect(() => {
+        _checkSession();
         const intervalId = setInterval(() => {
             _checkSession();
         }, 5000);
@@ -58,6 +70,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         alignItems: "center",
         height: "100vh",
     };
+
     if (isLoading) {
         return (
             <div style={spinnerStyle}>
@@ -66,7 +79,8 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         );
     }
 
-    return isAuthenticated ? <>{children}</> : <Login />;
+    // Since we are redirecting unauthenticated users, we don't need an isAuthenticated check here
+    return <>{children}</>;
 };
 
 export default AppWrapper;

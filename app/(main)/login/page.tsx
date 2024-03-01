@@ -11,8 +11,6 @@ import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
 import { UIUtils } from "@/service/Utils";
 import { persistRefreshToken, persistToken } from "@/service/localStorage";
-import useAuth from "@/hook/useAuth";
-import Router from "next/router";
 
 const Login: Page = () => {
     const [username, setUsername] = useState("");
@@ -30,6 +28,7 @@ const Login: Page = () => {
             .then((resp) => {
                 persistToken(resp.token);
                 persistRefreshToken(resp.refreshToken);
+                console.log("login thanh cong ");
                 router.push("/");
             })
             .catch((err) => {
