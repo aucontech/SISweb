@@ -2,12 +2,12 @@
 // is not correct!  Use Chart from chart.js instead.
 "use client";
 import React from "react";
-import { Chart } from "chart.js";
+import { Chart, registerables } from "chart.js";
 import StreamingPlugin from "chartjs-plugin-streaming";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
 
-Chart.register(StreamingPlugin);
+Chart.register(...registerables, StreamingPlugin);
 
 export default function Stream() {
     return (

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Layout from "../../layout/layout";
 import AppWrapper from "./AppWrapper";
+import { AuthProvider } from "@/context/AuthProvider";
 interface MainLayoutProps {
     children: React.ReactNode;
 }
@@ -27,8 +28,10 @@ export const metadata: Metadata = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
-        <AppWrapper>
-            <Layout>{children}</Layout>
-        </AppWrapper>
+        <AuthProvider>
+            <AppWrapper>
+                <Layout>{children}</Layout>
+            </AppWrapper>
+        </AuthProvider>
     );
 }

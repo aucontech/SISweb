@@ -1,17 +1,17 @@
 "use client";
 import type { Page } from "@/types";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import { useContext, useState, useRef, useEffect } from "react";
 import { LayoutContext } from "@/layout/context/layoutcontext";
-import { httpApi } from "@/api/http.api";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
-import { UIUtils } from "@/service/Utils";
-import { persistRefreshToken, persistToken } from "@/service/localStorage";
-
+import { Utils, UIUtils } from "@/service/Utils";
+import { persistToken, persistRefreshToken } from "@/service/localStorage";
+import { AuthContext } from "@/context/AuthProvider";
 const Login: Page = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -21,15 +21,27 @@ const Login: Page = () => {
     const router = useRouter();
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "dark";
+    const authContext = useContext(AuthContext);
+    if (!authContext) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    const { setIsAuthenticated } = authContext;
 
+    if (!setIsAuthenticated) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         router.push("/");
+    //     }
+    // }, [isAuthenticated]);
     const _onLogin = () => {
         login({ username: username, password: password })
             .then((resp) => resp.data)
             .then((resp) => {
                 persistToken(resp.token);
                 persistRefreshToken(resp.refreshToken);
-                console.log("login thanh cong ");
-                router.push("/");
+                setIsAuthenticated(true);
             })
             .catch((err) => {
                 console.log(err);
@@ -39,6 +51,17 @@ const Login: Page = () => {
                 });
             });
     };
+
+    // const _onSubmit = async (e: any) => {
+    //     e.preventDefault();
+    //     console.log(e);
+    //     signIn("credentials", {
+    //         username: "leductoan",
+    //         password: "sdsdsds",
+    //         callbackUrl: "/",
+    //     });
+    // };
+
     return (
         <>
             <Toast ref={toast} />
