@@ -30,11 +30,6 @@ const Login: Page = () => {
     if (!setIsAuthenticated) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-    // useEffect(() => {
-    //     if (isAuthenticated) {
-    //         router.push("/");
-    //     }
-    // }, [isAuthenticated]);
     const _onLogin = () => {
         login({ username: username, password: password })
             .then((resp) => resp.data)
@@ -51,16 +46,6 @@ const Login: Page = () => {
                 });
             });
     };
-
-    // const _onSubmit = async (e: any) => {
-    //     e.preventDefault();
-    //     console.log(e);
-    //     signIn("credentials", {
-    //         username: "leductoan",
-    //         password: "sdsdsds",
-    //         callbackUrl: "/",
-    //     });
-    // };
 
     return (
         <>

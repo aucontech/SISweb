@@ -6,7 +6,7 @@ interface MainLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: "PrimeReact APOLLO",
+    title: "Sogec",
     description:
         "The ultimate collection of design-agnostic, flexible and accessible React UI Components.",
     robots: { index: false, follow: false },

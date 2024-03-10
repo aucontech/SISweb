@@ -8,13 +8,17 @@ import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+
 interface Props {}
 
 const DeviceList: React.FC<Props> = () => {
-    const [devices, setDevices] = useState<any>(null);
+    const [devices, setDevices] = useState<any>([]);
     const [totalElements, setTotalElements] = useState<number>(0);
     const [textSearch, setTextSearch] = useState<string>("");
     const toast = useRef<Toast>(null);
+    const typingTimeout = useRef<NodeJS.Timeout | null>(null);
+
     const _fetchDataDevices = useCallback(
         ({
             pageSize,
@@ -41,7 +45,6 @@ const DeviceList: React.FC<Props> = () => {
                     setTotalElements(res.totalElements);
                 })
                 .catch((err) => {
-                    console.log(err);
                     UIUtils.showError({
                         error: err?.message,
                         toast: toast.current,
@@ -84,10 +87,56 @@ const DeviceList: React.FC<Props> = () => {
             textSearch,
         });
     }, [lazyState]);
+    useEffect(() => {
+        if (typingTimeout.current) {
+            clearTimeout(typingTimeout.current);
+        }
+        typingTimeout.current = setTimeout(() => {
+            _fetchDataDevices({
+                pageSize: lazyState.rows,
+                page: lazyState.page,
+                textSearch,
+            });
+        }, 300);
+
+        return () => {
+            if (typingTimeout.current) {
+                clearTimeout(typingTimeout.current);
+            }
+        };
+    }, [textSearch, lazyState]);
+
     const _onInvsPaging = (event: any) => {
         console.log(event);
         setlazyState(event);
     };
+
+    const renderHeader = () => {
+        return (
+            <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i className="pi pi-search"></i>
+                    <InputText
+                        placeholder="Global Search"
+                        value={textSearch}
+                        onChange={handleInputChange}
+                        className="w-full"
+                    />
+                </span>
+            </div>
+        );
+    };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setTextSearch(value);
+    };
+    const filteredDataFormatted = devices.map((item: any, index: any) => ({
+        createdTime: item.createdTime,
+        deviceProfileName: item.deviceProfileName,
+        name: item.name,
+        label: item.label,
+        active: item.active,
+    }));
     return (
         <>
             <div>
@@ -97,8 +146,8 @@ const DeviceList: React.FC<Props> = () => {
                     <DataTable
                         rows={lazyState.rows}
                         rowsPerPageOptions={[5, 10, 25, 50]}
-                        //header={renderSearch}
-                        value={devices}
+                        header={renderHeader}
+                        value={filteredDataFormatted}
                         paginator
                         lazy={true}
                         className="datatable-responsive"
@@ -114,29 +163,18 @@ const DeviceList: React.FC<Props> = () => {
                             sortable
                             header="Created Time"
                             body={_renderCreatedTime}
-                            // style={{ width: "200px" }}
                         ></Column>
 
-                        <Column
-                            field="name"
-                            header=" Name"
-                            //style={{ width: "200px" }}
-                        ></Column>
+                        <Column field="name" header=" Name"></Column>
                         <Column
                             field="deviceProfileName"
                             header="Device profile"
-                            // style={{ width: "250px" }}
                         ></Column>
+                        <Column field="label" header="Label"></Column>
                         <Column
-                            field="label"
-                            header="Label"
-                            //style={{ width: "250px" }}
-                        ></Column>
-                        <Column header="State" body={_renderState}></Column>
-                        <Column
-                            header="Edit"
-                            //body={deleteButtonTemplate}
-                            //  headerClassName="white-space-nowrap w-4"
+                            field="active"
+                            header="State"
+                            body={_renderState}
                         ></Column>
                     </DataTable>
                 </div>

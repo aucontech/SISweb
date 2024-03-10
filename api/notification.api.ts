@@ -4,6 +4,6 @@ export const getNotifications = (reqParams: any): Promise<any> => {
     return httpApi.get<any>("/notifications", { params: { ...reqParams } });
 };
 
-export const deleteNotification = (id: string): Promise<any> => {
-    return httpApi.delete<any>("/notifications/" + id);
+export const deleteNotifications = (id: string) => {
+    return httpApi.delete<any>(`/notification/${id}`);
 };

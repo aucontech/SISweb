@@ -1,13 +1,14 @@
 "use client";
 import { useCallback, useEffect, useState, useRef } from "react";
-import { getNotifications } from "@/api/notification.api";
+import { getNotifications, deleteNotifications } from "@/api/notification.api";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
-import { Utils } from "@/service/Utils";
+import { UIUtils, Utils } from "@/service/Utils";
+
 interface Props {
     unreadOnly: boolean;
 }
@@ -53,19 +54,54 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                     setNotifications([...res.data]);
                     setTotalElements(res.totalElements);
                 })
-                .catch((err) => {});
+                .catch((err: any) => {
+                    UIUtils.showError({
+                        error: err?.message,
+                        toast: toast.current,
+                    });
+                });
         },
         []
     );
+    const deleteAlarm = (id: string) => {
+        deleteNotifications(id)
+            .then((resp) => resp.data)
+            .then((res) => {
+                const updateTable = notifications.filter(
+                    (item: any) => item.id !== id
+                );
+                setNotifications(updateTable);
+                _fetchDataNotification({
+                    pageSize: lazyState.rows,
+                    page: lazyState.page,
+                    unreadOnly,
+                    textSearch,
+                });
 
-    const confirm2 = (id: string) => {
+                toast.current?.show({
+                    severity: "warn",
+                    summary: "Rejected",
+                    detail: "Deleted successfully",
+                    life: 3000,
+                });
+            })
+            .catch((err: any) => {
+                toast.current?.show({
+                    severity: "warn",
+                    summary: "Rejected",
+                    detail: "Error deleting alarm",
+                    life: 3000,
+                });
+            });
+    };
+
+    const confirm2 = (id: any) => {
         confirmDialog({
             message: "Do you want to delete this record?",
             header: "Delete Confirmation",
             icon: "pi pi-info-circle",
             acceptClassName: "p-button-danger",
-            accept: () => {},
-            reject: () => {},
+            accept: () => deleteAlarm(id.id),
         });
     };
 
@@ -102,7 +138,7 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
     const deleteButtonTemplate = (rowData: any) => {
         return (
             <Button
-                onClick={() => confirm2("33")}
+                onClick={() => confirm2(rowData.id)}
                 icon="pi pi-trash"
                 className="p-button-rounded p-button-danger"
             />

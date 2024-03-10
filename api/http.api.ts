@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-    persistRefreshToken,
-    persistToken,
-    readToken,
-    deleteToken,
-} from "@/service/localStorage";
+import { readToken } from "@/service/localStorage";
 
 export const httpApi = axios.create({
     baseURL: process.env.baseUrlApi,
