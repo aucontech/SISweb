@@ -24,7 +24,7 @@ const ChartRealtime: React.FC<Props> = ({ tag, deviceId }) => {
     }, []);
     const updateChartData = useCallback((message: any) => {
         let dataReceives = message.update[0].timeseries[tag];
-        console.log(dataReceives);
+
         setChartData((currentData: any) => {
             let newLabels = [...currentData.labels];
             let newData = [...currentData.datasets[0].data];
@@ -103,6 +103,7 @@ const ChartRealtime: React.FC<Props> = ({ tag, deviceId }) => {
             };
 
             ws.current.onmessage = (evt: any) => {
+                //console.log(Utils.getUnixTimeMilliseconds());
                 let data1 = {
                     entityDataCmds: [
                         {
@@ -111,7 +112,7 @@ const ChartRealtime: React.FC<Props> = ({ tag, deviceId }) => {
                                 keys: [tag],
                                 startTs: Utils.getUnixTimeMilliseconds(),
                                 timeWindow: 61000,
-                                interval: 1000,
+                                interval: 10000,
                                 limit: 61,
                                 agg: "AVG",
                             },
@@ -130,7 +131,7 @@ const ChartRealtime: React.FC<Props> = ({ tag, deviceId }) => {
                 console.log(
                     "WebSocket connection closed. Trying to reconnect..."
                 );
-                setTimeout(connectWebSocket, 5000); // Thử kết nối lại sau 5 giây
+                setTimeout(connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
             };
             ws.current.onerror = (error) => {
                 console.error("WebSocket error:", error);

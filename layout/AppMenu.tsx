@@ -18,6 +18,11 @@ const AppMenu = () => {
                     to: "/dashboard-banking",
                 },
                 {
+                    label: "Alarms",
+                    icon: "pi pi-fw pi-image",
+                    to: "/alarms",
+                },
+                {
                     label: "Realtime Monitoring",
                     icon: "pi pi-fw pi-image",
                     to: "/realtimemonitoring",
@@ -31,6 +36,11 @@ const AppMenu = () => {
                     label: "Devices",
                     icon: "pi pi-fw pi-image",
                     to: "/devices",
+                },
+                {
+                    label: "Device Profiles",
+                    icon: "pi pi-fw pi-image",
+                    to: "/deviceprofiles",
                 },
                 {
                     label: "OTSUKA",

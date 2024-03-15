@@ -1,25 +1,26 @@
 "use client";
-import { useState, useCallback, useEffect, useRef } from "react";
-import { getDevices } from "@/api/device.api";
-import { UIUtils } from "@/service/Utils";
-import { Toast } from "primereact/toast";
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { Utils } from "@/service/Utils";
-import { Button } from "primereact/button";
+import { Column } from "primereact/column";
+import { Toast } from "primereact/toast";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-
-interface Props {}
-
-const DeviceList: React.FC<Props> = () => {
-    const [devices, setDevices] = useState<any>([]);
-    const [totalElements, setTotalElements] = useState<number>(0);
-    const [textSearch, setTextSearch] = useState<string>("");
+import { getDeviceProfiles } from "@/api/deviceProfile.api";
+import { UIUtils, Utils } from "@/service/Utils";
+const DeviceProfileList = () => {
+    const [deviceProfiles, setDeviceProfiles] = useState<any>([]);
     const toast = useRef<Toast>(null);
-    const typingTimeout = useRef<NodeJS.Timeout | null>(null);
-
-    const _fetchDataDevices = useCallback(
+    const [totalElements, setTotalElements] = useState<number>(0);
+    const [lazyState, setlazyState] = useState({
+        first: 0,
+        rows: 10,
+        page: 0,
+        sortField: null,
+        sortOrder: null,
+        filters: {},
+    });
+    const [textSearch, setTextSearch] = useState<string>("");
+    const _fetchDataDeviceProfiles = useCallback(
         ({
             pageSize,
             page,
@@ -31,7 +32,7 @@ const DeviceList: React.FC<Props> = () => {
             sortOrder?: string;
             textSearch: string;
         }) => {
-            getDevices({
+            getDeviceProfiles({
                 pageSize,
                 page,
                 sortProperty: "createdTime",
@@ -40,7 +41,8 @@ const DeviceList: React.FC<Props> = () => {
             })
                 .then((resp) => resp.data)
                 .then((res) => {
-                    setDevices([...res.data]);
+                    console.log(res);
+                    setDeviceProfiles([...res.data]);
                     setTotalElements(res.totalElements);
                 })
                 .catch((err) => {
@@ -52,63 +54,14 @@ const DeviceList: React.FC<Props> = () => {
         },
         []
     );
-    const [lazyState, setlazyState] = useState({
-        first: 0,
-        rows: 10,
-        page: 0,
-        sortField: null,
-        sortOrder: null,
-        filters: {},
-    });
     const _renderCreatedTime = (row: any) => {
         let createdTime = row.createdTime;
         return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
     };
-
-    const _renderState = (row: any) => {
-        let { active } = row;
-
-        return active ? (
-            <Button disabled={true} label="Active" rounded severity="success" />
-        ) : (
-            <Button
-                disabled={true}
-                label="Inactive"
-                rounded
-                severity="danger"
-            />
-        );
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setTextSearch(value);
     };
-    useEffect(() => {
-        _fetchDataDevices({
-            pageSize: lazyState.rows,
-            page: lazyState.page,
-            textSearch,
-        });
-    }, [lazyState]);
-    useEffect(() => {
-        if (typingTimeout.current) {
-            clearTimeout(typingTimeout.current);
-        }
-        typingTimeout.current = setTimeout(() => {
-            _fetchDataDevices({
-                pageSize: lazyState.rows,
-                page: lazyState.page,
-                textSearch,
-            });
-        }, 300);
-
-        return () => {
-            if (typingTimeout.current) {
-                clearTimeout(typingTimeout.current);
-            }
-        };
-    }, [textSearch, lazyState]);
-
-    const _onInvsPaging = (event: any) => {
-        setlazyState(event);
-    };
-
     const renderHeader = () => {
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -124,17 +77,18 @@ const DeviceList: React.FC<Props> = () => {
             </div>
         );
     };
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setTextSearch(value);
+    useEffect(() => {
+        _fetchDataDeviceProfiles({
+            pageSize: lazyState.rows,
+            page: lazyState.page,
+            textSearch,
+        });
+    }, [lazyState, _fetchDataDeviceProfiles, textSearch]);
+
+    const _onInvsPaging = (event: any) => {
+        setlazyState(event);
     };
-    const filteredDataFormatted = devices.map((item: any, index: any) => ({
-        createdTime: item.createdTime,
-        deviceProfileName: item.deviceProfileName,
-        name: item.name,
-        label: item.label,
-        active: item.active,
-    }));
+
     return (
         <>
             <div>
@@ -145,7 +99,7 @@ const DeviceList: React.FC<Props> = () => {
                         rows={lazyState.rows}
                         rowsPerPageOptions={[5, 10, 25, 50]}
                         header={renderHeader}
-                        value={filteredDataFormatted}
+                        value={deviceProfiles}
                         paginator
                         lazy={true}
                         className="datatable-responsive"
@@ -164,15 +118,14 @@ const DeviceList: React.FC<Props> = () => {
                         ></Column>
 
                         <Column field="name" header=" Name"></Column>
+                        <Column field="type" header="Profile type"></Column>
                         <Column
-                            field="deviceProfileName"
-                            header="Device profile"
+                            field="transportType"
+                            header="Transport type"
                         ></Column>
-                        <Column field="label" header="Label"></Column>
                         <Column
-                            field="active"
-                            header="State"
-                            body={_renderState}
+                            field="description"
+                            header="Description"
                         ></Column>
                     </DataTable>
                 </div>
@@ -181,4 +134,4 @@ const DeviceList: React.FC<Props> = () => {
     );
 };
 
-export default DeviceList;
+export default DeviceProfileList;
