@@ -80,15 +80,9 @@ const showWarning = ({
 const getUnixTimeMilliseconds = () => new Date().getTime();
 
 const getUnixTimeMillisecondsGMT7 = () => {
-    // Get the current UTC date and time in milliseconds
     const currentTime = new Date().getTime();
-
-    // Convert 7 hours to milliseconds
     const offset = 7 * 3600000; // 7 hours * 3600 seconds/hour * 1000 milliseconds/second
-
-    // Adjust the current time for GMT+7
     const timeInGMT7 = currentTime + offset;
-
     return timeInGMT7;
 };
 

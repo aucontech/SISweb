@@ -2,19 +2,27 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import TelemetryOTSUKA from "./telemetryOTSUKA/telemetryOTSUKA";
 import GraphicOTK from "./graphic-otk/page";
-
+import ReactFlow from "./ReactFlow/ReactFlow";
+import FlowRR from "./FlowRR";
 const TabOtsuka = () => {
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
                     <TabPanel header="Graphic">
-                        <GraphicOTK />
+                        <ReactFlow />
                     </TabPanel>
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
                     </TabPanel>
-                    <TabPanel header="Chart"></TabPanel>
+
+                    <TabPanel header="Graphic">
+                        <GraphicOTK />
+                    </TabPanel>
+                    {/* <TabPanel header="Graphic">
+                
+                    <FlowRR/>
+                    </TabPanel> */}
                 </TabView>
             </div>
         </div>

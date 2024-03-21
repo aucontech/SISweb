@@ -1,0 +1,32 @@
+.ValueData{
+    font-size: 23px;
+    position: fixed;
+    font-weight: 500;
+    fill: rgb(10, 121, 10);
+}
+
+.NameData{
+    font-size: 23px;
+    position: fixed;
+    font-weight: 500;
+}
+
+.NameMeasuring{
+    font-size: 21px;
+    position: fixed;
+    font-weight: 500;
+    fill: blueviolet;
+}
+.NameQ{
+
+    font-size: 20px;
+    position: fixed;
+    font-weight: 500;
+}
+.NameDevice{
+    font-size: 30px;
+    position: fixed;
+    font-weight: 400;
+    fill: #b71616
+
+}

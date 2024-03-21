@@ -2,19 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../graphic-otk/graphic-OTK.css"
 import { readToken } from '@/service/localStorage';
 import { id_OTSUKA } from '../../data-table-device/ID-DEVICE/IdDevice';
-import TelemetryOTSUKA from '../telemetryOTSUKA/telemetryOTSUKA';
 interface StateMap {
     [key: string]: React.Dispatch<React.SetStateAction<string | null>> | undefined;
   }
 
-export default function DataOTK() {
+export default function DataOtsuka() {
 
     const [data, setData] = useState<any[]>([]);
-
     const token = readToken()
-
     const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
-
     const [flowRate, setFlowRate] = useState<string | null>(null);
     const [pipePressure, setPipePressure] = useState<string | null>(null);
     const [liquidLever, setLiquidLever] = useState<string | null>(null);

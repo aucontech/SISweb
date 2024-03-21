@@ -1,69 +1,76 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import "../graphic-otk/graphic-OTK.css"
-import DataOTK from "./Data-OTK";
-import TextGraphic from "./TextGraphic";
 import { Button } from "primereact/button";
 import { OverlayPanel } from "primereact/overlaypanel";
+import DataIGUACU from "./DataIGUACU";
+import TextGraphicIGUACU from "./TextGraphicIGUACU";
 
+function GraphicOTSUKA() {
 
-function GraphicOTK() {
-
+const DeviceName = localStorage.getItem('deviceName')
 
     const op = useRef<OverlayPanel>(null);
 
 
     const paragraphContents: Record<string, string> = {
-        SVF: 'Standard Volume Flow Rate',
-        GVF: 'Gross Volume Flow Rate',
-        SVA: 'Standard Volume Accumulated',
-        GVA: 'Gross Volume Accumulated',
-        PT: 'Pressure Transmitter',
-        PSV: 'Pressure Safety Valve',
-        PCV: 'Pressure Control Valve',
-        SSV: 'Slam Shut Off Valve',
-        SDV: 'Shutdown valve',
-  
+        FRA: 'Flow Rate AI',
+        PPA: 'Pipe Pressure AI',
+        LLA: 'Liquie Lever AI',
+        TPA: 'Tank Pressure AI',
+        S01A: 'Spare 01 AI',
+        S02A: 'Spare 02 AI',
+        S03A: 'Spare 03 AI',
+        S04A: 'Spare 04 AI',
+        T01A: 'Temperature_01_AI',
+        T02A: 'Temperature_02_AI',
+        S01D: 'Solenoid 01 DO'
     };
+    
   
     return (
 
 
         <div>
        <div style={{padding:15, display:'flex', justifyContent:"space-between"}}>
-                <div>
-                    <p style={{fontSize:25,fontWeight:500}} >EWON OTSUKA</p>
-                </div>
-                
-                <div style={{width:25, height:30, textAlign:'center', cursor:'pointer'}}>
-                    <p style={{border:'2px solid black', borderRadius:50, fontWeight:600}} onClick={(e:any) => op.current?.toggle(e)} > ?</p>
-                    <OverlayPanel style={{width:400, fontWeight:500, fontSize:17}} ref={op}>
-                     
-                        {Object.keys(paragraphContents).map((key:string, index:number) => (
+                    <div>
 
-                            <p key={index}>    {key} - {paragraphContents[key]} <hr /></p>
+                    </div>
+                  
+                <div style={{width:27, height:30, textAlign:'center', cursor:'pointer', position:'relative', bottom:50 }}>
+                    <p style={{border:'3px solid black', borderRadius:50, fontWeight:600,}} onClick={(e:any) => op.current?.toggle(e)} > ?</p>
+                    <OverlayPanel style={{width:300, fontWeight:500, fontSize:17}} ref={op}>
+                        {Object.keys(paragraphContents).map((key:string, index:number) => (
+                            <p  key={index}>{key} - {paragraphContents[key]}</p>
                         ))}
                     </OverlayPanel>
                 </div>
-          </div>
+            </div>
             
         <div
             style={{
                 background: "#87CEEB",
                 borderRadius: 2,
                 boxShadow: "0 0 10px rgba(0, 0, 0, 2)",
+                position:'relative',
+                bottom:30
             }}
         >
 
-            
-<svg   contentScriptType="text/ecmascript"
+            <svg  
+                contentScriptType="text/ecmascript"
                 zoomAndPan="magnify"
                 contentStyleType="text/css"
                 version="1.0"
+                centerview="true"
                 preserveAspectRatio="xMidYMid meet"
                 viewBox="0 0 1366 740"
                 xmlns="http://www.w3.org/2000/svg"
-                >
+                fittoscreen="true"
+                referenceNode="SOGEC/"
+                referenceFile="SOGEC.gv"
+                orindex="0"
+                resindex="0"
+                viewPath="svgedit.svg"  >
  <defs>
   <symbol id="svg_2" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" >
    <path d="m236.73,269.72c7.93,0 33.75,19.07 33.75,37.85c0,18.79 -25.82,14.68 -33.75,14.68l0,-52.53z" fill="#FF5959" id="svg_1"/>
@@ -352,7 +359,6 @@ function GraphicOTK() {
   <use id="svg_101" transform="rotate(-90 273.649 -6690.77) matrix(1.13944 0 0 0.378697 1150.24 -14.0407)" x="-624.33" href="#svg_78" y="-594.83"/>
   <rect fill="#ede8e8" height="0" id="svg_185" stroke="#e5e5e5" stroke-linecap="round" width="0" x="624.49" y="266.77"/>
   <ellipse cx="619.79" cy="260.89" fill="#ede8e8" id="svg_187" opacity="0.5" rx="0" ry="0" stroke="#e5e5e5" stroke-linecap="round"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_469" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="542.7" y="195.29"/>
   <rect fill="#ede8e8" height="0" id="svg_470" stroke="#e5e5e5" stroke-linecap="round" width="9.41" x="249.46" y="141.74"/>
   <rect fill="#b71616" height="30.59" id="svg_473" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="688.87" y="517.03"/>
   <rect fill="#b71616" height="32.94" id="svg_478" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="689.46" y="228.47"/>
@@ -464,29 +470,35 @@ function GraphicOTK() {
   <use id="svg_304" transform="matrix(0.46112 0 0 0.516546 -159.463 -1197.12)" x="2361.81" href="#svg_167" y="3239.89"/>
   <use id="svg_177" transform="matrix(4.91108 0 0 0.516546 -10375.8 -520.116)" x="2215.71" href="#svg_167" y="1492.51"/>
   <use id="svg_383" transform="matrix(0.0415566 0 0 0.0439526 126.367 81.3167)" x="9201.04" href="#svg_370" y="1262.38"/>
-  <rect fill="#b71616" height="22.35" id="svg_481" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="523.84" y="113.76"/>
-  <rect fill="#b71616" height="14.71" id="svg_487" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="1075.02" y="260.63"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_497" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="228.24" x="308.38" y="90"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_498" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="228.24" x="503.38" y="371.41"/>
-  <rect fill="#ffff00" height="40" id="svg_212" rx="5" ry="5" stroke="#e5e5e5" stroke-linecap="round" width="116.47" x="630.96" y="246.77"/>
-  <rect fill="#ffff00" height="40" id="svg_472" rx="5" ry="5" stroke="#e5e5e5" stroke-linecap="round" width="116.47" x="631.23" y="492.33"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_490" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="542.5" y="160"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_491" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="542.5" y="125"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_492" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353" x="542.5" y="90"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_493" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="542.5" y="547.29"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_494" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="542.5" y="582.59"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_495" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="543.09" y="617.88"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_496" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="353.53" x="543.09" y="653"/>
-  <rect fill="#ede8e8" height="32.94" id="svg_49" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="186.99" x="928.38" y="228.65"/>
   <use id="svg_55" transform="matrix(0 -0.420688 1.23424 0 -2131.62 801.776)" x="545.57" href="#svg_109" y="1839.77"/>
   <use id="svg_178" transform="matrix(0.0556097 0 0 0.0558888 366.886 45.8319)" x="-3809.26" href="#svg_314" y="8605.89"/>
   <use id="svg_53" transform="rotate(-90 128.187 510.117) matrix(1.0834 0 0 0.378698 -478.482 109.9)" x="528" href="#svg_78" y="1024.86"/>
   <use id="svg_62" transform="matrix(1.23328 0 0 0.493988 -586.942 -569.149)" x="543.69" href="#svg_34" y="2073.09"/>
 
 
-<DataOTK/>
+  
+  <rect fill="#b71616" height="22.35" id="svg_481" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="523.84" y="113.76"/>
+  <rect fill="#b71616" height="14.71" id="svg_487" stroke="#e5e5e5" stroke-linecap="round" width="3.53" x="1075.02" y="260.63"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_497" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="228.24" x="308.38" y="90"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_498" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="228.24" x="503.38" y="371.41"/>
+  <rect fill="#ffff00" height="40" id="svg_212" rx="5" ry="5" stroke="#e5e5e5" stroke-linecap="round" width="116.47" x="630.96" y="246.77"/>
+  <rect fill="#ffff00" height="40" id="svg_472" rx="5" ry="5" stroke="#e5e5e5" stroke-linecap="round" width="116.47" x="631.23" y="492.33"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_469" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="195.29"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_490" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="160"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_491" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="125"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_492" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="90"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_493" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="547.29"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_494" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="542.5" y="582.59"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_495" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="543.09" y="617.88"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_496" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="300.252" x="543.09" y="653"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_49" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="186.99" x="928.38" y="228.65"/>
+  <rect fill="#ede8e8" height="32.94" id="svg_49" rx="3" ry="3" stroke="#e5e5e5" stroke-linecap="round" width="412" x="912" y="12"/>
 
-<TextGraphic/>
+
+
+<DataIGUACU/>
+<TextGraphicIGUACU/>
+
  </g>
 </svg>
 
@@ -495,4 +507,4 @@ function GraphicOTK() {
     );
 }
 
-export default GraphicOTK;
+export default GraphicOTSUKA;

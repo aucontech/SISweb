@@ -5,8 +5,11 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { Column } from "primereact/column";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { getAlarms } from "@/api/alarm.api";
-import { UIUtils } from "@/service/Utils";
-const AlarmList = () => {
+import { UIUtils, Utils } from "@/service/Utils";
+interface Props {
+    filters: any;
+}
+const AlarmList: React.FC<Props> = ({ filters }) => {
     const toast = useRef<Toast>(null);
     const [lazyState, setlazyState] = useState({
         first: 0,
@@ -23,48 +26,69 @@ const AlarmList = () => {
         setlazyState(event);
     };
     const _fetchDataAlarms = useCallback(
-        ({
-            pageSize,
-            page,
-            sortOrder,
-        }: // textSearch,
-        {
-            pageSize: number;
-            page: number;
-            sortOrder?: string;
-            //  textSearch: string;
-        }) => {
-            getAlarms({
+        (
+            {
                 pageSize,
                 page,
-                sortProperty: "createdTime",
-                sortOrder: "DESC",
-              //  textSearch,
-            })
-                .then((resp) => resp.data)
-                .then((res) => {
-                    console.log(res);
-                    setAlarms([...res.data]);
-                    setTotalElements(res.totalElements);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    // UIUtils.showError({
-                    //     error: err?.message,
-                    //     toast: toast.current,
-                    // });
-                });
+                sortOrder,
+            }: {
+                pageSize: number;
+                page: number;
+                sortOrder?: string;
+            },
+            filters?: any
+        ) => {
+            if (filters && filters.device && filters.device.id) {
+                let device = filters.device;
+                let reqParams = {};
+                reqParams = {
+                    ...reqParams,
+                    pageSize,
+                    page,
+                    sortProperty: "createdTime",
+                };
+                let dates = filters.dates ? [...filters.dates] : [];
+                if (dates && dates[0] && dates[1]) {
+                    reqParams = {
+                        ...reqParams,
+                        startTime: dates[0].getTime(),
+                        endTime: dates[1].getTime(),
+                    };
+                }
+
+                getAlarms(device.id.entityType, device.id.id, reqParams)
+                    .then((resp) => resp.data)
+                    .then((res) => {
+                        console.log(res);
+                        setAlarms([...res.data]);
+                        setTotalElements(res.totalElements);
+                    })
+                    .catch((err) => {
+                        UIUtils.showError({
+                            error: err?.message,
+                            toast: toast.current,
+                        });
+                    });
+            } else {
+            }
         },
         []
     );
     useEffect(() => {
-        _fetchDataAlarms({
-            pageSize: lazyState.rows,
-            page: lazyState.page,
-            // textSearch,
-        });
-    }, [lazyState, _fetchDataAlarms]);
+        _fetchDataAlarms(
+            {
+                pageSize: lazyState.rows,
+                page: lazyState.page,
+                // textSearch,
+            },
+            filters
+        );
+    }, [lazyState, _fetchDataAlarms, filters]);
 
+    const _renderCreatedTime = (row: any) => {
+        let createdTime = row.createdTime;
+        return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
+    };
     return (
         <>
             <div>
@@ -90,15 +114,15 @@ const AlarmList = () => {
                         <Column
                             sortable
                             header="Created Time"
-                            // body={_renderCreatedTime}
+                            body={_renderCreatedTime}
                         ></Column>
 
-                        <Column field="name" header=" Name"></Column>
-                        <Column field="type" header="Profile type"></Column>
                         <Column
-                            field="transportType"
-                            header="Transport type"
+                            field="originatorName"
+                            header=" Originator"
                         ></Column>
+                        <Column field="type" header="Type"></Column>
+                        <Column field="severity" header="Severity"></Column>
                         <Column
                             field="description"
                             header="Description"

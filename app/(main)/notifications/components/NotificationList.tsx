@@ -189,13 +189,8 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                         sortable
                         header="Created Time"
                         body={_renderCreatedTime}
-                        headerClassName="white-space-nowrap w-4"
                     ></Column>
-                    <Column
-                        field="type"
-                        header="Type"
-                        // headerClassName="white-space-nowrap w-4"
-                    ></Column>
+                    <Column field="type" header="Type"></Column>
                     <Column
                         field="subject"
                         header=" Subject"
@@ -206,13 +201,8 @@ const NotificationList: React.FC<Props> = ({ unreadOnly }) => {
                         field="text"
                         header="Message"
                         // body={dateBodyTemplate}
-                        headerClassName="white-space-nowrap w-4"
                     ></Column>
-                    <Column
-                        header="Edit"
-                        body={deleteButtonTemplate}
-                        headerClassName="white-space-nowrap w-4"
-                    ></Column>
+                    <Column header="Edit" body={deleteButtonTemplate}></Column>
                 </DataTable>
             </div>
         </div>

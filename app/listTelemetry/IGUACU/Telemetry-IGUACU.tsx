@@ -4,14 +4,16 @@ import { Column } from "primereact/column";
 import { format } from "date-fns";
 import { InputText } from "primereact/inputtext";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import ClipLoader from "react-spinners/ClipLoader";
+import { id_IGUECU } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
 
-
-function TelemetryOTSUKA({}) {
+function TelemetryOTSUKA() {
     const [sensorData, setSensorData] = useState<any>([]); // State để lưu trữ dữ liệu cảm biến
+    const DeviceName = localStorage.getItem("deviceName");
 
     const [textSearch, setTextSearch] = useState<string>("");
+    const [loading, setLoading] = useState(true); // State để xác định trạng thái loading
 
     const ws = useRef<WebSocket | null>(null);
 
@@ -26,7 +28,7 @@ function TelemetryOTSUKA({}) {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId:id_OTSUKA,
+                    entityId:id_IGUECU,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -43,6 +45,7 @@ function TelemetryOTSUKA({}) {
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
+                setLoading(false); // Đóng WebSocket, đặt loading thành false
             };
         }
 
@@ -67,6 +70,7 @@ function TelemetryOTSUKA({}) {
                         return { name: key, value, timestamp };
                     });
                     setSensorData(sensorDataArray);
+                    setLoading(false);
                 }
             };
         }
@@ -91,7 +95,7 @@ function TelemetryOTSUKA({}) {
             }}
         >
             <div>
-            <p style={{fontSize:25,fontWeight:500}} >EWON OTSUKA</p>
+            <p style={{fontSize:25,fontWeight:500}} >{DeviceName}</p>
             </div>
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -108,17 +112,16 @@ function TelemetryOTSUKA({}) {
         )
     }
 
-
     return (
         <div>
-
 
             <DataTable
             header={renderHeader}
                 value={filteredSensorData}
                 rows={1}
                 className="datatable-responsive"
-                emptyMessage="No products found."
+                emptyMessage=            {loading && <ClipLoader  color="#00BFFF"/>}
+
                 responsiveLayout="scroll"
             >
                 <Column
@@ -142,15 +145,9 @@ function TelemetryOTSUKA({}) {
                     field="value"
                     header="Value"
                     headerClassName="white-space-nowrap w-1 h-5"
-                    body={(rowData) => <span>{rowData.value.slice(0, 5)}</span>}
+                    body={(rowData) => <span>{rowData.value}</span>}
                 ></Column>
             </DataTable>
-
-            {/* <div style={{display:'none'}} >
-
-                <FlowRR />
-            </div> */}
-
         </div>
     );
 }
