@@ -6,6 +6,7 @@ import { Column } from "primereact/column";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { getAlarms } from "@/api/alarm.api";
 import { UIUtils, Utils } from "@/service/Utils";
+import { InputText } from "primereact/inputtext";
 interface Props {
     filters: any;
 }
@@ -21,7 +22,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
     });
     const [totalElements, setTotalElements] = useState<number>(0);
     const [alarms, setAlarms] = useState<any>([]);
-
+    const [textSearch, setTextSearch] = useState<string>("");
     const _onInvsPaging = (event: any) => {
         setlazyState(event);
     };
@@ -31,10 +32,12 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                 pageSize,
                 page,
                 sortOrder,
+                textSearch,
             }: {
                 pageSize: number;
                 page: number;
                 sortOrder?: string;
+                textSearch: string;
             },
             filters?: any
         ) => {
@@ -45,6 +48,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                     ...reqParams,
                     pageSize,
                     page,
+                    sortOrder: "DESC",
                     sortProperty: "createdTime",
                 };
                 let dates = filters.dates ? [...filters.dates] : [];
@@ -53,6 +57,12 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         ...reqParams,
                         startTime: dates[0].getTime(),
                         endTime: dates[1].getTime(),
+                    };
+                }
+                if (textSearch !== "") {
+                    reqParams = {
+                        ...reqParams,
+                        textSearch,
                     };
                 }
 
@@ -79,15 +89,55 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
             {
                 pageSize: lazyState.rows,
                 page: lazyState.page,
-                // textSearch,
+                textSearch,
             },
             filters
         );
-    }, [lazyState, _fetchDataAlarms, filters]);
+    }, [lazyState, _fetchDataAlarms, filters, textSearch]);
 
     const _renderCreatedTime = (row: any) => {
         let createdTime = row.createdTime;
         return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
+    };
+    const _renderStartTime = (row: any) => {
+        let startTs = row.startTs;
+        return startTs ? Utils.formatUnixTimeToString(startTs) : "";
+    };
+    const _renderEndTime = (row: any) => {
+        let endTs = row.endTs;
+        return endTs ? Utils.formatUnixTimeToString(endTs) : "";
+    };
+    const _renderValue = (row: any) => {
+        let { details } = row;
+        let value = details.data.split(",")[1];
+
+        return value ? value : "";
+    };
+
+    const _renderDurationTime = (row: any) => {
+        let { startTs, endTs } = row;
+        return startTs && endTs
+            ? Utils.calculateDurationFromUnixWithWords(startTs, endTs)
+            : "";
+    };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setTextSearch(value);
+    };
+    const renderHeader = () => {
+        return (
+            <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i className="pi pi-search"></i>
+                    <InputText
+                        placeholder="Search Alarms"
+                        value={textSearch}
+                        onChange={handleInputChange}
+                        className="w-full"
+                    />
+                </span>
+            </div>
+        );
     };
     return (
         <>
@@ -98,7 +148,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                     <DataTable
                         rows={lazyState.rows}
                         rowsPerPageOptions={[5, 10, 25, 50]}
-                        // header={renderHeader}
+                        header={renderHeader}
                         value={alarms}
                         paginator
                         lazy={true}
@@ -119,10 +169,27 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
 
                         <Column
                             field="originatorName"
-                            header=" Originator"
+                            header="Originator"
                         ></Column>
                         <Column field="type" header="Type"></Column>
-                        <Column field="severity" header="Severity"></Column>
+                        <Column
+                            header="Start Time"
+                            body={_renderStartTime}
+                        ></Column>
+                        <Column
+                            header="End Time"
+                            body={_renderEndTime}
+                        ></Column>
+                        <Column
+                            header="Duration"
+                            body={_renderDurationTime}
+                        ></Column>
+                        <Column header="Value" body={_renderValue}></Column>
+                        {/* <Column
+                            sortable
+                            header="Duration"
+                            body={_renderDuration}
+                        ></Column> */}
                         <Column
                             field="description"
                             header="Description"

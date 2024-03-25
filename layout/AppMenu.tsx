@@ -8,19 +8,9 @@ const AppMenu = () => {
             icon: "pi pi-home",
             items: [
                 {
-                    label: "E-Commerce",
-                    icon: "pi pi-fw pi-home",
-                    to: "/",
-                },
-                {
-                    label: "Banking",
+                    label: "Alarm History",
                     icon: "pi pi-fw pi-image",
-                    to: "/dashboard-banking",
-                },
-                {
-                    label: "Alarms",
-                    icon: "pi pi-fw pi-image",
-                    to: "/alarms",
+                    to: "/alarmhistory",
                 },
                 {
                     label: "Realtime Monitoring",

@@ -95,10 +95,30 @@ const formatUnixTimeToString = (unixTime: any, fmt?: any) => {
     return format(date, fmt);
 };
 
+const formatDurationWithWords = (duration: any) => {
+    let seconds = Math.floor((duration / 1000) % 60);
+    let minutes = Math.floor((duration / (1000 * 60)) % 60);
+    let hours = Math.floor(duration / (1000 * 60 * 60));
+
+    const hoursText = hours > 0 ? `${hours} hours` : "";
+    const minutesText = minutes > 0 ? `${minutes} minutes` : "";
+    const secondsText = seconds > 0 ? `${seconds} seconds` : "";
+
+    return [hoursText, minutesText, secondsText].filter(Boolean).join(", ");
+};
+
+const calculateDurationFromUnixWithWords = (startTime: any, endTime: any) => {
+    const start: any = new Date(startTime);
+    const end: any = new Date(endTime);
+    const duration: any = end - start; // Khoảng thời gian tính bằng miligiây
+    return formatDurationWithWords(duration);
+};
+
 const UIUtils = { showError, showInfo, showWarning };
 const Utils = {
     formatUnixTimeToString,
     getUnixTimeMilliseconds,
     getUnixTimeMillisecondsGMT7,
+    calculateDurationFromUnixWithWords,
 };
 export { UIUtils, Utils };
