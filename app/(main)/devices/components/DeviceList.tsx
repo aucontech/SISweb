@@ -9,6 +9,8 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Sidebar } from "primereact/sidebar";
+import DeviceProfileForm from "./DeviceProfileForm";
 
 interface Props {}
 
@@ -18,7 +20,9 @@ const DeviceList: React.FC<Props> = () => {
     const [textSearch, setTextSearch] = useState<string>("");
     const toast = useRef<Toast>(null);
     const typingTimeout = useRef<NodeJS.Timeout | null>(null);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
+    const [selectedDevice, setSelectedDevice] = useState<any>({});
     const _fetchDataDevices = useCallback(
         ({
             pageSize,
@@ -40,6 +44,7 @@ const DeviceList: React.FC<Props> = () => {
             })
                 .then((resp) => resp.data)
                 .then((res) => {
+                    console.log(res.data);
                     setDevices([...res.data]);
                     setTotalElements(res.totalElements);
                 })
@@ -128,13 +133,10 @@ const DeviceList: React.FC<Props> = () => {
         const value = e.target.value;
         setTextSearch(value);
     };
-    const filteredDataFormatted = devices.map((item: any, index: any) => ({
-        createdTime: item.createdTime,
-        deviceProfileName: item.deviceProfileName,
-        name: item.name,
-        label: item.label,
-        active: item.active,
-    }));
+    const _onClickSelection = (e: any) => {
+        setSelectedDevice(e.value);
+        setIsVisible(true);
+    };
     return (
         <>
             <div>
@@ -145,17 +147,20 @@ const DeviceList: React.FC<Props> = () => {
                         rows={lazyState.rows}
                         rowsPerPageOptions={[5, 10, 25, 50]}
                         header={renderHeader}
-                        value={filteredDataFormatted}
+                        value={devices}
                         paginator
+                        selectionMode="single"
                         lazy={true}
+                        selection={selectedDevice}
                         className="datatable-responsive"
-                        emptyMessage="No products found."
+                        emptyMessage="No records found."
                         paginatorTemplate="CurrentPageReport RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks  NextPageLink LastPageLink"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                         totalRecords={totalElements}
                         first={lazyState.first}
                         dataKey="id"
                         onPage={_onInvsPaging}
+                        onSelectionChange={(e) => _onClickSelection(e)}
                     >
                         <Column
                             sortable
@@ -176,6 +181,14 @@ const DeviceList: React.FC<Props> = () => {
                         ></Column>
                     </DataTable>
                 </div>
+                <Sidebar
+                    visible={isVisible}
+                    className="w-5"
+                    position="right"
+                    onHide={() => setIsVisible(false)}
+                >
+                    <DeviceProfileForm device={selectedDevice} />
+                </Sidebar>
             </div>
         </>
     );

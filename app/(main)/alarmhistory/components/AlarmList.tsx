@@ -65,6 +65,14 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         textSearch,
                     };
                 }
+                let alarmType = filters?.alarmType;
+                if (alarmType && alarmType.type) {
+                    reqParams = {
+                        ...reqParams,
+                        typeList: alarmType.type,
+                    };
+                }
+                console.log(filters);
 
                 getAlarms(device.id.entityType, device.id.id, reqParams)
                     .then((resp) => resp.data)
@@ -103,13 +111,10 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
         let startTs = row.startTs;
         return startTs ? Utils.formatUnixTimeToString(startTs) : "";
     };
-    const _renderEndTime = (row: any) => {
-        let endTs = row.endTs;
-        return endTs ? Utils.formatUnixTimeToString(endTs) : "";
-    };
+
     const _renderValue = (row: any) => {
         let { details } = row;
-        let value = details.data.split(",")[1];
+        let value = details?.data?.split(",")[1];
 
         return value ? value : "";
     };
@@ -176,10 +181,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                             header="Start Time"
                             body={_renderStartTime}
                         ></Column>
-                        <Column
-                            header="End Time"
-                            body={_renderEndTime}
-                        ></Column>
+
                         <Column
                             header="Duration"
                             body={_renderDurationTime}

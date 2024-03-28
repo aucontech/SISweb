@@ -3,19 +3,26 @@ import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
-
+import { getAlarmTypes } from "@/api/alarm.api";
 interface Props {
     showDevice: boolean;
     showDate: boolean;
+    showAlarmType: boolean;
     onAction: (evt: any) => void;
 }
 const defFilter = {
     device: null,
     dates: null,
+    alarmType: null,
 };
-const FilterAlarm: React.FC<Props> = ({ showDevice, onAction }) => {
+const FilterAlarm: React.FC<Props> = ({
+    showDevice,
+    onAction,
+    showAlarmType,
+}) => {
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
+    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
 
     useEffect(() => {
         let newFilter = {
@@ -44,6 +51,16 @@ const FilterAlarm: React.FC<Props> = ({ showDevice, onAction }) => {
         newFil[field] = value;
         setEditFilter(newFil);
         onAction(newFil);
+    };
+    const _onSuggAlarmType = (evt: any) => {
+        getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
+            .then((resp) => resp.data)
+            .then((resp) => {
+                setSuggAlarmType([...resp.data]);
+            })
+            .catch((err) => {
+                setSuggAlarmType([]);
+            });
     };
     return (
         <>
@@ -76,6 +93,23 @@ const FilterAlarm: React.FC<Props> = ({ showDevice, onAction }) => {
                                 }}
                             />
                             <label>Select Date</label>
+                        </span>
+                    </div>
+                )}
+                {showAlarmType && (
+                    <div className="col-12 lg:col-3">
+                        <span className="p-float-label">
+                            <AutoComplete
+                                dropdown
+                                field="type"
+                                value={editFilter.alarmType}
+                                onChange={(e) => {
+                                    _processFilterChange("alarmType", e.value);
+                                }}
+                                suggestions={suggAlarmType}
+                                completeMethod={_onSuggAlarmType}
+                            />
+                            <label>Alarm type</label>
                         </span>
                     </div>
                 )}
