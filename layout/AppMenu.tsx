@@ -32,11 +32,11 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-image",
                     to: "/deviceprofiles",
                 },
-                // {
-                //     label: "OTSUKA",
-                //     icon: "pi pi-fw pi-image",
-                //     to: "/OTSUKA",
-                // },
+                {
+                    label: "OTSUKA",
+                    icon: "pi pi-fw pi-image",
+                    to: "/OTSUKA",
+                },
             ],
         },
     ];
