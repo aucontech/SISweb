@@ -18,7 +18,7 @@ export default function DataIGUACU() {
     const token = readToken();
     const op = useRef<OverlayPanel>(null);
 
-    const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const [flowRate, setFlowRate] = useState<string | null>(null);
     const [pipePressure, setPipePressure] = useState<string | null>(null);
@@ -115,7 +115,7 @@ export default function DataIGUACU() {
         }
     }, [data]);
     const paragraphContents: Record<string, string> = {
-        FRA: 'FRA :',
+        FRA: "FRA :",
         PPA: "PPA :",
         LLA: "LLA :",
         TPA: "TPA :",
@@ -130,331 +130,320 @@ export default function DataIGUACU() {
 
     return (
         <>
-            
-        <text
-            x="50"
-            y="40"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameDevice}
-            id="UID_1701153734203"
-        >
-            {DeviceName}
-        </text>
-        <text
-            x="950"
-            y="40"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-            Last update {timeUpdate}
-        </text>
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            <text
+                x="50"
+                y="40"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameDevice}
+                id="UID_1701153734203"
+            >
+                {DeviceName}
+            </text>
+            <text
+                x="950"
+                y="40"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                Last update {timeUpdate}
+            </text>
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        <text
-            x="650"
-            y="120"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {flowRate}
-        </text>
-        <text
-            x="650"
-            y="155"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {pipePressure}
-        </text>
-        <text
-            x="650"
-            y="190"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {liquidLever}
-        </text>
-        <text
-            x="650"
-            y="225"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {tankPressureAI}
-        </text>
-        {/* ______________________________________________________________________________________________________________________________________ */}
-        <text
-            x="780"
-            y="120"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            SM3/H
-        </text>
-        <text
-            x="780"
-            y="155"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            M3/H
-        </text>
-        <text
-            x="780"
-            y="190"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            SM3
-        </text>
-        <text
-            x="780"
-            y="225"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            M3
-        </text>
+            <text
+                x="650"
+                y="120"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {flowRate}
+            </text>
+            <text
+                x="650"
+                y="155"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {pipePressure}
+            </text>
+            <text
+                x="650"
+                y="190"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {liquidLever}
+            </text>
+            <text
+                x="650"
+                y="225"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {tankPressureAI}
+            </text>
+            {/* ______________________________________________________________________________________________________________________________________ */}
+            <text
+                x="780"
+                y="120"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                SM3/H
+            </text>
+            <text
+                x="780"
+                y="155"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                M3/H
+            </text>
+            <text
+                x="780"
+                y="190"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                SM3
+            </text>
+            <text
+                x="780"
+                y="225"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                M3
+            </text>
 
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        <text
-            x="650"
-            y="575"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {spare01AI}
-        </text>
-        <text
-            x="650"
-            y="610"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {spare02AI}
-        </text>
-        <text
-            x="650"
-            y="645"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {spare03AI}
-        </text>
-        <text
-            x="650"
-            y="680"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {spare04AI}
-        </text>
-        {/* ______________________________________________________________________________________________________________________________________ */}
+            <text
+                x="650"
+                y="575"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {spare01AI}
+            </text>
+            <text
+                x="650"
+                y="610"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {spare02AI}
+            </text>
+            <text
+                x="650"
+                y="645"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {spare03AI}
+            </text>
+            <text
+                x="650"
+                y="680"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {spare04AI}
+            </text>
+            {/* ______________________________________________________________________________________________________________________________________ */}
 
-        <text
-            x="780"
-            y="575"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            SM3/H
-        </text>
-        <text
-            x="780"
-            y="610"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            M3/H
-        </text>
-        <text
-            x="780"
-            y="645"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            SM3
-        </text>
-        <text
-            x="780"
-            y="680"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameQ}
-            id="UID_1701153734203"
-        >
-            M3
-        </text>
+            <text
+                x="780"
+                y="575"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                SM3/H
+            </text>
+            <text
+                x="780"
+                y="610"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                M3/H
+            </text>
+            <text
+                x="780"
+                y="645"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                SM3
+            </text>
+            <text
+                x="780"
+                y="680"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameQ}
+                id="UID_1701153734203"
+            >
+                M3
+            </text>
 
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        <text
-            x="410"
-            y="120"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {temprerature01AI}
-        </text>
-        <text
-            x="610"
-            y="400"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {temprerature02AI}
-        </text>
-        <text
-            x="1035"
-            y="256"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.ValueData}
-            id="UID_1701153734203"
-        >
-            {solenoido01Do}
-        </text>
+            <text
+                x="410"
+                y="120"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {temprerature01AI}
+            </text>
+            <text
+                x="610"
+                y="400"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {temprerature02AI}
+            </text>
+            <text
+                x="1035"
+                y="256"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.ValueData}
+                id="UID_1701153734203"
+            >
+                {solenoido01Do}
+            </text>
 
-        {/*  */}
+            {/*  */}
 
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        <text
-            x="570"
-            y="120"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.FRA}
-        </text>
-        <text
-            x="570"
-            y="155"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.PPA}
+            <text
+                x="570"
+                y="120"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.FRA}
+            </text>
+            <text
+                x="570"
+                y="155"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.PPA}
+            </text>
+            <text
+                x="570"
+                y="190"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.LLA}
+            </text>
+            <text
+                x="570"
+                y="225"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.TPA}
+            </text>
 
-        </text>
-        <text
-            x="570"
-            y="190"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.LLA}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        </text>
-        <text
-            x="570"
-            y="225"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.TPA}
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        </text>
+            <text
+                x="570"
+                y="575"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.S01A}
+            </text>
+            <text
+                x="570"
+                y="610"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.S02A}
+            </text>
+            <text
+                x="570"
+                y="645"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.S03A}
+            </text>
+            <text
+                x="570"
+                y="680"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.S04A}
+            </text>
+            {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
-
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
-
-        <text
-            x="570"
-            y="575"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.S01A}
-
-        </text>
-        <text
-            x="570"
-            y="610"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.S02A}
-
-        </text>
-        <text
-            x="570"
-            y="645"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.S03A}
-
-        </text>
-        <text
-            x="570"
-            y="680"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.S04A}
-
-        </text>
-        {/* --------------------------------------------------------------------------------------------------------------------------------- */}
-
-        <text
-            x="335"
-            y="120"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.T01A}
-
-        </text>
-        <text
-            x="530"
-            y="400"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.T02A}
-
-        </text>
-        <text
-            x="955"
-            y="256"
-            transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
-            className={styles.NameData}
-            id="UID_1701153734203"
-        >
-           {paragraphContents.S01D}
-
-        </text>
-    </>
+            <text
+                x="335"
+                y="120"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.T01A}
+            </text>
+            <text
+                x="530"
+                y="400"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.T02A}
+            </text>
+            <text
+                x="955"
+                y="256"
+                transform="matrix(1 0 0 1 -19.130434036254883 -4.202898333038109)"
+                className={styles.NameData}
+                id="UID_1701153734203"
+            >
+                {paragraphContents.S01D}
+            </text>
+        </>
     );
 }

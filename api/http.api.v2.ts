@@ -2,7 +2,7 @@ import axios from "axios";
 import { readToken } from "@/service/localStorage";
 
 export const httpApi = axios.create({
-    baseURL: process.env.baseUrlApiv2,
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL_API_V2,
     headers: {
         "Content-Type": "application/json",
     },

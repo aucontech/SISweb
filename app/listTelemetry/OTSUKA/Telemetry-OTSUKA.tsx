@@ -9,16 +9,16 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { id_OTSUKA } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
 function TelemetryOTSUKA() {
-    const [sensorData, setSensorData] = useState<any>([]); 
+    const [sensorData, setSensorData] = useState<any>([]);
     const DeviceName = localStorage.getItem("deviceName");
 
     const [textSearch, setTextSearch] = useState<string>("");
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     const ws = useRef<WebSocket | null>(null);
 
     useEffect(() => {
         const token = readToken();
-        const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
         ws.current = new WebSocket(url);
 
@@ -44,7 +44,7 @@ function TelemetryOTSUKA() {
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
-                setLoading(false); 
+                setLoading(false);
             };
         }
 

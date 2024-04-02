@@ -1,7 +1,7 @@
 import { MarkerType } from "reactflow";
 
 const styleLine = {
-    strokeWidth: 5,
+    strokeWidth: 2,
     stroke: "#FFF",
 };
 
@@ -17,7 +17,7 @@ export const initialEdges = [
         id: "station-pipeSVD",
         source: "station",
         target: "pipeSVD",
-        animated: true,
+        // animated: true,
 
         style: {
             ...styleLine,
@@ -28,7 +28,7 @@ export const initialEdges = [
         source: "station",
         target: "pipeSmall",
         type: "smoothstep",
-        animated: true,
+        // animated: true,
 
         style: {
             ...styleLine,
@@ -39,7 +39,7 @@ export const initialEdges = [
         source: "pipeSmall",
         target: "pipeSVD",
         type: "smoothstep",
-        animated: true,
+        // animated: true,
         markerEnd: {
             ...markerType,
         },
@@ -53,7 +53,7 @@ export const initialEdges = [
         source: "pipeSmall2",
         target: "pipeMark",
         type: "smoothstep",
-        animated: true,
+        // animated: true,
 
         style: {
             ...styleLine,
@@ -63,7 +63,7 @@ export const initialEdges = [
         id: "pipeSVD-pipeSmall2",
         source: "pipeSVD",
         target: "pipeSmall2",
-        animated: true,
+        // animated: true,
 
         type: "smoothstep",
 
@@ -75,7 +75,7 @@ export const initialEdges = [
         id: "Tank-pipeSVD",
         source: "pipeSVD",
         target: "TankSVG",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -96,7 +96,7 @@ export const initialEdges = [
         id: "Tank-epipeSVD",
         source: "TankSVG",
         target: "pipeMark",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -110,7 +110,7 @@ export const initialEdges = [
         id: "pipeMark-gauges",
         source: "pipeMark",
         target: "gauges",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -124,7 +124,7 @@ export const initialEdges = [
         id: "pipeMark-gauges",
         source: "pipeMark",
         target: "gauges",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -138,7 +138,7 @@ export const initialEdges = [
         id: "pipeMark-gauges2",
         source: "pipeMark",
         target: "gauges2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -163,7 +163,7 @@ export const initialEdges = [
         id: "gauges-bara1",
         source: "gauges",
         target: "bara1",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -174,7 +174,7 @@ export const initialEdges = [
         id: "gauges2-bara2",
         source: "gauges2",
         target: "bara2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -233,7 +233,7 @@ export const initialEdges = [
         id: "gauges2-coupling",
         source: "gauges2",
         target: "coupling",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -244,7 +244,7 @@ export const initialEdges = [
         id: "gauges3-bara3",
         source: "gauges3",
         target: "bara3",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -255,7 +255,7 @@ export const initialEdges = [
         id: "coupling-coupling2",
         source: "coupling",
         target: "coupling2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -266,7 +266,7 @@ export const initialEdges = [
         id: "FIQ2-pipeMark2",
         source: "FIQ2",
         target: "pipeMark2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -277,7 +277,7 @@ export const initialEdges = [
         id: "coupling2-pipeMark2",
         source: "coupling2",
         target: "pipeMark2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -290,7 +290,7 @@ export const initialEdges = [
         id: "pipeMark2-pipeEnd",
         source: "pipeMark2",
         target: "pipeEnd",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -301,7 +301,7 @@ export const initialEdges = [
         id: "pipeMark2-pipeEnd2",
         source: "pipeMark2",
         target: "pipeEnd2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -312,7 +312,7 @@ export const initialEdges = [
         id: "pipeEnd-pipeMark3",
         source: "pipeEnd",
         target: "pipeMark3",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,
@@ -325,7 +325,7 @@ export const initialEdges = [
         id: "pipeEnd2-pipeMark3",
         source: "pipeEnd2",
         target: "pipeMark3",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -336,7 +336,7 @@ export const initialEdges = [
         id: "pipeMark3-gauges3",
         source: "pipeMark3",
         target: "gauges3",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -347,7 +347,7 @@ export const initialEdges = [
         id: "pipeMark3-halfCricle2",
         source: "pipeMark3",
         target: "halfCricle2",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -358,7 +358,7 @@ export const initialEdges = [
         id: "pipeMark3-gasout",
         source: "pipeMark3",
         target: "gasout",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
         markerEnd: {
             ...markerType,

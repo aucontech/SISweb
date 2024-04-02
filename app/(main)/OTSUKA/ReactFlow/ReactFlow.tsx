@@ -3,9 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
     useNodesState,
     useEdgesState,
-    addEdge,
-    MiniMap,
-    Controls,
     Background,
     Position,
 } from "reactflow";
@@ -27,8 +24,17 @@ import "./Flow.css";
 import { initialEdges } from "./initalsEgdes";
 import { readToken } from "@/service/localStorage";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { time } from "console";
 import { OverlayPanel } from "primereact/overlaypanel";
+import FlowRR from "../FlowRR";
+import InitalsNodes from "./initalsNodes";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import BallValue01 from "./BallValue01";
+import BallValue02 from "./BallValue02";
+import SDV_Otsuka from "./SDV_Otsuka";
+import { Toast } from "primereact/toast";
+import PCV_01_Otsuka from "./PCV01_Otsuka";
+import PCV_02_Otsuka from "./PCV02_Otsuka";
+import PSV01_Otsuka from "./PSV02_Otsuka";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -37,10 +43,11 @@ interface StateMap {
 
 export default function App() {
     const op = useRef<OverlayPanel>(null);
+    const toast = useRef<Toast>(null);
 
     const [data, setData] = useState<any[]>([]);
     const token = readToken();
-    const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [flowRate, setFlowRate] = useState<any>([]);
     const [pipePressure, setPipePressure] = useState<string | null>(null);
     const [liquidLever, setLiquidLever] = useState<string | null>(null);
@@ -111,18 +118,19 @@ export default function App() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        Flow_Rate_AI: setFlowRate,
-                        Pipe_Pressure_AI: setPipePressure,
-                        Liquid_Level_AI: setLiquidLever,
-                        Tank_Pressure_AI: setTankPreesureAI,
+                        DI_MAP_1: setFlowRate,
+                        DI_RESET: setPipePressure,
+                        DI_SD_1: setLiquidLever,
+                        DO_BC_01: setTankPreesureAI,
 
-                        Spare_01_AI: setSpare01AI,
-                        Spare_02_AI: setSpare02AI,
-                        Spare_03_AI: setSpare03AI,
-                        Spare_04_AI: setSpare04AI,
-                        Temperature_01_AI: setTemperature01AI,
-                        Temperature_02_AI: setTemperature02AI,
-                        Solenoid_01_DO: setSolenoid01Do,
+                        DI_SELECT_SW: setSpare01AI,
+                        DI_UPS_ALARM: setSpare02AI,
+                        DI_UPS_BATTERY: setSpare03AI,
+                        DI_UPS_CHARGING: setSpare04AI,
+
+                        DI_ZSC_1: setTemperature01AI,
+                        DI_ZSC_2: setTemperature02AI,
+                        DI_ZSO_1: setSolenoid01Do,
                     };
 
                     keys.forEach((key) => {
@@ -132,7 +140,7 @@ export default function App() {
                             stateMap[key]?.(slicedValue);
                         }
                     });
-                    if (keys.includes("Flow_Rate_AI")) {
+                    if (keys.includes("time")) {
                         const timeUpdate = dataReceived.data["time"][0][1];
                         setTimeUpdate(timeUpdate);
                     }
@@ -461,7 +469,7 @@ export default function App() {
                                         marginLeft: 20,
                                     }}
                                 >
-                                    {solenoido01Do?.slice(0, 4)} BARA
+                                    {solenoido01Do?.slice(0, 4)} BARG
                                 </p>
                             </div>
                         ),
@@ -515,8 +523,7 @@ export default function App() {
                                         <p
                                             style={{
                                                 padding: 5,
-                                                background: "green",
-                                                color: "white",
+                                                color: "green",
                                             }}
                                         >
                                             CONNECTED
@@ -527,8 +534,7 @@ export default function App() {
                                         <p
                                             style={{
                                                 padding: 5,
-                                                background: "red",
-                                                color: "white",
+                                                color: "red",
                                             }}
                                         >
                                             DISCONNECT
@@ -549,33 +555,33 @@ export default function App() {
     const initialPositions = storedPositionString
         ? JSON.parse(storedPositionString)
         : {
-              ConnectData: { x: 1700, y: 850 },
+              ConnectData: { x: 208, y: -191 },
               FIQ: { x: 981.2251539415981, y: 257.1013591338559 },
-              FIQ2: { x: 1223.1684779134775, y: 725.6423242694441 },
-              TankSVG: { x: 377.145799096966, y: 280.9405374811869 },
-              bara1: { x: 521.8066870550815, y: 109.17563432143135 },
-              bara2: { x: 804.5270339715067, y: 505.38016602556297 },
-              bara3: { x: 1742.691591708324, y: 100.59079367738252 },
-              coupling: { x: 1026.0485996989885, y: 624.8810749623736 },
+              FIQ2: { x: 1226.1465266939656, y: 726.6350071962734 },
+              TankSVG: { x: 385.07262836525877, y: 277.9478545543576 },
+              bara1: { x: 484.3049129189668, y: 137.40231270294777 },
+              bara2: { x: 812.4155143100833, y: 549.6845581780644 },
+              bara3: { x: 1696.691591708324, y: 184.59079367738252 },
+              coupling: { x: 1023.0081198522901, y: 475.897562474152 },
               coupling2: { x: 1222, y: 258 },
-              gasout: { x: 2210.0977013919046, y: 399 },
+              gasout: { x: 2208.0977013919046, y: 501 },
               gauges: { x: 781.7512871049225, y: 218.79590743621344 },
-              gauges2: { x: 780.1945051204779, y: 687.8553699550267 },
-              gauges3: { x: 1900.8894273127753, y: 212.77797356828194 },
+              gauges2: { x: 782.2030149904368, y: 687.8553699550267 },
+              gauges3: { x: 1860.8894273127753, y: 320.77797356828194 },
               halfCricle: { x: 208.76511323364036, y: 106.11892503762641 },
-              halfCricle2: { x: 2056.7779735682816, y: -17.998237885462572 },
-              pipeEnd: { x: 1621, y: 276 },
-              pipeEnd2: { x: 1621, y: 533 },
-              pipeMark: { x: 582.8593493227245, y: 355.94053748118677 },
-              pipeMark2: { x: 1423, y: 401 },
-              pipeMark3: { x: 1818, y: 399 },
-              pipeSVD: { x: 358.1349362771417, y: 578 },
-              pipeSmall: { x: 164.27643038849135, y: 763.1306312915254 },
-              pipeSmall2: { x: 381.5407440956791, y: 760.5021637824406 },
+              halfCricle2: { x: 2069.3257850544323, y: 134.44178854694428 },
+              pipeEnd: { x: 1628.0073170731707, y: 327.44634146341457 },
+              pipeEnd2: { x: 1627, y: 627.9926829268292 },
+              pipeMark: { x: 585.8373981032122, y: 499.5746838226502 },
+              pipeMark2: { x: 1431, y: 503 },
+              pipeMark3: { x: 1824, y: 501 },
+              pipeSVD: { x: 368.0514839198503, y: 630.7105280371044 },
+              pipeSmall: { x: 171.08770377058852, y: 825.3606829381719 },
+              pipeSmall2: { x: 385.9928793215362, y: 825.6382385547478 },
               position1: { x: 865.6323620672963, y: -192 },
               position2: { x: 821, y: 850 },
-              sation: { x: 139.60450176341521, y: 582.1263037266444 },
-              timeUpdate: { x: 1526, y: -187.1999999999996 },
+              sation: { x: 135.66390840327284, y: 650.8221976174074 },
+              timeUpdate: { x: 1600.9121951219513, y: -191.17073170731666 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -595,9 +601,7 @@ export default function App() {
                                 color: "green",
                                 fontWeight: 500,
                             }}
-                        >
-                            Gas in
-                        </p>
+                        ></p>
                         {station}
                     </div>
                 ),
@@ -610,7 +614,12 @@ export default function App() {
             id: "pipeSmall",
             position: positions.pipeSmall,
             data: {
-                label: <div> {pipeSmall}</div>,
+                label: (
+                    <div>
+                        {" "}
+                        <BallValue01 /> {pipeSmall}
+                    </div>
+                ),
             },
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -619,7 +628,12 @@ export default function App() {
             id: "pipeSmall2",
             position: positions.pipeSmall2,
             data: {
-                label: <div> {pipeSmall}</div>,
+                label: (
+                    <div>
+                        {" "}
+                        <BallValue02 /> {pipeSmall}
+                    </div>
+                ),
             },
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -630,7 +644,10 @@ export default function App() {
             data: {
                 label: (
                     <div>
-                        <p style={{ fontSize: 25 }}>SDV 1501</p>
+                        <p style={{ fontSize: 20 }}>
+                            {" "}
+                            <SDV_Otsuka />
+                        </p>
                         {pipeSDV}
                     </div>
                 ),
@@ -873,8 +890,7 @@ export default function App() {
                 label: (
                     <div>
                         <p style={{ fontSize: 23, fontWeight: 500 }}>
-                            <p>PCV-1502 </p>
-
+                            <PCV_01_Otsuka />
                             {pipeEnd}
                         </p>
                     </div>
@@ -891,7 +907,7 @@ export default function App() {
                 label: (
                     <div>
                         <p style={{ fontSize: 23, fontWeight: 500 }}>
-                            <p>PCV-1502 </p>
+                            <PCV_02_Otsuka />
                             {pipeEnd}
                         </p>
                     </div>
@@ -923,6 +939,9 @@ export default function App() {
                 label: (
                     <div>
                         <p style={{ fontSize: 20, fontWeight: 500 }}>
+                            <p>
+                                <PSV01_Otsuka />
+                            </p>
                             {halfCricle}
                         </p>
                     </div>
@@ -1023,7 +1042,7 @@ export default function App() {
             },
             sourcePosition: Position.Right,
             targetPosition: Position.Right,
-            style: { width: "700px" },
+            style: { width: "730px" },
         },
         {
             id: "ConnectData",
@@ -1205,6 +1224,9 @@ export default function App() {
     };
     return (
         <div>
+            <Toast ref={toast} />
+
+            <ConfirmDialog />
             <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button>

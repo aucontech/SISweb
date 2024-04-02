@@ -52,7 +52,7 @@ const ChartRealtime: React.FC<Props> = ({ tag, deviceId }) => {
     const connectWebSocket = useCallback(
         (token: string) => {
             ws.current = new WebSocket(
-                `${process.env.baseUrlWebsocket}/telemetry?token=${token}`
+                `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
             );
             ws.current.onopen = () => {
                 setLoading(false);

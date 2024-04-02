@@ -11,7 +11,7 @@ export default function Alarmbell() {
     if (typeof window !== "undefined") {
         token = readToken();
     }
-    const url = `${process.env.baseUrlWebsocketAlarmBell}${token}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();

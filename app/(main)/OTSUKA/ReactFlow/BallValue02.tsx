@@ -3,11 +3,15 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function InitalsNodes() {
+export default function BallValue01() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
+
+    const [data, setData] = useState([]);
+
+    const [Status, setStatus] = useState<any>([]);
 
     const token = readToken();
 
@@ -25,7 +29,7 @@ export default function InitalsNodes() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_02",
                             },
                         ],
                     },
@@ -65,7 +69,7 @@ export default function InitalsNodes() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_02",
                             },
                         ],
                     },
@@ -75,18 +79,14 @@ export default function InitalsNodes() {
 
         if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj2));
                 });
             };
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+            ws.current.onclose = () => {};
 
             return () => {
-                console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
@@ -98,12 +98,12 @@ export default function InitalsNodes() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_02
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_02
                             .ts;
                     setUpTS(ballTS);
                 } else if (
@@ -111,10 +111,10 @@ export default function InitalsNodes() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_02
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_02.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -128,18 +128,53 @@ export default function InitalsNodes() {
             const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_01: newValue }
+                { BallValue_02: newValue }
             );
             setSensorData(newValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            fetchData();
+        } catch (error) {}
     };
 
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+            );
+            setData(res.data);
+        } catch (error) {}
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <div>
-            <button onClick={handleButtonClick}>{upData}</button>
+            {data.map((item: any) => (
+                <div key={item.key}>
+                    {item.key === "BallValue_02" && (
+                        <div>
+                            <button
+                                style={{
+                                    padding: 10,
+                                    cursor: "pointer",
+                                    border: "none",
+                                    width: 50,
+                                    height: 50,
+                                    fontWeight: 600,
+                                    background: "white",
+                                }}
+                                onClick={handleButtonClick}
+                            >
+                                {item.value.toString() === "false" ? (
+                                    <span style={{ color: "red" }}>OFF</span>
+                                ) : (
+                                    <span style={{ color: "green" }}>ON</span>
+                                )}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }
-1;

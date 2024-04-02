@@ -1,15 +1,21 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { OverlayPanel } from "primereact/overlaypanel";
+import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function InitalsNodes() {
+export default function PCV_01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
+    const [inputValue, setInputValue] = useState<any>();
+
     const token = readToken();
+    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -25,7 +31,7 @@ export default function InitalsNodes() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "PCV_01",
                             },
                         ],
                     },
@@ -65,7 +71,7 @@ export default function InitalsNodes() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "PCV_01",
                             },
                         ],
                     },
@@ -98,23 +104,20 @@ export default function InitalsNodes() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
-                            .value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
-                            .ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.ts;
                     setUpTS(ballTS);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
-                            .value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -125,21 +128,45 @@ export default function InitalsNodes() {
 
     const handleButtonClick = async () => {
         try {
-            const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_01: newValue }
+                { PCV_01: inputValue }
             );
-            setSensorData(newValue);
+            setSensorData(inputValue);
+            setUpData(inputValue);
+            op.current?.hide();
         } catch (error) {
             console.log("error: ", error);
         }
     };
 
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        setInputValue(newValue);
+    };
+
+    const handleButtonToggle = (e: React.MouseEvent) => {
+        op.current?.toggle(e);
+        setInputValue(upData);
+    };
+
     return (
         <div>
-            <button onClick={handleButtonClick}>{upData}</button>
+            <Button style={{ border: "none" }} onClick={handleButtonToggle}>
+                {" "}
+                PCV - {upData}
+            </Button>
+            <OverlayPanel ref={op}>
+                <div>
+                    <InputText
+                        keyfilter="int"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                    />
+
+                    <Button label="Update" onClick={handleButtonClick} />
+                </div>
+            </OverlayPanel>
         </div>
     );
 }
-1;

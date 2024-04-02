@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -6,7 +7,6 @@ import { InputText } from "primereact/inputtext";
 import { readToken } from "@/service/localStorage";
 import ClipLoader from "react-spinners/ClipLoader";
 import { id_IGUECU } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
-
 
 function TelemetryOTSUKA() {
     const [sensorData, setSensorData] = useState<any>([]); // State để lưu trữ dữ liệu cảm biến
@@ -18,8 +18,8 @@ function TelemetryOTSUKA() {
     const ws = useRef<WebSocket | null>(null);
 
     useEffect(() => {
-        const token = readToken()
-        const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
+        const token = readToken();
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
         ws.current = new WebSocket(url);
 
@@ -28,7 +28,7 @@ function TelemetryOTSUKA() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId:id_IGUECU,
+                    entityId: id_IGUECU,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -40,7 +40,7 @@ function TelemetryOTSUKA() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                }, );
+                });
             };
 
             ws.current.onclose = () => {
@@ -81,47 +81,47 @@ function TelemetryOTSUKA() {
         setTextSearch(value);
     };
 
-    const filteredSensorData = sensorData.filter((sensor:any) =>
+    const filteredSensorData = sensorData.filter((sensor: any) =>
         sensor.name.toLowerCase().replace(/_/g, " ").includes(textSearch)
     );
 
     const renderHeader = () => {
         return (
             <div
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "0px 10px 10px 0px",
-            }}
-        >
-            <div>
-            <p style={{fontSize:25,fontWeight:500}} >{DeviceName}</p>
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "0px 10px 10px 0px",
+                }}
+            >
+                <div>
+                    <p style={{ fontSize: 25, fontWeight: 500 }}>
+                        {DeviceName}
+                    </p>
+                </div>
+                <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                        <i className="pi pi-search"></i>
+                        <InputText
+                            placeholder="Global Search"
+                            value={textSearch}
+                            onChange={handleInputChange}
+                            className="w-full"
+                        />
+                    </span>
+                </div>
             </div>
-            <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <span className="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
-                    <i className="pi pi-search"></i>
-                    <InputText
-                        placeholder="Global Search"
-                        value={textSearch}
-                        onChange={handleInputChange}
-                        className="w-full"
-                    />
-                </span>
-            </div>
-        </div>
-        )
-    }
+        );
+    };
 
     return (
         <div>
-
             <DataTable
-            header={renderHeader}
+                header={renderHeader}
                 value={filteredSensorData}
                 rows={1}
                 className="datatable-responsive"
-                emptyMessage=            {loading && <ClipLoader  color="#00BFFF"/>}
-
+                emptyMessage={loading && <ClipLoader color="#00BFFF" />}
                 responsiveLayout="scroll"
             >
                 <Column

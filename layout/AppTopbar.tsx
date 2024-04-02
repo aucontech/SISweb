@@ -37,10 +37,9 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             <div className="topbar-end">
                 <ul className="topbar-menu">
                     <li className="topbar-search">
-                    <span >
-                            <Alarmbell/>
+                        <span>
+                            <Alarmbell />
                         </span>
-
                     </li>
                     <li className="ml-3">
                         <Button
@@ -57,7 +56,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                         <button
                             type="button"
                             className="p-link"
-                            onClick={showProfileSidebar}
+                            // onClick={showProfileSidebar}
                         >
                             <img
                                 src="/layout/images/avatar/avatar.png"

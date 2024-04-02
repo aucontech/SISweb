@@ -47,7 +47,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             const key = condition.key.key;
             const operation = condition.predicate.operation.toLowerCase();
             const value = condition.predicate.value.defaultValue;
-            if (value) {
+            if (value !== null) {
                 conditionString = `Condition: ${key} ${operation} ${value}`;
             } else {
                 conditionString = `Condition: `;
@@ -189,7 +189,10 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 setCondition(newCondition);
                 break;
             case "boolValue":
-                newCondition.predicate.value.defaultValue = value === "true";
+                console.log(typeof value);
+                newCondition.predicate.value.defaultValue =
+                    value === "true" ? true : false;
+                console.log(newCondition);
                 setCondition(newCondition);
                 break;
 

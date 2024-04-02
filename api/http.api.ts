@@ -2,12 +2,14 @@ import axios from "axios";
 import { readToken } from "@/service/localStorage";
 
 export const httpApi = axios.create({
-    baseURL: process.env.baseUrlApi,
+    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_API}`,
     headers: {
         "Content-Type": "application/json",
     },
     timeout: 30000,
 });
+
+console.log(httpApi);
 
 httpApi.interceptors.request.use(
     (config) => {

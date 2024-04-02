@@ -8,7 +8,7 @@ import {
 import DeviceProfileAlarmSettings from "./DeviceProfileAlarmSettings";
 import { useState } from "react";
 import { Button } from "primereact/button";
-
+import AttributeSetting from "./AttributeSetting";
 interface Props {
     device: any;
 }
@@ -50,23 +50,23 @@ const defaultAlarms = [
         clearRule: {
             condition: {
                 condition: [
-                    {
-                        key: {
-                            type: "",
-                            key: "",
-                        },
-                        valueType: "",
-                        value: null,
-                        predicate: {
-                            type: "",
-                            operation: "",
-                            value: {
-                                defaultValue: null,
-                                userValue: null,
-                                dynamicValue: null,
-                            },
-                        },
-                    },
+                    // {
+                    //     key: {
+                    //         type: "",
+                    //         key: "",
+                    //     },
+                    //     valueType: "",
+                    //     value: null,
+                    //     predicate: {
+                    //         type: "",
+                    //         operation: "",
+                    //         value: {
+                    //             defaultValue: null,
+                    //             userValue: null,
+                    //             dynamicValue: null,
+                    //         },
+                    //     },
+                    // },
                 ],
                 spec: {
                     type: "SIMPLE",
@@ -76,6 +76,7 @@ const defaultAlarms = [
             alarmDetails: null,
             dashboardId: null,
         },
+        //clearRule: null,
         propagate: false,
         propagateToOwner: false,
         propagateToTenant: false,
@@ -117,25 +118,25 @@ const defaultAlarm = {
     },
     clearRule: {
         condition: {
-            condition: [
-                {
-                    key: {
-                        type: "",
-                        key: "",
-                    },
-                    valueType: "",
-                    value: null,
-                    predicate: {
-                        type: "",
-                        operation: "",
-                        value: {
-                            defaultValue: null,
-                            userValue: null,
-                            dynamicValue: null,
-                        },
-                    },
-                },
-            ],
+            condition: [],
+            //     {
+            //         key: {
+            //             type: "",
+            //             key: "",
+            //         },
+            //         valueType: "",
+            //         value: null,
+            //         predicate: {
+            //             type: "",
+            //             operation: "",
+            //             value: {
+            //                 defaultValue: null,
+            //                 userValue: null,
+            //                 dynamicValue: null,
+            //             },
+            //         },
+            //     },
+            // ],
             spec: {
                 type: "SIMPLE",
             },
@@ -144,12 +145,14 @@ const defaultAlarm = {
         alarmDetails: null,
         dashboardId: null,
     },
+    //  clearRule: null,
     propagate: false,
     propagateToOwner: false,
     propagateToTenant: false,
     propagateRelationTypes: null,
 };
 const DeviceProfileForm: React.FC<Props> = ({ device }) => {
+    console.log(device);
     const [deviceProfile, setDeviceProfile] = useState<any>({});
     const _fetchDataDeviceProfile = useCallback(({ id }: { id: string }) => {
         getDeviceProfileById(id)
@@ -221,7 +224,9 @@ const DeviceProfileForm: React.FC<Props> = ({ device }) => {
                 <Button onClick={_hanldeSubmit}>Submit</Button>
                 <Button onClick={_handleNewAlarm}>New Alarm</Button>
             </TabPanel>
-            <TabPanel header="Attributes"></TabPanel>
+            <TabPanel header="Attributes">
+                <AttributeSetting deviceId={device.id.id} />
+            </TabPanel>
         </TabView>
     );
 };

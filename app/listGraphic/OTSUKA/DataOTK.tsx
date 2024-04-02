@@ -18,7 +18,7 @@ export default function DataOTK() {
     const token = readToken();
     const op = useRef<OverlayPanel>(null);
 
-    const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const [flowRate, setFlowRate] = useState<string | null>(null);
     const [pipePressure, setPipePressure] = useState<string | null>(null);
@@ -85,19 +85,19 @@ export default function DataOTK() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        'Flow_Rate_AI': setFlowRate,
-                        'Pipe_Pressure_AI': setPipePressure,
-                        'Liquid_Level_AI': setLiquidLever,
-                        'Tank_Pressure_AI': setTankPreesureAI,
+                        Flow_Rate_AI: setFlowRate,
+                        Pipe_Pressure_AI: setPipePressure,
+                        Liquid_Level_AI: setLiquidLever,
+                        Tank_Pressure_AI: setTankPreesureAI,
 
-                        'Spare_01_AI': setSpare01AI,
-                        'Spare_02_AI': setSpare02AI,
-                        'Spare_03_AI': setSpare03AI,
-                        'Spare_04_AI': setSpare04AI,
+                        Spare_01_AI: setSpare01AI,
+                        Spare_02_AI: setSpare02AI,
+                        Spare_03_AI: setSpare03AI,
+                        Spare_04_AI: setSpare04AI,
 
-                        'Temperature_01_AI': setTemperature01AI,
-                        'Temperature_02_AI': setTemperature02AI,
-                        'Solenoid_01_DO': setSolenoid01Do,
+                        Temperature_01_AI: setTemperature01AI,
+                        Temperature_02_AI: setTemperature02AI,
+                        Solenoid_01_DO: setSolenoid01Do,
                     };
 
                     keys.forEach((key) => {
@@ -116,7 +116,7 @@ export default function DataOTK() {
     }, [data]);
 
     const paragraphContents: Record<string, string> = {
-        FRA: 'FRA :',
+        FRA: "FRA :",
         PPA: "PPA :",
         LLA: "LLA :",
         TPA: "TPA :",
@@ -131,7 +131,6 @@ export default function DataOTK() {
 
     return (
         <>
-            
             <text
                 x="50"
                 y="40"
@@ -347,7 +346,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.FRA}
+                {paragraphContents.FRA}
             </text>
             <text
                 x="570"
@@ -356,8 +355,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.PPA}
-
+                {paragraphContents.PPA}
             </text>
             <text
                 x="570"
@@ -366,8 +364,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.LLA}
-
+                {paragraphContents.LLA}
             </text>
             <text
                 x="570"
@@ -376,8 +373,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.TPA}
-
+                {paragraphContents.TPA}
             </text>
 
             {/* --------------------------------------------------------------------------------------------------------------------------------- */}
@@ -391,8 +387,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.S01A}
-
+                {paragraphContents.S01A}
             </text>
             <text
                 x="570"
@@ -401,8 +396,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.S02A}
-
+                {paragraphContents.S02A}
             </text>
             <text
                 x="570"
@@ -411,8 +405,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.S03A}
-
+                {paragraphContents.S03A}
             </text>
             <text
                 x="570"
@@ -421,8 +414,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.S04A}
-
+                {paragraphContents.S04A}
             </text>
             {/* --------------------------------------------------------------------------------------------------------------------------------- */}
 
@@ -433,8 +425,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.T01A}
-
+                {paragraphContents.T01A}
             </text>
             <text
                 x="530"
@@ -443,8 +434,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.T02A}
-
+                {paragraphContents.T02A}
             </text>
             <text
                 x="955"
@@ -453,8 +443,7 @@ export default function DataOTK() {
                 className={styles.NameData}
                 id="UID_1701153734203"
             >
-               {paragraphContents.S01D}
-
+                {paragraphContents.S01D}
             </text>
         </>
     );
