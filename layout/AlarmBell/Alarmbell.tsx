@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
+//import tingting from "./Notification.mp3";
 
 export default function Alarmbell() {
     let token: string | null = "";
@@ -12,6 +13,7 @@ export default function Alarmbell() {
         token = readToken();
     }
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
@@ -64,6 +66,7 @@ export default function Alarmbell() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
+                    audioRef.current?.play();
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
@@ -100,6 +103,10 @@ export default function Alarmbell() {
 
     return (
         <div>
+            <audio ref={audioRef}>
+                <source src={`media/Notification.mp3`} type="audio/mpeg" />
+            </audio>
+
             <div className="flex">
                 {totalCount && (
                     <div className={styles.totalCount}>

@@ -28,7 +28,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
     const [suggBoolValues, setSuggBoolValues] = useState<any[]>([]);
 
     useEffect(() => {
-        console.log(alarm);
         let newEditAlarm = {
             ...editAlarm,
             ...alarm,
@@ -216,7 +215,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 { label: "NOT_EQUAL", value: "NOT_EQUAL" },
             ]);
         }
-        //setOperations([{ label: "GREATER", value: "GREATER" }]);
     };
     const _renderValueInput = (condition: any) => {
         if (condition.valueType === "NUMERIC") {
@@ -233,7 +231,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                 e.target.value
                             );
                         }}
-                        // type="text"
                     />
                 </>
             );

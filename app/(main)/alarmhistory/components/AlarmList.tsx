@@ -120,9 +120,9 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
     };
 
     const _renderDurationTime = (row: any) => {
-        let { startTs, endTs } = row;
-        return startTs && endTs
-            ? Utils.calculateDurationFromUnixWithWords(startTs, endTs)
+        let { startTs, clearTs } = row;
+        return startTs && clearTs
+            ? Utils.calculateDurationFromUnixWithWords(startTs, clearTs)
             : "";
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

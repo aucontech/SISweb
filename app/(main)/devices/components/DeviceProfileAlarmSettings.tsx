@@ -18,8 +18,6 @@ const DeviceProfileAlarmSettings: React.FC<Props> = ({
     }, [alarms]);
 
     const handleAlarmUpdate = (index: any, updatedAlarm: any) => {
-        console.log("udapte ne", updatedAlarm);
-        console.log("index ne", index);
         const updatedAlarms = [...alarmList];
         updatedAlarms[index] = updatedAlarm;
         setAlarmList(updatedAlarms);
