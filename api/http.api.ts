@@ -9,8 +9,6 @@ export const httpApi = axios.create({
     timeout: 30000,
 });
 
-console.log(httpApi);
-
 httpApi.interceptors.request.use(
     (config) => {
         const token = readToken();

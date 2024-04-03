@@ -1,17 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { readToken } from "@/service/localStorage";
+import { InputText } from "primereact/inputtext";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { format } from "date-fns";
-import { InputText } from "primereact/inputtext";
-import { readToken } from "@/service/localStorage";
+import { Utils } from "@/service/Utils";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 
-function TelemetryOTSUKA({}) {
-    const [sensorData, setSensorData] = useState<any>([]); // State để lưu trữ dữ liệu cảm biến
+export default function LastetTelemetry() {
+    const ws = useRef<WebSocket | null>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
+
+    const [sensorData, setSensorData] = useState<any>([]);
 
     const [textSearch, setTextSearch] = useState<string>("");
+    const [loading, setLoading] = useState(true);
+    const [lazyState, setlazyState] = useState({
+        rows: 10,
+    });
 
-    const ws = useRef<WebSocket | null>(null);
+    const sensorDataCount = sensorData.length;
 
     useEffect(() => {
         const token = readToken();
@@ -34,6 +44,7 @@ function TelemetryOTSUKA({}) {
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
+                2;
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
                 });
@@ -41,6 +52,7 @@ function TelemetryOTSUKA({}) {
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
+                setLoading(false);
             };
         }
 
@@ -65,6 +77,8 @@ function TelemetryOTSUKA({}) {
                         return { name: key, value, timestamp };
                     });
                     setSensorData(sensorDataArray);
+                    setLoading(false);
+                    // audioRef.current?.play();
                 }
             };
         }
@@ -106,47 +120,56 @@ function TelemetryOTSUKA({}) {
         );
     };
 
+    const _renderCreatedTime = (row: any) => {
+        let timestamp = row.timestamp;
+        return timestamp ? Utils.formatUnixTimeToString(timestamp) : "";
+    };
+
     return (
-        <div>
-            <DataTable
-                header={renderHeader}
-                value={filteredSensorData}
-                rows={1}
-                className="datatable-responsive"
-                emptyMessage="No products found."
-                responsiveLayout="scroll"
-            >
-                <Column
-                    field="timestamp"
-                    header="Last Update"
-                    headerClassName="white-space-nowrap w-1"
-                    body={(rowData) =>
-                        format(new Date(rowData.timestamp), "dd/MM/yyyy HH:mm")
-                    }
-                ></Column>
-                <Column
-                    field="name"
-                    header="Name"
-                    headerClassName="white-space-nowrap w-1 h-5"
-                    body={(rowData) => (
-                        <span>{rowData.name.replace(/_/g, " ")}</span>
-                    )}
-                ></Column>
+        <div style={{ alignItems: "center" }}>
+            {loading ? (
+                <div style={{ display: "flex" }}>
+                    <ProgressSpinner />
+                </div>
+            ) : (
+                <div>
+                    <DataTable
+                        style={{ borderRadius: 5 }}
+                        rows={lazyState.rows}
+                        rowsPerPageOptions={[5, 10, 25, 50]}
+                        header={renderHeader}
+                        value={filteredSensorData}
+                        className="datatable-responsive"
+                        paginator
+                        emptyMessage={"No products found"}
+                        paginatorTemplate="CurrentPageReport RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks  NextPageLink LastPageLink"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                        totalRecords={sensorDataCount}
+                    >
+                        <Column
+                            field="timestamp"
+                            header="Last Update"
+                            headerClassName="white-space-nowrap w-1"
+                            body={_renderCreatedTime}
+                        ></Column>
+                        <Column
+                            field="name"
+                            header="Name"
+                            headerClassName="white-space-nowrap w-1 "
+                            body={(rowData) => (
+                                <span>{rowData.name.replace(/_/g, " ")}</span>
+                            )}
+                        ></Column>
 
-                <Column
-                    field="value"
-                    header="Value"
-                    headerClassName="white-space-nowrap w-1 h-5"
-                    body={(rowData) => <span>{rowData.value.slice(0, 5)}</span>}
-                ></Column>
-            </DataTable>
-
-            {/* <div style={{display:'none'}} >
-
-                <FlowRR />
-            </div> */}
+                        <Column
+                            field="value"
+                            header="Value"
+                            headerClassName="white-space-nowrap w-1 h-5"
+                            body={(rowData) => <span>{rowData.value}</span>}
+                        ></Column>
+                    </DataTable>
+                </div>
+            )}
         </div>
     );
 }
-
-export default TelemetryOTSUKA;

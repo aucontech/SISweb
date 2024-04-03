@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import DeviceProfileAlarmSetting from "./DeviceProfileAlarmSetting";
 
@@ -24,13 +25,19 @@ const DeviceProfileAlarmSettings: React.FC<Props> = ({
         onAlarmsUpdate(updatedAlarms);
     };
 
-    console.log(alarmList);
+    const handleAlarmDelete = (index: number) => {
+        const updatedAlarms = alarmList.filter(
+            (_: any, idx: number) => idx !== index
+        );
+        setAlarmList(updatedAlarms);
+        onAlarmsUpdate(updatedAlarms);
+    };
     return (
         <>
             <div>
                 {alarmList && alarmList.length > 0 ? (
                     <ol>
-                        {alarmList.map((alarm: any, index: any) => (
+                        {alarmList.map((alarm: any, index: number) => (
                             <li key={index}>
                                 <DeviceProfileAlarmSetting
                                     onAlarmUpdate={(updatedAlarm) =>
@@ -38,6 +45,12 @@ const DeviceProfileAlarmSettings: React.FC<Props> = ({
                                     }
                                     deviceProfileId={deviceProfileId}
                                     alarm={alarm}
+                                />
+                                <Button
+                                    label="Delete"
+                                    icon="pi pi-trash"
+                                    className="p-button-danger"
+                                    onClick={() => handleAlarmDelete(index)}
                                 />
                             </li>
                         ))}

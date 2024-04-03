@@ -9,6 +9,8 @@ import DeviceProfileAlarmSettings from "./DeviceProfileAlarmSettings";
 import { useState } from "react";
 import { Button } from "primereact/button";
 import AttributeSetting from "./AttributeSetting";
+import { v4 as uuidv4 } from "uuid"; // Import the uuid function at the top of your file
+
 interface Props {
     device: any;
 }
@@ -85,6 +87,7 @@ const defaultAlarms = [
 ];
 const defaultAlarm = {
     alarmType: "",
+
     createRules: {
         CRITICAL: {
             condition: {
@@ -189,13 +192,18 @@ const DeviceProfileForm: React.FC<Props> = ({ device }) => {
         saveOrUpdateDeviceProfile(deviceProfile);
     };
     const _handleNewAlarm = () => {
+        const newAlarm = {
+            ...defaultAlarm,
+            id: uuidv4(),
+        };
+
         let newDeviceProfile: any = {};
         if (deviceProfile?.profileData?.alarms === null) {
             newDeviceProfile = {
                 ...deviceProfile,
                 profileData: {
                     ...deviceProfile.profileData,
-                    alarms: [...defaultAlarms],
+                    alarms: [newAlarm],
                 },
             };
         } else {
@@ -203,7 +211,7 @@ const DeviceProfileForm: React.FC<Props> = ({ device }) => {
                 ...deviceProfile,
                 profileData: {
                     ...deviceProfile.profileData,
-                    alarms: [...deviceProfile.profileData.alarms, defaultAlarm],
+                    alarms: [...deviceProfile.profileData.alarms, newAlarm],
                 },
             };
         }

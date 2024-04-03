@@ -53,7 +53,7 @@ export default function Alarmbell() {
             console.log("Cleaning up WebSocket connection.");
             ws.current?.close();
         };
-    }, [url]);
+    }, []);
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -104,7 +104,7 @@ export default function Alarmbell() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src={`media/Notification.mp3`} type="audio/mpeg" />
+                {/* <source src={tingting} type="audio/mpeg" /> */}
             </audio>
 
             <div className="flex">

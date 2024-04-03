@@ -8,6 +8,8 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import {
+    ConnectedLed,
+    disconnectedLed,
     gasOut,
     gauges,
     halfCricle,
@@ -74,6 +76,7 @@ export default function App() {
     const ws = useRef<WebSocket | null>(null);
 
     useEffect(() => {
+        console.log(url);
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -131,6 +134,7 @@ export default function App() {
                         DI_ZSC_1: setTemperature01AI,
                         DI_ZSC_2: setTemperature02AI,
                         DI_ZSO_1: setSolenoid01Do,
+                        time: setTimeUpdate,
                     };
 
                     keys.forEach((key) => {
@@ -140,10 +144,6 @@ export default function App() {
                             stateMap[key]?.(slicedValue);
                         }
                     });
-                    if (keys.includes("time")) {
-                        const timeUpdate = dataReceived.data["time"][0][1];
-                        setTimeUpdate(timeUpdate);
-                    }
                 }
             };
         }
@@ -510,14 +510,7 @@ export default function App() {
                     data: {
                         ...node.data,
                         label: (
-                            <div
-                                style={{
-                                    fontSize: 40,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    padding: 10,
-                                }}
-                            >
+                            <div style={{}}>
                                 {checkConnectData ? (
                                     <div style={{}}>
                                         <p
@@ -526,7 +519,7 @@ export default function App() {
                                                 color: "green",
                                             }}
                                         >
-                                            CONNECTED
+                                            {ConnectedLed}
                                         </p>
                                     </div>
                                 ) : (
@@ -537,7 +530,7 @@ export default function App() {
                                                 color: "red",
                                             }}
                                         >
-                                            DISCONNECT
+                                            {disconnectedLed}
                                         </p>
                                     </div>
                                 )}
@@ -549,39 +542,39 @@ export default function App() {
             return node;
         });
         setNodes(updatedNodes);
-    }, [flowRate, pipePressure]);
+    }, [data]);
 
     const storedPositionString = localStorage.getItem("positions");
     const initialPositions = storedPositionString
         ? JSON.parse(storedPositionString)
         : {
               ConnectData: { x: 208, y: -191 },
-              FIQ: { x: 981.2251539415981, y: 257.1013591338559 },
-              FIQ2: { x: 1226.1465266939656, y: 726.6350071962734 },
-              TankSVG: { x: 385.07262836525877, y: 277.9478545543576 },
-              bara1: { x: 484.3049129189668, y: 137.40231270294777 },
-              bara2: { x: 812.4155143100833, y: 549.6845581780644 },
-              bara3: { x: 1696.691591708324, y: 184.59079367738252 },
-              coupling: { x: 1023.0081198522901, y: 475.897562474152 },
+              FIQ: { x: 981, y: 257 },
+              FIQ2: { x: 1226, y: 726 },
+              TankSVG: { x: 385, y: 277 },
+              bara1: { x: 484, y: 137 },
+              bara2: { x: 812, y: 549 },
+              bara3: { x: 1696, y: 184 },
+              coupling: { x: 1023, y: 475 },
               coupling2: { x: 1222, y: 258 },
-              gasout: { x: 2208.0977013919046, y: 501 },
-              gauges: { x: 781.7512871049225, y: 218.79590743621344 },
-              gauges2: { x: 782.2030149904368, y: 687.8553699550267 },
-              gauges3: { x: 1860.8894273127753, y: 320.77797356828194 },
-              halfCricle: { x: 208.76511323364036, y: 106.11892503762641 },
-              halfCricle2: { x: 2069.3257850544323, y: 134.44178854694428 },
-              pipeEnd: { x: 1628.0073170731707, y: 327.44634146341457 },
-              pipeEnd2: { x: 1627, y: 627.9926829268292 },
-              pipeMark: { x: 585.8373981032122, y: 499.5746838226502 },
+              gasout: { x: 2208, y: 501 },
+              gauges: { x: 781, y: 218 },
+              gauges2: { x: 782, y: 687 },
+              gauges3: { x: 1860, y: 320 },
+              halfCricle: { x: 208, y: 106 },
+              halfCricle2: { x: 2069, y: 134 },
+              pipeEnd: { x: 1628, y: 327 },
+              pipeEnd2: { x: 1627, y: 627 },
+              pipeMark: { x: 585, y: 499 },
               pipeMark2: { x: 1431, y: 503 },
               pipeMark3: { x: 1824, y: 501 },
-              pipeSVD: { x: 368.0514839198503, y: 630.7105280371044 },
-              pipeSmall: { x: 171.08770377058852, y: 825.3606829381719 },
-              pipeSmall2: { x: 385.9928793215362, y: 825.6382385547478 },
-              position1: { x: 865.6323620672963, y: -192 },
+              pipeSVD: { x: 368, y: 630 },
+              pipeSmall: { x: 171, y: 825 },
+              pipeSmall2: { x: 385, y: 825 },
+              position1: { x: 865, y: -192 },
               position2: { x: 821, y: 850 },
-              sation: { x: 135.66390840327284, y: 650.8221976174074 },
-              timeUpdate: { x: 1600.9121951219513, y: -191.17073170731666 },
+              sation: { x: 135, y: 650 },
+              timeUpdate: { x: 1600, y: -191 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -932,6 +925,7 @@ export default function App() {
             sourcePosition: Position.Right,
             targetPosition: Position.Right,
         },
+
         {
             id: "halfCricle2",
             position: positions.halfCricle2,

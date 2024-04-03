@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect, useRef, useState } from "react";
 import "../graphic-otk/graphic-OTK.css";
 import { readToken } from "@/service/localStorage";

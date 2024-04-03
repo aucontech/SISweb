@@ -4,6 +4,7 @@ import TelemetryOTSUKA from "./telemetryOTSUKA/telemetryOTSUKA";
 import GraphicOTK from "./graphic-otk/page";
 import ReactFlow from "./ReactFlow/ReactFlow";
 import Inital from "./ReactFlow/inital";
+import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
 const TabOtsuka = () => {
     return (
         <div className="grid">
@@ -18,12 +19,12 @@ const TabOtsuka = () => {
                         <TelemetryOTSUKA />
                     </TabPanel>
 
-                    {/* <TabPanel header="Graphic">
+                    <TabPanel header="Graphic">
                         <GraphicOTK />
                     </TabPanel>
                   <TabPanel header="Graphic">
-                    <Inital/>
-                    </TabPanel> */}
+                <DemoFlowOTS/>
+                    </TabPanel>
                 </TabView>
             </div>
         </div>
@@ -31,3 +32,5 @@ const TabOtsuka = () => {
 };
 
 export default TabOtsuka;
+
+

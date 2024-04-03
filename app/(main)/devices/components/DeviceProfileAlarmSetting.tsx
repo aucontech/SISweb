@@ -22,6 +22,8 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
     const [clearCondition, setClearCondition] = useState<any>({});
     const [isConditionFormVisible, setIsConditionFormVisible] =
         useState<boolean>(false);
+    const [isClearConditionFormVisible, setIsClearConditionFormVisible] =
+        useState<boolean>(false);
     const [suggKey, setSuggKey] = useState<any[]>([]);
     const [valueTypes, setValueTypes] = useState<any[]>([]);
     const [operations, setOperations] = useState<any>([]);
@@ -32,15 +34,21 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             ...editAlarm,
             ...alarm,
         };
-        if (alarm.createRules.CRITICAL.condition.condition[0] !== undefined) {
+        if (
+            alarm?.createRules?.CRITICAL?.condition?.condition?.[0] !==
+            undefined
+        ) {
             setCondition(alarm.createRules.CRITICAL.condition.condition[0]);
+        }
+        if (alarm?.clearRule?.condition?.condition?.[0] !== undefined) {
+            setClearCondition(alarm.clearRule.condition.condition[0]);
         }
         setEditAlarm(newEditAlarm);
     }, [alarm]);
 
     const _renderAlarmRule = (editAlarm: any) => {
-        const condition =
-            editAlarm?.createRules?.CRITICAL?.condition?.condition[0];
+        // const condition =
+        //     editAlarm?.createRules?.CRITICAL?.condition?.condition[0];
         let conditionString = "";
         if (condition) {
             const key = condition.key.key;
@@ -63,20 +71,31 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
         );
     };
     const _renderClearAlarmRule = (editAlarm: any) => {
-        const condition = editAlarm?.clearRule?.condition?.condition[0];
+        // const condition = editAlarm?.clearRule?.condition?.condition?.[0];
         let conditionString = "";
-        if (condition) {
-            const key = condition.key.key; // "E_Stop_DI"
-            const operation = condition.predicate.operation.toLowerCase(); // "equal"
-            const value = condition.predicate.value.defaultValue; // true
-            conditionString = `Condition: ${key} ${operation} ${value}`;
-        } else {
-            conditionString = "Condition: ";
+        if (clearCondition) {
+            const key = clearCondition?.key?.key; // "E_Stop_DI"
+            const operation =
+                clearCondition?.predicate?.operation.toLowerCase(); // "equal"
+            const value = clearCondition?.predicate?.value?.defaultValue; // true
+            console.log(key, operation, value);
+            if (
+                key !== undefined &&
+                operation !== undefined &&
+                value !== undefined
+            ) {
+                conditionString = `Condition: ${key} ${operation} ${value}`;
+            } else {
+                conditionString = "Codition: ";
+            }
         }
 
         return (
             <>
-                {conditionString} <Button>edit</Button>{" "}
+                {conditionString}{" "}
+                <Button onClick={() => setIsClearConditionFormVisible(true)}>
+                    edit
+                </Button>{" "}
             </>
         );
     };
@@ -133,17 +152,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                     </div>
                 </>
             );
-        } else {
-            return (
-                <>
-                    <h6>Clear alarm rule</h6>
-                    <div className="col-12 lg:col-12 ">
-                        <span className="p-float-label">
-                            <p>{_renderClearAlarmRule(editAlarm)}</p>
-                        </span>
-                    </div>
-                </>
-            );
         }
     };
     const _onSuggKey = () => {
@@ -165,7 +173,10 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
     };
 
     const _onChangConditionForm = (field: any, value: any) => {
-        let newCondition = { ...condition };
+        let newCondition = {
+            ...condition,
+            //   id: "c1e7275f-bfc8-e35a-6282-9e70508c418f",
+        };
         switch (field) {
             case "key":
                 newCondition.key.key = value;
@@ -193,6 +204,76 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                     value === "true" ? true : false;
                 console.log(newCondition);
                 setCondition(newCondition);
+                break;
+
+            default:
+                break;
+        }
+    };
+    const _onChangeClearConditionForm = (field: any, value: any) => {
+        console.log(Object.keys(clearCondition));
+        console.log(clearCondition);
+        let newCondition: any = {};
+        if (Object.keys(clearCondition).length === 0) {
+            newCondition = {
+                key: {
+                    type: "TIME_SERIES",
+                    key: "",
+                },
+                valueType: "",
+                value: null,
+                predicate: {
+                    type: "",
+                    operation: "",
+                    value: {
+                        defaultValue: null,
+                        userValue: null,
+                        dynamicValue: null,
+                    },
+                },
+            };
+        } else {
+            newCondition = { ...clearCondition };
+        }
+
+        switch (field) {
+            case "key":
+                newCondition.key.key = value;
+                setClearCondition(newCondition);
+                console.log;
+                break;
+            case "valueType":
+                console.log(value);
+                newCondition.valueType = value.value;
+                setClearCondition(newCondition);
+                break;
+            case "operation":
+                console.log(value);
+                if (!newCondition.predicate) {
+                    newCondition.predicate = {}; // Initialize key as an empty object if it doesn't exist
+                }
+                newCondition.predicate.operation = value.value;
+                newCondition.predicate.type = newCondition.valueType;
+                setClearCondition(newCondition);
+                break;
+            case "numericValue":
+                if (!newCondition.predicate) {
+                    newCondition.predicate = {};
+                }
+                // Ensure newCondition.predicate.value exists or initialize it
+                if (!newCondition.predicate.value) {
+                    newCondition.predicate.value = {};
+                }
+                // Now it's safe to assign the numeric value to defaultValue
+                newCondition.predicate.value.defaultValue = Number(value);
+                setClearCondition(newCondition);
+                break;
+            case "boolValue":
+                console.log(typeof value);
+                newCondition.predicate.value.defaultValue =
+                    value === "true" ? true : false;
+                console.log(newCondition);
+                setClearCondition(newCondition);
                 break;
 
             default:
@@ -251,15 +332,55 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             );
         }
     };
+    const _renderValueInputClearConditionForm = (condition: any) => {
+        if (condition.valueType === "NUMERIC") {
+            return (
+                <>
+                    <label>Value</label>
+                    <InputText
+                        keyfilter="pint"
+                        value={condition?.predicate?.value?.defaultValue}
+                        onChange={(e: any) => {
+                            console.log(e);
+                            _onChangeClearConditionForm(
+                                "numericValue",
+                                e.target.value
+                            );
+                        }}
+                    />
+                </>
+            );
+        } else if (condition.valueType === "BOOLEAN") {
+            return (
+                <>
+                    <label>Value</label>
+                    <AutoComplete
+                        dropdown
+                        value={condition?.predicate?.value?.defaultValue}
+                        suggestions={suggBoolValues}
+                        onChange={(e) => {
+                            _onChangeClearConditionForm("boolValue", e.value);
+                        }}
+                        completeMethod={_onSuggBoolValues}
+                    ></AutoComplete>
+                </>
+            );
+        }
+    };
     const _onSuggBoolValues = () => {
         setSuggBoolValues(["true", "false"]);
     };
     const _onOkCondtionForm = () => {
-        console.log(condition);
-        console.log(editAlarm);
         editAlarm.createRules.CRITICAL.condition.condition = [{ ...condition }];
         setEditAlarm(editAlarm);
         onAlarmUpdate(editAlarm);
+        setIsConditionFormVisible(false);
+    };
+    const _onOkClearCondtionForm = () => {
+        editAlarm.clearRule.condition.condition = [{ ...clearCondition }];
+        setEditAlarm(editAlarm);
+        onAlarmUpdate(editAlarm);
+        setIsClearConditionFormVisible(false);
     };
     const footerConditionForm = (
         <div>
@@ -272,7 +393,19 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             <Button label="Cancel" icon="pi pi-check" />
         </div>
     );
-    console.log(condition);
+
+    const footerClearConditionForm = (
+        <div>
+            <Button
+                label="Ok"
+                icon="pi pi-check"
+                onClick={_onOkClearCondtionForm}
+                autoFocus
+            />
+            <Button label="Cancel" icon="pi pi-check" />
+        </div>
+    );
+    console.log(clearCondition);
     return (
         <>
             <div>
@@ -338,11 +471,11 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                         </div>
                     </div>
                 </Dialog>
-                {/* <Dialog
-                    header="Condition Form"
-                    visible={isConditionFormVisible}
-                    onHide={() => setIsConditionFormVisible(false)}
-                    footer={footerConditionForm}
+                <Dialog
+                    header="Clear Condition Form"
+                    visible={isClearConditionFormVisible}
+                    onHide={() => setIsClearConditionFormVisible(false)}
+                    footer={footerClearConditionForm}
                 >
                     <div className="card p-fluid">
                         <div className="formgrid grid">
@@ -350,11 +483,14 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                 <label>Key</label>
                                 <AutoComplete
                                     dropdown
-                                    value={condition?.key?.key}
+                                    value={clearCondition?.key?.key}
                                     suggestions={suggKey}
                                     completeMethod={_onSuggKey}
                                     onChange={(e) => {
-                                        _onChangConditionForm("key", e.value);
+                                        _onChangeClearConditionForm(
+                                            "key",
+                                            e.value
+                                        );
                                     }}
                                 />
                             </div>
@@ -364,9 +500,9 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                     dropdown
                                     field="label"
                                     suggestions={valueTypes}
-                                    value={condition?.valueType}
+                                    value={clearCondition?.valueType}
                                     onChange={(e) => {
-                                        _onChangConditionForm(
+                                        _onChangeClearConditionForm(
                                             "valueType",
                                             e.value
                                         );
@@ -380,9 +516,9 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                     dropdown
                                     field="label"
                                     suggestions={operations}
-                                    value={condition?.predicate?.operation}
+                                    value={clearCondition?.predicate?.operation}
                                     onChange={(e) => {
-                                        _onChangConditionForm(
+                                        _onChangeClearConditionForm(
                                             "operation",
                                             e.value
                                         );
@@ -391,11 +527,13 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                 />
                             </div>
                             <div className="field col">
-                                {_renderValueInput(condition)}
+                                {_renderValueInputClearConditionForm(
+                                    clearCondition
+                                )}
                             </div>
                         </div>
                     </div>
-                </Dialog> */}
+                </Dialog>
             </div>
         </>
     );
