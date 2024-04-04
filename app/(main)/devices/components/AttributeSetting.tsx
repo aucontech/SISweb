@@ -19,6 +19,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
         getSeverAttributesByDevice(deviceId)
             .then((resp) => resp.data)
             .then((res) => {
+                console.log(res);
                 setAttributes([...res]);
             })
             .catch((err) => {});
@@ -41,6 +42,12 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
         ];
 
         setSuggValueTypes(valueTypes);
+    };
+    const _renderValueColumn = (row: any) => {
+        if (typeof row.value === "object" && row.value !== null) {
+            return <span>{JSON.stringify(row.value)}</span>;
+        }
+        return <span>{row.value.toString()}</span>;
     };
     return (
         <>
@@ -70,7 +77,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                     ></Column>
 
                     <Column field="key" header="key"></Column>
-                    <Column field="value" header="Value"></Column>
+                    <Column field="value" body={_renderValueColumn}></Column>
                 </DataTable>
                 <Button onClick={() => setIsFormVisible(true)}>Add</Button>
             </div>
