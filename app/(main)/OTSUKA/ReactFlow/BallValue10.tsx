@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-export default function BallValue01() {
+export default function BallValue10() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -30,7 +30,7 @@ export default function BallValue01() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_10",
                             },
                         ],
                     },
@@ -70,7 +70,7 @@ export default function BallValue01() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_10",
                             },
                         ],
                     },
@@ -99,12 +99,12 @@ export default function BallValue01() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_10
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_10
                             .ts;
                     setUpTS(ballTS);
                 } else if (
@@ -112,10 +112,10 @@ export default function BallValue01() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_10
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_10.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -129,7 +129,7 @@ export default function BallValue01() {
             const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_01: newValue }
+                { BallValue_10: newValue }
             );
             setSensorData(newValue);
             fetchData();
@@ -152,7 +152,7 @@ export default function BallValue01() {
         <div>
             {data.map((item: any) => (
                 <div key={item.key}>
-                    {item.key === "BallValue_01" && (
+                    {item.key === "BallValue_10" && (
                         <div>
                             <button
                                 style={{

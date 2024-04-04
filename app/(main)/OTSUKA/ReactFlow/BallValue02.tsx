@@ -2,8 +2,9 @@ import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
-export default function BallValue01() {
+export default function BallValue02() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -153,22 +154,41 @@ export default function BallValue01() {
                 <div key={item.key}>
                     {item.key === "BallValue_02" && (
                         <div>
-                            <button
+                           <button
                                 style={{
-                                    padding: 10,
                                     cursor: "pointer",
                                     border: "none",
                                     width: 50,
                                     height: 50,
-                                    fontWeight: 600,
                                     background: "white",
+                                    fontWeight: 600,
+                                    fontSize: 25,
                                 }}
                                 onClick={handleButtonClick}
                             >
                                 {item.value.toString() === "false" ? (
-                                    <span style={{ color: "red" }}>OFF</span>
+                                    <div style={{   display: "flex", flexDirection: "column", alignItems: "center", }}>
+
+                                        <Image
+                                            src="/layout/imgGraphic/BallVavle.png"
+                                            width={50}
+                                            height={50}
+                                            alt="Picture of the author"
+                                        />
+                                        <p  style={{color:'red', padding:5,borderRadius:10}} >Close</p>
+
+                                    </div>
                                 ) : (
-                                    <span style={{ color: "green" }}>ON</span>
+                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        <Image
+                                            src="/layout/imgGraphic/BallVavleON.png"
+                                            width={50}
+                                            height={50}
+                                            alt="Picture of the author"
+                                        />
+                                        <p style={{color:'green', padding:5,borderRadius:10}}>Open</p>
+
+                                    </div>
                                 )}
                             </button>
                         </div>

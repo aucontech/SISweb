@@ -5,25 +5,17 @@ import GraphicOTK from "./graphic-otk/page";
 import ReactFlow from "./ReactFlow/ReactFlow";
 import Inital from "./ReactFlow/inital";
 import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
+import ReactFlowHigh from "./ReactFlow/ReactFlow";
 const TabOtsuka = () => {
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
-
                     <TabPanel header="Graphic">
-                        <ReactFlow />
+                        <DemoFlowOTS />
                     </TabPanel>
-
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
-                    </TabPanel>
-
-                    <TabPanel header="Graphic">
-                        <GraphicOTK />
-                    </TabPanel>
-                  <TabPanel header="Graphic">
-                <DemoFlowOTS/>
                     </TabPanel>
                 </TabView>
             </div>
@@ -32,5 +24,3 @@ const TabOtsuka = () => {
 };
 
 export default TabOtsuka;
-
-

@@ -230,9 +230,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "coupling2-pipeMark2",
-        source: "coupling2",
-        target: "pipeMark2",
+        id: "a16-a16",
+        source: "a16",
+        target: "a16",
         // animated: true,
         type: "smoothstep",
         
@@ -241,9 +241,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeMark2-pipeEnd",
-        source: "pipeMark2",
-        target: "pipeEnd",
+        id: "TM1-data1",
+        source: "TM1",
+        target: "data1",
         // animated: true,
         type: "smoothstep",
 
@@ -252,9 +252,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeMark2-pipeEnd2",
-        source: "pipeMark2",
-        target: "pipeEnd2",
+        id: "TM1-data2",
+        source: "TM1",
+        target: "data2",
         // animated: true,
         type: "smoothstep",
 
@@ -263,9 +263,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeEnd-pipeMark3",
-        source: "pipeEnd",
-        target: "pipeMark3",
+        id: "TM1-data3",
+        source: "TM1",
+        target: "data3",
         // animated: true,
         type: "smoothstep",
         
@@ -274,9 +274,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeEnd2-pipeMark3",
-        source: "pipeEnd2",
-        target: "pipeMark3",
+        id: "TM1-data4",
+        source: "TM1",
+        target: "data4",
         // animated: true,
         type: "smoothstep",
 
@@ -285,9 +285,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeMark3-gauges3",
-        source: "pipeMark3",
-        target: "gauges3",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data5",
         // animated: true,
         type: "smoothstep",
 
@@ -296,9 +296,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeMark3-halfCricle2",
-        source: "pipeMark3",
-        target: "halfCricle2",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data6",
         // animated: true,
         type: "smoothstep",
 
@@ -307,9 +307,42 @@ export const DemoEdges = [
         },
     },
     {
-        id: "pipeMark3-gasout",
-        source: "pipeMark3",
-        target: "gasout",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data7",
+        // animated: true,
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data8",
+        // animated: true,
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "a13_BallCenter-BallCenter",
+        source: "a13_BallCenter",
+        target: "BallCenter",
+        // animated: true,
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "BallCenter-a14_BallCenter",
+        source: "BallCenter",
+        target: "a14_BallCenter",
         // animated: true,
         type: "smoothstep",
         

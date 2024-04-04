@@ -1,9 +1,14 @@
 import { MarkerType } from "reactflow";
 
 const styleLine = {
-    strokeWidth: 2,
-    stroke: "#FFF",
+    strokeWidth: 10,
+    stroke: "#999999",
 };
+
+const styleHide = {
+    strokeWidth: 3,
+    stroke: "#999999",
+}
 
 const markerType = {
     type: MarkerType.ArrowClosed,
@@ -12,69 +17,36 @@ const markerType = {
     color: "#036E9B",
 };
 
-export const initialEdges = [
+export const initalsEgdes = [
     {
-        id: "station-pipeSVD",
-        source: "station",
-        target: "pipeSVD",
+        id: "a1-a2",
+        source: "a1",
+        target: "a2",
         // animated: true,
 
         style: {
             ...styleLine,
         },
     },
+  
     {
-        id: "station-pipeSmall",
-        source: "station",
-        target: "pipeSmall",
+        id: "a2-a3",
+        source: "a2",
+        target: "a3",
         type: "smoothstep",
         // animated: true,
+        
 
         style: {
             ...styleLine,
         },
     },
+   
+   
     {
-        id: "pipeSmall-pipeSVD",
-        source: "pipeSmall",
-        target: "pipeSVD",
-        type: "smoothstep",
-        // animated: true,
-        markerEnd: {
-            ...markerType,
-        },
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "pipeSmall2-pipeSVD",
-        source: "pipeSmall2",
-        target: "pipeMark",
-        type: "smoothstep",
-        // animated: true,
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "pipeSVD-pipeSmall2",
-        source: "pipeSVD",
-        target: "pipeSmall2",
-        // animated: true,
-
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "Tank-pipeSVD",
-        source: "pipeSVD",
-        target: "TankSVG",
+        id: "a3-a6",
+        source: "a3",
+        target: "a6",
         // animated: true,
         type: "smoothstep",
 
@@ -83,9 +55,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "HalfCricle-Tank",
-        source: "halfCricle",
-        target: "TankSVG",
+        id: "a3-a9",
+        source: "a3",
+        target: "a9",
         type: "smoothstep",
 
         style: {
@@ -93,76 +65,68 @@ export const initialEdges = [
         },
     },
     {
-        id: "Tank-epipeSVD",
-        source: "TankSVG",
-        target: "pipeMark",
-        // animated: true,
+        id: "a5a3-a5",
+        source: "a5a3",
+        target: "a5",
+        animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
 
     {
-        id: "pipeMark-gauges",
-        source: "pipeMark",
-        target: "gauges",
-        // animated: true,
+        id: "a2a4-a4",
+        source: "a2a4",
+        target: "a4",
+        animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
 
     {
-        id: "pipeMark-gauges",
-        source: "pipeMark",
-        target: "gauges",
-        // animated: true,
+        id: "a4-a2a4",
+        source: "a4",
+        target: "a2a4",
+        animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
 
     {
-        id: "pipeMark-gauges2",
-        source: "pipeMark",
-        target: "gauges2",
-        // animated: true,
+        id: "a5a3-a5",
+        source: "a5a3",
+        target: "a5",
+        animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
 
     {
-        id: "gauges-FIQ",
-        source: "gauges",
-        target: "FIQ",
+        id: "a5-a5a3",
+        source: "a5",
+        target: "a5a3",
         animated: true,
         type: "smoothstep",
 
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
     {
-        id: "gauges-bara1",
-        source: "gauges",
-        target: "bara1",
+        id: "a6-a8",
+        source: "a6",
+        target: "a8",
         // animated: true,
         type: "smoothstep",
 
@@ -171,9 +135,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "gauges2-bara2",
-        source: "gauges2",
-        target: "bara2",
+        id: "a9-a11",
+        source: "a9",
+        target: "a11",
         // animated: true,
         type: "smoothstep",
 
@@ -182,36 +146,29 @@ export const initialEdges = [
         },
     },
     {
-        id: "FIQ-1",
-        source: "FIQ",
-        target: "1",
-        animated: true,
+        id: "a8a11-a11a8",
+        source: "a8a11",
+        target: "a11a8",
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
             ...styleLine,
         },
     },
     {
-        id: "FIQ2-2",
-        source: "FIQ2",
-        target: "2",
-        animated: true,
+        id: "a8-a12",
+        source: "a8",
+        target: "a12",
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
             ...styleLine,
         },
     },
     {
-        id: "FIQ-coupling2",
-        source: "FIQ",
-        target: "coupling2",
-        animated: true,
+        id: "a11-a14",
+        source: "a11",
+        target: "a14",
         type: "smoothstep",
 
         style: {
@@ -219,10 +176,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "gauges2-FIQ2",
-        source: "gauges2",
-        target: "FIQ2",
-        animated: true,
+        id: "a12-a13",
+        source: "a12",
+        target: "a13",
         type: "smoothstep",
 
         style: {
@@ -230,9 +186,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "gauges2-coupling",
-        source: "gauges2",
-        target: "coupling",
+        id: "a14-a15",
+        source: "a14",
+        target: "a15",
         // animated: true,
         type: "smoothstep",
 
@@ -241,9 +197,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "gauges3-bara3",
-        source: "gauges3",
-        target: "bara3",
+        id: "a13-a1313",
+        source: "a13",
+        target: "a1313",
         // animated: true,
         type: "smoothstep",
 
@@ -252,9 +208,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "coupling-coupling2",
-        source: "coupling",
-        target: "coupling2",
+        id: "a13-a16",
+        source: "a13",
+        target: "a16",
         // animated: true,
         type: "smoothstep",
 
@@ -263,9 +219,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "FIQ2-pipeMark2",
-        source: "FIQ2",
-        target: "pipeMark2",
+        id: "a16-a17",
+        source: "a16",
+        target: "a17",
         // animated: true,
         type: "smoothstep",
 
@@ -274,22 +230,20 @@ export const initialEdges = [
         },
     },
     {
-        id: "coupling2-pipeMark2",
-        source: "coupling2",
-        target: "pipeMark2",
+        id: "a16-a16",
+        source: "a16",
+        target: "a16",
         // animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
             ...styleLine,
         },
     },
     {
-        id: "pipeMark2-pipeEnd",
-        source: "pipeMark2",
-        target: "pipeEnd",
+        id: "TM1-data1",
+        source: "TM1",
+        target: "data1",
         // animated: true,
         type: "smoothstep",
 
@@ -298,9 +252,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "pipeMark2-pipeEnd2",
-        source: "pipeMark2",
-        target: "pipeEnd2",
+        id: "TM1-data2",
+        source: "TM1",
+        target: "data2",
         // animated: true,
         type: "smoothstep",
 
@@ -309,22 +263,20 @@ export const initialEdges = [
         },
     },
     {
-        id: "pipeEnd-pipeMark3",
-        source: "pipeEnd",
-        target: "pipeMark3",
+        id: "TM1-data3",
+        source: "TM1",
+        target: "data3",
         // animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
-        },
+        
         style: {
             ...styleLine,
         },
     },
     {
-        id: "pipeEnd2-pipeMark3",
-        source: "pipeEnd2",
-        target: "pipeMark3",
+        id: "TM1-data4",
+        source: "TM1",
+        target: "data4",
         // animated: true,
         type: "smoothstep",
 
@@ -333,9 +285,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "pipeMark3-gauges3",
-        source: "pipeMark3",
-        target: "gauges3",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data5",
         // animated: true,
         type: "smoothstep",
 
@@ -344,9 +296,9 @@ export const initialEdges = [
         },
     },
     {
-        id: "pipeMark3-halfCricle2",
-        source: "pipeMark3",
-        target: "halfCricle2",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data6",
         // animated: true,
         type: "smoothstep",
 
@@ -355,14 +307,45 @@ export const initialEdges = [
         },
     },
     {
-        id: "pipeMark3-gasout",
-        source: "pipeMark3",
-        target: "gasout",
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data7",
         // animated: true,
         type: "smoothstep",
-        markerEnd: {
-            ...markerType,
+        
+        style: {
+            ...styleLine,
         },
+    },
+    {
+        id: "TM2-data5",
+        source: "TM2",
+        target: "data8",
+        // animated: true,
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "a13_BallCenter-BallCenter",
+        source: "a13_BallCenter",
+        target: "BallCenter",
+        // animated: true,
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "BallCenter-a14_BallCenter",
+        source: "BallCenter",
+        target: "a14_BallCenter",
+        // animated: true,
+        type: "smoothstep",
+        
         style: {
             ...styleLine,
         },

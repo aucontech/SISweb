@@ -1,3 +1,6 @@
+
+
+
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
@@ -6,8 +9,8 @@ import React, { useEffect, useRef, useState } from "react";
 export default function InitalsNodes() {
     const [sensorData, setSensorData] = useState<any>([]);
 
-    const [upData, setUpData] = useState<any>([]);
-    const [upTS, setUpTS] = useState<any>([]);
+    const [upData,setUpData] = useState<any>([])
+    const [upTS,setUpTS] = useState<any>([])
 
     const token = readToken();
 
@@ -18,6 +21,7 @@ export default function InitalsNodes() {
         ws.current = new WebSocket(url);
 
         const obj2 = {
+       
             entityDataCmds: [
                 {
                     cmdId: 1,
@@ -71,6 +75,7 @@ export default function InitalsNodes() {
                     },
                 },
             ],
+       
         };
 
         if (ws.current) {
@@ -97,49 +102,42 @@ export default function InitalsNodes() {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
-                            .value;
-                    setUpData(ballValue);
+                    
+                    const ballValue = dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01.value;
+                        setUpData(ballValue);
 
-                    const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
-                            .ts;
-                    setUpTS(ballTS);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
-                            .value;
-                    const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        const ballTS = dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        setUpTS(ballTS)
+
+
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const updatedData = dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.value;
+                    const updateTS = dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
 
                     setUpData(updatedData);
-                    setUpTS(updateTS);
+                    setUpTS(updateTS)
                 }
             };
         }
     }, []);
-
+  
+    
     const handleButtonClick = async () => {
         try {
-            const newValue = !sensorData;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_01: newValue }
-            );
-            setSensorData(newValue);
+            const newValue = !sensorData; 
+            await httpApi.post('/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE', { BallValue_01: newValue });
+            setSensorData(newValue); 
         } catch (error) {
-            console.log("error: ", error);
+            console.log('error: ', error);
         }
-    };
+    }
+
 
     return (
         <div>
-            <button onClick={handleButtonClick}>{upData}</button>
+            <button onClick={handleButtonClick}>{upData }</button>
+
         </div>
     );
 }
-1;
+1

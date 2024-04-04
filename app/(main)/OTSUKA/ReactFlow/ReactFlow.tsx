@@ -1,82 +1,59 @@
-import { Button } from "primereact/button";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
-    useNodesState,
-    useEdgesState,
-    Background,
+    Controls,
     Position,
+    useEdgesState,
+    useNodesState,
 } from "reactflow";
-import "reactflow/dist/style.css";
-import {
-    ConnectedLed,
-    disconnectedLed,
-    gasOut,
-    gauges,
-    halfCricle,
-    markPipe,
-    pipeEnd,
-    pipeMark,
-    pipeSDV,
-    pipeSmall,
-    station,
-    svgIcon,
-    tankSVG,
-} from "./IconOTSUKA";
+
 import "./Flow.css";
-import { initialEdges } from "./initalsEgdes";
-import { readToken } from "@/service/localStorage";
-import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { OverlayPanel } from "primereact/overlaypanel";
-import FlowRR from "../FlowRR";
-import InitalsNodes from "./initalsNodes";
-import { ConfirmDialog } from "primereact/confirmdialog";
+
+import Image from "next/image";
 import BallValue01 from "./BallValue01";
 import BallValue02 from "./BallValue02";
+import BallValue03 from "./BallValue03";
+import BallValue04 from "./BallValue04";
+import BallValue05 from "./BallValue05";
+import BallValue06 from "./BallValue06";
+import BallValue07 from "./BallValue07";
+import BallValue08 from "./BallValue08";
+import BallValue09 from "./BallValue09";
+import BallValue10 from "./BallValue10";
 import SDV_Otsuka from "./SDV_Otsuka";
-import { Toast } from "primereact/toast";
 import PCV_01_Otsuka from "./PCV01_Otsuka";
 import PCV_02_Otsuka from "./PCV02_Otsuka";
-import PSV01_Otsuka from "./PSV02_Otsuka";
+import { readToken } from "@/service/localStorage";
+import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import BallValueCenter from "./BallValueCenter";
+import { initalsEgdes } from "./initalsEgdes";
+import { OverlayPanel } from "primereact/overlaypanel";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-
-export default function App() {
+export default function ReactFlowHigh() {
     const op = useRef<OverlayPanel>(null);
-    const toast = useRef<Toast>(null);
-
-    const [data, setData] = useState<any[]>([]);
-    const token = readToken();
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-    const [flowRate, setFlowRate] = useState<any>([]);
-    const [pipePressure, setPipePressure] = useState<string | null>(null);
-    const [liquidLever, setLiquidLever] = useState<string | null>(null);
-    const [tankPressureAI, setTankPreesureAI] = useState<string | null>(null);
-
-    const [spare01AI, setSpare01AI] = useState<string | null>(null);
-    const [spare02AI, setSpare02AI] = useState<string | null>(null);
-    const [spare03AI, setSpare03AI] = useState<string | null>(null);
-    const [spare04AI, setSpare04AI] = useState<string | null>(null);
-
-    const [temprerature01AI, setTemperature01AI] = useState<string | null>(
-        null
-    );
-    const [temprerature02AI, setTemperature02AI] = useState<string | null>(
-        null
-    );
-
-    const [solenoido01Do, setSolenoid01Do] = useState<string | null>(null);
-
-    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
 
     const [checkConnectData, setCheckConnectData] = useState(false);
+    const token = readToken();
+    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
+    const [data, setData] = useState<any[]>([]);
+
+    const [GVF1, setGVF1] = useState<string | null>(null);
+    const [SVF1, setSVF1] = useState<string | null>(null);
+    const [SVA1, setSVA1] = useState<string | null>(null);
+    const [GVA1, setGVA1] = useState<string | null>(null);
+
+    const [GVF2, setGVF2] = useState<string | null>(null);
+    const [SVF2, setSVF2] = useState<string | null>(null);
+    const [SVA2, setSVA2] = useState<string | null>(null);
+    const [GVA2, setGVA2] = useState<string | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     useEffect(() => {
-        console.log(url);
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -121,19 +98,16 @@ export default function App() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        DI_MAP_1: setFlowRate,
-                        DI_RESET: setPipePressure,
-                        DI_SD_1: setLiquidLever,
-                        DO_BC_01: setTankPreesureAI,
+                        EK1_Flow_at_Measurement_Conditions: setGVF1,
+                        EK1_Flow_at_Base_Conditions: setSVF1,
+                        EK1_Volume_at_Base_Conditions: setSVA1,
+                        EK1_Vm_Adjustable_Counter: setGVA1,
 
-                        DI_SELECT_SW: setSpare01AI,
-                        DI_UPS_ALARM: setSpare02AI,
-                        DI_UPS_BATTERY: setSpare03AI,
-                        DI_UPS_CHARGING: setSpare04AI,
+                        EK2_Flow_at_Measurement_Conditions: setGVF2,
+                        EK2_Flow_at_Base_Conditions: setSVF2,
+                        EK2_Volume_at_Base_Conditions: setSVA2,
+                        EK2_Vm_Adjustable_Counter: setGVA2,
 
-                        DI_ZSC_1: setTemperature01AI,
-                        DI_ZSC_2: setTemperature02AI,
-                        DI_ZSO_1: setSolenoid01Do,
                         time: setTimeUpdate,
                     };
 
@@ -148,7 +122,6 @@ export default function App() {
             };
         }
     }, [data]);
-
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",
@@ -165,7 +138,7 @@ export default function App() {
 
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
-            if (node.id === "1a") {
+            if (node.id === "data4") {
                 return {
                     ...node,
                     data: {
@@ -180,21 +153,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.SVF} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.SVF} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {" "}
-                                        {flowRate}{" "}
-                                    </p>
+                                    <p style={{ color: "green" }}>{SVF1}</p>
                                 </div>
-                                {KeyGas.SM3H}
+                                <p style={{ color: "white" }}>{KeyGas.SM3H}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "1b") {
+            if (node.id === "data3") {
                 return {
                     ...node,
                     data: {
@@ -209,20 +179,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.GVF} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.GVF} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {pipePressure}
-                                    </p>
+                                    <p style={{ color: "green" }}>{GVF1}</p>
                                 </div>
-                                <p>{KeyGas.M3H}</p>
+                                <p style={{ color: "white" }}>{KeyGas.M3H}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "1c") {
+            if (node.id === "data2") {
                 return {
                     ...node,
                     data: {
@@ -237,20 +205,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.SVA} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.SVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {liquidLever}
-                                    </p>
+                                    <p style={{ color: "green" }}>{SVA1}</p>
                                 </div>
-                                {KeyGas.SM3}
+                                <p style={{ color: "white" }}>{KeyGas.SM3}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "1d") {
+            if (node.id === "data1") {
                 return {
                     ...node,
                     data: {
@@ -265,20 +231,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.GVA} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.GVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {tankPressureAI}
-                                    </p>
+                                    <p style={{ color: "green" }}>{GVA1}</p>
                                 </div>
-                                {KeyGas.M3}
+                                <p style={{ color: "white" }}>{KeyGas.M3}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "2a") {
+            if (node.id === "data5") {
                 return {
                     ...node,
                     data: {
@@ -293,21 +257,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.SVF} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.SVF} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {" "}
-                                        {spare01AI}{" "}
-                                    </p>
+                                    <p style={{ color: "green" }}>{SVF2}</p>
                                 </div>
-                                {KeyGas.SM3H}
+                                <p style={{ color: "white" }}>{KeyGas.SM3H}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "2b") {
+            if (node.id === "data6") {
                 return {
                     ...node,
                     data: {
@@ -322,21 +283,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.GVF} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.GVF} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {" "}
-                                        {spare02AI}{" "}
-                                    </p>
+                                    <p style={{ color: "green" }}>{GVF2}</p>
                                 </div>
-                                {KeyGas.M3H}
+                                <p style={{ color: "white" }}>{KeyGas.M3H}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "2c") {
+            if (node.id === "data7") {
                 return {
                     ...node,
                     data: {
@@ -351,21 +309,18 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.SVA} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.SVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {" "}
-                                        {spare03AI}{" "}
-                                    </p>
+                                    <p style={{ color: "green" }}>{SVA2}</p>
                                 </div>
-                                {KeyGas.SM3}
+                                <p style={{ color: "white" }}>{KeyGas.SM3}</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "2d") {
+            if (node.id === "data8") {
                 return {
                     ...node,
                     data: {
@@ -380,16 +335,12 @@ export default function App() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "black" }}>
-                                        {ValueGas.GVA} -
+                                    <p style={{ color: "white" }}>
+                                        {ValueGas.GVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>
-                                        {" "}
-                                        {spare04AI}{" "}
-                                    </p>
+                                    <p style={{ color: "green" }}>{GVA2}</p>
                                 </div>
-
-                                {KeyGas.M3}
+                                <p style={{ color: "white" }}>{KeyGas.M3}</p>
                             </div>
                         ),
                     },
@@ -414,9 +365,7 @@ export default function App() {
                                         display: "flex",
                                         marginLeft: 20,
                                     }}
-                                >
-                                    {temprerature01AI?.slice(0, 4)} BARA
-                                </p>
+                                ></p>
                             </div>
                         ),
                     },
@@ -441,9 +390,7 @@ export default function App() {
                                         display: "flex",
                                         marginLeft: 20,
                                     }}
-                                >
-                                    {temprerature02AI?.slice(0, 4)} BARA
-                                </p>
+                                ></p>
                             </div>
                         ),
                     },
@@ -468,9 +415,7 @@ export default function App() {
                                         display: "flex",
                                         marginLeft: 20,
                                     }}
-                                >
-                                    {solenoido01Do?.slice(0, 4)} BARG
-                                </p>
+                                ></p>
                             </div>
                         ),
                     },
@@ -489,7 +434,7 @@ export default function App() {
                                     display: "flex",
                                 }}
                             >
-                                <p>Last Update</p>
+                                <p style={{ color: "white" }}>Last Update</p>
                                 <p
                                     style={{
                                         color: "green",
@@ -519,7 +464,7 @@ export default function App() {
                                                 color: "green",
                                             }}
                                         >
-                                            {ConnectedLed}
+                                            {/* {ConnectedLed} */}
                                         </p>
                                     </div>
                                 ) : (
@@ -530,7 +475,7 @@ export default function App() {
                                                 color: "red",
                                             }}
                                         >
-                                            {disconnectedLed}
+                                            {/* {disconnectedLed} */}
                                         </p>
                                     </div>
                                 )}
@@ -544,58 +489,68 @@ export default function App() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positions");
+    const storedPositionString = localStorage.getItem("positionsDemo");
+
     const initialPositions = storedPositionString
         ? JSON.parse(storedPositionString)
         : {
-              ConnectData: { x: 208, y: -191 },
-              FIQ: { x: 981, y: 257 },
-              FIQ2: { x: 1226, y: 726 },
-              TankSVG: { x: 385, y: 277 },
-              bara1: { x: 484, y: 137 },
-              bara2: { x: 812, y: 549 },
-              bara3: { x: 1696, y: 184 },
-              coupling: { x: 1023, y: 475 },
-              coupling2: { x: 1222, y: 258 },
-              gasout: { x: 2208, y: 501 },
-              gauges: { x: 781, y: 218 },
-              gauges2: { x: 782, y: 687 },
-              gauges3: { x: 1860, y: 320 },
-              halfCricle: { x: 208, y: 106 },
-              halfCricle2: { x: 2069, y: 134 },
-              pipeEnd: { x: 1628, y: 327 },
-              pipeEnd2: { x: 1627, y: 627 },
-              pipeMark: { x: 585, y: 499 },
-              pipeMark2: { x: 1431, y: 503 },
-              pipeMark3: { x: 1824, y: 501 },
-              pipeSVD: { x: 368, y: 630 },
-              pipeSmall: { x: 171, y: 825 },
-              pipeSmall2: { x: 385, y: 825 },
-              position1: { x: 865, y: -192 },
-              position2: { x: 821, y: 850 },
-              sation: { x: 135, y: 650 },
-              timeUpdate: { x: 1600, y: -191 },
+              BallCenter: { x: 1310.951148683639, y: 828.7698239631837 },
+              TM1: { x: 1281.7484064862829, y: 597.4322976792727 },
+              TM2: { x: 1290.8955932643962, y: 1113.7693606579335 },
+              a1: { x: -229.43883457175264, y: 778.5652353625532 },
+              a2: { x: -0.1889794828818765, y: 742.2532438872325 },
+              a2a4: { x: 0.10273508338707416, y: 806.1917947498391 },
+              a3: { x: 232.03332922104704, y: 755.9597314937049 },
+              a4: { x: -0.45112418741769034, y: 933.6119273621325 },
+              a5: { x: 232.11439062589363, y: 935.65679273712 },
+              a5a3: { x: 231.8971233234156, y: 806.9675184921454 },
+              a6: { x: 465.56606726403834, y: 616.120611613153 },
+              a7: { x: 640.1533130719292, y: 603.7520524046778 },
+              a8: { x: 816.535393145343, y: 615.905006920832 },
+              a8a11: { x: 812.9412867356604, y: 1086.438485892446 },
+              a9: { x: 464.2916565134959, y: 1036.803440610771 },
+              a10: { x: 639.358703505003, y: 1024.90285497321 },
+              a11: { x: 813.1442650823649, y: 1036.8311131458647 },
+              a11a8: { x: 815.7335617338521, y: 665.9159081279635 },
+              a12: { x: 1012.6339972528488, y: 564.893896568368 },
+              a13: { x: 1555, y: 565.0913772247163 },
+              a13_BallCenter: { x: 1609.8720094417527, y: 606.2335423759686 },
+              a14: { x: 1012.2367878055722, y: 1084.0123883774495 },
+              a14_BallCenter: { x: 1110.68044502287, y: 1124.5598195760622 },
+              a15: { x: 1555.2679949062424, y: 1083.7336832529672 },
+              a16: { x: 1753.4071151650487, y: 858.3807621455585 },
+              a17: { x: 2056.673779572456, y: 830.1370600911795 },
+              a1313: { x: 1555, y: 1119.4798126318437 },
+              data1: { x: 1106.6730286441682, y: 470.7553917072497 },
+              data2: { x: 1106.3080212753916, y: 391.49940744997264 },
+              data3: { x: 1106.4319225336608, y: 314.1222842732521 },
+              data4: { x: 1106.7253789405067, y: 235.8901485451295 },
+              data5: { x: 1116.0067509322091, y: 1221.3672989301788 },
+              data6: { x: 1116.037189197011, y: 1299.5743886935893 },
+              data7: { x: 1115.814160999785, y: 1376.7098108936295 },
+              data8: { x: 1115.7679949062424, y: 1454.488492633882 },
+              dataTM1: { x: 1293, y: 100 },
+              timeUpdate: { x: -146.43461687213102, y: 261.5130385679415 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
+
     const [editingEnabled, setEditingEnabled] = useState(false);
 
     const [initialNodes, setInitialNodes] = useState([
         {
-            id: "station",
-            position: positions.sation,
+            id: "a1",
+            position: positions.a1,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                color: "green",
-                                fontWeight: 500,
-                            }}
-                        ></p>
-                        {station}
+                        <Image
+                            src="/layout/imgGraphic/Vector.png"
+                            width={50}
+                            height={50}
+                            alt="Picture of the author"
+                        />
                     </div>
                 ),
             },
@@ -604,455 +559,656 @@ export default function App() {
             targetPosition: Position.Left,
         },
         {
-            id: "pipeSmall",
-            position: positions.pipeSmall,
+            id: "a2",
+            position: positions.a2,
+            type: "custom",
             data: {
                 label: (
                     <div>
                         {" "}
-                        <BallValue01 /> {pipeSmall}
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "pipeSmall2",
-            position: positions.pipeSmall2,
-            data: {
-                label: (
-                    <div>
-                        {" "}
-                        <BallValue02 /> {pipeSmall}
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "pipeSVD",
-            position: positions.pipeSVD,
-            data: {
-                label: (
-                    <div>
+                        <SDV_Otsuka />
+                        <br />
                         <p style={{ fontSize: 20 }}>
-                            {" "}
-                            <SDV_Otsuka />
+                            <Image
+                                src="/layout/imgGraphic/Symbol.png"
+                                width={80}
+                                height={60}
+                                alt="Picture of the author"
+                            />
                         </p>
-                        {pipeSDV}
                     </div>
                 ),
             },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "TankSVG",
-            position: positions.TankSVG,
-            data: {
-                label: <div> {tankSVG}</div>,
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "halfCricle",
-            position: positions.halfCricle,
-            data: {
-                label: <div> {halfCricle}</div>,
-            },
-        },
-        {
-            id: "pipeMark",
-            position: positions.pipeMark,
-            data: {
-                label: <div> {pipeMark}</div>,
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "gauges",
-            position: positions.gauges,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 30, fontWeight: 500 }}>PT</p>
-                        {gauges}
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
+            zIndex: 9999,
 
-        {
-            id: "gauges2",
-            position: positions.gauges2,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 30, fontWeight: 500 }}>PT</p>
-                        {gauges}
-                    </div>
-                ),
-            },
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
         },
+        {
+            id: "a3",
+            position: positions.a3,
+            type: "custom",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            height: 100,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            display: "flex",
+                        }}
+                    >
+                        {" "}
+                        <Image
+                            src="/layout/imgGraphic/TankFilter.png"
+                            width={80}
+                            height={70}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
+            },
+            zIndex: 999,
 
-        {
-            id: "FIQ",
-            position: positions.FIQ,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 25 }}>FIQ-1501</p>
-                    </div>
-                ),
-            },
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
         },
         {
-            id: "FIQ2",
-            position: positions.FIQ2,
+            id: "a4",
+            position: positions.a4,
+            type: "turbo",
             data: {
                 label: (
-                    <div>
-                        <p style={{ fontSize: 25 }}>FIQ-1502</p>
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue01 />
                     </div>
                 ),
             },
+
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
         },
         {
-            id: "1",
-            position: positions.position1,
+            id: "a5",
+            position: positions.a5,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue02 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a6",
+            position: positions.a6,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue03 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a7",
+            position: positions.a7,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <p style={{ fontSize: 30 }}></p>
+                        {" "}
+                        <PCV_01_Otsuka />
+                        <br />
+                        <Image
+                            src="/layout/imgGraphic/PCV.png"
+                            width={80}
+                            height={60}
+                            alt="Picture of the author"
+                        />
                     </div>
                 ),
             },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a8",
+
+            position: positions.a8,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue04 />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a9",
+            position: positions.a9,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue05 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a10",
+            position: positions.a10,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        {" "}
+                        <PCV_02_Otsuka />
+                        <br />
+                        <Image
+                            src="/layout/imgGraphic/PCV.png"
+                            width={80}
+                            height={60}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a11",
+            position: positions.a11,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue06 />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a12",
+            position: positions.a12,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue07 />
+                    </div>
+                ),
+            },
+            borderRadius: 8,
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a13",
+            position: positions.a13,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue08 />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a14",
+            position: positions.a14,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue09 />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a15",
+            position: positions.a15,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValue10 />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a16",
+            position: positions.a16,
+            type: "custom",
+            data: {
+                label: <div style={{ background: "#999999" }}></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { background: "#999999", border: "none", height: "3px" },
+        },
+        {
+            id: "a17",
+            position: positions.a17,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/icons8-arrow-100.png"
+                            width={50}
+                            height={50}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+        },
+        {
+            id: "a2a4",
+            position: positions.a2a4,
+            type: "custom",
+            data: {
+                label: <div> </div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+        },
+        {
+            id: "a5a3",
+            position: positions.a5a3,
+            type: "custom",
+            data: {
+                label: <div> </div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+        },
+        {
+            id: "a8a11",
+            position: positions.a8a11,
+            type: "custom",
+            data: {
+                label: <div> </div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+        },
+        {
+            id: "a11a8",
+            position: positions.a11a8,
+            type: "custom",
+            data: {
+                label: <div> </div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+        },
+        {
+            id: "a1313",
+            position: positions.a1313,
+            type: "custom",
+            data: {
+                label: <div> </div>,
+            },
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+        },
+
+        {
+            id: "data1",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.data1,
 
             style: {
-                width: 600,
-                height: 290,
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
             },
-            sourcePosition: Position.Bottom,
             targetPosition: Position.Bottom,
         },
         {
-            id: "1a",
-            data: { label: "" },
-            position: { x: 5, y: 5 },
-            parentNode: "1",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "1b",
-            data: { label: "" },
-
-            position: { x: 5, y: 75 },
-            parentNode: "1",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "1c",
-            data: { label: "" },
-
-            position: { x: 5, y: 145 },
-            parentNode: "1",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "1d",
-            data: { label: "" },
-
-            position: { x: 5, y: 215 },
-            parentNode: "1",
-            style: { width: "590px", height: "70px" },
-        },
-
-        {
-            id: "2",
-            position: positions.position2,
-            type: "custom",
+            id: "data2",
             data: {
                 label: (
-                    <div>
-                        <p style={{ fontSize: 30 }}></p>
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.data2,
+
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "data3",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
                     </div>
                 ),
             },
 
+            position: positions.data3,
+
             style: {
-                width: 600,
-                height: 290,
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
             },
-            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "data4",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+
+            position: positions.data4,
+
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "data5",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+
+            position: positions.data5,
+
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
+            },
             targetPosition: Position.Top,
         },
         {
-            id: "2a",
-            data: { label: "" },
-            position: { x: 5, y: 5 },
-            parentNode: "2",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "2b",
-            data: { label: "" },
+            id: "data6",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
 
-            position: { x: 5, y: 75 },
-            parentNode: "2",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "2c",
-            data: { label: "" },
+            position: positions.data6,
 
-            position: { x: 5, y: 145 },
-            parentNode: "2",
-            style: { width: "590px", height: "70px" },
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
+            },
+            targetPosition: Position.Top,
         },
         {
-            id: "2d",
-            data: { label: "" },
+            id: "data7",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
 
-            position: { x: 5, y: 215 },
-            parentNode: "2",
-            style: { width: "590px", height: "70px" },
-        },
-        {
-            id: "coupling",
-            position: positions.coupling,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {markPipe}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "coupling2",
-            position: positions.coupling2,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {markPipe}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "pipeMark2",
-            position: positions.pipeMark2,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {pipeMark}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
+            position: positions.data7,
 
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
+            },
+            targetPosition: Position.Top,
+        },
         {
-            id: "pipeEnd",
-            position: positions.pipeEnd,
+            id: "data8",
             data: {
                 label: (
-                    <div>
-                        <p style={{ fontSize: 23, fontWeight: 500 }}>
-                            <PCV_01_Otsuka />
-                            {pipeEnd}
-                        </p>
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
                     </div>
                 ),
             },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
 
-        {
-            id: "pipeEnd2",
-            position: positions.pipeEnd2,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 23, fontWeight: 500 }}>
-                            <PCV_02_Otsuka />
-                            {pipeEnd}
-                        </p>
-                    </div>
-                ),
+            position: positions.data8,
+
+            style: {
+                background: "#333333",
+                border: "2px solid white",
+                width: 500,
+                height: 70,
             },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            targetPosition: Position.Top,
         },
         {
-            id: "gauges3",
-            position: positions.gauges3,
+            id: "TM1",
+            position: positions.TM1,
+            type: "custom",
             data: {
-                label: (
-                    <div>
-                        <div>
-                            <p style={{ fontSize: 30, fontWeight: 500 }}>PT</p>
-                            {gauges}
-                        </div>
-                    </div>
-                ),
+                label: <div style={{ fontSize: 25 }}> FIQ-1901</div>,
             },
-            sourcePosition: Position.Right,
+
+            sourcePosition: Position.Top,
             targetPosition: Position.Right,
         },
-
         {
-            id: "halfCricle2",
-            position: positions.halfCricle2,
+            id: "TM2",
+            position: positions.TM2,
+            type: "custom",
             data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            <p>
-                                <PSV01_Otsuka />
-                            </p>
-                            {halfCricle}
-                        </p>
-                    </div>
-                ),
+                label: <div style={{ fontSize: 25 }}>FIQ_1902 </div>,
             },
+
             sourcePosition: Position.Bottom,
-
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "pipeMark3",
-            position: positions.pipeMark3,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {pipeMark}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-
-            targetPosition: Position.Left,
-        },
-        {
-            id: "gasout",
-            position: positions.gasout,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {gasOut}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-
-            targetPosition: Position.Left,
-        },
-        {
-            id: "bara1",
-            position: positions.bara1,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {gasOut}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
             targetPosition: Position.Right,
-            style: { width: "300px", height: "70px" },
         },
-        {
-            id: "bara2",
-            position: positions.bara2,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {gasOut}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-
-            style: { width: "300px", height: "70px" },
-        },
-        {
-            id: "bara3",
-            position: positions.bara3,
-            data: {
-                label: (
-                    <div>
-                        <p style={{ fontSize: 20, fontWeight: 500 }}>
-                            {gasOut}
-                        </p>
-                    </div>
-                ),
-            },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-
-            style: { width: "300px", height: "70px" },
-        },
-
         {
             id: "timeUpdate",
             position: positions.timeUpdate,
             data: {
                 label: <div></div>,
             },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-            style: { width: "730px" },
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                background: "#333333",
+                border: "none",
+                width: 750,
+            },
         },
         {
-            id: "ConnectData",
-            position: positions.ConnectData,
+            id: "BallCenter",
+            position: positions.BallCenter,
+            type: "custom",
             data: {
-                label: <div></div>,
+                label: (
+                    <div style={{ height: 100 }}>
+                        {" "}
+                        <BallValueCenter />
+                    </div>
+                ),
             },
+            borderRadius: 8,
 
-            sourcePosition: Position.Right,
             targetPosition: Position.Right,
-            style: { width: "300px" },
+            sourcePosition: Position.Left,
+        },
+        {
+            id: "a13_BallCenter",
+            position: positions.a13_BallCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <p>a13CT</p>
+                    </div>
+                ),
+            },
+            borderRadius: 8,
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: { width: 50 },
+        },
+        {
+            id: "a14_BallCenter",
+            position: positions.a14_BallCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        {" "}
+                        <p> a14CT</p>
+                    </div>
+                ),
+            },
+            borderRadius: 8,
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: { width: 50 },
         },
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<any>(initialEdges);
+    const [edges, setEdges, onEdgesChange] = useEdgesState<any>(initalsEgdes);
     const onNodeDragStop = useCallback(
         (event: any, node: any) => {
             if (editingEnabled) {
@@ -1062,135 +1218,190 @@ export default function App() {
                         n.id === id ? { ...n, position: position } : n
                     )
                 );
-                if (id === "1") {
+                if (id === "a1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        position1: position,
+                        a1: position,
                     }));
-                } else if (id === "coupling") {
+                } else if (id === "a2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        coupling: position,
+                        a2: position,
                     }));
-                } else if (id === "station") {
+                } else if (id === "a3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        sation: position,
+                        a3: position,
                     }));
-                } else if (id === "pipeSVD") {
+                } else if (id === "a4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeSVD: position,
+                        a4: position,
                     }));
-                } else if (id === "TankSVG") {
+                } else if (id === "a5") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TankSVG: position,
+                        a5: position,
                     }));
-                } else if (id === "halfCricle") {
+                } else if (id === "a6") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        halfCricle: position,
+                        a6: position,
                     }));
-                } else if (id === "pipeMark") {
+                } else if (id === "a7") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeMark: position,
+                        a7: position,
                     }));
-                } else if (id === "pipeSmall") {
+                } else if (id === "a8") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeSmall: position,
+                        a8: position,
                     }));
-                } else if (id === "pipeSmall2") {
+                } else if (id === "a9") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeSmall2: position,
+                        a9: position,
                     }));
-                } else if (id === "gauges") {
+                } else if (id === "a10") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        gauges: position,
+                        a10: position,
                     }));
-                } else if (id === "gauges2") {
+                } else if (id === "a11") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        gauges2: position,
+                        a11: position,
                     }));
-                } else if (id === "FIQ") {
+                } else if (id === "a12") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ: position,
+                        a12: position,
                     }));
-                } else if (id === "FIQ2") {
+                } else if (id === "a13") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ2: position,
+                        a13: position,
                     }));
-                } else if (id === "3") {
+                } else if (id === "a14") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        coupling2: position,
+                        a14: position,
                     }));
-                } else if (id === "pipeMark2") {
+                } else if (id === "a15") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeMark2: position,
+                        a15: position,
                     }));
-                } else if (id === "pipeEnd") {
+                } else if (id === "a16") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeEnd: position,
+                        a16: position,
                     }));
-                } else if (id === "pipeEnd2") {
+                } else if (id === "a17") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeEnd2: position,
+                        a17: position,
                     }));
-                } else if (id === "gauges3") {
+                } else if (id === "a5a3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        gauges3: position,
+                        a5a3: position,
                     }));
-                } else if (id === "halfCricle2") {
+                } else if (id === "a2a4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        halfCricle2: position,
+                        a2a4: position,
                     }));
-                } else if (id === "pipeMark3") {
+                } else if (id === "a8a11") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        pipeMark3: position,
+                        a8a11: position,
                     }));
-                } else if (id === "gasout") {
+                } else if (id === "a11a8") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        gasout: position,
+                        a11a8: position,
                     }));
-                } else if (id === "bara1") {
+                } else if (id === "a1313") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        bara1: position,
+                        a1313: position,
                     }));
-                } else if (id === "bara2") {
+                } else if (id === "TM1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        bara2: position,
+                        TM1: position,
                     }));
-                } else if (id === "bara3") {
+                } else if (id === "dataTM1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        bara3: position,
+                        dataTM1: position,
+                    }));
+                } else if (id === "TM2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TM2: position,
+                    }));
+                } else if (id === "data1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data1: position,
+                    }));
+                } else if (id === "data2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data2: position,
+                    }));
+                } else if (id === "data3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data3: position,
+                    }));
+                } else if (id === "data4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data4: position,
+                    }));
+                } else if (id === "data5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data5: position,
+                    }));
+                } else if (id === "data6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data6: position,
+                    }));
+                } else if (id === "data7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data7: position,
+                    }));
+                } else if (id === "data8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data8: position,
                     }));
                 } else if (id === "timeUpdate") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         timeUpdate: position,
                     }));
-                } else if (id === "ConnectData") {
+                } else if (id === "BallCenter") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        ConnectData: position,
+                        BallCenter: position,
+                    }));
+                } else if (id === "a13_BallCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        a13_BallCenter: position,
+                    }));
+                } else if (id === "a14_BallCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        a14_BallCenter: position,
                     }));
                 }
             }
@@ -1198,13 +1409,13 @@ export default function App() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    useEffect(() => {
-        localStorage.setItem("positions", JSON.stringify(positions));
-    }, [positions]);
-
     const toggleEditing = () => {
         setEditingEnabled(!editingEnabled);
     };
+    useEffect(() => {
+        localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    }, [positions]);
+
     const paragraphContents: Record<string, string> = {
         SVF: "Standard Volume Flow Rate",
         GVF: "Gross Volume Flow Rate",
@@ -1218,12 +1429,9 @@ export default function App() {
     };
     return (
         <div>
-            <Toast ref={toast} />
-
-            <ConfirmDialog />
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     padding: 15,
@@ -1267,7 +1475,6 @@ export default function App() {
                     </OverlayPanel>
                 </div>
             </div>
-
             <div
                 style={{
                     width: "100%",
@@ -1275,9 +1482,10 @@ export default function App() {
                     position: "relative",
                     overflow: "hidden",
                     alignItems: "center",
+                    background: "#333333",
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -1303,7 +1511,7 @@ export default function App() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}
@@ -1311,10 +1519,12 @@ export default function App() {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    minZoom={0.5}
+                    maxZoom={2}
                 >
-                    <Background style={{ backgroundColor: "gray" }} />
+                    <Controls />
                 </ReactFlow>
             </div>
         </div>

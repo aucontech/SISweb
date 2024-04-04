@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-export default function BallValue01() {
+export default function BallValueCenter() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -30,7 +30,7 @@ export default function BallValue01() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_center",
                             },
                         ],
                     },
@@ -70,7 +70,7 @@ export default function BallValue01() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_01",
+                                key: "BallValue_center",
                             },
                         ],
                     },
@@ -99,12 +99,12 @@ export default function BallValue01() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
                             .ts;
                     setUpTS(ballTS);
                 } else if (
@@ -112,10 +112,10 @@ export default function BallValue01() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -129,7 +129,7 @@ export default function BallValue01() {
             const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_01: newValue }
+                { BallValue_center: newValue }
             );
             setSensorData(newValue);
             fetchData();
@@ -152,9 +152,9 @@ export default function BallValue01() {
         <div>
             {data.map((item: any) => (
                 <div key={item.key}>
-                    {item.key === "BallValue_01" && (
+                    {item.key === "BallValue_center" && (
                         <div>
-                            <button
+                           <button
                                 style={{
                                     cursor: "pointer",
                                     border: "none",
@@ -167,52 +167,46 @@ export default function BallValue01() {
                                 onClick={handleButtonClick}
                             >
                                 {item.value.toString() === "false" ? (
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                        }}
-                                    >
+                                    <div style={{   display: "flex", flexDirection: "column", alignItems: "center", }}>
+                                        <div style={{display:'flex'}}>
+                                        <Image
+                                        style={{marginRight:10}}
+                                            src="/layout/imgGraphic/checkValue.png"
+                                            width={50}
+                                            height={50}
+                                            alt="Picture of the author"
+                                        /> 
                                         <Image
                                             src="/layout/imgGraphic/BallVavle.png"
                                             width={50}
                                             height={50}
                                             alt="Picture of the author"
-                                        />
-                                        <p
-                                            style={{
-                                                color: "red",
-                                                padding: 5,
-                                                borderRadius: 10,
-                                            }}
-                                        >
-                                            Close
-                                        </p>
+                                        /> 
+                                              
+                                        </div>
+
+                                        <p  style={{color:'red', padding:5,borderRadius:10}} >Close</p>
+
                                     </div>
                                 ) : (
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                        }}
-                                    >
+                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        <div style={{display:'flex'}}>
+                                        <Image
+                                        style={{marginRight:10}}
+                                            src="/layout/imgGraphic/checkValue.png"
+                                            width={50}
+                                            height={50}
+                                            alt="Picture of the author"
+                                        /> 
                                         <Image
                                             src="/layout/imgGraphic/BallVavleON.png"
                                             width={50}
                                             height={50}
                                             alt="Picture of the author"
                                         />
-                                        <p
-                                            style={{
-                                                color: "green",
-                                                padding: 5,
-                                                borderRadius: 10,
-                                            }}
-                                        >
-                                            Open
-                                        </p>
+                                        </div>
+                                        <p style={{color:'green', padding:5,borderRadius:10}}>Open</p>
+
                                     </div>
                                 )}
                             </button>
