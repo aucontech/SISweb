@@ -77,7 +77,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                     ></Column>
 
                     <Column field="key" header="key"></Column>
-                    <Column field="value" body={_renderValueColumn}></Column>
+                    <Column header="value" body={_renderValueColumn}></Column>
                 </DataTable>
                 <Button onClick={() => setIsFormVisible(true)}>Add</Button>
             </div>
