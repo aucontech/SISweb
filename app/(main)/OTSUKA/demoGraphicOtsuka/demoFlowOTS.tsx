@@ -64,7 +64,6 @@ export default function DemoFlowOTS() {
     const line = "#ffaa00";
     const [visible, setVisible] = useState(false);
 
-
     const [checkConnectData, setCheckConnectData] = useState(false);
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
@@ -185,67 +184,118 @@ export default function DemoFlowOTS() {
     };
 
     const KeyGas = {
-        SM3H: "SM3/H",
-        M3H: "M3/H",
-        SM3: "SM3",
-        M3: "M3",
+        SM3H: "sm³/h",
+        M3H: "m³/h",
+        SM3: "sm³",
+        M3: "m³",
         BAR: "BAR",
         CC: "°C",
     };
 
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
-            if (node.id === "data4") {
+            if (node.id === "data1") {
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
-                                    </p>
-                                    <p style={{ color: "green" }}>{SVF1}</p>
+                            <div style={{ fontSize: 25, fontWeight: 500 }}>
+                                <div>
+                                    <div style={{ padding: 2, boxShadow:
+                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                        
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                              
+                                                padding: 3,
+                                                borderRadius: 2,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "red",
+                                                    marginLeft: 5,
+                                                }}
+                                            >
+                                                {ValueGas.SVF}
+                                            </p>
+                                        </div>
+                                        <hr />
+
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                               
+                                                padding: 3,
+                                                borderRadius: 5,
+                                            }}
+                                        >
+                                          <p
+                                            style={{
+                                                display: "flex",
+                                                padding: 3,
+                                                borderRadius: 5,
+                                                
+                                                color: "green",
+                                            }}
+                                        >
+                                            {SVF1}
+                                        </p>
+                                            <p style={{}}>{KeyGas.SM3H}</p>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style={{ padding: 2, boxShadow:
+                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                        
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                              
+                                                padding: 3,
+                                                borderRadius: 2,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "red",
+                                                    marginLeft: 5,
+                                                }}
+                                            >
+                                                {ValueGas.GVF}
+                                            </p>
+                                        </div>
+                                        <hr />
+
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                               
+                                                padding: 3,
+                                                borderRadius: 5,
+                                            }}
+                                        >
+                                          <p
+                                            style={{
+                                                display: "flex",
+                                                padding: 3,
+                                                borderRadius: 5,
+                                                
+                                                color: "green",
+                                            }}
+                                        >
+                                            {GVF1}
+                                        </p>
+                                            <p style={{}}>{KeyGas.M3H}</p>
+                                        </div>
+                                        
+                                    </div>
+
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.SM3H}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-            if (node.id === "data3") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVF} :
-                                    </p>
-                                    <p style={{ color: "green" }}>{GVF1}</p>
-                                </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.M3H}
-                                </p>
                             </div>
                         ),
                     },
@@ -257,52 +307,102 @@ export default function DemoFlowOTS() {
                     data: {
                         ...node.data,
                         label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                            <div style={{ fontSize: 25, fontWeight: 500 }}>
+                            <div>
+                                <div style={{ padding: 2, boxShadow:
+                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                    
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                          
+                                            padding: 3,
+                                            borderRadius: 2,
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                marginLeft: 5,
+                                            }}
+                                        >
+                                            {ValueGas.SVA}
+                                        </p>
+                                    </div>
+                                        <hr />
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                           
+                                            padding: 3,
+                                            borderRadius: 5,
+                                        }}
+                                    >
+                                      <p
+                                        style={{
+                                            display: "flex",
+                                            padding: 3,
+                                            borderRadius: 5,
+                                            
+                                            color: "green",
+                                        }}
+                                    >
+                                        {SVA1}
                                     </p>
-                                    <p style={{ color: "green" }}>{SVA1}</p>
+                                        <p style={{}}>{KeyGas.SM3}</p>
+                                    </div>
+                                    
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.SM3}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-            if (node.id === "data1") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                <div style={{ padding: 2, boxShadow:
+                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                    
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                          
+                                            padding: 3,
+                                            borderRadius: 2,
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                marginLeft: 5,
+                                            }}
+                                        >
+                                            {ValueGas.GVA}
+                                        </p>
+                                    </div>
+                                    <hr />
+
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                           
+                                            padding: 3,
+                                            borderRadius: 5,
+                                        }}
+                                    >
+                                      <p
+                                        style={{
+                                            display: "flex",
+                                            padding: 3,
+                                            borderRadius: 5,
+                                            
+                                            color: "green",
+                                        }}
+                                    >
+                                        {GVA1}
                                     </p>
-                                    <p style={{ color: "green" }}>{GVA1}</p>
+                                        <p style={{}}>{KeyGas.M3}</p>
+                                    </div>
+                                    
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.M3}
-                                </p>
+
                             </div>
+                        </div>
                         ),
                     },
                 };
@@ -313,23 +413,102 @@ export default function DemoFlowOTS() {
                     data: {
                         ...node.data,
                         label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
-                                    </p>
-                                    <p style={{ color: "green" }}>{SVF2}</p>
+                            <div style={{ fontSize: 25, fontWeight: 500 }}>
+                                <div>
+                                    <div style={{ padding: 2, boxShadow:
+                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                        
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                              
+                                                padding: 3,
+                                                borderRadius: 2,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "red",
+                                                    marginLeft: 5,
+                                                }}
+                                            >
+                                                {ValueGas.SVF}
+                                            </p>
+                                        </div>
+                                        <hr />
+
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                               
+                                                padding: 3,
+                                                borderRadius: 5,
+                                            }}
+                                        >
+                                          <p
+                                            style={{
+                                                display: "flex",
+                                                padding: 3,
+                                                borderRadius: 5,
+                                                
+                                                color: "green",
+                                            }}
+                                        >
+                                            {SVF2}
+                                        </p>
+                                            <p style={{}}>{KeyGas.SM3H}</p>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style={{ padding: 2, boxShadow:
+                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                        
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                              
+                                                padding: 3,
+                                                borderRadius: 2,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "red",
+                                                    marginLeft: 5,
+                                                }}
+                                            >
+                                                {ValueGas.GVF}
+                                            </p>
+                                        </div>
+                                        <hr />
+
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                               
+                                                padding: 3,
+                                                borderRadius: 5,
+                                            }}
+                                        >
+                                          <p
+                                            style={{
+                                                display: "flex",
+                                                padding: 3,
+                                                borderRadius: 5,
+                                                
+                                                color: "green",
+                                            }}
+                                        >
+                                            {GVF2}
+                                        </p>
+                                            <p style={{}}>{KeyGas.M3H}</p>
+                                        </div>
+                                        
+                                    </div>
+
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.SM3H}
-                                </p>
                             </div>
                         ),
                     },
@@ -341,84 +520,107 @@ export default function DemoFlowOTS() {
                     data: {
                         ...node.data,
                         label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVF} :
+                            <div style={{ fontSize: 25, fontWeight: 500 }}>
+                            <div>
+                                <div style={{ padding: 2, boxShadow:
+                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                    
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                          
+                                            padding: 3,
+                                            borderRadius: 2,
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                marginLeft: 5,
+                                            }}
+                                        >
+                                            {ValueGas.SVA}
+                                        </p>
+                                    </div>
+                                        <hr />
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                           
+                                            padding: 3,
+                                            borderRadius: 5,
+                                        }}
+                                    >
+                                      <p
+                                        style={{
+                                            display: "flex",
+                                            padding: 3,
+                                            borderRadius: 5,
+                                            
+                                            color: "green",
+                                        }}
+                                    >
+                                        {SVA2}
                                     </p>
-                                    <p style={{ color: "green" }}>{GVF2}</p>
+                                        <p style={{}}>{KeyGas.SM3}</p>
+                                    </div>
+                                    
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.M3H}
-                                </p>
+                                <div style={{ padding: 2, boxShadow:
+                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
+                                    
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                          
+                                            padding: 3,
+                                            borderRadius: 2,
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                marginLeft: 5,
+                                            }}
+                                        >
+                                            {ValueGas.GVA}
+                                        </p>
+                                    </div>
+                                    <hr />
+
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                           
+                                            padding: 3,
+                                            borderRadius: 5,
+                                        }}
+                                    >
+                                      <p
+                                        style={{
+                                            display: "flex",
+                                            padding: 3,
+                                            borderRadius: 5,
+                                            
+                                            color: "green",
+                                        }}
+                                    >
+                                        {GVA2}
+                                    </p>
+                                        <p style={{}}>{KeyGas.M3}</p>
+                                    </div>
+                                    
+                                </div>
+
                             </div>
+                        </div>
                         ),
                     },
                 };
             }
-            if (node.id === "data7") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
-                                    </p>
-                                    <p style={{ color: "green" }}>{SVA2}</p>
-                                </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.SM3}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-            if (node.id === "data8") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
-                                    </p>
-                                    <p style={{ color: "green" }}>{GVA2}</p>
-                                </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.M3}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
+          
             if (node.id === "Pressure_Trans01") {
                 return {
                     ...node,
@@ -710,8 +912,8 @@ export default function DemoFlowOTS() {
               line11: { x: 447.93050744084644, y: 1446.4435456601166 },
               line12: { x: 626.5136457836865, y: 1042.4658932005227 },
               line13: { x: 832.6936273747973, y: 1042.463725443685 },
-              ArrowRight:{x: 777.455471857383, y: 991.6807441860246},
-              ArrowRight1:{x: -1231.5469404481196, y: 1033.7889028554175},
+              ArrowRight: { x: 777.455471857383, y: 991.6807441860246 },
+              ArrowRight1: { x: -1231.5469404481196, y: 1033.7889028554175 },
 
               timeUpdate: { x: -1134.2800640424662, y: 419.493859473365 },
           };
@@ -1342,7 +1544,7 @@ export default function DemoFlowOTS() {
                 width: 1,
                 height: 1,
             },
-            zIndex: 9999,
+            zIndex: 99990,
         },
 
         {
@@ -1403,10 +1605,10 @@ export default function DemoFlowOTS() {
                 background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 65,
             },
             targetPosition: Position.Bottom,
         },
+
         {
             id: "data2",
             data: {
@@ -1428,63 +1630,9 @@ export default function DemoFlowOTS() {
                 background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 65,
             },
             targetPosition: Position.Bottom,
         },
-        {
-            id: "data3",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-
-            position: positions.data3,
-
-            style: {
-                background: backGroundData,
-                border: "2px solid white",
-                width: 500,
-                height: 65,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "data4",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-
-            position: positions.data4,
-
-            style: {
-                background: backGroundData,
-                border: "2px solid white",
-                width: 500,
-                height: 65,
-            },
-            targetPosition: Position.Bottom,
-        },
-
         {
             id: "data5",
             data: {
@@ -1500,17 +1648,16 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
-
             position: positions.data5,
 
             style: {
                 background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 65,
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
+
         {
             id: "data6",
             data: {
@@ -1526,69 +1673,16 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
-
             position: positions.data6,
 
             style: {
                 background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 65,
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
-        {
-            id: "data7",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
 
-            position: positions.data7,
-
-            style: {
-                background: backGroundData,
-                border: "2px solid white",
-                width: 500,
-                height: 65,
-            },
-            targetPosition: Position.Top,
-        },
-        {
-            id: "data8",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-
-            position: positions.data8,
-
-            style: {
-                background: backGroundData,
-                border: "2px solid white",
-                width: 500,
-                height: 65,
-            },
-            targetPosition: Position.Top,
-        },
         // ============= PSV =====================
 
         {
@@ -1758,7 +1852,7 @@ export default function DemoFlowOTS() {
                 width: 200,
                 height: 65,
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
         {
             id: "Pressure_Trans02",
@@ -1811,7 +1905,7 @@ export default function DemoFlowOTS() {
                 width: 200,
                 height: 65,
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
         {
             id: "Temperature_Trans02",
@@ -1872,7 +1966,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: background,
-                width: "500px",
+                width: "470px",
 
                 height: 100,
             },
@@ -1913,8 +2007,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: background,
-
-                height: 100,
+width:10,
+                height: 10,
             },
             targetPosition: Position.Bottom,
         },
@@ -1932,15 +2026,7 @@ export default function DemoFlowOTS() {
                             alignItems: "center",
                         }}
                     >
-                        <div>
-                            <p
-                                style={{
-                                    fontSize: 60,
-                                    fontWeight: 500,
-                                    color: "#ffaa00",
-                                }}
-                            ></p>
-                        </div>
+                        <div></div>
                     </div>
                 ),
             },
@@ -1950,7 +2036,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "none",
-                width: "800px",
+                width: "550px",
 
                 height: 80,
             },
@@ -1976,7 +2062,7 @@ export default function DemoFlowOTS() {
             },
             targetPosition: Position.Bottom,
         },
-        // =================== Arrow ====================== 
+        // =================== Arrow ======================
 
         {
             id: "ArrowRight",
@@ -2376,13 +2462,13 @@ export default function DemoFlowOTS() {
                         ConnectData: position,
                     }));
                 }
-                // ============= Arrow ====================== 
+                // ============= Arrow ======================
                 else if (id === "ArrowRight") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         ArrowRight: position,
                     }));
-                }  else if (id === "ArrowRight1") {
+                } else if (id === "ArrowRight1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         ArrowRight1: position,
@@ -2405,6 +2491,7 @@ export default function DemoFlowOTS() {
             <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button>
+
             <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
@@ -2468,8 +2555,7 @@ export default function DemoFlowOTS() {
                     onNodeDragStop={onNodeDragStop}
                     // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
+                  
                 >
                     <Controls />
                 </ReactFlow>
