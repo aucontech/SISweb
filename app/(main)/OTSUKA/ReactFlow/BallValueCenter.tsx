@@ -3,6 +3,8 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
+import { BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
 
 export default function BallValueCenter() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -150,66 +152,31 @@ export default function BallValueCenter() {
     }, []);
     return (
         <div>
-            {data.map((item: any) => (
+           {data.map((item: any) => (
                 <div key={item.key}>
                     {item.key === "BallValue_center" && (
-                        <div>
-                           <button
-                                style={{
-                                    cursor: "pointer",
-                                    border: "none",
-                                    width: 50,
-                                    height: 50,
-                                    background: "white",
-                                    fontWeight: 600,
-                                    fontSize: 25,
-                                }}
-                                onClick={handleButtonClick}
-                            >
-                                {item.value.toString() === "false" ? (
-                                    <div style={{   display: "flex", flexDirection: "column", alignItems: "center", }}>
-                                        <div style={{display:'flex'}}>
-                                        <Image
-                                        style={{marginRight:10}}
-                                            src="/layout/imgGraphic/checkValue.png"
-                                            width={50}
-                                            height={50}
-                                            alt="Picture of the author"
-                                        /> 
-                                        <Image
-                                            src="/layout/imgGraphic/BallVavle.png"
-                                            width={50}
-                                            height={50}
-                                            alt="Picture of the author"
-                                        /> 
-                                              
-                                        </div>
+                        <div
+                        style={{
+                            cursor: "pointer",
+                            border: "none",
+                           
+                        }}
+                        onClick={handleButtonClick}
 
-                                        <p  style={{color:'red', padding:5,borderRadius:10}} >Close</p>
+                         >
+                            
+                                {item.value.toString() === "false" ? (
+                                    <div style={{ background:backgroundGraphic   }}>
+
+                                       {BallVavleOn}
 
                                     </div>
                                 ) : (
-                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                        <div style={{display:'flex'}}>
-                                        <Image
-                                        style={{marginRight:10}}
-                                            src="/layout/imgGraphic/checkValue.png"
-                                            width={50}
-                                            height={50}
-                                            alt="Picture of the author"
-                                        /> 
-                                        <Image
-                                            src="/layout/imgGraphic/BallVavleON.png"
-                                            width={50}
-                                            height={50}
-                                            alt="Picture of the author"
-                                        />
-                                        </div>
-                                        <p style={{color:'green', padding:5,borderRadius:10}}>Open</p>
+                                    <div style={{ background:backgroundGraphic   }}>
+                                        {BallVavleOff}
 
                                     </div>
                                 )}
-                            </button>
                         </div>
                     )}
                 </div>

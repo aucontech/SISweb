@@ -20,7 +20,6 @@ export default function Alarmbell() {
     interface Notification {
         subject: string;
         text: string;
-        // Các thuộc tính khác của notification nếu có
     }
 
     interface WebSocketMessage {

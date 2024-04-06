@@ -10,7 +10,11 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import "./demoFlowOTS.css";
 
-import { station } from "../ReactFlow/IconOTSUKA";
+import {
+    ConnectedLed,
+    disconnectedLed,
+    station,
+} from "../ReactFlow/IconOTSUKA";
 import { DemoEdges } from "./demoEdges";
 import Image from "next/image";
 import BallValue01 from "../ReactFlow/BallValue01";
@@ -30,16 +34,38 @@ import { readToken } from "@/service/localStorage";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
+import {
+    ArrowRight,
+    BlackTriangle,
+    BlackTriangleRight,
+    PCV,
+    SDV,
+    WhiteTriangleRight,
+    connect,
+    gasIn,
+    tankGas,
+} from "./iconSVG";
+import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
+import { Dialog } from "primereact/dialog";
+import { connected } from "process";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+const background = "#036E9B";
+const backGroundData = "white";
+const colorNameValue = "black";
+export const backgroundGraphic = background;
+export const colorIMG_none = "#000";
+
 export default function DemoFlowOTS() {
-    const op = useRef<OverlayPanel>(null);
+    const line = "#ffaa00";
+    const [visible, setVisible] = useState(false);
+
 
     const [checkConnectData, setCheckConnectData] = useState(false);
-    const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
 
@@ -52,6 +78,26 @@ export default function DemoFlowOTS() {
     const [SVF2, setSVF2] = useState<string | null>(null);
     const [SVA2, setSVA2] = useState<string | null>(null);
     const [GVA2, setGVA2] = useState<string | null>(null);
+
+    const [PT01, setPT01] = useState<string | null>(null);
+    const [PT02, setPT02] = useState<string | null>(null);
+
+    const [TT01, setTT01] = useState<string | null>(null);
+    const [TT02, setTT02] = useState<string | null>(null);
+
+    const paragraphContents: Record<string, string> = {
+        SVF: "Standard Volume Flow Rate",
+        GVF: "Gross Volume Flow Rate",
+        SVA: "Standard Volume Accumulated",
+        GVA: "Gross Volume Accumulated",
+        PT: "Pressure Transmitter",
+        TT: "Temperature Transmitter",
+        PSV: "Pressure Safety Valve",
+        PCV: "Pressure Control Valve",
+        SSV: "Slam Shut Off Valve",
+        SDV: "Shutdown valve",
+    };
+    const token = readToken();
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -105,11 +151,15 @@ export default function DemoFlowOTS() {
                         EK1_Flow_at_Base_Conditions: setSVF1,
                         EK1_Volume_at_Base_Conditions: setSVA1,
                         EK1_Vm_Adjustable_Counter: setGVA1,
+                        EK1_Pressure: setPT01,
+                        EK1_Temperature: setTT01,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
                         EK2_Vm_Adjustable_Counter: setGVA2,
+                        EK2_Pressure: setPT02,
+                        EK2_Temperature: setTT02,
 
                         time: setTimeUpdate,
                     };
@@ -130,6 +180,8 @@ export default function DemoFlowOTS() {
         GVF: "GVF",
         SVA: "SVA",
         GVA: "GVA",
+        PT: "PT",
+        TT: "TT",
     };
 
     const KeyGas = {
@@ -137,6 +189,8 @@ export default function DemoFlowOTS() {
         M3H: "M3/H",
         SM3: "SM3",
         M3: "M3",
+        BAR: "BAR",
+        CC: "°C",
     };
 
     useEffect(() => {
@@ -149,19 +203,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVF} :
                                     </p>
                                     <p style={{ color: "green" }}>{SVF1}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.SM3H}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.SM3H}
+                                </p>
                             </div>
                         ),
                     },
@@ -175,19 +231,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVF} :
                                     </p>
                                     <p style={{ color: "green" }}>{GVF1}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.M3H}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.M3H}
+                                </p>
                             </div>
                         ),
                     },
@@ -201,19 +259,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVA} :
                                     </p>
                                     <p style={{ color: "green" }}>{SVA1}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.SM3}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.SM3}
+                                </p>
                             </div>
                         ),
                     },
@@ -227,19 +287,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVA} :
                                     </p>
                                     <p style={{ color: "green" }}>{GVA1}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.M3}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.M3}
+                                </p>
                             </div>
                         ),
                     },
@@ -253,19 +315,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVF} :
                                     </p>
                                     <p style={{ color: "green" }}>{SVF2}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.SM3H}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.SM3H}
+                                </p>
                             </div>
                         ),
                     },
@@ -279,19 +343,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVF} :
                                     </p>
                                     <p style={{ color: "green" }}>{GVF2}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.M3H}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.M3H}
+                                </p>
                             </div>
                         ),
                     },
@@ -305,19 +371,21 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVA} :
                                     </p>
                                     <p style={{ color: "green" }}>{SVA2}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.SM3}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.SM3}
+                                </p>
                             </div>
                         ),
                     },
@@ -331,25 +399,27 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: "white" }}>
+                                    <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVA} :
                                     </p>
                                     <p style={{ color: "green" }}>{GVA2}</p>
                                 </div>
-                                <p style={{ color: "white" }}>{KeyGas.M3}</p>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.M3}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "bara1") {
+            if (node.id === "Pressure_Trans01") {
                 return {
                     ...node,
                     data: {
@@ -357,24 +427,27 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 35,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
+                                    justifyContent: "space-between",
                                 }}
                             >
-                                <p
-                                    style={{
-                                        color: "green",
-                                        display: "flex",
-                                        marginLeft: 20,
-                                    }}
-                                ></p>
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: colorNameValue }}>
+                                        {ValueGas.PT} :
+                                    </p>
+                                    <p style={{ color: "green" }}>{PT01}</p>
+                                </div>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.BAR}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "bara2") {
+            if (node.id === "Pressure_Trans02") {
                 return {
                     ...node,
                     data: {
@@ -382,24 +455,27 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 35,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
+                                    justifyContent: "space-between",
                                 }}
                             >
-                                <p
-                                    style={{
-                                        color: "green",
-                                        display: "flex",
-                                        marginLeft: 20,
-                                    }}
-                                ></p>
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: colorNameValue }}>
+                                        {ValueGas.PT} :
+                                    </p>
+                                    <p style={{ color: "green" }}>{PT02}</p>
+                                </div>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.BAR}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "bara3") {
+            if (node.id === "Temperature_Trans01") {
                 return {
                     ...node,
                     data: {
@@ -407,23 +483,55 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 35,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
+                                    justifyContent: "space-between",
                                 }}
                             >
-                                <p
-                                    style={{
-                                        color: "green",
-                                        display: "flex",
-                                        marginLeft: 20,
-                                    }}
-                                ></p>
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: colorNameValue }}>
+                                        {ValueGas.TT} :
+                                    </p>
+                                    <p style={{ color: "green" }}>{TT01}</p>
+                                </div>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.CC}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
+            if (node.id === "Temperature_Trans02") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: colorNameValue }}>
+                                        {ValueGas.TT} :
+                                    </p>
+                                    <p style={{ color: "green" }}>{TT02}</p>
+                                </div>
+                                <p style={{ color: colorNameValue }}>
+                                    {KeyGas.CC}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
             if (node.id === "timeUpdate") {
                 return {
                     ...node,
@@ -432,15 +540,16 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 40,
+                                    fontSize: 30,
                                     fontWeight: 500,
+
                                     display: "flex",
                                 }}
                             >
                                 <p style={{ color: "white" }}>Last Update</p>
                                 <p
                                     style={{
-                                        color: "green",
+                                        color: "#ffaa00",
                                         display: "flex",
                                         marginLeft: 20,
                                     }}
@@ -460,25 +569,47 @@ export default function DemoFlowOTS() {
                         label: (
                             <div style={{}}>
                                 {checkConnectData ? (
-                                    <div style={{}}>
+                                    <div
+                                        style={{
+                                            fontSize: 30,
+                                            fontWeight: 500,
+
+                                            display: "flex",
+                                        }}
+                                    >
+                                        <p style={{ color: "white" }}>
+                                            Status{" "}
+                                        </p>
                                         <p
                                             style={{
-                                                padding: 5,
-                                                color: "green",
+                                                color: "#25d125",
+                                                display: "flex",
+                                                marginLeft: 20,
                                             }}
                                         >
-                                            {/* {ConnectedLed} */}
+                                            Connected
                                         </p>
                                     </div>
                                 ) : (
-                                    <div style={{}}>
+                                    <div
+                                        style={{
+                                            fontSize: 30,
+                                            fontWeight: 500,
+
+                                            display: "flex",
+                                        }}
+                                    >
+                                        <p style={{ color: "white" }}>
+                                            Status{" "}
+                                        </p>
                                         <p
                                             style={{
-                                                padding: 5,
-                                                color: "red",
+                                                color: "#ff7070",
+                                                display: "flex",
+                                                marginLeft: 20,
                                             }}
                                         >
-                                            {/* {disconnectedLed} */}
+                                            Disconnect
                                         </p>
                                     </div>
                                 )}
@@ -487,6 +618,7 @@ export default function DemoFlowOTS() {
                     },
                 };
             }
+
             return node;
         });
         setNodes(updatedNodes);
@@ -497,43 +629,91 @@ export default function DemoFlowOTS() {
     const initialPositions = storedPositionString
         ? JSON.parse(storedPositionString)
         : {
-              BallCenter: { x: 1310.951148683639, y: 828.7698239631837 },
-              TM1: { x: 1281.7484064862829, y: 597.4322976792727 },
-              TM2: { x: 1290.8955932643962, y: 1113.7693606579335 },
-              a1: { x: -229.43883457175264, y: 778.5652353625532 },
-              a2: { x: -0.1889794828818765, y: 742.2532438872325 },
-              a2a4: { x: 0.10273508338707416, y: 806.1917947498391 },
-              a3: { x: 232.03332922104704, y: 755.9597314937049 },
-              a4: { x: -0.45112418741769034, y: 933.6119273621325 },
-              a5: { x: 232.11439062589363, y: 935.65679273712 },
-              a5a3: { x: 231.8971233234156, y: 806.9675184921454 },
-              a6: { x: 465.56606726403834, y: 616.120611613153 },
-              a7: { x: 640.1533130719292, y: 603.7520524046778 },
-              a8: { x: 816.535393145343, y: 615.905006920832 },
-              a8a11: { x: 812.9412867356604, y: 1086.438485892446 },
-              a9: { x: 464.2916565134959, y: 1036.803440610771 },
-              a10: { x: 639.358703505003, y: 1024.90285497321 },
-              a11: { x: 813.1442650823649, y: 1036.8311131458647 },
-              a11a8: { x: 815.7335617338521, y: 665.9159081279635 },
-              a12: { x: 1012.6339972528488, y: 564.893896568368 },
-              a13: { x: 1555, y: 565.0913772247163 },
-              a13_BallCenter: { x: 1609.8720094417527, y: 606.2335423759686 },
-              a14: { x: 1012.2367878055722, y: 1084.0123883774495 },
-              a14_BallCenter: { x: 1110.68044502287, y: 1124.5598195760622 },
-              a15: { x: 1555.2679949062424, y: 1083.7336832529672 },
-              a16: { x: 1753.4071151650487, y: 858.3807621455585 },
-              a17: { x: 2056.673779572456, y: 830.1370600911795 },
-              a1313: { x: 1555, y: 1119.4798126318437 },
-              data1: { x: 1106.6730286441682, y: 470.7553917072497 },
-              data2: { x: 1106.3080212753916, y: 391.49940744997264 },
-              data3: { x: 1106.4319225336608, y: 314.1222842732521 },
-              data4: { x: 1106.7253789405067, y: 235.8901485451295 },
-              data5: { x: 1116.0067509322091, y: 1221.3672989301788 },
-              data6: { x: 1116.037189197011, y: 1299.5743886935893 },
-              data7: { x: 1115.814160999785, y: 1376.7098108936295 },
-              data8: { x: 1115.7679949062424, y: 1454.488492633882 },
-              dataTM1: { x: 1293, y: 100 },
-              timeUpdate: { x: -146.43461687213102, y: 261.5130385679415 },
+              BallValue01: { x: -1097.605629934581, y: 1173.607986636483 },
+              BallValue02: { x: -891.2045691421613, y: 1171.9528838503882 },
+              BallValue03: { x: -696.6526539739878, y: 901.1235928158399 },
+              BallValue04: { x: -696.0359880606529, y: 1206.662628430253 },
+              BallValue05: { x: -424.4943597444343, y: 900.5240644920967 },
+              BallValue06: { x: -424.12757625672475, y: 1206.17879809019 },
+              BallValue07: { x: 418.3921741541734, y: 1411.782662756458 },
+              BallValue08: { x: -190.77280623539374, y: 708.3496500172416 },
+              BallValue09: { x: -189.9460106807655, y: 1411.1899880078795 },
+              BallValue10: { x: 414.99525641767275, y: 708.7612288865865 },
+              BallValueCenter: { x: 115.59597391677278, y: 1070.6153121264047 },
+              BallValueCenter_Check: {
+                  x: 90.96636981528951,
+                  y: 1084.2937921267353,
+              },
+              BallValueCenter_None: {
+                  x: 131.96684078356355,
+                  y: 1105.6667128261267,
+              },
+              BallValueCenter_None2: {
+                  x: 172.06238604607165,
+                  y: 1105.8046467132351,
+              },
+              ConnectData: { x: -1134.1375965271236, y: 487.74880247840576 },
+              FIQ_1901: { x: 151.88338755257894, y: 727.5258186779024 },
+              FIQ_1902: { x: 185.88338755257894, y: 1430.9757474747291 },
+              HELP: { x: 750.7851455025582, y: 309.0601951574698 },
+              Header: { x: -1140.7800640424662, y: 325.43730785914363 },
+              PCV01: { x: -571.3267338977995, y: 886.2190552398349 },
+              PCV02: { x: -572.2292385950245, y: 1194.219055239835 },
+              PCV_NUM01: { x: -619.2144202562994, y: 816.0311507910837 },
+              PCV_NUM02: { x: -617.1228888470157, y: 1279.0054293977919 },
+              PSV01: { x: 596.7851455025582, y: 627.0601951574699 },
+              PSV_01: { x: 669.2538764594976, y: 836.4874717124227 },
+              PSV_02: { x: 648.3501259796325, y: 808.6024183693339 },
+              PSV_03: { x: 638.9992618921414, y: 704.6183280580515 },
+              PSV_None01: { x: 742.3718378164413, y: 1041.9226244049653 },
+              PSV_None02: { x: 694.4037921900604, y: 868.687476499454 },
+              PSV_None03: { x: 667.0132949567214, y: 833.4558433672137 },
+              PSV_None04: { x: 663.0867925941689, y: 727.8758269107395 },
+              Pressure_Trans01: { x: -182.7016565750124, y: 798.3557304227198 },
+              Pressure_Trans02: {
+                  x: -188.11661244742106,
+                  y: 1499.5258186779024,
+              },
+              SDV: { x: -1147.5862981848443, y: 963.7190552398351 },
+              SDV_Ball: { x: -1062.666185847575, y: 1207.802246453875 },
+              SDV_IMG: { x: -1101.582862024962, y: 1036.6197369290164 },
+              SDV_None: { x: -1088.4225430796919, y: 1084.3846479705223 },
+              Tank: { x: -925.8840753759819, y: 959.8792039115663 },
+              Tank_Ball: { x: -856.7123889459066, y: 1209.2517229357263 },
+              Tank_None: { x: -906.6261313289393, y: 1085.4707750355217 },
+              Temperature_Trans01: {
+                  x: 29.347931772380093,
+                  y: 798.730969752744,
+              },
+              Temperature_Trans02: {
+                  x: 25.883387552578938,
+                  y: 1499.5258186779024,
+              },
+              data1: { x: 0.35480754344791876, y: 639.0626212290737 },
+              data2: { x: 0.11904699106366934, y: 570.383119839662 },
+              data3: { x: 0.7624640610270035, y: 502.13505311458215 },
+              data4: { x: 0.5421928008739769, y: 433.7158008792085 },
+              data5: { x: 15.006750932209115, y: 1136.8672989301788 },
+              data6: { x: 14.43718919701098, y: 1207.5743886935893 },
+              data7: { x: 14.814160999784804, y: 1278.7098108936295 },
+              data8: { x: 14.76799490624228, y: 1349.488492633882 },
+              line1: { x: -1179.679115196726, y: 1085.5692254680569 },
+              line2: { x: -817.6211537200223, y: 1085.4365275251103 },
+              line3: { x: -665.7972452980424, y: 936.4534537832784 },
+              line4: { x: -666.6379487203451, y: 1242.0439575604762 },
+              line5: { x: -395.4911784135934, y: 936.4344118626898 },
+              line6: { x: -395.35020171066435, y: 1242.0033423427326 },
+              line7: { x: -277.2494157546796, y: 1090.0143295493367 },
+              line8: { x: -160.93843313638945, y: 742.7916712815348 },
+              line9: { x: -161.2464958856404, y: 1446.4332534760574 },
+              line10: { x: 446.3046911017194, y: 743.8273408328664 },
+              line11: { x: 447.93050744084644, y: 1446.4435456601166 },
+              line12: { x: 626.5136457836865, y: 1042.4658932005227 },
+              line13: { x: 832.6936273747973, y: 1042.463725443685 },
+              ArrowRight:{x: 777.455471857383, y: 991.6807441860246},
+              ArrowRight1:{x: -1231.5469404481196, y: 1033.7889028554175},
+
+              timeUpdate: { x: -1134.2800640424662, y: 419.493859473365 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -541,121 +721,290 @@ export default function DemoFlowOTS() {
     const [editingEnabled, setEditingEnabled] = useState(false);
 
     const [initialNodes, setInitialNodes] = useState([
+        // ============================== line =========================================
         {
-            id: "a1",
-            position: positions.a1,
+            id: "line1",
+            position: positions.line1,
             type: "custom",
             data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/Vector.png"
-                            width={50}
-                            height={50}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
         },
         {
-            id: "a2",
-            position: positions.a2,
+            id: "line2",
+            position: positions.line2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line3",
+            position: positions.line3,
+            type: "custom",
+            data: {
+                label: <div>3</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line4",
+            position: positions.line4,
+            type: "custom",
+            data: {
+                label: <div>4</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line5",
+            position: positions.line5,
+            type: "custom",
+            data: {
+                label: <div>5</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line6",
+            position: positions.line6,
+            type: "custom",
+            data: {
+                label: <div>6</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: line, width: 30, height: 10, background: line },
+        },
+        {
+            id: "line7",
+            position: positions.line7,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 5, background: line },
+        },
+        {
+            id: "line8",
+            position: positions.line8,
+            type: "custom",
+            data: {
+                label: <div>8</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line9",
+            position: positions.line9,
+            type: "custom",
+            data: {
+                label: <div>9</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line10",
+            position: positions.line10,
+            type: "custom",
+            data: {
+                label: <div>10</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line11",
+            position: positions.line11,
+            type: "custom",
+            data: {
+                label: <div>11</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line12",
+            position: positions.line12,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "none", width: 30, height: 10, background: line },
+        },
+        {
+            id: "line13",
+            position: positions.line13,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 30,
+                height: 10,
+                background: background,
+            },
+        },
+
+        // ============================== line =========================================
+
+        {
+            id: "SDV",
+            position: positions.SDV,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        {" "}
                         <SDV_Otsuka />
-                        <br />
-                        <p style={{ fontSize: 20 }}>
-                            <Image
-                                src="/layout/imgGraphic/Symbol.png"
-                                width={80}
-                                height={60}
-                                alt="Picture of the author"
-                            />
-                        </p>
                     </div>
                 ),
             },
-            zIndex: 9999,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: { border: "#333333", background: background, width: 200 },
         },
         {
-            id: "a3",
-            position: positions.a3,
+            id: "SDV_None",
+            position: positions.SDV_None,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 75,
+                height: 22,
+            },
+        },
+        {
+            id: "SDV_Ball",
+            position: positions.SDV_Ball,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 20,
+                height: 22,
+            },
+        },
+        {
+            id: "SDV_IMG",
+            position: positions.SDV_IMG,
+            type: "custom",
+            data: {
+                label: <div>{SDV}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+
+        //=================== Ball vavle ==================================
+        {
+            id: "BallValue01",
+            position: positions.BallValue01,
             type: "custom",
             data: {
                 label: (
-                    <div
-                        style={{
-                            height: 100,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                        }}
-                    >
-                        {" "}
-                        <Image
-                            src="/layout/imgGraphic/TankFilter.png"
-                            width={80}
-                            height={70}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
-            zIndex: 999,
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a4",
-            position: positions.a4,
-            type: "turbo",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
+                    <div>
                         <BallValue01 />
                     </div>
                 ),
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Top,
+            targetPosition: Position.Top,
+            style: {
+                border: background,
+
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a5",
-            position: positions.a5,
+            id: "BallValue02",
+            position: positions.BallValue02,
             type: "custom",
             data: {
                 label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
+                    <div>
                         <BallValue02 />
                     </div>
                 ),
             },
-
+            zIndex: 9999,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a6",
-            position: positions.a6,
+            id: "BallValue03",
+            position: positions.BallValue03,
             type: "custom",
             data: {
                 label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
+                    <div>
                         <BallValue03 />
                     </div>
                 ),
@@ -663,55 +1012,42 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: {
+                border: background,
+
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a7",
-            position: positions.a7,
+            id: "BallValue04",
+            position: positions.BallValue04,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        {" "}
-                        <PCV_01_Otsuka />
-                        <br />
-                        <Image
-                            src="/layout/imgGraphic/PCV.png"
-                            width={80}
-                            height={60}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a8",
-
-            position: positions.a8,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
                         <BallValue04 />
                     </div>
                 ),
             },
-            zIndex: 9999,
+
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a9",
-            position: positions.a9,
+            id: "BallValue05",
+            position: positions.BallValue05,
             type: "custom",
             data: {
                 label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
+                    <div>
                         <BallValue05 />
                     </div>
                 ),
@@ -719,199 +1055,332 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: {
+                border: background,
+
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a10",
-            position: positions.a10,
+            id: "BallValue06",
+            position: positions.BallValue06,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        {" "}
-                        <PCV_02_Otsuka />
-                        <br />
-                        <Image
-                            src="/layout/imgGraphic/PCV.png"
-                            width={80}
-                            height={60}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a11",
-            position: positions.a11,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
                         <BallValue06 />
                     </div>
                 ),
             },
-            zIndex: 9999,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-        },
-        {
-            id: "a12",
-            position: positions.a12,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
-                        <BallValue07 />
-                    </div>
-                ),
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
             },
-            borderRadius: 8,
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
         },
         {
-            id: "a13",
-            position: positions.a13,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
-                        <BallValue08 />
-                    </div>
-                ),
-            },
-            zIndex: 9999,
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a14",
-            position: positions.a14,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
-                        <BallValue09 />
-                    </div>
-                ),
-            },
-            zIndex: 9999,
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a15",
-            position: positions.a15,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
-                        <BallValue10 />
-                    </div>
-                ),
-            },
-            zIndex: 9999,
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-        },
-        {
-            id: "a16",
-            position: positions.a16,
-            type: "custom",
-            data: {
-                label: <div style={{ background: "#999999" }}></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: { background: "#999999", border: "none", height: "3px" },
-        },
-        {
-            id: "a17",
-            position: positions.a17,
+            id: "BallValue07",
+            position: positions.BallValue07,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <Image
-                            src="/layout/imgGraphic/icons8-arrow-100.png"
-                            width={50}
-                            height={50}
-                            alt="Picture of the author"
-                        />
+                        <BallValue07 />
                     </div>
                 ),
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            style: {
+                border: background,
+
+                background: background,
+                width: 1,
+                height: 1,
+            },
         },
         {
-            id: "a2a4",
-            position: positions.a2a4,
+            id: "BallValue08",
+            position: positions.BallValue08,
             type: "custom",
             data: {
-                label: <div> </div>,
+                label: (
+                    <div>
+                        <BallValue08 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "BallValue09",
+            position: positions.BallValue09,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue09 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: background,
+
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "BallValue10",
+            position: positions.BallValue10,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue10 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+        // ================= Tank ======================
+        {
+            id: "Tank",
+            position: positions.Tank,
+            type: "custom",
+            data: {
+                label: <div>{tankGas}</div>,
+            },
+            zIndex: 9999,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "Tank_None",
+            position: positions.Tank_None,
+            type: "custom",
+            data: {
+                label: <div></div>,
             },
 
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
+            style: {
+                border: "#ffaa00",
+                background: "#ffaa00",
+                width: 125,
+                height: 1,
+            },
         },
         {
-            id: "a5a3",
-            position: positions.a5a3,
+            id: "Tank_Ball",
+            position: positions.Tank_Ball,
             type: "custom",
             data: {
-                label: <div> </div>,
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 20,
+                height: 2,
+            },
+        },
+
+        // ================= PCV =============================
+
+        {
+            id: "PCV01",
+            position: positions.PCV01,
+            type: "custom",
+            data: {
+                label: <div>{PCV}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PCV02",
+            position: positions.PCV02,
+            type: "custom",
+            data: {
+                label: <div>{PCV}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+
+        {
+            id: "PCV_NUM01",
+            position: positions.PCV_NUM01,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <PCV_01_Otsuka />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "#333333", background: background, width: 200 },
+        },
+
+        {
+            id: "PCV_NUM02",
+            position: positions.PCV_NUM02,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <PCV_02_Otsuka />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "#333333", background: background, width: 200 },
+        },
+
+        // ==================== FIQ =============================
+
+        {
+            id: "FIQ_1901",
+            position: positions.FIQ_1901,
+            type: "custom",
+            data: {
+                label: <div>FIQ-1901</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: { background: "white", fontSize: 20 },
+        },
+        {
+            id: "FIQ_1902",
+            position: positions.FIQ_1902,
+            type: "custom",
+            data: {
+                label: <div>FIQ-1902</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: { background: "white", fontSize: 20 },
+        },
+
+        // ==================== Ball center =============================
+        {
+            id: "BallValueCenter",
+            position: positions.BallValueCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueCenter />
+                    </div>
+                ),
             },
 
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
+            zIndex: 9999,
         },
+
         {
-            id: "a8a11",
-            position: positions.a8a11,
+            id: "BallValueCenter_None",
+            position: positions.BallValueCenter_None,
             type: "custom",
             data: {
-                label: <div> </div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 10,
+                height: 10,
+            },
         },
         {
-            id: "a11a8",
-            position: positions.a11a8,
+            id: "BallValueCenter_None2",
+            position: positions.BallValueCenter_None2,
             type: "custom",
             data: {
-                label: <div> </div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-        },
-        {
-            id: "a1313",
-            position: positions.a1313,
-            type: "custom",
-            data: {
-                label: <div> </div>,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 10,
+                height: 10,
             },
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
         },
+
+        // =================== data ================================
 
         {
             id: "data1",
@@ -931,10 +1400,10 @@ export default function DemoFlowOTS() {
             position: positions.data1,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
@@ -956,10 +1425,10 @@ export default function DemoFlowOTS() {
             position: positions.data2,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
@@ -982,10 +1451,10 @@ export default function DemoFlowOTS() {
             position: positions.data3,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
@@ -1008,10 +1477,10 @@ export default function DemoFlowOTS() {
             position: positions.data4,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
@@ -1035,10 +1504,10 @@ export default function DemoFlowOTS() {
             position: positions.data5,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Top,
         },
@@ -1061,10 +1530,10 @@ export default function DemoFlowOTS() {
             position: positions.data6,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Top,
         },
@@ -1087,10 +1556,10 @@ export default function DemoFlowOTS() {
             position: positions.data7,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
             },
             targetPosition: Position.Top,
         },
@@ -1113,100 +1582,436 @@ export default function DemoFlowOTS() {
             position: positions.data8,
 
             style: {
-                background: "#333333",
+                background: backGroundData,
                 border: "2px solid white",
                 width: 500,
-                height: 70,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
+        // ============= PSV =====================
+
+        {
+            id: "PSV_01",
+            position: positions.PSV_01,
+            type: "custom",
+            data: {
+                label: <div>{BlackTriangle}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Bottom,
+            zIndex: 9999,
+            style: {
+                background: background,
+                border: "none",
+                width: 1,
+                height: 1,
+            },
+        },
+
+        {
+            id: "PSV_02",
+            position: positions.PSV_02,
+            type: "custom",
+            data: {
+                label: <div>{BlackTriangleRight}</div>,
+            },
+            zIndex: 9999,
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Bottom,
+            style: {
+                background: background,
+                border: "none",
+                width: 1,
+                height: 1,
+            },
+        },
+
+        {
+            id: "PSV_03",
+            position: positions.PSV_03,
+            type: "custom",
+            data: {
+                label: <div>{WhiteTriangleRight}</div>,
+            },
+
+            zIndex: 9999,
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Bottom,
+            style: {
+                background: background,
+                border: "none",
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PSV_None01",
+            position: positions.PSV_None01,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PSV_None02",
+            position: positions.PSV_None02,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Bottom,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PSV_None03",
+            position: positions.PSV_None03,
+            type: "custom",
+            data: {
+                label: <div>3</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Bottom,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PSV_None04",
+            position: positions.PSV_None04,
+            type: "custom",
+            data: {
+                label: <div>4</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 1,
+                height: 1,
+            },
+        },
+        {
+            id: "PSV01",
+            position: positions.PSV01,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <PSV01_Otsuka />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: { border: "#333333", background: background, width: 200 },
+        },
+
+        // =================  PT ===================================
+
+        {
+            id: "Pressure_Trans01",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.Pressure_Trans01,
+
+            style: {
+                background: backGroundData,
+                border: "2px solid white",
+                width: 200,
+                height: 65,
             },
             targetPosition: Position.Top,
         },
         {
-            id: "TM1",
-            position: positions.TM1,
-            type: "custom",
+            id: "Pressure_Trans02",
             data: {
-                label: <div style={{ fontSize: 25 }}> FIQ-1901</div>,
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
             },
+            position: positions.Pressure_Trans02,
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
+            style: {
+                background: backGroundData,
+                border: "2px solid white",
+                width: 200,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
+
+        //  ================== TT ======================
+
+        {
+            id: "Temperature_Trans01",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.Temperature_Trans01,
+
+            style: {
+                background: backGroundData,
+                border: "2px solid white",
+                width: 200,
+                height: 65,
+            },
+            targetPosition: Position.Top,
         },
         {
-            id: "TM2",
-            position: positions.TM2,
-            type: "custom",
+            id: "Temperature_Trans02",
             data: {
-                label: <div style={{ fontSize: 25 }}>FIQ_1902 </div>,
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.Temperature_Trans02,
+
+            style: {
+                background: backGroundData,
+                border: "2px solid white",
+                width: 200,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
+        // ================ header ========================
+
+        {
+            id: "Header",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 60,
+                                    fontWeight: 500,
+                                    color: "#ffaa00",
+                                }}
+                            >
+                                EWON OTSUKA
+                            </p>
+                        </div>
+                    </div>
+                ),
             },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
+            position: positions.Header,
+
+            style: {
+                background: background,
+                border: background,
+                width: "500px",
+
+                height: 100,
+            },
+            targetPosition: Position.Bottom,
         },
+        {
+            id: "HELP",
+            data: {
+                label: (
+                    <div>
+                        <div
+                            style={{
+                                textAlign: "center",
+                                cursor: "pointer",
+                            }}
+                        >
+                            <p
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    border: "5px solid white",
+                                    borderRadius: 50,
+                                    fontWeight: 600,
+                                    color: "white",
+                                    fontSize: 30,
+                                }}
+                                onClick={() => setVisible(true)}
+                            >
+                                ?
+                            </p>
+                        </div>
+                    </div>
+                ),
+            },
+
+            position: positions.HELP,
+
+            style: {
+                background: background,
+                border: background,
+
+                height: 100,
+            },
+            targetPosition: Position.Bottom,
+        },
+        // =============== TIME  =======================
+
         {
             id: "timeUpdate",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 60,
+                                    fontWeight: 500,
+                                    color: "#ffaa00",
+                                }}
+                            ></p>
+                        </div>
+                    </div>
+                ),
+            },
+
             position: positions.timeUpdate,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "800px",
+
+                height: 80,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        //====================== Conneted ===================
+
+        {
+            id: "ConnectData",
             data: {
                 label: <div></div>,
             },
-            sourcePosition: Position.Left,
-            targetPosition: Position.Left,
+
+            position: positions.ConnectData,
+
             style: {
-                background: "#333333",
+                background: background,
                 border: "none",
-                width: 750,
-            },
-        },
-        {
-            id: "BallCenter",
-            position: positions.BallCenter,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ height: 100 }}>
-                        {" "}
-                        <BallValueCenter />
-                    </div>
-                ),
-            },
-            borderRadius: 8,
+                width: "10px",
 
-            targetPosition: Position.Right,
-            sourcePosition: Position.Left,
-        },
-        {
-            id: "a13_BallCenter",
-            position: positions.a13_BallCenter,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <p>a13CT</p>
-                    </div>
-                ),
+                height: 10,
             },
-            borderRadius: 8,
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: { width: 50 },
+            targetPosition: Position.Bottom,
         },
-        {
-            id: "a14_BallCenter",
-            position: positions.a14_BallCenter,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        {" "}
-                        <p> a14CT</p>
-                    </div>
-                ),
-            },
-            borderRadius: 8,
+        // =================== Arrow ====================== 
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: { width: 50 },
+        {
+            id: "ArrowRight",
+            data: {
+                label: <div>{ArrowRight}</div>,
+            },
+
+            position: positions.ArrowRight,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "ArrowRight1",
+            data: {
+                label: <div>{ArrowRight}</div>,
+            },
+
+            position: positions.ArrowRight1,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
         },
     ]);
 
@@ -1221,132 +2026,224 @@ export default function DemoFlowOTS() {
                         n.id === id ? { ...n, position: position } : n
                     )
                 );
-                if (id === "a1") {
+                if (id === "SDV") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a1: position,
+                        SDV: position,
                     }));
-                } else if (id === "a2") {
+                } else if (id === "SDV_None") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a2: position,
+                        SDV_None: position,
                     }));
-                } else if (id === "a3") {
+                } else if (id === "SDV_IMG") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a3: position,
+                        SDV_IMG: position,
                     }));
-                } else if (id === "a4") {
+                } else if (id === "SDV_Ball") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a4: position,
+                        SDV_Ball: position,
                     }));
-                } else if (id === "a5") {
+                }
+                // ================================== end item ==================================
+
+                // ============ line =========================
+                else if (id === "line1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a5: position,
+                        line1: position,
                     }));
-                } else if (id === "a6") {
+                } else if (id === "line2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a6: position,
+                        line2: position,
                     }));
-                } else if (id === "a7") {
+                } else if (id === "line3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a7: position,
+                        line3: position,
                     }));
-                } else if (id === "a8") {
+                } else if (id === "line4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a8: position,
+                        line4: position,
                     }));
-                } else if (id === "a9") {
+                } else if (id === "line5") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a9: position,
+                        line5: position,
                     }));
-                } else if (id === "a10") {
+                } else if (id === "line6") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a10: position,
+                        line6: position,
                     }));
-                } else if (id === "a11") {
+                } else if (id === "line7") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a11: position,
+                        line7: position,
                     }));
-                } else if (id === "a12") {
+                } else if (id === "line8") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a12: position,
+                        line8: position,
                     }));
-                } else if (id === "a13") {
+                } else if (id === "line9") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a13: position,
+                        line9: position,
                     }));
-                } else if (id === "a14") {
+                } else if (id === "line10") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a14: position,
+                        line10: position,
                     }));
-                } else if (id === "a15") {
+                } else if (id === "line11") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a15: position,
+                        line11: position,
                     }));
-                } else if (id === "a16") {
+                } else if (id === "line12") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a16: position,
+                        line12: position,
                     }));
-                } else if (id === "a17") {
+                } else if (id === "line13") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a17: position,
+                        line13: position,
                     }));
-                } else if (id === "a5a3") {
+                }
+
+                // ============ ball vavle ===========================
+                else if (id === "BallValue01") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a5a3: position,
+                        BallValue01: position,
                     }));
-                } else if (id === "a2a4") {
+                } else if (id === "BallValue02") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a2a4: position,
+                        BallValue02: position,
                     }));
-                } else if (id === "a8a11") {
+                } else if (id === "BallValue03") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a8a11: position,
+                        BallValue03: position,
                     }));
-                } else if (id === "a11a8") {
+                } else if (id === "BallValue04") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a11a8: position,
+                        BallValue04: position,
                     }));
-                } else if (id === "a1313") {
+                } else if (id === "BallValue05") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a1313: position,
+                        BallValue05: position,
                     }));
-                } else if (id === "TM1") {
+                } else if (id === "BallValue06") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TM1: position,
+                        BallValue06: position,
                     }));
-                } else if (id === "dataTM1") {
+                } else if (id === "BallValue07") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        dataTM1: position,
+                        BallValue07: position,
                     }));
-                } else if (id === "TM2") {
+                } else if (id === "BallValue08") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TM2: position,
+                        BallValue08: position,
                     }));
-                } else if (id === "data1") {
+                } else if (id === "BallValue09") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue09: position,
+                    }));
+                } else if (id === "BallValue10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue10: position,
+                    }));
+                }
+                // ============ ball vavle ===========================
+                else if (id === "Tank") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank: position,
+                    }));
+                } else if (id === "Tank_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_None: position,
+                    }));
+                } else if (id === "Tank_Ball") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_Ball: position,
+                    }));
+                }
+                // ============ PCV ===========================
+                else if (id === "PCV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV01: position,
+                    }));
+                } else if (id === "PCV02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV02: position,
+                    }));
+                } else if (id === "PCV_NUM01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM01: position,
+                    }));
+                } else if (id === "PCV_NUM02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM02: position,
+                    }));
+                }
+                // ============ FIQ ===========================
+                else if (id === "FIQ_1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1901: position,
+                    }));
+                } else if (id === "FIQ_1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1902: position,
+                    }));
+                }
+                // ============ Ball center ===========================
+                else if (id === "BallValueCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter: position,
+                    }));
+                } else if (id === "BallValueCenter_Check") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_Check: position,
+                    }));
+                } else if (id === "BallValueCenter_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None: position,
+                    }));
+                } else if (id === "BallValueCenter_None2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None2: position,
+                    }));
+                }
+                // ========================= data ==========================
+                else if (id === "data1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         data1: position,
@@ -1386,25 +2283,109 @@ export default function DemoFlowOTS() {
                         ...prevPositions,
                         data8: position,
                     }));
-                } else if (id === "timeUpdate") {
+                }
+                // ========================= PSV ==========================
+                else if (id === "PSV_01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_01: position,
+                    }));
+                } else if (id === "PSV_02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_02: position,
+                    }));
+                } else if (id === "PSV_03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_03: position,
+                    }));
+                } else if (id === "PSV_None01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None01: position,
+                    }));
+                } else if (id === "PSV_None02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None02: position,
+                    }));
+                } else if (id === "PSV_None03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None03: position,
+                    }));
+                } else if (id === "PSV_None04") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None04: position,
+                    }));
+                } else if (id === "PSV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV01: position,
+                    }));
+                }
+                //  ================ PT ===================
+                else if (id === "Pressure_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans01: position,
+                    }));
+                } else if (id === "Pressure_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans02: position,
+                    }));
+                }
+                // ================ TT =================
+                else if (id === "Temperature_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans01: position,
+                    }));
+                } else if (id === "Temperature_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans02: position,
+                    }));
+                }
+                // ============= header ===============
+                else if (id === "Header") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Header: position,
+                    }));
+                } else if (id === "HELP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        HELP: position,
+                    }));
+                }
+                // ============= Time Update ==================
+                else if (id === "timeUpdate") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         timeUpdate: position,
                     }));
-                } else if (id === "BallCenter") {
+                }
+                // ============= Connected ===================
+                else if (id === "ConnectData") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallCenter: position,
+                        ConnectData: position,
                     }));
-                } else if (id === "a13_BallCenter") {
+                }
+                // ============= Arrow ====================== 
+                else if (id === "ArrowRight") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a13_BallCenter: position,
+                        ArrowRight: position,
                     }));
-                } else if (id === "a14_BallCenter") {
+                }  else if (id === "ArrowRight1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        a14_BallCenter: position,
+                        ArrowRight1: position,
                     }));
                 }
             }
@@ -1419,65 +2400,28 @@ export default function DemoFlowOTS() {
         localStorage.setItem("positionsDemo", JSON.stringify(positions));
     }, [positions]);
 
-    const paragraphContents: Record<string, string> = {
-        SVF: "Standard Volume Flow Rate",
-        GVF: "Gross Volume Flow Rate",
-        SVA: "Standard Volume Accumulated",
-        GVA: "Gross Volume Accumulated",
-        PT: "Pressure Transmitter",
-        PSV: "Pressure Safety Valve",
-        PCV: "Pressure Control Valve",
-        SSV: "Slam Shut Off Valve",
-        SDV: "Shutdown valve",
-    };
     return (
         <div>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
-            <div
+            </Button>
+            <Dialog
+                visible={visible}
+                onHide={() => setVisible(false)}
                 style={{
-                    padding: 15,
-                    display: "flex",
-                    justifyContent: "space-between",
+                    width: 500,
+                    fontWeight: 500,
+                    fontSize: 17,
                 }}
             >
-                <div>
-                    <p style={{ fontSize: 25, fontWeight: 500 }}>EWON OTSUKA</p>
-                </div>
-
-                <div
-                    style={{
-                        width: 25,
-                        height: 30,
-                        textAlign: "center",
-                        cursor: "pointer",
-                    }}
-                >
-                    <p
-                        style={{
-                            border: "2px solid black",
-                            borderRadius: 50,
-                            fontWeight: 600,
-                        }}
-                        onClick={(e: any) => op.current?.toggle(e)}
-                    >
-                        ?
-                    </p>
-                    <OverlayPanel
-                        style={{ width: 400, fontWeight: 500, fontSize: 17 }}
-                        ref={op}
-                    >
-                        {Object.keys(paragraphContents).map(
-                            (key: string, index: number) => (
-                                <p key={index}>
-                                    {key} - {paragraphContents[key]} <hr />
-                                </p>
-                            )
-                        )}
-                    </OverlayPanel>
-                </div>
-            </div>
+                {Object.keys(paragraphContents).map(
+                    (key: string, index: number) => (
+                        <p key={index}>
+                            {key} - {paragraphContents[key]} <hr />
+                        </p>
+                    )
+                )}
+            </Dialog>
             <div
                 style={{
                     width: "100%",
@@ -1485,10 +2429,10 @@ export default function DemoFlowOTS() {
                     position: "relative",
                     overflow: "hidden",
                     alignItems: "center",
-                    background: "#333333",
+                    background: background,
                 }}
             >
-                {/* {!editingEnabled && (
+                {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -1514,7 +2458,7 @@ export default function DemoFlowOTS() {
                             height: "100%",
                         }}
                     ></div>
-                )} */}
+                )}
 
                 <ReactFlow
                     nodes={nodes}
@@ -1522,7 +2466,7 @@ export default function DemoFlowOTS() {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
