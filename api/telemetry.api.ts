@@ -5,3 +5,13 @@ export const getSeverAttributesByDevice = (deviceId: string): Promise<any> => {
         `/plugins/telemetry/DEVICE/${deviceId}/values/attributes/SERVER_SCOPE`
     );
 };
+
+export const saveOrUpdateSeverAttributesByDevice = (
+    deviceId: string,
+    attribute: any
+): Promise<any> => {
+    return httpApi.post<any>(
+        `/plugins/telemetry/DEVICE/${deviceId}/SERVER_SCOPE`,
+        { ...attribute }
+    );
+};

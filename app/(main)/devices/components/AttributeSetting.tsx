@@ -1,6 +1,9 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { getSeverAttributesByDevice } from "@/api/telemetry.api";
+import {
+    getSeverAttributesByDevice,
+    saveOrUpdateSeverAttributesByDevice,
+} from "@/api/telemetry.api";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Utils } from "@/service/Utils";
@@ -10,6 +13,7 @@ import { Button } from "primereact/button";
 import { AutoComplete } from "primereact/autocomplete";
 import { Checkbox } from "primereact/checkbox";
 import { InputTextarea } from "primereact/inputtextarea";
+import { InputNumber } from "primereact/inputnumber";
 import debounce from "lodash/debounce";
 
 interface Props {
@@ -50,7 +54,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
             }
         }, 2000),
         []
-    ); // Adjust debounce delay as needed (500ms in this example)
+    );
     useEffect(() => {
         let newAttribute = {
             ...defaultAttribute,
@@ -91,13 +95,18 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 if (value !== "") {
                     newAttribute.value.value = Number(value);
                 }
+
+                console.log(newAttribute);
                 setAttribute(newAttribute);
                 break;
             case "doubleValue":
                 if (value !== "") {
+                    console.log(typeof value);
                     newAttribute.value.value = Number(value);
                 }
+                console.log(newAttribute);
                 setAttribute(newAttribute);
+                break;
             case "jsonValue":
                 newAttribute.value.value = value;
                 console.log(newAttribute);
@@ -149,13 +158,14 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 );
             case "Double":
                 return (
-                    <InputText
+                    <InputNumber
                         value={attribute?.value.value}
                         onChange={(e) => {
-                            _onChangeInputForm("doubleValue", e.target.value);
+                            _onChangeInputForm("doubleValue", e.value);
                         }}
-                        keyfilter="pint"
-                        type="text"
+                        mode="decimal"
+                        minFractionDigits={2}
+                        maxFractionDigits={5}
                     />
                 );
             case "Boolean":
@@ -216,6 +226,26 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
             return true;
         return false;
     };
+    const _onOkAttributeForm = () => {
+        let reqParams: any = {};
+
+        if (
+            attribute.value.type === "JSON" &&
+            typeof attribute.value.value === "string"
+        ) {
+            try {
+                reqParams[attribute.key] = JSON.parse(attribute.value.value);
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+            }
+        } else {
+            reqParams[attribute.key] = attribute.value.value;
+        }
+        saveOrUpdateSeverAttributesByDevice(deviceId, reqParams).then(
+            (resp) => resp.data
+        );
+        console.log(reqParams);
+    };
 
     const footerAttributeForm = (
         <div>
@@ -223,7 +253,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 label="Ok"
                 disabled={validateAttribute()}
                 icon="pi pi-check"
-                //  onClick={_onOkCondtionForm}
+                onClick={_onOkAttributeForm}
                 autoFocus
             />
             <Button label="Cancel" icon="pi pi-check" />

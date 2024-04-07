@@ -281,7 +281,10 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
         }
     };
     const _onSuggOperations = () => {
-        if (condition.valueType === "NUMERIC") {
+        if (
+            condition.valueType === "NUMERIC" ||
+            clearCondition.valueType === "NUMERIC"
+        ) {
             setOperations([
                 { label: "EQUAL", value: "EQUAL" },
                 { label: "NOT_EQUAL", value: "NOT_EQUAL" },
@@ -290,7 +293,10 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 { label: "GREATER_OR_EQUAL", value: "GREATER_OR_EQUAL" },
                 { label: "LESS_OR_EQUAL", value: "LESS_OR_EQUAL" },
             ]);
-        } else if (condition.valueType === "BOOLEAN") {
+        } else if (
+            condition.valueType === "BOOLEAN" ||
+            clearCondition.valueType === "BOOLEAN"
+        ) {
             setOperations([
                 { label: "EQUAL", value: "EQUAL" },
                 { label: "NOT_EQUAL", value: "NOT_EQUAL" },
