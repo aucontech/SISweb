@@ -169,7 +169,7 @@ const Banking = () => {
 
     return (
         <div className="grid">
-            <div className="col-12">
+            {/* <div className="col-12">
                 <div className="flex flex-column sm:flex-row align-items-center gap-4">
                     <div className="flex flex-column sm:flex-row align-items-center gap-3">
                         <img
@@ -298,7 +298,7 @@ const Banking = () => {
                         $10,416.11
                     </span>
                 </div>
-            </div>
+            </div> */}
 
             <div className="col-12 xl:col-4">
                 <div className="card">
@@ -389,7 +389,7 @@ const Banking = () => {
                     </ul>
                 </div>
             </div>
-            <div className="col-12 xl:col-8">
+            {/* <div className="col-12 xl:col-8">
                 <div className="card">
                     <div className="text-900 text-xl font-semibold mb-3">
                         Overview
@@ -542,7 +542,7 @@ const Banking = () => {
                         ></Column>
                     </DataTable>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,22 +1,22 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
+import { InputText } from 'primereact/inputtext';
+import { OverlayPanel } from "primereact/overlaypanel";
+import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
-import { BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
 
-export default function BallValue02() {
+export default function PSV01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
-    const [data, setData] = useState([]);
 
-    const [Status, setStatus] = useState<any>([]);
+    const [inputValue, setInputValue] = useState<any>(); 
 
     const token = readToken();
+    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -32,7 +32,7 @@ export default function BallValue02() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_02",
+                                key: "PSV_01",
                             },
                         ],
                     },
@@ -72,7 +72,7 @@ export default function BallValue02() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_02",
+                                key: "PSV_01",
                             },
                         ],
                     },
@@ -82,14 +82,18 @@ export default function BallValue02() {
 
         if (ws.current) {
             ws.current.onopen = () => {
+                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj2));
                 });
             };
 
-            ws.current.onclose = () => {};
+            ws.current.onclose = () => {
+                console.log("WebSocket connection closed.");
+            };
 
             return () => {
+                console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
@@ -101,12 +105,12 @@ export default function BallValue02() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_02
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_02
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01
                             .ts;
                     setUpTS(ballTS);
                 } else if (
@@ -114,10 +118,10 @@ export default function BallValue02() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_02
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_02.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -126,61 +130,47 @@ export default function BallValue02() {
         }
     }, []);
 
+
     const handleButtonClick = async () => {
         try {
-            const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { BallValue_02: newValue }
+                { PSV_01: inputValue }
             );
-            setSensorData(newValue);
-            fetchData();
-        } catch (error) {}
+            setSensorData(inputValue);
+            setUpData(inputValue)
+            op.current?.hide();
+           
+        } catch (error) {
+            console.log("error: ", error);
+           
+        }
+    };
+    
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value); 
+        setInputValue(newValue);
     };
 
-    const fetchData = async () => {
-        try {
-            const res = await httpApi.get(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-            );
-            setData(res.data);
-        } catch (error) {}
+    const handleButtonToggle = (e: React.MouseEvent) => {
+        op.current?.toggle(e); 
+        setInputValue(upData);
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
     return (
         <div>
-             {data.map((item: any) => (
-                <div key={item.key}>
-                    {item.key === "BallValue_02" && (
-                        <div
-                        style={{
-                            cursor: "pointer",
-                            border: "none",
-                           
-                        }}
-                        onClick={handleButtonClick}
 
-                         >
-                            
-                                {item.value.toString() === "false" ? (
-                                    <div style={{ background:backgroundGraphic   }}>
+         
 
-                                       {BallVavleOn}
+            <Button style={{border:'none',fontSize:25 }} onClick={handleButtonToggle}>     PSV - {upData}</Button>
+            
+            <OverlayPanel ref={op}>
+                <div>
+                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
 
-                                    </div>
-                                ) : (
-                                    <div style={{ background:backgroundGraphic   }}>
-                                        {BallVavleOff}
-
-                                    </div>
-                                )}
-                        </div>
-                    )}
+                    <Button label="Update" onClick={handleButtonClick} />
                 </div>
-            ))}
+            </OverlayPanel>
         </div>
     );
 }

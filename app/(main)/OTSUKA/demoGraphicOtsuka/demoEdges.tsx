@@ -1,28 +1,24 @@
 import { MarkerType } from "reactflow";
 
 const styleLine = {
-    strokeWidth: 10,
-    stroke: "#999999",
+    strokeWidth: 18,
+    stroke: "#ffaa00",
 };
 
 const styleHide = {
-    strokeWidth: 3,
-    stroke: "#999999",
+    strokeWidth: 6,
+    stroke: "#ffaa00",
 }
 
-const markerType = {
-    type: MarkerType.ArrowClosed,
-    width: 7,
-    height: 7,
-    color: "#036E9B",
-};
+
 
 export const DemoEdges = [
     {
-        id: "a1-a2",
-        source: "a1",
-        target: "a2",
+        id: "line1-line2",
+        source: "line1",
+        target: "line2",
         // animated: true,
+        type: "smoothstep",
 
         style: {
             ...styleLine,
@@ -30,24 +26,131 @@ export const DemoEdges = [
     },
   
     {
-        id: "a2-a3",
-        source: "a2",
-        target: "a3",
+        id: "line2-line3",
+        source: "line2",
+        target: "line3",
         type: "smoothstep",
         // animated: true,
         
+
+        style: {
+            ...styleLine,
+        },
+    },
+
+   
+    {
+        id: "line2-line4",
+        source: "line2",
+        target: "line4",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "line3-line5",
+        source: "line3",
+        target: "line5",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "line4-line6",
+        source: "line4",
+        target: "line6",
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "line5-line7",
+        source: "line5",
+        target: "line7",
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "line6-line6",
+        source: "line6",
+        target: "line7",
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "line7-line8",
+        source: "line7",
+        target: "line8",
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "line7-line9",
+        source: "line7",
+        target: "line9",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "line8-line10",
+        source: "line8",
+        target: "line10",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "line9-line11",
+        source: "line9",
+        target: "line11",
+        // animated: true,
+        type: "smoothstep",
 
         style: {
             ...styleLine,
         },
     },
    
-   
     {
-        id: "a3-a6",
-        source: "a3",
-        target: "a6",
-        // animated: true,
+        id: "line10-line12",
+        source: "line10",
+        target: "line12",
+        type: "smoothstep",
+        
+        style: {
+            ...styleLine,
+        },
+    },
+    {
+        id: "line11-line12",
+        source: "line11",
+        target: "line12",
         type: "smoothstep",
 
         style: {
@@ -55,9 +158,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "a3-a9",
-        source: "a3",
-        target: "a9",
+        id: "line12-line13",
+        source: "line12",
+        target: "line13",
         type: "smoothstep",
 
         style: {
@@ -65,57 +168,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "a5a3-a5",
-        source: "a5a3",
-        target: "a5",
-        animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleHide,
-        },
-    },
-
-    {
-        id: "a2a4-a4",
-        source: "a2a4",
-        target: "a4",
-        animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleHide,
-        },
-    },
-
-    {
-        id: "a4-a2a4",
-        source: "a4",
-        target: "a2a4",
-        animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleHide,
-        },
-    },
-
-    {
-        id: "a5a3-a5",
-        source: "a5a3",
-        target: "a5",
-        animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleHide,
-        },
-    },
-
-    {
-        id: "a5-a5a3",
-        source: "a5",
-        target: "a5a3",
+        id: "SDV_None-SDV_Ball",
+        source: "SDV_None",
+        target: "SDV_Ball",
         animated: true,
         type: "smoothstep",
 
@@ -124,115 +179,42 @@ export const DemoEdges = [
         },
     },
     {
-        id: "a6-a8",
-        source: "a6",
-        target: "a8",
-        // animated: true,
+        id: "SDV_Ball-SDV_None",
+        source: "SDV_Ball",
+        target: "SDV_None",
+        animated: true,
         type: "smoothstep",
 
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
     {
-        id: "a9-a11",
-        source: "a9",
-        target: "a11",
-        // animated: true,
+        id: "Tank_None-Tank_Ball",
+        source: "Tank_None",
+        target: "Tank_Ball",
+        animated: true,
         type: "smoothstep",
 
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
     {
-        id: "a8a11-a11a8",
-        source: "a8a11",
-        target: "a11a8",
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a8-a12",
-        source: "a8",
-        target: "a12",
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a11-a14",
-        source: "a11",
-        target: "a14",
+        id: "Tank_Ball-Tank_None",
+        source: "Tank_Ball",
+        target: "Tank_None",
+        animated: true,
         type: "smoothstep",
 
         style: {
-            ...styleLine,
+            ...styleHide,
         },
     },
     {
-        id: "a12-a13",
-        source: "a12",
-        target: "a13",
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a14-a15",
-        source: "a14",
-        target: "a15",
-        // animated: true,
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a13-a1313",
-        source: "a13",
-        target: "a1313",
-        // animated: true,
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a13-a16",
-        source: "a13",
-        target: "a16",
-        // animated: true,
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a16-a17",
-        source: "a16",
-        target: "a17",
-        // animated: true,
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a16-a16",
-        source: "a16",
-        target: "a16",
+        id: "line9-BallValueCenter_None",
+        source: "line9",
+        target: "BallValueCenter_None",
         // animated: true,
         type: "smoothstep",
         
@@ -241,9 +223,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "TM1-data1",
-        source: "TM1",
-        target: "data1",
+        id: "line10-BallValueCenter_None2",
+        source: "BallValueCenter_None2",
+        target: "line10",
         // animated: true,
         type: "smoothstep",
 
@@ -252,9 +234,32 @@ export const DemoEdges = [
         },
     },
     {
-        id: "TM1-data2",
-        source: "TM1",
-        target: "data2",
+        id: "PSV_None01-PSV_None02",
+        source: "PSV_None01",
+        target: "PSV_None02",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "PSV_None03-PSV_None04",
+        source: "PSV_None03",
+        target: "PSV_None04",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    }, 
+     {
+        id: "FIQ_1901-Pressure_Trans01",
+        source: "FIQ_1901",
+        target: "Pressure_Trans01",
         // animated: true,
         type: "smoothstep",
 
@@ -263,20 +268,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "TM1-data3",
-        source: "TM1",
-        target: "data3",
-        // animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "TM1-data4",
-        source: "TM1",
-        target: "data4",
+        id: "FIQ_1902-Pressure_Trans02",
+        source: "FIQ_1902",
+        target: "Pressure_Trans02",
         // animated: true,
         type: "smoothstep",
 
@@ -285,9 +279,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "TM2-data5",
-        source: "TM2",
-        target: "data5",
+        id: "FIQ_1901-Temperature_Trans01",
+        source: "FIQ_1901",
+        target: "Temperature_Trans01",
         // animated: true,
         type: "smoothstep",
 
@@ -296,56 +290,12 @@ export const DemoEdges = [
         },
     },
     {
-        id: "TM2-data5",
-        source: "TM2",
-        target: "data6",
+        id: "FIQ_1902-Temperature_Trans02",
+        source: "FIQ_1902",
+        target: "Temperature_Trans02",
         // animated: true,
         type: "smoothstep",
 
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "TM2-data5",
-        source: "TM2",
-        target: "data7",
-        // animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "TM2-data5",
-        source: "TM2",
-        target: "data8",
-        // animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "a13_BallCenter-BallCenter",
-        source: "a13_BallCenter",
-        target: "BallCenter",
-        // animated: true,
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "BallCenter-a14_BallCenter",
-        source: "BallCenter",
-        target: "a14_BallCenter",
-        // animated: true,
-        type: "smoothstep",
-        
         style: {
             ...styleLine,
         },

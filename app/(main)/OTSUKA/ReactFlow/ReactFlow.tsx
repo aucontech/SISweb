@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import ReactFlow, {
-    Controls,
-    Position,
-    useEdgesState,
-    useNodesState,
-} from "reactflow";
+import ReactFlow,  { Controls, Position, useEdgesState, useNodesState, } from "reactflow";
 
 import "./Flow.css";
 
@@ -51,7 +46,7 @@ export default function ReactFlowHigh() {
     const [GVA2, setGVA2] = useState<string | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    const url = `${process.env.baseUrlWebsocketTelemetry}${token}`;
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -101,12 +96,12 @@ export default function ReactFlowHigh() {
                         EK1_Flow_at_Measurement_Conditions: setGVF1,
                         EK1_Flow_at_Base_Conditions: setSVF1,
                         EK1_Volume_at_Base_Conditions: setSVA1,
-                        EK1_Vm_Adjustable_Counter: setGVA1,
+                        EK1_Vm_Adjustable_Counter:setGVA1,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
-                        EK2_Vm_Adjustable_Counter: setGVA2,
+                        EK2_Vm_Adjustable_Counter:setGVA2,
 
                         time: setTimeUpdate,
                     };
@@ -234,7 +229,10 @@ export default function ReactFlowHigh() {
                                     <p style={{ color: "white" }}>
                                         {ValueGas.GVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>{GVA1}</p>
+                                    <p style={{ color: "green" }}>
+                                    {GVA1}
+
+                                    </p>
                                 </div>
                                 <p style={{ color: "white" }}>{KeyGas.M3}</p>
                             </div>
@@ -338,7 +336,9 @@ export default function ReactFlowHigh() {
                                     <p style={{ color: "white" }}>
                                         {ValueGas.GVA} :
                                     </p>
-                                    <p style={{ color: "green" }}>{GVA2}</p>
+                                    <p style={{ color: "green" }}>
+                                        {GVA2}
+                                    </p>
                                 </div>
                                 <p style={{ color: "white" }}>{KeyGas.M3}</p>
                             </div>
@@ -1432,7 +1432,7 @@ export default function ReactFlowHigh() {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
-            <div
+  <div
                 style={{
                     padding: 15,
                     display: "flex",
