@@ -36,9 +36,13 @@ import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
     ArrowRight,
+    BallVavle,
     BlackTriangle,
     BlackTriangleRight,
+    FIQ,
+    GD,
     PCV,
+    PTV,
     SDV,
     WhiteTriangleRight,
     connect,
@@ -59,12 +63,15 @@ const backGroundData = "white";
 const colorNameValue = "black";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
+export const line = "#ffaa00";
 
 export default function DemoFlowOTS() {
-    const line = "#ffaa00";
     const [visible, setVisible] = useState(false);
 
+    const op = useRef<OverlayPanel>(null);
+
     const [checkConnectData, setCheckConnectData] = useState(false);
+    const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
 
@@ -80,23 +87,14 @@ export default function DemoFlowOTS() {
 
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
+    const [PT03, setPT03] = useState<string | null>(null);
 
     const [TT01, setTT01] = useState<string | null>(null);
     const [TT02, setTT02] = useState<string | null>(null);
 
-    const paragraphContents: Record<string, string> = {
-        SVF: "Standard Volume Flow Rate",
-        GVF: "Gross Volume Flow Rate",
-        SVA: "Standard Volume Accumulated",
-        GVA: "Gross Volume Accumulated",
-        PT: "Pressure Transmitter",
-        TT: "Temperature Transmitter",
-        PSV: "Pressure Safety Valve",
-        PCV: "Pressure Control Valve",
-        SSV: "Slam Shut Off Valve",
-        SDV: "Shutdown valve",
-    };
-    const token = readToken();
+    const [GD1, SetGD1] = useState<string | null>(null);
+    const [GD2, SetGD2] = useState<string | null>(null);
+    const [GD3, SetGD3] = useState<string | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -150,15 +148,21 @@ export default function DemoFlowOTS() {
                         EK1_Flow_at_Base_Conditions: setSVF1,
                         EK1_Volume_at_Base_Conditions: setSVA1,
                         EK1_Vm_Adjustable_Counter: setGVA1,
-                        EK1_Pressure: setPT01,
+                        EK1_Pressure: setPT02,
                         EK1_Temperature: setTT01,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
                         EK2_Vm_Adjustable_Counter: setGVA2,
-                        EK2_Pressure: setPT02,
+                        EK2_Pressure: setPT03,
                         EK2_Temperature: setTT02,
+
+                        GD1: SetGD1,
+                        GD2: SetGD2,
+                        GD3: SetGD3,
+
+                        PT1: setPT01,
 
                         time: setTimeUpdate,
                     };
@@ -174,6 +178,7 @@ export default function DemoFlowOTS() {
             };
         }
     }, [data]);
+
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",
@@ -188,439 +193,389 @@ export default function DemoFlowOTS() {
         M3H: "m³/h",
         SM3: "sm³",
         M3: "m³",
-        BAR: "BAR",
+        BAR: "Bara",
         CC: "°C",
     };
-
+    const paragraphContents: Record<string, string> = {
+        SVF: "Standard Volume Flow Rate",
+        GVF: "Gross Volume Flow Rate",
+        SVA: "Standard Volume Accumulated",
+        GVA: "Gross Volume Accumulated",
+        PT: "Pressure Transmitter",
+        TT: "Temperature Transmitter",
+        PSV: "Pressure Safety Valve",
+        PCV: "Pressure Control Valve",
+        SSV: "Slam Shut Off Valve",
+        SDV: "Shutdown valve",
+    };
+    function formatNumberWithCommas(num: number): string {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatNumberWithCommas1(num: number): string {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
-            if (node.id === "data1") {
+            if (node.id === "data4") {
+                let decimalSVF1: string | number = "";
+
+                if (SVF1 !== null) {
+                    const SVF1Number = parseFloat(SVF1);
+                    if (!isNaN(SVF1Number)) {
+                        decimalSVF1 = formatNumberWithCommas(SVF1Number);
+                    } else {
+                        decimalSVF1 = "";
+                    }
+                }
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{ fontSize: 25, fontWeight: 500 }}>
-                                <div>
-                                    <div style={{ padding: 2, boxShadow:
-                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                        
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                              
-                                                padding: 3,
-                                                borderRadius: 2,
-                                            }}
-                                        >
-                                            <p
-                                                style={{
-                                                    color: "red",
-                                                    marginLeft: 5,
-                                                }}
-                                            >
-                                                {ValueGas.SVF}
-                                            </p>
-                                        </div>
-                                        <hr />
-
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                               
-                                                padding: 3,
-                                                borderRadius: 5,
-                                            }}
-                                        >
-                                          <p
-                                            style={{
-                                                display: "flex",
-                                                padding: 3,
-                                                borderRadius: 5,
-                                                
-                                                color: "green",
-                                            }}
-                                        >
-                                            {SVF1}
-                                        </p>
-                                            <p style={{}}>{KeyGas.SM3H}</p>
-                                        </div>
-                                        
-                                    </div>
-                                    <div style={{ padding: 2, boxShadow:
-                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                        
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                              
-                                                padding: 3,
-                                                borderRadius: 2,
-                                            }}
-                                        >
-                                            <p
-                                                style={{
-                                                    color: "red",
-                                                    marginLeft: 5,
-                                                }}
-                                            >
-                                                {ValueGas.GVF}
-                                            </p>
-                                        </div>
-                                        <hr />
-
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                               
-                                                padding: 3,
-                                                borderRadius: 5,
-                                            }}
-                                        >
-                                          <p
-                                            style={{
-                                                display: "flex",
-                                                padding: 3,
-                                                borderRadius: 5,
-                                                
-                                                color: "green",
-                                            }}
-                                        >
-                                            {GVF1}
-                                        </p>
-                                            <p style={{}}>{KeyGas.M3H}</p>
-                                        </div>
-                                        
-                                    </div>
-
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.SVF} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalSVF1}
+                                    </p>
                                 </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.SM3H}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "data3") {
+                let decimalGVF1: string | number = "";
+
+                if (GVF1 !== null) {
+                    const SVA1Number = parseFloat(GVF1);
+                    if (!isNaN(SVA1Number)) {
+                        decimalGVF1 = formatNumberWithCommas(SVA1Number);
+                    } else {
+                        decimalGVF1 = "";
+                    }
+                }
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.GVF} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalGVF1}
+                                    </p>
+                                </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.M3H}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "data2") {
+                let decimalSVA1: string | number = "";
+
+                if (SVA1 !== null) {
+                    const SVA1Number = parseFloat(SVA1);
+                    if (!isNaN(SVA1Number)) {
+                        decimalSVA1 = formatNumberWithCommas(SVA1Number);
+                    } else {
+                        decimalSVA1 = "";
+                    }
+                }
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{ fontSize: 25, fontWeight: 500 }}>
-                            <div>
-                                <div style={{ padding: 2, boxShadow:
-                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                    
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                          
-                                            padding: 3,
-                                            borderRadius: 2,
-                                        }}
-                                    >
-                                        <p
-                                            style={{
-                                                color: "red",
-                                                marginLeft: 5,
-                                            }}
-                                        >
-                                            {ValueGas.SVA}
-                                        </p>
-                                    </div>
-                                        <hr />
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                           
-                                            padding: 3,
-                                            borderRadius: 5,
-                                        }}
-                                    >
-                                      <p
-                                        style={{
-                                            display: "flex",
-                                            padding: 3,
-                                            borderRadius: 5,
-                                            
-                                            color: "green",
-                                        }}
-                                    >
-                                        {SVA1}
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.SVA} :
                                     </p>
-                                        <p style={{}}>{KeyGas.SM3}</p>
-                                    </div>
-                                    
-                                </div>
-                                <div style={{ padding: 2, boxShadow:
-                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                    
-                                    <div
+                                    <p
                                         style={{
-                                            display: "flex",
-                                          
-                                            padding: 3,
-                                            borderRadius: 2,
+                                            color: backGroundData,
+                                            marginLeft: 20,
                                         }}
                                     >
-                                        <p
-                                            style={{
-                                                color: "red",
-                                                marginLeft: 5,
-                                            }}
-                                        >
-                                            {ValueGas.GVA}
-                                        </p>
-                                    </div>
-                                    <hr />
-
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                           
-                                            padding: 3,
-                                            borderRadius: 5,
-                                        }}
-                                    >
-                                      <p
-                                        style={{
-                                            display: "flex",
-                                            padding: 3,
-                                            borderRadius: 5,
-                                            
-                                            color: "green",
-                                        }}
-                                    >
-                                        {GVA1}
+                                        {decimalSVA1}
                                     </p>
-                                        <p style={{}}>{KeyGas.M3}</p>
-                                    </div>
-                                    
                                 </div>
-
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.SM3}
+                                </p>
                             </div>
-                        </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "data1") {
+                let decimalGVA1: string | number = "";
+
+                if (GVA1 !== null) {
+                    const GVA1Number = parseFloat(GVA1);
+                    if (!isNaN(GVA1Number)) {
+                        decimalGVA1 = formatNumberWithCommas1(GVA1Number);
+                    } else {
+                        decimalGVA1 = "";
+                    }
+                }
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.GVA} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalGVA1}
+                                    </p>
+                                </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.M3}
+                                </p>
+                            </div>
                         ),
                     },
                 };
             }
             if (node.id === "data5") {
+                let decimalSVF2: string | number = "";
+
+                if (SVF2 !== null) {
+                    const SVF2Number = parseFloat(SVF2);
+                    if (!isNaN(SVF2Number)) {
+                        decimalSVF2 = formatNumberWithCommas(SVF2Number);
+                    } else {
+                        decimalSVF2 = "";
+                    }
+                }
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{ fontSize: 25, fontWeight: 500 }}>
-                                <div>
-                                    <div style={{ padding: 2, boxShadow:
-                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                        
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                              
-                                                padding: 3,
-                                                borderRadius: 2,
-                                            }}
-                                        >
-                                            <p
-                                                style={{
-                                                    color: "red",
-                                                    marginLeft: 5,
-                                                }}
-                                            >
-                                                {ValueGas.SVF}
-                                            </p>
-                                        </div>
-                                        <hr />
-
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                               
-                                                padding: 3,
-                                                borderRadius: 5,
-                                            }}
-                                        >
-                                          <p
-                                            style={{
-                                                display: "flex",
-                                                padding: 3,
-                                                borderRadius: 5,
-                                                
-                                                color: "green",
-                                            }}
-                                        >
-                                            {SVF2}
-                                        </p>
-                                            <p style={{}}>{KeyGas.SM3H}</p>
-                                        </div>
-                                        
-                                    </div>
-                                    <div style={{ padding: 2, boxShadow:
-                                                    "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                        
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                              
-                                                padding: 3,
-                                                borderRadius: 2,
-                                            }}
-                                        >
-                                            <p
-                                                style={{
-                                                    color: "red",
-                                                    marginLeft: 5,
-                                                }}
-                                            >
-                                                {ValueGas.GVF}
-                                            </p>
-                                        </div>
-                                        <hr />
-
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                               
-                                                padding: 3,
-                                                borderRadius: 5,
-                                            }}
-                                        >
-                                          <p
-                                            style={{
-                                                display: "flex",
-                                                padding: 3,
-                                                borderRadius: 5,
-                                                
-                                                color: "green",
-                                            }}
-                                        >
-                                            {GVF2}
-                                        </p>
-                                            <p style={{}}>{KeyGas.M3H}</p>
-                                        </div>
-                                        
-                                    </div>
-
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.SVF} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalSVF2}
+                                    </p>
                                 </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.SM3H}
+                                </p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "data6") {
+                let decimalGVF2: string | number = "";
+
+                if (GVF2 !== null) {
+                    const GVF2Number = parseFloat(GVF2);
+                    if (!isNaN(GVF2Number)) {
+                        decimalGVF2 = formatNumberWithCommas(GVF2Number);
+                    } else {
+                        decimalGVF2 = "";
+                    }
+                }
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{ fontSize: 25, fontWeight: 500 }}>
-                            <div>
-                                <div style={{ padding: 2, boxShadow:
-                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                    
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                          
-                                            padding: 3,
-                                            borderRadius: 2,
-                                        }}
-                                    >
-                                        <p
-                                            style={{
-                                                color: "red",
-                                                marginLeft: 5,
-                                            }}
-                                        >
-                                            {ValueGas.SVA}
-                                        </p>
-                                    </div>
-                                        <hr />
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                           
-                                            padding: 3,
-                                            borderRadius: 5,
-                                        }}
-                                    >
-                                      <p
-                                        style={{
-                                            display: "flex",
-                                            padding: 3,
-                                            borderRadius: 5,
-                                            
-                                            color: "green",
-                                        }}
-                                    >
-                                        {SVA2}
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.GVF} :
                                     </p>
-                                        <p style={{}}>{KeyGas.SM3}</p>
-                                    </div>
-                                    
-                                </div>
-                                <div style={{ padding: 2, boxShadow:
-                                                "0px 0px 10px rgba(0, 0, 0, 0.2)", }}>
-                                    
-                                    <div
+                                    <p
                                         style={{
-                                            display: "flex",
-                                          
-                                            padding: 3,
-                                            borderRadius: 2,
+                                            color: backGroundData,
+                                            marginLeft: 20,
                                         }}
                                     >
-                                        <p
-                                            style={{
-                                                color: "red",
-                                                marginLeft: 5,
-                                            }}
-                                        >
-                                            {ValueGas.GVA}
-                                        </p>
-                                    </div>
-                                    <hr />
-
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                           
-                                            padding: 3,
-                                            borderRadius: 5,
-                                        }}
-                                    >
-                                      <p
-                                        style={{
-                                            display: "flex",
-                                            padding: 3,
-                                            borderRadius: 5,
-                                            
-                                            color: "green",
-                                        }}
-                                    >
-                                        {GVA2}
+                                        {decimalGVF2}
                                     </p>
-                                        <p style={{}}>{KeyGas.M3}</p>
-                                    </div>
-                                    
                                 </div>
-
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.M3H}
+                                </p>
                             </div>
-                        </div>
                         ),
                     },
                 };
             }
-          
+            if (node.id === "data7") {
+                let decimalSVA2: string | number = "";
+
+                if (SVA2 !== null) {
+                    const SVA2Number = parseFloat(SVA2);
+                    if (!isNaN(SVA2Number)) {
+                        decimalSVA2 = formatNumberWithCommas(SVA2Number);
+                    } else {
+                        decimalSVA2 = "";
+                    }
+                }
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.SVA} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalSVA2}
+                                    </p>
+                                </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.SM3}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "data8") {
+                let decimalGVA2: string | number = "";
+
+                if (GVA2 !== null) {
+                    const GVA2Number = parseFloat(GVA2);
+                    if (!isNaN(GVA2Number)) {
+                        decimalGVA2 = formatNumberWithCommas(GVA2Number);
+                    } else {
+                        decimalGVA2 = "";
+                    }
+                }
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: line }}>
+                                        {ValueGas.GVA} :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {decimalGVA2}
+                                    </p>
+                                </div>
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.M3}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
             if (node.id === "Pressure_Trans01") {
                 return {
                     ...node,
@@ -636,12 +591,19 @@ export default function DemoFlowOTS() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
+                                    <p style={{ color: line }}>
                                         {ValueGas.PT} :
                                     </p>
-                                    <p style={{ color: "green" }}>{PT01}</p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {PT01}
+                                    </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p style={{ color: backGroundData }}>
                                     {KeyGas.BAR}
                                 </p>
                             </div>
@@ -664,12 +626,19 @@ export default function DemoFlowOTS() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
+                                    <p style={{ color: line }}>
                                         {ValueGas.PT} :
                                     </p>
-                                    <p style={{ color: "green" }}>{PT02}</p>
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {PT02}
+                                    </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p style={{ color: backGroundData }}>
                                     {KeyGas.BAR}
                                 </p>
                             </div>
@@ -677,7 +646,7 @@ export default function DemoFlowOTS() {
                     },
                 };
             }
-            if (node.id === "Temperature_Trans01") {
+            if (node.id === "Pressure_Trans03") {
                 return {
                     ...node,
                     data: {
@@ -692,41 +661,20 @@ export default function DemoFlowOTS() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.TT} :
+                                    <p style={{ color: line }}>
+                                        {ValueGas.PT} :
                                     </p>
-                                    <p style={{ color: "green" }}>{TT01}</p>
-                                </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.CC}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-            if (node.id === "Temperature_Trans02") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.TT} :
+                                    <p
+                                        style={{
+                                            color: backGroundData,
+                                            marginLeft: 20,
+                                        }}
+                                    >
+                                        {PT03}
                                     </p>
-                                    <p style={{ color: "green" }}>{TT02}</p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
-                                    {KeyGas.CC}
+                                <p style={{ color: backGroundData }}>
+                                    {KeyGas.BAR}
                                 </p>
                             </div>
                         ),
@@ -742,16 +690,118 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
+                                    fontSize: 20,
                                     fontWeight: 500,
 
                                     display: "flex",
                                 }}
                             >
-                                <p style={{ color: "white" }}>Last Update</p>
+                                <p style={{ color: "white" }}>Status EK1 : </p>
+
+                                <div style={{}}>
+                                    {checkConnectData ? (
+                                        <div
+                                            style={{
+                                                fontWeight: 500,
+
+                                                display: "flex",
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "#25d125",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Connected
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            style={{
+                                                fontWeight: 500,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "white",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Disconnect
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
                                 <p
                                     style={{
-                                        color: "#ffaa00",
+                                        color: "white",
+
+                                        marginLeft: 20,
+                                    }}
+                                >
+                                    {timeUpdate}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "timeUpdate2") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 500,
+
+                                    display: "flex",
+                                }}
+                            >
+                                <p style={{ color: "white" }}>Status EK2 : </p>
+
+                                <div style={{}}>
+                                    {checkConnectData ? (
+                                        <div
+                                            style={{
+                                                fontWeight: 500,
+
+                                                display: "flex",
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "#25d125",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Connected
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            style={{
+                                                fontWeight: 500,
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: "white",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Disconnect
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p
+                                    style={{
+                                        color: "white",
+
                                         display: "flex",
                                         marginLeft: 20,
                                     }}
@@ -763,58 +813,141 @@ export default function DemoFlowOTS() {
                     },
                 };
             }
-            if (node.id === "ConnectData") {
+            if (node.id === "timeUpdate3") {
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{}}>
-                                {checkConnectData ? (
-                                    <div
-                                        style={{
-                                            fontSize: 30,
-                                            fontWeight: 500,
+                            <div
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 500,
 
-                                            display: "flex",
-                                        }}
-                                    >
-                                        <p style={{ color: "white" }}>
-                                            Status{" "}
-                                        </p>
-                                        <p
+                                    display: "flex",
+                                }}
+                            >
+                                <p style={{ color: "white" }}>Status PLC : </p>
+
+                                <div style={{}}>
+                                    {checkConnectData ? (
+                                        <div
                                             style={{
-                                                color: "#25d125",
+                                                fontWeight: 500,
+
                                                 display: "flex",
-                                                marginLeft: 20,
                                             }}
                                         >
-                                            Connected
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div
-                                        style={{
-                                            fontSize: 30,
-                                            fontWeight: 500,
-
-                                            display: "flex",
-                                        }}
-                                    >
-                                        <p style={{ color: "white" }}>
-                                            Status{" "}
-                                        </p>
-                                        <p
+                                            <p
+                                                style={{
+                                                    color: "#25d125",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Connected
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div
                                             style={{
-                                                color: "#ff7070",
-                                                display: "flex",
-                                                marginLeft: 20,
+                                                fontWeight: 500,
                                             }}
                                         >
-                                            Disconnect
-                                        </p>
-                                    </div>
-                                )}
+                                            <p
+                                                style={{
+                                                    color: "white",
+                                                    marginLeft: 20,
+                                                }}
+                                            >
+                                                Disconnect
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p
+                                    style={{
+                                        color: "white",
+
+                                        fontSize: 20,
+                                        marginLeft: 20,
+                                    }}
+                                >
+                                    {timeUpdate}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            //  =============================== GD ===================================
+
+            if (node.id === "GD1_Value1901") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: backGroundData }}>
+                                        {GD1} LEL
+                                    </p>
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "GD2_Value1902") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: backGroundData }}>
+                                        {GD2} LEL
+                                    </p>
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "GD3_Value1903") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div style={{ display: "flex" }}>
+                                    <p style={{ color: backGroundData }}>
+                                        {GD3} LEL
+                                    </p>
+                                </div>
                             </div>
                         ),
                     },
@@ -831,91 +964,120 @@ export default function DemoFlowOTS() {
     const initialPositions = storedPositionString
         ? JSON.parse(storedPositionString)
         : {
-              BallValue01: { x: -1097.605629934581, y: 1173.607986636483 },
-              BallValue02: { x: -891.2045691421613, y: 1171.9528838503882 },
-              BallValue03: { x: -696.6526539739878, y: 901.1235928158399 },
-              BallValue04: { x: -696.0359880606529, y: 1206.662628430253 },
-              BallValue05: { x: -424.4943597444343, y: 900.5240644920967 },
-              BallValue06: { x: -424.12757625672475, y: 1206.17879809019 },
-              BallValue07: { x: 418.3921741541734, y: 1411.782662756458 },
-              BallValue08: { x: -190.77280623539374, y: 708.3496500172416 },
-              BallValue09: { x: -189.9460106807655, y: 1411.1899880078795 },
-              BallValue10: { x: 414.99525641767275, y: 708.7612288865865 },
-              BallValueCenter: { x: 115.59597391677278, y: 1070.6153121264047 },
+              ArrowRight: { x: 823.955471857383, y: 999.6807441860246 },
+              ArrowRight1: { x: -1261.8585518029631, y: 1038.9120392894379 },
+              BallValue01: { x: -1129.9980812500166, y: 1187.9107038056438 },
+              BallValue02: { x: -895.356682967557, y: 1189.8020033217338 },
+              BallValue03: { x: -701.3246378085894, y: 883.8304778298589 },
+              BallValue04: { x: -702.693312830796, y: 1196.0996633088027 },
+              BallValue05: { x: -378.0807121369639, y: 882.6824168265823 },
+              BallValue06: { x: -378.1704246285699, y: 1195.6987844499788 },
+              BallValue07: { x: 462.80957360308423, y: 1275.632981441439 },
+              BallValue08: { x: 462.6050864040965, y: 805.8830489984563 },
+              BallValue09: { x: -113.22647003069105, y: 1277.0117880830726 },
+              BallValue10: { x: -113.02940460357098, y: 805.6518574509679 },
+              BallValueCenter: { x: 153.51754710958227, y: 1061.7611985041206 },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
                   y: 1084.2937921267353,
               },
               BallValueCenter_None: {
-                  x: 131.96684078356355,
-                  y: 1105.6667128261267,
+                  x: 223.64781787725457,
+                  y: 1114.0567134405967,
               },
               BallValueCenter_None2: {
-                  x: 172.06238604607165,
-                  y: 1105.8046467132351,
+                  x: 144.74851954286828,
+                  y: 1114.3502288121902,
               },
-              ConnectData: { x: -1134.1375965271236, y: 487.74880247840576 },
-              FIQ_1901: { x: 151.88338755257894, y: 727.5258186779024 },
-              FIQ_1902: { x: 185.88338755257894, y: 1430.9757474747291 },
+              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+              FIQ_1901: { x: 33.28704961872347, y: 335.1135501590107 },
+              FIQ_1902: { x: 36.64222079991478, y: 1397.4336269884245 },
+              FIQ_none: { x: 223.6869922039623, y: 777.2354742632019 },
+              FIQ_none2: { x: 225.06548244808948, y: 1247.3671164522668 },
+              FIQ_none11: { x: 272.7139984525454, y: 856.912018718329 },
+              FIQ_none22: { x: 275.4324075532159, y: 1326.360590984426 },
+              GD1: { x: -705.1814154857234, y: 1057.508602928905 },
+              GD1_Name1901: { x: -615.0195844024829, y: 982.637181181105 },
+              GD1_Value1901: { x: -615.6307245161495, y: 1022.748043629185 },
+              GD2: { x: -133.94457688309086, y: 1056.6756602852502 },
+              GD2_Name1902: { x: -59.779589372016574, y: 978.6585600806475 },
+              GD2_Value1902: { x: -58.69915684202027, y: 1018.8095852734185 },
+              GD3: { x: 309.01737430287176, y: 1050.8606129330037 },
+              GD3_Name1903: { x: 384.1349817802261, y: 984.8342277734904 },
+              GD3_Value1903: { x: 383.9248093630961, y: 1022.7174334287059 },
+              GD_none1: { x: -670.1784767260174, y: 1074.5507789267567 },
+              GD_none2: { x: -101.34408008024292, y: 1082.1710089261915 },
+              GD_none3: { x: 345.62391441028547, y: 1087.609177087721 },
               HELP: { x: 750.7851455025582, y: 309.0601951574698 },
-              Header: { x: -1140.7800640424662, y: 325.43730785914363 },
-              PCV01: { x: -571.3267338977995, y: 886.2190552398349 },
-              PCV02: { x: -572.2292385950245, y: 1194.219055239835 },
-              PCV_NUM01: { x: -619.2144202562994, y: 816.0311507910837 },
-              PCV_NUM02: { x: -617.1228888470157, y: 1279.0054293977919 },
-              PSV01: { x: 596.7851455025582, y: 627.0601951574699 },
-              PSV_01: { x: 669.2538764594976, y: 836.4874717124227 },
-              PSV_02: { x: 648.3501259796325, y: 808.6024183693339 },
-              PSV_03: { x: 638.9992618921414, y: 704.6183280580515 },
-              PSV_None01: { x: 742.3718378164413, y: 1041.9226244049653 },
-              PSV_None02: { x: 694.4037921900604, y: 868.687476499454 },
-              PSV_None03: { x: 667.0132949567214, y: 833.4558433672137 },
-              PSV_None04: { x: 663.0867925941689, y: 727.8758269107395 },
-              Pressure_Trans01: { x: -182.7016565750124, y: 798.3557304227198 },
-              Pressure_Trans02: {
-                  x: -188.11661244742106,
-                  y: 1499.5258186779024,
+              Header: { x: -1206.7800640424662, y: 388.37876746146 },
+              PCV01: { x: -596.9577180787576, y: 874.4326119207913 },
+              PCV02: { x: -597.6433959532042, y: 1186.237160632944 },
+              PCV_NUM01: { x: -673.4856861354434, y: 726.0294822075074 },
+              PCV_NUM02: { x: -674.7380892015382, y: 1370.5199593154873 },
+              PCV_none1: { x: -559.5509818116116, y: 935.3683241530094 },
+              PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
+              PSV01: { x: 610.473175015095, y: 597.3219090263999 },
+              PSV_01: { x: 707.4234072547852, y: 834.0399185360251 },
+              PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
+              PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
+              PSV_None01: { x: 796.2500184506105, y: 1044.2017434854683 },
+              PSV_None02: { x: 742.4037921900604, y: 882.687476499454 },
+              PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
+              PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
+              PT1: { x: -1025.2125246843698, y: 1004.1838777096069 },
+              PT2: { x: -25.542489665719472, y: 1256.3255536762633 },
+              PT3: { x: -5.0188432487411205, y: 789.4562620346093 },
+              PT_none1: { x: -989.7465212143211, y: 1034.3299806591485 },
+              PT_none2: { x: 29.223411113184227, y: 817.3255536762634 },
+              PT_none3: { x: 11.42743990310646, y: 1282.7324187845866 },
+              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+              Pressure_Trans01: { x: -1074.582503155971, y: 780.2569333035837 },
+              Pressure_Trans02: { x: -286.3699613505455, y: 722.7662576288657 },
+              Pressure_Trans03: {
+                  x: -320.6762190909783,
+                  y: 1368.5878435786115,
               },
-              SDV: { x: -1147.5862981848443, y: 963.7190552398351 },
-              SDV_Ball: { x: -1062.666185847575, y: 1207.802246453875 },
-              SDV_IMG: { x: -1101.582862024962, y: 1036.6197369290164 },
-              SDV_None: { x: -1088.4225430796919, y: 1084.3846479705223 },
-              Tank: { x: -925.8840753759819, y: 959.8792039115663 },
-              Tank_Ball: { x: -856.7123889459066, y: 1209.2517229357263 },
+              SDV: { x: -1247.5296036246955, y: 936.5758808521592 },
+              SDV_Ball: { x: -1109.8969185378605, y: 1241.6399506143773 },
+              SDV_IMG: { x: -1127.898707272786, y: 1020.6408310422089 },
+              SDV_None: { x: -1092.597048928013, y: 1084.7361187303948 },
+              Tank: { x: -911.664517080937, y: 965.7322464522078 },
+              Tank_Ball: { x: -875.1430460093859, y: 1242.7446917036984 },
               Tank_None: { x: -906.6261313289393, y: 1085.4707750355217 },
               Temperature_Trans01: {
-                  x: 29.347931772380093,
-                  y: 798.730969752744,
+                  x: -607.828356494313,
+                  y: 562.8487535527242,
               },
               Temperature_Trans02: {
-                  x: 25.883387552578938,
-                  y: 1499.5258186779024,
+                  x: -796.1166124474211,
+                  y: 1445.5258186779024,
               },
-              data1: { x: 0.35480754344791876, y: 639.0626212290737 },
-              data2: { x: 0.11904699106366934, y: 570.383119839662 },
-              data3: { x: 0.7624640610270035, y: 502.13505311458215 },
-              data4: { x: 0.5421928008739769, y: 433.7158008792085 },
-              data5: { x: 15.006750932209115, y: 1136.8672989301788 },
-              data6: { x: 14.43718919701098, y: 1207.5743886935893 },
-              data7: { x: 14.814160999784804, y: 1278.7098108936295 },
-              data8: { x: 14.76799490624228, y: 1349.488492633882 },
-              line1: { x: -1179.679115196726, y: 1085.5692254680569 },
+              borderWhite: { x: -1228.5752488233188, y: 377.16014281141565 },
+              data1: { x: 33.98800518087057, y: 593.0278017643932 },
+              data2: { x: 33.78846144394731, y: 528.3506431415917 },
+              data3: { x: 33.36374521178436, y: 463.6853304857493 },
+              data4: { x: 32.63339716779848, y: 399.39870601500076 },
+              data5: { x: 36.9278303152023, y: 1461.095011105468 },
+              data6: { x: 36.7721669447223, y: 1524.7459382860852 },
+              data7: { x: 36.197218212598386, y: 1588.775369537831 },
+              data8: { x: 35.58508145225224, y: 1653.1748866910893 },
+              line1: { x: -1252.0791151967255, y: 1085.5692254680569 },
               line2: { x: -817.6211537200223, y: 1085.4365275251103 },
-              line3: { x: -665.7972452980424, y: 936.4534537832784 },
-              line4: { x: -666.6379487203451, y: 1242.0439575604762 },
-              line5: { x: -395.4911784135934, y: 936.4344118626898 },
-              line6: { x: -395.35020171066435, y: 1242.0033423427326 },
-              line7: { x: -277.2494157546796, y: 1090.0143295493367 },
-              line8: { x: -160.93843313638945, y: 742.7916712815348 },
-              line9: { x: -161.2464958856404, y: 1446.4332534760574 },
-              line10: { x: 446.3046911017194, y: 743.8273408328664 },
-              line11: { x: 447.93050744084644, y: 1446.4435456601166 },
-              line12: { x: 626.5136457836865, y: 1042.4658932005227 },
-              line13: { x: 832.6936273747973, y: 1042.463725443685 },
-              ArrowRight: { x: 777.455471857383, y: 991.6807441860246 },
-              ArrowRight1: { x: -1231.5469404481196, y: 1033.7889028554175 },
-
-              timeUpdate: { x: -1134.2800640424662, y: 419.493859473365 },
+              line3: { x: -679.4548405099899, y: 936.4534537832784 },
+              line4: { x: -679.8288704580859, y: 1247.5473074652164 },
+              line5: { x: -355.96875345751545, y: 936.5969570000603 },
+              line6: { x: -355.67780000165965, y: 1247.470831450982 },
+              line7: { x: -188.45830132383423, y: 1089.4219836777133 },
+              line8: { x: -90.39616947758043, y: 858.6688336051166 },
+              line9: { x: -90.52620249154324, y: 1329.2727569858912 },
+              line10: { x: 484.86843311853136, y: 858.5611750826382 },
+              line11: { x: 484.9474549111277, y: 1329.260296490842 },
+              line12: { x: 706.3313915738289, y: 1043.5647138277245 },
+              line13: { x: 854.493627374797, y: 1044.463725443685 },
+              timeUpdate: { x: -1204.4329288664649, y: 481.78426525992836 },
+              timeUpdate2: { x: -1206.7571479926846, y: 524.0916184511616 },
+              timeUpdate3: { x: -1207.68200120475, y: 569.5594513023825 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -953,12 +1115,18 @@ export default function DemoFlowOTS() {
             position: positions.line3,
             type: "custom",
             data: {
-                label: <div>3</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line4",
@@ -970,7 +1138,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line5",
@@ -982,7 +1156,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line6",
@@ -994,7 +1174,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: line, width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line7",
@@ -1018,7 +1204,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line9",
@@ -1030,7 +1222,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line10",
@@ -1042,7 +1240,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line11",
@@ -1054,7 +1258,13 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 60,
+                height: 22,
+                opacity: 0.01,
+            },
         },
         {
             id: "line12",
@@ -1066,14 +1276,19 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "#333333",
+                background: line,
+                width: 20,
+                height: 22,
+            },
         },
         {
             id: "line13",
             position: positions.line13,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>13</div>,
             },
 
             sourcePosition: Position.Right,
@@ -1082,27 +1297,34 @@ export default function DemoFlowOTS() {
                 border: "none",
                 width: 30,
                 height: 10,
-                background: background,
+                background: line,
             },
         },
 
         // ============================== line =========================================
-
         {
             id: "SDV",
-            position: positions.SDV,
-            type: "custom",
             data: {
                 label: (
-                    <div>
-                        <SDV_Otsuka />
+                    <div
+                        style={{
+                            fontSize: 25,
+                            fontWeight: 500,
+                        }}
+                    >
+                        SDV-1901
                     </div>
                 ),
             },
+            position: positions.SDV,
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: { border: "#333333", background: background, width: 200 },
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 170,
+                height: 65,
+            },
+            targetPosition: Position.Bottom,
         },
         {
             id: "SDV_None",
@@ -1117,8 +1339,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 75,
-                height: 22,
+                width: 30,
+                height: 1,
             },
         },
         {
@@ -1134,8 +1356,9 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 20,
+                width: 65,
                 height: 22,
+                opacity: 0.01,
             },
         },
         {
@@ -1151,8 +1374,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: background,
-                width: 1,
-                height: 1,
+                width: 0,
+                height: 0,
             },
         },
 
@@ -1175,9 +1398,10 @@ export default function DemoFlowOTS() {
                 border: background,
 
                 background: background,
-                width: 1,
-                height: 1,
+                width: 20,
+                height: 20,
             },
+            zIndex: 99999,
         },
         {
             id: "BallValue02",
@@ -1190,15 +1414,17 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
-            zIndex: 9999,
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Top,
             style: {
                 border: background,
+
                 background: background,
-                width: 1,
-                height: 1,
+                width: 20,
+                height: 20,
             },
+            zIndex: 99999,
         },
         {
             id: "BallValue03",
@@ -1420,8 +1646,9 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 20,
+                width: 65,
                 height: 2,
+                opacity: 0.01,
             },
         },
 
@@ -1432,7 +1659,16 @@ export default function DemoFlowOTS() {
             position: positions.PCV01,
             type: "custom",
             data: {
-                label: <div>{PCV}</div>,
+                label: (
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/PVC.png"
+                            width={80}
+                            height={80}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
             },
 
             sourcePosition: Position.Right,
@@ -1443,13 +1679,23 @@ export default function DemoFlowOTS() {
                 width: 1,
                 height: 1,
             },
+            zIndex: 9999,
         },
         {
             id: "PCV02",
             position: positions.PCV02,
             type: "custom",
             data: {
-                label: <div>{PCV}</div>,
+                label: (
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/PVC.png"
+                            width={80}
+                            height={80}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
             },
 
             sourcePosition: Position.Right,
@@ -1460,6 +1706,7 @@ export default function DemoFlowOTS() {
                 width: 1,
                 height: 1,
             },
+            zIndex: 9999,
         },
 
         {
@@ -1468,15 +1715,20 @@ export default function DemoFlowOTS() {
             type: "custom",
             data: {
                 label: (
-                    <div>
+                    <div style={{ fontSize: 25, display: "flex" }}>
                         <PCV_01_Otsuka />
                     </div>
                 ),
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: { border: "#333333", background: background, width: 200 },
+            targetPosition: Position.Bottom,
+            style: {
+                border: background,
+                width: 250,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
         },
 
         {
@@ -1492,37 +1744,161 @@ export default function DemoFlowOTS() {
             },
 
             sourcePosition: Position.Right,
+            targetPosition: Position.Top,
+            style: {
+                border: background,
+                width: 250,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+        {
+            id: "PCV_none1",
+            position: positions.PCV_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
             targetPosition: Position.Left,
-            style: { border: "#333333", background: background, width: 200 },
+            style: {
+                height: 1,
+                width: 1,
+            },
+        },
+        {
+            id: "PCV_none2",
+            position: positions.PCV_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Left,
+            style: {
+                height: 1,
+                width: 1,
+            },
         },
 
         // ==================== FIQ =============================
-
         {
             id: "FIQ_1901",
-            position: positions.FIQ_1901,
-            type: "custom",
             data: {
-                label: <div>FIQ-1901</div>,
+                label: (
+                    <div
+                        style={{
+                            fontSize: 32,
+                            fontWeight: 500,
+                        }}
+                    >
+                        FIQ-1901
+                    </div>
+                ),
             },
+            position: positions.FIQ_1901,
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Left,
-            style: { background: "white", fontSize: 20 },
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Bottom,
         },
         {
             id: "FIQ_1902",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 32,
+                            fontWeight: 500,
+                        }}
+                    >
+                        FIQ-1902
+                    </div>
+                ),
+            },
             position: positions.FIQ_1902,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
+        {
+            id: "FIQ_none",
+            position: positions.FIQ_none,
             type: "custom",
             data: {
-                label: <div>FIQ-1902</div>,
+                label: <div>{FIQ}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
+            },
+            zIndex: 9999,
+        },
+        {
+            id: "FIQ_none2",
+            position: positions.FIQ_none2,
+            type: "custom",
+            data: {
+                label: <div>{FIQ}</div>,
             },
 
             sourcePosition: Position.Left,
             targetPosition: Position.Left,
-            style: { background: "white", fontSize: 20 },
+            style: {
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
+            },
+            zIndex: 9999,
         },
 
+        {
+            id: "FIQ_none11",
+            position: positions.FIQ_none11,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                height: 1,
+                width: 1,
+            },
+        },
+        {
+            id: "FIQ_none22",
+            position: positions.FIQ_none22,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Left,
+            style: {
+                height: 1,
+                width: 1,
+            },
+        },
         // ==================== Ball center =============================
         {
             id: "BallValueCenter",
@@ -1544,7 +1920,7 @@ export default function DemoFlowOTS() {
                 width: 1,
                 height: 1,
             },
-            zIndex: 99990,
+            zIndex: 9999,
         },
 
         {
@@ -1559,9 +1935,10 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
-                background: line,
-                width: 10,
-                height: 10,
+                background: colorIMG_none,
+                width: 65,
+                height: 22,
+                opacity: 0.01,
             },
         },
         {
@@ -1576,9 +1953,10 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
-                background: line,
-                width: 10,
-                height: 10,
+                background: colorIMG_none,
+                width: 65,
+                height: 22,
+                opacity: 0.01,
             },
         },
 
@@ -1602,13 +1980,13 @@ export default function DemoFlowOTS() {
             position: positions.data1,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                background: background,
+                border: "1px solid white",
                 width: 500,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
-
         {
             id: "data2",
             data: {
@@ -1627,12 +2005,66 @@ export default function DemoFlowOTS() {
             position: positions.data2,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                background: background,
+                border: "1px solid white",
                 width: 500,
+                height: 65,
             },
             targetPosition: Position.Bottom,
         },
+        {
+            id: "data3",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+
+            position: positions.data3,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "data4",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+
+            position: positions.data4,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Bottom,
+        },
+
         {
             id: "data5",
             data: {
@@ -1648,16 +2080,17 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
+
             position: positions.data5,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                background: background,
+                border: "1px solid white",
                 width: 500,
+                height: 65,
             },
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Top,
         },
-
         {
             id: "data6",
             data: {
@@ -1673,16 +2106,69 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
+
             position: positions.data6,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                background: background,
+                border: "1px solid white",
                 width: 500,
+                height: 65,
             },
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Left,
         },
+        {
+            id: "data7",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
 
+            position: positions.data7,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
+        {
+            id: "data8",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+
+            position: positions.data8,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 500,
+                height: 65,
+            },
+            targetPosition: Position.Top,
+        },
         // ============= PSV =====================
 
         {
@@ -1801,7 +2287,7 @@ export default function DemoFlowOTS() {
                 label: <div>4</div>,
             },
 
-            sourcePosition: Position.Left,
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
@@ -1810,21 +2296,27 @@ export default function DemoFlowOTS() {
                 height: 1,
             },
         },
+
         {
             id: "PSV01",
             position: positions.PSV01,
             type: "custom",
             data: {
                 label: (
-                    <div>
+                    <div style={{ fontSize: 25, display: "flex" }}>
                         <PSV01_Otsuka />
                     </div>
                 ),
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: { border: "#333333", background: background, width: 200 },
+            targetPosition: Position.Bottom,
+            style: {
+                border: background,
+                width: 250,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
         },
 
         // =================  PT ===================================
@@ -1847,10 +2339,10 @@ export default function DemoFlowOTS() {
             position: positions.Pressure_Trans01,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                border: background,
                 width: 200,
-                height: 65,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -1872,18 +2364,15 @@ export default function DemoFlowOTS() {
             position: positions.Pressure_Trans02,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                border: background,
                 width: 200,
-                height: 65,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Right,
         },
-
-        //  ================== TT ======================
-
         {
-            id: "Temperature_Trans01",
+            id: "Pressure_Trans03",
             data: {
                 label: (
                     <div
@@ -1897,41 +2386,123 @@ export default function DemoFlowOTS() {
                     </div>
                 ),
             },
-            position: positions.Temperature_Trans01,
+            position: positions.Pressure_Trans03,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
+                border: background,
                 width: 200,
-                height: 65,
+                background: background,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Right,
+        },
+        {
+            id: "PT1",
+            data: {
+                label: <div>{PTV}</div>,
+            },
+
+            position: positions.PT1,
+            zIndex: 9999,
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
             },
             targetPosition: Position.Bottom,
         },
         {
-            id: "Temperature_Trans02",
+            id: "PT2",
             data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 25,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
+                label: <div>{PTV}</div>,
             },
-            position: positions.Temperature_Trans02,
+
+            position: positions.PT2,
+            zIndex: 9999,
 
             style: {
-                background: backGroundData,
-                border: "2px solid white",
-                width: 200,
-                height: 65,
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
+        {
+            id: "PT3",
+            data: {
+                label: <div>{PTV}</div>,
+            },
+            zIndex: 9999,
+
+            position: positions.PT3,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "PT_none1",
+            position: positions.PT_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "PT_none2",
+            position: positions.PT_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "PT_none3",
+            position: positions.PT_none3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+
+        //  ================== TT ======================
+
         // ================ header ========================
 
         {
@@ -1954,7 +2525,7 @@ export default function DemoFlowOTS() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                EWON OTSUKA
+                                OTSUKA
                             </p>
                         </div>
                     </div>
@@ -1962,11 +2533,12 @@ export default function DemoFlowOTS() {
             },
 
             position: positions.Header,
+            zIndex: 9999,
 
             style: {
                 background: background,
                 border: background,
-                width: "470px",
+                width: "500px",
 
                 height: 100,
             },
@@ -2007,8 +2579,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: background,
-width:10,
-                height: 10,
+
+                height: 100,
             },
             targetPosition: Position.Bottom,
         },
@@ -2026,19 +2598,103 @@ width:10,
                             alignItems: "center",
                         }}
                     >
-                        <div></div>
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 60,
+                                    fontWeight: 500,
+                                    color: "#ffaa00",
+                                }}
+                            ></p>
+                        </div>
                     </div>
                 ),
             },
 
             position: positions.timeUpdate,
+            zIndex: 9999,
 
             style: {
                 background: background,
                 border: "none",
-                width: "550px",
+                width: 500,
 
-                height: 80,
+                height: 45,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "timeUpdate2",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 60,
+                                    fontWeight: 500,
+                                    color: "#ffaa00",
+                                }}
+                            ></p>
+                        </div>
+                    </div>
+                ),
+            },
+
+            position: positions.timeUpdate2,
+            zIndex: 9999,
+            style: {
+                background: background,
+                border: "none",
+                width: 500,
+
+                height: 45,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "timeUpdate3",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 60,
+                                    fontWeight: 500,
+                                    color: "#ffaa00",
+                                }}
+                            ></p>
+                        </div>
+                    </div>
+                ),
+            },
+
+            position: positions.timeUpdate3,
+            zIndex: 9999,
+
+            style: {
+                background: background,
+                border: "none",
+                width: 500,
+
+                height: 45,
             },
             targetPosition: Position.Bottom,
         },
@@ -2096,6 +2752,295 @@ width:10,
                 width: "10px",
 
                 height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        // ================ PT ICONS ===================
+
+        // ============= GD =====================
+
+        {
+            id: "GD1",
+            data: {
+                label: <div>{GD}</div>,
+            },
+
+            position: positions.GD1,
+            zIndex: 9999,
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Top,
+        },
+        {
+            id: "GD2",
+            data: {
+                label: <div>{GD}</div>,
+            },
+
+            position: positions.GD2,
+            zIndex: 9999,
+
+            style: {
+                background: "#ffaa00",
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Left,
+        },
+        {
+            id: "GD3",
+            data: {
+                label: <div>{GD}</div>,
+            },
+
+            position: positions.GD3,
+            zIndex: 9999,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Top,
+        },
+        {
+            id: "GD1_Name1901",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 18,
+                            fontWeight: 500,
+                        }}
+                    >
+                        GD-1901
+                    </div>
+                ),
+            },
+            position: positions.GD1_Name1901,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 300,
+                height: 40,
+            },
+            targetPosition: Position.Left,
+        },
+        {
+            id: "GD2_Name1902",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 18,
+                            fontWeight: 500,
+                        }}
+                    >
+                        GD-1902
+                    </div>
+                ),
+            },
+            position: positions.GD2_Name1902,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 300,
+                height: 40,
+            },
+            targetPosition: Position.Left,
+        },
+        {
+            id: "GD3_Name1903",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 18,
+                            fontWeight: 500,
+                        }}
+                    >
+                        GD-1903
+                    </div>
+                ),
+            },
+            position: positions.GD3_Name1903,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 230,
+
+                height: 40,
+            },
+            targetPosition: Position.Left,
+        },
+
+        {
+            id: "GD1_Value1901",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 18,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.GD1_Value1901,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 300,
+                height: 40,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "GD2_Value1902",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 18,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.GD2_Value1902,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 300,
+
+                height: 40,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "GD3_Value1903",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 18,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.GD3_Value1903,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 230,
+
+                height: 40,
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "GD_none1",
+            position: positions.GD_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "GD_none2",
+            position: positions.GD_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "GD_none3",
+            position: positions.GD_none3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 30,
+                height: 1,
+            },
+        },
+
+        // ============ border white ======================
+        {
+            id: "borderWhite",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.borderWhite,
+
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 550,
+                height: 270,
+                borderRadius: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -2293,6 +3238,16 @@ width:10,
                         ...prevPositions,
                         PCV_NUM02: position,
                     }));
+                } else if (id === "PCV_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none1: position,
+                    }));
+                } else if (id === "PCV_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none2: position,
+                    }));
                 }
                 // ============ FIQ ===========================
                 else if (id === "FIQ_1901") {
@@ -2304,6 +3259,26 @@ width:10,
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         FIQ_1902: position,
+                    }));
+                } else if (id === "FIQ_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none: position,
+                    }));
+                } else if (id === "FIQ_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none2: position,
+                    }));
+                } else if (id === "FIQ_none11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none11: position,
+                    }));
+                } else if (id === "FIQ_none22") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none22: position,
                     }));
                 }
                 // ============ Ball center ===========================
@@ -2423,7 +3398,43 @@ width:10,
                         ...prevPositions,
                         Pressure_Trans02: position,
                     }));
+                } else if (id === "Pressure_Trans03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans03: position,
+                    }));
+                } else if (id === "PT1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT1: position,
+                    }));
+                } else if (id === "PT2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT2: position,
+                    }));
+                } else if (id === "PT3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT3: position,
+                    }));
+                } else if (id === "PT_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none1: position,
+                    }));
+                } else if (id === "PT_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none2: position,
+                    }));
+                } else if (id === "PT_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none3: position,
+                    }));
                 }
+
                 // ================ TT =================
                 else if (id === "Temperature_Trans01") {
                     setPositions((prevPositions: any) => ({
@@ -2454,6 +3465,16 @@ width:10,
                         ...prevPositions,
                         timeUpdate: position,
                     }));
+                } else if (id === "timeUpdate2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate2: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
                 }
                 // ============= Connected ===================
                 else if (id === "ConnectData") {
@@ -2474,6 +3495,77 @@ width:10,
                         ArrowRight1: position,
                     }));
                 }
+                // =========== PT ICONS1 ==================
+
+                //================ GD ====================
+                else if (id === "GD1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1: position,
+                    }));
+                } else if (id === "GD2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2: position,
+                    }));
+                } else if (id === "GD3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3: position,
+                    }));
+                } else if (id === "GD1_Name1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Name1901: position,
+                    }));
+                } else if (id === "GD2_Name1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Name1902: position,
+                    }));
+                } else if (id === "GD3_Name1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Name1903: position,
+                    }));
+                } else if (id === "GD1_Value1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Value1901: position,
+                    }));
+                } else if (id === "GD2_Value1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Value1902: position,
+                    }));
+                } else if (id === "GD3_Value1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Value1903: position,
+                    }));
+                } else if (id === "GD_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none1: position,
+                    }));
+                } else if (id === "GD_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none2: position,
+                    }));
+                } else if (id === "GD_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none3: position,
+                    }));
+                }
+                // ===================== border white ==================
+                else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                }
             }
         },
         [setNodes, setPositions, editingEnabled]
@@ -2491,7 +3583,6 @@ width:10,
             <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button>
-
             <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
@@ -2555,7 +3646,8 @@ width:10,
                     onNodeDragStop={onNodeDragStop}
                     // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                  
+                    minZoom={0.5}
+                    maxZoom={2}
                 >
                     <Controls />
                 </ReactFlow>

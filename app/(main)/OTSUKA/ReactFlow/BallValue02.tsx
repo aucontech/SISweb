@@ -152,7 +152,7 @@ export default function BallValue02() {
     }, []);
     return (
         <div>
-             {data.map((item: any) => (
+            {data.map((item: any) => (
                 <div key={item.key}>
                     {item.key === "BallValue_02" && (
                         <div
@@ -166,14 +166,15 @@ export default function BallValue02() {
                          >
                             
                                 {item.value.toString() === "false" ? (
-                                    <div style={{ background:backgroundGraphic   }}>
+                                    <div style={{   }}>
 
-                                       {BallVavleOn}
+                                            {BallVavleOn}
 
                                     </div>
                                 ) : (
-                                    <div style={{ background:backgroundGraphic   }}>
-                                        {BallVavleOff}
+                                    <div style={{    }}>
+
+                                               {BallVavleOff}
 
                                     </div>
                                 )}

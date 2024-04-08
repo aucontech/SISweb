@@ -166,14 +166,15 @@ export default function BallValue06() {
                          >
                             
                                 {item.value.toString() === "false" ? (
-                                    <div style={{ background:backgroundGraphic   }}>
+                                    <div style={{   }}>
 
-                                       {BallVavleOn}
+                                            {BallVavleOn}
 
                                     </div>
                                 ) : (
-                                    <div style={{ background:backgroundGraphic   }}>
-                                        {BallVavleOff}
+                                    <div style={{    }}>
+
+                                               {BallVavleOff}
 
                                     </div>
                                 )}

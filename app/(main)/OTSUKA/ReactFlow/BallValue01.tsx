@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
-import { BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
+import { BallVavle, BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
 
 export default function BallValue01() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -166,14 +166,15 @@ export default function BallValue01() {
                          >
                             
                                 {item.value.toString() === "false" ? (
-                                    <div style={{ background:backgroundGraphic   }}>
+                                    <div style={{   }}>
 
-                                       {BallVavleOn}
+                                            {BallVavleOn}
 
                                     </div>
                                 ) : (
-                                    <div style={{ background:backgroundGraphic   }}>
-                                        {BallVavleOff}
+                                    <div style={{    }}>
+
+                                               {BallVavleOff}
 
                                     </div>
                                 )}

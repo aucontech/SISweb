@@ -1,7 +1,7 @@
 import { MarkerType } from "reactflow";
 
 const styleLine = {
-    strokeWidth: 18,
+    strokeWidth: 20,
     stroke: "#ffaa00",
 };
 
@@ -171,7 +171,7 @@ export const DemoEdges = [
         id: "SDV_None-SDV_Ball",
         source: "SDV_None",
         target: "SDV_Ball",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -182,7 +182,7 @@ export const DemoEdges = [
         id: "SDV_Ball-SDV_None",
         source: "SDV_Ball",
         target: "SDV_None",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -193,7 +193,7 @@ export const DemoEdges = [
         id: "Tank_None-Tank_Ball",
         source: "Tank_None",
         target: "Tank_Ball",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -204,7 +204,7 @@ export const DemoEdges = [
         id: "Tank_Ball-Tank_None",
         source: "Tank_Ball",
         target: "Tank_None",
-        animated: true,
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -256,48 +256,142 @@ export const DemoEdges = [
             ...styleLine,
         },
     }, 
+    {
+        id: "PSV_None04-PSV01",
+        source: "PSV_None04",
+        target: "PSV01",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    }, 
      {
-        id: "FIQ_1901-Pressure_Trans01",
-        source: "FIQ_1901",
+        id: "FIQ_none11-data1",
+        source: "FIQ_none11",
+        target: "data1",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+
+   
+    {
+        id: "PCV_none1-PCV_NUM01",
+        source: "PCV_none1",
+        target: "PCV_NUM01",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+    {
+        id: "PCV_none2-PCV_NUM02",
+        source: "PCV_none2",
+        target: "PCV_NUM02",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+
+    {
+        id: "FIQ_none22-FIQ_1902",
+        source: "FIQ_none22",
+        target: "FIQ_1902",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+   
+    {
+        id: "PCV_none1-PCV_NUM01",
+        source: "PCV_none1",
+        target: "PCV_NUM01",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+    {
+        id: "PCV_none2-PCV_NUM02",
+        source: "PCV_none2",
+        target: "PCV_NUM02",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+
+    {
+        id: "GD_none1-GD1_Name1901",
+        source: "GD_none1",
+        target: "GD1_Name1901",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+   
+    {
+        id: "GD_none2-GD2_Name1902",
+        source: "GD_none2",
+        target: "GD2_Name1902",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+    {
+        id: "GD_none3-GD3_Name1903",
+        source: "GD_none3",
+        target: "GD3_Name1903",
+        // animated: true,
+        type: "smoothstep",
+
+        strokeWidth: 1,
+        stroke: "gray",
+    },
+
+    {
+        id: "PT_none1-Pressure_Trans01",
+        source: "PT_none1",
         target: "Pressure_Trans01",
         // animated: true,
         type: "smoothstep",
 
-        style: {
-            ...styleLine,
-        },
+        strokeWidth: 1,
+        stroke: "gray",
     },
+   
     {
-        id: "FIQ_1902-Pressure_Trans02",
-        source: "FIQ_1902",
+        id: "PT_none2-Pressure_Trans02",
+        source: "PT_none2",
         target: "Pressure_Trans02",
         // animated: true,
         type: "smoothstep",
 
-        style: {
-            ...styleLine,
-        },
+        strokeWidth: 1,
+        stroke: "gray",
     },
     {
-        id: "FIQ_1901-Temperature_Trans01",
-        source: "FIQ_1901",
-        target: "Temperature_Trans01",
+        id: "PT_none3-Pressure_Trans03",
+        source: "PT_none3",
+        target: "Pressure_Trans03",
         // animated: true,
         type: "smoothstep",
 
-        style: {
-            ...styleLine,
-        },
-    },
-    {
-        id: "FIQ_1902-Temperature_Trans02",
-        source: "FIQ_1902",
-        target: "Temperature_Trans02",
-        // animated: true,
-        type: "smoothstep",
-
-        style: {
-            ...styleLine,
-        },
+        strokeWidth: 1,
+        stroke: "gray",
     },
 ];

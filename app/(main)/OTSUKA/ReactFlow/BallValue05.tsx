@@ -152,35 +152,36 @@ export default function BallValue05() {
     }, []);
     return (
         <div>
-            {data.map((item: any) => (
-                <div key={item.key}>
-                    {item.key === "BallValue_05" && (
-                        <div
-                        style={{
-                            cursor: "pointer",
-                            border: "none",
-                           
-                        }}
-                        onClick={handleButtonClick}
+        {data.map((item: any) => (
+            <div key={item.key}>
+                {item.key === "BallValue_05" && (
+                    <div
+                    style={{
+                        cursor: "pointer",
+                        border: "none",
+                       
+                    }}
+                    onClick={handleButtonClick}
 
-                         >
-                            
-                                {item.value.toString() === "false" ? (
-                                    <div style={{ background:backgroundGraphic   }}>
+                     >
+                        
+                            {item.value.toString() === "false" ? (
+                                <div style={{   }}>
 
-                                       {BallVavleOn}
+                                        {BallVavleOn}
 
-                                    </div>
-                                ) : (
-                                    <div style={{ background:backgroundGraphic   }}>
-                                        {BallVavleOff}
+                                </div>
+                            ) : (
+                                <div style={{    }}>
 
-                                    </div>
-                                )}
-                        </div>
-                    )}
-                </div>
-            ))}
-        </div>
+                                           {BallVavleOff}
+
+                                </div>
+                            )}
+                    </div>
+                )}
+            </div>
+        ))}
+    </div>
     );
 }
