@@ -97,6 +97,12 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 break;
             case "valueType":
                 newAttribute.value.type = value;
+                if (
+                    newAttribute.value.value === null ||
+                    newAttribute.value.value === ""
+                ) {
+                    newAttribute.value.value = "{}";
+                }
                 setAttribute(newAttribute);
                 break;
             case "intValue":
@@ -135,17 +141,36 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 break;
         }
     };
+    // const debouncedHandleJsonChange = useCallback(
+    //     debounce((e) => handleJsonChange(e), 250),
+    //     [] // Dependencies array, it's empty because we only want to create the debounced function once
+    // );
 
     const handleJsonChange = useCallback(
         (e: any) => {
             const newValue = e.target.value;
+            // Initialize isValid flag as false
+            let isValid = false;
+
             try {
-                JSON.parse(newValue); // Attempt to parse the JSON
-                _onChangeInputForm("jsonValue", newValue);
-                setIsJsonValid(true); // Set JSON as valid
+                // Attempt to parse the JSON
+                const parsedValue = JSON.parse(newValue);
+
+                // Check if the parsed JSON is an object and not an array
+                isValid =
+                    parsedValue &&
+                    typeof parsedValue === "object" &&
+                    !Array.isArray(parsedValue);
             } catch (err) {
-                setIsJsonValid(false); // Set JSON as invalid
+                // Parsing failed, log the error and leave isValid as false
+                console.log("Error parsing JSON:", err);
             }
+
+            // Update the form with the new value
+            _onChangeInputForm("jsonValue", newValue);
+
+            // Update JSON validation state
+            setIsJsonValid(isValid);
         },
         [_onChangeInputForm]
     );
@@ -198,8 +223,8 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 return (
                     <>
                         <InputTextarea
-                            value={JSON.stringify(attribute?.value?.value)}
-                            onChange={debounce(handleJsonChange, 500)} // Adjust debounce delay as needed
+                            value={attribute?.value?.value}
+                            onChange={(e) => handleJsonChange(e)} // Adjust debounce delay as needed
                             rows={2}
                             autoResize={true}
                             className={!isJsonValid ? "p-invalid" : ""} // Add 'p-invalid' class if JSON is invalid
@@ -286,14 +311,21 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
         </div>
     );
     const handleEditAttribute = (rowData: any) => {
-        let newAttribute = {
+        let newAttribute: any = {
             ...defaultAttribute,
         };
         newAttribute.key = rowData.key;
         newAttribute.value.type = Utils.getType(rowData.value);
-        newAttribute.value.value = rowData.value;
-        setIsNew(false);
-        setAttribute(newAttribute);
+
+        if (Utils.getType(rowData.value) === "JSON") {
+            newAttribute.value.value = JSON.stringify(rowData.value);
+        } else {
+            newAttribute.value.value = rowData.value;
+        }
+
+        console.log(newAttribute);
+        // setIsNew(false);
+        setAttribute({ ...newAttribute });
         setIsFormVisible(true);
     };
     const editButtonTemplate = (rowData: any) => {
