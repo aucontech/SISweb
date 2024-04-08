@@ -118,6 +118,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                     <div className="col-12 lg:col-12 ">
                         <span className="p-float-label">
                             <InputText
+                                placeholder="Alarm type"
                                 className="w-full"
                                 value={editAlarm.alarmType}
                                 onChange={(e: any) =>
@@ -127,7 +128,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                                     )
                                 }
                             />
-                            <label>Alarm Type</label>
                         </span>
                     </div>
                     <div className="col-12 lg:col-12 ">
@@ -396,7 +396,11 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 onClick={_onOkCondtionForm}
                 autoFocus
             />
-            <Button label="Cancel" icon="pi pi-check" />
+            <Button
+                label="Cancel"
+                icon="pi pi-times"
+                onClick={() => setIsConditionFormVisible(false)}
+            />
         </div>
     );
 
@@ -408,7 +412,11 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 onClick={_onOkClearCondtionForm}
                 autoFocus
             />
-            <Button label="Cancel" icon="pi pi-check" />
+            <Button
+                label="Cancel"
+                icon="pi pi-times"
+                onClick={() => setIsClearConditionFormVisible(false)}
+            />
         </div>
     );
     console.log(clearCondition);

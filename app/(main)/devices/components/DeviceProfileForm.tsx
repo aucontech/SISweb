@@ -1,6 +1,6 @@
 "use client";
 import { TabPanel, TabView } from "primereact/tabview";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import {
     getDeviceProfileById,
     saveOrUpdateDeviceProfile,
@@ -9,7 +9,9 @@ import DeviceProfileAlarmSettings from "./DeviceProfileAlarmSettings";
 import { useState } from "react";
 import { Button } from "primereact/button";
 import AttributeSetting from "./AttributeSetting";
+import { Toast } from "primereact/toast";
 import { v4 as uuidv4 } from "uuid"; // Import the uuid function at the top of your file
+import { UIUtils, Utils } from "@/service/Utils";
 
 interface Props {
     device: any;
@@ -155,7 +157,7 @@ const defaultAlarm = {
     propagateRelationTypes: null,
 };
 const DeviceProfileForm: React.FC<Props> = ({ device }) => {
-    console.log(device);
+    const toast = useRef<Toast>(null);
     const [deviceProfile, setDeviceProfile] = useState<any>({});
     const _fetchDataDeviceProfile = useCallback(({ id }: { id: string }) => {
         getDeviceProfileById(id)
@@ -189,7 +191,22 @@ const DeviceProfileForm: React.FC<Props> = ({ device }) => {
     }, [device, _fetchDataDeviceProfile]);
     console.log(deviceProfile);
     const _hanldeSubmit = () => {
-        saveOrUpdateDeviceProfile(deviceProfile);
+        saveOrUpdateDeviceProfile(deviceProfile)
+            .then((resp) => resp.data)
+            .then((res) => {
+                if (res) {
+                    UIUtils.showInfo({
+                        toast: toast.current,
+                        summary: "Success",
+                    });
+                }
+            })
+            .catch((err: any) => {
+                UIUtils.showError({
+                    error: err?.response?.data?.message,
+                    toast: toast.current,
+                });
+            });
     };
     const _handleNewAlarm = () => {
         const newAlarm = {
@@ -215,27 +232,31 @@ const DeviceProfileForm: React.FC<Props> = ({ device }) => {
                 },
             };
         }
-        console.log(newDeviceProfile);
 
         setDeviceProfile(newDeviceProfile);
     };
     return (
-        <TabView>
-            <TabPanel header="Alarms">
-                <DeviceProfileAlarmSettings
-                    onAlarmsUpdate={(updatedAlarms) =>
-                        handleAlarmsUpdate(updatedAlarms)
-                    }
-                    alarms={deviceProfile?.profileData?.alarms}
-                    deviceProfileId={deviceProfile?.id?.id}
-                />
-                <Button onClick={_hanldeSubmit}>Submit</Button>
-                <Button onClick={_handleNewAlarm}>New Alarm</Button>
-            </TabPanel>
-            <TabPanel header="Attributes">
-                <AttributeSetting deviceId={device.id.id} />
-            </TabPanel>
-        </TabView>
+        <>
+            <Toast ref={toast} />
+            <TabView>
+                <TabPanel header="Alarms">
+                    <DeviceProfileAlarmSettings
+                        onAlarmsUpdate={(updatedAlarms) =>
+                            handleAlarmsUpdate(updatedAlarms)
+                        }
+                        alarms={deviceProfile?.profileData?.alarms}
+                        deviceProfileId={deviceProfile?.id?.id}
+                    />
+                    <div className="mt-5 flex gap-3">
+                        <Button onClick={_hanldeSubmit}>Save</Button>
+                        <Button onClick={_handleNewAlarm}>New Alarm</Button>
+                    </div>
+                </TabPanel>
+                <TabPanel header="Attributes">
+                    <AttributeSetting deviceId={device.id.id} />
+                </TabPanel>
+            </TabView>
+        </>
     );
 };
 

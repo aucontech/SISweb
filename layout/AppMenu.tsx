@@ -37,19 +37,12 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-image",
                     to: "/OTSUKA",
                 },
-                {
-                    label: "Banking",
-                    icon: "pi pi-fw pi-image",
-                    to: "/dashboard-banking",
-                },
             ],
         },
         {
             label: "Dashboards",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "Overview",
                     icon: "pi pi-fw pi-home",
@@ -60,15 +53,12 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-home",
                     to: "/devices",
                 },
-               
             ],
         },
         {
             label: "Alarm",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "Alarm Summary",
                     icon: "pi pi-fw pi-comment",
@@ -78,16 +68,13 @@ const AppMenu = () => {
                     label: "Alarm History",
                     icon: "pi pi-fw pi-calendar",
                     to: "/alarmhistory",
-
                 },
-               
             ],
-        },  {
+        },
+        {
             label: "Device",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "Device List",
                     icon: "pi pi-fw pi-list",
@@ -109,8 +96,6 @@ const AppMenu = () => {
             label: "Summary",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "Table",
                     icon: "pi pi-fw pi-table",
@@ -121,15 +106,12 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-list",
                     // to: "/devices",
                 },
-               
             ],
-        }, 
+        },
         {
             label: "Report",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "Customer Report",
                     icon: "pi pi-fw pi-table",
@@ -146,13 +128,11 @@ const AppMenu = () => {
                     // to: "/devices",
                 },
             ],
-        }, 
+        },
         {
             label: "Setting",
             icon: "pi pi-home",
             items: [
-              
-               
                 {
                     label: "User",
                     icon: "pi pi-fw pi-user",
@@ -180,7 +160,7 @@ const AppMenu = () => {
                 },
             ],
         },
-    ]; 
+    ];
 
     return <AppSubMenu model={model} />;
 };

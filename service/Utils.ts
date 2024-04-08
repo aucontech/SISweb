@@ -113,12 +113,51 @@ const calculateDurationFromUnixWithWords = (startTime: any, endTime: any) => {
     const duration: any = end - start; // Khoảng thời gian tính bằng miligiây
     return formatDurationWithWords(duration);
 };
+// Định nghĩa kiểu dữ liệu trả về
+type ValueType =
+    | "String"
+    | "Boolean"
+    | "Integer"
+    | "Double"
+    | "JSON"
+    | "Array"
+    | "Unknown Type";
 
+const getType = (value: any): ValueType => {
+    if (typeof value === "boolean") {
+        return "Boolean";
+    }
+
+    if (typeof value === "string") {
+        return "String";
+    }
+
+    if (typeof value === "number") {
+        if (Number.isInteger(value)) {
+            return "Integer";
+        } else {
+            return "Double";
+        }
+    }
+
+    if (typeof value === "object") {
+        if (value !== null) {
+            if (Array.isArray(value)) {
+                return "Array";
+            } else {
+                return "JSON";
+            }
+        }
+    }
+
+    return "Unknown Type";
+};
 const UIUtils = { showError, showInfo, showWarning };
 const Utils = {
     formatUnixTimeToString,
     getUnixTimeMilliseconds,
     getUnixTimeMillisecondsGMT7,
     calculateDurationFromUnixWithWords,
+    getType,
 };
 export { UIUtils, Utils };

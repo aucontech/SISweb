@@ -1,12 +1,12 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import {
     getSeverAttributesByDevice,
     saveOrUpdateSeverAttributesByDevice,
 } from "@/api/telemetry.api";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Utils } from "@/service/Utils";
+import { Utils, UIUtils } from "@/service/Utils";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -15,6 +15,7 @@ import { Checkbox } from "primereact/checkbox";
 import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import debounce from "lodash/debounce";
+import { Toast } from "primereact/toast";
 
 interface Props {
     deviceId: string;
@@ -30,18 +31,25 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
     const [attributes, setAttributes] = useState<any>([]);
     const [attributeValue, setAttributeValue] = useState<any>();
     const [isJsonValid, setIsJsonValid] = useState(true); // Assuming JSON is valid initially
-
+    const [isNew, setIsNew] = useState<boolean>(true);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [suggValueTypes, setSuggValueTypes] = useState<any[]>([]);
     const [attribute, setAttribute] = useState<any>({});
     const [valueType, setValueType] = useState<any>();
+    const [isReload, seIsReload] = useState<boolean>(true);
+    const toast = useRef<Toast>(null);
     const _fecthDataAttribute = useCallback((deviceId: string) => {
         getSeverAttributesByDevice(deviceId)
             .then((resp) => resp.data)
             .then((res) => {
                 setAttributes([...res]);
             })
-            .catch((err) => {});
+            .catch((err) => {
+                UIUtils.showError({
+                    error: err?.message,
+                    toast: toast.current,
+                });
+            });
     }, []);
     const validateJson = useCallback(
         debounce((value: string) => {
@@ -63,7 +71,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
     }, []);
     useEffect(() => {
         _fecthDataAttribute(deviceId);
-    }, [deviceId]);
+    }, [deviceId, isReload, _fecthDataAttribute]);
 
     const _renderLastUpdateTime = (row: any) => {
         let { lastUpdateTs } = row;
@@ -190,7 +198,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 return (
                     <>
                         <InputTextarea
-                            value={attribute?.value?.value}
+                            value={JSON.stringify(attribute?.value?.value)}
                             onChange={debounce(handleJsonChange, 500)} // Adjust debounce delay as needed
                             rows={2}
                             autoResize={true}
@@ -241,9 +249,23 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
         } else {
             reqParams[attribute.key] = attribute.value.value;
         }
-        saveOrUpdateSeverAttributesByDevice(deviceId, reqParams).then(
-            (resp) => resp.data
-        );
+        saveOrUpdateSeverAttributesByDevice(deviceId, reqParams)
+            .then((resp) => {
+                if (resp.status === 200) {
+                    UIUtils.showInfo({
+                        toast: toast.current,
+                        summary: "Success",
+                    });
+                    setIsFormVisible(false);
+                    seIsReload((prevalue) => !prevalue);
+                }
+            })
+            .catch((err) => {
+                UIUtils.showError({
+                    error: err?.response?.data?.message,
+                    toast: toast.current,
+                });
+            });
         console.log(reqParams);
     };
 
@@ -256,13 +278,38 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                 onClick={_onOkAttributeForm}
                 autoFocus
             />
-            <Button label="Cancel" icon="pi pi-check" />
+            <Button
+                label="Cancel"
+                icon="pi pi-times"
+                onClick={() => setIsFormVisible(false)}
+            />
         </div>
     );
+    const handleEditAttribute = (rowData: any) => {
+        let newAttribute = {
+            ...defaultAttribute,
+        };
+        newAttribute.key = rowData.key;
+        newAttribute.value.type = Utils.getType(rowData.value);
+        newAttribute.value.value = rowData.value;
+        setIsNew(false);
+        setAttribute(newAttribute);
+        setIsFormVisible(true);
+    };
+    const editButtonTemplate = (rowData: any) => {
+        return (
+            <Button
+                onClick={() => handleEditAttribute(rowData)}
+                icon="pi pi-user-edit"
+                className="p-button-rounded p-button-danger"
+            />
+        );
+    };
 
     return (
         <>
             <div>
+                <Toast ref={toast} />
                 <DataTable
                     // rows={lazyState.rows}
                     rowsPerPageOptions={[5, 10, 25, 50]}
@@ -289,6 +336,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
 
                     <Column field="key" header="key"></Column>
                     <Column header="value" body={_renderValueColumn}></Column>
+                    <Column header="Edit" body={editButtonTemplate}></Column>
                 </DataTable>
                 <Button onClick={() => setIsFormVisible(true)}>Add</Button>
             </div>
