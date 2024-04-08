@@ -3644,10 +3644,12 @@ export default function DemoFlowOTS() {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    nodesDraggable={false}
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
+
+
                 >
                     <Controls />
                 </ReactFlow>
