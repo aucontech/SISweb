@@ -122,7 +122,10 @@ export default function BallValue04() {
                     setUpData(updatedData);
                     setUpTS(updateTS);
                 }
+        fetchData();
+
             };
+
         }
     }, []);
 
