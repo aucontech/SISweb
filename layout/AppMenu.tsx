@@ -3,42 +3,7 @@ import AppSubMenu from "./AppSubMenu";
 
 const AppMenu = () => {
     const model: MenuModel[] = [
-        {
-            label: "Dashboards",
-            icon: "pi pi-home",
-            items: [
-                {
-                    label: "Alarm History",
-                    icon: "pi pi-fw pi-image",
-                    to: "/alarmhistory",
-                },
-                // {
-                //     label: "Realtime Monitoring",
-                //     icon: "pi pi-fw pi-image",
-                //     to: "/realtimemonitoring",
-                // },
-                {
-                    label: "Notifications center",
-                    icon: "pi pi-fw pi-image",
-                    to: "/notifications",
-                },
-                {
-                    label: "Devices",
-                    icon: "pi pi-fw pi-image",
-                    to: "/devices",
-                },
-                {
-                    label: "Device Profiles",
-                    icon: "pi pi-fw pi-image",
-                    to: "/deviceprofiles",
-                },
-                {
-                    label: "OTSUKA",
-                    icon: "pi pi-fw pi-image",
-                    to: "/OTSUKA",
-                },
-            ],
-        },
+       
         {
             label: "Dashboards",
             icon: "pi pi-home",
@@ -46,7 +11,8 @@ const AppMenu = () => {
                 {
                     label: "Overview",
                     icon: "pi pi-fw pi-home",
-                    // to: "/notifications",
+                    to: "/OTSUKA",
+
                 },
                 {
                     label: "Station Details",
@@ -78,12 +44,14 @@ const AppMenu = () => {
                 {
                     label: "Device List",
                     icon: "pi pi-fw pi-list",
-                    to: "/notifications",
+                    to: "/devices",
+
                 },
                 {
                     label: "Device Profile",
                     icon: "pi pi-fw pi-table",
-                    to: "/devices",
+                    to: "/deviceprofiles",
+
                 },
                 {
                     label: "Chart",

@@ -52,6 +52,7 @@ import {
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
 import { Dialog } from "primereact/dialog";
 import { connected } from "process";
+import { httpApi } from "@/api/http.api";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -68,7 +69,8 @@ export const line = "#ffaa00";
 export default function DemoFlowOTS() {
     const [visible, setVisible] = useState(false);
 
-    const op = useRef<OverlayPanel>(null);
+    const [dataApi, setDataApi] = useState<any>([]);
+    console.log("dataApi: ", dataApi);
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -178,6 +180,18 @@ export default function DemoFlowOTS() {
             };
         }
     }, [data]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await httpApi.get(
+                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                );
+                setDataApi(res.data);
+            } catch (error) {}
+        };
+        fetchData();
+    }, []);
 
     const ValueGas = {
         SVF: "SVF",
@@ -965,121 +979,304 @@ export default function DemoFlowOTS() {
     //     ? JSON.parse(storedPositionString)
     //     :
         
-    const initialPositions =   {
-        ArrowRight: { x: 823.955471857383, y: 999.6807441860246 },
-        ArrowRight1: { x: -1261.8585518029631, y: 1038.9120392894379 },
-        BallValue01: { x: -1129.9980812500166, y: 1187.9107038056438 },
-        BallValue02: { x: -895.356682967557, y: 1189.8020033217338 },
-        BallValue03: { x: -701.3246378085894, y: 883.8304778298589 },
-        BallValue04: { x: -702.693312830796, y: 1196.0996633088027 },
-        BallValue05: { x: -378.0807121369639, y: 882.6824168265823 },
-        BallValue06: { x: -378.1704246285699, y: 1195.6987844499788 },
-        BallValue07: { x: 462.80957360308423, y: 1275.632981441439 },
-        BallValue08: { x: 462.6050864040965, y: 805.8830489984563 },
-        BallValue09: { x: -113.22647003069105, y: 1277.0117880830726 },
-        BallValue10: { x: -113.02940460357098, y: 805.6518574509679 },
-        BallValueCenter: { x: 155.01754710958227, y: 1061.7611985041206 },
-        BallValueCenter_Check: {
-            x: 90.96636981528951,
-            y: 1084.2937921267353,
-        },
-        BallValueCenter_None: {
-            x: 174.25466354995183,
-            y: 1114.0567134405967,
-        },
-        BallValueCenter_None2: {
-            x: 175.72043709091793,
-            y: 1114.1142700381654,
-        },
-        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-        FIQ_1901: { x: 33.28704961872347, y: 335.1135501590107 },
-        FIQ_1902: { x: 36.64222079991478, y: 1397.4336269884245 },
-        FIQ_none: { x: 223.6869922039623, y: 777.2354742632019 },
-        FIQ_none2: { x: 225.06548244808948, y: 1247.3671164522668 },
-        FIQ_none11: { x: 272.7139984525454, y: 856.912018718329 },
-        FIQ_none22: { x: 275.4324075532159, y: 1326.360590984426 },
-        GD1: { x: -705.1814154857234, y: 1057.508602928905 },
-        GD1_Name1901: { x: -615.0195844024829, y: 982.637181181105 },
-        GD1_Value1901: { x: -615.6307245161495, y: 1022.748043629185 },
-        GD2: { x: -133.94457688309086, y: 1056.6756602852502 },
-        GD2_Name1902: { x: -59.779589372016574, y: 978.6585600806475 },
-        GD2_Value1902: { x: -58.69915684202027, y: 1018.8095852734185 },
-        GD3: { x: 309.01737430287176, y: 1050.8606129330037 },
-        GD3_Name1903: { x: 384.1349817802261, y: 984.8342277734904 },
-        GD3_Value1903: { x: 383.9248093630961, y: 1022.7174334287059 },
-        GD_none1: { x: -670.1784767260174, y: 1074.5507789267567 },
-        GD_none2: { x: -101.34408008024292, y: 1082.1710089261915 },
-        GD_none3: { x: 345.62391441028547, y: 1087.609177087721 },
-        HELP: { x: 750.7851455025582, y: 309.0601951574698 },
-        Header: { x: -1206.7800640424662, y: 388.37876746146 },
-        PCV01: { x: -596.9577180787576, y: 874.4326119207913 },
-        PCV02: { x: -597.6433959532042, y: 1186.237160632944 },
-        PCV_NUM01: { x: -673.4856861354434, y: 726.0294822075074 },
-        PCV_NUM02: { x: -674.7380892015382, y: 1370.5199593154873 },
-        PCV_none1: { x: -559.5509818116116, y: 935.3683241530094 },
-        PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-        PSV01: { x: 610.473175015095, y: 597.3219090263999 },
-        PSV_01: { x: 707.4234072547852, y: 834.0399185360251 },
-        PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
-        PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
-        PSV_None01: { x: 796.2500184506105, y: 1044.2017434854683 },
-        PSV_None02: { x: 742.4037921900604, y: 882.687476499454 },
-        PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
-        PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
-        PT1: { x: -1025.2125246843698, y: 1004.1838777096069 },
-        PT2: { x: -25.542489665719472, y: 1256.3255536762633 },
-        PT3: { x: -5.0188432487411205, y: 789.4562620346093 },
-        PT_none1: { x: -989.7465212143211, y: 1034.3299806591485 },
-        PT_none2: { x: 29.223411113184227, y: 817.3255536762634 },
-        PT_none3: { x: 11.42743990310646, y: 1282.7324187845866 },
-        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-        Pressure_Trans01: { x: -1074.582503155971, y: 780.2569333035837 },
-        Pressure_Trans02: { x: -286.3699613505455, y: 722.7662576288657 },
-        Pressure_Trans03: {
-            x: -320.6762190909783,
-            y: 1368.5878435786115,
-        },
-        SDV: { x: -1247.5296036246955, y: 936.5758808521592 },
-        SDV_Ball: { x: -1109.8969185378605, y: 1241.6399506143773 },
-        SDV_IMG: { x: -1127.898707272786, y: 1020.6408310422089 },
-        SDV_None: { x: -1092.597048928013, y: 1084.7361187303948 },
-        Tank: { x: -911.664517080937, y: 965.7322464522078 },
-        Tank_Ball: { x: -875.1430460093859, y: 1242.7446917036984 },
-        Tank_None: { x: -906.6261313289393, y: 1085.4707750355217 },
-        Temperature_Trans01: {
-            x: -607.828356494313,
-            y: 562.8487535527242,
-        },
-        Temperature_Trans02: {
-            x: -796.1166124474211,
-            y: 1445.5258186779024,
-        },
-        borderWhite: { x: -1228.5752488233188, y: 377.16014281141565 },
-        data1: { x: 33.98800518087057, y: 593.0278017643932 },
-        data2: { x: 33.78846144394731, y: 528.3506431415917 },
-        data3: { x: 33.36374521178436, y: 463.6853304857493 },
-        data4: { x: 32.63339716779848, y: 399.39870601500076 },
-        data5: { x: 36.9278303152023, y: 1461.095011105468 },
-        data6: { x: 36.7721669447223, y: 1524.7459382860852 },
-        data7: { x: 36.197218212598386, y: 1588.775369537831 },
-        data8: { x: 35.58508145225224, y: 1653.1748866910893 },
-        line1: { x: -1252.0791151967255, y: 1085.5692254680569 },
-        line2: { x: -817.6211537200223, y: 1085.4365275251103 },
-        line3: { x: -679.4548405099899, y: 936.4534537832784 },
-        line4: { x: -679.8288704580859, y: 1247.5473074652164 },
-        line5: { x: -355.96875345751545, y: 936.5969570000603 },
-        line6: { x: -355.67780000165965, y: 1247.470831450982 },
-        line7: { x: -188.45830132383423, y: 1089.4219836777133 },
-        line8: { x: -90.39616947758043, y: 858.6688336051166 },
-        line9: { x: -90.52620249154324, y: 1329.2727569858912 },
-        line10: { x: 484.86843311853136, y: 858.5611750826382 },
-        line11: { x: 484.9474549111277, y: 1329.260296490842 },
-        line12: { x: 706.3313915738289, y: 1043.5647138277245 },
-        line13: { x: 854.493627374797, y: 1044.463725443685 },
-        timeUpdate: { x: -1204.4329288664649, y: 481.78426525992836 },
-        timeUpdate2: { x: -1206.7571479926846, y: 524.0916184511616 },
-        timeUpdate3: { x: -1207.68200120475, y: 569.5594513023825 },
+        const initialPositions = {
+            ArrowRight
+            : 
+            {x: 770.0423568651795, y: 999.0512757003828},
+            ArrowRight1
+            : 
+            {x: -1262.1001825232765, y: 1000.2070645557653},
+            BallValue01
+            : 
+            {x: -1129.8077404386877, y: 1191.6262752572804},
+            BallValue02
+            : 
+            {x: -903.8172406747104, y: 1193.399667617022},
+            BallValue03
+            : 
+            {x: -701.743699776225, y: 811.268852001003},
+            BallValue04
+            : 
+            {x: -702.8672275157428, y: 1194.5644365920487},
+            BallValue05
+            : 
+            {x: -409.1293248998188, y: 811.8988197919384},
+            BallValue06
+            : 
+            {x: -408.81019299266336, y: 1196.4905308723003},
+            BallValue07
+            : 
+            {x: 504.8485477377201, y: 1275.7596294538605},
+            BallValue08
+            : 
+            {x: 503.96196630239683, y: 731.9490736073253},
+            BallValue09
+            : 
+            {x: -110.97796431132724, y: 1276.0539298322096},
+            BallValue10
+            : 
+            {x: -110.7879376251401, y: 730.8594374390017},
+            BallValueCenter
+            : 
+            {x: 170.28284253055722, y: 1074.8085613478083},
+            BallValueCenter_Check
+            : 
+            {x: 90.96636981528951, y: 1084.2937921267353},
+            BallValueCenter_None
+            : 
+            {x: 190.6977403016166, y: 1128.2735110631843},
+            BallValueCenter_None2
+            : 
+            {x: 187.69325594988527, y: 1127.7651266121159},
+            ConnectData
+            : 
+            {x: -1224.1375965271236, y: 779.7488024784055},
+            FIQ_1901
+            : 
+            {x: 56.4384344762982, y: 335.1135501590107},
+            FIQ_1902
+            : 
+            {x: 52.64222079991475, y: 1396.0082765753443},
+            FIQ_none
+            : 
+            {x: 248.9733646620158, y: 703.1349517698848},
+            FIQ_none2
+            : 
+            {x: 240.4782876338645, y: 1246.433138125363},
+            FIQ_none11
+            : 
+            {x: 297.9700546608087, y: 776.4933333155745},
+            FIQ_none22
+            : 
+            {x: 291.83473663064194, y: 1326.765516678561},
+            GD1
+            : 
+            {x: -593.1247404829055, y: 1021.5484138763804},
+            GD1_Name1901
+            : 
+            {x: -642.5174367324778, y: 929.7999982291198},
+            GD1_Value1901
+            : 
+            {x: -642.2309648261335, y: 969.2951649681137},
+            GD2
+            : 
+            {x: -42.50089224243885, y: 1021.4354854552315},
+            GD2_Name1902
+            : 
+            {x: -93.0443422577471, y: 929.3762980384839},
+            GD2_Value1902
+            : 
+            {x: -92.91457554484961, y: 969.1203079122581},
+            GD3
+            : 
+            {x: 459.914400589417, y: 1020.9672974791615},
+            GD3_Name1903
+            : 
+            {x: 408.94939138278767, y: 926.3542185615489},
+            GD3_Value1903
+            : 
+            {x: 409.16846035566243, y: 966.2240910379097},
+            GD_none1
+            : 
+            {x: -557.4064666813481, y: 1048.346153521593},
+            GD_none2
+            : 
+            {x: -7.7844474100276955, y: 1044.8685851757357},
+            GD_none3
+            : 
+            {x: 494.08483331589105, y: 1051.9593704975985},
+            HELP
+            : 
+            {x: 750.7851455025582, y: 309.0601951574698},
+            Header
+            : 
+            {x: -1215.2974346820151, y: 334.59191426371524},
+            PCV01
+            : 
+            {x: -600.44289821967, y: 802.1626518716577},
+            PCV02
+            : 
+            {x: -599.605425182069, y: 1186.7751314040793},
+            PCV_NUM01
+            : 
+            {x: -675.4245247615252, y: 649.8482428718216},
+            PCV_NUM02
+            : 
+            {x: -674.7380892015382, y: 1385.6184188882628},
+            PCV_none1
+            : 
+            {x: -561.5028035240778, y: 865.4758644182178},
+            PCV_none2
+            : 
+            {x: -560.7446075974576, y: 1245.861392635763},
+            PSV01
+            : 
+            {x: 610.1731993621377, y: 610.5133777676822},
+            PSV_01
+            : 
+            {x: 706.026929274324, y: 839.5277060688408},
+            PSV_02
+            : 
+            {x: 677.371154154704, y: 804.4314434762641},
+            PSV_03
+            : 
+            {x: 663.4773354313934, y: 704.930638396519},
+            PSV_None01
+            : 
+            {x: 784.3052438210208, y: 1043.0259819068465},
+            PSV_None02
+            : 
+            {x: 740.5334428531365, y: 887.7863120430411},
+            PSV_None03
+            : 
+            {x: 698.7618492817661, y: 839.0390132826677},
+            PSV_None04
+            : 
+            {x: 691.0055856547771, y: 735.8487283773412},
+            PT1
+            : 
+            {x: -1030.7668278678443, y: 923.6792519357384},
+            PT2
+            : 
+            {x: -28.230424576846872, y: 1208.4191682124228},
+            PT3
+            : 
+            {x: -20.381746689621593, y: 648.2950323883464},
+            PT_col1
+            : 
+            {x: -990.7658686613956, y: 998.6460419620203},
+            PT_col2
+            : 
+            {x: 19.862308874268933, y: 723.4102490216972},
+            PT_col3
+            : 
+            {x: 12.25510938641824, y: 1283.8771270969148},
+            PT_none1
+            : 
+            {x: -994.879694196512, y: 940.6460419620203},
+            PT_none2
+            : 
+            {x: 14.853152228289105, y: 669.8323533445953},
+            PT_none3
+            : 
+            {x: 7.676012482892929, y: 1237.2951782160794},
+            PVC_none1
+            : 
+            {x: -559.5285900583461, y: 935.5671930782875},
+            PVC_none2
+            : 
+            {x: -554.5116204107262, y: 1246.839418457314},
+            Pressure_Trans01
+            : 
+            {x: -1079.8436117067047, y: 781.9865024503554},
+            Pressure_Trans02
+            : 
+            {x: -290.0766678403734, y: 607.0339683340325},
+            Pressure_Trans03
+            : 
+            {x: -299.9462192355602, y: 1436.8780553467147},
+            SDV
+            : 
+            {x: -1233.5296036246955, y: 898.5758808521592},
+            SDV_Ball
+            : 
+            {x: -1108.7415047384393, y: 1243.8057655958721},
+            SDV_IMG
+            : 
+            {x: -1126.3831115366236, y: 979.9402528155629},
+            SDV_None
+            : 
+            {x: -1089.4833742545557, y: 1047.2356364928637},
+            Tank
+            : 
+            {x: -921.5169052023348, y: 946.94544810155},
+            Tank_Ball
+            : 
+            {x: -881.0746635080593, y: 1244.2870542191342},
+            Tank_None
+            : 
+            {x: -913.9045068453281, y: 1045.2445985526958},
+            Temperature_Trans01
+            : 
+            {x: -607.828356494313, y: 562.8487535527242},
+            Temperature_Trans02
+            : 
+            {x: -796.1166124474211, y: 1445.5258186779024},
+            borderWhite
+            : 
+            {x: -1244.5752488233188, y: 325.16014281141565},
+            data1
+            : 
+            {x: 58.191725713789765, y: 589.2589906944482},
+            data2
+            : 
+            {x: 57.99218197686639, y: 525.1936361155588},
+            data3
+            : 
+            {x: 57.56746574470333, y: 461.5806591350607},
+            data4
+            : 
+            {x: 56.8371177007175, y: 398.34637033965646},
+            data5
+            : 
+            {x: 52.537564275821296, y: 1461.095011105468},
+            data6
+            : 
+            {x: 52.38190090534124, y: 1525.9466870522867},
+            data7
+            : 
+            {x: 51.806952173217496, y: 1589.9761183040325},
+            data8
+            : 
+            {x: 52.342679026038354, y: 1653.1748866910893},
+            line1
+            : 
+            {x: -1216.4118252175665, y: 1045.059045857194},
+            line2
+            : 
+            {x: -824.7490621134568, y: 1045.059045857194},
+            line3
+            : 
+            {x: -679.4548405099899, y: 864.3210507007146},
+            line4
+            : 
+            {x: -679.8288704580859, y: 1247.5473074652164},
+            line5
+            : 
+            {x: -386.35311440840894, y: 864.5020291308545},
+            line6
+            : 
+            {x: -386.02218778401766, y: 1247.470831450982},
+            line7
+            : 
+            {x: -210.82907734671454, y: 1052.6632425418165},
+            line8
+            : 
+            {x: -88.04540708877198, y: 784.1775456107679},
+            line9
+            : 
+            {x: -88.0002755654424, y: 1328.89662061928},
+            line10
+            : 
+            {x: 526.287999771183, y: 784.4482798747053},
+            line11
+            : 
+            {x: 526.7985068882073, y: 1328.7506749429908},
+            line12
+            : 
+            {x: 669.453281622097, y: 1042.0651701525298},
+            line13
+            : 
+            {x: 784.3012389553304, y: 1043.0028327994185},
+            timeUpdate
+            : 
+            {x: -1207.662833618947, y: 426.37580509660154},
+            timeUpdate2
+            : 
+            {x: -1208.390903453317, y: 465.43168547154335},
+            timeUpdate3
+            : 
+            {x: -1207.9206887298799, y: 504.9606057897354},
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -2502,6 +2699,63 @@ export default function DemoFlowOTS() {
                 height: 1,
             },
         },
+        {
+            id: "PT_col1",
+            position: positions.PT_col1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            zIndex: 999999,
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: line,
+                background: line,
+                width: 10,
+                height: 65,
+
+                borderRadius: "none",
+            },
+        },
+        {
+            id: "PT_col2",
+            position: positions.PT_col2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            zIndex: 999999,
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: line,
+                background: line,
+                width: 10,
+                height: 65,
+
+                borderRadius: "none",
+            },
+        },
+        {
+            id: "PT_col3",
+            position: positions.PT_col3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            zIndex: 999999,
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: line,
+                background: line,
+                width: 10,
+                height: 65,
+
+                borderRadius: "none",
+            },
+        },
 
         //  ================== TT ======================
 
@@ -2789,7 +3043,7 @@ export default function DemoFlowOTS() {
             zIndex: 9999,
 
             style: {
-                background: "#ffaa00",
+                background: background,
                 border: "none",
                 width: "10px",
 
@@ -2834,7 +3088,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 300,
+                width: 200,
                 height: 40,
             },
             targetPosition: Position.Left,
@@ -2858,7 +3112,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 300,
+                width: 200,
                 height: 40,
             },
             targetPosition: Position.Left,
@@ -2882,7 +3136,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 230,
+                width: 200,
 
                 height: 40,
             },
@@ -2909,7 +3163,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 300,
+                width: 200,
                 height: 40,
             },
             targetPosition: Position.Bottom,
@@ -2934,7 +3188,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 300,
+                width: 200,
 
                 height: 40,
             },
@@ -2960,7 +3214,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 230,
+                width: 200,
 
                 height: 40,
             },
@@ -3435,6 +3689,21 @@ export default function DemoFlowOTS() {
     //                     ...prevPositions,
     //                     PT_none3: position,
     //                 }));
+    //             } else if (id === "PT_col1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_col1: position,
+    //                 }));
+    //             } else if (id === "PT_col2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_col2: position,
+    //                 }));
+    //             } else if (id === "PT_col3") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_col3: position,
+    //                 }));
     //             }
 
     //             // ================ TT =================
@@ -3573,9 +3842,9 @@ export default function DemoFlowOTS() {
     //     [setNodes, setPositions, editingEnabled]
     // );
 
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);
@@ -3646,12 +3915,10 @@ export default function DemoFlowOTS() {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
-
-
                 >
                     <Controls />
                 </ReactFlow>

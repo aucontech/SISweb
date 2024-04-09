@@ -6,6 +6,7 @@ import ReactFlow from "./ReactFlow/ReactFlow";
 import Inital from "./ReactFlow/inital";
 import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
 import ReactFlowHigh from "./ReactFlow/ReactFlow";
+import LowHighData from "./LowHighData/LowHighData";
 const TabOtsuka = () => {
     return (
         <div className="grid">
@@ -17,6 +18,9 @@ const TabOtsuka = () => {
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
                     </TabPanel>
+                    {/* <TabPanel header="LowHigh Data">
+                        <LowHighData />
+                    </TabPanel> */}
                 </TabView>
             </div>
         </div>

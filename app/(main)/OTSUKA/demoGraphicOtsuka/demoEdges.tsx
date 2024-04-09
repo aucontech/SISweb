@@ -332,9 +332,9 @@ export const DemoEdges = [
     },
 
     {
-        id: "GD_none1-GD1_Name1901",
+        id: "GD_none1-GD1_Value1901",
         source: "GD_none1",
-        target: "GD1_Name1901",
+        target: "GD1_Value1901",
         // animated: true,
         type: "smoothstep",
 
@@ -343,9 +343,9 @@ export const DemoEdges = [
     },
    
     {
-        id: "GD_none2-GD2_Name1902",
+        id: "GD_none2-GD2_Value1902",
         source: "GD_none2",
-        target: "GD2_Name1902",
+        target: "GD2_Value1902",
         // animated: true,
         type: "smoothstep",
 
@@ -353,9 +353,9 @@ export const DemoEdges = [
         stroke: "gray",
     },
     {
-        id: "GD_none3-GD3_Name1903",
+        id: "GD_none3-GD3_Value1903",
         source: "GD_none3",
-        target: "GD3_Name1903",
+        target: "GD3_Value1903",
         // animated: true,
         type: "smoothstep",
 
