@@ -136,7 +136,6 @@ export default function PCV_01_Otsuka() {
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { PCV_01: inputValue }
             );
-            setSensorData(inputValue);
             setUpData(inputValue)
             op.current?.hide();
            
@@ -161,7 +160,12 @@ export default function PCV_01_Otsuka() {
 
          
 
-            <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer' }} onClick={handleButtonToggle}> <p style={{color:'#ffaa00',}}>PVC-1901: </p>  <p style={{marginLeft:5}}> {upData} Bar</p>  </div>
+            <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer',   }} onClick={handleButtonToggle}>
+                 <p style={{color:'#ffaa00',}}>PVC-1901 : </p> 
+                  <p style={{marginLeft:20}} > {upData} </p> 
+                  <p style={{marginLeft:10}}>Bar</p>
+
+           </div>
             
             <OverlayPanel ref={op}>
                 <div>

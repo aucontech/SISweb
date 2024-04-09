@@ -9,7 +9,10 @@ const styleHide = {
     strokeWidth: 6,
     stroke: "#ffaa00",
 }
-
+const styleBallSmall = {
+    strokeWidth: 3,
+    stroke: "#000",
+}
 
 
 export const DemoEdges = [
@@ -393,5 +396,29 @@ export const DemoEdges = [
 
         strokeWidth: 1,
         stroke: "gray",
+    },
+
+    {
+        id: "PCV_ballVavle_Small1_none1-PCV_ballVavle_Small2_none1",
+        source: "PCV_ballVavle_Small1_none1",
+        target: "PCV_ballVavle_Small2_none1",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleBallSmall
+        }
+    },
+
+    {
+        id: "PCV_ballVavle_Small1_none2-PCV_ballVavle_Small2_none2",
+        source: "PCV_ballVavle_Small1_none2",
+        target: "PCV_ballVavle_Small2_none2",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleBallSmall
+        }
     },
 ];

@@ -5,18 +5,25 @@ import { InputText } from 'primereact/inputtext';
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { SDV, SVD_NO } from "../demoGraphicOtsuka/iconSVG";
+interface StateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 
 export default function SDV_Otsuka() {
-    const [sensorData, setSensorData] = useState<any>([]);
-
-    const [upData, setUpData] = useState<any>([]);
-    const [upTS, setUpTS] = useState<any>([]);
 
 
-    const [inputValue, setInputValue] = useState<any>(); 
+    const [data, setData] = useState<any[]>([]);
+
 
     const token = readToken();
-    const op = useRef<OverlayPanel>(null);
+
+    const[NC,setNC] = useState<string | null>(null);
+    const[NO,setNO] = useState<string | null>(null);
+    const [PT02, setPT02] = useState<string | null>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -24,58 +31,14 @@ export default function SDV_Otsuka() {
     useEffect(() => {
         ws.current = new WebSocket(url);
 
-        const obj2 = {
-            entityDataCmds: [
+        const obj1 = {
+            attrSubCmds: [],
+            tsSubCmds: [
                 {
+                    entityType: "DEVICE",
+                    entityId: id_OTSUKA,
+                    scope: "LATEST_TELEMETRY",
                     cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "SDV",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "SDV",
-                            },
-                        ],
-                    },
                 },
             ],
         };
@@ -84,7 +47,7 @@ export default function SDV_Otsuka() {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj2));
+                    ws.current?.send(JSON.stringify(obj1));
                 });
             };
 
@@ -101,75 +64,44 @@ export default function SDV_Otsuka() {
 
     useEffect(() => {
         if (ws.current) {
-            ws.current.onmessage = (event) => {
-                let dataReceived = JSON.parse(event.data);
-                if (dataReceived.data && dataReceived.data.data.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.SDV
-                            .value;
-                    setUpData(ballValue);
+            ws.current.onmessage = (evt) => {
+                let dataReceived = JSON.parse(evt.data);
+                if (dataReceived.update !== null) {
+                    setData([...data, dataReceived]);
 
-                    const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.SDV
-                            .ts;
-                    setUpTS(ballTS);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.SDV
-                            .value;
-                    const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.SDV.ts;
+                    const keys = Object.keys(dataReceived.data);
+                    const stateMap: StateMap = {
+                        DI_ZSC_1:setNC,
+                        DI_ZSO_1:setNO,
 
-                    setUpData(updatedData);
-                    setUpTS(updateTS);
+                    
+                    };
+
+                    keys.forEach((key) => {
+                        if (stateMap[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            const slicedValue = value;
+                            stateMap[key]?.(slicedValue);
+                        }
+                    });
                 }
             };
         }
-    }, []);
+    }, [data]);
 
-
-    const handleButtonClick = async () => {
-        try {
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { SDV: inputValue }
-            );
-            setSensorData(inputValue);
-            setUpData(inputValue)
-            op.current?.hide();
-           
-        } catch (error) {
-            console.log("error: ", error);
-           
-        }
-    };
-    
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value); 
-        setInputValue(newValue);
-    };
-
-    const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e); 
-        setInputValue(upData);
-    };
 
     return (
         <div>
+      
+            {NO === '1' &&  <div>
+                NO {SDV}
+            </div>}
+            {NC === '1' && <div>
+                NC {SVD_NO}
+            </div>}
+            {NC === '0' && NO === '0' && <div> {SVD_NO}</div>}
 
-         
-
-            <Button style={{border:'none',fontSize:25 }} onClick={handleButtonToggle}>     SDV - {upData}</Button>
-            <OverlayPanel ref={op}>
-                <div>
-                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
-
-                    <Button label="Update" onClick={handleButtonClick} />
-                </div>
-            </OverlayPanel>
+          
         </div>
     );
 }
