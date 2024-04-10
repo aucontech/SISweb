@@ -160,8 +160,8 @@ export default function PCV_01_Otsuka() {
 
          
 
-            <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer',   }} onClick={handleButtonToggle}>
-                 <p style={{color:'#ffaa00',}}>PVC-1901 : </p> 
+            <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', justifyContent:'space-between'  }} onClick={handleButtonToggle}>
+                 <p style={{color:'#ffaa00',}}>PCV-1901 : </p> 
                   <p style={{marginLeft:20}} > {upData} </p> 
                   <p style={{marginLeft:10}}>Bar</p>
 

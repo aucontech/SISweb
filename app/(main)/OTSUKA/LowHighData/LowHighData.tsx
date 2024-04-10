@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { id_OTSUKA } from '../../data-table-device/ID-DEVICE/IdDevice';
 import { readToken } from '@/service/localStorage';
 import { httpApi } from '@/api/http.api';
-import tingting from "./NotificationCuu.mp3";
 import { fetchData } from 'next-auth/client/_utils';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { InputText } from 'primereact/inputtext';
@@ -185,7 +184,7 @@ export default function LowHighData() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src={tingting} type="audio/mpeg" />
+                <source src="/audios/Notification.mp3" type="audio/mpeg" />
             </audio>
             <div style={{
                  border: 'none',

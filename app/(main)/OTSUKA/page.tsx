@@ -14,8 +14,9 @@ const TabOtsuka = () => {
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
+              
                     <TabPanel header="Graphic">
-                        <GraphicFlow />
+                        <DemoFlowOTS />
                     </TabPanel>
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
