@@ -28,7 +28,7 @@ import { readToken } from "@/service/localStorage";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
-import tingting from "./NotificationCuu.mp3";
+//import tingting from "./NotificationCuu.mp3";
 
 import {
     ArrowRight,
@@ -3534,46 +3534,46 @@ export default function GraphicFlow() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src={tingting} type="audio/mpeg" />
+                <source src="/audios/Notification.mp3" type="audio/mpeg" />
             </audio>
             <OverlayPanel ref={op}>
-                <div style={{display:'flex'}}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>High</div>
-                        <div style={{ paddingLeft:20 }}>
-                            <InputText
-                                placeholder="High"
-                                value={HighInputPT02}
-                                onChange={handleHighPT02}
-                            />
+                <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <div>High</div>
+                            <div style={{ paddingLeft: 20 }}>
+                                <InputText
+                                    placeholder="High"
+                                    value={HighInputPT02}
+                                    onChange={handleHighPT02}
+                                />
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <div>Low</div>
+                            <div style={{ paddingLeft: 25 }}>
+                                <InputText
+                                    placeholder="Low"
+                                    value={LowInputPT02}
+                                    onChange={handleLowPT02}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>Low</div>
-                        <div style={{ paddingLeft:25 }}>
-                            <InputText
-                                placeholder="Low"
-                                value={LowInputPT02}
-                                onChange={handleLowPT02}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <Button label="Update" onClick={handleButtonClick} />
+                    <br />
+                    <Button label="Update" onClick={handleButtonClick} />
                 </div>
             </OverlayPanel>
 

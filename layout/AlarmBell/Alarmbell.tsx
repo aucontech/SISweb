@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
-import tingting from "./Notification.mp3";
+//import tingting from "./Notification.mp3";
 
 export default function Alarmbell() {
     let token: string | null = "";
@@ -101,8 +101,8 @@ export default function Alarmbell() {
 
     return (
         <div>
-            <audio  ref={audioRef}>
-                <source src={tingting} type="audio/mpeg" />
+            <audio ref={audioRef}>
+                <source src="/audios/Notification.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
