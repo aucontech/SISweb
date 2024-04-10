@@ -759,14 +759,14 @@ export default function DemoFlowOTS() {
                                     <p
                                         style={{
                                             color: backGroundData,
-                                            marginLeft: 20,
+                                            marginLeft: 15,
                                         }}
                                     >
                                         {PT02}
                                     </p>
                                 </div>
                                 <p style={{ color: backGroundData }}>
-                                    {KeyGas.BAR}
+                                BarG
                                 </p>
                             </div>
                         ),
@@ -783,7 +783,7 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding:5,
                                     borderRadius:5,
-                                    fontSize: 27,
+                                    fontSize: 25,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -798,14 +798,14 @@ export default function DemoFlowOTS() {
                                     <p
                                         style={{
                                             color: backGroundData,
-                                            marginLeft: 20,
+                                            marginLeft: 15,
                                         }}
                                     >
                                         {PT03}
                                     </p>
                                 </div>
                                 <p style={{ color: backGroundData }}>
-                                    {KeyGas.BAR}
+                                BarG
                                 </p>
                             </div>
                         ),
