@@ -1,22 +1,22 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
-import { InputText } from 'primereact/inputtext';
-import { OverlayPanel } from "primereact/overlaypanel";
-import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
+import { BallVavle, BallVavleOff, BallVavleOn, BallVavleRightOff } from "../demoGraphicOtsuka/iconSVG";
 
-export default function PSV01_Otsuka() {
+export default function BallVavlePSV() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
+    const [data, setData] = useState([]);
 
-    const [inputValue, setInputValue] = useState<any>(); 
+    const [Status, setStatus] = useState<any>([]);
 
     const token = readToken();
-    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -32,7 +32,7 @@ export default function PSV01_Otsuka() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_01",
+                                key: "BallVavlePSV",
                             },
                         ],
                     },
@@ -72,7 +72,7 @@ export default function PSV01_Otsuka() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_01",
+                                key: "BallVavlePSV",
                             },
                         ],
                     },
@@ -82,18 +82,14 @@ export default function PSV01_Otsuka() {
 
         if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj2));
                 });
             };
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+            ws.current.onclose = () => {};
 
             return () => {
-                console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
@@ -105,12 +101,12 @@ export default function PSV01_Otsuka() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallVavlePSV
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallVavlePSV
                             .ts;
                     setUpTS(ballTS);
                 } else if (
@@ -118,63 +114,81 @@ export default function PSV01_Otsuka() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01
+                        dataReceived.update[0].latest.ATTRIBUTE.BallVavlePSV
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallVavlePSV.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
                 }
+        fetchData();
+
             };
         }
     }, []);
 
-
     const handleButtonClick = async () => {
         try {
+            const newValue = !sensorData;
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { PSV_01: inputValue }
+                { BallVavlePSV: newValue }
             );
-            setSensorData(inputValue);
-            setUpData(inputValue)
-            op.current?.hide();
-           
-        } catch (error) {
-            console.log("error: ", error);
-           
-        }
-    };
-    
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value); 
-        setInputValue(newValue);
+            setSensorData(newValue);
+            fetchData();
+        } catch (error) {}
     };
 
-    const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e); 
-        setInputValue(upData);
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+            );
+            setData(res.data);
+        } catch (error) {}
     };
 
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <div>
+            {data.map((item: any) => (
+                <div key={item.key}>
+                    {item.key === "BallVavlePSV" && (
+                        <div
+                        style={{
+                            cursor: "pointer",
+                            border: "none",
+                           
+                        }}
+                        onClick={handleButtonClick}
 
-         
-<div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer',   }} onClick={handleButtonToggle}>
-                 <p style={{color:'#ffaa00',}}>PSV-1901 : </p> 
-                  <p style={{marginLeft:20}} > {upData} </p> 
-                  <p style={{marginLeft:10}}>Bar</p>
+                         >
+                            
+                                {item.value.toString() === "false" ? (
+                                    <div style={{   }}>
 
-           </div>
-            
-            <OverlayPanel ref={op}>
-                <div>
-                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
+<Image
+                            src="/layout/imgGraphic/BallValueRight.png"
+                            width={90}
+                            height={90}
+                            alt="Picture of the author"
+                        />
 
-                    <Button label="Update" onClick={handleButtonClick} />
+                                    </div>
+                                ) : (
+                                    <div style={{    }}>
+
+                                               {BallVavleRightOff}
+
+                                    </div>
+                                )}
+                        </div>
+                    )}
                 </div>
-            </OverlayPanel>
+            ))}
         </div>
     );
 }

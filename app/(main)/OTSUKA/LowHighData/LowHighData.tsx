@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { id_OTSUKA } from '../../data-table-device/ID-DEVICE/IdDevice';
 import { readToken } from '@/service/localStorage';
 import { httpApi } from '@/api/http.api';
-import tingting from "./NotificationCuu.mp3";
 import { fetchData } from 'next-auth/client/_utils';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { InputText } from 'primereact/inputtext';
@@ -29,8 +28,10 @@ export default function LowHighData() {
 
     const [inputValue, setInputValue] = useState<any>(); 
     const [inputValue2, setInputValue2] = useState<any>(); 
+    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const op = useRef<OverlayPanel>(null);
+
 
 
     useEffect(() => {
@@ -91,42 +92,47 @@ export default function LowHighData() {
         }
     }, [data]);
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-                );
-                const highEK1PressureItem = res.data.find((item: any) => item.key === "High_EK1_Pressure");
-                if (highEK1PressureItem) {
-                    setHighEK1PressureValue(highEK1PressureItem.value);
-                }
-                const lowEK1PressureItem = res.data.find((item: any) => item.key === "Low_EK1_Pressure");
-                if (lowEK1PressureItem) {
-                    setLowEK1PressureValue(lowEK1PressureItem.value);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-    useEffect(() => {
-
-        fetchData()
-    },[])
-
-    useEffect(() => {
-        if (highEK1PressureValue !== null && PT02 !== null) {
-            if (parseFloat(highEK1PressureValue) < parseFloat(PT02) || parseFloat(PT02) <  parseFloat(lowEK1PressureValue)) {
-                if (!audioPlaying) {
-                    audioRef.current?.play();
-                    setAudioPlaying(true);
-                }
-            } else {
-                setAudioPlaying(false);
-            }
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+            );
+    
+            const highEK1PressureItem = res.data.find((item: any) => item.key === "High_EK1_Pressure");
+            setHighEK1PressureValue(highEK1PressureItem?.value || null);
+    
+            const lowEK1PressureItem = res.data.find((item: any) => item.key === "Low_EK1_Pressure");
+            setLowEK1PressureValue(lowEK1PressureItem?.value || null);
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
-        fetchData()
+    };
 
-    }, [highEK1PressureValue, PT02, audioPlaying,lowEK1PressureValue]);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (typeof highEK1PressureValue === 'string' && typeof lowEK1PressureValue === 'string' && PT02 !== null) {
+            const highValue = parseFloat(highEK1PressureValue);
+            const lowValue = parseFloat(lowEK1PressureValue);
+            const PT02Value = parseFloat(PT02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
+                if (highValue < PT02Value || PT02Value < lowValue) {
+                    if (!audioPlaying) {
+                        audioRef.current?.play();
+                        setAudioPlaying(true);
+                        setExceedThreshold(true);
+                    }
+                } else {
+                    setAudioPlaying(false);
+                    setExceedThreshold(false);
+                }
+            } 
+        } 
+    }, [highEK1PressureValue, PT02, audioPlaying, lowEK1PressureValue]);
+    
 
     useEffect(() => {
         if (audioPlaying) {
@@ -140,14 +146,31 @@ export default function LowHighData() {
         }
     }, [audioPlaying]);
 
+
+    const handleInputChange = (event:any) => {
+        const newValue = (event.target.value); 
+        setInputValue(newValue);
+    };
+
+    const handleInputChange2 = (event:any) => {
+        const newValue2 = (event.target.value); 
+        setInputValue2(newValue2);
+    };
+
+    const handleButtonToggle = (e: React.MouseEvent) => {
+        op.current?.toggle(e); 
+        setInputValue(highEK1PressureValue);
+        setInputValue2(lowEK1PressureValue);
+    };
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { High_EK1_Pressure: inputValue,Low_EK1_Pressure:inputValue2 }
             );
-            setHighEK1PressureValue(inputValue)
-            setLowEK1PressureValue(inputValue2)
+
+            setHighEK1PressureValue(inputValue);
+            setLowEK1PressureValue(inputValue2);
 
             op.current?.hide();
            
@@ -156,42 +179,32 @@ export default function LowHighData() {
            
         }
     };
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value); 
-
-        setInputValue(newValue);
-
-    };
-    const handleInputChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue2 = Number(event.target.value); 
-
-        setInputValue2(newValue2);
-
-    };
-    const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e); 
-        setInputValue(highEK1PressureValue);
-        setInputValue2(lowEK1PressureValue);
-
-    };
-
+  
 
     return (
         <div>
             <audio ref={audioRef}>
-                <source src={tingting} type="audio/mpeg" />
+                <source src="/audios/Notification.mp3" type="audio/mpeg" />
             </audio>
-            <div style={{border:'none',fontSize:25,  display:'flex',cursor:'pointer' }} onClick={handleButtonToggle}> <p style={{color:'#ffaa00',}}>PVC-1901: </p>  </div>
+            <div style={{
+                 border: 'none',
+                 fontSize: 25,
+                 display: 'flex',
+                 cursor: 'pointer',
+                 backgroundColor: exceedThreshold ? 'red' : 'transparent'
+            }} onClick={handleButtonToggle}> 
+                <p style={{color:'#ffaa00',}}>PVC-1901: </p>
+            </div>
             
             <OverlayPanel ref={op}>
                 <div>
-                <InputText placeholder='High' keyfilter="int" value={inputValue} onChange={handleInputChange} />
-                <InputText placeholder='Low' keyfilter="int" value={inputValue2} onChange={handleInputChange2} />
-
-                    <Button label="Update" onClick={handleButtonClick} />
+                    <InputText placeholder='High'  value={inputValue} onChange={handleInputChange} />
+                    <InputText placeholder='Low'  value={inputValue2} onChange={handleInputChange2} />
                 </div>
+                <Button  onClick={handleButtonClick} />
+
             </OverlayPanel>
             {PT02}
         </div>
-    )
+    );
 }

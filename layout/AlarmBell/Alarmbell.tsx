@@ -21,7 +21,6 @@ export default function Alarmbell() {
         subject: string;
         text: string;
     }
-
     interface WebSocketMessage {
         update: any;
         cmdUpdateType: string;
@@ -103,7 +102,7 @@ export default function Alarmbell() {
     return (
         <div>
             <audio ref={audioRef}>
-                {/* <source src={tingting} type="audio/mpeg" /> */}
+                <source src="/audios/Notification.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">

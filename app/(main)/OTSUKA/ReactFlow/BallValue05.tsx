@@ -1,9 +1,6 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
-import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
 import { BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
 
 export default function BallValue05() {
