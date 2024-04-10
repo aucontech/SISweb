@@ -766,7 +766,7 @@ export default function DemoFlowOTS() {
                                     </p>
                                 </div>
                                 <p style={{ color: backGroundData }}>
-                                BarG
+                                    {KeyGas.BAR}
                                 </p>
                             </div>
                         ),
@@ -805,7 +805,7 @@ export default function DemoFlowOTS() {
                                     </p>
                                 </div>
                                 <p style={{ color: backGroundData }}>
-                                BarG
+                                    {KeyGas.BAR}
                                 </p>
                             </div>
                         ),
