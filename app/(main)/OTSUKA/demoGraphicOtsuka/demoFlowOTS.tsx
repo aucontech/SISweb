@@ -4283,9 +4283,9 @@ export default function DemoFlowOTS() {
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
 
             <OverlayPanel ref={op}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -4439,7 +4439,7 @@ export default function DemoFlowOTS() {
                     background: background,
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -4465,7 +4465,7 @@ export default function DemoFlowOTS() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}
