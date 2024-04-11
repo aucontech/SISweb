@@ -21,6 +21,7 @@ const TabOtsuka = () => {
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
                     </TabPanel>
+                   
                     {/* <TabPanel header="LowHigh Data">
                         <LowHighData />
                     </TabPanel>
