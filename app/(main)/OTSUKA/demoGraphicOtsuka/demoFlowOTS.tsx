@@ -109,17 +109,24 @@ export default function DemoFlowOTS() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
+    const [HighPT02, setHighPT02] = useState<number | null>(null);
+    const [LowPT02, setLowPT02] = useState<number | null>(null);
+    const [HighInputPT03, setHighInputPT03] = useState<any>();
+    const [LowInputPT03, setLowInputPT03] = useState<any>();
 
-    const [HighPT02,setHighPT02] = useState<number | null>(null);
-    const [LowPT02,setLowPT02] = useState<number | null>(null);
-    const [HighInputPT02,setHighInputPT02] = useState<any>()
-    const [LowInputPT02,setLowInputPT02] = useState<any>()
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [audioPlaying, setAudioPlaying] = useState(false);
+    const [audioPlaying2, setAudioPlaying2] = useState(false);
+
+    const [inputValue, setInputValue] = useState<any>();
+    const [inputValue2, setInputValue2] = useState<any>();
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const op = useRef<OverlayPanel>(null);
+    const op2 = useRef<OverlayPanel>(null); // Thêm một biến tham chiếu mới cho OverlayPanel thứ hai
+
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -204,35 +211,52 @@ export default function DemoFlowOTS() {
         }
     }, [data]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-                );
-        //================================ PT02 ===================================================
-                const highPT02 = res.data.find((item: any) => item.key === "High_EK1_Pressure");
-                setHighPT02(highPT02?.value || null);
-                const LowPT02 = res.data.find((item: any) => item.key === "Low_EK1_Pressure");
-                setLowPT02(LowPT02?.value || null);
-    
-    
-    
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchData()
-    },[])
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+            );
+
+            const highEK1PressureItem = res.data.find(
+                (item: any) => item.key === "High_EK1_Pressure"
+            );
+            setHighPT02(highEK1PressureItem?.value || null);
+
+            const lowEK1PressureItem = res.data.find(
+                (item: any) => item.key === "Low_EK1_Pressure"
+            );
+            setLowPT02(lowEK1PressureItem?.value || null);
+
+            const highEK2PressureItem = res.data.find(
+                (item: any) => item.key === "High_EK2_Pressure"
+            );
+            setHighInputPT03(highEK2PressureItem?.value || null); // Cập nhật giá trị của High_EK2_Pressure
+
+            const lowEK2PressureItem = res.data.find(
+                (item: any) => item.key === "Low_EK2_Pressure"
+            );
+            setLowInputPT03(lowEK2PressureItem?.value || null); // Cập nhật giá trị của Low_EK2_Pressure
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
-        if (typeof HighPT02 === 'string' && typeof LowPT02 === 'string' && PT02 !== null) {
-            const highValue02 = parseFloat(HighPT02);
-            const lowValue02 = parseFloat(LowPT02);
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (
+            typeof HighPT02 === "string" &&
+            typeof LowPT02 === "string" &&
+            PT02 !== null
+        ) {
+            const highValue = parseFloat(HighPT02);
+            const lowValue = parseFloat(LowPT02);
             const PT02Value = parseFloat(PT02);
-    
-            if (!isNaN(highValue02) && !isNaN(lowValue02) && !isNaN(PT02Value)) {
-                if (highValue02 < PT02Value || PT02Value < lowValue02) {
+
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
+                if (highValue < PT02Value || PT02Value < lowValue) {
                     if (!audioPlaying) {
                         audioRef.current?.play();
                         setAudioPlaying(true);
@@ -242,59 +266,108 @@ export default function DemoFlowOTS() {
                     setAudioPlaying(false);
                     setExceedThreshold(false);
                 }
-            } 
-        } 
+            }
+        }
+    }, [HighPT02, PT02, audioPlaying, LowPT02]);
 
-    }, [LowPT02,HighPT02, PT02, audioPlaying, ]);
+    useEffect(() => {
+        if (
+            typeof HighInputPT03 === "string" &&
+            typeof LowInputPT03 === "string" &&
+            PT03 !== null
+        ) {
+            const highValue = parseFloat(HighInputPT03);
+            const lowValue = parseFloat(LowInputPT03);
+            const PT02Value = parseFloat(PT03);
+
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
+                if (highValue < PT02Value || PT02Value < lowValue) {
+                    if (!audioPlaying) {
+                        audioRef.current?.play();
+                        setAudioPlaying2(true);
+                        setExceedThreshold2(true);
+                    }
+                } else {
+                    setAudioPlaying2(false);
+                    setExceedThreshold2(false);
+                }
+            }
+        }
+    }, [HighInputPT03, PT03, audioPlaying2, LowInputPT03]);
 
     useEffect(() => {
         if (audioPlaying) {
             const audioEnded = () => {
                 setAudioPlaying(false);
             };
-            audioRef.current?.addEventListener('ended', audioEnded);
+            audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
+                audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
     }, [audioPlaying]);
+    useEffect(() => {
+        if (audioPlaying2) {
+            const audioEnded = () => {
+                setAudioPlaying2(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioPlaying2]);
 
-    const handleHighPT02 = (event:any) => {
-        const newValue = (event.target.value); 
-        setHighInputPT02(newValue);
+    const handleInputChange = (event: any) => {
+        const newValue = event.target.value;
+        setInputValue(newValue);
     };
 
-    const handleLowPT02 = (event:any) => {
-        const newValue2 = (event.target.value); 
-        setLowInputPT02(newValue2);
+    const handleInputChange2 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputValue2(newValue2);
     };
-
-
 
     const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e); 
-        setHighInputPT02(HighPT02);
-        setLowInputPT02(LowPT02);
-
- 
+        op.current?.toggle(e);
+        setInputValue(HighPT02);
+        setInputValue2(LowPT02);
     };
- 
+
+    const handleButtonToggle2 = (e: React.MouseEvent) => {
+        op2.current?.toggle(e);
+        setInputValue(HighInputPT03);
+        setInputValue2(LowInputPT03);
+    };
+
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { High_EK1_Pressure: HighInputPT02,Low_EK1_Pressure:LowInputPT02, }
+                { High_EK1_Pressure: inputValue, Low_EK1_Pressure: inputValue2 }
             );
 
-            setHighPT02(HighInputPT02);
-            setLowPT02(LowInputPT02);
+            setHighPT02(inputValue);
+            setLowPT02(inputValue2);
 
-         
             op.current?.hide();
-           
         } catch (error) {
             console.log("error: ", error);
-           
+        }
+    };
+    const handleButtonClick2 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { High_EK2_Pressure: inputValue, Low_EK2_Pressure: inputValue2 }
+            );
+
+            setHighInputPT03(inputValue);
+            setLowInputPT03(inputValue2);
+
+            op2.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
         }
     };
     const ValueGas = {
@@ -739,18 +812,18 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    padding:5,
-                                    borderRadius:5,
+                                    padding: 5,
+                                    borderRadius: 5,
                                     fontSize: 25,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold ? 'red' : 'transparent',
-
-
+                                    backgroundColor: exceedThreshold
+                                        ? "red"
+                                        : "transparent",
+                                    cursor: "pointer",
                                 }}
                                 onClick={handleButtonToggle}
-
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: line }}>
@@ -781,15 +854,18 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    padding:5,
-                                    borderRadius:5,
+                                    padding: 5,
+                                    borderRadius: 5,
                                     fontSize: 25,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-
+                                    backgroundColor: exceedThreshold2
+                                        ? "red"
+                                        : "transparent",
+                                    cursor: "pointer",
                                 }}
-
+                                onClick={handleButtonToggle2}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: line }}>
@@ -1022,15 +1098,11 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
                                 }}
                             >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: backGroundData }}>
-                                        {GD1} LEL
-                                    </p>
-                                </div>
+                                <p style={{ color: backGroundData }}>
+                                    {GD1} LEL
+                                </p>
                             </div>
                         ),
                     },
@@ -1046,22 +1118,16 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
                                 }}
                             >
-                                <div style={{ display: "flex" }}>
-                                    <p
-                                        style={{
-                                            color: backGroundData,
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        {GD2} LEL
-                                    </p>
-                                </div>
+                                <p
+                                    style={{
+                                        color: backGroundData,
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {GD2} LEL
+                                </p>
                             </div>
                         ),
                     },
@@ -1077,15 +1143,16 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    display: "flex",
-                                    justifyContent: "space-between",
                                 }}
                             >
-                                <div style={{ display: "flex" }}>
-                                    <p style={{ color: backGroundData }}>
-                                        {GD3} LEL
-                                    </p>
-                                </div>
+                                <p
+                                    style={{
+                                        color: backGroundData,
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {GD3} LEL
+                                </p>
                             </div>
                         ),
                     },
@@ -1111,22 +1178,22 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
-    //     : {
-            const initialPositions  =   {
-                 ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
+    //     : 
+        const initialPositions = {
+              ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
               ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
               BallValue01: { x: -1128.037821602239, y: 1191.6262752572804 },
               BallValue02: { x: -903.8172406747104, y: 1193.399667617022 },
               BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
-              BallValue04: { x: -702.8672275157428, y: 1196.5644365920487 },
+              BallValue04: { x: -701.8672275157428, y: 1196.0644365920487 },
               BallValue05: { x: -409.1293248998188, y: 811.8988197919384 },
-              BallValue06: { x: -408.81019299266336, y: 1196.4905308723003 },
+              BallValue06: { x: -408.92842757827566, y: 1195.0575990996279 },
               BallValue07: { x: 504.8485477377201, y: 1275.7596294538605 },
-              BallValue08: { x: 506.46196630239683, y: 730.9490736073252 },
+              BallValue08: { x: 503.46196630239683, y: 731.9490736073252 },
               BallValue09: { x: -110.97796431132724, y: 1276.0539298322096 },
               BallValue10: { x: -110.7879376251401, y: 731.3407916825689 },
               BallValueCenter: { x: 216.63841865030145, y: 1001.3683765993258 },
@@ -1142,15 +1209,17 @@ export default function DemoFlowOTS() {
                   x: 237.47569648423314,
                   y: 1052.5061752737931,
               },
-              BallValuePSV: { x: 707.4535331808087, y: 925.0884862803827 },
+              BallValuePSV: { x: 707.9554044991246, y: 924.5866149620667 },
               BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: 184.1578709483532, y: 333.85959459449845 },
+              FIQ_1901: { x: 183.62840295404374, y: 334.12220097531537 },
               FIQ_1902: { x: 178.74127788453586, y: 1398.25966389962 },
               FIQ_none: { x: 282.9733646620158, y: 703.1349517698848 },
               FIQ_none2: { x: 278.13649978584374, y: 1248.1810069589415 },
               FIQ_none11: { x: 331.8518422841481, y: 730.5874119203619 },
               FIQ_none22: { x: 327.5698184656908, y: 1326.4750245165508 },
+              Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
+              Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
               GD1_Name1901: { x: -617.0174367324778, y: 922.7999982291198 },
               GD1_Value1901: { x: -617.2309648261335, y: 962.7951649681137 },
@@ -1163,23 +1232,23 @@ export default function DemoFlowOTS() {
               GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
               GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
               GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
-              HELP: { x: 750.7851455025582, y: 309.0601951574698 },
-              Header: { x: -1206.6213894992948, y: 362.1584689447791 },
-              PCV01: { x: -599.94289821967, y: 802.6626518716577 },
-              PCV02: { x: -599.958842024047, y: 1182.9561914947765 },
-              PCV_NUM01: { x: -685.8470421308417, y: 609.8902077349668 },
-              PCV_NUM02: { x: -684.9095065313029, y: 1408.963392899504 },
+              HELP: { x: 750.7851455025582, y: 336.66019515746984 },
+              Header: { x: -1129.2473581293548, y: 361.02061554228 },
+              PCV01: { x: -600.44289821967, y: 800.6626518716577 },
+              PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
+              PCV_NUM01: { x: -685.509356814222, y: 647.8453966003194 },
+              PCV_NUM02: { x: -684.9095065313029, y: 1347.8359120884465 },
               PCV_ballVavle_Small1: {
                   x: -463.95750208249893,
                   y: 796.3268812764675,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -565.2385229733152,
-                  y: 816.2575474175768,
+                  x: -566.2385229733152,
+                  y: 817.7575474175768,
               },
               PCV_ballVavle_Small1_none2: {
                   x: -564.568543995368,
-                  y: 1198.5320880854015,
+                  y: 1200.5823936921363,
               },
               PCV_ballVavle_Small2: {
                   x: -471.39757167976717,
@@ -1195,7 +1264,7 @@ export default function DemoFlowOTS() {
               },
               PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
               PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-              PSV01: { x: 600.1731993621377, y: 559.5742417551456 },
+              PSV01: { x: 602.1731993621377, y: 559.5742417551456 },
               PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
               PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
               PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
@@ -1205,7 +1274,7 @@ export default function DemoFlowOTS() {
               PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
               PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
               PT2: { x: -20.5266252899755, y: 1205.90966060702 },
-              PT3: { x: -20.381746689621593, y: 662.037880506796 },
+              PT3: { x: -19.96306016205915, y: 662.037880506796 },
               PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
               PT_col2: { x: 19.862308874268933, y: 737.7028110648847 },
               PT_col3: { x: 18.933799482851384, y: 1281.9893881385794 },
@@ -1214,20 +1283,20 @@ export default function DemoFlowOTS() {
               PT_none3: { x: 13.31411303030356, y: 1237.2951782160794 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1104.9635840718088,
-                  y: 779.9865024503554,
+              Pressure_Trans01: { x: -1144.6672900563185, y: 775.737751310433 },
+              Pressure_Trans02: {
+                  x: -348.25725570005113,
+                  y: 556.5256963891002,
               },
-              Pressure_Trans02: { x: -95.54623555836702, y: 562.6992955318807 },
               Pressure_Trans03: {
-                  x: -97.36125584885997,
-                  y: 1440.8707898141963,
+                  x: -338.8034517946339,
+                  y: 1432.8945675111804,
               },
               SDV: { x: -1259.5296036246955, y: 892.5758808521592 },
               SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
-              SDV_IMG: { x: -1128.421296764186, y: 980.1809849794247 },
+              SDV_IMG: { x: -1130.4943569208203, y: 972.4252744312048 },
               SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
-              Tank: { x: -921.5169052023348, y: 946.94544810155 },
+              Tank: { x: -921.5169052023348, y: 949.94544810155 },
               Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
               Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
               Temperature_Trans01: {
@@ -1239,11 +1308,11 @@ export default function DemoFlowOTS() {
                   y: 1445.5258186779024,
               },
               VavleWay: { x: 130.5898811672564, y: 1018.9139269928653 },
-              borderWhite: { x: -1229.392001466799, y: 338.67009122532744 },
+              borderWhite: { x: -1167.3348539128942, y: 353.6848685437511 },
               data1: { x: 182.96578390941687, y: 591.8268385681101 },
               data2: { x: 182.91461976399586, y: 527.4681282847005 },
               data3: { x: 183.23947478062132, y: 463.0806591350607 },
-              data4: { x: 183.51321234317754, y: 398.24543287465485 },
+              data4: { x: 183.59703521941117, y: 398.74837013205615 },
               data5: { x: 178.4954918538765, y: 1463.2446504740167 },
               data6: { x: 177.99575012585416, y: 1526.951897225196 },
               data7: { x: 178.10960660782348, y: 1590.372320069896 },
@@ -1271,9 +1340,9 @@ export default function DemoFlowOTS() {
               },
               overlay_line7: { x: -265.2148544974418, y: 1051.46019515747 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate: { x: -1205.539796691701, y: 463.6522453863277 },
-              timeUpdate2: { x: -1206.679214981902, y: 502.31176384754156 },
-              timeUpdate3: { x: -1206.1056663710533, y: 542.0591877689955 },
+              timeUpdate: { x: -1152.0606867742424, y: 465.9279521913259 },
+              timeUpdate2: { x: -1150.9243982594453, y: 505.8631774575381 },
+              timeUpdate3: { x: -1150.554252761057, y: 546.8863081839902 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -2716,7 +2785,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 250,
+                width: 330,
                 background: background,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -2741,11 +2810,11 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 250,
+                width: 330,
                 background: background,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Right,
         },
         {
             id: "Pressure_Trans03",
@@ -2766,11 +2835,11 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 250,
+                width: 330,
                 background: background,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Right,
         },
         {
             id: "PT1",
@@ -3188,6 +3257,42 @@ export default function DemoFlowOTS() {
             },
             targetPosition: Position.Bottom,
         },
+
+        // {
+        //     id: "Flow1",
+        //     data: {
+        //         label: <div>{ArrowRight}</div>,
+        //     },
+
+        //     position: positions.Flow1,
+
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
+
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+
+        // {
+        //     id: "Flow2",
+        //     data: {
+        //         label: <div>{ArrowRight}</div>,
+        //     },
+
+        //     position: positions.Flow2,
+
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
+
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         // ================ PT ICONS ===================
 
@@ -4058,6 +4163,16 @@ export default function DemoFlowOTS() {
     //                     ...prevPositions,
     //                     ArrowRight1: position,
     //                 }));
+    //             } else if (id === "Flow1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Flow1: position,
+    //                 }));
+    //             } else if (id === "Flow2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Flow2: position,
+    //                 }));
     //             }
     //             // =========== PT ICONS1 ==================
 
@@ -4166,18 +4281,137 @@ export default function DemoFlowOTS() {
 
     return (
         <div>
-                 <audio ref={audioRef}>
-                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
-
+            <audio ref={audioRef}>
+                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-           <OverlayPanel ref={op}>
-                <div style={{display:'flex', flexDirection:'column'}}>
-                    <InputText placeholder='High'  value={HighInputPT02} onChange={handleHighPT02} />
-                    <br />
-                    <InputText placeholder='Low'  value={LowInputPT02} onChange={handleLowPT02} />
-                </div>
-                <Button label="Update" onClick={handleButtonClick} />
+            {/* <Button onClick={toggleEditing}>
+                {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
+            </Button> */}
 
+            <OverlayPanel ref={op}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        PT-1901
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValue2}
+                            onChange={handleInputChange2}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonClick}
+                    />
+                </div>
+            </OverlayPanel>
+
+            <OverlayPanel ref={op2}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        PT-1902
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValue2}
+                            onChange={handleInputChange2}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonClick2}
+                    />
+                </div>
             </OverlayPanel>
             <Dialog
                 visible={visible}
@@ -4245,6 +4479,8 @@ export default function DemoFlowOTS() {
                     minZoom={0.5}
                     maxZoom={2}
                 >
+                    <Controls style={{ position: "absolute", top: 0 }} />
+
                     <Controls />
                 </ReactFlow>
             </div>
