@@ -9,28 +9,30 @@ import ReactFlowHigh from "./ReactFlow/ReactFlow";
 import LowHighData from "./LowHighData/LowHighData";
 import SDV_Otsuka from "./ReactFlow/SDV_Otsuka";
 import GraphicFlow from "./demoGraphicOtsuka/GraphicFlow";
+import LineGraphic from "./demoGraphicOtsuka/LineGraphic";
 const TabOtsuka = () => {
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
               
-                    <TabPanel header="Graphic">
+                    {/* <TabPanel header="Graphic">
                         <DemoFlowOTS />
                     </TabPanel>
                     <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
                     </TabPanel>
-                   
-                    {/* <TabPanel header="LowHigh Data">
-                        <LowHighData />
-                    </TabPanel>
-                    <TabPanel header="LowHigh Data">
-                        <SDV_Otsuka />
-                    </TabPanel>
-                    <TabPanel header="LowHigh Data">
+                    <TabPanel header="Telemetry">
                         <GraphicFlow />
-                    </TabPanel> */}
+                    </TabPanel>
+                    */}
+   <TabPanel header="Telemetry">
+                        <DemoFlowOTS />
+                    </TabPanel>
+                    <TabPanel header="Telemetry">
+                        <LineGraphic />
+                    </TabPanel>
+                
                 </TabView>
             </div>
         </div>

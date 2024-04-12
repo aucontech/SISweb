@@ -1,12 +1,9 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
-import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { backgroundGraphic } from "../demoGraphicOtsuka/demoFlowOTS";
-import { BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
+import {  BallVavleOff, BallVavleOn } from "../demoGraphicOtsuka/iconSVG";
 
-export default function BallValue09() {
+export default function BallValue09({ onDataLine09 }: { onDataLine09: (data: any) => void }) {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -14,7 +11,6 @@ export default function BallValue09() {
 
     const [data, setData] = useState([]);
 
-    const [Status, setStatus] = useState<any>([]);
 
     const token = readToken();
 
@@ -109,6 +105,8 @@ export default function BallValue09() {
                         dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_09
                             .ts;
                     setUpTS(ballTS);
+                    onDataLine09({ value: ballValue});
+
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
@@ -120,12 +118,12 @@ export default function BallValue09() {
                         dataReceived.update[0].latest.ATTRIBUTE.BallValue_09.ts;
 
                     setUpData(updatedData);
-                    setUpTS(updateTS);
+                    onDataLine09({ value: updatedData});
+
                 }
         fetchData();
 
             };
-
         }
     }, []);
 
@@ -136,23 +134,29 @@ export default function BallValue09() {
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { BallValue_09: newValue }
             );
+            fetchData()
             setSensorData(newValue);
-            fetchData();
         } catch (error) {}
     };
 
-    const fetchData = async () => {
-        try {
-            const res = await httpApi.get(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-            );
-            setData(res.data);
-        } catch (error) {}
-    };
+        const fetchData = async () => {
+            try {
+                const res = await httpApi.get(
+                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                );
+                setData(res.data);
+                const ballValue = res.data.find((item: any) => item.key === "BallValue_09")?.value;
+                onDataLine09(ballValue);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        useEffect(() => {
 
-    useEffect(() => {
         fetchData();
-    }, []);
+    }, [onDataLine09]);
+
+
     return (
         <div>
             {data.map((item: any) => (
@@ -167,20 +171,7 @@ export default function BallValue09() {
                         onClick={handleButtonClick}
 
                          >
-                            
-                                {item.value.toString() === "false" ? (
-                                    <div style={{   }}>
-
-                                            {BallVavleOn}
-
-                                    </div>
-                                ) : (
-                                    <div style={{    }}>
-
-                                               {BallVavleOff}
-
-                                    </div>
-                                )}
+                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
                         </div>
                     )}
                 </div>

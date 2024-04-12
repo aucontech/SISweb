@@ -55,10 +55,8 @@ import {
 } from "./iconSVG";
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
 import { Dialog } from "primereact/dialog";
-import { connected } from "process";
 import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
-import { Line } from "react-chartjs-2";
 import { InputText } from "primereact/inputtext";
 interface StateMap {
     [key: string]:
@@ -76,9 +74,7 @@ export const line = "#ffaa00";
 export default function DemoFlowOTS() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
-
-    const [dataApi, setDataApi] = useState<any>([]);
-    console.log("dataApi: ", dataApi);
+    const [editingEnabled, setEditingEnabled] = useState(false);
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -98,9 +94,6 @@ export default function DemoFlowOTS() {
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
     const [PT03, setPT03] = useState<string | null>(null);
-
-    const [TT01, setTT01] = useState<string | null>(null);
-    const [TT02, setTT02] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
@@ -178,14 +171,12 @@ export default function DemoFlowOTS() {
                         EK1_Volume_at_Base_Conditions: setSVA1,
                         EK1_Vm_Adjustable_Counter: setGVA1,
                         EK1_Pressure: setPT02,
-                        EK1_Temperature: setTT01,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
                         EK2_Vm_Adjustable_Counter: setGVA2,
                         EK2_Pressure: setPT03,
-                        EK2_Temperature: setTT02,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
@@ -267,6 +258,7 @@ export default function DemoFlowOTS() {
                     setExceedThreshold(false);
                 }
             }
+            fetchData();
         }
     }, [HighPT02, PT02, audioPlaying, LowPT02]);
 
@@ -292,6 +284,7 @@ export default function DemoFlowOTS() {
                     setExceedThreshold2(false);
                 }
             }
+            fetchData();
         }
     }, [HighInputPT03, PT03, audioPlaying2, LowInputPT03]);
 
@@ -821,7 +814,6 @@ export default function DemoFlowOTS() {
                                     backgroundColor: exceedThreshold
                                         ? "red"
                                         : "transparent",
-                                    cursor: "pointer",
                                 }}
                                 onClick={handleButtonToggle}
                             >
@@ -1178,6 +1170,11 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
+
+
+
+
+
     const storedPositionString = localStorage.getItem("positionsDemo");
 
     const initialPositions = storedPositionString
@@ -1339,16 +1336,176 @@ export default function DemoFlowOTS() {
               },
               overlay_line7: { x: -265.2148544974418, y: 1051.46019515747 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate: { x: -1152.0606867742424, y: 465.9279521913259 },
+              timeUpdate: { x: -1149.7332581002388, y: 464.2087856301161 },
               timeUpdate2: { x: -1150.9243982594453, y: 505.8631774575381 },
               timeUpdate3: { x: -1150.554252761057, y: 546.8863081839902 },
+
+              animation_line7: { x: -210.82907734671454, y: 1052.6632425418165 },
+              animation_line8: { x: -88.04540708877198, y: 784.1775456107679 },
+              animation_line9: { x: -88.0002755654424, y: 1328.89662061928 },
+              animation_line10: { x: 526.287999771183, y: 784.4482798747053 },
+              animation_line11: { x: 526.7985068882073, y: 1328.7506749429908 }
+
+         
           };
+          const [positions, setPositions] = useState(initialPositions);
 
-    const [positions, setPositions] = useState(initialPositions);
 
-    const [editingEnabled, setEditingEnabled] = useState(false);
+          const lineColor = "#ffaa00"
 
+          const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
+          const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
+        //   const [isAnimated09, setIsAnimated09] = useState<boolean>(false);
+        //   const [isAnimated10, setIsAnimated10] = useState<boolean>(false);
+
+    const animated_07 = (value :boolean) =>{
+        setIsAnimated07(value)
+    }
+    const animated_08 = (value :boolean) =>{
+        setIsAnimated08(value)
+    }
+    //  const animated_09 = (value :boolean) =>{
+    //     setIsAnimated09(value)
+    // } 
+    // const animated_10 = (value :boolean) =>{
+    //     setIsAnimated10(value)
+    // } 
+
+    useEffect(() => {
+        const updatedEdges1 = edge7.map((edge) => ({
+            ...edge,
+            animated: isAnimated07,
+            style: {
+                strokeWidth: isAnimated07 ? 3 : 20,
+                stroke: isAnimated07 ? background : lineColor,
+            },
+        }));
+
+  
+
+        const allEdges = [...DemoEdges,...updatedEdges1, ]; // edgesS7 không thay đổi
+
+        setEdges(allEdges);
+    }, [isAnimated07]);
+
+    const edge7 = [
+        {
+            id: "animation_line7-animation_line8",
+            source: "animation_line7",
+            target: "animation_line8",
+            animated: isAnimated07,
+            type: "smoothstep",
+           
+        },
+       
+    ]
+    // const edge9 = [
+    //     {
+    //         id: "line1-line2",
+    //         source: "line1",
+    //         target: "line2",
+    //         animated: isAnimated09,
+    //         type: "smoothstep",
+    //         style: {
+    //             strokeWidth: 20,
+    //             stroke: "#ffaa00",
+    //         },
+    //     },
+       
+    // ]
+
+    const [edges, setEdges, onEdgesChange] = useEdgesState<any>([...edge7,]);
+
+
+   
     const [initialNodes, setInitialNodes] = useState([
+
+
+          //============================ animated_Line =======================================
+         //============================ animated_Line =======================================
+
+         {
+            id: "animation_line7",
+            position: positions.animation_line7,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "animation_line8",
+            position: positions.animation_line8,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line9",
+            position: positions.animation_line9,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line10",
+            position: positions.animation_line10,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line11",
+            position: positions.animation_line11,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },
         // ============================== line =========================================
         {
             id: "line1",
@@ -1783,7 +1940,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue07 />
+                        <BallValue07 onDataLine7={animated_07} />
                     </div>
                 ),
             },
@@ -1792,7 +1949,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                
                 background: background,
                 width: 1,
                 height: 1,
@@ -1805,7 +1962,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue08 />
+                        <BallValue08 onDataLine8={animated_08}  />
                     </div>
                 ),
             },
@@ -1826,7 +1983,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue09 />
+                        {/* <BallValue09 onDataLine09={animated_09}  /> */}
                     </div>
                 ),
             },
@@ -1848,7 +2005,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue10 />
+                        {/* <BallValue10 onDataLine10={animated_10}  /> */}
                     </div>
                 ),
             },
@@ -2800,9 +2957,7 @@ export default function DemoFlowOTS() {
                             fontSize: 25,
                             fontWeight: 600,
                         }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.Pressure_Trans02,
@@ -3651,10 +3806,12 @@ export default function DemoFlowOTS() {
                 height: 22,
             },
         },
+
+      
+
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<any>(DemoEdges);
     const onNodeDragStop = useCallback(
         (event: any, node: any) => {
             if (editingEnabled) {
@@ -4266,10 +4423,38 @@ export default function DemoFlowOTS() {
                         overlay_line13: position,
                     }));
                 }
+                //========================== animation line =======================
+
+                else if (id === "animation_line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line7: position,
+                    }));
+                } else if (id === "animation_line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line8: position,
+                    }));
+                } else if (id === "animation_line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line9: position,
+                    }));
+                }else if (id === "animation_line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line10: position,
+                    }));
+                }else if (id === "animation_line11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line11: position,
+                    }));
+                }
             }
         },
         [setNodes, setPositions, editingEnabled]
-    );
+    ); 
 
     const toggleEditing = () => {
         setEditingEnabled(!editingEnabled);
@@ -4283,10 +4468,22 @@ export default function DemoFlowOTS() {
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
-
+            </Button>
+            <div
+                style={{
+                    border: "none",
+                    fontSize: 25,
+                    display: "flex",
+                    cursor: "pointer",
+                    backgroundColor: exceedThreshold ? "red" : "transparent",
+                }}
+                onClick={handleButtonToggle}
+            >
+                <p style={{ color: "#ffaa00" }}>PVC-1901: </p>
+                {PT02}
+            </div>
             <OverlayPanel ref={op}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div
@@ -4439,7 +4636,7 @@ export default function DemoFlowOTS() {
                     background: background,
                 }}
             >
-                {/* {!editingEnabled && (
+                {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -4465,15 +4662,14 @@ export default function DemoFlowOTS() {
                             height: "100%",
                         }}
                     ></div>
-                )} */}
-
+                )}
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
