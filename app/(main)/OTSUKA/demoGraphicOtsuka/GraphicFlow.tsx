@@ -29,7 +29,6 @@ import { readToken } from "@/service/localStorage";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
-import tingting from "./NotificationCuu.mp3";
 
 import {
     ArrowRight,
@@ -3542,7 +3541,7 @@ useEffect(() => {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src={tingting} type="audio/mpeg" />
+                <source src='/audios/NotificationCuu.mp3' type="audio/mpeg" />
             </audio>
            <OverlayPanel ref={op}>
                 <div style={{display:'flex', flexDirection:'column'}}>
