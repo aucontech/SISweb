@@ -3,7 +3,6 @@ import AppSubMenu from "./AppSubMenu";
 
 const AppMenu = () => {
     const model: MenuModel[] = [
-       
         {
             label: "Dashboards",
             icon: "pi pi-home",
@@ -12,7 +11,6 @@ const AppMenu = () => {
                     label: "Overview",
                     icon: "pi pi-fw pi-home",
                     to: "/OTSUKA",
-
                 },
                 {
                     label: "Station Details",
@@ -45,13 +43,11 @@ const AppMenu = () => {
                     label: "Device List",
                     icon: "pi pi-fw pi-list",
                     to: "/devices",
-
                 },
                 {
                     label: "Device Profile",
                     icon: "pi pi-fw pi-table",
                     to: "/deviceprofiles",
-
                 },
                 {
                     label: "Chart",
@@ -83,7 +79,7 @@ const AppMenu = () => {
                 {
                     label: "Customer Report",
                     icon: "pi pi-fw pi-table",
-                    // to: "/notifications",
+                    to: "/customerreport",
                 },
                 {
                     label: "All In One Report",
