@@ -101,6 +101,7 @@ export const DemoEdges = [
         source: "line7",
         target: "line8",
         type: "smoothstep",
+        // animated: true,
         
         style: {
             ...styleLine,

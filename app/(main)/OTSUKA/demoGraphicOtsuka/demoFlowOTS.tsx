@@ -55,10 +55,8 @@ import {
 } from "./iconSVG";
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
 import { Dialog } from "primereact/dialog";
-import { connected } from "process";
 import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
-import { Line } from "react-chartjs-2";
 import { InputText } from "primereact/inputtext";
 interface StateMap {
     [key: string]:
@@ -76,9 +74,7 @@ export const line = "#ffaa00";
 export default function DemoFlowOTS() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
-
-    const [dataApi, setDataApi] = useState<any>([]);
-    console.log("dataApi: ", dataApi);
+    const [editingEnabled, setEditingEnabled] = useState(false);
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -98,9 +94,6 @@ export default function DemoFlowOTS() {
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
     const [PT03, setPT03] = useState<string | null>(null);
-
-    const [TT01, setTT01] = useState<string | null>(null);
-    const [TT02, setTT02] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
@@ -178,14 +171,12 @@ export default function DemoFlowOTS() {
                         EK1_Volume_at_Base_Conditions: setSVA1,
                         EK1_Vm_Adjustable_Counter: setGVA1,
                         EK1_Pressure: setPT02,
-                        EK1_Temperature: setTT01,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
                         EK2_Vm_Adjustable_Counter: setGVA2,
                         EK2_Pressure: setPT03,
-                        EK2_Temperature: setTT02,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
@@ -267,6 +258,7 @@ export default function DemoFlowOTS() {
                     setExceedThreshold(false);
                 }
             }
+            fetchData();
         }
     }, [HighPT02, PT02, audioPlaying, LowPT02]);
 
@@ -292,6 +284,7 @@ export default function DemoFlowOTS() {
                     setExceedThreshold2(false);
                 }
             }
+            fetchData();
         }
     }, [HighInputPT03, PT03, audioPlaying2, LowInputPT03]);
 
@@ -821,7 +814,6 @@ export default function DemoFlowOTS() {
                                     backgroundColor: exceedThreshold
                                         ? "red"
                                         : "transparent",
-                                    cursor: "pointer",
                                 }}
                                 onClick={handleButtonToggle}
                             >
@@ -1178,12 +1170,16 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : 
-        const initialPositions = {
+
+
+
+
+    const storedPositionString = localStorage.getItem("positionsDemo");
+
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
               ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
               ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
               BallValue01: { x: -1128.037821602239, y: 1191.6262752572804 },
@@ -1234,7 +1230,7 @@ export default function DemoFlowOTS() {
               GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1129.2473581293548, y: 361.02061554228 },
-              PCV01: { x: -600.44289821967, y: 800.6626518716577 },
+              PCV01: { x: -600.44289821967, y: 803.2924339111273 },
               PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
               PCV_NUM01: { x: -685.509356814222, y: 647.8453966003194 },
               PCV_NUM02: { x: -684.9095065313029, y: 1347.8359120884465 },
@@ -1340,16 +1336,176 @@ export default function DemoFlowOTS() {
               },
               overlay_line7: { x: -265.2148544974418, y: 1051.46019515747 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate: { x: -1152.0606867742424, y: 465.9279521913259 },
+              timeUpdate: { x: -1149.7332581002388, y: 464.2087856301161 },
               timeUpdate2: { x: -1150.9243982594453, y: 505.8631774575381 },
               timeUpdate3: { x: -1150.554252761057, y: 546.8863081839902 },
+
+              animation_line7: { x: -210.82907734671454, y: 1052.6632425418165 },
+              animation_line8: { x: -88.04540708877198, y: 784.1775456107679 },
+              animation_line9: { x: -88.0002755654424, y: 1328.89662061928 },
+              animation_line10: { x: 526.287999771183, y: 784.4482798747053 },
+              animation_line11: { x: 526.7985068882073, y: 1328.7506749429908 }
+
+         
           };
+          const [positions, setPositions] = useState(initialPositions);
 
-    const [positions, setPositions] = useState(initialPositions);
 
-    const [editingEnabled, setEditingEnabled] = useState(false);
+          const lineColor = "#ffaa00"
 
+          const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
+          const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
+        //   const [isAnimated09, setIsAnimated09] = useState<boolean>(false);
+        //   const [isAnimated10, setIsAnimated10] = useState<boolean>(false);
+
+    const animated_07 = (value :boolean) =>{
+        setIsAnimated07(value)
+    }
+    const animated_08 = (value :boolean) =>{
+        setIsAnimated08(value)
+    }
+    //  const animated_09 = (value :boolean) =>{
+    //     setIsAnimated09(value)
+    // } 
+    // const animated_10 = (value :boolean) =>{
+    //     setIsAnimated10(value)
+    // } 
+
+    useEffect(() => {
+        const updatedEdges1 = edge7.map((edge) => ({
+            ...edge,
+            animated: isAnimated07,
+            style: {
+                strokeWidth: isAnimated07 ? 3 : 20,
+                stroke: isAnimated07 ? background : lineColor,
+            },
+        }));
+
+  
+
+        const allEdges = [...DemoEdges,...updatedEdges1, ]; // edgesS7 không thay đổi
+
+        setEdges(allEdges);
+    }, [isAnimated07]);
+
+    const edge7 = [
+        {
+            id: "animation_line7-animation_line8",
+            source: "animation_line7",
+            target: "animation_line8",
+            animated: isAnimated07,
+            type: "smoothstep",
+           
+        },
+       
+    ]
+    // const edge9 = [
+    //     {
+    //         id: "line1-line2",
+    //         source: "line1",
+    //         target: "line2",
+    //         animated: isAnimated09,
+    //         type: "smoothstep",
+    //         style: {
+    //             strokeWidth: 20,
+    //             stroke: "#ffaa00",
+    //         },
+    //     },
+       
+    // ]
+
+    const [edges, setEdges, onEdgesChange] = useEdgesState<any>([...edge7,]);
+
+
+   
     const [initialNodes, setInitialNodes] = useState([
+
+
+          //============================ animated_Line =======================================
+         //============================ animated_Line =======================================
+
+         {
+            id: "animation_line7",
+            position: positions.animation_line7,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "animation_line8",
+            position: positions.animation_line8,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line9",
+            position: positions.animation_line9,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line10",
+            position: positions.animation_line10,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },{
+            id: "animation_line11",
+            position: positions.animation_line11,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },
         // ============================== line =========================================
         {
             id: "line1",
@@ -1784,7 +1940,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue07 />
+                        <BallValue07 onDataLine7={animated_07} />
                     </div>
                 ),
             },
@@ -1793,7 +1949,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                
                 background: background,
                 width: 1,
                 height: 1,
@@ -1806,7 +1962,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue08 />
+                        <BallValue08 onDataLine8={animated_08}  />
                     </div>
                 ),
             },
@@ -1827,7 +1983,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue09 />
+                        {/* <BallValue09 onDataLine09={animated_09}  /> */}
                     </div>
                 ),
             },
@@ -1849,7 +2005,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <BallValue10 />
+                        {/* <BallValue10 onDataLine10={animated_10}  /> */}
                     </div>
                 ),
             },
@@ -2801,9 +2957,7 @@ export default function DemoFlowOTS() {
                             fontSize: 25,
                             fontWeight: 600,
                         }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.Pressure_Trans02,
@@ -3652,642 +3806,684 @@ export default function DemoFlowOTS() {
                 height: 22,
             },
         },
+
+      
+
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<any>(DemoEdges);
-    // const onNodeDragStop = useCallback(
-    //     (event: any, node: any) => {
-    //         if (editingEnabled) {
-    //             const { id, position } = node;
-    //             setNodes((prevNodes) =>
-    //                 prevNodes.map((n) =>
-    //                     n.id === id ? { ...n, position: position } : n
-    //                 )
-    //             );
-    //             if (id === "SDV") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV: position,
-    //                 }));
-    //             } else if (id === "SDV_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_None: position,
-    //                 }));
-    //             } else if (id === "SDV_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_IMG: position,
-    //                 }));
-    //             } else if (id === "SDV_Ball") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_Ball: position,
-    //                 }));
-    //             }
-    //             // ================================== end item ==================================
+    const onNodeDragStop = useCallback(
+        (event: any, node: any) => {
+            if (editingEnabled) {
+                const { id, position } = node;
+                setNodes((prevNodes) =>
+                    prevNodes.map((n) =>
+                        n.id === id ? { ...n, position: position } : n
+                    )
+                );
+                if (id === "SDV") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV: position,
+                    }));
+                } else if (id === "SDV_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_None: position,
+                    }));
+                } else if (id === "SDV_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG: position,
+                    }));
+                } else if (id === "SDV_Ball") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Ball: position,
+                    }));
+                }
+                // ================================== end item ==================================
 
-    //             // ============ line =========================
-    //             else if (id === "line1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line1: position,
-    //                 }));
-    //             } else if (id === "line2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line2: position,
-    //                 }));
-    //             } else if (id === "line3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3: position,
-    //                 }));
-    //             } else if (id === "line4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4: position,
-    //                 }));
-    //             } else if (id === "line5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line7: position,
-    //                 }));
-    //             } else if (id === "line8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line8: position,
-    //                 }));
-    //             } else if (id === "line9") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line9: position,
-    //                 }));
-    //             } else if (id === "line10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line10: position,
-    //                 }));
-    //             } else if (id === "line11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line11: position,
-    //                 }));
-    //             } else if (id === "line12") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line12: position,
-    //                 }));
-    //             } else if (id === "line13") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line13: position,
-    //                 }));
-    //             }
+                // ============ line =========================
+                else if (id === "line1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line1: position,
+                    }));
+                } else if (id === "line2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line2: position,
+                    }));
+                } else if (id === "line3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3: position,
+                    }));
+                } else if (id === "line4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4: position,
+                    }));
+                } else if (id === "line5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line7: position,
+                    }));
+                } else if (id === "line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line8: position,
+                    }));
+                } else if (id === "line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9: position,
+                    }));
+                } else if (id === "line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10: position,
+                    }));
+                } else if (id === "line11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line11: position,
+                    }));
+                } else if (id === "line12") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line12: position,
+                    }));
+                } else if (id === "line13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line13: position,
+                    }));
+                }
 
-    //             // ============ ball vavle ===========================
-    //             else if (id === "BallValue01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue01: position,
-    //                 }));
-    //             } else if (id === "BallValue02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue02: position,
-    //                 }));
-    //             } else if (id === "BallValue03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue03: position,
-    //                 }));
-    //             } else if (id === "BallValue04") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue04: position,
-    //                 }));
-    //             } else if (id === "BallValue05") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue05: position,
-    //                 }));
-    //             } else if (id === "BallValue06") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue06: position,
-    //                 }));
-    //             } else if (id === "BallValue07") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue07: position,
-    //                 }));
-    //             } else if (id === "BallValue08") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue08: position,
-    //                 }));
-    //             } else if (id === "BallValue09") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue09: position,
-    //                 }));
-    //             } else if (id === "BallValue10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue10: position,
-    //                 }));
-    //             }
-    //             // ============ ball vavle ===========================
-    //             else if (id === "Tank") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank: position,
-    //                 }));
-    //             } else if (id === "Tank_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_None: position,
-    //                 }));
-    //             } else if (id === "Tank_Ball") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_Ball: position,
-    //                 }));
-    //             }
-    //             // ============ PCV ===========================
-    //             else if (id === "PCV01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV01: position,
-    //                 }));
-    //             } else if (id === "PCV02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV02: position,
-    //                 }));
-    //             } else if (id === "PCV_NUM01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_NUM01: position,
-    //                 }));
-    //             } else if (id === "PCV_NUM02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_NUM02: position,
-    //                 }));
-    //             } else if (id === "PCV_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2_none2: position,
-    //                 }));
-    //             }
+                // ============ ball vavle ===========================
+                else if (id === "BallValue01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue01: position,
+                    }));
+                } else if (id === "BallValue02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue02: position,
+                    }));
+                } else if (id === "BallValue03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue03: position,
+                    }));
+                } else if (id === "BallValue04") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue04: position,
+                    }));
+                } else if (id === "BallValue05") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue05: position,
+                    }));
+                } else if (id === "BallValue06") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue06: position,
+                    }));
+                } else if (id === "BallValue07") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue07: position,
+                    }));
+                } else if (id === "BallValue08") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue08: position,
+                    }));
+                } else if (id === "BallValue09") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue09: position,
+                    }));
+                } else if (id === "BallValue10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue10: position,
+                    }));
+                }
+                // ============ ball vavle ===========================
+                else if (id === "Tank") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank: position,
+                    }));
+                } else if (id === "Tank_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_None: position,
+                    }));
+                } else if (id === "Tank_Ball") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_Ball: position,
+                    }));
+                }
+                // ============ PCV ===========================
+                else if (id === "PCV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV01: position,
+                    }));
+                } else if (id === "PCV02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV02: position,
+                    }));
+                } else if (id === "PCV_NUM01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM01: position,
+                    }));
+                } else if (id === "PCV_NUM02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM02: position,
+                    }));
+                } else if (id === "PCV_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none1: position,
+                    }));
+                } else if (id === "PCV_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1_none1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1_none2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2_none1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2_none2: position,
+                    }));
+                }
 
-    //             // ============ FIQ ===========================
-    //             else if (id === "FIQ_1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_1901: position,
-    //                 }));
-    //             } else if (id === "FIQ_1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_1902: position,
-    //                 }));
-    //             } else if (id === "FIQ_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none: position,
-    //                 }));
-    //             } else if (id === "FIQ_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none2: position,
-    //                 }));
-    //             } else if (id === "FIQ_none11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none11: position,
-    //                 }));
-    //             } else if (id === "FIQ_none22") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none22: position,
-    //                 }));
-    //             }
-    //             // ============ Ball center ===========================
-    //             else if (id === "BallValueCenter") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_Check") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_Check: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_None: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_None2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_None2: position,
-    //                 }));
-    //             } else if (id === "BallValuePSV") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValuePSV: position,
-    //                 }));
-    //             } else if (id === "BallValuePSVNone") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValuePSVNone: position,
-    //                 }));
-    //             } else if (id === "VavleWay") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VavleWay: position,
-    //                 }));
-    //             }
-    //             // ========================= data ==========================
-    //             else if (id === "data1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data1: position,
-    //                 }));
-    //             } else if (id === "data2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data2: position,
-    //                 }));
-    //             } else if (id === "data3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data3: position,
-    //                 }));
-    //             } else if (id === "data4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data4: position,
-    //                 }));
-    //             } else if (id === "data5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data5: position,
-    //                 }));
-    //             } else if (id === "data6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data6: position,
-    //                 }));
-    //             } else if (id === "data7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data7: position,
-    //                 }));
-    //             } else if (id === "data8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data8: position,
-    //                 }));
-    //             }
-    //             // ========================= PSV ==========================
-    //             else if (id === "PSV_01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_01: position,
-    //                 }));
-    //             } else if (id === "PSV_02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_02: position,
-    //                 }));
-    //             } else if (id === "PSV_03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_03: position,
-    //                 }));
-    //             } else if (id === "PSV_None01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None01: position,
-    //                 }));
-    //             } else if (id === "PSV_None02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None02: position,
-    //                 }));
-    //             } else if (id === "PSV_None03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None03: position,
-    //                 }));
-    //             } else if (id === "PSV_None04") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None04: position,
-    //                 }));
-    //             } else if (id === "PSV01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV01: position,
-    //                 }));
-    //             }
-    //             //  ================ PT ===================
-    //             else if (id === "Pressure_Trans01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans01: position,
-    //                 }));
-    //             } else if (id === "Pressure_Trans02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans02: position,
-    //                 }));
-    //             } else if (id === "Pressure_Trans03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans03: position,
-    //                 }));
-    //             } else if (id === "PT1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT1: position,
-    //                 }));
-    //             } else if (id === "PT2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT2: position,
-    //                 }));
-    //             } else if (id === "PT3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT3: position,
-    //                 }));
-    //             } else if (id === "PT_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none1: position,
-    //                 }));
-    //             } else if (id === "PT_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none2: position,
-    //                 }));
-    //             } else if (id === "PT_none3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none3: position,
-    //                 }));
-    //             } else if (id === "PT_col1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col1: position,
-    //                 }));
-    //             } else if (id === "PT_col2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col2: position,
-    //                 }));
-    //             } else if (id === "PT_col3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col3: position,
-    //                 }));
-    //             }
+                // ============ FIQ ===========================
+                else if (id === "FIQ_1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1901: position,
+                    }));
+                } else if (id === "FIQ_1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1902: position,
+                    }));
+                } else if (id === "FIQ_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none: position,
+                    }));
+                } else if (id === "FIQ_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none2: position,
+                    }));
+                } else if (id === "FIQ_none11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none11: position,
+                    }));
+                } else if (id === "FIQ_none22") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none22: position,
+                    }));
+                }
+                // ============ Ball center ===========================
+                else if (id === "BallValueCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter: position,
+                    }));
+                } else if (id === "BallValueCenter_Check") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_Check: position,
+                    }));
+                } else if (id === "BallValueCenter_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None: position,
+                    }));
+                } else if (id === "BallValueCenter_None2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None2: position,
+                    }));
+                } else if (id === "BallValuePSV") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValuePSV: position,
+                    }));
+                } else if (id === "BallValuePSVNone") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValuePSVNone: position,
+                    }));
+                } else if (id === "VavleWay") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VavleWay: position,
+                    }));
+                }
+                // ========================= data ==========================
+                else if (id === "data1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data1: position,
+                    }));
+                } else if (id === "data2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data2: position,
+                    }));
+                } else if (id === "data3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data3: position,
+                    }));
+                } else if (id === "data4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data4: position,
+                    }));
+                } else if (id === "data5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data5: position,
+                    }));
+                } else if (id === "data6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data6: position,
+                    }));
+                } else if (id === "data7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data7: position,
+                    }));
+                } else if (id === "data8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data8: position,
+                    }));
+                }
+                // ========================= PSV ==========================
+                else if (id === "PSV_01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_01: position,
+                    }));
+                } else if (id === "PSV_02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_02: position,
+                    }));
+                } else if (id === "PSV_03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_03: position,
+                    }));
+                } else if (id === "PSV_None01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None01: position,
+                    }));
+                } else if (id === "PSV_None02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None02: position,
+                    }));
+                } else if (id === "PSV_None03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None03: position,
+                    }));
+                } else if (id === "PSV_None04") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None04: position,
+                    }));
+                } else if (id === "PSV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV01: position,
+                    }));
+                }
+                //  ================ PT ===================
+                else if (id === "Pressure_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans01: position,
+                    }));
+                } else if (id === "Pressure_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans02: position,
+                    }));
+                } else if (id === "Pressure_Trans03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans03: position,
+                    }));
+                } else if (id === "PT1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT1: position,
+                    }));
+                } else if (id === "PT2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT2: position,
+                    }));
+                } else if (id === "PT3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT3: position,
+                    }));
+                } else if (id === "PT_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none1: position,
+                    }));
+                } else if (id === "PT_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none2: position,
+                    }));
+                } else if (id === "PT_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none3: position,
+                    }));
+                } else if (id === "PT_col1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col1: position,
+                    }));
+                } else if (id === "PT_col2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col2: position,
+                    }));
+                } else if (id === "PT_col3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col3: position,
+                    }));
+                }
 
-    //             // ================ TT =================
-    //             else if (id === "Temperature_Trans01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Temperature_Trans01: position,
-    //                 }));
-    //             } else if (id === "Temperature_Trans02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Temperature_Trans02: position,
-    //                 }));
-    //             }
-    //             // ============= header ===============
-    //             else if (id === "Header") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Header: position,
-    //                 }));
-    //             } else if (id === "HELP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     HELP: position,
-    //                 }));
-    //             }
-    //             // ============= Time Update ==================
-    //             else if (id === "timeUpdate") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate: position,
-    //                 }));
-    //             } else if (id === "timeUpdate2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate2: position,
-    //                 }));
-    //             } else if (id === "timeUpdate3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate3: position,
-    //                 }));
-    //             }
-    //             // ============= Connected ===================
-    //             else if (id === "ConnectData") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ConnectData: position,
-    //                 }));
-    //             }
-    //             // ============= Arrow ======================
-    //             else if (id === "ArrowRight") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ArrowRight: position,
-    //                 }));
-    //             } else if (id === "ArrowRight1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ArrowRight1: position,
-    //                 }));
-    //             } else if (id === "Flow1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Flow1: position,
-    //                 }));
-    //             } else if (id === "Flow2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Flow2: position,
-    //                 }));
-    //             }
-    //             // =========== PT ICONS1 ==================
+                // ================ TT =================
+                else if (id === "Temperature_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans01: position,
+                    }));
+                } else if (id === "Temperature_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans02: position,
+                    }));
+                }
+                // ============= header ===============
+                else if (id === "Header") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Header: position,
+                    }));
+                } else if (id === "HELP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        HELP: position,
+                    }));
+                }
+                // ============= Time Update ==================
+                else if (id === "timeUpdate") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate: position,
+                    }));
+                } else if (id === "timeUpdate2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate2: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
+                }
+                // ============= Connected ===================
+                else if (id === "ConnectData") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ConnectData: position,
+                    }));
+                }
+                // ============= Arrow ======================
+                else if (id === "ArrowRight") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ArrowRight: position,
+                    }));
+                } else if (id === "ArrowRight1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ArrowRight1: position,
+                    }));
+                } else if (id === "Flow1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Flow1: position,
+                    }));
+                } else if (id === "Flow2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Flow2: position,
+                    }));
+                }
+                // =========== PT ICONS1 ==================
 
-    //             //================ GD ====================
-    //             else if (id === "GD1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1: position,
-    //                 }));
-    //             } else if (id === "GD2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2: position,
-    //                 }));
-    //             } else if (id === "GD3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3: position,
-    //                 }));
-    //             } else if (id === "GD1_Name1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1_Name1901: position,
-    //                 }));
-    //             } else if (id === "GD2_Name1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2_Name1902: position,
-    //                 }));
-    //             } else if (id === "GD3_Name1903") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3_Name1903: position,
-    //                 }));
-    //             } else if (id === "GD1_Value1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1_Value1901: position,
-    //                 }));
-    //             } else if (id === "GD2_Value1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2_Value1902: position,
-    //                 }));
-    //             } else if (id === "GD3_Value1903") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3_Value1903: position,
-    //                 }));
-    //             } else if (id === "GD_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none1: position,
-    //                 }));
-    //             } else if (id === "GD_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none2: position,
-    //                 }));
-    //             } else if (id === "GD_none3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none3: position,
-    //                 }));
-    //             }
-    //             // ===================== border white ==================
-    //             else if (id === "borderWhite") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     borderWhite: position,
-    //                 }));
-    //             }
-    //             // ==================== overlay ========================
-    //             else if (id === "overlay_SmallVavle1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_SmallVavle1: position,
-    //                 }));
-    //             } else if (id === "overlay_SmallVavle2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_SmallVavle2: position,
-    //                 }));
-    //             } else if (id === "overlay_line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_line7: position,
-    //                 }));
-    //             } else if (id === "overlay_line13") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_line13: position,
-    //                 }));
-    //             }
-    //         }
-    //     },
-    //     [setNodes, setPositions, editingEnabled]
-    // );
+                //================ GD ====================
+                else if (id === "GD1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1: position,
+                    }));
+                } else if (id === "GD2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2: position,
+                    }));
+                } else if (id === "GD3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3: position,
+                    }));
+                } else if (id === "GD1_Name1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Name1901: position,
+                    }));
+                } else if (id === "GD2_Name1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Name1902: position,
+                    }));
+                } else if (id === "GD3_Name1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Name1903: position,
+                    }));
+                } else if (id === "GD1_Value1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Value1901: position,
+                    }));
+                } else if (id === "GD2_Value1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Value1902: position,
+                    }));
+                } else if (id === "GD3_Value1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Value1903: position,
+                    }));
+                } else if (id === "GD_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none1: position,
+                    }));
+                } else if (id === "GD_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none2: position,
+                    }));
+                } else if (id === "GD_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none3: position,
+                    }));
+                }
+                // ===================== border white ==================
+                else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                }
+                // ==================== overlay ========================
+                else if (id === "overlay_SmallVavle1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_SmallVavle1: position,
+                    }));
+                } else if (id === "overlay_SmallVavle2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_SmallVavle2: position,
+                    }));
+                } else if (id === "overlay_line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_line7: position,
+                    }));
+                } else if (id === "overlay_line13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_line13: position,
+                    }));
+                }
+                //========================== animation line =======================
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
-    // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    // }, [positions]);
+                else if (id === "animation_line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line7: position,
+                    }));
+                } else if (id === "animation_line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line8: position,
+                    }));
+                } else if (id === "animation_line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line9: position,
+                    }));
+                }else if (id === "animation_line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line10: position,
+                    }));
+                }else if (id === "animation_line11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line11: position,
+                    }));
+                }
+            }
+        },
+        [setNodes, setPositions, editingEnabled]
+    ); 
+
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
+    useEffect(() => {
+        localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    }, [positions]);
 
     return (
         <div>
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
-
+            </Button>
+            <div
+                style={{
+                    border: "none",
+                    fontSize: 25,
+                    display: "flex",
+                    cursor: "pointer",
+                    backgroundColor: exceedThreshold ? "red" : "transparent",
+                }}
+                onClick={handleButtonToggle}
+            >
+                <p style={{ color: "#ffaa00" }}>PVC-1901: </p>
+                {PT02}
+            </div>
             <OverlayPanel ref={op}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div
@@ -4440,7 +4636,7 @@ export default function DemoFlowOTS() {
                     background: background,
                 }}
             >
-                {/* {!editingEnabled && (
+                {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -4466,15 +4662,14 @@ export default function DemoFlowOTS() {
                             height: "100%",
                         }}
                     ></div>
-                )} */}
-
+                )}
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

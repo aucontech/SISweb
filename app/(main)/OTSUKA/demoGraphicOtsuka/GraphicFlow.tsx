@@ -10,7 +10,6 @@ import "reactflow/dist/style.css";
 import "./demoFlowOTS.css";
 
 
-import { DemoEdges } from "./demoEdges";
 import Image from "next/image";
 import BallValue01 from "../ReactFlow/BallValue01";
 import BallValue02 from "../ReactFlow/BallValue02";
@@ -197,7 +196,9 @@ export default function GraphicFlow() {
         }
     }, [data]);
 
-useEffect(() => {
+
+
+
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
@@ -208,19 +209,17 @@ useEffect(() => {
             setHighPT02(highPT02?.value || null);
             const LowPT02 = res.data.find((item: any) => item.key === "Low_EK1_Pressure");
             setLowPT02(LowPT02?.value || null);
-
-
-
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+
     };
+useEffect(() => {
+
     fetchData()
+
 },[])
  
-
-
-
     useEffect(() => {
         if (typeof HighPT02 === 'string' && typeof LowPT02 === 'string' && PT02 !== null) {
             const highValue02 = parseFloat(HighPT02);
@@ -242,6 +241,11 @@ useEffect(() => {
         } 
 
     }, [LowPT02,HighPT02, PT02, audioPlaying, ]);
+    const [sensorData, setSensorData] = useState<any>({ value: null, ts: null });
+    console.log('sensorData: ', sensorData);
+    const handleDataReceived = (data: any) => {
+        setSensorData(data);
+    };
 
     useEffect(() => {
         if (audioPlaying) {
@@ -271,8 +275,6 @@ useEffect(() => {
         op.current?.toggle(e); 
         setHighInputPT02(HighPT02);
         setLowInputPT02(LowPT02);
-
- 
     };
  
     const handleButtonClick = async () => {
@@ -281,18 +283,28 @@ useEffect(() => {
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { High_EK1_Pressure: HighInputPT02,Low_EK1_Pressure:LowInputPT02, }
             );
-
             setHighPT02(HighInputPT02);
             setLowPT02(LowInputPT02);
-
-         
             op.current?.hide();
+            fetchData()
            
         } catch (error) {
             console.log("error: ", error);
-           
         }
     };
+
+    const [isAnimated_line7, setIsAnimated_line7] = useState<boolean>(false);
+
+
+
+
+    const onDataLine_07 = (value: boolean) => {
+        setIsAnimated_line7(value);
+    };
+
+
+
+
 
 
     const ValueGas = {
@@ -330,6 +342,172 @@ useEffect(() => {
     function formatNumberWithCommas1(num: number): string {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+
+
+    const initialPositions =  {
+              ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
+              ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
+              BallValue01: { x: -1128.037821602239, y: 1191.6262752572804 },
+              BallValue02: { x: -903.8172406747104, y: 1193.399667617022 },
+              BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
+              BallValue04: { x: -702.8672275157428, y: 1196.5644365920487 },
+              BallValue05: { x: -409.1293248998188, y: 811.8988197919384 },
+              BallValue06: { x: -408.81019299266336, y: 1196.4905308723003 },
+              BallValue07: { x: 504.8485477377201, y: 1275.7596294538605 },
+              BallValue08: { x: 503.96196630239683, y: 731.9490736073253 },
+              BallValue09: { x: -110.97796431132724, y: 1276.0539298322096 },
+              BallValue10: { x: -110.7879376251401, y: 731.3407916825689 },
+              BallValueCenter: { x: 171.8879607409171, y: 997.3707577281239 },
+              BallValueCenter_Check: {
+                  x: 90.96636981528951,
+                  y: 1084.2937921267353,
+              },
+              BallValueCenter_None: {
+                  x: 194.0927490343022,
+                  y: 1049.7940379274323,
+              },
+              BallValueCenter_None2: {
+                  x: 188.97569648423308,
+                  y: 1050.2566331831772,
+              },
+              BallValuePSV: { x: 707.4535331808087, y: 925.0884862803827 },
+              BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
+              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+              FIQ_1901: { x: 109.21476408033044, y: 333.03027399043043 },
+              FIQ_1902: { x: 102.93274684979508, y: 1390.9527295767557 },
+              FIQ_none: { x: 248.9733646620158, y: 703.1349517698848 },
+              FIQ_none2: { x: 243.1791231142755, y: 1246.433138125363 },
+              FIQ_none11: { x: 297.9700546608087, y: 776.4933333155745 },
+              FIQ_none22: { x: 291.83473663064194, y: 1326.765516678561 },
+              GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
+              GD1_Name1901: { x: -642.5174367324778, y: 929.7999982291198 },
+              GD1_Value1901: { x: -642.2309648261335, y: 969.2951649681137 },
+              GD2: { x: -42.50089224243885, y: 1021.4354854552315 },
+              GD2_Name1902: { x: -93.0443422577471, y: 929.3762980384839 },
+              GD2_Value1902: { x: -92.91457554484961, y: 969.1203079122581 },
+              GD3: { x: 459.914400589417, y: 1020.9672974791615 },
+              GD3_Name1903: { x: 408.94939138278767, y: 926.3542185615489 },
+              GD3_Value1903: { x: 409.16846035566243, y: 966.2240910379097 },
+              GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
+              GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
+              GD_none3: { x: 494.08483331589105, y: 1051.9593704975985 },
+              HELP: { x: 750.7851455025582, y: 309.0601951574698 },
+              Header: { x: -1206.6213894992948, y: 364.1584689447791 },
+              PCV01: { x: -599.94289821967, y: 802.6626518716577 },
+              PCV02: { x: -599.958842024047, y: 1182.9561914947765 },
+              PCV_NUM01: { x: -685.2202972740031, y: 658.7120912134735 },
+              PCV_NUM02: { x: -684.9232711228508, y: 1384.163392899504 },
+              PCV_ballVavle_Small1: {
+                  x: -463.95750208249893,
+                  y: 796.3268812764675,
+              },
+              PCV_ballVavle_Small1_none1: {
+                  x: -565.2385229733152,
+                  y: 816.2575474175768,
+              },
+              PCV_ballVavle_Small1_none2: {
+                  x: -564.568543995368,
+                  y: 1198.5320880854015,
+              },
+              PCV_ballVavle_Small2: {
+                  x: -471.39757167976717,
+                  y: 1178.6960358714698,
+              },
+              PCV_ballVavle_Small2_none1: {
+                  x: -450.31021631638924,
+                  y: 869.5519055175876,
+              },
+              PCV_ballVavle_Small2_none2: {
+                  x: -458.105425182069,
+                  y: 1251.7751314040793,
+              },
+              PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
+              PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
+              PSV01: { x: 612.1731993621377, y: 610.5133777676822 },
+              PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
+              PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
+              PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
+              PSV_None01: { x: 784.3052438210208, y: 1043.0259819068465 },
+              PSV_None02: { x: 740.5334428531365, y: 887.7863120430411 },
+              PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
+              PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
+              PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
+              PT2: { x: -27.189835027824415, y: 1206.4222152022392 },
+              PT3: { x: -20.381746689621593, y: 662.037880506796 },
+              PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
+              PT_col2: { x: 19.862308874268933, y: 737.7028110648847 },
+              PT_col3: { x: 13.295698935440726, y: 1282.5019427337986 },
+              PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
+              PT_none2: { x: 14.303438303551133, y: 701.7157609793983 },
+              PT_none3: { x: 7.676012482892929, y: 1237.2951782160794 },
+              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+              Pressure_Trans01: {
+                  x: -1079.8436117067047,
+                  y: 781.9865024503554,
+              },
+              Pressure_Trans02: { x: -290.0766678403734, y: 607.0339683340325 },
+              Pressure_Trans03: {
+                  x: -299.9462192355602,
+                  y: 1436.8780553467147,
+              },
+              SDV: { x: -1233.5296036246955, y: 898.5758808521592 },
+              SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
+              SDV_IMG: { x: -1128.421296764186, y: 980.1809849794247 },
+              SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
+              Tank: { x: -921.5169052023348, y: 946.94544810155 },
+              Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
+              Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
+              Temperature_Trans01: {
+                  x: -607.828356494313,
+                  y: 562.8487535527242,
+              },
+              Temperature_Trans02: {
+                  x: -796.1166124474211,
+                  y: 1445.5258186779024,
+              },
+              VavleWay: { x: 85.58988116725641, y: 1016.4139269928653 },
+              borderWhite: { x: -1229.392001466799, y: 338.67009122532744 },
+              data1: { x: 109.47946341011584, y: 589.2589906944482 },
+              data2: { x: 109.27991967319247, y: 526.0779074551506 },
+              data3: { x: 109.73947478062132, y: 461.5806591350607 },
+              data4: { x: 109.8371177007175, y: 397.84637033965646 },
+              data5: { x: 102.78007803710699, y: 1455.8924158928564 },
+              data6: { x: 103.10223762535634, y: 1518.8843616862086 },
+              data7: { x: 102.5272888932326, y: 1582.2717633592201 },
+              data8: { x: 102.42098616731909, y: 1646.7545909037456 },
+              line1: { x: -1216.4118252175665, y: 1045.059045857194 },
+              line2: { x: -824.7490621134568, y: 1045.059045857194 },
+              line3: { x: -679.4548405099899, y: 864.3210507007146 },
+              line4: { x: -679.8288704580859, y: 1247.5473074652164 },
+              line5: { x: -386.35311440840894, y: 864.5020291308545 },
+              line6: { x: -386.02218778401766, y: 1247.470831450982 },
+              line7: { x: -210.82907734671454, y: 1052.6632425418165 },
+              line8: { x: -88.04540708877198, y: 784.1775456107679 },
+              line9: { x: -88.0002755654424, y: 1328.89662061928 },
+              line10: { x: 526.287999771183, y: 784.4482798747053 },
+              line11: { x: 526.7985068882073, y: 1328.7506749429908 },
+              line12: { x: 669.453281622097, y: 1042.0651701525298 },
+              line13: { x: 784.3012389553304, y: 1043.0028327994185 },
+              overlay_SmallVavle1: {
+                  x: -460.2968162301511,
+                  y: 885.6463541552142,
+              },
+              overlay_SmallVavle2: {
+                  x: -467.9401692198322,
+                  y: 1268.7449655852304,
+              },
+              overlay_line7: { x: -265.2148544974418, y: 1051.46019515747 },
+              overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
+              timeUpdate: { x: -1205.539796691701, y: 463.6522453863277 },
+              timeUpdate2: { x: -1206.679214981902, y: 505.7174141210413 },
+              timeUpdate3: { x: -1208.113792389707, y: 546.6921195736882 },
+          };
+
+    const [positions, setPositions] = useState(initialPositions);
+  
+
+    const [editingEnabled, setEditingEnabled] = useState(false);
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
@@ -1098,171 +1276,6 @@ useEffect(() => {
         setNodes(updatedNodes);
     }, [data]);
 
-
-    const initialPositions =  {
-              ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
-              ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
-              BallValue01: { x: -1128.037821602239, y: 1191.6262752572804 },
-              BallValue02: { x: -903.8172406747104, y: 1193.399667617022 },
-              BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
-              BallValue04: { x: -702.8672275157428, y: 1196.5644365920487 },
-              BallValue05: { x: -409.1293248998188, y: 811.8988197919384 },
-              BallValue06: { x: -408.81019299266336, y: 1196.4905308723003 },
-              BallValue07: { x: 504.8485477377201, y: 1275.7596294538605 },
-              BallValue08: { x: 503.96196630239683, y: 731.9490736073253 },
-              BallValue09: { x: -110.97796431132724, y: 1276.0539298322096 },
-              BallValue10: { x: -110.7879376251401, y: 731.3407916825689 },
-              BallValueCenter: { x: 171.8879607409171, y: 997.3707577281239 },
-              BallValueCenter_Check: {
-                  x: 90.96636981528951,
-                  y: 1084.2937921267353,
-              },
-              BallValueCenter_None: {
-                  x: 194.0927490343022,
-                  y: 1049.7940379274323,
-              },
-              BallValueCenter_None2: {
-                  x: 188.97569648423308,
-                  y: 1050.2566331831772,
-              },
-              BallValuePSV: { x: 707.4535331808087, y: 925.0884862803827 },
-              BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
-              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: 109.21476408033044, y: 333.03027399043043 },
-              FIQ_1902: { x: 102.93274684979508, y: 1390.9527295767557 },
-              FIQ_none: { x: 248.9733646620158, y: 703.1349517698848 },
-              FIQ_none2: { x: 243.1791231142755, y: 1246.433138125363 },
-              FIQ_none11: { x: 297.9700546608087, y: 776.4933333155745 },
-              FIQ_none22: { x: 291.83473663064194, y: 1326.765516678561 },
-              GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
-              GD1_Name1901: { x: -642.5174367324778, y: 929.7999982291198 },
-              GD1_Value1901: { x: -642.2309648261335, y: 969.2951649681137 },
-              GD2: { x: -42.50089224243885, y: 1021.4354854552315 },
-              GD2_Name1902: { x: -93.0443422577471, y: 929.3762980384839 },
-              GD2_Value1902: { x: -92.91457554484961, y: 969.1203079122581 },
-              GD3: { x: 459.914400589417, y: 1020.9672974791615 },
-              GD3_Name1903: { x: 408.94939138278767, y: 926.3542185615489 },
-              GD3_Value1903: { x: 409.16846035566243, y: 966.2240910379097 },
-              GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
-              GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
-              GD_none3: { x: 494.08483331589105, y: 1051.9593704975985 },
-              HELP: { x: 750.7851455025582, y: 309.0601951574698 },
-              Header: { x: -1206.6213894992948, y: 364.1584689447791 },
-              PCV01: { x: -599.94289821967, y: 802.6626518716577 },
-              PCV02: { x: -599.958842024047, y: 1182.9561914947765 },
-              PCV_NUM01: { x: -685.2202972740031, y: 658.7120912134735 },
-              PCV_NUM02: { x: -684.9232711228508, y: 1384.163392899504 },
-              PCV_ballVavle_Small1: {
-                  x: -463.95750208249893,
-                  y: 796.3268812764675,
-              },
-              PCV_ballVavle_Small1_none1: {
-                  x: -565.2385229733152,
-                  y: 816.2575474175768,
-              },
-              PCV_ballVavle_Small1_none2: {
-                  x: -564.568543995368,
-                  y: 1198.5320880854015,
-              },
-              PCV_ballVavle_Small2: {
-                  x: -471.39757167976717,
-                  y: 1178.6960358714698,
-              },
-              PCV_ballVavle_Small2_none1: {
-                  x: -450.31021631638924,
-                  y: 869.5519055175876,
-              },
-              PCV_ballVavle_Small2_none2: {
-                  x: -458.105425182069,
-                  y: 1251.7751314040793,
-              },
-              PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
-              PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-              PSV01: { x: 612.1731993621377, y: 610.5133777676822 },
-              PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
-              PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
-              PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
-              PSV_None01: { x: 784.3052438210208, y: 1043.0259819068465 },
-              PSV_None02: { x: 740.5334428531365, y: 887.7863120430411 },
-              PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
-              PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
-              PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
-              PT2: { x: -27.189835027824415, y: 1206.4222152022392 },
-              PT3: { x: -20.381746689621593, y: 662.037880506796 },
-              PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
-              PT_col2: { x: 19.862308874268933, y: 737.7028110648847 },
-              PT_col3: { x: 13.295698935440726, y: 1282.5019427337986 },
-              PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
-              PT_none2: { x: 14.303438303551133, y: 701.7157609793983 },
-              PT_none3: { x: 7.676012482892929, y: 1237.2951782160794 },
-              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1079.8436117067047,
-                  y: 781.9865024503554,
-              },
-              Pressure_Trans02: { x: -290.0766678403734, y: 607.0339683340325 },
-              Pressure_Trans03: {
-                  x: -299.9462192355602,
-                  y: 1436.8780553467147,
-              },
-              SDV: { x: -1233.5296036246955, y: 898.5758808521592 },
-              SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
-              SDV_IMG: { x: -1128.421296764186, y: 980.1809849794247 },
-              SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
-              Tank: { x: -921.5169052023348, y: 946.94544810155 },
-              Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
-              Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
-              Temperature_Trans01: {
-                  x: -607.828356494313,
-                  y: 562.8487535527242,
-              },
-              Temperature_Trans02: {
-                  x: -796.1166124474211,
-                  y: 1445.5258186779024,
-              },
-              VavleWay: { x: 85.58988116725641, y: 1016.4139269928653 },
-              borderWhite: { x: -1229.392001466799, y: 338.67009122532744 },
-              data1: { x: 109.47946341011584, y: 589.2589906944482 },
-              data2: { x: 109.27991967319247, y: 526.0779074551506 },
-              data3: { x: 109.73947478062132, y: 461.5806591350607 },
-              data4: { x: 109.8371177007175, y: 397.84637033965646 },
-              data5: { x: 102.78007803710699, y: 1455.8924158928564 },
-              data6: { x: 103.10223762535634, y: 1518.8843616862086 },
-              data7: { x: 102.5272888932326, y: 1582.2717633592201 },
-              data8: { x: 102.42098616731909, y: 1646.7545909037456 },
-              line1: { x: -1216.4118252175665, y: 1045.059045857194 },
-              line2: { x: -824.7490621134568, y: 1045.059045857194 },
-              line3: { x: -679.4548405099899, y: 864.3210507007146 },
-              line4: { x: -679.8288704580859, y: 1247.5473074652164 },
-              line5: { x: -386.35311440840894, y: 864.5020291308545 },
-              line6: { x: -386.02218778401766, y: 1247.470831450982 },
-              line7: { x: -210.82907734671454, y: 1052.6632425418165 },
-              line8: { x: -88.04540708877198, y: 784.1775456107679 },
-              line9: { x: -88.0002755654424, y: 1328.89662061928 },
-              line10: { x: 526.287999771183, y: 784.4482798747053 },
-              line11: { x: 526.7985068882073, y: 1328.7506749429908 },
-              line12: { x: 669.453281622097, y: 1042.0651701525298 },
-              line13: { x: 784.3012389553304, y: 1043.0028327994185 },
-              overlay_SmallVavle1: {
-                  x: -460.2968162301511,
-                  y: 885.6463541552142,
-              },
-              overlay_SmallVavle2: {
-                  x: -467.9401692198322,
-                  y: 1268.7449655852304,
-              },
-              overlay_line7: { x: -265.2148544974418, y: 1051.46019515747 },
-              overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate: { x: -1205.539796691701, y: 463.6522453863277 },
-              timeUpdate2: { x: -1206.679214981902, y: 505.7174141210413 },
-              timeUpdate3: { x: -1208.113792389707, y: 546.6921195736882 },
-          };
-
-    const [positions, setPositions] = useState(initialPositions);
-
-    const [editingEnabled, setEditingEnabled] = useState(false);
-
     const [initialNodes, setInitialNodes] = useState([
         // ============================== line =========================================
         {
@@ -1566,7 +1579,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValue01 />
+                        <BallValue01  />
                     </div>
                 ),
             },
@@ -1698,7 +1711,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValue07 />
+                        <BallValue07 onDataLine7={onDataLine_07} />
                     </div>
                 ),
             },
@@ -1720,7 +1733,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValue08 />
+                        {/* <BallValue08 /> */}
                     </div>
                 ),
             },
@@ -1741,7 +1754,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValue09 />
+                        {/* <BallValue09 /> */}
                     </div>
                 ),
             },
@@ -1763,7 +1776,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValue10 />
+                        {/* <BallValue10 /> */}
                     </div>
                 ),
             },
@@ -3531,6 +3544,428 @@ useEffect(() => {
             },
         },
     ]);
+    const styleLine = {
+        strokeWidth: 20,
+        stroke: "#ffaa00",
+    };
+    
+    const styleHide = {
+        strokeWidth: 6,
+        stroke: "#ffaa00",
+    }
+    const styleBallSmall = {
+        strokeWidth: 3,
+        stroke: "#000",
+    }
+
+    const DemoEdges = [
+        {
+            id: "line1-line2",
+            source: "line1",
+            target: "line2",
+            animated: sensorData,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+      
+        {
+            id: "line2-line3",
+            source: "line2",
+            target: "line3",
+            type: "smoothstep",
+            // animated: true,
+            
+    
+            style: {
+                ...styleLine,
+            },
+        },
+    
+       
+        {
+            id: "line2-line4",
+            source: "line2",
+            target: "line4",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line3-line5",
+            source: "line3",
+            target: "line5",
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line4-line6",
+            source: "line4",
+            target: "line6",
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+    
+        {
+            id: "line5-line7",
+            source: "line5",
+            target: "line7",
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+    
+        {
+            id: "line6-line6",
+            source: "line6",
+            target: "line7",
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+    
+        {
+            id: "line7-line8",
+            source: "line7",
+            target: "line8",
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+    
+        {
+            id: "line7-line9",
+            source: "line7",
+            target: "line9",
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line8-line10",
+            source: "line8",
+            target: "line10",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line9-line11",
+            source: "line9",
+            target: "line11",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+       
+        {
+            id: "line10-line12",
+            source: "line10",
+            target: "line12",
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line11-line12",
+            source: "line11",
+            target: "line12",
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line12-line13",
+            source: "line12",
+            target: "line13",
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "SDV_None-SDV_Ball",
+            source: "SDV_None",
+            target: "SDV_Ball",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleHide,
+            },
+        },
+        {
+            id: "SDV_Ball-SDV_None",
+            source: "SDV_Ball",
+            target: "SDV_None",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleHide,
+            },
+        },
+        {
+            id: "Tank_None-Tank_Ball",
+            source: "Tank_None",
+            target: "Tank_Ball",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleHide,
+            },
+        },
+        {
+            id: "Tank_Ball-Tank_None",
+            source: "Tank_Ball",
+            target: "Tank_None",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleHide,
+            },
+        },
+        {
+            id: "line9-BallValueCenter_None",
+            source: "line9",
+            target: "BallValueCenter_None",
+            // animated: true,
+            type: "smoothstep",
+            
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "line10-BallValueCenter_None2",
+            source: "BallValueCenter_None2",
+            target: "line10",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+        {
+            id: "PSV_None01-PSV_None02",
+            source: "PSV_None01",
+            target: "PSV_None02",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        },
+    
+        {
+            id: "PSV_None03-PSV_None04",
+            source: "PSV_None03",
+            target: "PSV_None04",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleLine,
+            },
+        }, 
+        {
+            id: "PSV_None04-PSV01",
+            source: "PSV_None04",
+            target: "PSV01",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        }, 
+         {
+            id: "FIQ_none11-data1",
+            source: "FIQ_none11",
+            target: "data1",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+    
+       
+        {
+            id: "PCV_none1-PCV_NUM01",
+            source: "PCV_none1",
+            target: "PCV_NUM01",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+        {
+            id: "PCV_none2-PCV_NUM02",
+            source: "PCV_none2",
+            target: "PCV_NUM02",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+    
+        {
+            id: "FIQ_none22-FIQ_1902",
+            source: "FIQ_none22",
+            target: "FIQ_1902",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+       
+        {
+            id: "PCV_none1-PCV_NUM01",
+            source: "PCV_none1",
+            target: "PCV_NUM01",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+        {
+            id: "PCV_none2-PCV_NUM02",
+            source: "PCV_none2",
+            target: "PCV_NUM02",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+    
+        {
+            id: "GD_none1-GD1_Value1901",
+            source: "GD_none1",
+            target: "GD1_Value1901",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+       
+        {
+            id: "GD_none2-GD2_Value1902",
+            source: "GD_none2",
+            target: "GD2_Value1902",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+        {
+            id: "GD_none3-GD3_Value1903",
+            source: "GD_none3",
+            target: "GD3_Value1903",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+    
+        {
+            id: "PT_none1-Pressure_Trans01",
+            source: "PT_none1",
+            target: "Pressure_Trans01",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+       
+        {
+            id: "PT_none2-Pressure_Trans02",
+            source: "PT_none2",
+            target: "Pressure_Trans02",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+        {
+            id: "PT_none3-Pressure_Trans03",
+            source: "PT_none3",
+            target: "Pressure_Trans03",
+            // animated: true,
+            type: "smoothstep",
+    
+            strokeWidth: 1,
+            stroke: "gray",
+        },
+    
+        {
+            id: "PCV_ballVavle_Small1_none1-PCV_ballVavle_Small2_none1",
+            source: "PCV_ballVavle_Small1_none1",
+            target: "PCV_ballVavle_Small2_none1",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleBallSmall
+            }
+        },
+    
+        {
+            id: "PCV_ballVavle_Small1_none2-PCV_ballVavle_Small2_none2",
+            source: "PCV_ballVavle_Small1_none2",
+            target: "PCV_ballVavle_Small2_none2",
+            // animated: true,
+            type: "smoothstep",
+    
+            style: {
+                ...styleBallSmall
+            }
+        },
+    ];
+    
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState<any>(DemoEdges);
