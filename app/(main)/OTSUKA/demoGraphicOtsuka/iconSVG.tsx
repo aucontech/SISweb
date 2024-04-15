@@ -1181,8 +1181,8 @@ const SVD_NC = (
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
-        width="90px"
-        height="90px"
+        width="100px"
+        height="100px"
         viewBox="0 0 512 512"
         enable-background="new 0 0 512 512"
     >
@@ -1202,8 +1202,8 @@ const SVD_NO = (
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
-        width="90px"
-        height="90px"
+        width="100px"
+        height="100px"
         viewBox="0 0 512 512"
         enable-background="new 0 0 512 512"
     >
@@ -1245,15 +1245,15 @@ const BallVavleRightOff = (
 
 const VavleWay = (
     <svg
-    version="1.1"
-    id="Layer_1"
-    xmlns="http://www.w3.org/2000/svg"
-    x="0px"
-    y="0px"
-    width="110px"
-    height="110px"
-    viewBox="0 0 512 512"
-    enable-background="new 0 0 512 512"
+        version="1.1"
+        id="Layer_1"
+        xmlns="http://www.w3.org/2000/svg"
+        x="0px"
+        y="0px"
+        width="110px"
+        height="110px"
+        viewBox="0 0 512 512"
+        enable-background="new 0 0 512 512"
     >
         <g>
             <image
@@ -1264,6 +1264,8 @@ const VavleWay = (
         </g>
     </svg>
 );
+
+
 
 export {
     gasIn,
@@ -1285,5 +1287,5 @@ export {
     SVD_NC,
     SVD_NO,
     BallVavleRightOff,
-    VavleWay
+    VavleWay,
 };

@@ -137,7 +137,6 @@ export default function BallValue04() {
                 { BallValue_04: newValue }
             );
             setSensorData(newValue);
-            fetchData();
         } catch (error) {}
     };
 

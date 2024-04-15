@@ -136,7 +136,6 @@ export default function BallVavlePSV() {
                 { BallVavlePSV: newValue }
             );
             setSensorData(newValue);
-            fetchData();
         } catch (error) {}
     };
 

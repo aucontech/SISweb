@@ -137,8 +137,8 @@ export default function BallValue01() {
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { BallValue_01: newValue }
             );
-            fetchData()
             setSensorData(newValue);
+            
         } catch (error) {}
     };
 
@@ -155,8 +155,8 @@ export default function BallValue01() {
             }
         };
         useEffect(() => {
+            fetchData();
 
-        fetchData();
     }, []);
 
 
