@@ -51,6 +51,8 @@ import {
     WhiteTriangleRight,
     connect,
     gasIn,
+    juntionBottom,
+    juntionTop,
     tankGas,
 } from "./iconSVG";
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
@@ -169,16 +171,19 @@ export default function DemoFlowOTS() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Measurement_Conditions: setGVF1,
                         EVC_01_Flow_at_Base_Condition: setSVF1,
-                        EVC_01_Volume_at_Base_Conditions: setSVA1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
+
+                        EVC_01_Volume_at_Base_Condition: setSVA1,
                         EVC_01_Vm_Adjustable_Counter: setGVA1,
                         EVC_01_Pressure: setPT02,
 
-                        EVC_02_Flow_at_Measurement_Conditions: setGVF2,
-                        EVC_02_Flow_at_Base_Conditions: setSVF2,
-                        EVC_02_Volume_at_Base_Conditions: setSVA2,
+                        EVC_02_Flow_at_Base_Condition: setSVF2,
+                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
+
+                        EVC_02_Volume_at_Base_Condition: setSVA2,
                         EVC_02_Vm_Adjustable_Counter: setGVA2,
+
                         EVC_02_Pressure: setPT03,
 
                         GD1: SetGD1,
@@ -1223,8 +1228,8 @@ export default function DemoFlowOTS() {
               SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
               SDV_IMG: { x: -1128.9943569208203, y: 972.9252744312048 },
               SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
-              T_juntion_11: { x: 53.6110895966861, y: 1271.9089191715047 },
-              T_juntion_14: { x: 367.59260253682675, y: 763.9395959362829 },
+              T_juntion_11: { x: 365.1924037601432, y: 761.5664930235843 },
+              T_juntion_14: { x: 51.19739447051353, y: 1267.8592609282646 },
               Tank: { x: -921.5169052023348, y: 949.94544810155 },
               Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
               Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
@@ -3793,16 +3798,7 @@ export default function DemoFlowOTS() {
             position: positions.T_juntion_11,
             type: "custom",
             data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/T_juntion.png"
-                            width={80}
-                            height={80}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
+                label: <div>{juntionBottom}</div>,
             },
 
             sourcePosition: Position.Right,
@@ -3821,16 +3817,7 @@ export default function DemoFlowOTS() {
             position: positions.T_juntion_14,
             type: "custom",
             data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/TJuntion_bottom.png"
-                            width={80}
-                            height={80}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
+                label: <div>{juntionTop}</div>,
             },
 
             sourcePosition: Position.Right,

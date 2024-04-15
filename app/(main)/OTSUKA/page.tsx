@@ -33,8 +33,8 @@ const TabOtsuka = () => {
                         <TelemetryOTSUKA />
                     </TabPanel>
                     <TabPanel header="Setup Data">
-                        {/* <LowHighData /> */}
-                        <h1>Update...</h1>
+                        <LowHighData />
+                        {/* <h1>Update...</h1> */}
                     </TabPanel>
                 </TabView>
             </div>
