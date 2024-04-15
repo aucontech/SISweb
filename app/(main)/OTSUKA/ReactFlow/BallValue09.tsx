@@ -134,7 +134,6 @@ export default function BallValue09({ onDataLine09 }: { onDataLine09: (data: any
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
                 { BallValue_09: newValue }
             );
-            fetchData()
             setSensorData(newValue);
         } catch (error) {}
     };

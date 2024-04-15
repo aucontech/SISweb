@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
+import { colorData, colorNameValue } from "../demoGraphicOtsuka/demoFlowOTS";
 
 export default function PCV_01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -161,9 +162,9 @@ export default function PCV_01_Otsuka() {
          
 
             <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', justifyContent:'space-between'  }} onClick={handleButtonToggle}>
-                 <p style={{color:'#ffaa00',}}>PCV-1901 : </p> 
-                  <p style={{marginLeft:20}} > {upData} </p> 
-                  <p style={{marginLeft:10}}>Bar</p>
+                 <p style={{color:colorNameValue,}}>PCV-1901 : </p> 
+                  <p style={{marginLeft:20, color:colorData}} > {upData} </p> 
+                  <p style={{marginLeft:10,color:colorNameValue,}}>Bar</p>
 
            </div>
             

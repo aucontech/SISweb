@@ -2223,7 +2223,7 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <BallValueCenter />
+                        {/* <BallValueCenter onDataLineCenter={} /> */}
                     </div>
                 ),
             },

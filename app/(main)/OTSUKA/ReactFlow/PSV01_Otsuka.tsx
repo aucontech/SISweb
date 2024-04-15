@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import { colorData, colorNameValue } from "../demoGraphicOtsuka/demoFlowOTS";
 
 export default function PSV01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -162,9 +163,9 @@ export default function PSV01_Otsuka() {
 
          
 <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer',   }} onClick={handleButtonToggle}>
-                 <p style={{color:'#ffaa00',}}>PSV-1901 : </p> 
-                  <p style={{marginLeft:20}} > {upData} </p> 
-                  <p style={{marginLeft:10}}>Bar</p>
+                 <p style={{color:colorNameValue,}}>PSV-1901 : </p> 
+                  <p style={{marginLeft:20,color:colorData}} > {upData} </p> 
+                  <p style={{marginLeft:10,color:colorNameValue}}>Bar</p>
 
            </div>
             

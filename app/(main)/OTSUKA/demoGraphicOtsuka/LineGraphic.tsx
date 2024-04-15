@@ -158,6 +158,8 @@ export default function LineGraphic() {
             },
         },
     ]
+    const [edges, setEdges, onEdgesChange] = useEdgesState<any>([...edgeS1, ...edgeS2,]);
+
     const [initialNodes, setInitialNodes] = useState([
         // ============================== line =========================================
         {
@@ -273,7 +275,6 @@ export default function LineGraphic() {
  
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<any>([...edgeS1, ...edgeS2,]);
 
 
     const onNodeDragStop = useCallback(
