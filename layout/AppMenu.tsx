@@ -82,6 +82,11 @@ const AppMenu = () => {
                     to: "/customerreport",
                 },
                 {
+                    label: "GC values",
+                    icon: "pi pi-fw pi-table",
+                    to: "/gcvalues",
+                },
+                {
                     label: "All In One Report",
                     icon: "pi pi-fw pi-list",
                     // to: "/devices",

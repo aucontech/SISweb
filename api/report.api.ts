@@ -1,0 +1,12 @@
+import { httpApi } from "./http.api";
+
+// Định nghĩa interface ReportRequest
+export interface ReportRequest {
+    deviceId: string;
+    date: number;
+}
+
+// Hàm getReport với đối số là một đối tượng ReportRequest và sử dụng phương thức POST
+export const getReport = (reqParams: ReportRequest): Promise<any> => {
+    return httpApi.post<any>("/v1/report", reqParams);
+};

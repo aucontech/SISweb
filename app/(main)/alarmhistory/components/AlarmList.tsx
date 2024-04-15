@@ -103,24 +103,24 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
         );
     }, [lazyState, _fetchDataAlarms, filters, textSearch]);
 
-    const _renderCreatedTime = (row: any) => {
-        let createdTime = row.createdTime;
-        return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
-    };
+    // const _renderCreatedTime = (row: any) => {
+    //     let createdTime = row.createdTime;
+    //     return createdTime ? Utils.formatUnixTimeToString(createdTime) : "";
+    // };
     const _renderStartTime = (row: any) => {
         let startTs = row.startTs;
         return startTs ? Utils.formatUnixTimeToString(startTs) : "";
     };
 
-    const _renderValue = (row: any) => {
-        let { details } = row;
-        let value = details?.data?.split(",")[1];
+    // const _renderValue = (row: any) => {
+    //     let { details } = row;
+    //     let value = details?.data?.split(",")[1];
 
-        return value ? value : "";
-    };
+    //     return value ? value : "";
+    // };
 
     const _renderDurationTime = (row: any) => {
-        let clearTs = row.clearTs;
+        let clearTs = { row };
         return clearTs ? Utils.formatUnixTimeToString(clearTs) : "";
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,7 +172,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
 
                         <Column
                             field="originatorName"
-                            header="Originator"
+                            header="Station Name"
                         ></Column>
                         <Column field="type" header="Type"></Column>
                         <Column
