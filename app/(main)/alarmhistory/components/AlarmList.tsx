@@ -120,10 +120,8 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
     };
 
     const _renderDurationTime = (row: any) => {
-        let { startTs, clearTs } = row;
-        return startTs && clearTs
-            ? Utils.calculateDurationFromUnixWithWords(startTs, clearTs)
-            : "";
+        let clearTs = row.clearTs;
+        return clearTs ? Utils.formatUnixTimeToString(clearTs) : "";
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -166,11 +164,11 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         dataKey="id"
                         onPage={_onInvsPaging}
                     >
-                        <Column
+                        {/* <Column
                             sortable
                             header="Created Time"
                             body={_renderCreatedTime}
-                        ></Column>
+                        ></Column> */}
 
                         <Column
                             field="originatorName"
@@ -183,19 +181,19 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         ></Column>
 
                         <Column
-                            header="Duration"
+                            header="End Time"
                             body={_renderDurationTime}
                         ></Column>
-                        <Column header="Value" body={_renderValue}></Column>
+                        {/* <Column header="Value" body={_renderValue}></Column> */}
                         {/* <Column
                             sortable
                             header="Duration"
                             body={_renderDuration}
                         ></Column> */}
-                        <Column
+                        {/* <Column
                             field="description"
                             header="Description"
-                        ></Column>
+                        ></Column> */}
                     </DataTable>
                 </div>
             </div>
