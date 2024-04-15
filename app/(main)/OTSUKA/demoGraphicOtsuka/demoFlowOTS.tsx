@@ -914,8 +914,12 @@ export default function DemoFlowOTS() {
                                         PLC :{" "}
                                     </p>
 
-                                    <p style={{ color: "white" }}> EVC 01 : </p>
-                                    <p style={{ color: "white" }}> EVC 02 : </p>
+                                    <p style={{ color: "white",
+                                            display: "flex",
+                                        }}> EVC 01 : </p>
+                                    <p style={{ color: "white",
+                                            display: "flex",
+                                        }}> EVC 02 : </p>
                                 </div>
 
                                 <div style={{}}>
@@ -1286,8 +1290,7 @@ export default function DemoFlowOTS() {
               },
               overlay_line7: { x: -267.2148544974418, y: 1051.46019515747 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate: { x: -1149.7332581002388, y: 464.2087856301161 },
-              timeUpdate2: { x: -1175.4689171756004, y: 526.6316165404385 },
+      
               timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
           };
     const [positions, setPositions] = useState(initialPositions);
