@@ -1197,7 +1197,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT01}
+                                        {PT03}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>BarG</p>
