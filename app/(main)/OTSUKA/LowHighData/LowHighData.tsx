@@ -1255,7 +1255,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                 <tr style={{ backgroundColor: AlarmSVA1 ? '#ff5656' : '#fff', fontWeight:600,  }} >
                     
                     <td  style={{   color: AlarmSVA1 ? 'white' : 'black', }}>SVA FIQ-1901</td>
-                    <td  style={{  color: AlarmSVA1 ? 'white' : 'black',}}>{SVA1} m³</td>
+                    <td  style={{  color: AlarmSVA1 ? 'white' : 'black',}}>{SVA1} sm³</td>
                     <td  style={{   }}>
                         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />
                     </td>
@@ -1325,7 +1325,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
 <tr style={{ backgroundColor: AlarmSVA2 ? '#ff5656' : '#fff', fontWeight:600,  }} >
     
     <td  style={{   color: AlarmSVA2 ? 'white' : '#CC6600', }}>SVA FIQ-1902</td>
-    <td  style={{  color: AlarmSVA2 ? 'white' : '#CC6600', }}>{SVA2} m³</td>
+    <td  style={{  color: AlarmSVA2 ? 'white' : '#CC6600', }}>{SVA2} sm³</td>
     <td  style={{   }}>
         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />
     </td>
