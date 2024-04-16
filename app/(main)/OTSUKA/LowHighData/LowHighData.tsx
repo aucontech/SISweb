@@ -1099,7 +1099,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
   
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background:'white', padding:10, borderRadius:10 }}>
             <div>
         <h2>OSTUKA</h2>
         <hr />
@@ -1119,8 +1119,8 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                 </tr>
                 <br />
                 <tr style={{ backgroundColor: exceedThreshold ? '#ff5656' : '#fff',width:'100%', fontWeight:600, color:'#036E9B' }} >
-                    <td  style={{   color: exceedThreshold ? 'white' : 'red', width:'20%' }}>PT-1901</td>
-                    <td  style={{  width:'20%',color: exceedThreshold ? 'white' : 'red' }}>{PT02} Bara</td>
+                    <td  style={{   color: exceedThreshold ? 'white' : 'green', width:'20%' }}>PT-1901</td>
+                    <td  style={{  width:'20%',color: exceedThreshold ? 'white' : 'green' }}>{PT02} Bara</td>
                     <td  style={{  width:'20%' }}>
                         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />
                     </td>
@@ -1137,8 +1137,8 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                     <div style={{height:3}}></div>
                 <tr style={{ backgroundColor: exceedThreshold2 ? '#ff5656' : '#fff', fontWeight:600, color:''  }} >
                     
-                    <td  style={{   color: exceedThreshold2 ? 'white' : 'red' }}>PT-1902</td>
-                    <td  style={{  color: exceedThreshold2 ? 'white' : 'red' }}>{PT03} Bara</td>
+                    <td  style={{   color: exceedThreshold2 ? 'white' : 'green' }}>PT-1902</td>
+                    <td  style={{  color: exceedThreshold2 ? 'white' : 'green' }}>{PT03} Bara</td>
                     <td  style={{    }}>
                         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />
                     </td>
@@ -1153,8 +1153,8 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                 <div style={{height:3}}></div>
                 <tr style={{ backgroundColor: exceedThreshold3 ? '#ff5656' : '#fff', fontWeight:600, color:''  }} >
                     
-                    <td  style={{   color: exceedThreshold3 ? 'white' : 'red' }}>PT-1903</td>
-                    <td  style={{  color: exceedThreshold3 ? 'white' : 'red' }}>{PT01} BarG</td>
+                    <td  style={{   color: exceedThreshold3 ? 'white' : 'green' }}>PT-1903</td>
+                    <td  style={{  color: exceedThreshold3 ? 'white' : 'green' }}>{PT01} BarG</td>
                     <td  style={{   }}>
                         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />
                     </td>
@@ -1255,7 +1255,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                 <tr style={{ backgroundColor: AlarmSVA1 ? '#ff5656' : '#fff', fontWeight:600,  }} >
                     
                     <td  style={{   color: AlarmSVA1 ? 'white' : 'black', }}>SVA FIQ-1901</td>
-                    <td  style={{  color: AlarmSVA1 ? 'white' : 'black',}}>{SVA1} m³</td>
+                    <td  style={{  color: AlarmSVA1 ? 'white' : 'black',}}>{SVA1} sm³</td>
                     <td  style={{   }}>
                         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />
                     </td>
@@ -1325,7 +1325,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
 <tr style={{ backgroundColor: AlarmSVA2 ? '#ff5656' : '#fff', fontWeight:600,  }} >
     
     <td  style={{   color: AlarmSVA2 ? 'white' : '#CC6600', }}>SVA FIQ-1902</td>
-    <td  style={{  color: AlarmSVA2 ? 'white' : '#CC6600', }}>{SVA2} m³</td>
+    <td  style={{  color: AlarmSVA2 ? 'white' : '#CC6600', }}>{SVA2} sm³</td>
     <td  style={{   }}>
         <InputText className="p-inputtext-sm" placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />
     </td>

@@ -194,6 +194,7 @@ export default function DemoFlowOTS() {
                         }
                     });
                 }
+                fetchData()
             };
         }
     }, [data]);
@@ -896,16 +897,16 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data2") {
-                let decimalSVA1: string | number = "";
+                // let decimalSVA1: string | number = "";
 
-                if (SVA1 !== null) {
-                    const SVA1Number = parseFloat(SVA1);
-                    if (!isNaN(SVA1Number)) {
-                        decimalSVA1 = formatNumberWithCommas(SVA1Number);
-                    } else {
-                        decimalSVA1 = "";
-                    }
-                }
+                // if (SVA1 !== null) {
+                //     const SVA1Number = parseFloat(SVA1);
+                //     if (!isNaN(SVA1Number)) {
+                //         decimalSVA1 = formatNumberWithCommas(SVA1Number);
+                //     } else {
+                //         decimalSVA1 = "";
+                //     }
+                // }
                 return {
                     ...node,
                     data: {
@@ -929,7 +930,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalSVA1}
+                                        {SVA1}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1076,16 +1077,16 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data7") {
-                let decimalSVA2: string | number = "";
+                // let decimalSVA2: string | number = "";
 
-                if (SVA2 !== null) {
-                    const SVA2Number = parseFloat(SVA2);
-                    if (!isNaN(SVA2Number)) {
-                        decimalSVA2 = formatNumberWithCommas(SVA2Number);
-                    } else {
-                        decimalSVA2 = "";
-                    }
-                }
+                // if (SVA2 !== null) {
+                //     const SVA2Number = parseFloat(SVA2);
+                //     if (!isNaN(SVA2Number)) {
+                //         decimalSVA2 = formatNumberWithCommas(SVA2Number);
+                //     } else {
+                //         decimalSVA2 = "";
+                //     }
+                // }
                 return {
                     ...node,
                     data: {
@@ -1109,7 +1110,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {decimalSVA2}
+                                        {SVA2}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1196,7 +1197,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT01}
+                                        {PT03}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>BarG</p>
