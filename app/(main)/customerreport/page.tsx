@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import styles from "./CustomerReport.module.css";
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
+import { co } from "@fullcalendar/core/internal-common";
 
 const defaultValue = {
     grossVolumeVmB1: 0,
@@ -30,7 +31,7 @@ const defaultValue = {
 const CustomerReport = () => {
     const [filters, setFilters] = useState<any>({});
     const [reportData, setReportData] = useState<any>({});
-    const [selectedDevice, setSelectedDevice] = useState<any>(null);
+
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
     };
@@ -46,35 +47,104 @@ const CustomerReport = () => {
             .then((resp) => resp.data)
             .then((resp) => {
                 console.log(resp);
-                setReportData(resp);
+                setReportData({ ...resp, deviceInfo: filters.device });
             })
             .catch((error) => {
                 console.log(error);
             });
         //console.log(filters);
     }, []);
+
     useEffect(() => {
         if (filters.date && filters.device) {
-            setSelectedDevice(filters.device);
+            //setReportData({ ...defaultValue, deviceInfo: filters.device });
+
+            //setSelectedDevice(filters.device);
             _fetchDateReport(filters);
         }
     }, [filters, _fetchDateReport]);
 
-    console.log(selectedDevice);
+    console.log(reportData);
     const handleDutyClick = (duty: string) => {
         let newReportData = { ...reportData };
         switch (duty) {
             case "grossVolumeVmB1":
-                console.log("grossVolumeVmB1");
                 newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
                 setReportData(newReportData);
                 break;
             case "grossVolumeVmB2":
-                console.log("grossVolumeVmB2");
                 newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
                 setReportData(newReportData);
                 break;
+            case "standardVolumeVbB1":
+                newReportData.standardVolumeVbCon =
+                    newReportData.standardVolumeVbB1;
+                setReportData(newReportData);
+                break;
+            case "standardVolumeVbB2":
+                newReportData.standardVolumeVbCon =
+                    newReportData.standardVolumeVbB2;
+                setReportData(newReportData);
+                break;
+            case "heatingValueB1":
+                newReportData.heatingValueCon = newReportData.heatingValueB1;
+                setReportData(newReportData);
+                break;
+            case "heatingValueB2":
+                newReportData.heatingValueCon = newReportData.heatingValueB2;
+                setReportData(newReportData);
+                break;
 
+            case "energyQB1":
+                newReportData.energyCon = newReportData.energyQB1;
+                setReportData(newReportData);
+                break;
+
+            case "energyQB2":
+                newReportData.energyCon = newReportData.energyQB2;
+                setReportData(newReportData);
+                break;
+            case "avgTemperatureB1":
+                console.log("avgTemperatureB1");
+                newReportData.avgTemperatureCon =
+                    newReportData.avgTemperatureB1;
+                setReportData(newReportData);
+                break;
+            case "avgTemperatureB2":
+                console.log("avgTemperatureB2");
+                newReportData.avgTemperatureCon =
+                    newReportData.avgTemperatureB2;
+                setReportData(newReportData);
+                break;
+            case "avgPresssureB1":
+                console.log("avgPresssureB1");
+                newReportData.avgPresssureCon = newReportData.avgPresssureB1;
+                setReportData(newReportData);
+                break;
+            case "avgPresssureB2":
+                newReportData.avgPresssureCon = newReportData.avgPresssureB2;
+                setReportData(newReportData);
+                break;
+            case "grossVolumeAccumulatedB1":
+                newReportData.grossVolumeAccumulatedCon =
+                    newReportData.grossVolumeAccumulatedB1;
+                setReportData(newReportData);
+                break;
+            case "grossVolumeAccumulatedB2":
+                newReportData.grossVolumeAccumulatedCon =
+                    newReportData.grossVolumeAccumulatedB2;
+                setReportData(newReportData);
+                break;
+            case "standardVolumeAccumulatedB1":
+                newReportData.standardVolumeAccumulatedCon =
+                    newReportData.standardVolumeAccumulatedB1;
+                setReportData(newReportData);
+                break;
+            case "standardVolumeAccumulatedB2":
+                newReportData.standardVolumeAccumulatedCon =
+                    newReportData.standardVolumeAccumulatedB2;
+                setReportData(newReportData);
+                break;
             default:
                 console.log("default");
                 break;
@@ -88,7 +158,7 @@ const CustomerReport = () => {
                 showDate={true}
             />
             <Button>Get Report</Button>
-            {selectedDevice && <h2>{selectedDevice.name} CUSTOMER</h2>}
+            {reportData.device && <h2>{reportData.device.name} CUSTOMER</h2>}
             <div className={styles.grid}>
                 <div className={styles.col}>
                     <p className={styles.label}>Daily Report</p>
@@ -150,17 +220,52 @@ const CustomerReport = () => {
                         Action
                     </Button>
                     <Button
-                        onClick={() => handleDutyClick("grossVolumeVmB1")}
+                        onClick={() => handleDutyClick("standardVolumeVbB1")}
                         className="w-full"
                     >
                         Action
                     </Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
+                    <Button
+                        onClick={() => handleDutyClick("heatingValueB1")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("energyQB1")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("avgTemperatureB1")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("avgPresssureB1")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleDutyClick("grossVolumeAccumulatedB1")
+                        }
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+
+                    <Button
+                        onClick={() =>
+                            handleDutyClick("standardVolumeAccumulatedB1")
+                        }
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
                 </div>
                 <div className={styles.col}>
                     <p className="w-full text-center">EVC 1902</p>
@@ -206,27 +311,87 @@ const CustomerReport = () => {
                     >
                         Action
                     </Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
-                    <Button className="w-full">Action</Button>
+                    <Button
+                        onClick={() => handleDutyClick("standardVolumeVbB2")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("heatingValueB2")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("energyQB2")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("avgTemperatureB2")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() => handleDutyClick("avgPresssureB2")}
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleDutyClick("grossVolumeAccumulatedB2")
+                        }
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleDutyClick("standardVolumeAccumulatedB2")
+                        }
+                        className="w-full"
+                    >
+                        Action
+                    </Button>
                 </div>
                 <div className={styles.col}>
                     <p className="w-full text-center">Consumption</p>
                     <InputText
-                        value={reportData?.grossVolumeVmCon}
+                        value={reportData?.grossVolumeVmCon ?? ""}
                         className="w-full text-center"
                     />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
-                    <InputText className="w-full" />
+                    <InputText
+                        value={reportData?.standardVolumeVbCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.heatingValueCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.energyCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.avgTemperatureCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.avgPresssureCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.grossVolumeAccumulatedCon ?? ""}
+                        className="w-full text-center"
+                    />
+                    <InputText
+                        value={reportData?.standardVolumeAccumulatedCon ?? ""}
+                        className="w-full text-center"
+                    />
                 </div>
             </div>
         </>
