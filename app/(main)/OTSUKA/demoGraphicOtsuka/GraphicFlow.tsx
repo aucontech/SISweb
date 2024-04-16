@@ -102,16 +102,11 @@ export default function GraphicFlow() {
     const [HighInputPT02,setHighInputPT02] = useState<any>()
     const [LowInputPT02,setLowInputPT02] = useState<any>()
 
-    const [HighPT03,setHighPT03] = useState<number | null>(null);
-    const [LowPT03,setLowPT03] = useState<number | null>(null);
-    const [HighInputPT03,setHighInputPT03] = useState<any>()
-    const [LowInputPT03,setLowInputPT03] = useState<any>()
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [audioPlaying, setAudioPlaying] = useState(false);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [exceedThreshold03, setExceedThreshold03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const op = useRef<OverlayPanel>(null);
 
@@ -164,13 +159,13 @@ export default function GraphicFlow() {
                         EK1_Flow_at_Base_Conditions: setSVF1,
                         EK1_Volume_at_Base_Conditions: setSVA1,
                         EK1_Vm_Adjustable_Counter: setGVA1,
-                        EK1_Pressure: setPT02,
+                        EVC_01_Pressure: setPT02,
 
                         EK2_Flow_at_Measurement_Conditions: setGVF2,
                         EK2_Flow_at_Base_Conditions: setSVF2,
                         EK2_Volume_at_Base_Conditions: setSVA2,
                         EK2_Vm_Adjustable_Counter: setGVA2,
-                        EK2_Pressure: setPT03,
+                        EVC_02_Pressure: setPT03,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
@@ -212,8 +207,8 @@ export default function GraphicFlow() {
         } catch (error) {
             console.error("Error fetching data:", error);
         }
-
     };
+
 useEffect(() => {
 
     fetchData()
@@ -268,8 +263,6 @@ useEffect(() => {
         const newValue2 = (event.target.value); 
         setLowInputPT02(newValue2);
     };
-
-
 
     const handleButtonToggle = (e: React.MouseEvent) => {
         op.current?.toggle(e); 
@@ -2294,6 +2287,7 @@ useEffect(() => {
                 background: background,
                 width: 1,
                 height: 1,
+                
             },
             zIndex: 9999,
         },

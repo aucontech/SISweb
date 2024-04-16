@@ -29,13 +29,15 @@ const TabOtsuka = () => {
                      <TabPanel header="Graphic">
                         <DemoFlowOTS />
                     </TabPanel>
-                    <TabPanel header="Telemetry">
+                    {/* <TabPanel header="Telemetry">
                         <TelemetryOTSUKA />
-                    </TabPanel>
-                    <TabPanel header="Setup Data">
+                    </TabPanel> */}
+                    <TabPanel header="Set Data">
                         <LowHighData />
-                        {/* <h1>Update...</h1> */}
                     </TabPanel>
+                    {/* <TabPanel header="Telemetry">
+                        <GraphicFlow />
+                    </TabPanel> */}
                 </TabView>
             </div>
         </div>

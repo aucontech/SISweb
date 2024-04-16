@@ -4,6 +4,9 @@ import { InputText } from "primereact/inputtext";
 import styles from "./CustomerReport.module.css";
 
 const CustomerReport = () => {
+
+        
+
     return (
         <div className={styles.grid}>
             <div className={styles.col}>
