@@ -194,6 +194,7 @@ export default function DemoFlowOTS() {
                         }
                     });
                 }
+                fetchData()
             };
         }
     }, [data]);

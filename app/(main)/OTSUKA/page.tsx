@@ -1,43 +1,24 @@
 "use client";
 import { TabView, TabPanel } from "primereact/tabview";
-import TelemetryOTSUKA from "./telemetryOTSUKA/telemetryOTSUKA";
-import GraphicOTK from "./graphic-otk/page";
-import ReactFlow from "./ReactFlow/ReactFlow";
-import Inital from "./ReactFlow/inital";
 import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
-import ReactFlowHigh from "./ReactFlow/ReactFlow";
 import LowHighData from "./LowHighData/LowHighData";
-import SDV_Otsuka from "./ReactFlow/SDV_Otsuka";
-import GraphicFlow from "./demoGraphicOtsuka/GraphicFlow";
-import LineGraphic from "./demoGraphicOtsuka/LineGraphic";
 const TabOtsuka = () => {
+
+
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
               
-                    {/* <TabPanel header="Graphic">
-                        <DemoFlowOTS />
-                    </TabPanel>
-                    <TabPanel header="Telemetry">
-                        <TelemetryOTSUKA />
-                    </TabPanel>
-                    <TabPanel header="Telemetry">
-                        <GraphicFlow />
-                    </TabPanel>
-                    */}
+                 
                      <TabPanel header="Graphic">
                         <DemoFlowOTS />
                     </TabPanel>
-                    {/* <TabPanel header="Telemetry">
-                        <TelemetryOTSUKA />
-                    </TabPanel> */}
+                  
                     <TabPanel header="Set Data">
                         <LowHighData />
                     </TabPanel>
-                    {/* <TabPanel header="Telemetry">
-                        <GraphicFlow />
-                    </TabPanel> */}
+                  
                 </TabView>
             </div>
         </div>
