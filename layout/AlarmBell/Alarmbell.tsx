@@ -107,7 +107,7 @@ export default function Alarmbell() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src="/audios/Notification.mp3" type="audio/mpeg" />
+                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
