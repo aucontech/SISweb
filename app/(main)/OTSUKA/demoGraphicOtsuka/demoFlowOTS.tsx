@@ -107,25 +107,13 @@ export default function DemoFlowOTS() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-    const [HighPT02, setHighPT02] = useState<number | null>(null);
-    const [LowPT02, setLowPT02] = useState<number | null>(null);
-    const [HighInputPT03, setHighInputPT03] = useState<any>();
-    const [LowInputPT03, setLowInputPT03] = useState<any>();
 
-    const [audioPlaying, setAudioPlaying] = useState(false);
-    const [audioPlaying2, setAudioPlaying2] = useState(false);
 
-    const [inputValue, setInputValue] = useState<any>();
-    const [inputValue2, setInputValue2] = useState<any>();
-    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const op = useRef<OverlayPanel>(null);
-    const op2 = useRef<OverlayPanel>(null); // Thêm một biến tham chiếu mới cho OverlayPanel thứ hai
 
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
+
+   
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -176,7 +164,7 @@ export default function DemoFlowOTS() {
 
                         EVC_01_Volume_at_Base_Condition: setSVA1,
                         EVC_01_Vm_Adjustable_Counter: setGVA1,
-                        EVC_01_Pressure: setPT02,
+                        EVC_01_Pressure: setPT01,
 
                         EVC_02_Flow_at_Base_Condition: setSVF2,
                         EVC_02_Flow_at_Measurement_Condition: setGVF2,
@@ -184,13 +172,13 @@ export default function DemoFlowOTS() {
                         EVC_02_Volume_at_Base_Condition: setSVA2,
                         EVC_02_Vm_Adjustable_Counter: setGVA2,
 
-                        EVC_02_Pressure: setPT03,
+                        EVC_02_Pressure: setPT02,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
                         GD3: SetGD3,
 
-                        PT1: setPT01,
+                        PT1: setPT03,
 
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
@@ -209,160 +197,565 @@ export default function DemoFlowOTS() {
             };
         }
     }, [data]);
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    //============================GD =============================
 
+//================================ PT 1901================================
+
+    const [audioPT1901, setAudio1901] = useState(false);
+    const [HighPT01, setHighPT01] = useState<number | null>(null);
+    const [LowPT01, setLowPT01] = useState<number | null>(null);
+    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const op1901 = useRef<OverlayPanel>(null);
+    const [inputValueHighPT1901, setInputValueHighPT1901] = useState<any>();
+    const [inputValueLowPT1901, settInputValueLowPT1901] = useState<any>();
     useEffect(() => {
         if (
-            typeof HighPT02 === "string" &&
-            typeof LowPT02 === "string" &&
-            PT02 !== null
+            typeof HighPT01 === "string" &&
+            typeof LowPT01 === "string" &&
+            PT01 !== null
         ) {
-            const highValue = parseFloat(HighPT02);
-            const lowValue = parseFloat(LowPT02);
-            const PT02Value = parseFloat(PT02);
+            const highValue = parseFloat(HighPT01);
+            const lowValue = parseFloat(LowPT01);
+            const PT01Value = parseFloat(PT01);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue < PT02Value || PT02Value < lowValue) {
-                    if (!audioPlaying) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
+                if (highValue < PT01Value || PT01Value < lowValue) {
+                    if (!audioPT1901) {
                         audioRef.current?.play();
-                        setAudioPlaying(true);
+                        setAudio1901(true);
                         setExceedThreshold(true);
                     }
                 } else {
-                    setAudioPlaying(false);
+                    setAudio1901(false);
                     setExceedThreshold(false);
                 }
             }
             fetchData();
         }
-    }, [HighPT02, PT02, audioPlaying, LowPT02]);
+    }, [HighPT01, PT01, audioPT1901, LowPT01]);
+
+  
 
     useEffect(() => {
-        if (
-            typeof HighInputPT03 === "string" &&
-            typeof LowInputPT03 === "string" &&
-            PT03 !== null
-        ) {
-            const highValue = parseFloat(HighInputPT03);
-            const lowValue = parseFloat(LowInputPT03);
-            const PT02Value = parseFloat(PT03);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue < PT02Value || PT02Value < lowValue) {
-                    if (!audioPlaying) {
-                        audioRef.current?.play();
-                        setAudioPlaying2(true);
-                        setExceedThreshold2(true);
-                    }
-                } else {
-                    setAudioPlaying2(false);
-                    setExceedThreshold2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighInputPT03, PT03, audioPlaying2, LowInputPT03]);
-
-    useEffect(() => {
-        if (audioPlaying) {
+        if (audioPT1901) {
             const audioEnded = () => {
-                setAudioPlaying(false);
+                setAudio1901(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPlaying]);
-    useEffect(() => {
-        if (audioPlaying2) {
-            const audioEnded = () => {
-                setAudioPlaying2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
+    }, [audioPT1901]);
+
+    const handleButtonPT1901 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { High_EK1_Pressure: inputValueHighPT1901, Low_EK1_Pressure: inputValueLowPT1901 }
+            );
+            setHighPT01(inputValueHighPT1901);
+            setLowPT01(inputValueLowPT1901);
+            op1901.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
         }
-    }, [audioPlaying2]);
+    };
+
+    const handleTogglePT1901 = (e: React.MouseEvent) => {
+        op1901.current?.toggle(e);
+        setInputValueHighPT1901(HighPT01);
+        settInputValueLowPT1901(LowPT01);
+    };
 
     const handleInputChange = (event: any) => {
         const newValue = event.target.value;
-        setInputValue(newValue);
+        setInputValueHighPT1901(newValue);
     };
 
     const handleInputChange2 = (event: any) => {
         const newValue2 = event.target.value;
-        setInputValue2(newValue2);
+        settInputValueLowPT1901(newValue2);
     };
 
-    const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e);
-        setInputValue(HighPT02);
-        setInputValue2(LowPT02);
-    };
+//================================ PT 1901======================================================
 
-    const handleButtonToggle2 = (e: React.MouseEvent) => {
-        op2.current?.toggle(e);
-        setInputValue(HighInputPT03);
-        setInputValue2(LowInputPT03);
-    };
+//================================ PT 1902======================================================
+const [audioPT1902, setAudio1902] = useState(false);
+const [HighPT02, setHighPT02] = useState<number | null>(null);
+const [LowPT02, setLowPT02] = useState<number | null>(null);
+const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueHighPT1902, setInputValueHighPT1902] = useState<any>();
+const [inputValueLowPT1902, settInputValueLowPT1902] = useState<any>();
+const op1902 = useRef<OverlayPanel>(null);
 
-    const handleButtonClick = async () => {
-        try {
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { High_EK1_Pressure: inputValue, Low_EK1_Pressure: inputValue2 }
-            );
+useEffect(() => {
+    if (
+        typeof HighPT02 === "string" &&
+        typeof LowPT02 === "string" &&
+        PT02 !== null
+    ) {
+        const highValue = parseFloat(HighPT02);
+        const lowValue = parseFloat(LowPT02);
+        const PT02Value = parseFloat(PT02);
 
-            setHighPT02(inputValue);
-            setLowPT02(inputValue2);
-
-            op.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
+        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
+            if (highValue < PT02Value || PT02Value < lowValue) {
+                if (!audioPT1902) {
+                    audioRef.current?.play();
+                    setAudio1902(true);
+                    setExceedThreshold2(true);
+                }
+            } else {
+                setAudio1902(false);
+                setExceedThreshold2(false);
+            }
         }
-    };
-    const handleButtonClick2 = async () => {
-        try {
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { High_EK2_Pressure: inputValue, Low_EK2_Pressure: inputValue2 }
-            );
+        fetchData();
+    }
+}, [HighPT02, PT02, audioPT1902, LowPT02]);
 
-            setHighInputPT03(inputValue);
-            setLowInputPT03(inputValue2);
 
-            op2.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
 
+useEffect(() => {
+    if (audioPT1902) {
+        const audioEnded = () => {
+            setAudio1902(false);
+        };
+        audioRef.current?.addEventListener("ended", audioEnded);
+        return () => {
+            audioRef.current?.removeEventListener("ended", audioEnded);
+        };
+    }
+}, [audioPT1902]);
+
+const handleButtonPT1902 = async () => {
+    try {
+        await httpApi.post(
+            "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+            { High_EK2_Pressure: inputValueHighPT1902, Low_EK2_Pressure: inputValueLowPT1902 }
+        );
+        setHighPT02(inputValueHighPT1902);
+        setLowPT02(inputValueLowPT1902);
+        op1902.current?.hide();
+    } catch (error) {
+        console.log("error: ", error);
+    }
+};
+
+const handleTogglePT1902 = (e: React.MouseEvent) => {
+    op1902.current?.toggle(e);
+    setInputValueHighPT1902(HighPT02);
+    settInputValueLowPT1902(LowPT02);
+};
+
+const handleInputChangept1902 = (event: any) => {
+    const newValue = event.target.value;
+    setInputValueHighPT1902(newValue);
+};
+
+const handleInputChange2PT1902 = (event: any) => {
+    const newValue2 = event.target.value;
+    settInputValueLowPT1902(newValue2);
+};
+
+//================================ PT 1902======================================================
+
+
+ //================================ PT 1903======================================================
+ const [audioPT1903, setAudio1903] = useState(false);
+ const [HighPT03, setHighPT03] = useState<number | null>(null);
+ const [LowPT03, setLowPT03] = useState<number | null>(null);
+ const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [inputValueHighPT1903, setInputValueHighPT1903] = useState<any>();
+ const [inputValueLowPT1903, settInputValueLowPT1903] = useState<any>();
+ const op1903 = useRef<OverlayPanel>(null);
+ 
+ useEffect(() => {
+     if (
+         typeof HighPT03 === "string" &&
+         typeof LowPT03 === "string" &&
+         PT03 !== null
+     ) {
+         const highValue = parseFloat(HighPT03);
+         const lowValue = parseFloat(LowPT03);
+         const PT03Value = parseFloat(PT03);
+ 
+         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
+             if (highValue < PT03Value || PT03Value < lowValue) {
+                 if (!audioPT1903) {
+                     audioRef.current?.play();
+                     setAudio1903(true);
+                     setExceedThreshold3(true);
+                 }
+             } else {
+                 setAudio1903(false);
+                 setExceedThreshold3(false);
+             }
+         }
+         fetchData();
+     }
+ }, [HighPT03, PT03, audioPT1903, LowPT03]);
+ 
+ 
+ 
+ useEffect(() => {
+     if (audioPT1903) {
+         const audioEnded = () => {
+             setAudio1903(false);
+         };
+         audioRef.current?.addEventListener("ended", audioEnded);
+         return () => {
+             audioRef.current?.removeEventListener("ended", audioEnded);
+         };
+     }
+ }, [audioPT1903]);
+ 
+ const handleButtonPT1903 = async () => {
+     try {
+         await httpApi.post(
+             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+             { High_EK3_Pressure: inputValueHighPT1903, Low_EK3_Pressure: inputValueLowPT1903 }
+         );
+         setHighPT03(inputValueHighPT1903);
+         setLowPT03(inputValueLowPT1903);
+         op1903.current?.hide();
+     } catch (error) {
+         console.log("error: ", error);
+     }
+ };
+ 
+ const handleTogglePT1903 = (e: React.MouseEvent) => {
+     op1903.current?.toggle(e);
+     setInputValueHighPT1903(HighPT03);
+     settInputValueLowPT1903(LowPT03);
+ };
+ 
+ const handleInputChangept1903 = (event: any) => {
+     const newValue = event.target.value;
+     setInputValueHighPT1903(newValue);
+ };
+ 
+ const handleInputChange2PT1903 = (event: any) => {
+     const newValue2 = event.target.value;
+     settInputValueLowPT1903(newValue2);
+ };
+
+//================================ PT 1903======================================================
+
+ //================================ GD 1901 ======================================================
+ const [audioGD01, setAudioGD01] = useState(false);
+ const [HighGD01, setHighGD01] = useState<number | null>(null);
+ const [LowGD01, setLowGD01] = useState<number | null>(null);
+ const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [inputValueHighGD01, setInputValueHighGD01] = useState<any>();
+ const [inputValueLowGD01, settInputValueLowGD01] = useState<any>();
+ const opGD01 = useRef<OverlayPanel>(null);
+ 
+ useEffect(() => {
+     if (
+         typeof HighGD01 === "string" &&
+         typeof LowGD01 === "string" &&
+         GD1 !== null
+     ) {
+         const highValueGD01 = parseFloat(HighGD01);
+         const lowValueGD01 = parseFloat(LowGD01);
+         const ValueGD01 = parseFloat(GD1);
+ 
+         if (!isNaN(highValueGD01) && !isNaN(lowValueGD01) && !isNaN(ValueGD01)) {
+             if (highValueGD01 < ValueGD01 || ValueGD01 < lowValueGD01) {
+                 if (!audioGD01) {
+                     audioRef.current?.play();
+                     setAudioGD01(true);
+                     setExceedThresholdGD01(true);
+                 }
+             } else {
+                setAudioGD01(false);
+                setExceedThresholdGD01(false);
+             }
+         }
+         fetchData();
+     }
+ }, [HighGD01, GD1, audioGD01, LowGD01]);
+ 
+ 
+ 
+ useEffect(() => {
+     if (audioGD01) {
+         const audioEnded = () => {
+             setAudioGD01(false);
+         };
+         audioRef.current?.addEventListener("ended", audioEnded);
+         return () => {
+             audioRef.current?.removeEventListener("ended", audioEnded);
+         };
+     }
+ }, [audioGD01]);
+ 
+ const handleButtonGD01 = async () => {
+     try {
+         await httpApi.post(
+             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+             { GD_High_1: inputValueHighGD01, GD_Low_1: inputValueLowGD01 }
+         );
+         setHighGD01(inputValueHighGD01);
+         setLowGD01(inputValueLowGD01);
+         opGD01.current?.hide();
+     } catch (error) {
+         console.log("error: ", error);
+     }
+ };
+ 
+ const handleToggleGD01 = (e: React.MouseEvent) => {
+    opGD01.current?.toggle(e);
+     setInputValueHighGD01(HighGD01);
+     settInputValueLowGD01(LowGD01);
+ };
+ 
+ const handleInputChange1GD01 = (event: any) => {
+     const newValue = event.target.value;
+     setInputValueHighGD01(newValue);
+ };
+ 
+ const handleInputChange2GD01 = (event: any) => {
+     const newValue2 = event.target.value;
+     settInputValueLowGD01(newValue2);
+ };
+
+//================================ GD 1901======================================================
+
+ //================================ GD 1902 ======================================================
+ const [audioGD02, setAudioGD02] = useState(false);
+ const [HighGD02, setHighGD02] = useState<number | null>(null);
+ const [LowGD02, setLowGD02] = useState<number | null>(null);
+ const [exceedThresholdGD02, setExceedThresholdGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [inputValueHighGD02, setInputValueHighGD02] = useState<any>();
+ const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
+ const opGD02 = useRef<OverlayPanel>(null);
+ 
+ useEffect(() => {
+     if (
+         typeof HighGD02 === "string" &&
+         typeof LowGD02 === "string" &&
+         GD2 !== null
+     ) {
+         const highValueGD02 = parseFloat(HighGD02);
+         const lowValueGD02 = parseFloat(LowGD02);
+         const ValueGD02 = parseFloat(GD2);
+ 
+         if (!isNaN(highValueGD02) && !isNaN(lowValueGD02) && !isNaN(ValueGD02)) {
+             if (highValueGD02 < ValueGD02 || ValueGD02 < lowValueGD02) {
+                 if (!audioGD02) {
+                     audioRef.current?.play();
+                     setAudioGD02(true);
+                     setExceedThresholdGD02(true);
+                 }
+             } else {
+                setAudioGD02(false);
+                setExceedThresholdGD02(false);
+             }
+         }
+         fetchData();
+     }
+ }, [HighGD02, GD2, audioGD02, LowGD02]);
+ 
+ 
+ 
+ useEffect(() => {
+     if (audioGD02) {
+         const audioEnded = () => {
+             setAudioGD02(false);
+         };
+         audioRef.current?.addEventListener("ended", audioEnded);
+         return () => {
+             audioRef.current?.removeEventListener("ended", audioEnded);
+         };
+     }
+ }, [audioGD02]);
+ 
+ const handleButtonGD02 = async () => {
+     try {
+         await httpApi.post(
+             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+             { GD_High_2: inputValueHighGD02, GD_Low_2: inputValueLowGD02 }
+         );
+         setHighGD02(inputValueHighGD02);
+         setLowGD02(inputValueLowGD02);
+         opGD02.current?.hide();
+     } catch (error) {
+         console.log("error: ", error);
+     }
+ };
+ 
+ const handleToggleGD02 = (e: React.MouseEvent) => {
+    opGD02.current?.toggle(e);
+     setInputValueHighGD02(HighGD02);
+     settInputValueLowGD02(LowGD02);
+ };
+ 
+ const handleInputChange1GD02 = (event: any) => {
+     const newValue = event.target.value;
+     setInputValueHighGD02(newValue);
+ };
+ 
+ const handleInputChange2GD02 = (event: any) => {
+     const newValue2 = event.target.value;
+     settInputValueLowGD02(newValue2);
+ };
+
+//================================ GD 1902 ======================================================
+
+ //================================ GD 1902 ======================================================
+ const [audioGD03, setAudioGD03] = useState(false);
+ const [HighGD03, setHighGD03] = useState<number | null>(null);
+ const [LowGD03, setLowGD03] = useState<number | null>(null);
+ const [exceedThresholdGD03, setExceedThresholdGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [inputValueHighGD03, setInputValueHighGD03] = useState<any>();
+ const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
+ const opGD03 = useRef<OverlayPanel>(null);
+ 
+ useEffect(() => {
+     if (
+         typeof HighGD03 === "string" &&
+         typeof LowGD03 === "string" &&
+         GD3 !== null
+     ) {
+         const highValueGD03 = parseFloat(HighGD03);
+         const lowValueGD03 = parseFloat(LowGD03);
+         const ValueGD03 = parseFloat(GD3);
+ 
+         if (!isNaN(highValueGD03) && !isNaN(lowValueGD03) && !isNaN(ValueGD03)) {
+             if (highValueGD03 < ValueGD03 || ValueGD03 < lowValueGD03) {
+                 if (!audioGD03) {
+                     audioRef.current?.play();
+                     setAudioGD03(true);
+                     setExceedThresholdGD03(true);
+                 }
+             } else {
+                setAudioGD03(false);
+                setExceedThresholdGD03(false);
+             }
+         }
+         fetchData();
+     }
+ }, [HighGD03, GD3, audioGD03, LowGD03]);
+ 
+ 
+ 
+ useEffect(() => {
+     if (audioGD03) {
+         const audioEnded = () => {
+             setAudioGD03(false);
+         };
+         audioRef.current?.addEventListener("ended", audioEnded);
+         return () => {
+             audioRef.current?.removeEventListener("ended", audioEnded);
+         };
+     }
+ }, [audioGD03]);
+ 
+ const handleButtonGD03 = async () => {
+     try {
+         await httpApi.post(
+             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+             { GD_High_3: inputValueHighGD03, GD_Low_3: inputValueLowGD03 }
+         );
+         setHighGD03(inputValueHighGD03);
+         setLowGD03(inputValueLowGD03);
+         opGD03.current?.hide();
+     } catch (error) {
+         console.log("error: ", error);
+     }
+ };
+ 
+ const handleToggleGD03 = (e: React.MouseEvent) => {
+    opGD03.current?.toggle(e);
+     setInputValueHighGD03(HighGD03);
+     settInputValueLowGD03(LowGD03);
+ };
+ 
+ const handleInputChange1GD03 = (event: any) => {
+     const newValue = event.target.value;
+     setInputValueHighGD03(newValue);
+ };
+ 
+ const handleInputChange2GD03 = (event: any) => {
+     const newValue2 = event.target.value;
+     settInputValueLowGD03(newValue2);
+ };
+
+//================================ GD 1902 ======================================================
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/values/attributes/SERVER_SCOPE`
             );
 
             const highEVCPressureItem = res.data.find(
                 (item: any) => item.key === "High_EK1_Pressure"
             );
-            setHighPT02(highEVCPressureItem?.value || null);
-
+            setHighPT01(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
                 (item: any) => item.key === "Low_EK1_Pressure"
             );
-            setLowPT02(lowEVCPressureItem?.value || null);
+            setLowPT01(lowEVCPressureItem?.value || null);
 
-            const highEK2PressureItem = res.data.find(
+      
+            const HighPT1902 = res.data.find(
                 (item: any) => item.key === "High_EK2_Pressure"
             );
-            setHighInputPT03(highEK2PressureItem?.value || null); // Cập nhật giá trị của High_EK2_Pressure
-
-            const lowEK2PressureItem = res.data.find(
+            setHighPT02(HighPT1902?.value || null);
+            const LowPT1902 = res.data.find(
                 (item: any) => item.key === "Low_EK2_Pressure"
             );
-            setLowInputPT03(lowEK2PressureItem?.value || null); // Cập nhật giá trị của Low_EK2_Pressure
+            setLowPT02(LowPT1902?.value || null);
+
+
+            const HighPT1903 = res.data.find(
+                (item: any) => item.key === "High_EK3_Pressure"
+            );
+            setHighPT03(HighPT1903?.value || null);
+            const LowPT1903 = res.data.find(
+                (item: any) => item.key === "Low_EK3_Pressure"
+            );
+            setLowPT03(LowPT1903?.value || null);
+
+
+            const HighGD01 = res.data.find(
+                (item: any) => item.key === "GD_High_1"
+            );
+            setHighGD01(HighGD01?.value || null);
+
+            const LowGD01 = res.data.find(
+                (item: any) => item.key === "GD_Low_1"
+            );
+            setLowGD01(LowGD01?.value || null);
+
+
+
+            const HighGD02 = res.data.find(
+                (item: any) => item.key === "GD_High_2"
+            );
+            setHighGD02(HighGD02?.value || null);
+
+            const LowGD02 = res.data.find(
+                (item: any) => item.key === "GD_Low_2"
+            );
+            setLowGD02(LowGD02?.value || null);
+
+
+
+            const HighGD03 = res.data.find(
+                (item: any) => item.key === "GD_High_3"
+            );
+            setHighGD03(HighGD03?.value || null);
+
+            const LowGD03 = res.data.find(
+                (item: any) => item.key === "GD_Low_3"
+            );
+            setLowGD03(LowGD03?.value || null);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -780,11 +1173,18 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
+                                    padding: 5,
+                                    borderRadius: 5,
                                     fontSize: 25,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor: exceedThreshold3
+                                        ? "#ff5656"
+                                        : "transparent",
                                 }}
+                                onClick={handleTogglePT1903}
+
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -820,10 +1220,10 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     backgroundColor: exceedThreshold
-                                        ? "red"
+                                        ? "#ff5656"
                                         : "transparent",
                                 }}
-                                onClick={handleButtonToggle}
+                                onClick={handleTogglePT1901}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -835,7 +1235,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT02}
+                                        {PT01}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -861,11 +1261,11 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     backgroundColor: exceedThreshold2
-                                        ? "red"
+                                        ? "#ff5656"
                                         : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={handleButtonToggle2}
+                                onClick={handleTogglePT1902}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -877,7 +1277,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT03}
+                                        {PT02}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1037,9 +1437,13 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    background: exceedThresholdGD01 ? '#ff5656' : 'transparent',
+                                    cursor:'pointer',
                                 }}
+
+                                onClick={handleToggleGD01}
                             >
-                                <p style={{ color: backGroundData }}>
+                                <p style={{  }} >
                                     {GD1} LEL
                                 </p>
                             </div>
@@ -1057,11 +1461,16 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    background: exceedThresholdGD02 ? '#ff5656' : 'transparent',
+                                    cursor:'pointer'
+
                                 }}
+                                onClick={handleToggleGD02}
+
                             >
                                 <p
                                     style={{
-                                        color: backGroundData,
+                                       
                                         textAlign: "center",
                                     }}
                                 >
@@ -1082,12 +1491,16 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    background: exceedThresholdGD03 ? '#ff5656' : 'transparent',
+                                    cursor:'pointer'
                                 }}
+                                onClick={handleToggleGD03}
+
                             >
                                 <p
                                     style={{
-                                        color: backGroundData,
                                         textAlign: "center",
+                                        
                                     }}
                                 >
                                     {GD3} LEL
@@ -3585,10 +3998,10 @@ export default function DemoFlowOTS() {
             position: positions.GD1_Value1901,
 
             style: {
-                background: background,
+                background: borderBox,
                 border: "1px solid white",
                 width: 150,
-                height: 40,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -3610,11 +4023,11 @@ export default function DemoFlowOTS() {
             position: positions.GD2_Value1902,
 
             style: {
-                background: background,
+                background: borderBox,
                 border: "1px solid white",
                 width: 150,
 
-                height: 40,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -3636,11 +4049,11 @@ export default function DemoFlowOTS() {
             position: positions.GD3_Value1903,
 
             style: {
-                background: background,
+                background: borderBox,
                 border: "1px solid white",
                 width: 150,
 
-                height: 40,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4527,7 +4940,7 @@ export default function DemoFlowOTS() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
-            <OverlayPanel ref={op}>
+            <OverlayPanel ref={op1901}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div
                         style={{
@@ -4552,7 +4965,7 @@ export default function DemoFlowOTS() {
                         <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
                         <InputText
                             placeholder="High"
-                            value={inputValue}
+                            value={inputValueHighPT1901}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -4570,7 +4983,7 @@ export default function DemoFlowOTS() {
                         <InputText
                             style={{ marginLeft: 10 }}
                             placeholder="Low"
-                            value={inputValue2}
+                            value={inputValueLowPT1901}
                             onChange={handleInputChange2}
                         />
                     </div>
@@ -4585,12 +4998,12 @@ export default function DemoFlowOTS() {
                     <Button
                         style={{}}
                         label="Update"
-                        onClick={handleButtonClick}
+                        onClick={handleButtonPT1901}
                     />
                 </div>
             </OverlayPanel>
 
-            <OverlayPanel ref={op2}>
+            <OverlayPanel ref={op1902}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div
                         style={{
@@ -4615,8 +5028,8 @@ export default function DemoFlowOTS() {
                         <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
                         <InputText
                             placeholder="High"
-                            value={inputValue}
-                            onChange={handleInputChange}
+                            value={inputValueHighPT1902}
+                            onChange={handleInputChangept1902}
                         />
                     </div>
 
@@ -4633,8 +5046,8 @@ export default function DemoFlowOTS() {
                         <InputText
                             style={{ marginLeft: 10 }}
                             placeholder="Low"
-                            value={inputValue2}
-                            onChange={handleInputChange2}
+                            value={inputValueLowPT1902}
+                            onChange={handleInputChange2PT1902}
                         />
                     </div>
                 </div>
@@ -4648,7 +5061,259 @@ export default function DemoFlowOTS() {
                     <Button
                         style={{}}
                         label="Update"
-                        onClick={handleButtonClick2}
+                        onClick={handleButtonPT1902}
+                    />
+                </div>
+            </OverlayPanel>
+
+            <OverlayPanel ref={op1903}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        PT-1903
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValueHighPT1903}
+                            onChange={handleInputChangept1903}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValueLowPT1903}
+                            onChange={handleInputChange2PT1903}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonPT1903}
+                    />
+                </div>
+            </OverlayPanel>
+
+            <OverlayPanel ref={opGD01}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        GD-1901
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValueHighGD01}
+                            onChange={handleInputChange1GD01}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValueLowGD01}
+                            onChange={handleInputChange2GD01}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonGD01}
+                    />
+                </div>
+            </OverlayPanel>
+
+            <OverlayPanel ref={opGD02}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        GD-1902
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValueHighGD02}
+                            onChange={handleInputChange1GD02}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValueLowGD02}
+                            onChange={handleInputChange2GD02}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonGD02}
+                    />
+                </div>
+            </OverlayPanel>
+
+            <OverlayPanel ref={opGD03}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            justifyContent: "center",
+                            display: "flex",
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: background,
+                            marginBottom: 10,
+                        }}
+                    >
+                        GD-1903
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
+                        <InputText
+                            placeholder="High"
+                            value={inputValueHighGD03}
+                            onChange={handleInputChange1GD03}
+                        />
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <p style={{ marginTop: 10 }}> Low</p>
+                        <InputText
+                            style={{ marginLeft: 10 }}
+                            placeholder="Low"
+                            value={inputValueLowGD03}
+                            onChange={handleInputChange2GD03}
+                        />
+                    </div>
+                </div>
+                <div
+                    style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        margin: 10,
+                    }}
+                >
+                    <Button
+                        style={{}}
+                        label="Update"
+                        onClick={handleButtonGD03}
                     />
                 </div>
             </OverlayPanel>

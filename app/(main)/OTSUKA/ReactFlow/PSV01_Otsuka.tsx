@@ -162,7 +162,7 @@ export default function PSV01_Otsuka() {
         <div>
 
          
-<div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer',   }} onClick={handleButtonToggle}>
+<div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', fontWeight:500  }} onClick={handleButtonToggle}>
                  <p style={{color:colorNameValue,}}>PSV-1901 : </p> 
                   <p style={{marginLeft:20,color:colorData}} > {upData} </p> 
                   <p style={{marginLeft:10,color:colorNameValue}}>Bar</p>

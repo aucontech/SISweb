@@ -32,6 +32,7 @@ export default function Alarmbell() {
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -64,7 +65,9 @@ export default function Alarmbell() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
-                    audioRef.current?.play();
+                    if (!firstRender) { // Kiểm tra nếu không phải lần render đầu tiên thì mới gọi audio
+                        audioRef.current?.play();
+                    }
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
@@ -78,8 +81,10 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed]);
-
+    }, [totalUnreadCount, obj1Processed,firstRender]);
+    useEffect(() => {
+        setFirstRender(false);
+    }, []);
     const dataAlarm = notifications.slice(0, 6).map((item, index) => (
         <div key={index} style={{ padding: "0px 10px" }}>
             <div>
@@ -102,7 +107,7 @@ export default function Alarmbell() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src="/audios/Notification.mp3" type="audio/mpeg" />
+                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
