@@ -12,6 +12,8 @@ import { Toast } from "primereact/toast";
 import { Utils, UIUtils } from "@/service/Utils";
 import { persistToken, persistRefreshToken } from "@/service/localStorage";
 import { AuthContext } from "@/context/AuthProvider";
+import Image from "next/image";
+
 const Login: Page = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -78,15 +80,15 @@ const Login: Page = () => {
                     d="M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z"
                 />
             </svg>
-            <div className="px-5 min-h-screen flex justify-content-center align-items-center">
+            <div className="px-5 min-h-screen flex justify-content-center align-items-center" style={{marginRight:200}} >
                 <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
-                    <div className="mb-4">
-                        <div className="text-900 text-xl font-bold mb-2">
-                            Log in
-                        </div>
-                        <span className="text-600 font-medium">
-                            Please enter your details
-                        </span>
+                    <div className="mb-4" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    <Image
+                        src="/layout/imgGas/logoLogin.png"
+                        width={300}
+                        height={100}
+                        alt="Picture of the author"
+                    />
                     </div>
                     <div className="flex flex-column">
                         <span className="p-input-icon-left w-full mb-4">
