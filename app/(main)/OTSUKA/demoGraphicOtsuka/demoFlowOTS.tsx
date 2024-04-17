@@ -860,7 +860,7 @@ export default function DemoFlowOTS() {
             setMaintainPT_1902(MaintainPT_1902?.value || false);
 
 
-            const MaintainPT_1903 = res.data.find((item: any) => item.key === "PT_1902_maintain");
+            const MaintainPT_1903 = res.data.find((item: any) => item.key === "PT_1903_maintain");
             setMaintainPT_1903(MaintainPT_1903?.value || false);
 
             const MaintainGD_1901 = res.data.find((item: any) => item.key === "GD_1901_maintain");
@@ -868,6 +868,11 @@ export default function DemoFlowOTS() {
 
             const MaintainGD_1902 = res.data.find((item: any) => item.key === "GD_1902_maintain");
             setMaintainGD_1902(MaintainGD_1902?.value || false);
+
+            const MaintainGD_1903 = res.data.find((item: any) => item.key === "GD_1903_maintain");
+            setMaintainGD_1902(MaintainGD_1903?.value || false);
+
+            
         } catch (error) {
             console.error("Error fetching data:", error);
         }
