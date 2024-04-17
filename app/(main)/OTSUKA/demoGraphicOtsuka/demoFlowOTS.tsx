@@ -60,6 +60,7 @@ import { Dialog } from "primereact/dialog";
 import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { InputText } from "primereact/inputtext";
+import { Checkbox } from "primereact/checkbox";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -109,11 +110,6 @@ export default function DemoFlowOTS() {
 
 
 
-
-
-
-
-   
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -194,7 +190,7 @@ export default function DemoFlowOTS() {
                         }
                     });
                 }
-                fetchData()
+                fetchData();
             };
         }
     }, [data]);
@@ -202,7 +198,7 @@ export default function DemoFlowOTS() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
 
-//================================ PT 1901================================
+    //================================ PT 1901================================
 
     const [audioPT1901, setAudio1901] = useState(false);
     const [HighPT01, setHighPT01] = useState<number | null>(null);
@@ -211,11 +207,14 @@ export default function DemoFlowOTS() {
     const op1901 = useRef<OverlayPanel>(null);
     const [inputValueHighPT1901, setInputValueHighPT1901] = useState<any>();
     const [inputValueLowPT1901, settInputValueLowPT1901] = useState<any>();
+
+    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false); 
+
     useEffect(() => {
         if (
             typeof HighPT01 === "string" &&
             typeof LowPT01 === "string" &&
-            PT01 !== null
+            PT01 !== null && maintainPT_1901 === false
         ) {
             const highValue = parseFloat(HighPT01);
             const lowValue = parseFloat(LowPT01);
@@ -235,9 +234,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01]);
-
-  
+    }, [HighPT01, PT01, audioPT1901, LowPT01,maintainPT_1901]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -255,11 +252,27 @@ export default function DemoFlowOTS() {
         try {
             await httpApi.post(
                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { High_EK1_Pressure: inputValueHighPT1901, Low_EK1_Pressure: inputValueLowPT1901 }
+                {
+                    High_EK1_Pressure: inputValueHighPT1901,
+                    Low_EK1_Pressure: inputValueLowPT1901,
+                }
             );
             setHighPT01(inputValueHighPT1901);
             setLowPT01(inputValueLowPT1901);
             op1901.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleMaintainPT1901Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainPT_1901;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { PT_1901_maintain: newMaintainValue }
+            );
+            setMaintainPT_1901(newMaintainValue);
         } catch (error) {
             console.log("error: ", error);
         }
@@ -281,413 +294,500 @@ export default function DemoFlowOTS() {
         settInputValueLowPT1901(newValue2);
     };
 
-//================================ PT 1901======================================================
+    //================================ PT 1901======================================================
 
-//================================ PT 1902======================================================
-const [audioPT1902, setAudio1902] = useState(false);
-const [HighPT02, setHighPT02] = useState<number | null>(null);
-const [LowPT02, setLowPT02] = useState<number | null>(null);
-const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [inputValueHighPT1902, setInputValueHighPT1902] = useState<any>();
-const [inputValueLowPT1902, settInputValueLowPT1902] = useState<any>();
-const op1902 = useRef<OverlayPanel>(null);
+    //================================ PT 1902======================================================
+    const [audioPT1902, setAudio1902] = useState(false);
+    const [HighPT02, setHighPT02] = useState<number | null>(null);
+    const [LowPT02, setLowPT02] = useState<number | null>(null);
+    const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighPT1902, setInputValueHighPT1902] = useState<any>();
+    const [inputValueLowPT1902, settInputValueLowPT1902] = useState<any>();
 
-useEffect(() => {
-    if (
-        typeof HighPT02 === "string" &&
-        typeof LowPT02 === "string" &&
-        PT02 !== null
-    ) {
-        const highValue = parseFloat(HighPT02);
-        const lowValue = parseFloat(LowPT02);
-        const PT02Value = parseFloat(PT02);
+    const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false); 
 
-        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-            if (highValue < PT02Value || PT02Value < lowValue) {
-                if (!audioPT1902) {
-                    audioRef.current?.play();
-                    setAudio1902(true);
-                    setExceedThreshold2(true);
+    const op1902 = useRef<OverlayPanel>(null);
+
+    useEffect(() => {
+        if (
+            typeof HighPT02 === "string" &&
+            typeof LowPT02 === "string" &&
+            PT02 !== null && maintainPT_1902 === false
+        ) {
+            const highValue = parseFloat(HighPT02);
+            const lowValue = parseFloat(LowPT02);
+            const PT02Value = parseFloat(PT02);
+
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
+                if (highValue < PT02Value || PT02Value < lowValue) {
+                    if (!audioPT1902) {
+                        audioRef.current?.play();
+                        setAudio1902(true);
+                        setExceedThreshold2(true);
+                    }
+                } else {
+                    setAudio1902(false);
+                    setExceedThreshold2(false);
                 }
-            } else {
-                setAudio1902(false);
-                setExceedThreshold2(false);
             }
+            fetchData();
         }
-        fetchData();
-    }
-}, [HighPT02, PT02, audioPT1902, LowPT02]);
+    }, [HighPT02, PT02, audioPT1902, LowPT02,maintainPT_1902]);
+
+    useEffect(() => {
+        if (audioPT1902) {
+            const audioEnded = () => {
+                setAudio1902(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioPT1902]);
+
+    const handleButtonPT1902 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                {
+                    High_EK2_Pressure: inputValueHighPT1902,
+                    Low_EK2_Pressure: inputValueLowPT1902,
+                }
+            );
+            setHighPT02(inputValueHighPT1902);
+            setLowPT02(inputValueLowPT1902);
+            op1902.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleMaintainPT1902Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainPT_1902;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { PT_1902_maintain: newMaintainValue }
+            );
+            setMaintainPT_1902(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleTogglePT1902 = (e: React.MouseEvent) => {
+        op1902.current?.toggle(e);
+        setInputValueHighPT1902(HighPT02);
+        settInputValueLowPT1902(LowPT02);
+    };
+
+    const handleInputChangept1902 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighPT1902(newValue);
+    };
+
+    const handleInputChange2PT1902 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowPT1902(newValue2);
+    };
+
+    //================================ PT 1902======================================================
+
+    //================================ PT 1903======================================================
+    const [audioPT1903, setAudio1903] = useState(false);
+    const [HighPT03, setHighPT03] = useState<number | null>(null);
+    const [LowPT03, setLowPT03] = useState<number | null>(null);
+    const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighPT1903, setInputValueHighPT1903] = useState<any>();
+    const [inputValueLowPT1903, settInputValueLowPT1903] = useState<any>();
+    const op1903 = useRef<OverlayPanel>(null);
+
+    const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false); 
 
 
+    useEffect(() => {
+        if (
+            typeof HighPT03 === "string" &&
+            typeof LowPT03 === "string" &&
+            PT03 !== null && maintainPT_1903 === false
+        ) {
+            const highValue = parseFloat(HighPT03);
+            const lowValue = parseFloat(LowPT03);
+            const PT03Value = parseFloat(PT03);
 
-useEffect(() => {
-    if (audioPT1902) {
-        const audioEnded = () => {
-            setAudio1902(false);
-        };
-        audioRef.current?.addEventListener("ended", audioEnded);
-        return () => {
-            audioRef.current?.removeEventListener("ended", audioEnded);
-        };
-    }
-}, [audioPT1902]);
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
+                if (highValue < PT03Value || PT03Value < lowValue) {
+                    if (!audioPT1903) {
+                        audioRef.current?.play();
+                        setAudio1903(true);
+                        setExceedThreshold3(true);
+                    }
+                } else {
+                    setAudio1903(false);
+                    setExceedThreshold3(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighPT03, PT03, audioPT1903, LowPT03,maintainPT_1903]);
 
-const handleButtonPT1902 = async () => {
-    try {
-        await httpApi.post(
-            "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-            { High_EK2_Pressure: inputValueHighPT1902, Low_EK2_Pressure: inputValueLowPT1902 }
-        );
-        setHighPT02(inputValueHighPT1902);
-        setLowPT02(inputValueLowPT1902);
-        op1902.current?.hide();
-    } catch (error) {
-        console.log("error: ", error);
-    }
-};
+    useEffect(() => {
+        if (audioPT1903) {
+            const audioEnded = () => {
+                setAudio1903(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioPT1903]);
 
-const handleTogglePT1902 = (e: React.MouseEvent) => {
-    op1902.current?.toggle(e);
-    setInputValueHighPT1902(HighPT02);
-    settInputValueLowPT1902(LowPT02);
-};
+    const handleButtonPT1903 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                {
+                    High_EK3_Pressure: inputValueHighPT1903,
+                    Low_EK3_Pressure: inputValueLowPT1903,
+                }
+            );
+            setHighPT03(inputValueHighPT1903);
+            setLowPT03(inputValueLowPT1903);
+            op1903.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
 
-const handleInputChangept1902 = (event: any) => {
-    const newValue = event.target.value;
-    setInputValueHighPT1902(newValue);
-};
+    const handleMaintainPT1903Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainPT_1903;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { PT_1903_maintain: newMaintainValue }
+            );
+            setMaintainPT_1903(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
 
-const handleInputChange2PT1902 = (event: any) => {
-    const newValue2 = event.target.value;
-    settInputValueLowPT1902(newValue2);
-};
+    const handleTogglePT1903 = (e: React.MouseEvent) => {
+        op1903.current?.toggle(e);
+        setInputValueHighPT1903(HighPT03);
+        settInputValueLowPT1903(LowPT03);
+    };
 
-//================================ PT 1902======================================================
+    const handleInputChangept1903 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighPT1903(newValue);
+    };
+
+    const handleInputChange2PT1903 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowPT1903(newValue2);
+    };
+
+    //================================ PT 1903======================================================
+
+    //================================ GD 1901 ======================================================
+    const [audioGD01, setAudioGD01] = useState(false);
+    const [HighGD01, setHighGD01] = useState<number | null>(null);
+    const [LowGD01, setLowGD01] = useState<number | null>(null);
+    const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighGD01, setInputValueHighGD01] = useState<any>();
+    const [inputValueLowGD01, settInputValueLowGD01] = useState<any>();
+    const opGD01 = useRef<OverlayPanel>(null);
+
+    const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false); 
 
 
- //================================ PT 1903======================================================
- const [audioPT1903, setAudio1903] = useState(false);
- const [HighPT03, setHighPT03] = useState<number | null>(null);
- const [LowPT03, setLowPT03] = useState<number | null>(null);
- const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [inputValueHighPT1903, setInputValueHighPT1903] = useState<any>();
- const [inputValueLowPT1903, settInputValueLowPT1903] = useState<any>();
- const op1903 = useRef<OverlayPanel>(null);
- 
- useEffect(() => {
-     if (
-         typeof HighPT03 === "string" &&
-         typeof LowPT03 === "string" &&
-         PT03 !== null
-     ) {
-         const highValue = parseFloat(HighPT03);
-         const lowValue = parseFloat(LowPT03);
-         const PT03Value = parseFloat(PT03);
- 
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
-             if (highValue < PT03Value || PT03Value < lowValue) {
-                 if (!audioPT1903) {
-                     audioRef.current?.play();
-                     setAudio1903(true);
-                     setExceedThreshold3(true);
-                 }
-             } else {
-                 setAudio1903(false);
-                 setExceedThreshold3(false);
-             }
-         }
-         fetchData();
-     }
- }, [HighPT03, PT03, audioPT1903, LowPT03]);
- 
- 
- 
- useEffect(() => {
-     if (audioPT1903) {
-         const audioEnded = () => {
-             setAudio1903(false);
-         };
-         audioRef.current?.addEventListener("ended", audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener("ended", audioEnded);
-         };
-     }
- }, [audioPT1903]);
- 
- const handleButtonPT1903 = async () => {
-     try {
-         await httpApi.post(
-             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-             { High_EK3_Pressure: inputValueHighPT1903, Low_EK3_Pressure: inputValueLowPT1903 }
-         );
-         setHighPT03(inputValueHighPT1903);
-         setLowPT03(inputValueLowPT1903);
-         op1903.current?.hide();
-     } catch (error) {
-         console.log("error: ", error);
-     }
- };
- 
- const handleTogglePT1903 = (e: React.MouseEvent) => {
-     op1903.current?.toggle(e);
-     setInputValueHighPT1903(HighPT03);
-     settInputValueLowPT1903(LowPT03);
- };
- 
- const handleInputChangept1903 = (event: any) => {
-     const newValue = event.target.value;
-     setInputValueHighPT1903(newValue);
- };
- 
- const handleInputChange2PT1903 = (event: any) => {
-     const newValue2 = event.target.value;
-     settInputValueLowPT1903(newValue2);
- };
+    useEffect(() => {
+        if (
+            typeof HighGD01 === "string" &&
+            typeof LowGD01 === "string" &&
+            GD1 !== null && !maintainGD_1901 === false
+        ) {
+            const highValueGD01 = parseFloat(HighGD01);
+            const lowValueGD01 = parseFloat(LowGD01);
+            const ValueGD01 = parseFloat(GD1);
 
-//================================ PT 1903======================================================
+            if (
+                !isNaN(highValueGD01) &&
+                !isNaN(lowValueGD01) &&
+                !isNaN(ValueGD01)
+            ) {
+                if (highValueGD01 < ValueGD01 || ValueGD01 < lowValueGD01) {
+                    if (!audioGD01) {
+                        audioRef.current?.play();
+                        setAudioGD01(true);
+                        setExceedThresholdGD01(true);
+                    }
+                } else {
+                    setAudioGD01(false);
+                    setExceedThresholdGD01(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighGD01, GD1, audioGD01, LowGD01,maintainGD_1901]);
 
- //================================ GD 1901 ======================================================
- const [audioGD01, setAudioGD01] = useState(false);
- const [HighGD01, setHighGD01] = useState<number | null>(null);
- const [LowGD01, setLowGD01] = useState<number | null>(null);
- const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [inputValueHighGD01, setInputValueHighGD01] = useState<any>();
- const [inputValueLowGD01, settInputValueLowGD01] = useState<any>();
- const opGD01 = useRef<OverlayPanel>(null);
- 
- useEffect(() => {
-     if (
-         typeof HighGD01 === "string" &&
-         typeof LowGD01 === "string" &&
-         GD1 !== null
-     ) {
-         const highValueGD01 = parseFloat(HighGD01);
-         const lowValueGD01 = parseFloat(LowGD01);
-         const ValueGD01 = parseFloat(GD1);
- 
-         if (!isNaN(highValueGD01) && !isNaN(lowValueGD01) && !isNaN(ValueGD01)) {
-             if (highValueGD01 < ValueGD01 || ValueGD01 < lowValueGD01) {
-                 if (!audioGD01) {
-                     audioRef.current?.play();
-                     setAudioGD01(true);
-                     setExceedThresholdGD01(true);
-                 }
-             } else {
+    useEffect(() => {
+        if (audioGD01) {
+            const audioEnded = () => {
                 setAudioGD01(false);
-                setExceedThresholdGD01(false);
-             }
-         }
-         fetchData();
-     }
- }, [HighGD01, GD1, audioGD01, LowGD01]);
- 
- 
- 
- useEffect(() => {
-     if (audioGD01) {
-         const audioEnded = () => {
-             setAudioGD01(false);
-         };
-         audioRef.current?.addEventListener("ended", audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener("ended", audioEnded);
-         };
-     }
- }, [audioGD01]);
- 
- const handleButtonGD01 = async () => {
-     try {
-         await httpApi.post(
-             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-             { GD_High_1: inputValueHighGD01, GD_Low_1: inputValueLowGD01 }
-         );
-         setHighGD01(inputValueHighGD01);
-         setLowGD01(inputValueLowGD01);
-         opGD01.current?.hide();
-     } catch (error) {
-         console.log("error: ", error);
-     }
- };
- 
- const handleToggleGD01 = (e: React.MouseEvent) => {
-    opGD01.current?.toggle(e);
-     setInputValueHighGD01(HighGD01);
-     settInputValueLowGD01(LowGD01);
- };
- 
- const handleInputChange1GD01 = (event: any) => {
-     const newValue = event.target.value;
-     setInputValueHighGD01(newValue);
- };
- 
- const handleInputChange2GD01 = (event: any) => {
-     const newValue2 = event.target.value;
-     settInputValueLowGD01(newValue2);
- };
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGD01]);
 
-//================================ GD 1901======================================================
+    const handleButtonGD01 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GD_High_1: inputValueHighGD01, GD_Low_1: inputValueLowGD01 }
+            );
+            setHighGD01(inputValueHighGD01);
+            setLowGD01(inputValueLowGD01);
+            opGD01.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
 
- //================================ GD 1902 ======================================================
- const [audioGD02, setAudioGD02] = useState(false);
- const [HighGD02, setHighGD02] = useState<number | null>(null);
- const [LowGD02, setLowGD02] = useState<number | null>(null);
- const [exceedThresholdGD02, setExceedThresholdGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [inputValueHighGD02, setInputValueHighGD02] = useState<any>();
- const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
- const opGD02 = useRef<OverlayPanel>(null);
- 
- useEffect(() => {
-     if (
-         typeof HighGD02 === "string" &&
-         typeof LowGD02 === "string" &&
-         GD2 !== null
-     ) {
-         const highValueGD02 = parseFloat(HighGD02);
-         const lowValueGD02 = parseFloat(LowGD02);
-         const ValueGD02 = parseFloat(GD2);
- 
-         if (!isNaN(highValueGD02) && !isNaN(lowValueGD02) && !isNaN(ValueGD02)) {
-             if (highValueGD02 < ValueGD02 || ValueGD02 < lowValueGD02) {
-                 if (!audioGD02) {
-                     audioRef.current?.play();
-                     setAudioGD02(true);
-                     setExceedThresholdGD02(true);
-                 }
-             } else {
+
+    const handleMaintainGD1901Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainGD_1901;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GD_1901_maintain: newMaintainValue }
+            );
+            setMaintainGD_1901(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleToggleGD01 = (e: React.MouseEvent) => {
+        opGD01.current?.toggle(e);
+        setInputValueHighGD01(HighGD01);
+        settInputValueLowGD01(LowGD01);
+    };
+
+    const handleInputChange1GD01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighGD01(newValue);
+    };
+
+    const handleInputChange2GD01 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowGD01(newValue2);
+    };
+
+    //================================ GD 1901======================================================
+
+    //================================ GD 1902 ======================================================
+    const [audioGD02, setAudioGD02] = useState(false);
+    const [HighGD02, setHighGD02] = useState<number | null>(null);
+    const [LowGD02, setLowGD02] = useState<number | null>(null);
+    const [exceedThresholdGD02, setExceedThresholdGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighGD02, setInputValueHighGD02] = useState<any>();
+    const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
+    const opGD02 = useRef<OverlayPanel>(null);
+
+    const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false); 
+
+
+    useEffect(() => {
+        if (
+            typeof HighGD02 === "string" &&
+            typeof LowGD02 === "string" &&
+            GD2 !== null && maintainGD_1902 === false
+        ) {
+            const highValueGD02 = parseFloat(HighGD02);
+            const lowValueGD02 = parseFloat(LowGD02);
+            const ValueGD02 = parseFloat(GD2);
+
+            if (
+                !isNaN(highValueGD02) &&
+                !isNaN(lowValueGD02) &&
+                !isNaN(ValueGD02)
+            ) {
+                if (highValueGD02 < ValueGD02 || ValueGD02 < lowValueGD02) {
+                    if (!audioGD02) {
+                        audioRef.current?.play();
+                        setAudioGD02(true);
+                        setExceedThresholdGD02(true);
+                    }
+                } else {
+                    setAudioGD02(false);
+                    setExceedThresholdGD02(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighGD02, GD2, audioGD02, LowGD02,maintainGD_1902]);
+
+    useEffect(() => {
+        if (audioGD02) {
+            const audioEnded = () => {
                 setAudioGD02(false);
-                setExceedThresholdGD02(false);
-             }
-         }
-         fetchData();
-     }
- }, [HighGD02, GD2, audioGD02, LowGD02]);
- 
- 
- 
- useEffect(() => {
-     if (audioGD02) {
-         const audioEnded = () => {
-             setAudioGD02(false);
-         };
-         audioRef.current?.addEventListener("ended", audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener("ended", audioEnded);
-         };
-     }
- }, [audioGD02]);
- 
- const handleButtonGD02 = async () => {
-     try {
-         await httpApi.post(
-             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-             { GD_High_2: inputValueHighGD02, GD_Low_2: inputValueLowGD02 }
-         );
-         setHighGD02(inputValueHighGD02);
-         setLowGD02(inputValueLowGD02);
-         opGD02.current?.hide();
-     } catch (error) {
-         console.log("error: ", error);
-     }
- };
- 
- const handleToggleGD02 = (e: React.MouseEvent) => {
-    opGD02.current?.toggle(e);
-     setInputValueHighGD02(HighGD02);
-     settInputValueLowGD02(LowGD02);
- };
- 
- const handleInputChange1GD02 = (event: any) => {
-     const newValue = event.target.value;
-     setInputValueHighGD02(newValue);
- };
- 
- const handleInputChange2GD02 = (event: any) => {
-     const newValue2 = event.target.value;
-     settInputValueLowGD02(newValue2);
- };
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGD02]);
 
-//================================ GD 1902 ======================================================
+    const handleButtonGD02 = async () => {
+        try {
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GD_High_2: inputValueHighGD02, GD_Low_2: inputValueLowGD02 }
+            );
+            setHighGD02(inputValueHighGD02);
+            setLowGD02(inputValueLowGD02);
+            opGD02.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
 
- //================================ GD 1902 ======================================================
- const [audioGD03, setAudioGD03] = useState(false);
- const [HighGD03, setHighGD03] = useState<number | null>(null);
- const [LowGD03, setLowGD03] = useState<number | null>(null);
- const [exceedThresholdGD03, setExceedThresholdGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [inputValueHighGD03, setInputValueHighGD03] = useState<any>();
- const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
- const opGD03 = useRef<OverlayPanel>(null);
- 
- useEffect(() => {
-     if (
-         typeof HighGD03 === "string" &&
-         typeof LowGD03 === "string" &&
-         GD3 !== null
-     ) {
-         const highValueGD03 = parseFloat(HighGD03);
-         const lowValueGD03 = parseFloat(LowGD03);
-         const ValueGD03 = parseFloat(GD3);
- 
-         if (!isNaN(highValueGD03) && !isNaN(lowValueGD03) && !isNaN(ValueGD03)) {
-             if (highValueGD03 < ValueGD03 || ValueGD03 < lowValueGD03) {
-                 if (!audioGD03) {
-                     audioRef.current?.play();
-                     setAudioGD03(true);
-                     setExceedThresholdGD03(true);
-                 }
-             } else {
+    const handleMaintainGD1902Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainGD_1902;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GD_1902_maintain: newMaintainValue }
+            );
+            setMaintainGD_1902(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleToggleGD02 = (e: React.MouseEvent) => {
+        opGD02.current?.toggle(e);
+        setInputValueHighGD02(HighGD02);
+        settInputValueLowGD02(LowGD02);
+    };
+
+    const handleInputChange1GD02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighGD02(newValue);
+    };
+
+    const handleInputChange2GD02 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowGD02(newValue2);
+    };
+
+    //================================ GD 1902 ======================================================
+
+    //================================ GD 1902 ======================================================
+    const [audioGD03, setAudioGD03] = useState(false);
+    const [HighGD03, setHighGD03] = useState<number | null>(null);
+    const [LowGD03, setLowGD03] = useState<number | null>(null);
+    const [exceedThresholdGD03, setExceedThresholdGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighGD03, setInputValueHighGD03] = useState<any>();
+    const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
+    const opGD03 = useRef<OverlayPanel>(null);
+
+    const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false); 
+
+
+    useEffect(() => {
+        if (
+            typeof HighGD03 === "string" &&
+            typeof LowGD03 === "string" &&
+            GD3 !== null && maintainGD_1903 === false
+        ) {
+            const highValueGD03 = parseFloat(HighGD03);
+            const lowValueGD03 = parseFloat(LowGD03);
+            const ValueGD03 = parseFloat(GD3);
+
+            if (
+                !isNaN(highValueGD03) &&
+                !isNaN(lowValueGD03) &&
+                !isNaN(ValueGD03)
+            ) {
+                if (highValueGD03 < ValueGD03 || ValueGD03 < lowValueGD03) {
+                    if (!audioGD03) {
+                        audioRef.current?.play();
+                        setAudioGD03(true);
+                        setExceedThresholdGD03(true);
+                    }
+                } else {
+                    setAudioGD03(false);
+                    setExceedThresholdGD03(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighGD03, GD3, audioGD03, LowGD03,maintainGD_1903]);
+
+    useEffect(() => {
+        if (audioGD03) {
+            const audioEnded = () => {
                 setAudioGD03(false);
-                setExceedThresholdGD03(false);
-             }
-         }
-         fetchData();
-     }
- }, [HighGD03, GD3, audioGD03, LowGD03]);
- 
- 
- 
- useEffect(() => {
-     if (audioGD03) {
-         const audioEnded = () => {
-             setAudioGD03(false);
-         };
-         audioRef.current?.addEventListener("ended", audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener("ended", audioEnded);
-         };
-     }
- }, [audioGD03]);
- 
- const handleButtonGD03 = async () => {
-     try {
-         await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-             { GD_High_3: inputValueHighGD03, GD_Low_3: inputValueLowGD03 }
-         );
-         setHighGD03(inputValueHighGD03);
-         setLowGD03(inputValueLowGD03);
-         opGD03.current?.hide();
-     } catch (error) {
-         console.log("error: ", error);
-     }
- };
- 
- const handleToggleGD03 = (e: React.MouseEvent) => {
-    opGD03.current?.toggle(e);
-     setInputValueHighGD03(HighGD03);
-     settInputValueLowGD03(LowGD03);
- };
- 
- const handleInputChange1GD03 = (event: any) => {
-     const newValue = event.target.value;
-     setInputValueHighGD03(newValue);
- };
- 
- const handleInputChange2GD03 = (event: any) => {
-     const newValue2 = event.target.value;
-     settInputValueLowGD03(newValue2);
- };
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGD03]);
 
-//================================ GD 1902 ======================================================
+    const handleButtonGD03 = async () => {
+        try {
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_High_3: inputValueHighGD03, GD_Low_3: inputValueLowGD03 }
+            );
+            setHighGD03(inputValueHighGD03);
+            setLowGD03(inputValueLowGD03);
+            opGD03.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+    const handleMaintainGD1903Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainGD_1903;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GD_1903_maintain: newMaintainValue }
+            );
+            setMaintainGD_1903(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleToggleGD03 = (e: React.MouseEvent) => {
+        opGD03.current?.toggle(e);
+        setInputValueHighGD03(HighGD03);
+        settInputValueLowGD03(LowGD03);
+    };
+
+    const handleInputChange1GD03 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighGD03(newValue);
+    };
+
+    const handleInputChange2GD03 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowGD03(newValue2);
+    };
+
+    //================================ GD 1902 ======================================================
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
@@ -703,7 +803,6 @@ const handleInputChange2PT1902 = (event: any) => {
             );
             setLowPT01(lowEVCPressureItem?.value || null);
 
-      
             const HighPT1902 = res.data.find(
                 (item: any) => item.key === "High_EK2_Pressure"
             );
@@ -713,7 +812,6 @@ const handleInputChange2PT1902 = (event: any) => {
             );
             setLowPT02(LowPT1902?.value || null);
 
-
             const HighPT1903 = res.data.find(
                 (item: any) => item.key === "High_EK3_Pressure"
             );
@@ -722,7 +820,6 @@ const handleInputChange2PT1902 = (event: any) => {
                 (item: any) => item.key === "Low_EK3_Pressure"
             );
             setLowPT03(LowPT1903?.value || null);
-
 
             const HighGD01 = res.data.find(
                 (item: any) => item.key === "GD_High_1"
@@ -734,8 +831,6 @@ const handleInputChange2PT1902 = (event: any) => {
             );
             setLowGD01(LowGD01?.value || null);
 
-
-
             const HighGD02 = res.data.find(
                 (item: any) => item.key === "GD_High_2"
             );
@@ -746,8 +841,6 @@ const handleInputChange2PT1902 = (event: any) => {
             );
             setLowGD02(LowGD02?.value || null);
 
-
-
             const HighGD03 = res.data.find(
                 (item: any) => item.key === "GD_High_3"
             );
@@ -757,6 +850,24 @@ const handleInputChange2PT1902 = (event: any) => {
                 (item: any) => item.key === "GD_Low_3"
             );
             setLowGD03(LowGD03?.value || null);
+
+
+            const MaintainPT_1901 = res.data.find((item: any) => item.key === "PT_1901_maintain");
+            setMaintainPT_1901(MaintainPT_1901?.value || false);
+
+
+            const MaintainPT_1902 = res.data.find((item: any) => item.key === "PT_1902_maintain");
+            setMaintainPT_1902(MaintainPT_1902?.value || false);
+
+
+            const MaintainPT_1903 = res.data.find((item: any) => item.key === "PT_1902_maintain");
+            setMaintainPT_1903(MaintainPT_1903?.value || false);
+
+            const MaintainGD_1901 = res.data.find((item: any) => item.key === "GD_1901_maintain");
+            setMaintainGD_1901(MaintainGD_1901?.value || false);
+
+            const MaintainGD_1902 = res.data.find((item: any) => item.key === "GD_1902_maintain");
+            setMaintainGD_1902(MaintainGD_1902?.value || false);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -798,25 +909,24 @@ const handleInputChange2PT1902 = (event: any) => {
         SSV: "Slam Shut Off Valve",
         SDV: "Shutdown valve",
     };
-    function formatNumberWithCommas(num: number): string {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    function formatNumberWithCommas1(num: number): string {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
-                let decimalSVF1: string | number = "";
+                // let decimalSVF1: string | number = "";
 
-                if (SVF1 !== null) {
-                    const SVF1Number = parseFloat(SVF1);
-                    if (!isNaN(SVF1Number)) {
-                        decimalSVF1 = formatNumberWithCommas(SVF1Number);
-                    } else {
-                        decimalSVF1 = "";
-                    }
-                }
+                // if (SVF1 !== null) {
+                //     const SVF1Number = parseFloat(SVF1);
+                //     if (!isNaN(SVF1Number)) {
+                //         decimalSVF1 = formatNumberWithCommas(SVF1Number);
+                //     } else {
+                //         decimalSVF1 = "";
+                //     }
+                // }
+
+                const roundedSVF1 =
+                    SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -840,7 +950,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalSVF1}
+                                        {roundedSVF1}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -852,16 +962,19 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data3") {
-                let decimalGVF1: string | number = "";
+                // let decimalGVF1: string | number = "";
 
-                if (GVF1 !== null) {
-                    const SVA1Number = parseFloat(GVF1);
-                    if (!isNaN(SVA1Number)) {
-                        decimalGVF1 = formatNumberWithCommas(SVA1Number);
-                    } else {
-                        decimalGVF1 = "";
-                    }
-                }
+                // if (GVF1 !== null) {
+                //     const SVA1Number = parseFloat(GVF1);
+                //     if (!isNaN(SVA1Number)) {
+                //         decimalGVF1 = formatNumberWithCommas(SVA1Number);
+                //     } else {
+                //         decimalGVF1 = "";
+                //     }
+                // }
+                const roundedGVF1 =
+                    GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -885,7 +998,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalGVF1}
+                                        {roundedGVF1}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -897,16 +1010,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data2") {
-                // let decimalSVA1: string | number = "";
+                const roundedSVA1 =
+                    SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
 
-                // if (SVA1 !== null) {
-                //     const SVA1Number = parseFloat(SVA1);
-                //     if (!isNaN(SVA1Number)) {
-                //         decimalSVA1 = formatNumberWithCommas(SVA1Number);
-                //     } else {
-                //         decimalSVA1 = "";
-                //     }
-                // }
                 return {
                     ...node,
                     data: {
@@ -930,7 +1036,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {SVA1}
+                                        {roundedSVA1}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -942,16 +1048,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data1") {
-                let decimalGVA1: string | number = "";
+                const roundedGVA1 =
+                    GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
 
-                if (GVA1 !== null) {
-                    const GVA1Number = parseFloat(GVA1);
-                    if (!isNaN(GVA1Number)) {
-                        decimalGVA1 = formatNumberWithCommas1(GVA1Number);
-                    } else {
-                        decimalGVA1 = "";
-                    }
-                }
                 return {
                     ...node,
                     data: {
@@ -975,7 +1074,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalGVA1}
+                                        {roundedGVA1}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -987,16 +1086,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data5") {
-                let decimalSVF2: string | number = "";
+                const roundedSVF2 =
+                    SVF2 !== null ? parseFloat(SVF2).toFixed(2) : "";
 
-                if (SVF2 !== null) {
-                    const SVF2Number = parseFloat(SVF2);
-                    if (!isNaN(SVF2Number)) {
-                        decimalSVF2 = formatNumberWithCommas(SVF2Number);
-                    } else {
-                        decimalSVF2 = "";
-                    }
-                }
                 return {
                     ...node,
                     data: {
@@ -1020,7 +1112,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalSVF2}
+                                        {roundedSVF2}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1032,16 +1124,20 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data6") {
-                let decimalGVF2: string | number = "";
+                // let decimalGVF2: string | number = "";
 
-                if (GVF2 !== null) {
-                    const GVF2Number = parseFloat(GVF2);
-                    if (!isNaN(GVF2Number)) {
-                        decimalGVF2 = formatNumberWithCommas(GVF2Number);
-                    } else {
-                        decimalGVF2 = "";
-                    }
-                }
+                // if (GVF2 !== null) {
+                //     const GVF2Number = parseFloat(GVF2);
+                //     if (!isNaN(GVF2Number)) {
+                //         decimalGVF2 = formatNumberWithCommas(GVF2Number);
+                //     } else {
+                //         decimalGVF2 = "";
+                //     }
+                // }
+
+                const roundedGVF2 =
+                    GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1065,7 +1161,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {decimalGVF2}
+                                        {roundedGVF2}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1077,16 +1173,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data7") {
-                // let decimalSVA2: string | number = "";
+                const roundedSVA2 =
+                    SVA2 !== null ? parseFloat(SVA2).toFixed(2) : "";
 
-                // if (SVA2 !== null) {
-                //     const SVA2Number = parseFloat(SVA2);
-                //     if (!isNaN(SVA2Number)) {
-                //         decimalSVA2 = formatNumberWithCommas(SVA2Number);
-                //     } else {
-                //         decimalSVA2 = "";
-                //     }
-                // }
                 return {
                     ...node,
                     data: {
@@ -1110,7 +1199,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {SVA2}
+                                        {roundedSVA2}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1122,16 +1211,19 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "data8") {
-                let decimalGVA2: string | number = "";
+                // let decimalGVA2: string | number = "";
 
-                if (GVA2 !== null) {
-                    const GVA2Number = parseFloat(GVA2);
-                    if (!isNaN(GVA2Number)) {
-                        decimalGVA2 = formatNumberWithCommas(GVA2Number);
-                    } else {
-                        decimalGVA2 = "";
-                    }
-                }
+                // if (GVA2 !== null) {
+                //     const GVA2Number = parseFloat(GVA2);
+                //     if (!isNaN(GVA2Number)) {
+                //         decimalGVA2 = formatNumberWithCommas(GVA2Number);
+                //     } else {
+                //         decimalGVA2 = "";
+                //     }
+                // }
+                const roundedGVA2 =
+                    GVA2 !== null ? parseFloat(GVA2).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1155,7 +1247,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {decimalGVA2}
+                                        {roundedGVA2}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1167,6 +1259,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "Pressure_Trans01") {
+                const roundedPT03 =
+                    PT03 !== null ? parseFloat(PT03).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1180,12 +1275,10 @@ const handleInputChange2PT1902 = (event: any) => {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold3
-                                        ? "#ff5656"
-                                        : "transparent",
+                                    backgroundColor: exceedThreshold3 && !maintainPT_1903 ? "#ff5656" : (maintainPT_1903 ? 'orange' : "transparent")   ,
+
                                 }}
                                 onClick={handleTogglePT1903}
-
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1197,7 +1290,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT03}
+                                        {roundedPT03}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>BarG</p>
@@ -1207,6 +1300,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "Pressure_Trans02") {
+                const roundedPT01 =
+                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1220,9 +1316,8 @@ const handleInputChange2PT1902 = (event: any) => {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold
-                                        ? "#ff5656"
-                                        : "transparent",
+                                    backgroundColor: exceedThreshold && !maintainPT_1901 ? "#ff5656" : (maintainPT_1901 ? 'orange' : "transparent")   ,
+
                                 }}
                                 onClick={handleTogglePT1901}
                             >
@@ -1236,7 +1331,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT01}
+                                        {roundedPT01}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1248,6 +1343,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "Pressure_Trans03") {
+                const roundedPT02 =
+                    PT02 !== null ? parseFloat(PT02).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1261,9 +1359,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold2
-                                        ? "#ff5656"
-                                        : "transparent",
+                                    backgroundColor: exceedThreshold2 && !maintainPT_1902 ? "#ff5656" : (maintainPT_1902 ? 'orange' : "transparent")   ,
                                     cursor: "pointer",
                                 }}
                                 onClick={handleTogglePT1902}
@@ -1278,7 +1374,7 @@ const handleInputChange2PT1902 = (event: any) => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT02}
+                                        {roundedPT02}
                                     </p>
                                 </div>
                                 <p style={{ color: colorNameValue }}>
@@ -1315,12 +1411,24 @@ const handleInputChange2PT1902 = (event: any) => {
                                         PLC :{" "}
                                     </p>
 
-                                    <p style={{ color: "white",
+                                    <p
+                                        style={{
+                                            color: "white",
                                             display: "flex",
-                                        }}> EVC 01 : </p>
-                                    <p style={{ color: "white",
+                                        }}
+                                    >
+                                        {" "}
+                                        EVC 01 :{" "}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
                                             display: "flex",
-                                        }}> EVC 02 : </p>
+                                        }}
+                                    >
+                                        {" "}
+                                        EVC 02 :{" "}
+                                    </p>
                                 </div>
 
                                 <div style={{}}>
@@ -1429,6 +1537,9 @@ const handleInputChange2PT1902 = (event: any) => {
             //  =============================== GD ===================================
 
             if (node.id === "GD1_Value1901") {
+                const roundedGD01 =
+                    GD1 !== null ? parseFloat(GD1).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1438,21 +1549,22 @@ const handleInputChange2PT1902 = (event: any) => {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    background: exceedThresholdGD01 ? '#ff5656' : 'transparent',
-                                    cursor:'pointer',
-                                }}
 
+                                    backgroundColor: exceedThresholdGD01 && !maintainGD_1901 ? "#ff5656" : (maintainGD_1901 ? 'orange' : "transparent")   ,
+                                    cursor: "pointer",
+                                }}
                                 onClick={handleToggleGD01}
                             >
-                                <p style={{  }} >
-                                    {GD1} LEL
-                                </p>
+                                <p style={{}}>{roundedGD01} LEL</p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "GD2_Value1902") {
+                const roundedGD02 =
+                    GD2 !== null ? parseFloat(GD2).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1462,20 +1574,18 @@ const handleInputChange2PT1902 = (event: any) => {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    background: exceedThresholdGD02 ? '#ff5656' : 'transparent',
-                                    cursor:'pointer'
+                                    backgroundColor: exceedThresholdGD02 && !maintainGD_1902 ? "#ff5656" : (maintainGD_1902 ? 'orange' : "transparent")   ,
 
+                                    cursor: "pointer",
                                 }}
                                 onClick={handleToggleGD02}
-
                             >
                                 <p
                                     style={{
-                                       
                                         textAlign: "center",
                                     }}
                                 >
-                                    {GD2} LEL
+                                    {roundedGD02} LEL
                                 </p>
                             </div>
                         ),
@@ -1483,6 +1593,9 @@ const handleInputChange2PT1902 = (event: any) => {
                 };
             }
             if (node.id === "GD3_Value1903") {
+                const roundedGD03 =
+                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
+
                 return {
                     ...node,
                     data: {
@@ -1492,19 +1605,18 @@ const handleInputChange2PT1902 = (event: any) => {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    background: exceedThresholdGD03 ? '#ff5656' : 'transparent',
-                                    cursor:'pointer'
+                                    backgroundColor: exceedThresholdGD03 && !maintainGD_1903 ? "#ff5656" : (maintainGD_1903 ? 'orange' : "transparent")   ,
+
+                                    cursor: "pointer",
                                 }}
                                 onClick={handleToggleGD03}
-
                             >
                                 <p
                                     style={{
                                         textAlign: "center",
-                                        
                                     }}
                                 >
-                                    {GD3} LEL
+                                    {roundedGD03} LEL
                                 </p>
                             </div>
                         ),
@@ -1520,6 +1632,7 @@ const handleInputChange2PT1902 = (event: any) => {
                             <div>
                                 {NO === "1" && <div>{SVD_NO}</div>}
                                 {NC === "1" && <div>{SVD_NC}</div>}
+                                {NC === "0" && <div>{SVD_NC}</div>}
                             </div>
                         ),
                     },
@@ -1535,8 +1648,7 @@ const handleInputChange2PT1902 = (event: any) => {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-
-            const initialPositions = {
+              const initialPositions = {
               ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
               ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
               BallValue01: { x: -1128.7252492515188, y: 1191.6262752572804 },
@@ -1567,10 +1679,10 @@ const handleInputChange2PT1902 = (event: any) => {
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
               FIQ_1901: { x: 138.2731367163276, y: 333.440904461505 },
               FIQ_1902: { x: 128.63597487275513, y: 1396.7039906596735 },
-              FIQ_none: { x: 238.7014619002282, y: 704.8821189824897 },
-              FIQ_none2: { x: 229.33821336902065, y: 1248.873990363984 },
-              FIQ_none11: { x: 287.37057540950383, y: 731.1885101213705 },
-              FIQ_none22: { x: 277.46451545391005, y: 1321.703090896381 },
+              FIQ_none: { x: 238.7014619002282, y: 704.3821189824897 },
+              FIQ_none2: { x: 228.83821336902065, y: 1248.373990363984 },
+              FIQ_none11: { x: 287.87057540950383, y: 731.1885101213705 },
+              FIQ_none22: { x: 277.96451545391005, y: 1321.703090896381 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
@@ -1704,7 +1816,6 @@ const handleInputChange2PT1902 = (event: any) => {
               },
               overlay_line7: { x: -267.2148544974418, y: 1051.46019515747 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-      
               timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
           };
     const [positions, setPositions] = useState(initialPositions);
@@ -4925,9 +5036,9 @@ const handleInputChange2PT1902 = (event: any) => {
     //     [setNodes, setPositions, editingEnabled]
     // );
 
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);
@@ -4991,16 +5102,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1901 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonPT1901}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1901Toggle} checked={maintainPT_1901}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
 
@@ -5054,16 +5175,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1902 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonPT1902}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1902Toggle} checked={maintainPT_1902}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
 
@@ -5117,16 +5248,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1903 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonPT1903}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1903Toggle} checked={maintainPT_1903}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
 
@@ -5180,16 +5321,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1901 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonGD01}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1901Toggle} checked={maintainGD_1901}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
 
@@ -5243,16 +5394,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1902 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonGD02}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1902Toggle} checked={maintainGD_1902}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
 
@@ -5306,16 +5467,26 @@ const handleInputChange2PT1902 = (event: any) => {
                 </div>
                 <div
                     style={{
-                        justifyContent: "center",
-                        display: "flex",
                         margin: 10,
                     }}
                 >
+
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
+                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1903 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
+
+
+                     </div>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
+
                     <Button
                         style={{}}
                         label="Update"
                         onClick={handleButtonGD03}
                     />
+                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1903Toggle} checked={maintainGD_1903}></Checkbox>
+
+                    </div>
+                  
                 </div>
             </OverlayPanel>
             <Dialog

@@ -19,16 +19,9 @@ const AppSidebar = () => {
             <div className="sidebar-header">
                 <Link href="/" className="app-logo">
                     <Image
-                        src="/layout/imgGas/1sojitz.png"
-                        width={80}
+                        src="/layout/imgGas/logoIMG.png"
+                        width={190}
                         height={50}
-                        alt="Picture of the author"
-                    />
-
-                    <Image
-                        src="/layout/imgGas/daigaslogo.png"
-                        width={80}
-                        height={40}
                         alt="Picture of the author"
                     />
                 </Link>
