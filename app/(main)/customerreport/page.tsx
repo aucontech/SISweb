@@ -157,7 +157,7 @@ const CustomerReport = () => {
                 showDevice={true}
                 showDate={true}
             />
-            <Button>Get Report</Button>
+
             {reportData.device && <h2>{reportData.device.name} CUSTOMER</h2>}
             <div className={styles.grid}>
                 <div className={styles.col}>
@@ -394,6 +394,7 @@ const CustomerReport = () => {
                     />
                 </div>
             </div>
+            <Button>Export Report</Button>
         </>
     );
 };
