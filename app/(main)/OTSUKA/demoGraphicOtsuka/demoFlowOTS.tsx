@@ -11,11 +11,6 @@ import "reactflow/dist/style.css";
 import "./demoFlowOTS.css";
 // import tingting from "./NotificationCuu.mp3";
 
-import {
-    ConnectedLed,
-    disconnectedLed,
-    station,
-} from "../ReactFlow/IconOTSUKA";
 import { DemoEdges } from "./demoEdges";
 import Image from "next/image";
 import BallValue01 from "../ReactFlow/BallValue01";
@@ -508,7 +503,7 @@ export default function DemoFlowOTS() {
         if (
             typeof HighGD01 === "string" &&
             typeof LowGD01 === "string" &&
-            GD1 !== null && !maintainGD_1901 === false
+            GD1 !== null && maintainGD_1901 === false
         ) {
             const highValueGD01 = parseFloat(HighGD01);
             const lowValueGD01 = parseFloat(LowGD01);
@@ -559,8 +554,6 @@ export default function DemoFlowOTS() {
             console.log("error: ", error);
         }
     };
-
-
     const handleMaintainGD1901Toggle = async () => {
         try {
             const newMaintainValue = !maintainGD_1901;
@@ -573,6 +566,8 @@ export default function DemoFlowOTS() {
             console.log("error: ", error);
         }
     };
+
+
 
     const handleToggleGD01 = (e: React.MouseEvent) => {
         opGD01.current?.toggle(e);
@@ -870,9 +865,9 @@ export default function DemoFlowOTS() {
             setMaintainGD_1902(MaintainGD_1902?.value || false);
 
             const MaintainGD_1903 = res.data.find((item: any) => item.key === "GD_1903_maintain");
-            setMaintainGD_1902(MaintainGD_1903?.value || false);
+            setMaintainGD_1903(MaintainGD_1903?.value || false);
 
-            
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -1555,7 +1550,7 @@ export default function DemoFlowOTS() {
                                     fontSize: 18,
                                     fontWeight: 500,
 
-                                    backgroundColor: exceedThresholdGD01 && !maintainGD_1901 ? "#ff5656" : (maintainGD_1901 ? 'orange' : "transparent")   ,
+                                    backgroundColor: exceedThresholdGD01 && !maintainGD_1901  ? "#ff5656" : ( maintainGD_1901 ? 'orange' : "transparent")   ,
                                     cursor: "pointer",
                                 }}
                                 onClick={handleToggleGD01}

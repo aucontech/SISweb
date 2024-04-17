@@ -18,7 +18,7 @@ const AppSidebar = () => {
         <>
             <div className="sidebar-header">
                 <Link href="/" className="app-logo">
-                    <Image
+                    <img
                         src="/layout/imgGas/logoIMG.png"
                         width={190}
                         height={50}
@@ -37,6 +37,7 @@ const AppSidebar = () => {
                     <AppMenu />
                 </MenuProvider>
             </div>
+
         </>
     );
 };
