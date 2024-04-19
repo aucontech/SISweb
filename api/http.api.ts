@@ -6,7 +6,7 @@ export const httpApi = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
-    timeout: 30000,
+    timeout: 100000,
 });
 
 httpApi.interceptors.request.use(

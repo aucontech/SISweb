@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             }
         } catch (error: any) {
             console.log(error);
-            if (error.response.data.errorCode !== 11) {
+            if (error?.response?.data?.errorCode !== 11) {
                 setIsAuthenticated(() => false);
             }
         } finally {
