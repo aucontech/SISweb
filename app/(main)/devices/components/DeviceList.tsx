@@ -49,6 +49,7 @@ const DeviceList: React.FC<Props> = () => {
                     setTotalElements(res.totalElements);
                 })
                 .catch((err) => {
+                    console.log(err);
                     UIUtils.showError({
                         error: err?.message,
                         toast: toast.current,
