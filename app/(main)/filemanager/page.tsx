@@ -5,7 +5,7 @@ const FileManager = () => {
     return (
         <div>
             <iframe
-                src="http://sogecgas.com:8080/"
+                src="https://sogecgas.com:8080/"
                 width="100%"
                 height="800px"
                 style={{ border: "none" }}
