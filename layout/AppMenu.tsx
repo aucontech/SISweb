@@ -94,7 +94,7 @@ const AppMenu = () => {
                 {
                     label: "File Manager",
                     icon: "pi pi-fw pi-file",
-                    // to: "/devices",
+                    to: "/filemanager",
                 },
             ],
         },

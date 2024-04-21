@@ -1,14 +1,16 @@
 "use client";
-import React, { use, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import FilterGcValue from "./components/FilterGcValue";
 import {
     getSeverAttributesByAsset,
     saveOrUpdateSeverAttributesByAsseet,
 } from "@/api/telemetry.api";
+import { Toast } from "primereact/toast";
 
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
+import { UIUtils } from "@/service/Utils";
 
 interface Props {}
 const defaultValue = {
@@ -20,6 +22,7 @@ const Page: React.FC<Props> = () => {
     const [gcData, setGcData] = useState<any>([]);
     const [seletetedData, setSeletetedData] = useState<any>([]);
     const [isNewData, setIsNewData] = useState<boolean>(false);
+    const toast = useRef<any>(null);
     const _onFilterChange = (evt: any) => {
         console.log(evt);
         setFilters({ ...evt });
@@ -80,10 +83,19 @@ const Page: React.FC<Props> = () => {
         };
         saveOrUpdateSeverAttributesByAsseet(filters.asset.id.id, attribute)
             .then((resp) => {
-                console.log(resp);
+                if (resp.status === 200) {
+                    UIUtils.showInfo({
+                        summary: "Success",
+                        detail: "Save data success",
+                        toast: toast.current,
+                    });
+                }
             })
             .catch((err) => {
-                console.log(err);
+                UIUtils.showError({
+                    error: err?.response?.message,
+                    toast: toast.current,
+                });
             });
     };
     const handleChangeB1 = (e: any) => {
@@ -106,8 +118,11 @@ const Page: React.FC<Props> = () => {
             _fetchSeverAttributesByAsset(filters);
         }
     }, [filters, _fetchSeverAttributesByAsset]);
+
+    console.log(filters);
     return (
         <>
+            <Toast ref={toast} />
             <FilterGcValue
                 onAction={_onFilterChange}
                 showAsset={true}
@@ -141,7 +156,7 @@ const Page: React.FC<Props> = () => {
                     <Button
                         onClick={handleSave}
                         label="Save"
-                        disabled={!filters.date && !filters.asset}
+                        disabled={!filters.date || !filters.asset}
                     />
                 </div>
             </div>
