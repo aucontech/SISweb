@@ -197,7 +197,7 @@ export default function GraphicFlow() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/values/attributes/SERVER_SCOPE`
             );
     //================================ PT02 ===================================================
             const highPT02 = res.data.find((item: any) => item.key === "High_EK1_Pressure");
