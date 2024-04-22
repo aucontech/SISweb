@@ -103,7 +103,7 @@ export default function DemoFlowOTS() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-
+    const opIQ_1901 = useRef<OverlayPanel>(null);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -203,13 +203,14 @@ export default function DemoFlowOTS() {
     const [inputValueHighPT1901, setInputValueHighPT1901] = useState<any>();
     const [inputValueLowPT1901, settInputValueLowPT1901] = useState<any>();
 
-    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false); 
+    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighPT01 === "string" &&
             typeof LowPT01 === "string" &&
-            PT01 !== null && maintainPT_1901 === false
+            PT01 !== null &&
+            maintainPT_1901 === false
         ) {
             const highValue = parseFloat(HighPT01);
             const lowValue = parseFloat(LowPT01);
@@ -229,7 +230,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01,maintainPT_1901]);
+    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPT_1901]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -299,7 +300,7 @@ export default function DemoFlowOTS() {
     const [inputValueHighPT1902, setInputValueHighPT1902] = useState<any>();
     const [inputValueLowPT1902, settInputValueLowPT1902] = useState<any>();
 
-    const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false); 
+    const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
 
     const op1902 = useRef<OverlayPanel>(null);
 
@@ -307,7 +308,8 @@ export default function DemoFlowOTS() {
         if (
             typeof HighPT02 === "string" &&
             typeof LowPT02 === "string" &&
-            PT02 !== null && maintainPT_1902 === false
+            PT02 !== null &&
+            maintainPT_1902 === false
         ) {
             const highValue = parseFloat(HighPT02);
             const lowValue = parseFloat(LowPT02);
@@ -327,7 +329,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighPT02, PT02, audioPT1902, LowPT02,maintainPT_1902]);
+    }, [HighPT02, PT02, audioPT1902, LowPT02, maintainPT_1902]);
 
     useEffect(() => {
         if (audioPT1902) {
@@ -398,14 +400,14 @@ export default function DemoFlowOTS() {
     const [inputValueLowPT1903, settInputValueLowPT1903] = useState<any>();
     const op1903 = useRef<OverlayPanel>(null);
 
-    const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false); 
-
+    const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighPT03 === "string" &&
             typeof LowPT03 === "string" &&
-            PT03 !== null && maintainPT_1903 === false
+            PT03 !== null &&
+            maintainPT_1903 === false
         ) {
             const highValue = parseFloat(HighPT03);
             const lowValue = parseFloat(LowPT03);
@@ -425,7 +427,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighPT03, PT03, audioPT1903, LowPT03,maintainPT_1903]);
+    }, [HighPT03, PT03, audioPT1903, LowPT03, maintainPT_1903]);
 
     useEffect(() => {
         if (audioPT1903) {
@@ -496,14 +498,14 @@ export default function DemoFlowOTS() {
     const [inputValueLowGD01, settInputValueLowGD01] = useState<any>();
     const opGD01 = useRef<OverlayPanel>(null);
 
-    const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false); 
-
+    const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighGD01 === "string" &&
             typeof LowGD01 === "string" &&
-            GD1 !== null && maintainGD_1901 === false
+            GD1 !== null &&
+            maintainGD_1901 === false
         ) {
             const highValueGD01 = parseFloat(HighGD01);
             const lowValueGD01 = parseFloat(LowGD01);
@@ -527,7 +529,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighGD01, GD1, audioGD01, LowGD01,maintainGD_1901]);
+    }, [HighGD01, GD1, audioGD01, LowGD01, maintainGD_1901]);
 
     useEffect(() => {
         if (audioGD01) {
@@ -567,8 +569,6 @@ export default function DemoFlowOTS() {
         }
     };
 
-
-
     const handleToggleGD01 = (e: React.MouseEvent) => {
         opGD01.current?.toggle(e);
         setInputValueHighGD01(HighGD01);
@@ -596,14 +596,14 @@ export default function DemoFlowOTS() {
     const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
     const opGD02 = useRef<OverlayPanel>(null);
 
-    const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false); 
-
+    const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighGD02 === "string" &&
             typeof LowGD02 === "string" &&
-            GD2 !== null && maintainGD_1902 === false
+            GD2 !== null &&
+            maintainGD_1902 === false
         ) {
             const highValueGD02 = parseFloat(HighGD02);
             const lowValueGD02 = parseFloat(LowGD02);
@@ -627,7 +627,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighGD02, GD2, audioGD02, LowGD02,maintainGD_1902]);
+    }, [HighGD02, GD2, audioGD02, LowGD02, maintainGD_1902]);
 
     useEffect(() => {
         if (audioGD02) {
@@ -695,14 +695,14 @@ export default function DemoFlowOTS() {
     const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
     const opGD03 = useRef<OverlayPanel>(null);
 
-    const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false); 
-
+    const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighGD03 === "string" &&
             typeof LowGD03 === "string" &&
-            GD3 !== null && maintainGD_1903 === false
+            GD3 !== null &&
+            maintainGD_1903 === false
         ) {
             const highValueGD03 = parseFloat(HighGD03);
             const lowValueGD03 = parseFloat(LowGD03);
@@ -726,7 +726,7 @@ export default function DemoFlowOTS() {
             }
             fetchData();
         }
-    }, [HighGD03, GD3, audioGD03, LowGD03,maintainGD_1903]);
+    }, [HighGD03, GD3, audioGD03, LowGD03, maintainGD_1903]);
 
     useEffect(() => {
         if (audioGD03) {
@@ -783,6 +783,371 @@ export default function DemoFlowOTS() {
     };
 
     //================================ GD 1902 ======================================================
+
+    //================================ SVF1 FIQ 1901 ======================================================
+    const [audioSVF1, setAudioSVF1] = useState(false);
+    const [HighSVF1, setHighSVF1] = useState<number | null>(null);
+    const [LowSVF1, setLowSVF1] = useState<number | null>(null);
+    const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [inputValueHighSVF1, setInputValueHighSVF1] = useState<any>();
+    const [inputValueLowSVF1, settInputValueLowSVF1] = useState<any>();
+
+    const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighSVF1 === "string" &&
+            typeof LowSVF1 === "string" &&
+            SVF1 !== null &&
+            maintainSVF1 === false
+        ) {
+            const highValueSVF1 = parseFloat(HighSVF1);
+            const lowValueSVF1 = parseFloat(LowSVF1);
+            const ValueSVF1 = parseFloat(SVF1);
+
+            if (
+                !isNaN(highValueSVF1) &&
+                !isNaN(lowValueSVF1) &&
+                !isNaN(ValueSVF1)
+            ) {
+                if (highValueSVF1 < ValueSVF1 || ValueSVF1 < lowValueSVF1) {
+                    if (!audioSVF1) {
+                        audioRef.current?.play();
+                        setAudioSVF1(true);
+                        setExceedThresholdSVF1(true);
+                    }
+                } else {
+                    setAudioSVF1(false);
+                    setExceedThresholdSVF1(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighSVF1, SVF1, audioSVF1, LowSVF1, maintainSVF1]);
+
+    useEffect(() => {
+        if (audioSVF1) {
+            const audioEnded = () => {
+                setAudioSVF1(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioSVF1]);
+
+    const handleMaintainSVF1Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainSVF1;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { SVF1_Maintain: newMaintainValue }
+            );
+            setMaintainSVF1(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleInputChange1SVF1 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighSVF1(newValue);
+    };
+
+    const handleInputChange2SVF1 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowSVF1(newValue2);
+    };
+
+    //================================ SVF1 FIQ 1901 ======================================================
+
+    //================================ GVF1 FIQ 1901 ======================================================
+    const [audioGVF1, setAudioGVF1] = useState(false);
+    const [HighGVF1, setHighGVF1] = useState<number | null>(null);
+    const [LowGVF1, setLowGVF1] = useState<number | null>(null);
+    const [exceedThresholdGVF1, setExceedThresholdGVF1] = useState(false);
+    const [inputValueHighGVF1, setInputValueHighGVF1] = useState<any>();
+    const [inputValueLowGVF1, settInputValueLowGVF1] = useState<any>();
+
+    const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighGVF1 === "string" &&
+            typeof LowGVF1 === "string" &&
+            GVF1 !== null &&
+            maintainGVF1 === false
+        ) {
+            const highValueGVF1 = parseFloat(HighGVF1);
+            const lowValueGVF1 = parseFloat(LowGVF1);
+            const ValueGVF1 = parseFloat(GVF1);
+
+            if (
+                !isNaN(highValueGVF1) &&
+                !isNaN(lowValueGVF1) &&
+                !isNaN(ValueGVF1)
+            ) {
+                if (highValueGVF1 < ValueGVF1 || ValueGVF1 < lowValueGVF1) {
+                    if (!audioGVF1) {
+                        audioRef.current?.play();
+                        setAudioGVF1(true);
+                        setExceedThresholdGVF1(true);
+                    }
+                } else {
+                    setAudioGVF1(false);
+                    setExceedThresholdGVF1(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighGVF1, GVF1, audioGVF1, LowGVF1, maintainGVF1]);
+
+    useEffect(() => {
+        if (audioGVF1) {
+            const audioEnded = () => {
+                setAudioGVF1(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGVF1]);
+
+    const handleMaintainGVF1Toggle = async () => {
+        try {
+            const newMaintainValue = !maintainGVF1;
+            await httpApi.post(
+                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                { GVF1_Maintain: newMaintainValue }
+            );
+            setMaintainGVF1(newMaintainValue);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+
+    const handleInputChange1GVF1 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueHighGVF1(newValue);
+    };
+
+    const handleInputChange2GVF1 = (event: any) => {
+        const newValue2 = event.target.value;
+        settInputValueLowGVF1(newValue2);
+    };
+
+    //================================ GVF1 FIQ 1901 ======================================================
+
+        //================================ SVA1 FIQ 1901 ======================================================
+        const [audioSVA1, setAudioSVA1] = useState(false);
+        const [HighSVA1, setHighSVA1] = useState<number | null>(null);
+        const [LowSVA1, setLowSVA1] = useState<number | null>(null);
+        const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [inputValueHighSVA1, setInputValueHighSVA1] = useState<any>();
+        const [inputValueLowSVA1, settInputValueLowSVA1] = useState<any>();
+    
+        const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
+    
+        useEffect(() => {
+            if (
+                typeof HighSVA1 === "string" &&
+                typeof LowSVA1 === "string" &&
+                SVA1 !== null &&
+                maintainSVA1 === false
+            ) {
+                const highValueSVA1 = parseFloat(HighSVA1);
+                const lowValueSVA1 = parseFloat(LowSVA1);
+                const ValueSVA1 = parseFloat(SVA1);
+    
+                if (
+                    !isNaN(highValueSVA1) &&
+                    !isNaN(lowValueSVA1) &&
+                    !isNaN(ValueSVA1)
+                ) {
+                    if (highValueSVA1 < ValueSVA1 || ValueSVA1 < lowValueSVA1) {
+                        if (!audioSVA1) {
+                            audioRef.current?.play();
+                            setAudioSVA1(true);
+                            setExceedThresholdSVA1(true);
+                        }
+                    } else {
+                        setAudioSVA1(false);
+                        setExceedThresholdSVA1(false);
+                    }
+                }
+                fetchData();
+            }
+        }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
+    
+        useEffect(() => {
+            if (audioSVA1) {
+                const audioEnded = () => {
+                    setAudioSVA1(false);
+                };
+                audioRef.current?.addEventListener("ended", audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener("ended", audioEnded);
+                };
+            }
+        }, [audioSVA1]);
+    
+        const handleMaintainSVA1Toggle = async () => {
+            try {
+                const newMaintainValue = !maintainSVA1;
+                await httpApi.post(
+                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                    { SVA1_Maintain: newMaintainValue }
+                );
+                setMaintainSVA1(newMaintainValue);
+            } catch (error) {
+                console.log("error: ", error);
+            }
+        };
+    
+        const handleInputChange1SVA1 = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueHighSVA1(newValue);
+        };
+    
+        const handleInputChange2SVA1 = (event: any) => {
+            const newValue2 = event.target.value;
+            settInputValueLowSVA1(newValue2);
+        };
+    
+        //================================ SVA1 FIQ 1901 ======================================================
+    
+        //================================ GVA1 FIQ 1901 ======================================================
+        const [audioGVA1, setAudioGVA1] = useState(false);
+        const [HighGVA1, setHighGVA1] = useState<number | null>(null);
+        const [LowGVA1, setLowGVA1] = useState<number | null>(null);
+        const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
+        const [inputValueHighGVA1, setInputValueHighGVA1] = useState<any>();
+        const [inputValueLowGVA1, settInputValueLowGVA1] = useState<any>();
+    
+        const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
+    
+        useEffect(() => {
+            if (
+                typeof HighGVA1 === "string" &&
+                typeof LowGVA1 === "string" &&
+                GVA1 !== null &&
+                maintainGVA1 === false
+            ) {
+                const highValueGVA1 = parseFloat(HighGVA1);
+                const lowValueGVA1 = parseFloat(LowGVA1);
+                const ValueGVA1 = parseFloat(GVA1);
+    
+                if (
+                    !isNaN(highValueGVA1) &&
+                    !isNaN(lowValueGVA1) &&
+                    !isNaN(ValueGVA1)
+                ) {
+                    if (highValueGVA1 < ValueGVA1 || ValueGVA1 < lowValueGVA1) {
+                        if (!audioGVA1) {
+                            audioRef.current?.play();
+                            setAudioGVA1(true);
+                            setExceedThresholdGVA1(true);
+                        }
+                    } else {
+                        setAudioGVA1(false);
+                        setExceedThresholdGVA1(false);
+                    }
+                }
+                fetchData();
+            }
+        }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
+    
+        useEffect(() => {
+            if (audioGVA1) {
+                const audioEnded = () => {
+                    setAudioGVA1(false);
+                };
+                audioRef.current?.addEventListener("ended", audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener("ended", audioEnded);
+                };
+            }
+        }, [audioGVA1]);
+    
+        const handleMaintainGVA1Toggle = async () => {
+            try {
+                const newMaintainValue = !maintainGVA1;
+                await httpApi.post(
+                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                    { GVA1_Maintain: newMaintainValue }
+                );
+                setMaintainGVA1(newMaintainValue);
+            } catch (error) {
+                console.log("error: ", error);
+            }
+        };
+    
+        const handleInputChange1GVA1 = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueHighGVA1(newValue);
+        };
+    
+        const handleInputChange2GVA1 = (event: any) => {
+            const newValue2 = event.target.value;
+            settInputValueLowGVA1(newValue2);
+        };
+    
+        //================================ GVA1 FIQ 1901 ======================================================
+
+    // ================================ Center SVF GVF SVA GVA FIQ 1901 =======================================
+
+    const opFIQ_1901 = useRef<OverlayPanel>(null);
+
+    const handleButtonFIQ_1901 = async () => {
+        try {
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                {
+                    SVF1_High: inputValueHighSVF1,
+                    SVF1_Low: inputValueLowSVF1,
+                    GVF1_High: inputValueHighGVF1,
+                    GVF1_Low: inputValueLowGVF1,
+
+                    SVA1_High: inputValueHighSVA1,
+                    SVA1_Low: inputValueLowSVA1,
+                    GVA1_High: inputValueHighGVA1,
+                    GVA1_Low: inputValueLowGVA1,
+                }
+            );
+            setHighSVF1(inputValueHighSVF1);
+            setLowSVF1(inputValueLowSVF1);
+            setHighGVF1(inputValueHighGVF1);
+            setLowGVF1(inputValueLowGVF1);
+
+            setHighSVA1(inputValueHighSVA1);
+            setLowSVA1(inputValueLowSVA1);
+            setHighGVA1(inputValueHighGVA1);
+            setLowGVA1(inputValueLowGVA1);
+            opFIQ_1901.current?.hide();
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    };
+    const handleToggleFIQ_1901 = (e: React.MouseEvent) => {
+        opFIQ_1901.current?.toggle(e);
+        setInputValueHighSVF1(HighSVF1);
+        settInputValueLowSVF1(LowSVF1);
+
+        setInputValueHighGVF1(HighGVF1);
+        settInputValueLowGVF1(LowGVF1);
+
+
+        setInputValueHighSVA1(HighSVA1);
+        settInputValueLowSVA1(LowSVA1);
+
+        setInputValueHighGVA1(HighGVA1);
+        settInputValueLowGVA1(LowGVA1);
+    };
+
+    // ================================ Center SVF GVF SVA GVA FIQ 1901 =======================================
+
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
@@ -846,28 +1211,86 @@ export default function DemoFlowOTS() {
             );
             setLowGD03(LowGD03?.value || null);
 
+            const HighSVF1 = res.data.find(
+                (item: any) => item.key === "SVF1_High"
+            );
+            setHighSVF1(HighSVF1?.value || null);
 
-            const MaintainPT_1901 = res.data.find((item: any) => item.key === "PT_1901_maintain");
+            const LowSVF1 = res.data.find(
+                (item: any) => item.key === "SVF1_Low"
+            );
+            setLowSVF1(LowSVF1?.value || null);
+
+            const HighGVF1 = res.data.find(
+                (item: any) => item.key === "GVF1_High"
+            );
+            setHighGVF1(HighGVF1?.value || null);
+
+            const LowGVF1 = res.data.find(
+                (item: any) => item.key === "GVF1_Low"
+            );
+            setLowGVF1(LowGVF1?.value || null);
+
+
+
+
+
+            const HighSVA1 = res.data.find(
+                (item: any) => item.key === "SVA1_High"
+            );
+            setHighSVA1(HighSVA1?.value || null);
+
+            const LowSVA1 = res.data.find(
+                (item: any) => item.key === "SVA1_Low"
+            );
+            setLowSVA1(LowSVA1?.value || null);
+
+            const HighGVA1 = res.data.find(
+                (item: any) => item.key === "GVA1_High"
+            );
+            setHighGVA1(HighGVA1?.value || null);
+
+            const LowGVA1 = res.data.find(
+                (item: any) => item.key === "GVA1_Low"
+            );
+            setLowGVA1(LowGVA1?.value || null);
+
+
+
+
+
+
+
+
+            const MaintainPT_1901 = res.data.find(
+                (item: any) => item.key === "PT_1901_maintain"
+            );
             setMaintainPT_1901(MaintainPT_1901?.value || false);
 
-
-            const MaintainPT_1902 = res.data.find((item: any) => item.key === "PT_1902_maintain");
+            const MaintainPT_1902 = res.data.find(
+                (item: any) => item.key === "PT_1902_maintain"
+            );
             setMaintainPT_1902(MaintainPT_1902?.value || false);
 
-
-            const MaintainPT_1903 = res.data.find((item: any) => item.key === "PT_1903_maintain");
+            const MaintainPT_1903 = res.data.find(
+                (item: any) => item.key === "PT_1903_maintain"
+            );
             setMaintainPT_1903(MaintainPT_1903?.value || false);
 
-            const MaintainGD_1901 = res.data.find((item: any) => item.key === "GD_1901_maintain");
+            const MaintainGD_1901 = res.data.find(
+                (item: any) => item.key === "GD_1901_maintain"
+            );
             setMaintainGD_1901(MaintainGD_1901?.value || false);
 
-            const MaintainGD_1902 = res.data.find((item: any) => item.key === "GD_1902_maintain");
+            const MaintainGD_1902 = res.data.find(
+                (item: any) => item.key === "GD_1902_maintain"
+            );
             setMaintainGD_1902(MaintainGD_1902?.value || false);
 
-            const MaintainGD_1903 = res.data.find((item: any) => item.key === "GD_1903_maintain");
+            const MaintainGD_1903 = res.data.find(
+                (item: any) => item.key === "GD_1903_maintain"
+            );
             setMaintainGD_1903(MaintainGD_1903?.value || false);
-
-
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -926,7 +1349,6 @@ export default function DemoFlowOTS() {
 
                 const roundedSVF1 =
                     SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -938,7 +1360,15 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    padding:2,
+                                    backgroundColor:
+                                    exceedThresholdSVF1 && !maintainSVF1
+                                        ? "#ff5656"
+                                        : maintainSVF1
+                                        ? "orange"
+                                        : "transparent",
                                 }}
+                                onClick={handleToggleFIQ_1901}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -974,7 +1404,6 @@ export default function DemoFlowOTS() {
                 // }
                 const roundedGVF1 =
                     GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -986,7 +1415,18 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdGVF1 && !maintainGVF1
+                                        ? "#ff5656"
+                                        : maintainGVF1
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
+
+                                    
                                 }}
+                                onClick={handleToggleFIQ_1901}
+
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1012,7 +1452,6 @@ export default function DemoFlowOTS() {
             if (node.id === "data2") {
                 const roundedSVA1 =
                     SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -1024,7 +1463,17 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdSVA1 && !maintainSVA1
+                                        ? "#ff5656"
+                                        : maintainSVA1
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
+
                                 }}
+                                onClick={handleToggleFIQ_1901}
+
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1062,7 +1511,18 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdGVA1 && !maintainGVA1
+                                        ? "#ff5656"
+                                        : maintainGVA1
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
+
+
                                 }}
+                                onClick={handleToggleFIQ_1901}
+
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1275,8 +1735,12 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold3 && !maintainPT_1903 ? "#ff5656" : (maintainPT_1903 ? 'orange' : "transparent")   ,
-
+                                    backgroundColor:
+                                        exceedThreshold3 && !maintainPT_1903
+                                            ? "#ff5656"
+                                            : maintainPT_1903
+                                            ? "orange"
+                                            : "transparent",
                                 }}
                                 onClick={handleTogglePT1903}
                             >
@@ -1316,8 +1780,12 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold && !maintainPT_1901 ? "#ff5656" : (maintainPT_1901 ? 'orange' : "transparent")   ,
-
+                                    backgroundColor:
+                                        exceedThreshold && !maintainPT_1901
+                                            ? "#ff5656"
+                                            : maintainPT_1901
+                                            ? "orange"
+                                            : "transparent",
                                 }}
                                 onClick={handleTogglePT1901}
                             >
@@ -1359,7 +1827,12 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor: exceedThreshold2 && !maintainPT_1902 ? "#ff5656" : (maintainPT_1902 ? 'orange' : "transparent")   ,
+                                    backgroundColor:
+                                        exceedThreshold2 && !maintainPT_1902
+                                            ? "#ff5656"
+                                            : maintainPT_1902
+                                            ? "orange"
+                                            : "transparent",
                                     cursor: "pointer",
                                 }}
                                 onClick={handleTogglePT1902}
@@ -1550,7 +2023,12 @@ export default function DemoFlowOTS() {
                                     fontSize: 18,
                                     fontWeight: 500,
 
-                                    backgroundColor: exceedThresholdGD01 && !maintainGD_1901  ? "#ff5656" : ( maintainGD_1901 ? 'orange' : "transparent")   ,
+                                    backgroundColor:
+                                        exceedThresholdGD01 && !maintainGD_1901
+                                            ? "#ff5656"
+                                            : maintainGD_1901
+                                            ? "orange"
+                                            : "transparent",
                                     cursor: "pointer",
                                 }}
                                 onClick={handleToggleGD01}
@@ -1574,7 +2052,12 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    backgroundColor: exceedThresholdGD02 && !maintainGD_1902 ? "#ff5656" : (maintainGD_1902 ? 'orange' : "transparent")   ,
+                                    backgroundColor:
+                                        exceedThresholdGD02 && !maintainGD_1902
+                                            ? "#ff5656"
+                                            : maintainGD_1902
+                                            ? "orange"
+                                            : "transparent",
 
                                     cursor: "pointer",
                                 }}
@@ -1605,7 +2088,12 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-                                    backgroundColor: exceedThresholdGD03 && !maintainGD_1903 ? "#ff5656" : (maintainGD_1903 ? 'orange' : "transparent")   ,
+                                    backgroundColor:
+                                        exceedThresholdGD03 && !maintainGD_1903
+                                            ? "#ff5656"
+                                            : maintainGD_1903
+                                            ? "orange"
+                                            : "transparent",
 
                                     cursor: "pointer",
                                 }}
@@ -1648,176 +2136,176 @@ export default function DemoFlowOTS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
-              ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
-              ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
-              BallValue01: { x: -1128.7252492515188, y: 1191.6262752572804 },
-              BallValue02: { x: -901.8172406747104, y: 1191.399667617022 },
-              BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
-              BallValue04: { x: -701.8672275157428, y: 1196.0644365920487 },
-              BallValue05: { x: -408.81817382654674, y: 812.3988197919385 },
-              BallValue06: { x: -408.92842757827566, y: 1195.0575990996279 },
-              BallValue07: { x: -109.976146570266, y: 732.5849962342946 },
-              BallValue08: { x: 511.81515033374035, y: 732.8905369491654 },
-              BallValue09: { x: -109.18869777338799, y: 1276.8905722131906 },
-              BallValue10: { x: 512.076750938122, y: 1276.6662483937687 },
-              BallValueCenter: { x: 216.68461956782312, y: 991.2550857949235 },
-              BallValueCenter_Check: {
-                  x: 90.96636981528951,
-                  y: 1084.2937921267353,
-              },
-              BallValueCenter_None: {
-                  x: 235.16919766969937,
-                  y: 1043.6799040315725,
-              },
-              BallValueCenter_None2: {
-                  x: 236.508540978033,
-                  y: 1043.4269432822834,
-              },
-              BallValuePSV: { x: 707.9554044991246, y: 924.5866149620667 },
-              BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
-              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: 138.2731367163276, y: 333.440904461505 },
-              FIQ_1902: { x: 128.63597487275513, y: 1396.7039906596735 },
-              FIQ_none: { x: 238.7014619002282, y: 704.3821189824897 },
-              FIQ_none2: { x: 228.83821336902065, y: 1248.373990363984 },
-              FIQ_none11: { x: 287.87057540950383, y: 731.1885101213705 },
-              FIQ_none22: { x: 277.96451545391005, y: 1321.703090896381 },
-              Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-              Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
-              GD1_Name1901: { x: -617.0174367324778, y: 922.7999982291198 },
-              GD1_Value1901: { x: -617.2309648261335, y: 962.7951649681137 },
-              GD2: { x: -42.50089224243885, y: 1021.4354854552315 },
-              GD2_Name1902: { x: -67.54434225774708, y: 923.5792056424372 },
-              GD2_Value1902: { x: -67.91457554484958, y: 963.1203079122581 },
-              GD3: { x: 471.914400589417, y: 1018.4672974791615 },
-              GD3_Name1903: { x: 446.44939138278767, y: 922.3542185615489 },
-              GD3_Value1903: { x: 446.16846035566243, y: 961.7240910379097 },
-              GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
-              GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
-              GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
-              HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1146.0797880182224, y: 343.9694534020156 },
-              PCV01: { x: -600.44289821967, y: 803.2924339111273 },
-              PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
-              PCV_NUM01: { x: -685.509356814222, y: 647.8453966003194 },
-              PCV_NUM02: { x: -684.9095065313029, y: 1347.8359120884465 },
-              PCV_ballVavle_Small1: {
-                  x: -463.45750208249893,
-                  y: 796.2045791299236,
-              },
-              PCV_ballVavle_Small1_none1: {
-                  x: -566.2385229733152,
-                  y: 817.7575474175768,
-              },
-              PCV_ballVavle_Small1_none2: {
-                  x: -564.568543995368,
-                  y: 1200.5823936921363,
-              },
-              PCV_ballVavle_Small2: {
-                  x: -471.39757167976717,
-                  y: 1178.6960358714698,
-              },
-              PCV_ballVavle_Small2_none1: {
-                  x: -450.31021631638924,
-                  y: 869.5519055175876,
-              },
-              PCV_ballVavle_Small2_none2: {
-                  x: -458.105425182069,
-                  y: 1251.7751314040793,
-              },
-              PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
-              PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-              PSV01: { x: 602.1731993621377, y: 559.5742417551456 },
-              PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
-              PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
-              PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
-              PSV_None01: { x: 784.3052438210208, y: 1043.0259819068465 },
-              PSV_None02: { x: 740.5334428531365, y: 887.7863120430411 },
-              PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
-              PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
-              PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
-              PT2: { x: -21.651669453574158, y: 1195.9276507252328 },
-              PT3: { x: -22.68528485027099, y: 654.3057712932034 },
-              PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
-              PT_col2: { x: 17.862308874268933, y: 729.2802360193444 },
-              PT_col3: { x: 18.093270328360745, y: 1270.9966728522536 },
-              PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
-              PT_none2: { x: 12.872468321767258, y: 683.258994488236 },
-              PT_none3: { x: 12.893848453058297, y: 1216.7858497116608 },
-              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: -1144.6672900563185, y: 775.737751310433 },
-              Pressure_Trans02: { x: -326.82628571826723, y: 543.387636352668 },
-              Pressure_Trans03: {
-                  x: -327.47184043716663,
-                  y: 1434.9801685486188,
-              },
-              SDV: { x: -1259.5296036246955, y: 892.5758808521592 },
-              SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
-              SDV_IMG: { x: -1128.9943569208203, y: 972.9252744312048 },
-              SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
-              T_juntion_11: { x: 365.1924037601432, y: 761.5664930235843 },
-              T_juntion_14: { x: 51.19739447051353, y: 1267.8592609282646 },
-              Tank: { x: -921.5169052023348, y: 949.94544810155 },
-              Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
-              Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
-              Temperature_Trans01: {
-                  x: -607.828356494313,
-                  y: 562.8487535527242,
-              },
-              Temperature_Trans02: {
-                  x: -796.1166124474211,
-                  y: 1445.5258186779024,
-              },
-              VavleWay: { x: 130.10547762418554, y: 1009.7718094592451 },
-              animation_line7: { x: -57.33638520737881, y: 786.0142010748291 },
-              animation_line8: { x: 534.5875681565667, y: 785.9286837518672 },
-              animation_line9: { x: -53.98482361983602, y: 1329.7796968105158 },
-              animation_line10: { x: 534.2944515129055, y: 1329.9134977535994 },
-              animation_line11: { x: 408.14915225646655, y: 785.6291840355361 },
-              animation_line12: { x: 280.9850323278604, y: 1044.4121840565192 },
-              animation_line13: {
-                  x: 166.17450133771734,
-                  y: 1044.2699746503904,
-              },
-              animation_line14: { x: 94.07809660966518, y: 1330.0304864638001 },
-              animation_line15: { x: 534.0396421290242, y: 1330.0605161042722 },
-              borderWhite: { x: -1259.8488098276323, y: 334.804469377478 },
-              data1: { x: 138.48451703477264, y: 596.2740760310676 },
-              data2: { x: 138.54690230832, y: 530.5871687087123 },
-              data3: { x: 138.4853067439139, y: 464.9850519390955 },
-              data4: { x: 138.24176898169497, y: 399.6099182771684 },
-              data5: { x: 128.39018884209577, y: 1462.0516670689742 },
-              data6: { x: 128.39044711407342, y: 1527.510065004808 },
-              data7: { x: 128.50430359604275, y: 1593.2398068137738 },
-              data8: { x: 128.41451145597324, y: 1658.7248430688853 },
-              line1: { x: -1216.4118252175665, y: 1045.059045857194 },
-              line2: { x: -824.7490621134568, y: 1045.059045857194 },
-              line3: { x: -679.4548405099899, y: 864.3210507007146 },
-              line4: { x: -679.8288704580859, y: 1247.5473074652164 },
-              line5: { x: -386.35311440840894, y: 864.5020291308545 },
-              line6: { x: -386.02218778401766, y: 1247.470831450982 },
-              line7: { x: -210.82907734671454, y: 1052.6632425418165 },
-              line8: { x: -87.61107491463122, y: 784.7281266640797 },
-              line9: { x: -87.10280598982942, y: 1328.8966206192802 },
-              line10: { x: 534.6840573888813, y: 784.8089932160253 },
-              line11: { x: 534.738997393544, y: 1329.1045170701034 },
-              line12: { x: 669.453281622097, y: 1042.0651701525298 },
-              line13: { x: 784.3012389553304, y: 1043.0028327994185 },
-              overlay_SmallVavle1: {
-                  x: -460.2968162301511,
-                  y: 885.6463541552142,
-              },
-              overlay_SmallVavle2: {
-                  x: -467.9401692198322,
-                  y: 1268.7449655852304,
-              },
-              overlay_line7: { x: -267.2148544974418, y: 1051.46019515747 },
-              overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
-          };
+    const initialPositions = {
+        ArrowRight: { x: 768.5423568651795, y: 998.5512757003828 },
+        ArrowRight1: { x: -1262.1001825232765, y: 1000.2070645557653 },
+        BallValue01: { x: -1128.7252492515188, y: 1191.6262752572804 },
+        BallValue02: { x: -901.8172406747104, y: 1191.399667617022 },
+        BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
+        BallValue04: { x: -701.8672275157428, y: 1196.0644365920487 },
+        BallValue05: { x: -408.81817382654674, y: 812.3988197919385 },
+        BallValue06: { x: -408.92842757827566, y: 1195.0575990996279 },
+        BallValue07: { x: -109.976146570266, y: 732.5849962342946 },
+        BallValue08: { x: 511.81515033374035, y: 732.8905369491654 },
+        BallValue09: { x: -109.18869777338799, y: 1276.8905722131906 },
+        BallValue10: { x: 512.076750938122, y: 1276.6662483937687 },
+        BallValueCenter: { x: 216.68461956782312, y: 991.2550857949235 },
+        BallValueCenter_Check: {
+            x: 90.96636981528951,
+            y: 1084.2937921267353,
+        },
+        BallValueCenter_None: {
+            x: 235.16919766969937,
+            y: 1043.6799040315725,
+        },
+        BallValueCenter_None2: {
+            x: 236.508540978033,
+            y: 1043.4269432822834,
+        },
+        BallValuePSV: { x: 707.9554044991246, y: 924.5866149620667 },
+        BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
+        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+        FIQ_1901: { x: 138.2731367163276, y: 333.440904461505 },
+        FIQ_1902: { x: 128.63597487275513, y: 1396.7039906596735 },
+        FIQ_none: { x: 238.7014619002282, y: 704.3821189824897 },
+        FIQ_none2: { x: 228.83821336902065, y: 1248.373990363984 },
+        FIQ_none11: { x: 287.87057540950383, y: 731.1885101213705 },
+        FIQ_none22: { x: 277.96451545391005, y: 1321.703090896381 },
+        Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
+        Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
+        GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
+        GD1_Name1901: { x: -617.0174367324778, y: 922.7999982291198 },
+        GD1_Value1901: { x: -617.2309648261335, y: 962.7951649681137 },
+        GD2: { x: -42.50089224243885, y: 1021.4354854552315 },
+        GD2_Name1902: { x: -67.54434225774708, y: 923.5792056424372 },
+        GD2_Value1902: { x: -67.91457554484958, y: 963.1203079122581 },
+        GD3: { x: 471.914400589417, y: 1018.4672974791615 },
+        GD3_Name1903: { x: 446.44939138278767, y: 922.3542185615489 },
+        GD3_Value1903: { x: 446.16846035566243, y: 961.7240910379097 },
+        GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
+        GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
+        GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
+        HELP: { x: 750.7851455025582, y: 336.66019515746984 },
+        Header: { x: -1146.0797880182224, y: 343.9694534020156 },
+        PCV01: { x: -600.44289821967, y: 803.2924339111273 },
+        PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
+        PCV_NUM01: { x: -685.509356814222, y: 647.8453966003194 },
+        PCV_NUM02: { x: -684.9095065313029, y: 1347.8359120884465 },
+        PCV_ballVavle_Small1: {
+            x: -463.45750208249893,
+            y: 796.2045791299236,
+        },
+        PCV_ballVavle_Small1_none1: {
+            x: -566.2385229733152,
+            y: 817.7575474175768,
+        },
+        PCV_ballVavle_Small1_none2: {
+            x: -564.568543995368,
+            y: 1200.5823936921363,
+        },
+        PCV_ballVavle_Small2: {
+            x: -471.39757167976717,
+            y: 1178.6960358714698,
+        },
+        PCV_ballVavle_Small2_none1: {
+            x: -450.31021631638924,
+            y: 869.5519055175876,
+        },
+        PCV_ballVavle_Small2_none2: {
+            x: -458.105425182069,
+            y: 1251.7751314040793,
+        },
+        PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
+        PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
+        PSV01: { x: 602.1731993621377, y: 559.5742417551456 },
+        PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
+        PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
+        PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
+        PSV_None01: { x: 784.3052438210208, y: 1043.0259819068465 },
+        PSV_None02: { x: 740.5334428531365, y: 887.7863120430411 },
+        PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
+        PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
+        PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
+        PT2: { x: -21.651669453574158, y: 1195.9276507252328 },
+        PT3: { x: -22.68528485027099, y: 654.3057712932034 },
+        PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
+        PT_col2: { x: 17.862308874268933, y: 729.2802360193444 },
+        PT_col3: { x: 18.093270328360745, y: 1270.9966728522536 },
+        PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
+        PT_none2: { x: 12.872468321767258, y: 683.258994488236 },
+        PT_none3: { x: 12.893848453058297, y: 1216.7858497116608 },
+        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+        Pressure_Trans01: { x: -1144.6672900563185, y: 775.737751310433 },
+        Pressure_Trans02: { x: -326.82628571826723, y: 543.387636352668 },
+        Pressure_Trans03: {
+            x: -327.47184043716663,
+            y: 1434.9801685486188,
+        },
+        SDV: { x: -1259.5296036246955, y: 892.5758808521592 },
+        SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
+        SDV_IMG: { x: -1128.9943569208203, y: 972.9252744312048 },
+        SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
+        T_juntion_11: { x: 365.1924037601432, y: 761.5664930235843 },
+        T_juntion_14: { x: 51.19739447051353, y: 1267.8592609282646 },
+        Tank: { x: -921.5169052023348, y: 949.94544810155 },
+        Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
+        Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
+        Temperature_Trans01: {
+            x: -607.828356494313,
+            y: 562.8487535527242,
+        },
+        Temperature_Trans02: {
+            x: -796.1166124474211,
+            y: 1445.5258186779024,
+        },
+        VavleWay: { x: 130.10547762418554, y: 1009.7718094592451 },
+        animation_line7: { x: -57.33638520737881, y: 786.0142010748291 },
+        animation_line8: { x: 534.5875681565667, y: 785.9286837518672 },
+        animation_line9: { x: -53.98482361983602, y: 1329.7796968105158 },
+        animation_line10: { x: 534.2944515129055, y: 1329.9134977535994 },
+        animation_line11: { x: 408.14915225646655, y: 785.6291840355361 },
+        animation_line12: { x: 280.9850323278604, y: 1044.4121840565192 },
+        animation_line13: {
+            x: 166.17450133771734,
+            y: 1044.2699746503904,
+        },
+        animation_line14: { x: 94.07809660966518, y: 1330.0304864638001 },
+        animation_line15: { x: 534.0396421290242, y: 1330.0605161042722 },
+        borderWhite: { x: -1259.8488098276323, y: 334.804469377478 },
+        data1: { x: 138.48451703477264, y: 596.2740760310676 },
+        data2: { x: 138.54690230832, y: 530.5871687087123 },
+        data3: { x: 138.4853067439139, y: 464.9850519390955 },
+        data4: { x: 138.24176898169497, y: 399.6099182771684 },
+        data5: { x: 128.39018884209577, y: 1462.0516670689742 },
+        data6: { x: 128.39044711407342, y: 1527.510065004808 },
+        data7: { x: 128.50430359604275, y: 1593.2398068137738 },
+        data8: { x: 128.41451145597324, y: 1658.7248430688853 },
+        line1: { x: -1216.4118252175665, y: 1045.059045857194 },
+        line2: { x: -824.7490621134568, y: 1045.059045857194 },
+        line3: { x: -679.4548405099899, y: 864.3210507007146 },
+        line4: { x: -679.8288704580859, y: 1247.5473074652164 },
+        line5: { x: -386.35311440840894, y: 864.5020291308545 },
+        line6: { x: -386.02218778401766, y: 1247.470831450982 },
+        line7: { x: -210.82907734671454, y: 1052.6632425418165 },
+        line8: { x: -87.61107491463122, y: 784.7281266640797 },
+        line9: { x: -87.10280598982942, y: 1328.8966206192802 },
+        line10: { x: 534.6840573888813, y: 784.8089932160253 },
+        line11: { x: 534.738997393544, y: 1329.1045170701034 },
+        line12: { x: 669.453281622097, y: 1042.0651701525298 },
+        line13: { x: 784.3012389553304, y: 1043.0028327994185 },
+        overlay_SmallVavle1: {
+            x: -460.2968162301511,
+            y: 885.6463541552142,
+        },
+        overlay_SmallVavle2: {
+            x: -467.9401692198322,
+            y: 1268.7449655852304,
+        },
+        overlay_line7: { x: -267.2148544974418, y: 1051.46019515747 },
+        overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
+        timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
+    };
     const [positions, setPositions] = useState(initialPositions);
 
     const lineColor = "#ffaa00";
@@ -5105,23 +5593,45 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1901 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonPT1901}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1901Toggle} checked={maintainPT_1901}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainPT_1901 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonPT1901}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainPT1901Toggle}
+                            checked={maintainPT_1901}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
 
@@ -5178,23 +5688,45 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1902 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonPT1902}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1902Toggle} checked={maintainPT_1902}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainPT_1902 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonPT1902}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainPT1902Toggle}
+                            checked={maintainPT_1902}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
 
@@ -5251,23 +5783,45 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainPT_1903 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonPT1903}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainPT1903Toggle} checked={maintainPT_1903}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainPT_1903 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonPT1903}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainPT1903Toggle}
+                            checked={maintainPT_1903}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
 
@@ -5324,23 +5878,45 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1901 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonGD01}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1901Toggle} checked={maintainGD_1901}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainGD_1901 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonGD01}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainGD1901Toggle}
+                            checked={maintainGD_1901}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
 
@@ -5397,23 +5973,45 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1902 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonGD02}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1902Toggle} checked={maintainGD_1902}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainGD_1902 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonGD02}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainGD1902Toggle}
+                            checked={maintainGD_1902}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
 
@@ -5470,25 +6068,450 @@ export default function DemoFlowOTS() {
                         margin: 10,
                     }}
                 >
-
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', }}>
-                    <p style={{display:'flex',  textAlign:'center'}}>{maintainGD_1903 ? <span style={{fontSize:15, color:'orange'}}>In Maintenance</span> : <span style={{fontSize:15}}>Maintenance Mode</span> }</p>
-
-
-                     </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',marginTop:10}} >
-
-                    <Button
-                        style={{}}
-                        label="Update"
-                        onClick={handleButtonGD03}
-                    />
-                    <Checkbox style={{marginRight:20}} onChange={handleMaintainGD1903Toggle} checked={maintainGD_1903}></Checkbox>
-
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p style={{ display: "flex", textAlign: "center" }}>
+                            {maintainGD_1903 ? (
+                                <span style={{ fontSize: 15, color: "orange" }}>
+                                    In Maintenance
+                                </span>
+                            ) : (
+                                <span style={{ fontSize: 15 }}>
+                                    Maintenance Mode
+                                </span>
+                            )}
+                        </p>
                     </div>
-                  
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <Button
+                            style={{}}
+                            label="Update"
+                            onClick={handleButtonGD03}
+                        />
+                        <Checkbox
+                            style={{ marginRight: 20 }}
+                            onChange={handleMaintainGD1903Toggle}
+                            checked={maintainGD_1903}
+                        ></Checkbox>
+                    </div>
                 </div>
             </OverlayPanel>
+
+            <OverlayPanel ref={opFIQ_1901}>
+                <p style={{fontSize:25, fontWeight:500}} >FIQ-1901</p>
+
+                <div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div style={{ padding: "0px 10px 0px 10px" }}>
+                            <div
+                                style={{
+                                    justifyContent: "center",
+                                    display: "flex",
+                                    fontSize: 17,
+                                    fontWeight: 500,
+                                    color: background,
+                                    marginBottom: 10,
+                                }}
+                            >
+                                SVF
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <p style={{ marginTop: 5, marginRight: 5 }}>
+                                    {" "}
+                                    High
+                                </p>
+                                <InputText
+                                    placeholder="High"
+                                    value={inputValueHighSVF1}
+                                    onChange={handleInputChange1SVF1}
+                                />
+                            </div>
+
+
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    alignContent: "center",
+                                    marginTop: 5,
+                                }}
+                            >
+                                <p style={{ marginTop: 10 }}> Low</p>
+                                <InputText
+                                    style={{ marginLeft: 10 }}
+                                    placeholder="Low"
+                                    value={inputValueLowSVF1}
+                                    onChange={handleInputChange2SVF1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    margin: 10,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {maintainSVF1 ? (
+                                            <span
+                                                style={{
+                                                    fontSize: 15,
+                                                    color: "orange",
+                                                }}
+                                            >
+                                                In Maintenance
+                                            </span>
+                                        ) : (
+                                            <span style={{ fontSize: 15 }}>
+                                                Maintenance Mode
+                                            </span>
+                                        )}
+                                    </p>
+                                    <div>
+                                        <Checkbox
+                                            style={{}}
+                                            onChange={handleMaintainSVF1Toggle}
+                                            checked={maintainSVF1}
+                                        ></Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{ padding: "0px 10px 0px 10px" }}>
+                            <div
+                                style={{
+                                    justifyContent: "center",
+                                    display: "flex",
+                                    fontSize: 17,
+                                    fontWeight: 500,
+                                    color: background,
+                                    marginBottom: 10,
+                                }}
+                            >
+                                GVF
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <p style={{ marginTop: 5, marginRight: 5 }}>
+                                    {" "}
+                                    High
+                                </p>
+                                <InputText
+                                    placeholder="High"
+                                    value={inputValueHighGVF1}
+                                    onChange={handleInputChange1GVF1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    alignContent: "center",
+                                    marginTop: 5,
+                                }}
+                            >
+                                <p style={{ marginTop: 10 }}> Low</p>
+                                <InputText
+                                    style={{ marginLeft: 10 }}
+                                    placeholder="Low"
+                                    value={inputValueLowGVF1}
+                                    onChange={handleInputChange2GVF1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    margin: 10,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {maintainGVF1 ? (
+                                            <span
+                                                style={{
+                                                    fontSize: 15,
+                                                    color: "orange",
+                                                }}
+                                            >
+                                                In Maintenance
+                                            </span>
+                                        ) : (
+                                            <span style={{ fontSize: 15 }}>
+                                                Maintenance Mode
+                                            </span>
+                                        )}
+                                    </p>
+                                    <div>
+                                        <Checkbox
+                                            style={{}}
+                                            onChange={handleMaintainGVF1Toggle}
+                                            checked={maintainGVF1}
+                                        ></Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                <hr />
+
+                <div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div style={{ padding: "0px 10px 0px 10px" }}>
+                            <div
+                                style={{
+                                    justifyContent: "center",
+                                    display: "flex",
+                                    fontSize: 17,
+                                    fontWeight: 500,
+                                    color: background,
+                                    marginBottom: 10,
+                                }}
+                            >
+                                SVA
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <p style={{ marginTop: 5, marginRight: 5 }}>
+                                    {" "}
+                                    High
+                                </p>
+                                <InputText
+                                    placeholder="High"
+                                    value={inputValueHighSVA1}
+                                    onChange={handleInputChange1SVA1}
+                                />
+                            </div>
+
+
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    alignContent: "center",
+                                    marginTop: 5,
+                                }}
+                            >
+                                <p style={{ marginTop: 10 }}> Low</p>
+                                <InputText
+                                    style={{ marginLeft: 10 }}
+                                    placeholder="Low"
+                                    value={inputValueLowSVA1}
+                                    onChange={handleInputChange2SVA1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    margin: 10,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {maintainSVA1 ? (
+                                            <span
+                                                style={{
+                                                    fontSize: 15,
+                                                    color: "orange",
+                                                }}
+                                            >
+                                                In Maintenance
+                                            </span>
+                                        ) : (
+                                            <span style={{ fontSize: 15 }}>
+                                                Maintenance Mode
+                                            </span>
+                                        )}
+                                    </p>
+                                    <div>
+                                        <Checkbox
+                                            style={{}}
+                                            onChange={handleMaintainSVA1Toggle}
+                                            checked={maintainSVA1}
+                                        ></Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{ padding: "0px 10px 0px 10px" }}>
+                            <div
+                                style={{
+                                    justifyContent: "center",
+                                    display: "flex",
+                                    fontSize: 17,
+                                    fontWeight: 500,
+                                    color: background,
+                                    marginBottom: 10,
+                                }}
+                            >
+                                GVA
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <p style={{ marginTop: 5, marginRight: 5 }}>
+                                    {" "}
+                                    High
+                                </p>
+                                <InputText
+                                    placeholder="High"
+                                    value={inputValueHighGVA1}
+                                    onChange={handleInputChange1GVA1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    alignContent: "center",
+                                    marginTop: 5,
+                                }}
+                            >
+                                <p style={{ marginTop: 10 }}> Low</p>
+                                <InputText
+                                    style={{ marginLeft: 10 }}
+                                    placeholder="Low"
+                                    value={inputValueLowGVA1}
+                                    onChange={handleInputChange2GVA1}
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    margin: 10,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {maintainGVA1 ? (
+                                            <span
+                                                style={{
+                                                    fontSize: 15,
+                                                    color: "orange",
+                                                }}
+                                            >
+                                                In Maintenance
+                                            </span>
+                                        ) : (
+                                            <span style={{ fontSize: 15 }}>
+                                                Maintenance Mode
+                                            </span>
+                                        )}
+                                    </p>
+                                    <div>
+                                        <Checkbox
+                                            style={{}}
+                                            onChange={handleMaintainGVA1Toggle}
+                                            checked={maintainGVA1}
+                                        ></Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                <Button
+                    style={{}}
+                    label="Update"
+                    onClick={handleButtonFIQ_1901}
+                />
+            </OverlayPanel>
+
             <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
