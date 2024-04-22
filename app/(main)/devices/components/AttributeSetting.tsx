@@ -31,11 +31,9 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
     const [attributes, setAttributes] = useState<any>([]);
     const [attributeValue, setAttributeValue] = useState<any>();
     const [isJsonValid, setIsJsonValid] = useState(true); // Assuming JSON is valid initially
-    const [isNew, setIsNew] = useState<boolean>(true);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [suggValueTypes, setSuggValueTypes] = useState<any[]>([]);
     const [attribute, setAttribute] = useState<any>({});
-    const [valueType, setValueType] = useState<any>();
     const [isReload, seIsReload] = useState<boolean>(true);
     const toast = useRef<Toast>(null);
     const _fecthDataAttribute = useCallback((deviceId: string) => {
@@ -118,7 +116,7 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                     console.log(typeof value);
                     newAttribute.value.value = Number(value);
                 }
-                console.log(newAttribute);
+
                 setAttribute(newAttribute);
                 break;
             case "jsonValue":
@@ -179,6 +177,9 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
         const inputType = attribute.value?.type;
         switch (inputType) {
             case "Integer":
+                if (Number.isInteger(attribute?.value?.value) === false) {
+                    attribute.value.value = 0;
+                }
                 return (
                     <InputText
                         value={attribute?.value?.value}
@@ -190,6 +191,12 @@ const AttributeSetting: React.FC<Props> = ({ deviceId }) => {
                     />
                 );
             case "Double":
+                if (
+                    typeof attribute?.value?.value !== "number" &&
+                    !isNaN(attribute?.value?.value)
+                ) {
+                    attribute.value.value = 0;
+                }
                 return (
                     <InputNumber
                         value={attribute?.value.value}

@@ -188,7 +188,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
     const _onChangConditionForm = (field: any, value: any) => {
         let newCondition = {
             ...condition,
-            //   id: "c1e7275f-bfc8-e35a-6282-9e70508c418f",
         };
         switch (field) {
             case "key":
