@@ -54,8 +54,12 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             const key = condition.key.key;
             const operation = condition.predicate.operation.toLowerCase();
             const value = condition.predicate.value.defaultValue;
-            if (value !== null) {
+            const dynamicValue = condition.predicate.value.dynamicValue;
+            console.log(condition);
+            if (value !== null && dynamicValue === null) {
                 conditionString = `Condition: ${key} ${operation} ${value}`;
+            } else if (dynamicValue != null) {
+                conditionString = `Condition: ${key} ${operation} ${dynamicValue.sourceAttribute}`;
             } else {
                 conditionString = `Condition: `;
             }
@@ -78,13 +82,22 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             const operation =
                 clearCondition?.predicate?.operation.toLowerCase(); // "equal"
             const value = clearCondition?.predicate?.value?.defaultValue; // true
-            console.log(key, operation, value);
+            console.log(clearCondition);
+            const dynamicValue = clearCondition?.predicate?.value?.dynamicValue;
             if (
                 key !== undefined &&
                 operation !== undefined &&
-                value !== undefined
+                value !== undefined &&
+                dynamicValue === null
             ) {
                 conditionString = `Condition: ${key} ${operation} ${value}`;
+            } else if (
+                key !== undefined &&
+                operation !== undefined &&
+                value !== undefined &&
+                dynamicValue !== null
+            ) {
+                conditionString = `Condition: ${key} ${operation} ${dynamicValue.sourceAttribute}`;
             } else {
                 conditionString = "Codition: ";
             }
