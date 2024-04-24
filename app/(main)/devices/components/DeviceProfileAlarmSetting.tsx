@@ -6,7 +6,8 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { AutoComplete } from "primereact/autocomplete";
 import { getTimeSeriesKeyByProfileId } from "@/api/deviceProfile.api";
-
+import { Checkbox } from "primereact/checkbox";
+import { set } from "lodash";
 interface Props {
     alarm: any;
     onAlarmUpdate: (updatedAlarm: any) => void;
@@ -24,6 +25,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
         useState<boolean>(false);
     const [isClearConditionFormVisible, setIsClearConditionFormVisible] =
         useState<boolean>(false);
+    const [isUseDynamicValue, setIsUseDynamicValue] = useState<boolean>(false);
     const [suggKey, setSuggKey] = useState<any[]>([]);
     const [valueTypes, setValueTypes] = useState<any[]>([]);
     const [operations, setOperations] = useState<any>([]);
@@ -55,7 +57,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             const operation = condition.predicate.operation.toLowerCase();
             const value = condition.predicate.value.defaultValue;
             const dynamicValue = condition.predicate.value.dynamicValue;
-            console.log(condition);
+
             if (value !== null && dynamicValue === null) {
                 conditionString = `Condition: ${key} ${operation} ${value}`;
             } else if (dynamicValue != null) {
@@ -82,7 +84,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             const operation =
                 clearCondition?.predicate?.operation.toLowerCase(); // "equal"
             const value = clearCondition?.predicate?.value?.defaultValue; // true
-            console.log(clearCondition);
+
             const dynamicValue = clearCondition?.predicate?.value?.dynamicValue;
             if (
                 key !== undefined &&
@@ -114,7 +116,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
     };
 
     const _onChangeValueInput = (field: string, value: any) => {
-        console.log(value);
         let newEditAlarm = {
             ...editAlarm,
         };
@@ -195,27 +196,32 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 setCondition(newCondition);
                 break;
             case "valueType":
-                console.log(value);
                 newCondition.valueType = value.value;
                 setCondition(newCondition);
                 break;
             case "operation":
-                console.log(value);
                 newCondition.predicate.operation = value.value;
                 newCondition.predicate.type = newCondition.valueType;
                 setCondition(newCondition);
                 break;
             case "numericValue":
-                console.log(value);
                 newCondition.predicate.value.defaultValue = Number(value);
                 setCondition(newCondition);
                 break;
             case "boolValue":
-                console.log(typeof value);
                 newCondition.predicate.value.defaultValue =
                     value === "true" ? true : false;
-                console.log(newCondition);
+
                 setCondition(newCondition);
+                break;
+            case "dynamicValue":
+                let objDynamicValue = {
+                    inherit: true,
+                    sourceType: "CURRENT_DEVICE",
+                    sourceAttribute: value,
+                };
+                newCondition.predicate.value.dynamicValue = objDynamicValue;
+
                 break;
 
             default:
@@ -223,8 +229,6 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
         }
     };
     const _onChangeClearConditionForm = (field: any, value: any) => {
-        console.log(Object.keys(clearCondition));
-        console.log(clearCondition);
         let newCondition: any = {};
         if (Object.keys(clearCondition).length === 0) {
             newCondition = {
@@ -252,15 +256,13 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             case "key":
                 newCondition.key.key = value;
                 setClearCondition(newCondition);
-                console.log;
+
                 break;
             case "valueType":
-                console.log(value);
                 newCondition.valueType = value.value;
                 setClearCondition(newCondition);
                 break;
             case "operation":
-                console.log(value);
                 if (!newCondition.predicate) {
                     newCondition.predicate = {}; // Initialize key as an empty object if it doesn't exist
                 }
@@ -281,11 +283,19 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                 setClearCondition(newCondition);
                 break;
             case "boolValue":
-                console.log(typeof value);
                 newCondition.predicate.value.defaultValue =
                     value === "true" ? true : false;
-                console.log(newCondition);
+
                 setClearCondition(newCondition);
+                break;
+            case "dynamicValue":
+                let objDynamicValue = {
+                    inherit: true,
+                    sourceType: "CURRENT_DEVICE",
+                    sourceAttribute: value,
+                };
+                newCondition.predicate.value.dynamicValue = objDynamicValue;
+
                 break;
 
             default:
@@ -316,7 +326,7 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
         }
     };
     const _renderValueInput = (condition: any) => {
-        if (condition.valueType === "NUMERIC") {
+        if (condition.valueType === "NUMERIC" && isUseDynamicValue === false) {
             return (
                 <>
                     <label>Value</label>
@@ -324,16 +334,19 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                         keyfilter="pint"
                         value={condition?.predicate?.value?.defaultValue}
                         onChange={(e: any) => {
-                            console.log(e);
                             _onChangConditionForm(
                                 "numericValue",
                                 e.target.value
                             );
                         }}
                     />
+                    {_renderUseDynamicValue()}
                 </>
             );
-        } else if (condition.valueType === "BOOLEAN") {
+        } else if (
+            condition.valueType === "BOOLEAN" &&
+            isUseDynamicValue === false
+        ) {
             return (
                 <>
                     <label>Value</label>
@@ -346,12 +359,32 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                         }}
                         completeMethod={_onSuggBoolValues}
                     ></AutoComplete>
+                    {_renderUseDynamicValue()}
+                </>
+            );
+        } else if (isUseDynamicValue === true) {
+            return (
+                <>
+                    <label>Dynamic Value</label>
+                    <InputText
+                        value={
+                            condition?.predicate?.value?.dynamicValue
+                                ?.sourceAttribute
+                        }
+                        onChange={(e: any) => {
+                            _onChangConditionForm(
+                                "dynamicValue",
+                                e.target.value
+                            );
+                        }}
+                    />
+                    {_renderUseDynamicValue()}
                 </>
             );
         }
     };
     const _renderValueInputClearConditionForm = (condition: any) => {
-        if (condition.valueType === "NUMERIC") {
+        if (condition.valueType === "NUMERIC" && isUseDynamicValue === false) {
             return (
                 <>
                     <label>Value</label>
@@ -359,16 +392,19 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                         keyfilter="pint"
                         value={condition?.predicate?.value?.defaultValue}
                         onChange={(e: any) => {
-                            console.log(e);
                             _onChangeClearConditionForm(
                                 "numericValue",
                                 e.target.value
                             );
                         }}
                     />
+                    {_renderUseDynamicValue()}
                 </>
             );
-        } else if (condition.valueType === "BOOLEAN") {
+        } else if (
+            condition.valueType === "BOOLEAN" &&
+            isUseDynamicValue === false
+        ) {
             return (
                 <>
                     <label>Value</label>
@@ -381,6 +417,26 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
                         }}
                         completeMethod={_onSuggBoolValues}
                     ></AutoComplete>
+                    {_renderUseDynamicValue()}
+                </>
+            );
+        } else if (isUseDynamicValue === true) {
+            return (
+                <>
+                    <label>Dynamic Value</label>
+                    <InputText
+                        value={
+                            condition?.predicate?.value?.dynamicValue
+                                ?.sourceAttribute
+                        }
+                        onChange={(e: any) => {
+                            _onChangeClearConditionForm(
+                                "dynamicValue",
+                                e.target.value
+                            );
+                        }}
+                    />
+                    {_renderUseDynamicValue()}
                 </>
             );
         }
@@ -431,7 +487,21 @@ const DeviceProfileAlarmSetting: React.FC<Props> = ({
             />
         </div>
     );
-    console.log(clearCondition);
+    const _renderUseDynamicValue = () => {
+        return (
+            <>
+                <div className="flex align-items-center">
+                    <Checkbox
+                        checked={isUseDynamicValue}
+                        onChange={(e: any) => {
+                            setIsUseDynamicValue(e.checked);
+                        }}
+                    />
+                    <label>Use dynamic value</label>
+                </div>
+            </>
+        );
+    };
     return (
         <>
             <div>
