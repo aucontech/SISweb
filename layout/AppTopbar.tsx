@@ -52,18 +52,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                             onClick={onConfigButtonClick}
                         ></Button>
                     </li>
-                    <li className="topbar-profile">
-                        <button
-                            type="button"
-                            className="p-link"
-                            // onClick={showProfileSidebar}
-                        >
-                            <img
-                                src="/layout/images/avatar/avatar.png"
-                                alt="Profile"
-                            />
-                        </button>
-                    </li>
+                   
                 </ul>
             </div>
         </div>

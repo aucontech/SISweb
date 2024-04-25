@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
 //import tingting from "./Notification.mp3";
-
+import "./AlarmBellCssBlink.css"
 export default function Alarmbell() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
@@ -42,6 +42,9 @@ export default function Alarmbell() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
+
+         const ReadAllAlarm = {markAllAsReadCmd:{cmdId:4}}
+
         };
 
         ws.current.onclose = () => {
@@ -54,6 +57,7 @@ export default function Alarmbell() {
         };
     }, []);
 
+
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
         const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
@@ -65,9 +69,7 @@ export default function Alarmbell() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
-                    if (!firstRender) { // Kiểm tra nếu không phải lần render đầu tiên thì mới gọi audio
-                        audioRef.current?.play();
-                    }
+                  
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
@@ -81,19 +83,25 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed,firstRender]);
-    useEffect(() => {
-        setFirstRender(false);
-    }, []);
-    const dataAlarm = notifications.slice(0, 6).map((item, index) => (
-        <div key={index} style={{ padding: "0px 10px" }}>
-            <div>
-                <p className={styles.subject}>{item.subject}</p>
-                <p>{item.text}</p>
-                <hr />
+    }, [totalUnreadCount, obj1Processed,]);
+
+
+    const dataAlarm = notifications.slice(0, 6).map((item, index) => {
+        const isAlarm = item.subject.includes("New alarm");
+        const subjectStyle = {
+            color: isAlarm ? "red" : "blue" 
+        };
+        return (
+            <div key={index} style={{ padding: "0px 10px" }}>
+                <div>
+                    <p className={styles.subject} style={subjectStyle}>{item.subject}</p>
+                    <p>{item.text}</p>
+                    <hr />
+                </div>
             </div>
-        </div>
-    ));
+        );
+    });
+    
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
 
@@ -104,6 +112,16 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
+
+        const handleMarkAllAsRead = () => {
+            const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
+            ws.current?.send(JSON.stringify(ReadAllAlarm));
+    
+            const obj3 = { unsubCmd: { cmdId: 1 } };
+            const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
+            ws.current?.send(JSON.stringify(obj3));
+            ws.current?.send(JSON.stringify(obj2));
+        };
     return (
         <div>
             <audio ref={audioRef}>
@@ -118,18 +136,51 @@ export default function Alarmbell() {
                         </p>
                     </div>
                 )}
-                <i
+
+                {totalCount ? ( 
+
+                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
+                 <i
                     className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
                     onClick={(e) => op?.current?.toggle(e)}
                 />
+
+                    </div>
+                 ) : (
+                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
+
+                    <i
+                    className="pi pi-bell"
+                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
+                    onClick={(e) => op?.current?.toggle(e)}
+                />
+                    </div>
+                 )}
+                
+
+
+                
             </div>
             <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
                 <div className={styles.overlayPanel}>
-                    <div style={{ padding: "10px 20px " }}>
-                        <p style={{ fontSize: 20, fontWeight: 600 }}>Alarms</p>
-                        <hr />
+                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
+                       
+                       <div >
+                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
+                        </div>
+
+                        {totalCount ? ( 
+                                <div className="MarkAllBell">
+
+                    <p style={{fontWeight:500,  marginTop:4,cursor:'pointer' }} onClick={handleMarkAllAsRead}> Mark all as read</p>
+
+                                </div>
+
+                        ) : ("")}
                     </div>
+                    <hr />
+
                     {dataAlarm.length > 0 ? (
                         <div style={{ overflowY: "auto", maxHeight: 300 }}>
                             {dataAlarm}
@@ -146,7 +197,7 @@ export default function Alarmbell() {
                     )}
                     <div style={{ padding: 20 }}>
                         <Button
-                            onClick={() => router.push("/notifications")}
+                            onClick={() => router.push("/SetupData")}
                             className={styles.buttonViewAll}
                         >
                             View All
@@ -155,6 +206,8 @@ export default function Alarmbell() {
                     <div></div>
                 </div>
             </OverlayPanel>
+
+
         </div>
     );
 }
