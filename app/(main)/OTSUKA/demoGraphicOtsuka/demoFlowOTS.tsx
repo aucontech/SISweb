@@ -56,6 +56,8 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
+import { Toast } from "primereact/toast";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -102,8 +104,7 @@ export default function DemoFlowOTS() {
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
-
-    const opIQ_1901 = useRef<OverlayPanel>(null);
+    const toast = useRef<Toast>(null);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -199,9 +200,7 @@ export default function DemoFlowOTS() {
     const [HighPT01, setHighPT01] = useState<number | null>(null);
     const [LowPT01, setLowPT01] = useState<number | null>(null);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const op1901 = useRef<OverlayPanel>(null);
-    const [inputValueHighPT1901, setInputValueHighPT1901] = useState<any>();
-    const [inputValueLowPT1901, settInputValueLowPT1901] = useState<any>();
+  
 
     const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
 
@@ -244,51 +243,40 @@ export default function DemoFlowOTS() {
         }
     }, [audioPT1901]);
 
-    const handleButtonPT1901 = async () => {
+    const ChangeMaintainPT_1901 = async () => {
         try {
+            const newValue = !maintainPT_1901;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                {
-                    High_EK1_Pressure: inputValueHighPT1901,
-                    Low_EK1_Pressure: inputValueLowPT1901,
-                }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1901_maintain: newValue }
             );
-            setHighPT01(inputValueHighPT1901);
-            setLowPT01(inputValueLowPT1901);
-            op1901.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainPT_1901(newValue);
+
+
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+            
+        } catch (error) {}
     };
 
-    const handleMaintainPT1901Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainPT_1901;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { PT_1901_maintain: newMaintainValue }
-            );
-            setMaintainPT_1901(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+ 
+    const confirmPT_1901 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation PT-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainPT_1901(),
+        });
     };
 
-    const handleTogglePT1901 = (e: React.MouseEvent) => {
-        op1901.current?.toggle(e);
-        setInputValueHighPT1901(HighPT01);
-        settInputValueLowPT1901(LowPT01);
-    };
+ 
 
-    const handleInputChange = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighPT1901(newValue);
-    };
-
-    const handleInputChange2 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowPT1901(newValue2);
-    };
+  
 
     //================================ PT 1901======================================================
 
@@ -297,8 +285,7 @@ export default function DemoFlowOTS() {
     const [HighPT02, setHighPT02] = useState<number | null>(null);
     const [LowPT02, setLowPT02] = useState<number | null>(null);
     const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighPT1902, setInputValueHighPT1902] = useState<any>();
-    const [inputValueLowPT1902, settInputValueLowPT1902] = useState<any>();
+  
 
     const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
 
@@ -343,51 +330,38 @@ export default function DemoFlowOTS() {
         }
     }, [audioPT1902]);
 
-    const handleButtonPT1902 = async () => {
+    const ChangeMaintainPT_1902 = async () => {
         try {
+            const newValue = !maintainPT_1902;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                {
-                    High_EK2_Pressure: inputValueHighPT1902,
-                    Low_EK2_Pressure: inputValueLowPT1902,
-                }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1902_maintain: newValue }
             );
-            setHighPT02(inputValueHighPT1902);
-            setLowPT02(inputValueLowPT1902);
-            op1902.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainPT_1902(newValue);
+
+
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+            
+        } catch (error) {}
     };
 
-    const handleMaintainPT1902Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainPT_1902;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { PT_1902_maintain: newMaintainValue }
-            );
-            setMaintainPT_1902(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+    const confirmPT_1902 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation PT-1902",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainPT_1902(),
+        });
     };
 
-    const handleTogglePT1902 = (e: React.MouseEvent) => {
-        op1902.current?.toggle(e);
-        setInputValueHighPT1902(HighPT02);
-        settInputValueLowPT1902(LowPT02);
-    };
 
-    const handleInputChangept1902 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighPT1902(newValue);
-    };
 
-    const handleInputChange2PT1902 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowPT1902(newValue2);
-    };
 
     //================================ PT 1902======================================================
 
@@ -396,9 +370,6 @@ export default function DemoFlowOTS() {
     const [HighPT03, setHighPT03] = useState<number | null>(null);
     const [LowPT03, setLowPT03] = useState<number | null>(null);
     const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighPT1903, setInputValueHighPT1903] = useState<any>();
-    const [inputValueLowPT1903, settInputValueLowPT1903] = useState<any>();
-    const op1903 = useRef<OverlayPanel>(null);
 
     const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
@@ -441,51 +412,37 @@ export default function DemoFlowOTS() {
         }
     }, [audioPT1903]);
 
-    const handleButtonPT1903 = async () => {
+    const ChangeMaintainPT_1903 = async () => {
         try {
+            const newValue = !maintainPT_1903;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                {
-                    High_EK3_Pressure: inputValueHighPT1903,
-                    Low_EK3_Pressure: inputValueLowPT1903,
-                }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1903_maintain: newValue }
             );
-            setHighPT03(inputValueHighPT1903);
-            setLowPT03(inputValueLowPT1903);
-            op1903.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainPT_1903(newValue);
+
+
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+            
+        } catch (error) {}
     };
 
-    const handleMaintainPT1903Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainPT_1903;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { PT_1903_maintain: newMaintainValue }
-            );
-            setMaintainPT_1903(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+    const confirmPT_1903 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation PT-1903",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainPT_1903(),
+        });
     };
 
-    const handleTogglePT1903 = (e: React.MouseEvent) => {
-        op1903.current?.toggle(e);
-        setInputValueHighPT1903(HighPT03);
-        settInputValueLowPT1903(LowPT03);
-    };
 
-    const handleInputChangept1903 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighPT1903(newValue);
-    };
-
-    const handleInputChange2PT1903 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowPT1903(newValue2);
-    };
 
     //================================ PT 1903======================================================
 
@@ -494,9 +451,7 @@ export default function DemoFlowOTS() {
     const [HighGD01, setHighGD01] = useState<number | null>(null);
     const [LowGD01, setLowGD01] = useState<number | null>(null);
     const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighGD01, setInputValueHighGD01] = useState<any>();
-    const [inputValueLowGD01, settInputValueLowGD01] = useState<any>();
-    const opGD01 = useRef<OverlayPanel>(null);
+
 
     const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
 
@@ -543,47 +498,38 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD01]);
 
-    const handleButtonGD01 = async () => {
+
+
+    const ChangeMaintainGD_01 = async () => {
         try {
+            const newValue = !maintainGD_1901;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GD_High_1: inputValueHighGD01, GD_Low_1: inputValueLowGD01 }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_1901_maintain: newValue }
             );
-            setHighGD01(inputValueHighGD01);
-            setLowGD01(inputValueLowGD01);
-            opGD01.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
-    const handleMaintainGD1901Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainGD_1901;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GD_1901_maintain: newMaintainValue }
-            );
-            setMaintainGD_1901(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainGD_1901(newValue);
+
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
 
-    const handleToggleGD01 = (e: React.MouseEvent) => {
-        opGD01.current?.toggle(e);
-        setInputValueHighGD01(HighGD01);
-        settInputValueLowGD01(LowGD01);
-    };
 
-    const handleInputChange1GD01 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighGD01(newValue);
-    };
-
-    const handleInputChange2GD01 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowGD01(newValue2);
-    };
+    const confirmGD_1901 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation GD-1903",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGD_01(),
+        });
+    };    
 
     //================================ GD 1901======================================================
 
@@ -641,48 +587,38 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD02]);
 
-    const handleButtonGD02 = async () => {
+
+
+    const ChangeMaintainGD_02 = async () => {
         try {
+            const newValue = !maintainGD_1902;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GD_High_2: inputValueHighGD02, GD_Low_2: inputValueLowGD02 }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_1902_maintain: newValue }
             );
-            setHighGD02(inputValueHighGD02);
-            setLowGD02(inputValueLowGD02);
-            opGD02.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainGD_1902(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
 
-    const handleMaintainGD1902Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainGD_1902;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GD_1902_maintain: newMaintainValue }
-            );
-            setMaintainGD_1902(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
 
-    const handleToggleGD02 = (e: React.MouseEvent) => {
-        opGD02.current?.toggle(e);
-        setInputValueHighGD02(HighGD02);
-        settInputValueLowGD02(LowGD02);
-    };
-
-    const handleInputChange1GD02 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighGD02(newValue);
-    };
-
-    const handleInputChange2GD02 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowGD02(newValue2);
-    };
+    const confirmGD_1902 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation GD-1902",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGD_02(),
+        });
+    };    
 
     //================================ GD 1902 ======================================================
 
@@ -740,47 +676,39 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD03]);
 
-    const handleButtonGD03 = async () => {
+
+    const ChangeMaintainGD_03 = async () => {
         try {
+            const newValue = !maintainGD_1903;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_High_3: inputValueHighGD03, GD_Low_3: inputValueLowGD03 }
+                { GD_1903_maintain: newValue }
             );
-            setHighGD03(inputValueHighGD03);
-            setLowGD03(inputValueLowGD03);
-            opGD03.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
-    const handleMaintainGD1903Toggle = async () => {
-        try {
-            const newMaintainValue = !maintainGD_1903;
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GD_1903_maintain: newMaintainValue }
-            );
-            setMaintainGD_1903(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainGD_1903(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
 
-    const handleToggleGD03 = (e: React.MouseEvent) => {
-        opGD03.current?.toggle(e);
-        setInputValueHighGD03(HighGD03);
-        settInputValueLowGD03(LowGD03);
-    };
 
-    const handleInputChange1GD03 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighGD03(newValue);
-    };
+    const confirmGD_1903 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation GD-1903",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGD_03(),
+        });
+    };    
 
-    const handleInputChange2GD03 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowGD03(newValue2);
-    };
+ 
 
     //================================ GD 1902 ======================================================
 
@@ -837,28 +765,38 @@ export default function DemoFlowOTS() {
         }
     }, [audioSVF1]);
 
-    const handleMaintainSVF1Toggle = async () => {
+    const ChangeMaintainSVF_1 = async () => {
         try {
-            const newMaintainValue = !maintainSVF1;
+            const newValue = !maintainSVF1;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { SVF1_Maintain: newMaintainValue }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVF1_Maintain: newValue }
             );
-            setMaintainSVF1(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainSVF1(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
 
-    const handleInputChange1SVF1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighSVF1(newValue);
-    };
 
-    const handleInputChange2SVF1 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowSVF1(newValue2);
-    };
+    const confirmSVF_1= () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation SVF FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainSVF_1(),
+        });
+    };    
+
+
 
     //================================ SVF1 FIQ 1901 ======================================================
 
@@ -915,28 +853,37 @@ export default function DemoFlowOTS() {
         }
     }, [audioGVF1]);
 
-    const handleMaintainGVF1Toggle = async () => {
+    const ChangeMaintainGVF_1 = async () => {
         try {
-            const newMaintainValue = !maintainGVF1;
+            const newValue = !maintainGVF1;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { GVF1_Maintain: newMaintainValue }
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVF1_Maintain: newValue }
             );
-            setMaintainGVF1(newMaintainValue);
-        } catch (error) {
-            console.log("error: ", error);
-        }
+            setMaintainGVF1(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
 
-    const handleInputChange1GVF1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueHighGVF1(newValue);
-    };
 
-    const handleInputChange2GVF1 = (event: any) => {
-        const newValue2 = event.target.value;
-        settInputValueLowGVF1(newValue2);
-    };
+    const confirmGVF_1= () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation GVF FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGVF_1(),
+        });
+    };    
+
 
     //================================ GVF1 FIQ 1901 ======================================================
 
@@ -945,8 +892,7 @@ export default function DemoFlowOTS() {
         const [HighSVA1, setHighSVA1] = useState<number | null>(null);
         const [LowSVA1, setLowSVA1] = useState<number | null>(null);
         const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-        const [inputValueHighSVA1, setInputValueHighSVA1] = useState<any>();
-        const [inputValueLowSVA1, settInputValueLowSVA1] = useState<any>();
+
     
         const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
     
@@ -992,30 +938,39 @@ export default function DemoFlowOTS() {
                 };
             }
         }, [audioSVA1]);
-    
-        const handleMaintainSVA1Toggle = async () => {
+
+
+        const ChangeMaintainSVA_1 = async () => {
             try {
-                const newMaintainValue = !maintainSVA1;
+                const newValue = !maintainSVA1;
                 await httpApi.post(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                    { SVA1_Maintain: newMaintainValue }
+                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                    { SVA1_Maintain: newValue }
                 );
-                setMaintainSVA1(newMaintainValue);
-            } catch (error) {
-                console.log("error: ", error);
-            }
+                setMaintainSVA1(newValue);
+                
+                toast.current?.show({
+                    severity: "info",
+                    summary: "Rejected",
+                    detail: "Change successfully",
+                    life: 3000,
+                });
+                fetchData()
+    
+                
+            } catch (error) {}
         };
     
-        const handleInputChange1SVA1 = (event: any) => {
-            const newValue = event.target.value;
-            setInputValueHighSVA1(newValue);
-        };
     
-        const handleInputChange2SVA1 = (event: any) => {
-            const newValue2 = event.target.value;
-            settInputValueLowSVA1(newValue2);
-        };
-    
+        const confirmSVA_1= () => {
+            confirmDialog({
+                message: "Do you want to change the status?",
+                header: "Change Confirmation SVA FIQ-1901",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeMaintainSVA_1(),
+            });
+        };    
+
         //================================ SVA1 FIQ 1901 ======================================================
     
         //================================ GVA1 FIQ 1901 ======================================================
@@ -1023,8 +978,7 @@ export default function DemoFlowOTS() {
         const [HighGVA1, setHighGVA1] = useState<number | null>(null);
         const [LowGVA1, setLowGVA1] = useState<number | null>(null);
         const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
-        const [inputValueHighGVA1, setInputValueHighGVA1] = useState<any>();
-        const [inputValueLowGVA1, settInputValueLowGVA1] = useState<any>();
+
     
         const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
     
@@ -1071,82 +1025,423 @@ export default function DemoFlowOTS() {
             }
         }, [audioGVA1]);
     
-        const handleMaintainGVA1Toggle = async () => {
+        const ChangeMaintainGVA_1 = async () => {
             try {
-                const newMaintainValue = !maintainGVA1;
+                const newValue = !maintainGVA1;
                 await httpApi.post(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                    { GVA1_Maintain: newMaintainValue }
+                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                    { GVA1_Maintain: newValue }
                 );
-                setMaintainGVA1(newMaintainValue);
-            } catch (error) {
-                console.log("error: ", error);
-            }
+                setMaintainGVA1(newValue);
+                
+                toast.current?.show({
+                    severity: "info",
+                    summary: "Rejected",
+                    detail: "Change successfully",
+                    life: 3000,
+                });
+                fetchData()
+    
+                
+            } catch (error) {}
         };
     
-        const handleInputChange1GVA1 = (event: any) => {
-            const newValue = event.target.value;
-            setInputValueHighGVA1(newValue);
-        };
     
-        const handleInputChange2GVA1 = (event: any) => {
-            const newValue2 = event.target.value;
-            settInputValueLowGVA1(newValue2);
-        };
+        const confirmGVA_1= () => {
+            confirmDialog({
+                message: "Do you want to change the status?",
+                header: "Change Confirmation GVA FIQ-1901",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeMaintainGVA_1(),
+            });
+        };    
+
     
         //================================ GVA1 FIQ 1901 ======================================================
 
-    // ================================ Center SVF GVF SVA GVA FIQ 1901 =======================================
 
-    const opFIQ_1901 = useRef<OverlayPanel>(null);
+           //================================ SVF2 FIQ 1901 ======================================================
+    //================================ SVF1 FIQ 1901 ======================================================
+    const [audioSVF2, setAudioSVF2] = useState(false);
+    const [HighSVF2, setHighSVF2] = useState<number | null>(null);
+    const [LowSVF2, setLowSVF2] = useState<number | null>(null);
+    const [exceedThresholdSVF2, setExceedThresholdSVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const handleButtonFIQ_1901 = async () => {
+
+    const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighSVF2 === "string" &&
+            typeof LowSVF2 === "string" &&
+            SVF2 !== null &&
+            maintainSVF2 === false
+        ) {
+            const highValueSVF2 = parseFloat(HighSVF2);
+            const lowValueSVF2 = parseFloat(LowSVF2);
+            const ValueSVF2 = parseFloat(SVF2);
+
+            if (
+                !isNaN(highValueSVF2) &&
+                !isNaN(lowValueSVF2) &&
+                !isNaN(ValueSVF2)
+            ) {
+                if (highValueSVF2 < ValueSVF2 || ValueSVF2 < lowValueSVF2) {
+                    if (!audioSVF2) {
+                        audioRef.current?.play();
+                        setAudioSVF2(true);
+                        setExceedThresholdSVF2(true);
+                    }
+                } else {
+                    setAudioSVF2(false);
+                    setExceedThresholdSVF2(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighSVF2, SVF2, audioSVF2, LowSVF2, maintainSVF2]);
+
+    useEffect(() => {
+        if (audioSVF2) {
+            const audioEnded = () => {
+                setAudioSVF2(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioSVF2]);
+
+    const ChangeMaintainSVF_2 = async () => {
         try {
+            const newValue = !maintainSVF2;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                {
-                    SVF1_High: inputValueHighSVF1,
-                    SVF1_Low: inputValueLowSVF1,
-                    GVF1_High: inputValueHighGVF1,
-                    GVF1_Low: inputValueLowGVF1,
-
-                    SVA1_High: inputValueHighSVA1,
-                    SVA1_Low: inputValueLowSVA1,
-                    GVA1_High: inputValueHighGVA1,
-                    GVA1_Low: inputValueLowGVA1,
-                }
+                { SVF2_Maintain: newValue }
             );
-            setHighSVF1(inputValueHighSVF1);
-            setLowSVF1(inputValueLowSVF1);
-            setHighGVF1(inputValueHighGVF1);
-            setLowGVF1(inputValueLowGVF1);
+            setMaintainSVF2(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
 
-            setHighSVA1(inputValueHighSVA1);
-            setLowSVA1(inputValueLowSVA1);
-            setHighGVA1(inputValueHighGVA1);
-            setLowGVA1(inputValueLowGVA1);
-            opFIQ_1901.current?.hide();
-        } catch (error) {
-            console.log("error: ", error);
+            
+        } catch (error) {}
+    };
+
+
+    const confirmSVF_2= () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation SVF FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainSVF_2(),
+        });
+    };    
+
+
+    //================================ SVF1 FIQ 1901 ======================================================
+
+    //================================ GVF2 FIQ 1901 ======================================================
+    const [audioGVF2, setAudioGVF2] = useState(false);
+    const [HighGVF2, setHighGVF2] = useState<number | null>(null);
+    const [LowGVF2, setLowGVF2] = useState<number | null>(null);
+    const [exceedThresholdGVF2, setExceedThresholdGVF2] = useState(false);
+
+
+    const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighGVF2 === "string" &&
+            typeof LowGVF2 === "string" &&
+            GVF2 !== null &&
+            maintainGVF2 === false
+        ) {
+            const highValueGVF2 = parseFloat(HighGVF2);
+            const lowValueGVF2 = parseFloat(LowGVF2);
+            const ValueGVF2 = parseFloat(GVF2);
+
+            if (
+                !isNaN(highValueGVF2) &&
+                !isNaN(lowValueGVF2) &&
+                !isNaN(ValueGVF2)
+            ) {
+                if (highValueGVF2 < ValueGVF2 || ValueGVF2 < lowValueGVF2) {
+                    if (!audioGVF2) {
+                        audioRef.current?.play();
+                        setAudioGVF2(true);
+                        setExceedThresholdGVF2(true);
+                    }
+                } else {
+                    setAudioGVF2(false);
+                    setExceedThresholdGVF2(false);
+                }
+            }
+            fetchData();
         }
+    }, [HighGVF2, GVF2, audioGVF2, LowGVF2, maintainGVF2]);
+
+    useEffect(() => {
+        if (audioGVF2) {
+            const audioEnded = () => {
+                setAudioGVF2(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGVF2]);
+
+    const ChangeMaintainGVF_2 = async () => {
+        try {
+            const newValue = !maintainGVF2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVF2_Maintain: newValue }
+            );
+            setMaintainGVF2(newValue);
+            
+            toast.current?.show({
+                severity: "info",
+                summary: "Rejected",
+                detail: "Change successfully",
+                life: 3000,
+            });
+            fetchData()
+
+            
+        } catch (error) {}
     };
-    const handleToggleFIQ_1901 = (e: React.MouseEvent) => {
-        opFIQ_1901.current?.toggle(e);
-        setInputValueHighSVF1(HighSVF1);
-        settInputValueLowSVF1(LowSVF1);
-
-        setInputValueHighGVF1(HighGVF1);
-        settInputValueLowGVF1(LowGVF1);
 
 
-        setInputValueHighSVA1(HighSVA1);
-        settInputValueLowSVA1(LowSVA1);
+    const confirmGVF_2 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: "Change Confirmation GVF FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGVF_2(),
+        });
+    };    
 
-        setInputValueHighGVA1(HighGVA1);
-        settInputValueLowGVA1(LowGVA1);
-    };
 
-    // ================================ Center SVF GVF SVA GVA FIQ 1901 =======================================
+    //================================ GVF1 FIQ 1901 ======================================================
+
+        //================================ SVA2 FIQ 1901 ======================================================
+        const [audioSVA2, setAudioSVA2] = useState(false);
+        const [HighSVA2, setHighSVA2] = useState<number | null>(null);
+        const [LowSVA2, setLowSVA2] = useState<number | null>(null);
+        const [exceedThresholdSVA2, setExceedThresholdSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    
+    
+        const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
+    
+        useEffect(() => {
+            if (
+                typeof HighSVA2 === "string" &&
+                typeof LowSVA2 === "string" &&
+                SVA2 !== null &&
+                maintainSVA2 === false
+            ) {
+                const highValueSVA2 = parseFloat(HighSVA2);
+                const lowValueSVA2 = parseFloat(LowSVA2);
+                const ValueSVA2 = parseFloat(SVA2);
+    
+                if (
+                    !isNaN(highValueSVA2) &&
+                    !isNaN(lowValueSVA2) &&
+                    !isNaN(ValueSVA2)
+                ) {
+                    if (highValueSVA2 < ValueSVA2 || ValueSVA2 < lowValueSVA2) {
+                        if (!audioSVA2) {
+                            audioRef.current?.play();
+                            setAudioSVA2(true);
+                            setExceedThresholdSVA2(true);
+                        }
+                    } else {
+                        setAudioSVA2(false);
+                        setExceedThresholdSVA2(false);
+                    }
+                }
+                fetchData();
+            }
+        }, [HighSVA2, SVA2, audioSVA2, LowSVA2, maintainSVA2]);
+    
+        useEffect(() => {
+            if (audioSVA2) {
+                const audioEnded = () => {
+                    setAudioSVA2(false);
+                };
+                audioRef.current?.addEventListener("ended", audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener("ended", audioEnded);
+                };
+            }
+        }, [audioSVA2]);
+
+
+        const ChangeMaintainSVA_2 = async () => {
+            try {
+                const newValue = !maintainSVA2;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                    { SVA2_Maintain: newValue }
+                );
+                setMaintainSVA2(newValue);
+                
+                toast.current?.show({
+                    severity: "info",
+                    summary: "Rejected",
+                    detail: "Change successfully",
+                    life: 3000,
+                });
+                fetchData()
+    
+                
+            } catch (error) {}
+        };
+    
+    
+        const confirmSVA_2 = () => {
+            confirmDialog({
+                message: "Do you want to change the status?",
+                header: "Change Confirmation SVA FIQ-1901",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeMaintainSVA_2(),
+            });
+        };    
+
+        //================================ SVA2 FIQ 1901 ======================================================
+    
+        //================================ GVA2 FIQ 1901 ======================================================
+        const [audioGVA2, setAudioGVA2] = useState(false);
+        const [HighGVA2, setHighGVA2] = useState<number | null>(null);
+        const [LowGVA2, setLowGVA2] = useState<number | null>(null);
+        const [exceedThresholdGVA2, setExceedThresholdGVA2] = useState(false);
+ 
+    
+        const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
+    
+        useEffect(() => {
+            if (
+                typeof HighGVA2 === "string" &&
+                typeof LowGVA2 === "string" &&
+                GVA2 !== null &&
+                maintainGVA2 === false
+            ) {
+                const highValueGVA2 = parseFloat(HighGVA2);
+                const lowValueGVA2 = parseFloat(LowGVA2);
+                const ValueGVA2 = parseFloat(GVA2);
+    
+                if (
+                    !isNaN(highValueGVA2) &&
+                    !isNaN(lowValueGVA2) &&
+                    !isNaN(ValueGVA2)
+                ) {
+                    if (highValueGVA2 < ValueGVA2 || ValueGVA2 < lowValueGVA2) {
+                        if (!audioGVA2) {
+                            audioRef.current?.play();
+                            setAudioGVA2(true);
+                            setExceedThresholdGVA2(true);
+                        }
+                    } else {
+                        setAudioGVA2(false);
+                        setExceedThresholdGVA2(false);
+                    }
+                }
+                fetchData();
+            }
+        }, [HighGVA2, GVA2, audioGVA2, LowGVA2, maintainGVA2]);
+    
+        useEffect(() => {
+            if (audioGVA2) {
+                const audioEnded = () => {
+                    setAudioGVA2(false);
+                };
+                audioRef.current?.addEventListener("ended", audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener("ended", audioEnded);
+                };
+            }
+        }, [audioGVA2]);
+    
+        const ChangeMaintainGVA_2 = async () => {
+            try {
+                const newValue = !maintainGVA2;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                    { GVA2_Maintain: newValue }
+                );
+                setMaintainGVA2(newValue);
+                
+                toast.current?.show({
+                    severity: "info",
+                    summary: "Rejected",
+                    detail: "Change successfully",
+                    life: 3000,
+                });
+                fetchData()
+    
+                
+            } catch (error) {}
+        };
+    
+    
+        const confirmGVA_2= () => {
+            confirmDialog({
+                message: "Do you want to change the status?",
+                header: "Change Confirmation GVA FIQ-1901",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeMaintainGVA_2(),
+            });
+        };    
+
+    
+        //================================ GVA1 FIQ 1901 ======================================================
+
+       
+const [lineDuty1901,setLineduty1901]=useState<boolean>(false)
+const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
+
+        const ChangeStatusFIQ = async () => {
+            try {
+                const newValue1 = !lineDuty1901;
+                const newValue2 = !lineDuty1902;
+
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                    { FIQ1901_LineDuty: newValue1,FIQ1902_LineDuty:newValue2 }
+                );
+                setLineduty1901(newValue1);
+                setLineduty1902(newValue2);
+                
+                toast.current?.show({
+                    severity: "info",
+                    summary: "Rejected",
+                    detail: "Change successfully",
+                    life: 3000,
+                });
+                fetchData()
+    
+                
+            } catch (error) {}
+        };
+        const confirmLineDuty= () => {
+            confirmDialog({
+                message: "Do you want to change the line duty?",
+                header: "Change confirmation",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeStatusFIQ(),
+            });
+        };    
+
+ 
 
     const fetchData = async () => {
         try {
@@ -1258,6 +1553,26 @@ export default function DemoFlowOTS() {
 
 
 
+            const HighSVA2 = res.data.find(
+                (item: any) => item.key === "SVA2_High"
+            );
+            setHighSVA2(HighSVA2?.value || null);
+
+            const LowSVA2 = res.data.find(
+                (item: any) => item.key === "SVA2_Low"
+            );
+            setLowSVA2(LowSVA2?.value || null);
+
+            const HighGVA2 = res.data.find(
+                (item: any) => item.key === "GVA2_High"
+            );
+            setHighGVA2(HighGVA2?.value || null);
+
+            const LowGVA2 = res.data.find(
+                (item: any) => item.key === "GVA2_Low"
+            );
+            setLowGVA2(LowGVA2?.value || null);
+
 
 
 
@@ -1291,9 +1606,70 @@ export default function DemoFlowOTS() {
                 (item: any) => item.key === "GD_1903_maintain"
             );
             setMaintainGD_1903(MaintainGD_1903?.value || false);
+
+
+
+
+            const MaintainSVF_1 = res.data.find(
+                (item: any) => item.key === "SVF1_Maintain"
+            );
+            setMaintainSVF1(MaintainSVF_1?.value || false);
+
+            const MaintainGVF_1 = res.data.find(
+                (item: any) => item.key === "GVF1_Maintain"
+            );
+            setMaintainGVF1(MaintainGVF_1?.value || false);
+
+            const MaintainSVA_1 = res.data.find(
+                (item: any) => item.key === "SVA1_Maintain"
+            );
+            setMaintainSVA1(MaintainSVA_1?.value || false);
+
+            const MaintainGVA_1 = res.data.find(
+                (item: any) => item.key === "GVA1_Maintain"
+            );
+            setMaintainGVA1(MaintainGVA_1?.value || false);
+
+
+
+
+            const MaintainSVF_2 = res.data.find(
+                (item: any) => item.key === "SVF2_Maintain"
+            );
+            setMaintainSVF2(MaintainSVF_2?.value || false);
+
+            const MaintainGVF_2 = res.data.find(
+                (item: any) => item.key === "GVF2_Maintain"
+            );
+            setMaintainGVF2(MaintainGVF_2?.value || false);
+
+            const MaintainSVA_2 = res.data.find(
+                (item: any) => item.key === "SVA2_Maintain"
+            );
+            setMaintainSVA2(MaintainSVA_2?.value || false);
+
+            const MaintainGVA_2 = res.data.find(
+                (item: any) => item.key === "GVA2_Maintain"
+            );
+            setMaintainGVA2(MaintainGVA_2?.value || false);
+
+
+
+
+            const LineDuty1901 = res.data.find(
+                (item: any) => item.key === "FIQ1901_LineDuty"
+            );
+            setLineduty1901(LineDuty1901?.value || false);
+
+            const LineDuty1902 = res.data.find(
+                (item: any) => item.key === "FIQ1902_LineDuty"
+            );
+            setLineduty1902(LineDuty1902?.value || false);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+
+
     };
 
     useEffect(() => {
@@ -1368,7 +1744,7 @@ export default function DemoFlowOTS() {
                                         ? "orange"
                                         : "transparent",
                                 }}
-                                onClick={handleToggleFIQ_1901}
+                                onClick={()=> confirmSVF_1()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1425,7 +1801,7 @@ export default function DemoFlowOTS() {
 
                                     
                                 }}
-                                onClick={handleToggleFIQ_1901}
+                                onClick={()=> confirmGVF_1()}
 
                             >
                                 <div style={{ display: "flex" }}>
@@ -1472,7 +1848,7 @@ export default function DemoFlowOTS() {
                                     padding:2,
 
                                 }}
-                                onClick={handleToggleFIQ_1901}
+                                onClick={()=>confirmSVA_1()}
 
                             >
                                 <div style={{ display: "flex" }}>
@@ -1521,7 +1897,7 @@ export default function DemoFlowOTS() {
 
 
                                 }}
-                                onClick={handleToggleFIQ_1901}
+                                onClick={()=>confirmGVA_1()}
 
                             >
                                 <div style={{ display: "flex" }}>
@@ -1560,7 +1936,15 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdSVF2 && !maintainSVF2
+                                        ? "#ff5656"
+                                        : maintainSVF2
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
                                 }}
+                                onClick={()=>confirmSVF_2()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1609,7 +1993,15 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdGVF2&& !maintainGVF2
+                                        ? "#ff5656"
+                                        : maintainGVF2
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
                                 }}
+                                onClick={()=> confirmGVF_2()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1647,7 +2039,15 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdSVA2&& !maintainSVA2
+                                        ? "#ff5656"
+                                        : maintainSVA2
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
                                 }}
+                                onClick={()=> confirmSVA_2()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1695,7 +2095,15 @@ export default function DemoFlowOTS() {
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    backgroundColor:
+                                    exceedThresholdGVA2&& !maintainGVA2
+                                        ? "#ff5656"
+                                        : maintainGVA2
+                                        ? "orange"
+                                        : "transparent",
+                                    padding:2,
                                 }}
+                                onClick={()=> confirmGVA_2()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1742,7 +2150,8 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={handleTogglePT1903}
+                                onClick={()=> confirmPT_1903()}
+
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1787,7 +2196,8 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={handleTogglePT1901}
+
+                                onClick={()=> confirmPT_1901()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -1835,7 +2245,7 @@ export default function DemoFlowOTS() {
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={handleTogglePT1902}
+                                onClick={()=> confirmPT_1902()}
                             >
                                 <div style={{ display: "flex" }}>
                                     <p style={{ color: colorNameValue }}>
@@ -2022,7 +2432,6 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
-
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
                                             ? "#ff5656"
@@ -2031,7 +2440,7 @@ export default function DemoFlowOTS() {
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={handleToggleGD01}
+                                onClick={()=>confirmGD_1901()}
                             >
                                 <p style={{}}>{roundedGD01} LEL</p>
                             </div>
@@ -2061,7 +2470,7 @@ export default function DemoFlowOTS() {
 
                                     cursor: "pointer",
                                 }}
-                                onClick={handleToggleGD02}
+                                onClick={()=> confirmGD_1902()}
                             >
                                 <p
                                     style={{
@@ -2097,7 +2506,7 @@ export default function DemoFlowOTS() {
 
                                     cursor: "pointer",
                                 }}
-                                onClick={handleToggleGD03}
+                                onClick={()=> confirmGD_1903()}
                             >
                                 <p
                                     style={{
@@ -2121,6 +2530,56 @@ export default function DemoFlowOTS() {
                                 {NO === "1" && <div>{SVD_NO}</div>}
                                 {NC === "1" && <div>{SVD_NC}</div>}
                                 {NC === "0" && <div>{SVD_NC}</div>}
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "FIQ_1901") {
+                const roundedGD03 =
+                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
+
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 32,
+                                    fontWeight: 500,
+                                 
+                                }}
+                                onClick={confirmLineDuty}
+                                >
+                                    FIQ-1901
+                                    {lineDuty1901 && <span style={{  marginLeft:30}}><i className="pi pi-check" style={{ fontSize: 35, color:'green', fontWeight:700}}></i></span>}
+
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "FIQ_1902") {
+                const roundedGD03 =
+                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
+
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 32,
+                                    fontWeight: 500,
+                                 
+                                }}
+                                onClick={confirmLineDuty}
+                                >
+                                    FIQ-1902
+                                    {lineDuty1902 && <span style={{  marginLeft:30}}><i className="pi pi-check" style={{ fontSize: 35, color:'green', fontWeight:700}}></i></span>}
                             </div>
                         ),
                     },
@@ -3414,15 +3873,19 @@ export default function DemoFlowOTS() {
                             fontSize: 32,
                             fontWeight: 500,
                         }}
+
+                        onClick={confirmLineDuty}
                     >
                         FIQ-1901
+                        {lineDuty1901 && <span>1901</span>}
+
                     </div>
                 ),
             },
             position: positions.FIQ_1901,
 
             style: {
-                background: "yellow",
+                background: "#ffffaa",
                 border: "1px solid white",
                 width: 320,
                 height: 65,
@@ -3438,15 +3901,19 @@ export default function DemoFlowOTS() {
                             fontSize: 32,
                             fontWeight: 500,
                         }}
+                        onClick={confirmLineDuty}
+
                     >
                         FIQ-1902
+                        {lineDuty1902 && <span>1902</span>}
+
                     </div>
                 ),
             },
             position: positions.FIQ_1902,
 
             style: {
-                background: "yellow",
+                background: "#ffffaa",
                 border: "1px solid white",
                 width: 320,
                 height: 65,
@@ -5533,6 +6000,8 @@ export default function DemoFlowOTS() {
 
     return (
         <div>
+
+            <h2>Graphic Otsuka</h2>
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
@@ -5540,977 +6009,17 @@ export default function DemoFlowOTS() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
-            <OverlayPanel ref={op1901}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        PT-1901
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighPT1901}
-                            onChange={handleInputChange}
-                        />
-                    </div>
+        
+<Toast ref={toast} />
+            <ConfirmDialog />
 
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowPT1901}
-                            onChange={handleInputChange2}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainPT_1901 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonPT1901}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainPT1901Toggle}
-                            checked={maintainPT_1901}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
+           
 
-            <OverlayPanel ref={op1902}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        PT-1902
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighPT1902}
-                            onChange={handleInputChangept1902}
-                        />
-                    </div>
+         
 
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowPT1902}
-                            onChange={handleInputChange2PT1902}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainPT_1902 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonPT1902}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainPT1902Toggle}
-                            checked={maintainPT_1902}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
+            
 
-            <OverlayPanel ref={op1903}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        PT-1903
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighPT1903}
-                            onChange={handleInputChangept1903}
-                        />
-                    </div>
-
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowPT1903}
-                            onChange={handleInputChange2PT1903}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainPT_1903 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonPT1903}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainPT1903Toggle}
-                            checked={maintainPT_1903}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
-
-            <OverlayPanel ref={opGD01}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        GD-1901
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighGD01}
-                            onChange={handleInputChange1GD01}
-                        />
-                    </div>
-
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowGD01}
-                            onChange={handleInputChange2GD01}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainGD_1901 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonGD01}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainGD1901Toggle}
-                            checked={maintainGD_1901}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
-
-            <OverlayPanel ref={opGD02}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        GD-1902
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighGD02}
-                            onChange={handleInputChange1GD02}
-                        />
-                    </div>
-
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowGD02}
-                            onChange={handleInputChange2GD02}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainGD_1902 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonGD02}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainGD1902Toggle}
-                            checked={maintainGD_1902}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
-
-            <OverlayPanel ref={opGD03}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
-                        style={{
-                            justifyContent: "center",
-                            display: "flex",
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: background,
-                            marginBottom: 10,
-                        }}
-                    >
-                        GD-1903
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <p style={{ marginTop: 10, marginRight: 5 }}> High</p>
-                        <InputText
-                            placeholder="High"
-                            value={inputValueHighGD03}
-                            onChange={handleInputChange1GD03}
-                        />
-                    </div>
-
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            alignContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <p style={{ marginTop: 10 }}> Low</p>
-                        <InputText
-                            style={{ marginLeft: 10 }}
-                            placeholder="Low"
-                            value={inputValueLowGD03}
-                            onChange={handleInputChange2GD03}
-                        />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        margin: 10,
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p style={{ display: "flex", textAlign: "center" }}>
-                            {maintainGD_1903 ? (
-                                <span style={{ fontSize: 15, color: "orange" }}>
-                                    In Maintenance
-                                </span>
-                            ) : (
-                                <span style={{ fontSize: 15 }}>
-                                    Maintenance Mode
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Button
-                            style={{}}
-                            label="Update"
-                            onClick={handleButtonGD03}
-                        />
-                        <Checkbox
-                            style={{ marginRight: 20 }}
-                            onChange={handleMaintainGD1903Toggle}
-                            checked={maintainGD_1903}
-                        ></Checkbox>
-                    </div>
-                </div>
-            </OverlayPanel>
-
-            <OverlayPanel ref={opFIQ_1901}>
-                <p style={{fontSize:25, fontWeight:500}} >FIQ-1901</p>
-
-                <div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <div style={{ padding: "0px 10px 0px 10px" }}>
-                            <div
-                                style={{
-                                    justifyContent: "center",
-                                    display: "flex",
-                                    fontSize: 17,
-                                    fontWeight: 500,
-                                    color: background,
-                                    marginBottom: 10,
-                                }}
-                            >
-                                SVF
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <p style={{ marginTop: 5, marginRight: 5 }}>
-                                    {" "}
-                                    High
-                                </p>
-                                <InputText
-                                    placeholder="High"
-                                    value={inputValueHighSVF1}
-                                    onChange={handleInputChange1SVF1}
-                                />
-                            </div>
-
-
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    alignContent: "center",
-                                    marginTop: 5,
-                                }}
-                            >
-                                <p style={{ marginTop: 10 }}> Low</p>
-                                <InputText
-                                    style={{ marginLeft: 10 }}
-                                    placeholder="Low"
-                                    value={inputValueLowSVF1}
-                                    onChange={handleInputChange2SVF1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    margin: 10,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                    }}
-                                >
-                                    <p
-                                        style={{
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {maintainSVF1 ? (
-                                            <span
-                                                style={{
-                                                    fontSize: 15,
-                                                    color: "orange",
-                                                }}
-                                            >
-                                                In Maintenance
-                                            </span>
-                                        ) : (
-                                            <span style={{ fontSize: 15 }}>
-                                                Maintenance Mode
-                                            </span>
-                                        )}
-                                    </p>
-                                    <div>
-                                        <Checkbox
-                                            style={{}}
-                                            onChange={handleMaintainSVF1Toggle}
-                                            checked={maintainSVF1}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style={{ padding: "0px 10px 0px 10px" }}>
-                            <div
-                                style={{
-                                    justifyContent: "center",
-                                    display: "flex",
-                                    fontSize: 17,
-                                    fontWeight: 500,
-                                    color: background,
-                                    marginBottom: 10,
-                                }}
-                            >
-                                GVF
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <p style={{ marginTop: 5, marginRight: 5 }}>
-                                    {" "}
-                                    High
-                                </p>
-                                <InputText
-                                    placeholder="High"
-                                    value={inputValueHighGVF1}
-                                    onChange={handleInputChange1GVF1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    alignContent: "center",
-                                    marginTop: 5,
-                                }}
-                            >
-                                <p style={{ marginTop: 10 }}> Low</p>
-                                <InputText
-                                    style={{ marginLeft: 10 }}
-                                    placeholder="Low"
-                                    value={inputValueLowGVF1}
-                                    onChange={handleInputChange2GVF1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    margin: 10,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                    }}
-                                >
-                                    <p
-                                        style={{
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {maintainGVF1 ? (
-                                            <span
-                                                style={{
-                                                    fontSize: 15,
-                                                    color: "orange",
-                                                }}
-                                            >
-                                                In Maintenance
-                                            </span>
-                                        ) : (
-                                            <span style={{ fontSize: 15 }}>
-                                                Maintenance Mode
-                                            </span>
-                                        )}
-                                    </p>
-                                    <div>
-                                        <Checkbox
-                                            style={{}}
-                                            onChange={handleMaintainGVF1Toggle}
-                                            checked={maintainGVF1}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                </div>
-                <hr />
-
-                <div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <div style={{ padding: "0px 10px 0px 10px" }}>
-                            <div
-                                style={{
-                                    justifyContent: "center",
-                                    display: "flex",
-                                    fontSize: 17,
-                                    fontWeight: 500,
-                                    color: background,
-                                    marginBottom: 10,
-                                }}
-                            >
-                                SVA
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <p style={{ marginTop: 5, marginRight: 5 }}>
-                                    {" "}
-                                    High
-                                </p>
-                                <InputText
-                                    placeholder="High"
-                                    value={inputValueHighSVA1}
-                                    onChange={handleInputChange1SVA1}
-                                />
-                            </div>
-
-
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    alignContent: "center",
-                                    marginTop: 5,
-                                }}
-                            >
-                                <p style={{ marginTop: 10 }}> Low</p>
-                                <InputText
-                                    style={{ marginLeft: 10 }}
-                                    placeholder="Low"
-                                    value={inputValueLowSVA1}
-                                    onChange={handleInputChange2SVA1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    margin: 10,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                    }}
-                                >
-                                    <p
-                                        style={{
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {maintainSVA1 ? (
-                                            <span
-                                                style={{
-                                                    fontSize: 15,
-                                                    color: "orange",
-                                                }}
-                                            >
-                                                In Maintenance
-                                            </span>
-                                        ) : (
-                                            <span style={{ fontSize: 15 }}>
-                                                Maintenance Mode
-                                            </span>
-                                        )}
-                                    </p>
-                                    <div>
-                                        <Checkbox
-                                            style={{}}
-                                            onChange={handleMaintainSVA1Toggle}
-                                            checked={maintainSVA1}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style={{ padding: "0px 10px 0px 10px" }}>
-                            <div
-                                style={{
-                                    justifyContent: "center",
-                                    display: "flex",
-                                    fontSize: 17,
-                                    fontWeight: 500,
-                                    color: background,
-                                    marginBottom: 10,
-                                }}
-                            >
-                                GVA
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <p style={{ marginTop: 5, marginRight: 5 }}>
-                                    {" "}
-                                    High
-                                </p>
-                                <InputText
-                                    placeholder="High"
-                                    value={inputValueHighGVA1}
-                                    onChange={handleInputChange1GVA1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    alignContent: "center",
-                                    marginTop: 5,
-                                }}
-                            >
-                                <p style={{ marginTop: 10 }}> Low</p>
-                                <InputText
-                                    style={{ marginLeft: 10 }}
-                                    placeholder="Low"
-                                    value={inputValueLowGVA1}
-                                    onChange={handleInputChange2GVA1}
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    margin: 10,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                    }}
-                                >
-                                    <p
-                                        style={{
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {maintainGVA1 ? (
-                                            <span
-                                                style={{
-                                                    fontSize: 15,
-                                                    color: "orange",
-                                                }}
-                                            >
-                                                In Maintenance
-                                            </span>
-                                        ) : (
-                                            <span style={{ fontSize: 15 }}>
-                                                Maintenance Mode
-                                            </span>
-                                        )}
-                                    </p>
-                                    <div>
-                                        <Checkbox
-                                            style={{}}
-                                            onChange={handleMaintainGVA1Toggle}
-                                            checked={maintainGVA1}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                </div>
-                <Button
-                    style={{}}
-                    label="Update"
-                    onClick={handleButtonFIQ_1901}
-                />
-            </OverlayPanel>
+          
 
             <Dialog
                 visible={visible}
@@ -6531,6 +6040,7 @@ export default function DemoFlowOTS() {
             </Dialog>
             <div
                 style={{
+                    borderRadius:5,
                     width: "100%",
                     height: "100vh",
                     position: "relative",
@@ -6582,6 +6092,8 @@ export default function DemoFlowOTS() {
                     <Controls />
                 </ReactFlow>
             </div>
+
+
         </div>
     );
 }

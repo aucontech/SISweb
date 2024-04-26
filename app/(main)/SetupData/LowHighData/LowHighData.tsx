@@ -8,6 +8,8 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import "./LowHighOtsuka.css"
+import { Checkbox } from 'primereact/checkbox';
 
 interface StateMap {
     [key: string]:
@@ -59,6 +61,15 @@ export default function LowHighData() {
         }
     }, []);
 
+    
+    const [Ek1_Temperature,setEk1_Temperature] = useState<string | null>(null)
+    const [Ek1_Pressure,setEk1_Pressure] = useState<string | null>(null)
+    const [Ek1_VbToday,setEk1_VbToday] = useState<string | null>(null)
+    const [Ek1_VbLastDay,setEk1_VbLastDay] = useState<string | null>(null)
+    const [Ek1_VmToDay,setEk1_VmToDay] = useState<string | null>(null)
+    const [Ek1_VmLastDay,setEk1_VmLastDay] = useState<string | null>(null)
+
+
     useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
@@ -88,6 +99,14 @@ export default function LowHighData() {
 
                         time: setTimeUpdate,
 
+                        EK1_Temperature: setEk1_Temperature,
+                        EK1_Pressure: setEk1_Pressure,
+                        EK1_Vb_of_Current_Day:setEk1_VbToday,
+                        EK1_Vb_of_Last_Day:setEk1_VbLastDay,
+                        EK1_Vm_of_Current_Day:setEk1_VmToDay,
+                        EK1_Vm_of_Last_Day:setEk1_VmLastDay
+
+
 
                     };
 
@@ -103,6 +122,7 @@ export default function LowHighData() {
             };
         }
     }, [data]);
+
 
     const fetchData = async () => {
         try {
@@ -180,6 +200,85 @@ export default function LowHighData() {
             setHighGVA2(HighGVA2?.value || null);
             const LowGVA2 = res.data.find((item: any) => item.key === "GVA2_Low");
             setLowGVA2(LowGVA2?.value || null);
+
+
+
+            const MaintainPT_1901 = res.data.find(
+                (item: any) => item.key === "PT_1901_maintain"
+            );
+            setMaintainPT_1901(MaintainPT_1901?.value || false);
+
+            const MaintainPT_1902 = res.data.find(
+                (item: any) => item.key === "PT_1902_maintain"
+            );
+            setMaintainPT_1902(MaintainPT_1902?.value || false);
+
+            const MaintainPT_1903 = res.data.find(
+                (item: any) => item.key === "PT_1903_maintain"
+            );
+            setMaintainPT_1903(MaintainPT_1903?.value || false);
+
+            const MaintainGD_1901 = res.data.find(
+                (item: any) => item.key === "GD_1901_maintain"
+            );
+            setMaintainGD_1901(MaintainGD_1901?.value || false);
+
+            const MaintainGD_1902 = res.data.find(
+                (item: any) => item.key === "GD_1902_maintain"
+            );
+            setMaintainGD_1902(MaintainGD_1902?.value || false);
+
+            const MaintainGD_1903 = res.data.find(
+                (item: any) => item.key === "GD_1903_maintain"
+            );
+            setMaintainGD_1903(MaintainGD_1903?.value || false);
+
+
+
+            const MaintainSVF_1 = res.data.find(
+                (item: any) => item.key === "SVF1_Maintain"
+            );
+            setMaintainSVF1(MaintainSVF_1?.value || false);
+
+            const MaintainGVF_1 = res.data.find(
+                (item: any) => item.key === "GVF1_Maintain"
+            );
+            setMaintainGVF1(MaintainGVF_1?.value || false);
+
+            const MaintainSVA_1 = res.data.find(
+                (item: any) => item.key === "SVA1_Maintain"
+            );
+            setMaintainSVA1(MaintainSVA_1?.value || false);
+
+            const MaintainGVA_1 = res.data.find(
+                (item: any) => item.key === "GVA1_Maintain"
+            );
+            setMaintainGVA1(MaintainGVA_1?.value || false);
+
+
+
+
+            const MaintainSVF_2 = res.data.find(
+                (item: any) => item.key === "SVF2_Maintain"
+            );
+            setMaintainSVF2(MaintainSVF_2?.value || false);
+
+            const MaintainGVF_2 = res.data.find(
+                (item: any) => item.key === "GVF2_Maintain"
+            );
+            setMaintainGVF2(MaintainGVF_2?.value || false);
+
+            const MaintainSVA_2 = res.data.find(
+                (item: any) => item.key === "SVA2_Maintain"
+            );
+            setMaintainSVA2(MaintainSVA_2?.value || false);
+
+            const MaintainGVA_2 = res.data.find(
+                (item: any) => item.key === "GVA2_Maintain"
+            );
+            setMaintainGVA2(MaintainGVA_2?.value || false);
+
+         
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -197,9 +296,12 @@ const [highEK1PressureValue, setHighEK1PressureValue] = useState<number | null>(
 const [lowEK1PressureValue, setLowEK1PressureValue] = useState<number | null>(null);
 const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
+const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
+
 
     useEffect(() => {
-        if (typeof highEK1PressureValue === 'string' && typeof lowEK1PressureValue === 'string' && PT02 !== null) {
+        if (typeof highEK1PressureValue === 'string' && typeof lowEK1PressureValue === 'string' && PT02 !== null && maintainPT_1901 === false
+        ) {
             const highValue = parseFloat(highEK1PressureValue);
             const lowValue = parseFloat(lowEK1PressureValue);
             const PT02Value = parseFloat(PT02);
@@ -217,7 +319,7 @@ const [exceedThreshold, setExceedThreshold] = useState(false); // State để l�
                 }
             } 
         } 
-    }, [highEK1PressureValue, PT02, audioPlaying, lowEK1PressureValue]);
+    }, [highEK1PressureValue, PT02, audioPlaying, lowEK1PressureValue,maintainPT_1901]);
 
     useEffect(() => {
         if (audioPlaying) {
@@ -240,6 +342,17 @@ const [exceedThreshold, setExceedThreshold] = useState(false); // State để l�
         const newValue2 = event.target.value;
         setInputValue2(newValue2);
     };
+    const ChangeMaintainPT_1901 = async () => {
+        try {
+            const newValue = !maintainPT_1901;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1901_maintain: newValue }
+            );
+            setMaintainPT_1901(newValue);
+            
+        } catch (error) {}
+    };
 
 // ========================== PT 1901 ============================================
 
@@ -253,11 +366,12 @@ const [inputValueEK1Low, setInputValueEK2Low] = useState<any>();
 const [highEK2PressureValue, setHighEK2PressureValue] = useState<number | null>(null);
 const [lowEK2PressureValue, setLowEK2PressureValue] = useState<number | null>(null);
 const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
 
 
 
     useEffect(() => {
-        if (typeof highEK2PressureValue === 'string' && typeof lowEK2PressureValue === 'string' && PT03 !== null) {
+        if (typeof highEK2PressureValue === 'string' && typeof lowEK2PressureValue === 'string' && PT03 !== null && maintainPT_1902 === false) {
             const highValue = parseFloat(highEK2PressureValue);
             const lowValue = parseFloat(lowEK2PressureValue);
             const PT03Value = parseFloat(PT03);
@@ -275,7 +389,7 @@ const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để 
                 }
             } 
         } 
-    }, [highEK2PressureValue, PT03, audioPlaying2, lowEK2PressureValue]);
+    }, [highEK2PressureValue, PT03, audioPlaying2, lowEK2PressureValue, maintainPT_1902]);
 
     useEffect(() => {
         if (audioPlaying2) {
@@ -298,7 +412,17 @@ const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để 
         setInputValueEK2Low(newValue2);
     };
 
-
+    const ChangeMaintainPT_1902 = async () => {
+        try {
+            const newValue = !maintainPT_1902;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1902_maintain: newValue }
+            );
+            setMaintainPT_1902(newValue);
+            
+        } catch (error) {}
+    };
 // ========================== PT 1902 ============================================
 
 // ========================== PT 1903 ============================================
@@ -310,9 +434,10 @@ const [inputValueEK3Low, setInputValueEK3Low] = useState<any>();
 const [highEK3PressureValue, setHighEK3PressureValue] = useState<number | null>(null);
 const [lowEK3PressureValue, setLowEK3PressureValue] = useState<number | null>(null);
 const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof highEK3PressureValue === 'string' && typeof lowEK3PressureValue === 'string' && PT01 !== null) {
+        if (typeof highEK3PressureValue === 'string' && typeof lowEK3PressureValue === 'string' && PT01 !== null && maintainPT_1903 === false  ) {
             const highValue = parseFloat(highEK3PressureValue);
             const lowValue = parseFloat(lowEK3PressureValue);
             const PT01Value = parseFloat(PT01);
@@ -330,7 +455,7 @@ const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để 
                 }
             } 
         } 
-    }, [highEK3PressureValue, PT01, audioPlaying3, lowEK3PressureValue]);
+    }, [highEK3PressureValue, PT01, audioPlaying3, lowEK3PressureValue,maintainPT_1903]);
 
     useEffect(() => {
         if (audioPlaying3) {
@@ -354,7 +479,17 @@ const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để 
         setInputValueEK3Low(newValue2);
     };
 
-
+    const ChangeMaintainPT_1903 = async () => {
+        try {
+            const newValue = !maintainPT_1903;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PT_1903_maintain: newValue }
+            );
+            setMaintainPT_1903(newValue);
+            
+        } catch (error) {}
+    };
 // ========================== PT 1903 ============================================
 
 // ========================== GD_01 ============================================
@@ -365,10 +500,11 @@ const [inputHighGD01, setInputHighGD01] = useState<any>();
 const [inputLowGD01, setInputLowGD01] = useState<any>();
 const [HighGD01, setHighGD01] = useState<number | null>(null);
 const [LowGD01, setLowGD01] = useState<number | null>(null);
-const [AlarmGD01, setAlarmGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [AlarmGD01, setAlarmGD01] = useState(false);
+const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighGD01 === 'string' && typeof LowGD01 === 'string' && GD01 !== null) {
+        if (typeof HighGD01 === 'string' && typeof LowGD01 === 'string' && GD01 !== null && maintainGD_1901 === false) {
             const highValue = parseFloat(HighGD01);
             const lowValue = parseFloat(LowGD01);
             const GD01Value = parseFloat(GD01);
@@ -386,7 +522,7 @@ const [AlarmGD01, setAlarmGD01] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGD01, GD01, AudioGD01, LowGD01]);
+    }, [HighGD01, GD01, AudioGD01, LowGD01,maintainGD_1901]);
 
     useEffect(() => {
         if (AudioGD01) {
@@ -410,7 +546,17 @@ const [AlarmGD01, setAlarmGD01] = useState(false); // State để lưu trữ tr�
         setInputLowGD01(newValue2);
     };
 
-
+    const ChangeMaintainGD_01 = async () => {
+        try {
+            const newValue = !maintainGD_1901;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_1901_maintain: newValue }
+            );
+            setMaintainGD_1901(newValue);
+            
+        } catch (error) {}
+    };
 // ========================== GD_01 ============================================
 
 // ========================== GD_02 ============================================
@@ -421,9 +567,10 @@ const [inputLowGD02, setInputLowGD02] = useState<any>();
 const [HighGD02, setHighGD02] = useState<number | null>(null);
 const [LowGD02, setLowGD02] = useState<number | null>(null);
 const [AlarmGD02, setAlarmGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighGD02 === 'string' && typeof LowGD02 === 'string' && GD02 !== null) {
+        if (typeof HighGD02 === 'string' && typeof LowGD02 === 'string' && GD02 !== null && maintainGD_1902=== false ) {
             const highValue = parseFloat(HighGD02);
             const lowValue = parseFloat(LowGD02);
             const GD02Value = parseFloat(GD02);
@@ -441,7 +588,7 @@ const [AlarmGD02, setAlarmGD02] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGD02, GD02, AudioGD02, LowGD02]);
+    }, [HighGD02, GD02, AudioGD02, LowGD02,maintainGD_1902]);
 
     useEffect(() => {
         if (AlarmGD02) {
@@ -464,7 +611,17 @@ const [AlarmGD02, setAlarmGD02] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGD02(newValue2);
     };
-
+    const ChangeMaintainGD_02 = async () => {
+        try {
+            const newValue = !maintainGD_1902;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_1902_maintain: newValue }
+            );
+            setMaintainGD_1902(newValue);
+            
+        } catch (error) {}
+    };
 // ========================== GD_02 ============================================
 
 
@@ -476,9 +633,10 @@ const [inputLowGD03, setInputLowGD03] = useState<any>();
 const [HighGD03, setHighGD03] = useState<number | null>(null);
 const [LowGD03, setLowGD03] = useState<number | null>(null);
 const [AlarmGD03, setAlarmGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighGD03 === 'string' && typeof LowGD03 === 'string' && GD03 !== null) {
+        if (typeof HighGD03 === 'string' && typeof LowGD03 === 'string' && GD03 !== null && maintainGD_1903 === false ) {
             const highValue = parseFloat(HighGD03);
             const lowValue = parseFloat(LowGD03);
             const GD03Value = parseFloat(GD03);
@@ -496,7 +654,7 @@ const [AlarmGD03, setAlarmGD03] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGD03, GD03, AudioGD03, LowGD03]);
+    }, [HighGD03, GD03, AudioGD03, LowGD03,maintainGD_1903]);
 
     useEffect(() => {
         if (AudioGD03) {
@@ -519,7 +677,18 @@ const [AlarmGD03, setAlarmGD03] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGD03(newValue2);
     };
-
+    const ChangeMaintainGD_03 = async () => {
+        try {
+            const newValue = !maintainGD_1903;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GD_1903_maintain: newValue }
+            );
+            setMaintainGD_1903(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== GD_03 ============================================
 
 
@@ -531,9 +700,10 @@ const [inputLowGVF1, setInputLowGVF1] = useState<any>();
 const [HighGVF1, setHighGVF1] = useState<number | null>(null);
 const [LowGVF1, setLowGVF1] = useState<number | null>(null);
 const [AlarmGVF1, setAlarmGVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighGVF1 === 'string' && typeof LowGVF1 === 'string' && GVF1 !== null) {
+        if (typeof HighGVF1 === 'string' && typeof LowGVF1 === 'string' && GVF1 !== null && maintainGVF1 === false) {
             const highValue = parseFloat(HighGVF1);
             const lowValue = parseFloat(LowGVF1);
             const GVF1Value = parseFloat(GVF1);
@@ -551,7 +721,7 @@ const [AlarmGVF1, setAlarmGVF1] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGVF1, GVF1, AudioGVF1, LowGVF1]);
+    }, [HighGVF1, GVF1, AudioGVF1, LowGVF1,maintainGVF1]);
 
     useEffect(() => {
         if (AlarmGVF1) {
@@ -574,7 +744,18 @@ const [AlarmGVF1, setAlarmGVF1] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGVF1(newValue2);
     };
-
+    const ChangeMaintainGVF_01 = async () => {
+        try {
+            const newValue = !maintainGVF1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVF1_Maintain: newValue }
+            );
+            setMaintainGVF1(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== GVF1- FIQ-1901 ============================================
 
 // ========================== SVF1- FIQ-1901  ============================================
@@ -585,9 +766,10 @@ const [inputLowSVF1, setInputLowSVF1] = useState<any>();
 const [HighSVF1, setHighSVF1] = useState<number | null>(null);
 const [LowSVF1, setLowSVF1] = useState<number | null>(null);
 const [AlarmSVF1, setAlarmSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighSVF1 === 'string' && typeof LowSVF1 === 'string' && SVF1 !== null) {
+        if (typeof HighSVF1 === 'string' && typeof LowSVF1 === 'string' && SVF1 !== null && maintainSVF1 === false) {
             const highValue = parseFloat(HighSVF1);
             const lowValue = parseFloat(LowSVF1);
             const SVF1Value = parseFloat(SVF1);
@@ -605,7 +787,7 @@ const [AlarmSVF1, setAlarmSVF1] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighSVF1, SVF1, AudioSVF1, LowSVF1]);
+    }, [HighSVF1, SVF1, AudioSVF1, LowSVF1,maintainSVF1]);
 
     useEffect(() => {
         if (AudioSVF1) {
@@ -629,6 +811,18 @@ const [AlarmSVF1, setAlarmSVF1] = useState(false); // State để lưu trữ tr�
         setInputLowSVF1(newValue2);
     };
 
+    const ChangeMaintainSVF_01 = async () => {
+        try {
+            const newValue = !maintainSVF1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVF1_Maintain: newValue }
+            );
+            setMaintainSVF1(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== SVF1- FIQ-1901 ============================================
 
 
@@ -641,8 +835,10 @@ const [HighSVA1, setHighSVA1] = useState<number | null>(null);
 const [LowSVA1, setLowSVA1] = useState<number | null>(null);
 const [AlarmSVA1, setAlarmSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
+const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
+
     useEffect(() => {
-        if (typeof HighSVA1 === 'string' && typeof LowSVA1 === 'string' && SVA1 !== null) {
+        if (typeof HighSVA1 === 'string' && typeof LowSVA1 === 'string' && SVA1 !== null && maintainSVA1 === false) {
             const highValue = parseFloat(HighSVA1);
             const lowValue = parseFloat(LowSVA1);
             const SVA1Value = parseFloat(SVA1);
@@ -660,7 +856,7 @@ const [AlarmSVA1, setAlarmSVA1] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighSVA1, SVA1, AudioSVA1, LowSVA1]);
+    }, [HighSVA1, SVA1, AudioSVA1, LowSVA1,maintainSVA1]);
 
     useEffect(() => {
         if (AudioSVA1) {
@@ -683,7 +879,18 @@ const [AlarmSVA1, setAlarmSVA1] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowSVA1(newValue2);
     };
-
+    const ChangeMaintainSVA_01 = async () => {
+        try {
+            const newValue = !maintainSVA1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVA1_Maintain: newValue }
+            );
+            setMaintainSVA1(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== SVA1- FIQ-1901 ============================================
 
 // ========================== GVA1- FIQ-1901  ============================================
@@ -695,8 +902,10 @@ const [HighGVA1, setHighGVA1] = useState<number | null>(null);
 const [LowGVA1, setLowGVA1] = useState<number | null>(null);
 const [AlarmGVA1, setAlarmGVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
+const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
+
     useEffect(() => {
-        if (typeof HighGVA1 === 'string' && typeof LowGVA1 === 'string' && GVA1 !== null) {
+        if (typeof HighGVA1 === 'string' && typeof LowGVA1 === 'string' && GVA1 !== null && maintainGVA1 === false) {
             const highValue = parseFloat(HighGVA1);
             const lowValue = parseFloat(LowGVA1);
             const GVA1Value = parseFloat(GVA1);
@@ -714,7 +923,7 @@ const [AlarmGVA1, setAlarmGVA1] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGVA1, GVA1, AudioGVA1, LowGVA1]);
+    }, [HighGVA1, GVA1, AudioGVA1, LowGVA1,maintainGVA1]);
 
     useEffect(() => {
         if (AudioGVA1) {
@@ -737,7 +946,18 @@ const [AlarmGVA1, setAlarmGVA1] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGVA1(newValue2);
     };
-
+    const ChangeMaintainGVA_01 = async () => {
+        try {
+            const newValue = !maintainGVA1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVA1_Maintain: newValue }
+            );
+            setMaintainGVA1(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== GVA1- FIQ-1901 ============================================
 
 // ========================== GVF2- FIQ-19012 ============================================
@@ -749,8 +969,11 @@ const [HighGVF2, setHighGVF2] = useState<number | null>(null);
 const [LowGVF2, setLowGVF2] = useState<number | null>(null);
 const [AlarmGVF2, setAlarmGVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
+const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
+
+
     useEffect(() => {
-        if (typeof HighGVF2 === 'string' && typeof LowGVF2 === 'string' && GVF2 !== null) {
+        if (typeof HighGVF2 === 'string' && typeof LowGVF2 === 'string' && GVF2 !== null && maintainGVF2 === false) {
             const highValue = parseFloat(HighGVF2);
             const lowValue = parseFloat(LowGVF2);
             const GVF2Value = parseFloat(GVF2);
@@ -768,7 +991,7 @@ const [AlarmGVF2, setAlarmGVF2] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGVF2, GVF2, AudioGVF2, LowGVF2]);
+    }, [HighGVF2, GVF2, AudioGVF2, LowGVF2,maintainGVF2]);
 
     useEffect(() => {
         if (AlarmGVF2) {
@@ -791,7 +1014,18 @@ const [AlarmGVF2, setAlarmGVF2] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGVF2(newValue2);
     };
-
+    const ChangeMaintainGVF_02 = async () => {
+        try {
+            const newValue = !maintainGVF2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVF2_Maintain: newValue }
+            );
+            setMaintainGVF2(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== GVF2- FIQ-1902 ============================================
 
 // ========================== SVF2- FIQ-1902  ============================================
@@ -802,9 +1036,10 @@ const [inputLowSVF2, setInputLowSVF2] = useState<any>();
 const [HighSVF2, setHighSVF2] = useState<number | null>(null);
 const [LowSVF2, setLowSVF2] = useState<number | null>(null);
 const [AlarmSVF2, setAlarmSVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighSVF2 === 'string' && typeof LowSVF2 === 'string' && SVF2 !== null) {
+        if (typeof HighSVF2 === 'string' && typeof LowSVF2 === 'string' && SVF2 !== null && maintainSVF2 === false) {
             const highValue = parseFloat(HighSVF2);
             const lowValue = parseFloat(LowSVF2);
             const SVF2Value = parseFloat(SVF2);
@@ -822,7 +1057,7 @@ const [AlarmSVF2, setAlarmSVF2] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighSVF2, SVF2, AudioSVF2, LowSVF2]);
+    }, [HighSVF2, SVF2, AudioSVF2, LowSVF2,maintainSVF2]);
 
     useEffect(() => {
         if (AudioSVF2) {
@@ -845,7 +1080,18 @@ const [AlarmSVF2, setAlarmSVF2] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowSVF2(newValue2);
     };
-
+    const ChangeMaintainSVF_02 = async () => {
+        try {
+            const newValue = !maintainSVF2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVF2_Maintain: newValue }
+            );
+            setMaintainSVF2(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== SVF2- FIQ-1902 ============================================
 
 
@@ -857,9 +1103,10 @@ const [inputLowSVA2, setInputLowSVA2] = useState<any>();
 const [HighSVA2, setHighSVA2] = useState<number | null>(null);
 const [LowSVA2, setLowSVA2] = useState<number | null>(null);
 const [AlarmSVA2, setAlarmSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighSVA2 === 'string' && typeof LowSVA2 === 'string' && SVA2 !== null) {
+        if (typeof HighSVA2 === 'string' && typeof LowSVA2 === 'string' && SVA2 !== null && maintainSVA2 === false) {
             const highValue = parseFloat(HighSVA2);
             const lowValue = parseFloat(LowSVA2);
             const SVA2Value = parseFloat(SVA2);
@@ -877,7 +1124,7 @@ const [AlarmSVA2, setAlarmSVA2] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighSVA2, SVA2, AudioSVA2, LowSVA2]);
+    }, [HighSVA2, SVA2, AudioSVA2, LowSVA2,maintainSVA2]);
 
     useEffect(() => {
         if (AudioSVA2) {
@@ -900,7 +1147,18 @@ const [AlarmSVA2, setAlarmSVA2] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowSVA2(newValue2);
     };
-
+    const ChangeMaintainSVA_02 = async () => {
+        try {
+            const newValue = !maintainSVA2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVA2_Maintain: newValue }
+            );
+            setMaintainSVA2(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== SVA2- FIQ-1902 ============================================
 
 // ========================== GVA2- FIQ-1902  ============================================
@@ -911,9 +1169,10 @@ const [inputLowGVA2, setInputLowGVA2] = useState<any>();
 const [HighGVA2, setHighGVA2] = useState<number | null>(null);
 const [LowGVA2, setLowGVA2] = useState<number | null>(null);
 const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
 
     useEffect(() => {
-        if (typeof HighGVA2 === 'string' && typeof LowGVA2 === 'string' && GVA2 !== null) {
+        if (typeof HighGVA2 === 'string' && typeof LowGVA2 === 'string' && GVA2 !== null && maintainGVA2 === false) {
             const highValue = parseFloat(HighGVA2);
             const lowValue = parseFloat(LowGVA2);
             const GVA2Value = parseFloat(GVA2);
@@ -931,7 +1190,7 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
                 }
             } 
         } 
-    }, [HighGVA2, GVA2, AudioGVA2, LowGVA2]);
+    }, [HighGVA2, GVA2, AudioGVA2, LowGVA2,maintainGVA2]);
 
     useEffect(() => {
         if (AudioGVA2) {
@@ -954,7 +1213,18 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
         const newValue2 = event.target.value;
         setInputLowGVA2(newValue2);
     };
-
+    const ChangeMaintainGVA_02 = async () => {
+        try {
+            const newValue = !maintainGVA2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVA2_Maintain: newValue }
+            );
+            setMaintainGVA2(newValue);
+            
+            
+        } catch (error) {}
+    };
 // ========================== GVA2- FIQ-1901 ============================================
 
     useEffect(() => {
@@ -1103,73 +1373,129 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
 
       const combineCss = {
             CSSpt02 : {
-                color:exceedThreshold ?'red' :  'black'  ,
+                color:exceedThreshold && !maintainPT_1901
+                ? "#ff5656"
+                : maintainPT_1901
+                ? "orange"
+                : "black" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
             },
             CSSpt03 : {
-                color:exceedThreshold2 ?'red' :  'black'  ,
+                color:exceedThreshold2 && !maintainPT_1902
+                ? "#ff5656"
+                : maintainPT_1902
+                ? "orange"
+                : "black"  ,
                 height:25,
                 fontWeight:400
             },
             CSSpt01 : {
-                color:exceedThreshold3 ?'red' :  'black'  ,
+                color:exceedThreshold3 && !maintainPT_1903
+                ? "#ff5656"
+                : maintainPT_1903
+                ? "orange"
+                : "black"  ,
                 height:25,
                 fontWeight:400
             },
 
             CSSgd01 : {
-                color:AlarmGD01 ?'red' :  'black'  ,
+                color:AlarmGD01 && !maintainGD_1901
+                ? "#ff5656"
+                : maintainGD_1901
+                ? "orange"
+                : "black"  ,
                 height:25,
                 fontWeight:400
             },
             CSSgd02 : {
-                color:AlarmGD02 ?'red' :  'black'  ,
+                color:AlarmGD02 && !maintainGD_1902
+                ? "#ff5656"
+                : maintainGD_1902
+                ? "orange"
+                : "black"   ,
                 height:25,
                 fontWeight:400
             },
             CSSgd03 : {
-                color:AlarmGD03 ?'red' :  'black'  ,
+                color:AlarmGD03 && !maintainGD_1903
+                ? "#ff5656"
+                : maintainGD_1903
+                ? "orange"
+                : "black"   ,
                 height:25,
                 fontWeight:400
             },
             CSS_GVF1 : {
-                color:AlarmGVF1 ?'red' :  'black'  ,
+                color:AlarmGVF1 && !maintainGVF1
+                ? "#ff5656"
+                : maintainGVF1
+                ? "orange"
+                : "black"    ,
                 height:25,
                 fontWeight:400
             },
             CSS_SVF1 : {
-                color:AlarmSVF1 ?'red' :  'black'  ,
+                color:AlarmSVF1&& !maintainSVF1
+                ? "#ff5656"
+                : maintainSVF1
+                ? "orange"
+                : "black"    ,
                 height:25,
                 fontWeight:400
             },
              CSS_SVA1 : {
-                color:AlarmSVA1 ?'red' :  'black'  ,
+                color:AlarmSVA1 && !maintainSVA1
+                ? "#ff5656"
+                : maintainSVA1
+                ? "orange"
+                : "black"   ,
                 height:25,
                 fontWeight:400
             },
             CSS_GVA1 : {
-                color:AlarmGVA1 ?'red' :  'black'  ,
+                color:AlarmGVA1 && !maintainGVA1
+                ? "#ff5656"
+                : maintainGVA1
+                ? "orange"
+                : "black"   ,
                 height:25,
                 fontWeight:400
             },
             CSS_GVF2 : {
-                color:AlarmGVF2 ?'red' :  'black'  ,
+                color:AlarmGVF2 && !maintainGVF2
+                ? "#ff5656"
+                : maintainGVF2
+                ? "orange"
+                : "black"  ,
                 height:25,
                 fontWeight:400
             },
             CSS_SVF2 : {
-                color:AlarmSVF2 ?'red' :  'black'  ,
+                color:AlarmSVF2 && !maintainSVF2
+                ? "#ff5656"
+                : maintainSVF2
+                ? "orange"
+                : "black"  ,
                 height:25,
                 fontWeight:400
             },
              CSS_SVA2 : {
-                color:AlarmSVA2 ?'red' :  'black'  ,
+                color:AlarmSVA2&& !maintainSVA2
+                ? "#ff5656"
+                : maintainSVA2
+                ? "orange"
+                : "black" ,
                 height:25,
                 fontWeight:400
             },
             CSS_GVA2 : {
-                color:AlarmGVA2 ?'red' :  'black'  ,
+                color:AlarmGVA2 && !maintainGVA2
+                ? "#ff5656"
+                : maintainGVA2
+                ? "orange"
+                : "black" ,
                 height:25,
                 fontWeight:400
             },
@@ -1177,10 +1503,16 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
     const data1 = [
         { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
          name: <span style={combineCss.CSSpt02}>PT-1901</span> ,
+
          value: <span style={combineCss.CSSpt02} > {PT02} Bara</span>, 
          high: <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt02}    placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainPT_1901}
+         checked={maintainPT_1901}
+     ></Checkbox>
 
         },
 
@@ -1189,9 +1521,12 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
             value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
             high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
-
-          
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainPT_1902}
+         checked={maintainPT_1902}
+     ></Checkbox>
         },
 
         { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
@@ -1199,7 +1534,12 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
            value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
             high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainPT_1903}
+         checked={maintainPT_1903}
+     ></Checkbox>
 
            },
 
@@ -1208,7 +1548,12 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
         value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
          high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGD_01}
+         checked={maintainGD_1901}
+     ></Checkbox>
 
         },
 
@@ -1217,7 +1562,12 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
         value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
          high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGD_02}
+         checked={maintainGD_1902}
+     ></Checkbox>
 
         },
 
@@ -1226,100 +1576,168 @@ const [AlarmGVA2, setAlarmGVA2] = useState(false); // State để lưu trữ tr�
         value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
          high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
-
-        },
-        { timeUpdate: <span style={combineCss.CSS_GVF1} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVF1}>GVF FIQ-1901	 </span> ,
-        value: <span style={combineCss.CSS_GVF1} > {GVF1} sm³/h</span> , 
-         high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGD_03}
+         checked={maintainGD_1903}
+     ></Checkbox>
 
         },
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF1}>SVF FIQ-1901	 </span> ,
-        value: <span style={combineCss.CSS_SVF1} > {SVF1} m³/h</span> , 
+        // modbus: <span style={combineCss.CSS_SVF1}>40858	 </span> ,
+
+        value: <span style={combineCss.CSS_SVF1} > {SVF1} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainSVF_01}
+         checked={maintainSVF1}
+     ></Checkbox>
 
         },
+        { timeUpdate: <span style={combineCss.CSS_GVF1} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_GVF1}>GVF FIQ-1901	 </span> ,
+
+        // modbus: <span style={combineCss.CSS_GVF1}>40860</span> ,
+
+        value: <span style={combineCss.CSS_GVF1} > {GVF1} m³/h</span> , 
+         high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGVF_01}
+         checked={maintainGVF1}
+     ></Checkbox>
+
+        },
+       
           { timeUpdate: <span style={combineCss.CSS_SVA1} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SVA1}>SVA FIQ-1901	 </span> ,
+        name: <span  style={combineCss.CSS_SVA1}>SVA FIQ-1901	 </span> ,
+        // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
+
         value: <span style={combineCss.CSS_SVA1} >  {SVA1} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainSVA_01}
+         checked={maintainSVA1}
+     ></Checkbox>
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVA1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVA1}>GVA FIQ-1901	 </span> ,
+        // modbus: <span  style={combineCss.CSS_GVA1}>40872	 </span> ,
+
         value: <span style={combineCss.CSS_GVA1} > {GVA1} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputHighGVA1} onChange={handleInputChangeHighGVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGVA_01}
+         checked={maintainGVA1}
+     ></Checkbox>
 
         },
-
-        { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVF2}>GVF FIQ-1902	 </span> ,
-        value: <span style={combineCss.CSS_GVF2} > {GVF2} sm³/h</span> , 
-         high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
-
-        },
+      
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF2}>SVF FIQ-1902	 </span> ,
-        value: <span style={combineCss.CSS_SVF2} > {SVF2} m³/h</span> , 
+        // modbus: <span style={combineCss.CSS_SVF2}>  40858 </span> ,
+
+        value: <span style={combineCss.CSS_SVF2} > {SVF2} m³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainSVF_02}
+         checked={maintainSVF2}
+     ></Checkbox>
+
+        },
+        { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_GVF2}>GVF FIQ-1902	 </span> ,
+        // modbus: <span style={combineCss.CSS_GVF2}>        40860        </span> ,
+
+        value: <span style={combineCss.CSS_GVF2} > {GVF2} m³/h</span> , 
+         high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGVF_02}
+         checked={maintainGVF2}
+     ></Checkbox>
+         
 
         },
           { timeUpdate: <span style={combineCss.CSS_SVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVA2}>SVA FIQ-1902	 </span> ,
+        // modbus: <span style={combineCss.CSS_SVA2}>        40854        </span> ,
+
         value: <span style={combineCss.CSS_SVA2} > {SVA2} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainSVA_02}
+         checked={maintainSVA2}
+     ></Checkbox>
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVA2}>GVA FIQ-1902	 </span> ,
+        // modbus: <span style={combineCss.CSS_GVA2}>        40872        </span> ,
+
         value: <span style={combineCss.CSS_GVA2} > {GVA2} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
-         update:  <button style={{height:25, borderRadius:5, border:'none', color:'white', background:'#036E9B', cursor:'pointer'}} onClick={handleButtonClick} > update </button>
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainGVA_02}
+         checked={maintainGVA2}
+     ></Checkbox>
 
         },
       ];
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background:'white', padding:10, borderRadius:10 }}>
+            
+            <audio ref={audioRef}>
+            <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
+        </audio>
             <div>
 
                 <div style={{display:'flex' }}>
-        <h2>OSTUKA</h2>
+        <h2>OTSUKA</h2>
 
         </div>
         <hr />
         </div>
-        <audio ref={audioRef}>
-            <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
-        </audio>
-
+     
       
-      
-        <div style={{width:'100%'}}>
-        <DataTable value={data1} size={'small'} >
+        <div style={{width:'100%' ,  }}>
+        <DataTable  value={data1} size={'small'} scrollable scrollHeight="550px " showGridlines tableStyle={{ minWidth: '50rem' }} >
       <Column field="timeUpdate" header="Time Update" />
+      {/* <Column field="modbus" header="Modbus" /> */}
+
       <Column field="name" header="Name" />
+
       <Column field="value" header="Value" />
       <Column  field="high" header="High" />
       <Column field="low" header="Low" />
-      <Column field="update" header="update" />
+      <Column field="update" header="Update" />
+      <Column field="Maintain" header="Maintain" />
 
     </DataTable>
     </div>

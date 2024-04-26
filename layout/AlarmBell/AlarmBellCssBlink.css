@@ -1,0 +1,25 @@
+@keyframes Blink {
+    0% { background-color: red; }
+50% { background-color:white; }
+100% { background-color: red; }
+}
+
+.BackgroundRed {
+    animation: Blink 0.7s infinite;
+    border-radius: 50px;
+
+
+  }
+
+  .MarkAllBell{
+    width: 150px;
+    height:30px;
+    text-align: center;
+    align-items: center;
+  } 
+  
+  .MarkAllBell:hover{
+    background:rgb(80, 199, 167,0.2);
+    border-radius: 20px;
+  }
+

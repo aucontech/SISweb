@@ -17,6 +17,11 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-home",
                     to: "/devices",
                 },
+                {
+                    label: "Setup Data",
+                    icon: "pi pi-fw pi-home",
+                    to: "/SetupData",
+                },
             ],
         },
         {
