@@ -6001,7 +6001,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
     return (
         <div>
 
-            <h2>Graphic Otsuka</h2>
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
