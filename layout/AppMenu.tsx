@@ -22,6 +22,11 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-home",
                     to: "/SetupData",
                 },
+                {
+                    label: "Score card",
+                    icon: "pi pi-fw pi-home",
+                    to: "/scorecard",
+                },
             ],
         },
         {
