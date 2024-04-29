@@ -117,13 +117,13 @@ const CustomerReport = () => {
                     newReportData.avgTemperatureB2;
                 setReportData(newReportData);
                 break;
-            case "avgPresssureB1":
-                console.log("avgPresssureB1");
-                newReportData.avgPresssureCon = newReportData.avgPresssureB1;
+            case "avgPressureB1":
+                console.log("avgPressureB1");
+                newReportData.avgPressureCon = newReportData.avgPressureB1;
                 setReportData(newReportData);
                 break;
-            case "avgPresssureB2":
-                newReportData.avgPresssureCon = newReportData.avgPresssureB2;
+            case "avgPressureB2":
+                newReportData.avgPressureCon = newReportData.avgPressureB2;
                 setReportData(newReportData);
                 break;
             case "grossVolumeAccumulatedB1":
@@ -238,7 +238,7 @@ const CustomerReport = () => {
                         className="w-full text-center"
                     />
                     <InputText
-                        value={reportData.avgPresssureB1}
+                        value={reportData.avgPressureB1}
                         className="w-full text-center"
                     />
 
@@ -284,7 +284,7 @@ const CustomerReport = () => {
                         Action
                     </Button>
                     <Button
-                        onClick={() => handleDutyClick("avgPresssureB1")}
+                        onClick={() => handleDutyClick("avgPressureB1")}
                         className="w-full"
                     >
                         Action
@@ -331,7 +331,7 @@ const CustomerReport = () => {
                         className="w-full text-center"
                     />
                     <InputText
-                        value={reportData.avgPresssureB2}
+                        value={reportData.avgPressureB2}
                         className="w-full text-center"
                     />
                     <InputText
@@ -376,7 +376,7 @@ const CustomerReport = () => {
                         Action
                     </Button>
                     <Button
-                        onClick={() => handleDutyClick("avgPresssureB2")}
+                        onClick={() => handleDutyClick("avgPressureB2")}
                         className="w-full"
                     >
                         Action
@@ -421,7 +421,7 @@ const CustomerReport = () => {
                         className="w-full text-center"
                     />
                     <InputText
-                        value={reportData?.avgPresssureCon ?? ""}
+                        value={reportData?.avgPressureCon ?? ""}
                         className="w-full text-center"
                     />
                     <InputText
