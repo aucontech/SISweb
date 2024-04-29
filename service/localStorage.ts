@@ -14,9 +14,9 @@ export const readRefreshToken = (): string | null => {
     return localStorage.getItem("refreshToken") || null;
 };
 
-// export const persistUser = (user: UserModel): void => {
-//     localStorage.setItem("user", JSON.stringify(user));
-// };
+export const persistUser = (user: any): void => {
+    localStorage.setItem("user", JSON.stringify(user));
+};
 
 // export const readUser = (): UserModel | null => {
 //     const userStr = localStorage.getItem("user");
