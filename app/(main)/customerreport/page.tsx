@@ -6,7 +6,7 @@ import styles from "./CustomerReport.module.css";
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
 
 const defaultValue = {
     grossVolumeVmB1: 0,
@@ -19,8 +19,8 @@ const defaultValue = {
     energyQB2: 0,
     avgTemperatureB1: 0.0,
     avgTemperatureB2: 0.0,
-    avgPresssureB1: 0.0,
-    avgPresssureB2: 0.0,
+    avgPressureB1: 0.0,
+    avgPressureB2: 0.0,
     grossVolumeAccumulatedB1: 0,
     grossVolumeAccumulatedB2: 0,
     standardVolumeAccumulatedB1: 0,
@@ -154,27 +154,30 @@ const CustomerReport = () => {
 
     const handleExportReport = () => {
         exportReport(reportData)
+            .then((response: any) => {
+                // const contentDisposition = response.headers.get('content-disposition');
+                const contentDisposition: any =
+                    response.headers["content-disposition"];
+                let fileName = "report.xlsx";
+                // In giá trị của Content-Disposition
+                console.log(contentDisposition);
+                if (contentDisposition) {
+                    // Sử dụng Regular Expression để tìm filename
+                    const filenameMatch =
+                        contentDisposition.match(/filename="([^"]+)"/);
 
-            .then(response => {
-               // const contentDisposition = response.headers.get('content-disposition');
-               const contentDisposition = response.headers['content-disposition'];
-               let fileName="report.xlsx"
-               // In giá trị của Content-Disposition
-               console.log(contentDisposition);
-               if (contentDisposition) {
-                // Sử dụng Regular Expression để tìm filename
-                const filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
-
-                // Kiểm tra xem có tìm thấy kết quả phù hợp không
-                if (filenameMatch) {
-                    fileName = filenameMatch[1];
-                  console.log('Tên file:', fileName);
+                    // Kiểm tra xem có tìm thấy kết quả phù hợp không
+                    if (filenameMatch) {
+                        fileName = filenameMatch[1];
+                        console.log("Tên file:", fileName);
+                    } else {
+                        console.log(
+                            "Không tìm thấy tên file trong Content-Disposition"
+                        );
+                    }
                 } else {
-                  console.log('Không tìm thấy tên file trong Content-Disposition');
+                    console.log("Header Content-Disposition không tồn tại");
                 }
-              } else {
-                console.log('Header Content-Disposition không tồn tại');
-              }
                 // if (contentDisposition) {
                 //     const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
                 //     if (filenameMatch && filenameMatch[1]) {
@@ -183,8 +186,8 @@ const CustomerReport = () => {
                 // }
                 saveAs(response.data, fileName);
             })
-            .catch(err => {
-                console.error('Error exporting report:', err);
+            .catch((err) => {
+                console.error("Error exporting report:", err);
             });
     };
     return (

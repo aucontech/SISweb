@@ -115,7 +115,7 @@ const AppMenu = () => {
                 {
                     label: "User",
                     icon: "pi pi-fw pi-user",
-                    // to: "/notifications",
+                    to: "/user",
                 },
                 {
                     label: "About Us",

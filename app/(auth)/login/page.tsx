@@ -1,6 +1,6 @@
 "use client";
 import type { Page } from "@/types";
-import { signIn, useSession } from "next-auth/react";
+import { getCurrentUser } from "@/api/auth.api";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
@@ -9,36 +9,52 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
-import { Utils, UIUtils } from "@/service/Utils";
-import { persistToken, persistRefreshToken } from "@/service/localStorage";
+import { UIUtils } from "@/service/Utils";
 import { AuthContext } from "@/context/AuthProvider";
+import {
+    persistToken,
+    persistRefreshToken,
+    persistUser,
+} from "@/service/localStorage";
 import Image from "next/image";
 
 const Login: Page = () => {
+    const authContext = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
     const toast = useRef<Toast>(null);
     const [rememberMe, setRememberMe] = useState(false);
-    const router = useRouter();
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "dark";
-    const authContext = useContext(AuthContext);
-    if (!authContext) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    const { setIsAuthenticated } = authContext;
-
-    if (!setIsAuthenticated) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
+    const router = useRouter();
+    useEffect(() => {
+        getCurrentUser()
+            .then((resp) => {
+                persistUser(resp.data);
+                router.push("/");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
     const _onLogin = () => {
         login({ username: username, password: password })
             .then((resp) => resp.data)
             .then((resp) => {
                 persistToken(resp.token);
                 persistRefreshToken(resp.refreshToken);
-                setIsAuthenticated(true);
+                getCurrentUser()
+                    .then((resp) => {
+                        persistUser(resp.data);
+                        router.push("/");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        UIUtils.showError({
+                            error: err?.message,
+                            toast: toast.current,
+                        });
+                    });
             })
             .catch((err) => {
                 console.log(err);

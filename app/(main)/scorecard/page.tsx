@@ -3,13 +3,9 @@
 import ScoreCard_Otsuka from "./components/ScoreCard_Otsuka";
 
 const ScoreCard = () => {
-
-
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
-
-                
                 {/* <TabView>
               
                  
@@ -21,8 +17,7 @@ const ScoreCard = () => {
              
                 </TabView> */}
 
-                <ScoreCard_Otsuka/>
-
+                <ScoreCard_Otsuka />
             </div>
         </div>
     );
