@@ -61,14 +61,6 @@ export default function LowHighData() {
         }
     }, []);
 
-    
-    const [Ek1_Temperature,setEk1_Temperature] = useState<string | null>(null)
-    const [Ek1_Pressure,setEk1_Pressure] = useState<string | null>(null)
-    const [Ek1_VbToday,setEk1_VbToday] = useState<string | null>(null)
-    const [Ek1_VbLastDay,setEk1_VbLastDay] = useState<string | null>(null)
-    const [Ek1_VmToDay,setEk1_VmToDay] = useState<string | null>(null)
-    const [Ek1_VmLastDay,setEk1_VmLastDay] = useState<string | null>(null)
-
 
     useEffect(() => {
         if (ws.current) {
@@ -99,13 +91,42 @@ export default function LowHighData() {
 
                         time: setTimeUpdate,
 
-                        EK1_Temperature: setEk1_Temperature,
-                        EK1_Pressure: setEk1_Pressure,
-                        EK1_Vb_of_Current_Day:setEk1_VbToday,
-                        EK1_Vb_of_Last_Day:setEk1_VbLastDay,
-                        EK1_Vm_of_Current_Day:setEk1_VmToDay,
-                        EK1_Vm_of_Last_Day:setEk1_VmLastDay
 
+                        EVC_01_Temperature:setTemperature01,
+                        EVC_02_Temperature:setTemperature02,
+
+                        EVC_01_Vm_of_Last_Day: setVmLastDay01 ,
+                        EVC_02_Vm_of_Last_Day:setVmLastDay02 , 
+
+                        EVC_01_Vb_of_Last_Day: setVbLastDay01 ,
+                        EVC_02_Vb_of_Last_Day:setVbLastDay02 , 
+
+
+                        EVC_01_Vm_of_Current_Day:setVmToDay01,
+                        EVC_02_Vm_of_Current_Day:setVmToDay02,
+
+                        EVC_01_Vb_of_Current_Day: setVbToDay01 ,
+                        EVC_02_Vb_of_Current_Day: setVbToDay02,
+
+                        EVC_01_Remain_Battery_Service_Life:setRebattery01,
+                        EVC_02_Remain_Battery_Service_Life:setRebattery02,
+
+                        DI_UPS_BATTERY:setUpsBattery,
+                        DI_UPS_CHARGING:setUpsCharging,
+                        DI_UPS_ALARM:setUpsAlarm,
+                        UPS_Mode:setUpsMode,
+
+                        DI_SELECT_SW:setSelectSW,
+
+                        Emergency_NC:setEmergencyNC,
+                        Emergency_NO:setEmergencyNO,
+
+                        DI_RESET:setDIReset,
+                        DO_HR_01:setDOHorn,
+                        DO_BC_01:setDOBeacon,
+
+                        
+                        DI_MAP_1:setMap
 
 
                     };
@@ -127,8 +148,9 @@ export default function LowHighData() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/values/attributes/SERVER_SCOPE`
             );
+//=====================================================================================
     
             const highEK1PressureItem = res.data.find((item: any) => item.key === "High_EK1_Pressure");
             setHighEK1PressureValue(highEK1PressureItem?.value || null);
@@ -145,6 +167,7 @@ export default function LowHighData() {
             const lowEK3PressureItem = res.data.find((item: any) => item.key === "Low_EK3_Pressure");
             setLowEK3PressureValue(lowEK3PressureItem?.value || null);
 
+//=====================================================================================
 
             const HighGD01 = res.data.find((item: any) => item.key === "GD_High_1");
             setHighGD01(HighGD01?.value || null);
@@ -200,8 +223,141 @@ export default function LowHighData() {
             setHighGVA2(HighGVA2?.value || null);
             const LowGVA2 = res.data.find((item: any) => item.key === "GVA2_Low");
             setLowGVA2(LowGVA2?.value || null);
+//=====================================================================================
+
+            const HightTemperature01 = res.data.find((item: any) => item.key === "TEMPERATURE_01_HIGH");
+            setHighTemperature01(HightTemperature01?.value || null);
+            const LowTemperature01 = res.data.find((item: any) => item.key === "TEMPERATURE_01_LOW");
+            setLowTemperature01(LowTemperature01?.value || null);
+
+            const HightTemperature02 = res.data.find((item: any) => item.key === "TEMPERATURE_02_HIGH");
+            setHighTemperature02(HightTemperature02?.value || null);
+            const LowTemperature02 = res.data.find((item: any) => item.key === "TEMPERATURE_02_LOW");
+            setLowTemperature02(LowTemperature02?.value || null);
+
+            const HighReBattery01 = res.data.find((item: any) => item.key === "REMAIN_BATTERY01_HIGH");
+            setHighReBattery01(HighReBattery01?.value || null);
+            const LowReBattery01 = res.data.find((item: any) => item.key === "REMAIN_BATTERY01_LOW");
+            setLowReBattery01(LowReBattery01?.value || null);
+
+            const HighReBattery02 = res.data.find((item: any) => item.key === "REMAIN_BATTERY02_HIGH");
+            setHighReBattery02(HighReBattery02?.value || null);
+            const LowReBattery02 = res.data.find((item: any) => item.key === "REMAIN_BATTERY02_LOW");
+            setLowReBattery02(LowReBattery02?.value || null);
+//=====================================================================================
+
+            const HighVmLastDay01 = res.data.find((item: any) => item.key === "VM_LASTDAY01_HIGH");
+            setHighVmLastDay01(HighVmLastDay01?.value || null);
+            const LowVmLastDay01 = res.data.find((item: any) => item.key === "VM_LASTDAY01_LOW");
+            setLowVmLastDay01(LowVmLastDay01?.value || null);
 
 
+            const HighVmLastDay02 = res.data.find((item: any) => item.key === "VM_LASTDAY02_HIGH");
+            setHighVmLastDay02(HighVmLastDay02?.value || null);
+            const LowVmLastDay02 = res.data.find((item: any) => item.key === "VM_LASTDAY02_LOW");
+            setLowVmLastDay02(LowVmLastDay02?.value || null);
+
+            const HighVbLastDay01 = res.data.find((item: any) => item.key === "VB_LASTDAY01_HIGH");
+            setHighVbLastDay01(HighVbLastDay01?.value || null);
+            const LowVbLastDay01 = res.data.find((item: any) => item.key === "VB_LASTDAY01_LOW");
+            setLowVbLastDay01(LowVbLastDay01?.value || null);
+
+
+            const HighVbLastDay02 = res.data.find((item: any) => item.key === "VB_LASTDAY02_HIGH");
+            setHighVbLastDay02(HighVbLastDay02?.value || null);
+            const LowVbLastDay02 = res.data.find((item: any) => item.key === "VB_LASTDAY02_LOW");
+            setLowVbLastDay02(LowVbLastDay02?.value || null);
+//=====================================================================================
+
+const HighVmToDay01 = res.data.find((item: any) => item.key === "VM_TODAY01_HIGH");
+setHighVmToDay01(HighVmToDay01?.value || null);
+const LowVmToDay01 = res.data.find((item: any) => item.key === "VM_TODAY01_LOW");
+setLowVmToDay01(LowVmToDay01?.value || null);
+
+
+const HighVmToDay02 = res.data.find((item: any) => item.key === "VM_TODAY02_HIGH");
+setHighVmToDay02(HighVmToDay02?.value || null);
+const LowVmToDay02 = res.data.find((item: any) => item.key === "VM_TODAY02_LOW");
+setLowVmToDay02(LowVmToDay02?.value || null);
+
+const HighVbToDay01 = res.data.find((item: any) => item.key === "VB_TODAY01_HIGH");
+setHighVbToDay01(HighVbToDay01?.value || null);
+const LowVbToDay01 = res.data.find((item: any) => item.key === "VB_TODAY01_LOW");
+setLowVbToDay01(LowVbToDay01?.value || null);
+
+
+const HighVbToDay02 = res.data.find((item: any) => item.key === "VB_TODAY02_HIGH");
+setHighVbToDay02(HighVbToDay02?.value || null);
+const LowVbToDay02 = res.data.find((item: any) => item.key === "VB_TODAY02_LOW");
+setLowVbToDay02(LowVbToDay02?.value || null);
+//=====================================================================================
+
+const HighUpsBattery = res.data.find((item: any) => item.key === "UPS_BATTERY_HIGH");
+setHighUpsBattery(HighUpsBattery?.value || null);
+const LowUpsBattery = res.data.find((item: any) => item.key === "UPS_BATTERY_LOW");
+setLowUpsBattery(LowUpsBattery?.value || null);
+//=====================================================================================
+
+
+const HighUpsCharging = res.data.find((item: any) => item.key === "UPS_CHARGING_HIGH");
+setHighUpsCharging(HighUpsCharging?.value || null);
+const LowUpsCharging = res.data.find((item: any) => item.key === "UPS_CHARGING_LOW");
+setLowUpsCharging(LowUpsCharging?.value || null);
+//=====================================================================================
+
+const HighUpsAlarm = res.data.find((item: any) => item.key === "UPS_ALARM_HIGH");
+setHighUpsAlarm(HighUpsAlarm?.value || null);
+const LowUpsAlarm = res.data.find((item: any) => item.key === "UPS_ALARM_LOW");
+setLowUpsAlarm(LowUpsAlarm?.value || null);
+
+const MaintainUpsAlarm = res.data.find(
+    (item: any) => item.key === "UPS_ALARM_MAINTAIN"
+);
+setMaintainUpsAlarm(MaintainUpsAlarm?.value || false);
+//=====================================================================================
+
+const HighUpsMode = res.data.find((item: any) => item.key === "UPS_MODE_HIGH");
+setHighUpsMode(HighUpsMode?.value || null);
+const LowUpsMode = res.data.find((item: any) => item.key === "UPS_MODE_LOW");
+setLowUpsMode(LowUpsMode?.value || null);
+
+const MaintainUpsMode = res.data.find(
+    (item: any) => item.key === "UPS_MODE_MAINTAIN"
+);
+setMaintainUpsMode(MaintainUpsMode?.value || false);
+//=====================================================================================
+const HighSelectSW = res.data.find((item: any) => item.key === "SELECT_WS_HIGH");
+setHighSelectSW(HighSelectSW?.value || null);
+const LowSelectSW = res.data.find((item: any) => item.key === "SELECT_WS_LOW");
+setLowSelectSW(LowSelectSW?.value || null);
+
+const MaintainSelect = res.data.find(
+    (item: any) => item.key === "SELECT_WS_MAINTAIN"
+);
+setMaintainSelectSW(MaintainSelect?.value || false);
+//=====================================================================================
+
+const HighEmergencyNC = res.data.find((item: any) => item.key === "EMERGENCY_NC_HIGH");
+setHighEmergencyNC(HighEmergencyNC?.value || null);
+const LowEmergencyNC = res.data.find((item: any) => item.key === "EMERGENCY_NC_LOW");
+setLowEmergencyNC(LowEmergencyNC?.value || null);
+
+const MaintainEmergencyNC = res.data.find(
+    (item: any) => item.key === "EMERGENCY_NC_MAINTAIN"
+);
+setMaintainEmergencyNC(MaintainEmergencyNC?.value || false);
+//=====================================================================================
+
+const HighEmergencyNO = res.data.find((item: any) => item.key === "EMERGENCY_NO_HIGH");
+setHighEmergencyNO(HighEmergencyNO?.value || null);
+const LowEmergencyNO = res.data.find((item: any) => item.key === "EMERGENCY_NO_LOW");
+setLowEmergencyNO(LowEmergencyNO?.value || null);
+
+const MaintainEmergencyNO = res.data.find(
+    (item: any) => item.key === "EMERGENCY_NC_MAINTAIN"
+);
+setMaintainEmergencyNO(MaintainEmergencyNO?.value || false);
+//=====================================================================================
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "PT_1901_maintain"
@@ -217,6 +373,7 @@ export default function LowHighData() {
                 (item: any) => item.key === "PT_1903_maintain"
             );
             setMaintainPT_1903(MaintainPT_1903?.value || false);
+//=====================================================================================
 
             const MaintainGD_1901 = res.data.find(
                 (item: any) => item.key === "GD_1901_maintain"
@@ -233,6 +390,7 @@ export default function LowHighData() {
             );
             setMaintainGD_1903(MaintainGD_1903?.value || false);
 
+//=====================================================================================
 
 
             const MaintainSVF_1 = res.data.find(
@@ -255,6 +413,7 @@ export default function LowHighData() {
             );
             setMaintainGVA1(MaintainGVA_1?.value || false);
 
+//=====================================================================================
 
 
 
@@ -277,9 +436,103 @@ export default function LowHighData() {
                 (item: any) => item.key === "GVA2_Maintain"
             );
             setMaintainGVA2(MaintainGVA_2?.value || false);
+//=====================================================================================
 
-         
-        } catch (error) {
+            const MaintainTemperature_01 = res.data.find(
+                (item: any) => item.key === "maintain_Temperature01"
+            );
+            setMaintainTemperature01(MaintainTemperature_01?.value || false);
+
+
+            const MaintainTemperature_02 = res.data.find(
+                (item: any) => item.key === "maintain_Temperature02"
+            );
+            setMaintainTemperature02(MaintainTemperature_02?.value || false);
+
+//=====================================================================================
+
+
+            const MaintainReBattery_01 = res.data.find(
+                (item: any) => item.key === "REMAIN_BATTERY01_MAINTAIN"
+            );
+            setMaintainReBattery01(MaintainReBattery_01?.value || false);
+
+
+            const MaintainReBattery_02 = res.data.find(
+                (item: any) => item.key === "REMAIN_BATTERY02_MAINTAIN"
+            );
+            setMaintainReBattery02(MaintainReBattery_02?.value || false);
+
+//=====================================================================================
+
+            const MaintainVmLastDay_01 = res.data.find(
+                (item: any) => item.key === "VM_LASTDAY01_MAINTAIN"
+            );
+            setMaintainVmLastDay01(MaintainVmLastDay_01?.value || false);
+
+
+            const MaintainVmLastDay_02 = res.data.find(
+                (item: any) => item.key === "VM_LASTDAY02_MAINTAIN"
+            );
+            setMaintainVmLastDay02(MaintainVmLastDay_02?.value || false);
+
+
+            const MaintainVbLastDay_01 = res.data.find(
+                (item: any) => item.key === "VB_LASTDAY01_MAINTAIN"
+            );
+            setMaintainVbLastDay01(MaintainVbLastDay_01?.value || false);
+
+
+            const MaintainVbLastDay_02 = res.data.find(
+                (item: any) => item.key === "VB_LASTDAY02_MAINTAIN"
+            );
+            setMaintainVbLastDay02(MaintainVbLastDay_02?.value || false);
+//=====================================================================================
+
+
+
+            const MaintainVmToDay_01 = res.data.find(
+                (item: any) => item.key === "VM_TODAY01_MAINTAIN"
+            );
+            setMaintainVmToDay01(MaintainVmToDay_01?.value || false);
+
+
+            const MaintainVmToDay_02 = res.data.find(
+                (item: any) => item.key === "VM_TODAY02_MAINTAIN"
+            );
+            setMaintainVmToDay02(MaintainVmToDay_02?.value || false);
+       
+
+            const MaintainVbToDay_01 = res.data.find(
+                (item: any) => item.key === "VB_TODAY01_MAINTAIN"
+            );
+            setMaintainVbToDay01(MaintainVbToDay_01?.value || false);
+
+
+            const MaintainVbToDay_02 = res.data.find(
+                (item: any) => item.key === "VB_TODAY02_MAINTAIN"
+            );
+            setMaintainVbToDay02(MaintainVbToDay_02?.value || false);
+
+
+//=====================================================================================
+
+const MaintainUpsBattery = res.data.find(
+    (item: any) => item.key === "UPS_BATTERY_MAINTAIN"
+);
+setMaintainUpsBattery(MaintainUpsBattery?.value || false);
+
+
+//=====================================================================================
+const MaintainUpsCharging = res.data.find(
+    (item: any) => item.key === "UPS_CHARGING_MAINTAIN"
+);
+setMaintainUpsCharging(MaintainUpsCharging?.value || false);
+
+
+//=====================================================================================
+
+} catch (error) {
             console.error("Error fetching data:", error);
         }
     };
@@ -1227,6 +1480,1578 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
     };
 // ========================== GVA2- FIQ-1901 ============================================
 
+// ========================== EVC 01 TEMPERATURE ============================================
+const [Temperature01, setTemperature01] = useState<string | null>(null);
+
+const [AudioTemperature01, setAudioTemperature01] = useState(false);
+const [inputHighTemperature01, setInputHighTemperature01] = useState<any>();
+const [inputLowTemperature01, setInputLowTemperature01] = useState<any>();
+const [HighTemperature01, setHighTemperature01] = useState<number | null>(null);
+const [LowTemperature01, setLowTemperature01] = useState<number | null>(null);
+const [AlarmTemperature01, setAlarmTemperature01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainTemperature01, setMaintainTemperature01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighTemperature01 === 'string' && typeof LowTemperature01 === 'string' && Temperature01 !== null && maintainTemperature01 === false) {
+            const highValue = parseFloat(HighTemperature01);
+            const lowValue = parseFloat(LowTemperature01);
+            const Temperature01Value = parseFloat(Temperature01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Temperature01Value)) {
+                if (highValue < Temperature01Value || Temperature01Value < lowValue) {
+                    if (!AudioTemperature01) {
+                        audioRef.current?.play();
+                        setAudioTemperature01(true);
+                        setAlarmTemperature01(true);
+                    }
+                } else {
+                    setAudioTemperature01(false);
+                    setAlarmTemperature01(false);
+                }
+            } 
+        } 
+    }, [HighTemperature01, Temperature01, AudioTemperature01, LowTemperature01,maintainTemperature01]);
+
+    useEffect(() => {
+        if (AudioTemperature01) {
+            const audioEnded = () => {
+                setAudioTemperature01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioTemperature01]);
+
+    const handleInputChangeHighTemperature01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighTemperature01(newValue);
+    };
+
+    const handleInputChangeLowTemperature01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowTemperature01(newValue2);
+    };
+    const ChangeMaintainTemperature01 = async () => {
+        try {
+            const newValue = !maintainTemperature01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { maintain_Temperature01: newValue }
+            );
+            setMaintainTemperature01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== EVC 01 TEMPERATURE ============================================
+
+// ========================== EVC 01 TEMPERATURE ============================================
+const [Temperature02, setTemperature02] = useState<string | null>(null);
+
+const [AudioTemperature02, setAudioTemperature02] = useState(false);
+const [inputHighTemperature02, setInputHighTemperature02] = useState<any>();
+const [inputLowTemperature02, setInputLowTemperature02] = useState<any>();
+const [HighTemperature02, setHighTemperature02] = useState<number | null>(null);
+const [LowTemperature02, setLowTemperature02] = useState<number | null>(null);
+const [AlarmTemperature02, setAlarmTemperature02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainTemperature02, setMaintainTemperature02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighTemperature02 === 'string' && typeof LowTemperature02 === 'string' && Temperature02 !== null && maintainTemperature02 === false) {
+            const highValue = parseFloat(HighTemperature02);
+            const lowValue = parseFloat(LowTemperature02);
+            const Temperature02Value = parseFloat(Temperature02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Temperature02Value)) {
+                if (highValue < Temperature02Value || Temperature02Value < lowValue) {
+                    if (!AudioTemperature02) {
+                        audioRef.current?.play();
+                        setAudioTemperature02(true);
+                        setAlarmTemperature02(true);
+                    }
+                } else {
+                    setAudioTemperature02(false);
+                    setAlarmTemperature02(false);
+                }
+            } 
+        } 
+    }, [HighTemperature02, Temperature02, AudioTemperature02, LowTemperature02,maintainTemperature02]);
+
+    useEffect(() => {
+        if (AudioTemperature02) {
+            const audioEnded = () => {
+                setAudioTemperature02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioTemperature02]);
+
+    const handleInputChangeHighTemperature02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighTemperature02(newValue);
+    };
+
+    const handleInputChangeLowTemperature02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowTemperature02(newValue2);
+    };
+    const ChangeMaintainTemperature02 = async () => {
+        try {
+            const newValue = !maintainTemperature02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { maintain_Temperature02: newValue }
+            );
+            setMaintainTemperature02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== EVC 01 TEMPERATURE ============================================
+
+
+// ========================== Remain battery 01 ============================================
+const [ReBattery01,setRebattery01] = useState<string | null>(null);
+
+
+const [AudioReBattery01, setAudioReBattery01] = useState(false);
+const [inputHighReBattery01, setInputHighReBattery01] = useState<any>();
+const [inputLowReBattery01, setInputLowReBattery01] = useState<any>();
+const [HighReBattery01, setHighReBattery01] = useState<number | null>(null);
+const [LowReBattery01, setLowReBattery01] = useState<number | null>(null);
+const [AlarmReBattery01, setAlarmReBattery01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainReBattery01, setMaintainReBattery01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighReBattery01 === 'string' && typeof LowReBattery01 === 'string' && ReBattery01 !== null && maintainReBattery01 === false) {
+            const highValue = parseFloat(HighReBattery01);
+            const lowValue = parseFloat(LowReBattery01);
+            const ReBattery01Value = parseFloat(ReBattery01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ReBattery01Value)) {
+                if (highValue < ReBattery01Value || ReBattery01Value < lowValue) {
+                    if (!AudioReBattery01) {
+                        audioRef.current?.play();
+                        setAudioReBattery01(true);
+                        setAlarmReBattery01(true);
+                    }
+                } else {
+                    setAudioReBattery01(false);
+                    setAlarmReBattery01(false);
+                }
+            } 
+        } 
+    }, [HighReBattery01, ReBattery01, AudioReBattery01, LowReBattery01,maintainReBattery01]);
+
+    useEffect(() => {
+        if (AudioReBattery01) {
+            const audioEnded = () => {
+                setAudioReBattery01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioReBattery01]);
+
+    const handleInputChangeHighReBattery01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighReBattery01(newValue);
+    };
+
+    const handleInputChangeLowReBattery01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowReBattery01(newValue2);
+    };
+    const ChangeMaintainReBattery01 = async () => {
+        try {
+            const newValue = !maintainReBattery01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { REMAIN_BATTERY01_MAINTAIN: newValue }
+            );
+            setMaintainReBattery01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== Remain battery 01 ============================================
+
+// ==========================Remain battery 02 ============================================
+const [ReBattery02,setRebattery02] = useState<string | null>(null);
+
+const [AudioReBattery02, setAudioReBattery02] = useState(false);
+const [inputHighReBattery02, setInputHighReBattery02] = useState<any>();
+const [inputLowReBattery02, setInputLowReBattery02] = useState<any>();
+const [HighReBattery02, setHighReBattery02] = useState<number | null>(null);
+const [LowReBattery02, setLowReBattery02] = useState<number | null>(null);
+const [AlarmReBattery02, setAlarmReBattery02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainReBattery02, setMaintainReBattery02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighReBattery02 === 'string' && typeof LowReBattery02 === 'string' && ReBattery02 !== null && maintainReBattery02 === false) {
+            const highValue = parseFloat(HighReBattery02);
+            const lowValue = parseFloat(LowReBattery02);
+            const ReBattery02Value = parseFloat(ReBattery02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ReBattery02Value)) {
+                if (highValue < ReBattery02Value || ReBattery02Value < lowValue) {
+                    if (!AudioReBattery02) {
+                        audioRef.current?.play();
+                        setAudioReBattery02(true);
+                        setAlarmReBattery02(true);
+                    }
+                } else {
+                    setAudioReBattery02(false);
+                    setAlarmReBattery02(false);
+                }
+            } 
+        } 
+    }, [HighReBattery02, ReBattery02, AudioReBattery02, LowReBattery02,maintainReBattery02]);
+
+    useEffect(() => {
+        if (AudioReBattery02) {
+            const audioEnded = () => {
+                setAudioReBattery02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioReBattery02]);
+
+    const handleInputChangeHighReBattery02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighReBattery02(newValue);
+    };
+
+    const handleInputChangeLowReBattery02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowReBattery02(newValue2);
+    };
+    const ChangeMaintainReBattery02 = async () => {
+        try {
+            const newValue = !maintainReBattery02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { REMAIN_BATTERY02_MAINTAIN: newValue }
+            );
+            setMaintainReBattery02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== Remain battery 02 ============================================
+
+// ========================== VM LAST DAY 01 ============================================
+const [VmLastDay01, setVmLastDay01] = useState<string | null>(null);
+const [AudioVmLastDay01, setAudioVmLastDay01] = useState(false);
+const [inputHighVmLastDay01, setInputHighVmLastDay01] = useState<any>();
+const [inputLowVmLastDay01, setInputLowVmLastDay01] = useState<any>();
+const [HighVmLastDay01, setHighVmLastDay01] = useState<number | null>(null);
+const [LowVmLastDay01, setLowVmLastDay01] = useState<number | null>(null);
+const [AlarmVmLastDay01, setAlarmVmLastDay01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVmLastDay01, setMaintainVmLastDay01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVmLastDay01 === 'string' && typeof LowVmLastDay01 === 'string' && VmLastDay01 !== null && maintainVmLastDay01 === false) {
+            const highValue = parseFloat(HighVmLastDay01);
+            const lowValue = parseFloat(LowVmLastDay01);
+            const VmLastDay01Value = parseFloat(VmLastDay01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmLastDay01Value)) {
+                if (highValue < VmLastDay01Value || VmLastDay01Value < lowValue) {
+                    if (!AudioVmLastDay01) {
+                        audioRef.current?.play();
+                        setAudioVmLastDay01(true);
+                        setAlarmVmLastDay01(true);
+                    }
+                } else {
+                    setAudioVmLastDay01(false);
+                    setAlarmVmLastDay01(false);
+                }
+            } 
+        } 
+    }, [HighVmLastDay01, VmLastDay01, AudioVmLastDay01, LowVmLastDay01,maintainVmLastDay01]);
+
+    useEffect(() => {
+        if (AudioVmLastDay01) {
+            const audioEnded = () => {
+                setAudioVmLastDay01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVmLastDay01]);
+
+    const handleInputChangeHighVmLastDay01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVmLastDay01(newValue);
+    };
+
+    const handleInputChangeLowVmLastDay01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVmLastDay01(newValue2);
+    };
+    const ChangeMaintainVmLastDay01 = async () => {
+        try {
+            const newValue = !maintainVmLastDay01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VM_LASTDAY01_MAINTAIN: newValue }
+            );
+            setMaintainVmLastDay01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ==========================VM LAST DAY 01 ============================================
+
+// ==========================VM LAST DAY 01  ============================================
+const [VmLastDay02, setVmLastDay02] = useState<string | null>(null);
+const [AudioVmLastDay02, setAudioVmLastDay02] = useState(false);
+const [inputHighVmLastDay02, setInputHighVmLastDay02] = useState<any>();
+const [inputLowVmLastDay02, setInputLowVmLastDay02] = useState<any>();
+const [HighVmLastDay02, setHighVmLastDay02] = useState<number | null>(null);
+const [LowVmLastDay02, setLowVmLastDay02] = useState<number | null>(null);
+const [AlarmVmLastDay02, setAlarmVmLastDay02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVmLastDay02, setMaintainVmLastDay02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVmLastDay02 === 'string' && typeof LowVmLastDay02 === 'string' && VmLastDay02 !== null && maintainVmLastDay02 === false) {
+            const highValue = parseFloat(HighVmLastDay02);
+            const lowValue = parseFloat(LowVmLastDay02);
+            const VmLastDay02Value = parseFloat(VmLastDay02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmLastDay02Value)) {
+                if (highValue < VmLastDay02Value || VmLastDay02Value < lowValue) {
+                    if (!AudioVmLastDay02) {
+                        audioRef.current?.play();
+                        setAudioVmLastDay02(true);
+                        setAlarmVmLastDay02(true);
+                    }
+                } else {
+                    setAudioVmLastDay02(false);
+                    setAlarmVmLastDay02(false);
+                }
+            } 
+        } 
+    }, [HighVmLastDay02, VmLastDay02, AudioVmLastDay02, LowVmLastDay02,maintainVmLastDay02]);
+
+    useEffect(() => {
+        if (AudioVmLastDay02) {
+            const audioEnded = () => {
+                setAudioVmLastDay02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVmLastDay02]);
+
+    const handleInputChangeHighVmLastDay02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVmLastDay02(newValue);
+    };
+
+    const handleInputChangeLowVmLastDay02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVmLastDay02(newValue2);
+    };
+    const ChangeMaintainVmLastDay02 = async () => {
+        try {
+            const newValue = !maintainVmLastDay02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VM_LASTDAY02_MAINTAIN: newValue }
+            );
+            setMaintainVmLastDay02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== VM LAST DAY 01 ============================================
+
+
+
+// ========================== Vb LAST DAY 01 ============================================
+const [VbLastDay01, setVbLastDay01] = useState<string | null>(null);
+const [AudioVbLastDay01, setAudioVbLastDay01] = useState(false);
+const [inputHighVbLastDay01, setInputHighVbLastDay01] = useState<any>();
+const [inputLowVbLastDay01, setInputLowVbLastDay01] = useState<any>();
+const [HighVbLastDay01, setHighVbLastDay01] = useState<number | null>(null);
+const [LowVbLastDay01, setLowVbLastDay01] = useState<number | null>(null);
+const [AlarmVbLastDay01, setAlarmVbLastDay01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVbLastDay01, setMaintainVbLastDay01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVbLastDay01 === 'string' && typeof LowVbLastDay01 === 'string' && VbLastDay01 !== null && maintainVbLastDay01 === false) {
+            const highValue = parseFloat(HighVbLastDay01);
+            const lowValue = parseFloat(LowVbLastDay01);
+            const VbLastDay01Value = parseFloat(VbLastDay01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbLastDay01Value)) {
+                if (highValue < VbLastDay01Value || VbLastDay01Value < lowValue) {
+                    if (!AudioVbLastDay01) {
+                        audioRef.current?.play();
+                        setAudioVbLastDay01(true);
+                        setAlarmVbLastDay01(true);
+                    }
+                } else {
+                    setAudioVbLastDay01(false);
+                    setAlarmVbLastDay01(false);
+                }
+            } 
+        } 
+    }, [HighVbLastDay01, VbLastDay01, AudioVbLastDay01, LowVbLastDay01,maintainVbLastDay01]);
+
+    useEffect(() => {
+        if (AudioVbLastDay01) {
+            const audioEnded = () => {
+                setAudioVbLastDay01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVbLastDay01]);
+
+    const handleInputChangeHighVbLastDay01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVbLastDay01(newValue);
+    };
+
+    const handleInputChangeLowVbLastDay01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVbLastDay01(newValue2);
+    };
+    const ChangeMaintainVbLastDay01 = async () => {
+        try {
+            const newValue = !maintainVbLastDay01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VB_LASTDAVB_LASTDAY01_MAINTAINY01_MAINTAIN: newValue }
+            );
+            setMaintainVbLastDay01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ==========================Vb LAST DAY 01 ============================================
+
+// ==========================Vb LAST DAY 02  ============================================
+const [VbLastDay02, setVbLastDay02] = useState<string | null>(null);
+const [AudioVbLastDay02, setAudioVbLastDay02] = useState(false);
+const [inputHighVbLastDay02, setInputHighVbLastDay02] = useState<any>();
+const [inputLowVbLastDay02, setInputLowVbLastDay02] = useState<any>();
+const [HighVbLastDay02, setHighVbLastDay02] = useState<number | null>(null);
+const [LowVbLastDay02, setLowVbLastDay02] = useState<number | null>(null);
+const [AlarmVbLastDay02, setAlarmVbLastDay02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVbLastDay02, setMaintainVbLastDay02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVbLastDay02 === 'string' && typeof LowVbLastDay02 === 'string' && VbLastDay02 !== null && maintainVbLastDay02 === false) {
+            const highValue = parseFloat(HighVbLastDay02);
+            const lowValue = parseFloat(LowVbLastDay02);
+            const VbLastDay02Value = parseFloat(VbLastDay02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbLastDay02Value)) {
+                if (highValue < VbLastDay02Value || VbLastDay02Value < lowValue) {
+                    if (!AudioVbLastDay02) {
+                        audioRef.current?.play();
+                        setAudioVbLastDay02(true);
+                        setAlarmVbLastDay02(true);
+                    }
+                } else {
+                    setAudioVbLastDay02(false);
+                    setAlarmVbLastDay02(false);
+                }
+            } 
+        } 
+    }, [HighVbLastDay02, VbLastDay02, AudioVbLastDay02, LowVbLastDay02,maintainVbLastDay02]);
+
+    useEffect(() => {
+        if (AudioVbLastDay02) {
+            const audioEnded = () => {
+                setAudioVbLastDay02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVbLastDay02]);
+
+    const handleInputChangeHighVbLastDay02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVbLastDay02(newValue);
+    };
+
+    const handleInputChangeLowVbLastDay02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVbLastDay02(newValue2);
+    };
+    const ChangeMaintainVbLastDay02 = async () => {
+        try {
+            const newValue = !maintainVbLastDay02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VB_LASTDAY02_MAINTAIN: newValue }
+            );
+            setMaintainVbLastDay02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== Vb LAST DAY 02 ============================================
+
+//=============================================================================================
+
+
+// ========================== VM to DAY 01 ============================================
+const [VmToDay01, setVmToDay01] = useState<string | null>(null);
+const [AudioVmToDay01, setAudioVmToDay01] = useState(false);
+const [inputHighVmToDay01, setInputHighVmToDay01] = useState<any>();
+const [inputLowVmToDay01, setInputLowVmToDay01] = useState<any>();
+const [HighVmToDay01, setHighVmToDay01] = useState<number | null>(null);
+const [LowVmToDay01, setLowVmToDay01] = useState<number | null>(null);
+const [AlarmVmToDay01, setAlarmVmToDay01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVmToDay01, setMaintainVmToDay01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVmToDay01 === 'string' && typeof LowVmToDay01 === 'string' && VmToDay01 !== null && maintainVmToDay01 === false) {
+            const highValue = parseFloat(HighVmToDay01);
+            const lowValue = parseFloat(LowVmToDay01);
+            const VmToDay01Value = parseFloat(VmToDay01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmToDay01Value)) {
+                if (highValue < VmToDay01Value || VmToDay01Value < lowValue) {
+                    if (!AudioVmToDay01) {
+                        audioRef.current?.play();
+                        setAudioVmToDay01(true);
+                        setAlarmVmToDay01(true);
+                    }
+                } else {
+                    setAudioVmToDay01(false);
+                    setAlarmVmToDay01(false);
+                }
+            } 
+        } 
+    }, [HighVmToDay01, VmToDay01, AudioVmToDay01, LowVmToDay01,maintainVmToDay01]);
+
+    useEffect(() => {
+        if (AudioVmToDay01) {
+            const audioEnded = () => {
+                setAudioVmToDay01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVmToDay01]);
+
+    const handleInputChangeHighVmToDay01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVmToDay01(newValue);
+    };
+
+    const handleInputChangeLowVmToDay01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVmToDay01(newValue2);
+    };
+    const ChangeMaintainVmToDay01 = async () => {
+        try {
+            const newValue = !maintainVmToDay01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VM_TODAY01_MAINTAIN: newValue }
+            );
+            setMaintainVmToDay01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ==========================VM LAST DAY 01 ============================================
+
+// ==========================VM LAST DAY 01  ============================================
+const [VmToDay02, setVmToDay02] = useState<string | null>(null);
+const [AudioVmToDay02, setAudioVmToDay02] = useState(false);
+const [inputHighVmToDay02, setInputHighVmToDay02] = useState<any>();
+const [inputLowVmToDay02, setInputLowVmToDay02] = useState<any>();
+const [HighVmToDay02, setHighVmToDay02] = useState<number | null>(null);
+const [LowVmToDay02, setLowVmToDay02] = useState<number | null>(null);
+const [AlarmVmToDay02, setAlarmVmToDay02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVmToDay02, setMaintainVmToDay02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVmToDay02 === 'string' && typeof LowVmToDay02 === 'string' && VmToDay02 !== null && maintainVmToDay02 === false) {
+            const highValue = parseFloat(HighVmToDay02);
+            const lowValue = parseFloat(LowVmToDay02);
+            const VmToDay02Value = parseFloat(VmToDay02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmToDay02Value)) {
+                if (highValue < VmToDay02Value || VmToDay02Value < lowValue) {
+                    if (!AudioVmToDay02) {
+                        audioRef.current?.play();
+                        setAudioVmToDay02(true);
+                        setAlarmVmToDay02(true);
+                    }
+                } else {
+                    setAudioVmToDay02(false);
+                    setAlarmVmToDay02(false);
+                }
+            } 
+        } 
+    }, [HighVmToDay02, VmToDay02, AudioVmToDay02, LowVmToDay02,maintainVmToDay02]);
+
+    useEffect(() => {
+        if (AudioVmToDay02) {
+            const audioEnded = () => {
+                setAudioVmToDay02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVmToDay02]);
+
+    const handleInputChangeHighVmToDay02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVmToDay02(newValue);
+    };
+
+    const handleInputChangeLowVmToDay02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVmToDay02(newValue2);
+    };
+    const ChangeMaintainVmToDay02 = async () => {
+        try {
+            const newValue = !maintainVmToDay02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VM_TODAY02_MAINTAIN: newValue }
+            );
+            setMaintainVmToDay02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== VM LAST DAY 01 ============================================
+
+
+
+// ========================== Vb LAST DAY 01 ============================================
+const [VbToDay01, setVbToDay01] = useState<string | null>(null);
+const [AudioVbToDay01, setAudioVbToDay01] = useState(false);
+const [inputHighVbToDay01, setInputHighVbToDay01] = useState<any>();
+const [inputLowVbToDay01, setInputLowVbToDay01] = useState<any>();
+const [HighVbToDay01, setHighVbToDay01] = useState<number | null>(null);
+const [LowVbToDay01, setLowVbToDay01] = useState<number | null>(null);
+const [AlarmVbToDay01, setAlarmVbToDay01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVbToDay01, setMaintainVbToDay01] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVbToDay01 === 'string' && typeof LowVbToDay01 === 'string' && VbToDay01 !== null && maintainVbToDay01 === false) {
+            const highValue = parseFloat(HighVbToDay01);
+            const lowValue = parseFloat(LowVbToDay01);
+            const VbToDay01Value = parseFloat(VbToDay01);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbToDay01Value)) {
+                if (highValue < VbToDay01Value || VbToDay01Value < lowValue) {
+                    if (!AudioVbToDay01) {
+                        audioRef.current?.play();
+                        setAudioVbToDay01(true);
+                        setAlarmVbToDay01(true);
+                    }
+                } else {
+                    setAudioVbToDay01(false);
+                    setAlarmVbToDay01(false);
+                }
+            } 
+        } 
+    }, [HighVbToDay01, VbToDay01, AudioVbToDay01, LowVbToDay01,maintainVbToDay01]);
+
+    useEffect(() => {
+        if (AudioVbToDay01) {
+            const audioEnded = () => {
+                setAudioVbToDay01(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVbToDay01]);
+
+    const handleInputChangeHighVbToDay01 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVbToDay01(newValue);
+    };
+
+    const handleInputChangeLowVbToDay01 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVbToDay01(newValue2);
+    };
+    const ChangeMaintainVbToDay01 = async () => {
+        try {
+            const newValue = !maintainVbToDay01;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VB_TODAY01_MAINTAIN: newValue }
+            );
+            setMaintainVbToDay01(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ==========================Vb LAST DAY 01 ============================================
+
+// ==========================Vb LAST DAY 02  ============================================
+const [VbToDay02, setVbToDay02] = useState<string | null>(null);
+const [AudioVbToDay02, setAudioVbToDay02] = useState(false);
+const [inputHighVbToDay02, setInputHighVbToDay02] = useState<any>();
+const [inputLowVbToDay02, setInputLowVbToDay02] = useState<any>();
+const [HighVbToDay02, setHighVbToDay02] = useState<number | null>(null);
+const [LowVbToDay02, setLowVbToDay02] = useState<number | null>(null);
+const [AlarmVbToDay02, setAlarmVbToDay02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVbToDay02, setMaintainVbToDay02] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighVbToDay02 === 'string' && typeof LowVbToDay02 === 'string' && VbToDay02 !== null && maintainVbToDay02 === false) {
+            const highValue = parseFloat(HighVbToDay02);
+            const lowValue = parseFloat(LowVbToDay02);
+            const VbToDay02Value = parseFloat(VbToDay02);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbToDay02Value)) {
+                if (highValue < VbToDay02Value || VbToDay02Value < lowValue) {
+                    if (!AudioVbToDay02) {
+                        audioRef.current?.play();
+                        setAudioVbToDay02(true);
+                        setAlarmVbToDay02(true);
+                    }
+                } else {
+                    setAudioVbToDay02(false);
+                    setAlarmVbToDay02(false);
+                }
+            } 
+        } 
+    }, [HighVbToDay02, VbToDay02, AudioVbToDay02, LowVbToDay02,maintainVbToDay02]);
+
+    useEffect(() => {
+        if (AudioVbToDay02) {
+            const audioEnded = () => {
+                setAudioVbToDay02(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioVbToDay02]);
+
+    const handleInputChangeHighVbToDay02 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighVbToDay02(newValue);
+    };
+
+    const handleInputChangeLowVbToDay02 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowVbToDay02(newValue2);
+    };
+    const ChangeMaintainVbToDay02 = async () => {
+        try {
+            const newValue = !maintainVbToDay02;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { VB_TODAY02_MAINTAIN: newValue }
+            );
+            setMaintainVbToDay02(newValue);
+            
+            
+        } catch (error) {}
+    };
+// ========================== Vb LAST DAY 02 ============================================
+//===========================================================================================
+
+const [UpsBattery,setUpsBattery] = useState<string | null>(null);
+const [AudioUpsBattery, setAudioUpsBattery] = useState(false);
+const [inputHighUpsBattery, setInputHighUpsBattery] = useState<any>();
+const [inputLowUpsBattery, setInputLowUpsBattery] = useState<any>();
+const [HighUpsBattery, setHighUpsBattery] = useState<number | null>(null);
+const [LowUpsBattery, setLowUpsBattery] = useState<number | null>(null);
+const [AlarmUpsBattery, setAlarmUpsBattery] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainUpsBattery, setMaintainUpsBattery] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighUpsBattery === 'string' && typeof LowUpsBattery === 'string' && UpsBattery !== null && maintainUpsBattery === false) {
+            const highValue = parseFloat(HighUpsBattery);
+            const lowValue = parseFloat(LowUpsBattery);
+            const UpsBatteryValue = parseFloat(UpsBattery);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsBatteryValue)) {
+                if (highValue < UpsBatteryValue || UpsBatteryValue < lowValue) {
+                    if (!AudioUpsBattery) {
+                        audioRef.current?.play();
+                        setAudioUpsBattery(true);
+                        setAlarmUpsBattery(true);
+                    }
+                } else {
+                    setAudioUpsBattery(false);
+                    setAlarmUpsBattery(false);
+                }
+            } 
+        } 
+    }, [HighUpsBattery, UpsBattery, AudioUpsBattery, LowUpsBattery,maintainUpsBattery]);
+
+    useEffect(() => {
+        if (AudioUpsBattery) {
+            const audioEnded = () => {
+                setAudioUpsBattery(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioUpsBattery]);
+
+    const handleInputChangeHighUpsBattery = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighUpsBattery(newValue);
+    };
+
+    const handleInputChangeLowUpsBattery = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowUpsBattery(newValue2);
+    };
+    const ChangeMaintainUpsBattery = async () => {
+        try {
+            const newValue = !maintainUpsBattery;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_BATTERY_MAINTAIN: newValue }
+            );
+            setMaintainUpsBattery(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+//===========================================================================================
+
+const [UpsCharging,setUpsCharging] = useState<string | null>(null);
+
+const [AudioUpsCharging, setAudioUpsCharging] = useState(false);
+const [inputHighUpsCharging, setInputHighUpsCharging] = useState<any>();
+const [inputLowUpsCharging, setInputLowUpsCharging] = useState<any>();
+const [HighUpsCharging, setHighUpsCharging] = useState<number | null>(null);
+const [LowUpsCharging, setLowUpsCharging] = useState<number | null>(null);
+const [AlarmUpsCharging, setAlarmUpsCharging] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainUpsCharging, setMaintainUpsCharging] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighUpsCharging === 'string' && typeof LowUpsCharging === 'string' && UpsCharging !== null && maintainUpsCharging === false) {
+            const highValue = parseFloat(HighUpsCharging);
+            const lowValue = parseFloat(LowUpsCharging);
+            const UpsChargingValue = parseFloat(UpsCharging);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsChargingValue)) {
+                if (highValue < UpsChargingValue || UpsChargingValue < lowValue) {
+                    if (!AudioUpsCharging) {
+                        audioRef.current?.play();
+                        setAudioUpsCharging(true);
+                        setAlarmUpsCharging(true);
+                    }
+                } else {
+                    setAudioUpsCharging(false);
+                    setAlarmUpsCharging(false);
+                }
+            } 
+        } 
+    }, [HighUpsCharging, UpsCharging, AudioUpsCharging, LowUpsCharging,maintainUpsCharging]);
+
+    useEffect(() => {
+        if (AudioUpsCharging) {
+            const audioEnded = () => {
+                setAudioUpsCharging(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioUpsCharging]);
+
+    const handleInputChangeHighUpsCharging = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighUpsCharging(newValue);
+    };
+
+    const handleInputChangeLowUpsCharging = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowUpsCharging(newValue2);
+    };
+    const ChangeMaintainUpsCharging = async () => {
+        try {
+            const newValue = !maintainUpsCharging;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainUpsCharging(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [UpsAlarm,setUpsAlarm] = useState<string | null>(null);
+const [AudioUpsAlarm, setAudioUpsAlarm] = useState(false);
+const [inputHighUpsAlarm, setInputHighUpsAlarm] = useState<any>();
+const [inputLowUpsAlarm, setInputLowUpsAlarm] = useState<any>();
+const [HighUpsAlarm, setHighUpsAlarm] = useState<number | null>(null);
+const [LowUpsAlarm, setLowUpsAlarm] = useState<number | null>(null);
+const [AlarmUpsAlarm, setAlarmUpsAlarm] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainUpsAlarm, setMaintainUpsAlarm] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighUpsAlarm === 'string' && typeof LowUpsAlarm === 'string' && UpsAlarm !== null && maintainUpsAlarm === false) {
+            const highValue = parseFloat(HighUpsAlarm);
+            const lowValue = parseFloat(LowUpsAlarm);
+            const UpsAlarmValue = parseFloat(UpsAlarm);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsAlarmValue)) {
+                if (highValue < UpsAlarmValue || UpsAlarmValue < lowValue) {
+                    if (!AudioUpsAlarm) {
+                        audioRef.current?.play();
+                        setAudioUpsAlarm(true);
+                        setAlarmUpsAlarm(true);
+                    }
+                } else {
+                    setAudioUpsAlarm(false);
+                    setAlarmUpsAlarm(false);
+                }
+            } 
+        } 
+    }, [HighUpsAlarm, UpsAlarm, AudioUpsAlarm, LowUpsAlarm,maintainUpsAlarm]);
+
+    useEffect(() => {
+        if (AudioUpsAlarm) {
+            const audioEnded = () => {
+                setAudioUpsAlarm(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioUpsAlarm]);
+
+    const handleInputChangeHighUpsAlarm = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighUpsAlarm(newValue);
+    };
+
+    const handleInputChangeLowUpsAlarm = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowUpsAlarm(newValue2);
+    };
+    const ChangeMaintainUpsAlarm = async () => {
+        try {
+            const newValue = !maintainUpsAlarm;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainUpsAlarm(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [UpsMode,setUpsMode] = useState<string | null>(null);
+const [AudioUpsMode, setAudioUpsMode] = useState(false);
+const [inputHighUpsMode, setInputHighUpsMode] = useState<any>();
+const [inputLowUpsMode, setInputLowUpsMode] = useState<any>();
+const [HighUpsMode, setHighUpsMode] = useState<number | null>(null);
+const [LowUpsMode, setLowUpsMode] = useState<number | null>(null);
+const [AlarmUpsMode, setAlarmUpsMode] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainUpsMode, setMaintainUpsMode] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighUpsMode === 'string' && typeof LowUpsMode === 'string' && UpsMode !== null && maintainUpsMode === false) {
+            const highValue = parseFloat(HighUpsMode);
+            const lowValue = parseFloat(LowUpsMode);
+            const UpsModeValue = parseFloat(UpsMode);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsModeValue)) {
+                if (highValue < UpsModeValue || UpsModeValue < lowValue) {
+                    if (!AudioUpsMode) {
+                        audioRef.current?.play();
+                        setAudioUpsMode(true);
+                        setAlarmUpsMode(true);
+                    }
+                } else {
+                    setAudioUpsMode(false);
+                    setAlarmUpsMode(false);
+                }
+            } 
+        } 
+    }, [HighUpsMode, UpsMode, AudioUpsMode, LowUpsMode,maintainUpsMode]);
+
+    useEffect(() => {
+        if (AudioUpsMode) {
+            const audioEnded = () => {
+                setAudioUpsMode(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioUpsMode]);
+
+    const handleInputChangeHighUpsMode = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighUpsMode(newValue);
+    };
+
+    const handleInputChangeLowUpsMode = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowUpsMode(newValue2);
+    };
+    const ChangeMaintainUpsMode = async () => {
+        try {
+            const newValue = !maintainUpsMode;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainUpsMode(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+
+//===========================================================================================
+
+const [SelectSW,setSelectSW] = useState<string | null>(null);
+const [AudioSelectSW, setAudioSelectSW] = useState(false);
+const [inputHighSelectSW, setInputHighSelectSW] = useState<any>();
+const [inputLowSelectSW, setInputLowSelectSW] = useState<any>();
+const [HighSelectSW, setHighSelectSW] = useState<number | null>(null);
+const [LowSelectSW, setLowSelectSW] = useState<number | null>(null);
+const [AlarmSelectSW, setAlarmSelectSW] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainSelectSW, setMaintainSelectSW] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighSelectSW === 'string' && typeof LowSelectSW === 'string' && SelectSW !== null && maintainSelectSW === false) {
+            const highValue = parseFloat(HighSelectSW);
+            const lowValue = parseFloat(LowSelectSW);
+            const SelectSWValue = parseFloat(SelectSW);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SelectSWValue)) {
+                if (highValue < SelectSWValue || SelectSWValue < lowValue) {
+                    if (!AudioSelectSW) {
+                        audioRef.current?.play();
+                        setAudioSelectSW(true);
+                        setAlarmSelectSW(true);
+                    }
+                } else {
+                    setAudioSelectSW(false);
+                    setAlarmSelectSW(false);
+                }
+            } 
+        } 
+    }, [HighSelectSW, SelectSW, AudioSelectSW, LowSelectSW,maintainSelectSW]);
+
+    useEffect(() => {
+        if (AudioSelectSW) {
+            const audioEnded = () => {
+                setAudioSelectSW(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioSelectSW]);
+
+    const handleInputChangeHighSelectSW = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighSelectSW(newValue);
+    };
+
+    const handleInputChangeLowSelectSW = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowSelectSW(newValue2);
+    };
+    const ChangeMaintainSelectSW = async () => {
+        try {
+            const newValue = !maintainSelectSW;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainSelectSW(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [EmergencyNC,setEmergencyNC] =useState<string | null>(null);
+
+const [AudioEmergencyNC, setAudioEmergencyNC] = useState(false);
+const [inputHighEmergencyNC, setInputHighEmergencyNC] = useState<any>();
+const [inputLowEmergencyNC, setInputLowEmergencyNC] = useState<any>();
+const [HighEmergencyNC, setHighEmergencyNC] = useState<number | null>(null);
+const [LowEmergencyNC, setLowEmergencyNC] = useState<number | null>(null);
+const [AlarmEmergencyNC, setAlarmEmergencyNC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEmergencyNC, setMaintainEmergencyNC] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighEmergencyNC === 'string' && typeof LowEmergencyNC === 'string' && EmergencyNC !== null && maintainEmergencyNC === false) {
+            const highValue = parseFloat(HighEmergencyNC);
+            const lowValue = parseFloat(LowEmergencyNC);
+            const EmergencyNCValue = parseFloat(EmergencyNC);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EmergencyNCValue)) {
+                if (highValue < EmergencyNCValue || EmergencyNCValue < lowValue) {
+                    if (!AudioEmergencyNC) {
+                        audioRef.current?.play();
+                        setAudioEmergencyNC(true);
+                        setAlarmEmergencyNC(true);
+                    }
+                } else {
+                    setAudioEmergencyNC(false);
+                    setAlarmEmergencyNC(false);
+                }
+            } 
+        } 
+    }, [HighEmergencyNC, EmergencyNC, AudioEmergencyNC, LowEmergencyNC,maintainEmergencyNC]);
+
+    useEffect(() => {
+        if (AudioEmergencyNC) {
+            const audioEnded = () => {
+                setAudioEmergencyNC(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioEmergencyNC]);
+
+    const handleInputChangeHighEmergencyNC = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighEmergencyNC(newValue);
+    };
+
+    const handleInputChangeLowEmergencyNC = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowEmergencyNC(newValue2);
+    };
+    const ChangeMaintainEmergencyNC = async () => {
+        try {
+            const newValue = !maintainEmergencyNC;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainEmergencyNC(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+//===========================================================================================
+
+const [EmergencyNO,setEmergencyNO] =useState<string | null>(null);
+
+
+const [AudioEmergencyNO, setAudioEmergencyNO] = useState(false);
+const [inputHighEmergencyNO, setInputHighEmergencyNO] = useState<any>();
+const [inputLowEmergencyNO, setInputLowEmergencyNO] = useState<any>();
+const [HighEmergencyNO, setHighEmergencyNO] = useState<number | null>(null);
+const [LowEmergencyNO, setLowEmergencyNO] = useState<number | null>(null);
+const [AlarmEmergencyNO, setAlarmEmergencyNO] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEmergencyNO, setMaintainEmergencyNO] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighEmergencyNO === 'string' && typeof LowEmergencyNO === 'string' && EmergencyNO !== null && maintainEmergencyNO === false) {
+            const highValue = parseFloat(HighEmergencyNO);
+            const lowValue = parseFloat(LowEmergencyNO);
+            const EmergencyNOValue = parseFloat(EmergencyNO);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EmergencyNOValue)) {
+                if (highValue < EmergencyNOValue || EmergencyNOValue < lowValue) {
+                    if (!AudioEmergencyNO) {
+                        audioRef.current?.play();
+                        setAudioEmergencyNO(true);
+                        setAlarmEmergencyNO(true);
+                    }
+                } else {
+                    setAudioEmergencyNO(false);
+                    setAlarmEmergencyNO(false);
+                }
+            } 
+        } 
+    }, [HighEmergencyNO, EmergencyNO, AudioEmergencyNO, LowEmergencyNO,maintainEmergencyNO]);
+
+    useEffect(() => {
+        if (AudioEmergencyNO) {
+            const audioEnded = () => {
+                setAudioEmergencyNO(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioEmergencyNO]);
+
+    const handleInputChangeHighEmergencyNO = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighEmergencyNO(newValue);
+    };
+
+    const handleInputChangeLowEmergencyNO = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowEmergencyNO(newValue2);
+    };
+    const ChangeMaintainEmergencyNO = async () => {
+        try {
+            const newValue = !maintainEmergencyNO;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainEmergencyNO(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+//===========================================================================================
+
+const [DIReset,setDIReset] =useState<string | null>(null);
+
+const [AudioDIReset, setAudioDIReset] = useState(false);
+const [inputHighDIReset, setInputHighDIReset] = useState<any>();
+const [inputLowDIReset, setInputLowDIReset] = useState<any>();
+const [HighDIReset, setHighDIReset] = useState<number | null>(null);
+const [LowDIReset, setLowDIReset] = useState<number | null>(null);
+const [AlarmDIReset, setAlarmDIReset] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainDIReset, setMaintainDIReset] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighDIReset === 'string' && typeof LowDIReset === 'string' && DIReset !== null && maintainDIReset === false) {
+            const highValue = parseFloat(HighDIReset);
+            const lowValue = parseFloat(LowDIReset);
+            const DIResetValue = parseFloat(DIReset);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DIResetValue)) {
+                if (highValue < DIResetValue || DIResetValue < lowValue) {
+                    if (!AudioDIReset) {
+                        audioRef.current?.play();
+                        setAudioDIReset(true);
+                        setAlarmDIReset(true);
+                    }
+                } else {
+                    setAudioDIReset(false);
+                    setAlarmDIReset(false);
+                }
+            } 
+        } 
+    }, [HighDIReset, DIReset, AudioDIReset, LowDIReset,maintainDIReset]);
+
+    useEffect(() => {
+        if (AudioDIReset) {
+            const audioEnded = () => {
+                setAudioDIReset(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioDIReset]);
+
+    const handleInputChangeHighDIReset = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighDIReset(newValue);
+    };
+
+    const handleInputChangeLowDIReset = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowDIReset(newValue2);
+    };
+    const ChangeMaintainDIReset = async () => {
+        try {
+            const newValue = !maintainDIReset;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainDIReset(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [DOHorn,setDOHorn] =useState<string | null>(null);
+
+
+const [AudioDOHorn, setAudioDOHorn] = useState(false);
+const [inputHighDOHorn, setInputHighDOHorn] = useState<any>();
+const [inputLowDOHorn, setInputLowDOHorn] = useState<any>();
+const [HighDOHorn, setHighDOHorn] = useState<number | null>(null);
+const [LowDOHorn, setLowDOHorn] = useState<number | null>(null);
+const [AlarmDOHorn, setAlarmDOHorn] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainDOHorn, setMaintainDOHorn] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighDOHorn === 'string' && typeof LowDOHorn === 'string' && DOHorn !== null && maintainDOHorn === false) {
+            const highValue = parseFloat(HighDOHorn);
+            const lowValue = parseFloat(LowDOHorn);
+            const DOHornValue = parseFloat(DOHorn);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DOHornValue)) {
+                if (highValue < DOHornValue || DOHornValue < lowValue) {
+                    if (!AudioDOHorn) {
+                        audioRef.current?.play();
+                        setAudioDOHorn(true);
+                        setAlarmDOHorn(true);
+                    }
+                } else {
+                    setAudioDOHorn(false);
+                    setAlarmDOHorn(false);
+                }
+            } 
+        } 
+    }, [HighDOHorn, DOHorn, AudioDOHorn, LowDOHorn,maintainDOHorn]);
+
+    useEffect(() => {
+        if (AudioDOHorn) {
+            const audioEnded = () => {
+                setAudioDOHorn(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioDOHorn]);
+
+    const handleInputChangeHighDOHorn = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighDOHorn(newValue);
+    };
+
+    const handleInputChangeLowDOHorn = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowDOHorn(newValue2);
+    };
+    const ChangeMaintainDOHorn = async () => {
+        try {
+            const newValue = !maintainDOHorn;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainDOHorn(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [DOBeacon,setDOBeacon] =useState<string | null>(null);
+
+
+
+const [AudioDOBeacon, setAudioDOBeacon] = useState(false);
+const [inputHighDOBeacon, setInputHighDOBeacon] = useState<any>();
+const [inputLowDOBeacon, setInputLowDOBeacon] = useState<any>();
+const [HighDOBeacon, setHighDOBeacon] = useState<number | null>(null);
+const [LowDOBeacon, setLowDOBeacon] = useState<number | null>(null);
+const [AlarmDOBeacon, setAlarmDOBeacon] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainDOBeacon, setMaintainDOBeacon] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighDOBeacon === 'string' && typeof LowDOBeacon === 'string' && DOBeacon !== null && maintainDOBeacon === false) {
+            const highValue = parseFloat(HighDOBeacon);
+            const lowValue = parseFloat(LowDOBeacon);
+            const DOBeaconValue = parseFloat(DOBeacon);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DOBeaconValue)) {
+                if (highValue < DOBeaconValue || DOBeaconValue < lowValue) {
+                    if (!AudioDOBeacon) {
+                        audioRef.current?.play();
+                        setAudioDOBeacon(true);
+                        setAlarmDOBeacon(true);
+                    }
+                } else {
+                    setAudioDOBeacon(false);
+                    setAlarmDOBeacon(false);
+                }
+            } 
+        } 
+    }, [HighDOBeacon, DOBeacon, AudioDOBeacon, LowDOBeacon,maintainDOBeacon]);
+
+    useEffect(() => {
+        if (AudioDOBeacon) {
+            const audioEnded = () => {
+                setAudioDOBeacon(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioDOBeacon]);
+
+    const handleInputChangeHighDOBeacon = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighDOBeacon(newValue);
+    };
+
+    const handleInputChangeLowDOBeacon = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowDOBeacon(newValue2);
+    };
+    const ChangeMaintainDOBeacon = async () => {
+        try {
+            const newValue = !maintainDOBeacon;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainDOBeacon(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
+
+//===========================================================================================
+
+const [Map,setMap] =useState<string | null>(null);
+
+const [AudioMap, setAudioMap] = useState(false);
+const [inputHighMap, setInputHighMap] = useState<any>();
+const [inputLowMap, setInputLowMap] = useState<any>();
+const [HighMap, setHighMap] = useState<number | null>(null);
+const [LowMap, setLowMap] = useState<number | null>(null);
+const [AlarmMap, setAlarmMap] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainMap, setMaintainMap] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighMap === 'string' && typeof LowMap === 'string' && Map !== null && maintainMap === false) {
+            const highValue = parseFloat(HighMap);
+            const lowValue = parseFloat(LowMap);
+            const MapValue = parseFloat(Map);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(MapValue)) {
+                if (highValue < MapValue || MapValue < lowValue) {
+                    if (!AudioMap) {
+                        audioRef.current?.play();
+                        setAudioMap(true);
+                        setAlarmMap(true);
+                    }
+                } else {
+                    setAudioMap(false);
+                    setAlarmMap(false);
+                }
+            } 
+        } 
+    }, [HighMap, Map, AudioMap, LowMap,maintainMap]);
+
+    useEffect(() => {
+        if (AudioMap) {
+            const audioEnded = () => {
+                setAudioMap(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioMap]);
+
+    const handleInputChangeHighMap = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighMap(newValue);
+    };
+
+    const handleInputChangeLowMap = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowMap(newValue2);
+    };
+    const ChangeMaintainMap = async () => {
+        try {
+            const newValue = !maintainMap;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainMap(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
     useEffect(() => {
         setInputValue(highEK1PressureValue); 
         setInputValue2(lowEK1PressureValue); 
@@ -1275,6 +3100,49 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
         setInputHighGVA2(HighGVA2)
         setInputLowGVA2(LowGVA2)
 
+        setInputHighTemperature01(HighTemperature01)
+        setInputLowTemperature01(LowTemperature01)
+
+        setInputHighTemperature02(HighTemperature02)
+        setInputLowTemperature02(LowTemperature02)
+
+        setInputHighReBattery01(HighReBattery01)
+        setInputLowReBattery01(LowReBattery01)
+
+        setInputHighReBattery02(HighReBattery02)
+        setInputLowReBattery02(LowReBattery02)
+
+        setInputHighVmLastDay01(HighVmLastDay01)
+        setInputLowVmLastDay01(LowVmLastDay01)
+
+        setInputHighVmLastDay02(HighVmLastDay02)
+        setInputLowVmLastDay02(LowVmLastDay02)
+
+        setInputHighVbLastDay01(HighVbLastDay01)
+        setInputLowVbLastDay01(LowVbLastDay01)
+
+        setInputHighVbLastDay02(HighVbLastDay02)
+        setInputLowVbLastDay02(LowVbLastDay02)
+
+
+        setInputHighVmToDay01(HighVmToDay01)
+        setInputLowVmToDay01(LowVmToDay01)
+
+        setInputHighVmToDay02(HighVmToDay02)
+        setInputLowVmToDay02(LowVmToDay02)
+
+        setInputHighVbToDay01(HighVbToDay01)
+        setInputLowVbToDay01(LowVbToDay01)
+
+        setInputHighVbToDay02(HighVbToDay02)
+        setInputLowVbToDay02(LowVbToDay02)
+
+        setInputHighUpsBattery(HighUpsBattery)
+        setInputLowUpsBattery(LowUpsBattery)
+
+        setInputHighUpsCharging(HighUpsCharging)
+        setInputLowUpsCharging(LowUpsCharging)
+
     }, [highEK1PressureValue, lowEK1PressureValue,
          highEK2PressureValue, lowEK2PressureValue ,
          highEK3PressureValue, lowEK3PressureValue, 
@@ -1293,6 +3161,28 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
          HighSVF2, LowSVF2 ,
          HighSVA2, LowSVA2 ,
          HighGVA2, LowGVA2 ,
+
+         HighTemperature01, LowTemperature01 ,
+         HighTemperature02, LowTemperature02 ,
+
+         HighReBattery01, LowReBattery01 ,
+         HighReBattery02, LowReBattery02 ,
+
+         HighVmLastDay01, LowVmLastDay01 ,
+         HighVmLastDay02, LowVmLastDay02 ,
+         HighVbLastDay01, LowVbLastDay01 ,
+         HighVbLastDay02, LowVbLastDay02 ,
+
+         HighVmToDay01, LowVmToDay01 ,
+         HighVmToDay02, LowVmToDay02 ,
+         HighVbToDay01, LowVbToDay01 ,
+         HighVbToDay02, LowVbToDay02 ,
+
+         HighUpsBattery, LowUpsBattery ,
+
+         HighUpsCharging, LowUpsCharging ,
+
+
         ]);
     
     const handleButtonClick = async () => {
@@ -1318,6 +3208,30 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
                     SVF2_High:inputHighSVF2, SVF2_Low:inputLowSVF2,
                     SVA2_High:inputHighSVA2, SVA2_Low:inputLowSVA2,
                     GVA2_High:inputHighGVA2, GVA2_Low:inputLowGVA2,
+
+                    TEMPERATURE_01_HIGH:inputHighTemperature01, TEMPERATURE_01_LOW:inputLowTemperature01,
+                    TEMPERATURE_02_HIGH:inputHighTemperature02, TEMPERATURE_02_LOW:inputLowTemperature02,
+
+                    REMAIN_BATTERY01_HIGH:inputHighReBattery01, REMAIN_BATTERY01_LOW:inputLowReBattery01,
+                    REMAIN_BATTERY02_HIGH:inputHighReBattery02, REMAIN_BATTERY02_LOW:inputLowReBattery02,
+
+                    VM_LASTDAY01_HIGH:inputHighVmLastDay01, VM_LASTDAY01_LOW:inputLowVmLastDay01,
+                    VM_LASTDAY02_HIGH:inputHighVmLastDay02, VM_LASTDAY02_LOW:inputLowVmLastDay02,
+
+                    VB_LASTDAY01_HIGH:inputHighVbLastDay01, VB_LASTDAY01_LOW:inputLowVbLastDay01,
+                    VB_LASTDAY02_HIGH:inputHighVbLastDay02, VB_LASTDAY02_LOW:inputLowVbLastDay02,
+
+                    VB_TODAY01_HIGH:inputHighVbToDay01, VB_TODAY01_LOW:inputLowVbToDay01,
+                    VB_TODAY02_HIGH:inputHighVbToDay02, VB_TODAY02_LOW:inputLowVbToDay02,
+
+                    VM_TODAY01_HIGH:inputHighVmToDay01, VM_TODAY01_LOW:inputLowVmToDay01,
+                    VM_TODAY02_HIGH:inputHighVmToDay02, VM_TODAY02_LOW:inputLowVmToDay02,
+
+                    UPS_BATTERY_HIGH:inputHighUpsBattery, UPS_BATTERY_LOW:inputLowUpsBattery,
+
+                    UPS_CHARGING_HIGH:inputHighUpsCharging, UPS_CHARGING_LOW:inputLowUpsCharging,
+
+
                 }
             );
 
@@ -1364,6 +3278,56 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
 
             setHighGVA2(inputHighGVA2);
             setLowGVA2(inputLowGVA2);
+
+            setHighTemperature01(inputHighTemperature01);
+            setLowTemperature01(inputLowTemperature01);
+
+
+            setHighTemperature02(inputHighTemperature02);
+            setLowTemperature02(inputLowTemperature02);
+
+
+            setHighReBattery01(inputHighReBattery01);
+            setLowReBattery01(inputLowReBattery01);
+
+            setHighReBattery02(inputHighReBattery02);
+            setLowReBattery02(inputLowReBattery02);
+
+
+            setHighVmLastDay01(inputHighVmLastDay01);
+            setLowVmLastDay01(inputLowVmLastDay01);
+
+            setHighVmLastDay02(inputHighVmLastDay02);
+            setLowVmLastDay02(inputLowVmLastDay02);
+
+
+            setHighVbLastDay01(inputHighVbLastDay01);
+            setLowVbLastDay01(inputLowVbLastDay01);
+
+            setHighVbLastDay02(inputHighVbLastDay02);
+            setLowVbLastDay02(inputLowVbLastDay02);
+
+            setHighVbToDay01(inputHighVbToDay01);
+            setLowVbToDay01(inputLowVbToDay01);
+
+            setHighVbToDay02(inputHighVbToDay02);
+            setLowVbToDay02(inputLowVbToDay02);
+
+            setHighVmToDay01(inputHighVmToDay01);
+            setLowVmToDay01(inputLowVmToDay01);
+
+            setHighVmToDay02(inputHighVmToDay02);
+            setLowVmToDay02(inputLowVmToDay02);
+
+            setHighUpsBattery(inputHighUpsBattery);
+            setLowUpsBattery(inputLowUpsBattery);
+
+
+            setHighUpsCharging(inputHighUpsCharging);
+            setLowUpsCharging(inputLowUpsCharging);
+
+      
+
         } catch (error) {
             console.log("error: ", error);
            
@@ -1499,94 +3463,258 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
                 height:25,
                 fontWeight:400
             },
+
+            CSS_Temperature : {
+                color:AlarmTemperature01 && !maintainTemperature01
+                ? "#ff5656"
+                : maintainTemperature01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_Temperature02 : {
+                color:AlarmTemperature02 && !maintainTemperature02
+                ? "#ff5656"
+                : maintainTemperature02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_Rebattery : {
+                color:AlarmReBattery01 && !maintainReBattery01
+                ? "#ff5656"
+                : maintainReBattery01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_Rebattery02 : {
+                color:AlarmReBattery02 && !maintainReBattery02
+                ? "#ff5656"
+                : maintainReBattery02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_VmLastDay01 : {
+                color:AlarmVmLastDay01 && !maintainVmLastDay01
+                ? "#ff5656"
+                : maintainVmLastDay01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_VmLastDay02 : {
+                color:AlarmVmLastDay02 && !maintainVmLastDay02
+                ? "#ff5656"
+                : maintainVmLastDay02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_VbLastDay01 : {
+                color:AlarmVbLastDay01 && !maintainVbLastDay01
+                ? "#ff5656"
+                : maintainVbLastDay01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_VbLastDay02 : {
+                color:AlarmVbLastDay02 && !maintainVbLastDay02
+                ? "#ff5656"
+                : maintainVbLastDay02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_VmToDay01 : {
+                color:AlarmVmToDay01 && !maintainVmToDay01
+                ? "#ff5656"
+                : maintainVmToDay01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_VmToDay02 : {
+                color:AlarmVmToDay02 && !maintainVmToDay02
+                ? "#ff5656"
+                : maintainVmToDay02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_VbToDay01 : {
+                color:AlarmVbToDay01 && !maintainVbToDay01
+                ? "#ff5656"
+                : maintainVbToDay01
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_VbToDay02 : {
+                color:AlarmVbToDay02 && !maintainVbToDay02
+                ? "#ff5656"
+                : maintainVbToDay02
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_UpsBattery : {
+                color:AlarmUpsBattery && !maintainUpsBattery
+                ? "#ff5656"
+                : maintainUpsBattery
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_UpsCharging: {
+                color:AlarmUpsCharging && !maintainUpsCharging
+                ? "#ff5656"
+                : maintainUpsCharging
+                ? "orange"
+                : "black" ,
+                height:25,
+                fontWeight:400
+            },
       };
-    const data1 = [
+
+      const dataEVC01 = [
+
+
+        { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbToDay01}> VB Today</span> ,
+
+        value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} c</span>, 
+        high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbToDay01}
+        checked={maintainVbToDay01}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmToDay01}> VM Today</span> ,
+
+        value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} c</span>, 
+        high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmToDay01}
+        checked={maintainVmToDay01}
+    ></Checkbox>
+
+       },
+
+       { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
+       name: <span style={combineCss.CSS_VbLastDay01}> VB Yesterday</span> ,
+
+       value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} c</span>, 
+       high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainVbLastDay01}
+       checked={maintainVbLastDay01}
+   ></Checkbox>
+
+      },
+
+        { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmLastDay01}> VM Yesterday</span> ,
+
+        value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} c</span>, 
+        high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmLastDay01}
+        checked={maintainVmLastDay01}
+    ></Checkbox>
+
+       },
+
+  
+
+        { timeUpdate: <span style={combineCss.CSS_Rebattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Rebattery}> Remain Battery</span> ,
+
+        value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} c</span>, 
+        high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='High' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainReBattery01}
+        checked={maintainReBattery01}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Temperature}>Temperature </span> ,
+
+        value: <span style={combineCss.CSS_Temperature} > {Temperature01} c</span>, 
+        high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='High' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTemperature01}
+        checked={maintainTemperature01}
+    ></Checkbox>
+
+       },
+        
         { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
-         name: <span style={combineCss.CSSpt02}>PT-1901</span> ,
+        name: <span style={combineCss.CSSpt02}>PT-1901</span> ,
 
-         value: <span style={combineCss.CSSpt02} > {PT02} Bara</span>, 
-         high: <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSpt02}    placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainPT_1901}
-         checked={maintainPT_1901}
-     ></Checkbox>
+        value: <span style={combineCss.CSSpt02} > {PT02} Bara</span>, 
+        high: <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSpt02}    placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainPT_1901}
+        checked={maintainPT_1901}
+    ></Checkbox>
 
-        },
-
-        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
-            name: <span style={combineCss.CSSpt03}>PT-1902 </span> ,
-            value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
-            high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainPT_1902}
-         checked={maintainPT_1902}
-     ></Checkbox>
-        },
-
-        { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
-           name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
-           value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
-            high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainPT_1903}
-         checked={maintainPT_1903}
-     ></Checkbox>
-
-           },
-
-        { timeUpdate: <span style={combineCss.CSSgd01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSgd01}>GD-1901 </span> ,
-        value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
-         high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGD_01}
-         checked={maintainGD_1901}
-     ></Checkbox>
-
-        },
-
-        { timeUpdate: <span style={combineCss.CSSgd02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSgd02}>GD-1902 </span> ,
-        value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
-         high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGD_02}
-         checked={maintainGD_1902}
-     ></Checkbox>
-
-        },
-
-        { timeUpdate: <span style={combineCss.CSSgd03} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSgd03}>GD-1903 </span> ,
-        value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
-         high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGD_03}
-         checked={maintainGD_1903}
-     ></Checkbox>
-
-        },
+       },
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF1}>SVF FIQ-1901	 </span> ,
-        // modbus: <span style={combineCss.CSS_SVF1}>40858	 </span> ,
 
         value: <span style={combineCss.CSS_SVF1} > {SVF1} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
@@ -1602,7 +3730,6 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_GVF1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVF1}>GVF FIQ-1901	 </span> ,
 
-        // modbus: <span style={combineCss.CSS_GVF1}>40860</span> ,
 
         value: <span style={combineCss.CSS_GVF1} > {GVF1} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
@@ -1646,7 +3773,115 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
      ></Checkbox>
 
         },
-      
+
+
+      ]
+
+      const dataEVC02 = [
+
+        { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbToDay02}> VB Today</span> ,
+
+        value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} c</span>, 
+        high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbToDay02}
+        checked={maintainVbToDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmToDay02}> VM Today</span> ,
+
+        value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} c</span>, 
+        high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmToDay02}
+        checked={maintainVmToDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbLastDay02}> VB Yesterday</span> ,
+
+        value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} c</span>, 
+        high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbLastDay02}
+        checked={maintainVbLastDay02}
+    ></Checkbox>
+
+       },
+        { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmLastDay02}> VM Yesterday</span> ,
+
+        value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} c</span>, 
+        high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmLastDay02}
+        checked={maintainVmLastDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Rebattery02}> Remain Battery</span> ,
+
+        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery01} c</span>, 
+        high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='High' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainReBattery02}
+        checked={maintainReBattery02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Temperature02}>Temperature </span> ,
+
+        value: <span style={combineCss.CSS_Temperature02} > {Temperature01} c</span>, 
+        high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='High' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTemperature02}
+        checked={maintainTemperature02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
+            name: <span style={combineCss.CSSpt03}>PT-1902 </span> ,
+            value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
+            high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainPT_1902}
+         checked={maintainPT_1902}
+     ></Checkbox>
+        },
+
+
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF2}>SVF FIQ-1902	 </span> ,
         // modbus: <span style={combineCss.CSS_SVF2}>  40858 </span> ,
@@ -1664,7 +3899,6 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
         },
         { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVF2}>GVF FIQ-1902	 </span> ,
-        // modbus: <span style={combineCss.CSS_GVF2}>        40860        </span> ,
 
         value: <span style={combineCss.CSS_GVF2} > {GVF2} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
@@ -1680,7 +3914,6 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
         },
           { timeUpdate: <span style={combineCss.CSS_SVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVA2}>SVA FIQ-1902	 </span> ,
-        // modbus: <span style={combineCss.CSS_SVA2}>        40854        </span> ,
 
         value: <span style={combineCss.CSS_SVA2} > {SVA2} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
@@ -1695,7 +3928,6 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
         },
         { timeUpdate: <span style={combineCss.CSS_GVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVA2}>GVA FIQ-1902	 </span> ,
-        // modbus: <span style={combineCss.CSS_GVA2}>        40872        </span> ,
 
         value: <span style={combineCss.CSS_GVA2} > {GVA2} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
@@ -1703,15 +3935,104 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGVA_02}
+         onChange={(e:any) => setMaintainGVA2(e.target.checked)} 
          checked={maintainGVA2}
      ></Checkbox>
 
         },
-      ];
+      ]
+
+      const dataPLC = [
+
+
+
+        { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
+        value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} BarG</span> , 
+         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainUpsCharging}
+      checked={maintainUpsCharging}
+  ></Checkbox>
+
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} BarG</span> , 
+         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainUpsBattery}
+      checked={maintainUpsBattery}
+  ></Checkbox>
+
+        },
+
+        { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
+        value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
+         high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainPT_1903}
+      checked={maintainPT_1903}
+  ></Checkbox>
+
+        },
+
+     { timeUpdate: <span style={combineCss.CSSgd01} >{timeUpdate}</span>,
+     name: <span style={combineCss.CSSgd01}>GD-1901 </span> ,
+     value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
+      high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainGD_01}
+      checked={maintainGD_1901}
+  ></Checkbox>
+
+     },
+
+     { timeUpdate: <span style={combineCss.CSSgd02} >{timeUpdate}</span>,
+     name: <span style={combineCss.CSSgd02}>GD-1902 </span> ,
+     value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
+      high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainGD_02}
+      checked={maintainGD_1902}
+  ></Checkbox>
+
+     },
+
+     { timeUpdate: <span style={combineCss.CSSgd03} >{timeUpdate}</span>,
+     name: <span style={combineCss.CSSgd03}>GD-1903 </span> ,
+     value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
+      high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainGD_03}
+      checked={maintainGD_1903}
+  ></Checkbox>
+
+     },
+      ]
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background:'white', padding:10, borderRadius:10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
             
             <audio ref={audioRef}>
             <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
@@ -1727,7 +4048,9 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
      
       
         <div style={{width:'100%' ,  }}>
-        <DataTable  value={data1} size={'small'} scrollable scrollHeight="550px " showGridlines tableStyle={{ minWidth: '50rem' }} >
+
+            <h4>EVC 01</h4>
+        <DataTable  value={dataEVC01} size={'small'}  showGridlines  >
       <Column field="timeUpdate" header="Time Update" />
       {/* <Column field="modbus" header="Modbus" /> */}
 
@@ -1736,11 +4059,49 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
       <Column field="value" header="Value" />
       <Column  field="high" header="High" />
       <Column field="low" header="Low" />
-      <Column field="update" header="Update" />
       <Column field="Maintain" header="Maintain" />
+      <Column field="update" header="Update" />
 
     </DataTable>
     </div>
+<br />
+
+    <div style={{width:'100%' ,  }}>
+
+<h4>EVC 02</h4>
+<DataTable  value={dataEVC02} size={'small'}  showGridlines  >
+<Column field="timeUpdate" header="Time Update" />
+{/* <Column field="modbus" header="Modbus" /> */}
+
+<Column field="name" header="Name" />
+
+<Column field="value" header="Value" />
+<Column  field="high" header="High" />
+<Column field="low" header="Low" />
+<Column field="Maintain" header="Maintain" />
+<Column field="update" header="Update" />
+
+</DataTable>
+</div>
+<br />
+
+<div style={{width:'100%' ,  }}>
+
+<h4>PLC</h4>
+<DataTable  value={dataPLC} size={'small'}  showGridlines  >
+<Column field="timeUpdate" header="Time Update" />
+{/* <Column field="modbus" header="Modbus" /> */}
+
+<Column field="name" header="Name" />
+
+<Column field="value" header="Value" />
+<Column  field="high" header="High" />
+<Column field="low" header="Low" />
+<Column field="Maintain" header="Maintain" />
+<Column field="update" header="Update" />
+
+</DataTable>
+</div>
     </div>
     
     );

@@ -69,6 +69,8 @@ export default function ScoreCard_Otsuka() {
     const [DOBeacon,setDOBeacon] =useState<string | null>(null);
     const [Map,setMap] =useState<string | null>(null);
 
+    const [DO_SV1,setDO_SV1] = useState<string | null>(null);
+
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -137,7 +139,6 @@ export default function ScoreCard_Otsuka() {
 
                         PT1: setPT03,
 
-
                         time:setTimeUpdate,
 
                         DI_ZSC_1: setNC,
@@ -162,6 +163,8 @@ export default function ScoreCard_Otsuka() {
                         EVC_01_Remain_Battery_Service_Life:setRebattery01,
                         EVC_02_Remain_Battery_Service_Life:setRebattery02,
 
+
+
                         DI_UPS_BATTERY:setUpsBattery,
                         DI_UPS_CHARGING:setUpsCharging,
                         DI_UPS_ALARM:setUpsAlarm,
@@ -175,7 +178,9 @@ export default function ScoreCard_Otsuka() {
                         DI_RESET:setDIReset,
                         DO_HR_01:setDOHorn,
                         DO_BC_01:setDOBeacon,
-                        
+
+                        DO_SV1:setDO_SV1,
+
                         DI_MAP_1:setMap
                     };
 
@@ -426,7 +431,7 @@ export default function ScoreCard_Otsuka() {
                                 </p>
                             </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
                                 <p>
-                                Null
+                                {DO_SV1}
                                 </p>
                             </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
                                 <p>

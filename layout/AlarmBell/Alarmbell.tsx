@@ -14,6 +14,7 @@ export default function Alarmbell() {
     }
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
+    const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
@@ -43,7 +44,6 @@ export default function Alarmbell() {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
 
-         const ReadAllAlarm = {markAllAsReadCmd:{cmdId:4}}
 
         };
 
@@ -69,13 +69,15 @@ export default function Alarmbell() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
-                  
+                    audioRef.current?.play();
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
                 ) {
                     setNotifications(dataReceive.notifications);
                 }
+
+             
             };
         }
 

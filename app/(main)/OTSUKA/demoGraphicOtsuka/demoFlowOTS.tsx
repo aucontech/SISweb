@@ -37,15 +37,11 @@ import {
     BlackTriangleRight,
     FIQ,
     GD,
-    PCV,
     PTV,
-    SDV,
     SVD_NC,
     SVD_NO,
     VavleWay,
     WhiteTriangleRight,
-    connect,
-    gasIn,
     juntionBottom,
     juntionTop,
     tankGas,
@@ -54,8 +50,6 @@ import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
 import { Dialog } from "primereact/dialog";
 import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
-import { InputText } from "primereact/inputtext";
-import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 interface StateMap {
@@ -104,6 +98,13 @@ export default function DemoFlowOTS() {
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
+
+    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
+    console.log('EVC_STT01: ', EVC_STT01);
+    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
+
+    const [PLC_STT, setPLC_STT] = useState<string | null>(null);
+
     const toast = useRef<Toast>(null);
 
     useEffect(() => {
@@ -175,6 +176,10 @@ export default function DemoFlowOTS() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
+                        EVC_01_Conn_STT: setEVC_STT01,
+                        EVC_02_Conn_STT: setEVC_STT02,
+                        PLC_Conn_STT: setPLC_STT,
+
                         time: setTimeUpdate,
                     };
 
@@ -200,7 +205,6 @@ export default function DemoFlowOTS() {
     const [HighPT01, setHighPT01] = useState<number | null>(null);
     const [LowPT01, setLowPT01] = useState<number | null>(null);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-  
 
     const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
 
@@ -252,31 +256,24 @@ export default function DemoFlowOTS() {
             );
             setMaintainPT_1901(newValue);
 
-
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "PT-1901",
+                detail: "Success",
                 life: 3000,
             });
-            fetchData()
-            
+            fetchData();
         } catch (error) {}
     };
 
- 
     const confirmPT_1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation PT-1901",
+            header: " PT-1901",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1901(),
         });
     };
-
- 
-
-  
 
     //================================ PT 1901======================================================
 
@@ -285,7 +282,6 @@ export default function DemoFlowOTS() {
     const [HighPT02, setHighPT02] = useState<number | null>(null);
     const [LowPT02, setLowPT02] = useState<number | null>(null);
     const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-  
 
     const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
 
@@ -339,29 +335,24 @@ export default function DemoFlowOTS() {
             );
             setMaintainPT_1902(newValue);
 
-
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "PT-1902",
+                detail: "Success",
                 life: 3000,
             });
-            fetchData()
-            
+            fetchData();
         } catch (error) {}
     };
 
     const confirmPT_1902 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation PT-1902",
+            header: " PT-1902",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1902(),
         });
     };
-
-
-
 
     //================================ PT 1902======================================================
 
@@ -421,28 +412,24 @@ export default function DemoFlowOTS() {
             );
             setMaintainPT_1903(newValue);
 
-
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "PT-1903",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-            
+            fetchData();
         } catch (error) {}
     };
 
     const confirmPT_1903 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation PT-1903",
+            header: " PT-1903",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1903(),
         });
     };
-
-
 
     //================================ PT 1903======================================================
 
@@ -451,7 +438,6 @@ export default function DemoFlowOTS() {
     const [HighGD01, setHighGD01] = useState<number | null>(null);
     const [LowGD01, setLowGD01] = useState<number | null>(null);
     const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
 
     const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
 
@@ -498,8 +484,6 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD01]);
 
-
-
     const ChangeMaintainGD_01 = async () => {
         try {
             const newValue = !maintainGD_1901;
@@ -511,25 +495,22 @@ export default function DemoFlowOTS() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "GD-1901",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
-
 
     const confirmGD_1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation GD-1903",
+            header: " GD-1901",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_01(),
         });
-    };    
+    };
 
     //================================ GD 1901======================================================
 
@@ -587,8 +568,6 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD02]);
 
-
-
     const ChangeMaintainGD_02 = async () => {
         try {
             const newValue = !maintainGD_1902;
@@ -597,28 +576,25 @@ export default function DemoFlowOTS() {
                 { GD_1902_maintain: newValue }
             );
             setMaintainGD_1902(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "GD-1902",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
-
 
     const confirmGD_1902 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation GD-1902",
+            header: " GD-1902",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_02(),
         });
-    };    
+    };
 
     //================================ GD 1902 ======================================================
 
@@ -676,7 +652,6 @@ export default function DemoFlowOTS() {
         }
     }, [audioGD03]);
 
-
     const ChangeMaintainGD_03 = async () => {
         try {
             const newValue = !maintainGD_1903;
@@ -685,30 +660,25 @@ export default function DemoFlowOTS() {
                 { GD_1903_maintain: newValue }
             );
             setMaintainGD_1903(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "GD-1903",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
-
 
     const confirmGD_1903 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation GD-1903",
+            header: " GD-1903",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_03(),
         });
-    };    
-
- 
+    };
 
     //================================ GD 1902 ======================================================
 
@@ -773,30 +743,25 @@ export default function DemoFlowOTS() {
                 { SVF1_Maintain: newValue }
             );
             setMaintainSVF1(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "SVF FIQ-1901",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
 
-
-    const confirmSVF_1= () => {
+    const confirmSVF_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation SVF FIQ-1901",
+            header: " SVF FIQ-1901",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVF_1(),
         });
-    };    
-
-
+    };
 
     //================================ SVF1 FIQ 1901 ======================================================
 
@@ -805,8 +770,6 @@ export default function DemoFlowOTS() {
     const [HighGVF1, setHighGVF1] = useState<number | null>(null);
     const [LowGVF1, setLowGVF1] = useState<number | null>(null);
     const [exceedThresholdGVF1, setExceedThresholdGVF1] = useState(false);
-    const [inputValueHighGVF1, setInputValueHighGVF1] = useState<any>();
-    const [inputValueLowGVF1, settInputValueLowGVF1] = useState<any>();
 
     const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
 
@@ -861,212 +824,196 @@ export default function DemoFlowOTS() {
                 { GVF1_Maintain: newValue }
             );
             setMaintainGVF1(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "GVF FIQ-1901",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
 
-
-    const confirmGVF_1= () => {
+    const confirmGVF_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation GVF FIQ-1901",
+            header: " GVF FIQ-1901",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVF_1(),
         });
-    };    
-
+    };
 
     //================================ GVF1 FIQ 1901 ======================================================
 
-        //================================ SVA1 FIQ 1901 ======================================================
-        const [audioSVA1, setAudioSVA1] = useState(false);
-        const [HighSVA1, setHighSVA1] = useState<number | null>(null);
-        const [LowSVA1, setLowSVA1] = useState<number | null>(null);
-        const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    //================================ SVA1 FIQ 1901 ======================================================
+    const [audioSVA1, setAudioSVA1] = useState(false);
+    const [HighSVA1, setHighSVA1] = useState<number | null>(null);
+    const [LowSVA1, setLowSVA1] = useState<number | null>(null);
+    const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    
-        const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
-    
-        useEffect(() => {
+    const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighSVA1 === "string" &&
+            typeof LowSVA1 === "string" &&
+            SVA1 !== null &&
+            maintainSVA1 === false
+        ) {
+            const highValueSVA1 = parseFloat(HighSVA1);
+            const lowValueSVA1 = parseFloat(LowSVA1);
+            const ValueSVA1 = parseFloat(SVA1);
+
             if (
-                typeof HighSVA1 === "string" &&
-                typeof LowSVA1 === "string" &&
-                SVA1 !== null &&
-                maintainSVA1 === false
+                !isNaN(highValueSVA1) &&
+                !isNaN(lowValueSVA1) &&
+                !isNaN(ValueSVA1)
             ) {
-                const highValueSVA1 = parseFloat(HighSVA1);
-                const lowValueSVA1 = parseFloat(LowSVA1);
-                const ValueSVA1 = parseFloat(SVA1);
-    
-                if (
-                    !isNaN(highValueSVA1) &&
-                    !isNaN(lowValueSVA1) &&
-                    !isNaN(ValueSVA1)
-                ) {
-                    if (highValueSVA1 < ValueSVA1 || ValueSVA1 < lowValueSVA1) {
-                        if (!audioSVA1) {
-                            audioRef.current?.play();
-                            setAudioSVA1(true);
-                            setExceedThresholdSVA1(true);
-                        }
-                    } else {
-                        setAudioSVA1(false);
-                        setExceedThresholdSVA1(false);
+                if (highValueSVA1 < ValueSVA1 || ValueSVA1 < lowValueSVA1) {
+                    if (!audioSVA1) {
+                        audioRef.current?.play();
+                        setAudioSVA1(true);
+                        setExceedThresholdSVA1(true);
                     }
-                }
-                fetchData();
-            }
-        }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
-    
-        useEffect(() => {
-            if (audioSVA1) {
-                const audioEnded = () => {
+                } else {
                     setAudioSVA1(false);
-                };
-                audioRef.current?.addEventListener("ended", audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener("ended", audioEnded);
-                };
-            }
-        }, [audioSVA1]);
-
-
-        const ChangeMaintainSVA_1 = async () => {
-            try {
-                const newValue = !maintainSVA1;
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                    { SVA1_Maintain: newValue }
-                );
-                setMaintainSVA1(newValue);
-                
-                toast.current?.show({
-                    severity: "info",
-                    summary: "Rejected",
-                    detail: "Change successfully",
-                    life: 3000,
-                });
-                fetchData()
-    
-                
-            } catch (error) {}
-        };
-    
-    
-        const confirmSVA_1= () => {
-            confirmDialog({
-                message: "Do you want to change the status?",
-                header: "Change Confirmation SVA FIQ-1901",
-                icon: "pi pi-info-circle",
-                accept: () => ChangeMaintainSVA_1(),
-            });
-        };    
-
-        //================================ SVA1 FIQ 1901 ======================================================
-    
-        //================================ GVA1 FIQ 1901 ======================================================
-        const [audioGVA1, setAudioGVA1] = useState(false);
-        const [HighGVA1, setHighGVA1] = useState<number | null>(null);
-        const [LowGVA1, setLowGVA1] = useState<number | null>(null);
-        const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
-
-    
-        const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
-    
-        useEffect(() => {
-            if (
-                typeof HighGVA1 === "string" &&
-                typeof LowGVA1 === "string" &&
-                GVA1 !== null &&
-                maintainGVA1 === false
-            ) {
-                const highValueGVA1 = parseFloat(HighGVA1);
-                const lowValueGVA1 = parseFloat(LowGVA1);
-                const ValueGVA1 = parseFloat(GVA1);
-    
-                if (
-                    !isNaN(highValueGVA1) &&
-                    !isNaN(lowValueGVA1) &&
-                    !isNaN(ValueGVA1)
-                ) {
-                    if (highValueGVA1 < ValueGVA1 || ValueGVA1 < lowValueGVA1) {
-                        if (!audioGVA1) {
-                            audioRef.current?.play();
-                            setAudioGVA1(true);
-                            setExceedThresholdGVA1(true);
-                        }
-                    } else {
-                        setAudioGVA1(false);
-                        setExceedThresholdGVA1(false);
-                    }
+                    setExceedThresholdSVA1(false);
                 }
-                fetchData();
             }
-        }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
-    
-        useEffect(() => {
-            if (audioGVA1) {
-                const audioEnded = () => {
-                    setAudioGVA1(false);
-                };
-                audioRef.current?.addEventListener("ended", audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener("ended", audioEnded);
-                };
-            }
-        }, [audioGVA1]);
-    
-        const ChangeMaintainGVA_1 = async () => {
-            try {
-                const newValue = !maintainGVA1;
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                    { GVA1_Maintain: newValue }
-                );
-                setMaintainGVA1(newValue);
-                
-                toast.current?.show({
-                    severity: "info",
-                    summary: "Rejected",
-                    detail: "Change successfully",
-                    life: 3000,
-                });
-                fetchData()
-    
-                
-            } catch (error) {}
-        };
-    
-    
-        const confirmGVA_1= () => {
-            confirmDialog({
-                message: "Do you want to change the status?",
-                header: "Change Confirmation GVA FIQ-1901",
-                icon: "pi pi-info-circle",
-                accept: () => ChangeMaintainGVA_1(),
+            fetchData();
+        }
+    }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
+
+    useEffect(() => {
+        if (audioSVA1) {
+            const audioEnded = () => {
+                setAudioSVA1(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioSVA1]);
+
+    const ChangeMaintainSVA_1 = async () => {
+        try {
+            const newValue = !maintainSVA1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVA1_Maintain: newValue }
+            );
+            setMaintainSVA1(newValue);
+
+            toast.current?.show({
+                severity: "info",
+                summary: "SVA FIQ-1901",
+                detail: "Success ",
+                life: 3000,
             });
-        };    
+            fetchData();
+        } catch (error) {}
+    };
 
-    
-        //================================ GVA1 FIQ 1901 ======================================================
+    const confirmSVA_1 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: " SVA FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainSVA_1(),
+        });
+    };
 
+    //================================ SVA1 FIQ 1901 ======================================================
 
-           //================================ SVF2 FIQ 1901 ======================================================
+    //================================ GVA1 FIQ 1901 ======================================================
+    const [audioGVA1, setAudioGVA1] = useState(false);
+    const [HighGVA1, setHighGVA1] = useState<number | null>(null);
+    const [LowGVA1, setLowGVA1] = useState<number | null>(null);
+    const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
+
+    const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighGVA1 === "string" &&
+            typeof LowGVA1 === "string" &&
+            GVA1 !== null &&
+            maintainGVA1 === false
+        ) {
+            const highValueGVA1 = parseFloat(HighGVA1);
+            const lowValueGVA1 = parseFloat(LowGVA1);
+            const ValueGVA1 = parseFloat(GVA1);
+
+            if (
+                !isNaN(highValueGVA1) &&
+                !isNaN(lowValueGVA1) &&
+                !isNaN(ValueGVA1)
+            ) {
+                if (highValueGVA1 < ValueGVA1 || ValueGVA1 < lowValueGVA1) {
+                    if (!audioGVA1) {
+                        audioRef.current?.play();
+                        setAudioGVA1(true);
+                        setExceedThresholdGVA1(true);
+                    }
+                } else {
+                    setAudioGVA1(false);
+                    setExceedThresholdGVA1(false);
+                }
+            }
+            fetchData();
+        }
+    }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
+
+    useEffect(() => {
+        if (audioGVA1) {
+            const audioEnded = () => {
+                setAudioGVA1(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGVA1]);
+
+    const ChangeMaintainGVA_1 = async () => {
+        try {
+            const newValue = !maintainGVA1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVA1_Maintain: newValue }
+            );
+            setMaintainGVA1(newValue);
+
+            toast.current?.show({
+                severity: "info",
+                summary: "GVA FIQ-1901 ",
+                detail: "Success ",
+                life: 3000,
+            });
+            fetchData();
+        } catch (error) {}
+    };
+
+    const confirmGVA_1 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: " GVA FIQ-1901",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGVA_1(),
+        });
+    };
+
+    //================================ GVA1 FIQ 1901 ======================================================
+
+    //================================ SVF2 FIQ 1901 ======================================================
     //================================ SVF1 FIQ 1901 ======================================================
     const [audioSVF2, setAudioSVF2] = useState(false);
     const [HighSVF2, setHighSVF2] = useState<number | null>(null);
     const [LowSVF2, setLowSVF2] = useState<number | null>(null);
     const [exceedThresholdSVF2, setExceedThresholdSVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
 
     const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
 
@@ -1121,29 +1068,25 @@ export default function DemoFlowOTS() {
                 { SVF2_Maintain: newValue }
             );
             setMaintainSVF2(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "SVF FIQ-1902",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
 
-
-    const confirmSVF_2= () => {
+    const confirmSVF_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation SVF FIQ-1901",
+            header: " SVF FIQ-1902",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVF_2(),
         });
-    };    
-
+    };
 
     //================================ SVF1 FIQ 1901 ======================================================
 
@@ -1152,7 +1095,6 @@ export default function DemoFlowOTS() {
     const [HighGVF2, setHighGVF2] = useState<number | null>(null);
     const [LowGVF2, setLowGVF2] = useState<number | null>(null);
     const [exceedThresholdGVF2, setExceedThresholdGVF2] = useState(false);
-
 
     const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
 
@@ -1207,241 +1149,220 @@ export default function DemoFlowOTS() {
                 { GVF2_Maintain: newValue }
             );
             setMaintainGVF2(newValue);
-            
+
             toast.current?.show({
                 severity: "info",
-                summary: "Rejected",
-                detail: "Change successfully",
+                summary: "GVF FIQ-1902",
+                detail: "Success ",
                 life: 3000,
             });
-            fetchData()
-
-            
+            fetchData();
         } catch (error) {}
     };
-
 
     const confirmGVF_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Change Confirmation GVF FIQ-1901",
+            header: " GVF FIQ-1902",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVF_2(),
         });
-    };    
-
+    };
 
     //================================ GVF1 FIQ 1901 ======================================================
 
-        //================================ SVA2 FIQ 1901 ======================================================
-        const [audioSVA2, setAudioSVA2] = useState(false);
-        const [HighSVA2, setHighSVA2] = useState<number | null>(null);
-        const [LowSVA2, setLowSVA2] = useState<number | null>(null);
-        const [exceedThresholdSVA2, setExceedThresholdSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    
-    
-        const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
-    
-        useEffect(() => {
+    //================================ SVA2 FIQ 1901 ======================================================
+    const [audioSVA2, setAudioSVA2] = useState(false);
+    const [HighSVA2, setHighSVA2] = useState<number | null>(null);
+    const [LowSVA2, setLowSVA2] = useState<number | null>(null);
+    const [exceedThresholdSVA2, setExceedThresholdSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+    const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighSVA2 === "string" &&
+            typeof LowSVA2 === "string" &&
+            SVA2 !== null &&
+            maintainSVA2 === false
+        ) {
+            const highValueSVA2 = parseFloat(HighSVA2);
+            const lowValueSVA2 = parseFloat(LowSVA2);
+            const ValueSVA2 = parseFloat(SVA2);
+
             if (
-                typeof HighSVA2 === "string" &&
-                typeof LowSVA2 === "string" &&
-                SVA2 !== null &&
-                maintainSVA2 === false
+                !isNaN(highValueSVA2) &&
+                !isNaN(lowValueSVA2) &&
+                !isNaN(ValueSVA2)
             ) {
-                const highValueSVA2 = parseFloat(HighSVA2);
-                const lowValueSVA2 = parseFloat(LowSVA2);
-                const ValueSVA2 = parseFloat(SVA2);
-    
-                if (
-                    !isNaN(highValueSVA2) &&
-                    !isNaN(lowValueSVA2) &&
-                    !isNaN(ValueSVA2)
-                ) {
-                    if (highValueSVA2 < ValueSVA2 || ValueSVA2 < lowValueSVA2) {
-                        if (!audioSVA2) {
-                            audioRef.current?.play();
-                            setAudioSVA2(true);
-                            setExceedThresholdSVA2(true);
-                        }
-                    } else {
-                        setAudioSVA2(false);
-                        setExceedThresholdSVA2(false);
+                if (highValueSVA2 < ValueSVA2 || ValueSVA2 < lowValueSVA2) {
+                    if (!audioSVA2) {
+                        audioRef.current?.play();
+                        setAudioSVA2(true);
+                        setExceedThresholdSVA2(true);
                     }
-                }
-                fetchData();
-            }
-        }, [HighSVA2, SVA2, audioSVA2, LowSVA2, maintainSVA2]);
-    
-        useEffect(() => {
-            if (audioSVA2) {
-                const audioEnded = () => {
+                } else {
                     setAudioSVA2(false);
-                };
-                audioRef.current?.addEventListener("ended", audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener("ended", audioEnded);
-                };
-            }
-        }, [audioSVA2]);
-
-
-        const ChangeMaintainSVA_2 = async () => {
-            try {
-                const newValue = !maintainSVA2;
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                    { SVA2_Maintain: newValue }
-                );
-                setMaintainSVA2(newValue);
-                
-                toast.current?.show({
-                    severity: "info",
-                    summary: "Rejected",
-                    detail: "Change successfully",
-                    life: 3000,
-                });
-                fetchData()
-    
-                
-            } catch (error) {}
-        };
-    
-    
-        const confirmSVA_2 = () => {
-            confirmDialog({
-                message: "Do you want to change the status?",
-                header: "Change Confirmation SVA FIQ-1901",
-                icon: "pi pi-info-circle",
-                accept: () => ChangeMaintainSVA_2(),
-            });
-        };    
-
-        //================================ SVA2 FIQ 1901 ======================================================
-    
-        //================================ GVA2 FIQ 1901 ======================================================
-        const [audioGVA2, setAudioGVA2] = useState(false);
-        const [HighGVA2, setHighGVA2] = useState<number | null>(null);
-        const [LowGVA2, setLowGVA2] = useState<number | null>(null);
-        const [exceedThresholdGVA2, setExceedThresholdGVA2] = useState(false);
- 
-    
-        const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
-    
-        useEffect(() => {
-            if (
-                typeof HighGVA2 === "string" &&
-                typeof LowGVA2 === "string" &&
-                GVA2 !== null &&
-                maintainGVA2 === false
-            ) {
-                const highValueGVA2 = parseFloat(HighGVA2);
-                const lowValueGVA2 = parseFloat(LowGVA2);
-                const ValueGVA2 = parseFloat(GVA2);
-    
-                if (
-                    !isNaN(highValueGVA2) &&
-                    !isNaN(lowValueGVA2) &&
-                    !isNaN(ValueGVA2)
-                ) {
-                    if (highValueGVA2 < ValueGVA2 || ValueGVA2 < lowValueGVA2) {
-                        if (!audioGVA2) {
-                            audioRef.current?.play();
-                            setAudioGVA2(true);
-                            setExceedThresholdGVA2(true);
-                        }
-                    } else {
-                        setAudioGVA2(false);
-                        setExceedThresholdGVA2(false);
-                    }
+                    setExceedThresholdSVA2(false);
                 }
-                fetchData();
             }
-        }, [HighGVA2, GVA2, audioGVA2, LowGVA2, maintainGVA2]);
-    
-        useEffect(() => {
-            if (audioGVA2) {
-                const audioEnded = () => {
+            fetchData();
+        }
+    }, [HighSVA2, SVA2, audioSVA2, LowSVA2, maintainSVA2]);
+
+    useEffect(() => {
+        if (audioSVA2) {
+            const audioEnded = () => {
+                setAudioSVA2(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioSVA2]);
+
+    const ChangeMaintainSVA_2 = async () => {
+        try {
+            const newValue = !maintainSVA2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { SVA2_Maintain: newValue }
+            );
+            setMaintainSVA2(newValue);
+
+            toast.current?.show({
+                severity: "info",
+                summary: "SVA FIQ-1902",
+                detail: "Success ",
+                life: 3000,
+            });
+            fetchData();
+        } catch (error) {}
+    };
+
+    const confirmSVA_2 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: " SVA FIQ-1902",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainSVA_2(),
+        });
+    };
+
+    //================================ SVA2 FIQ 1901 ======================================================
+
+    //================================ GVA2 FIQ 1901 ======================================================
+    const [audioGVA2, setAudioGVA2] = useState(false);
+    const [HighGVA2, setHighGVA2] = useState<number | null>(null);
+    const [LowGVA2, setLowGVA2] = useState<number | null>(null);
+    const [exceedThresholdGVA2, setExceedThresholdGVA2] = useState(false);
+
+    const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighGVA2 === "string" &&
+            typeof LowGVA2 === "string" &&
+            GVA2 !== null &&
+            maintainGVA2 === false
+        ) {
+            const highValueGVA2 = parseFloat(HighGVA2);
+            const lowValueGVA2 = parseFloat(LowGVA2);
+            const ValueGVA2 = parseFloat(GVA2);
+
+            if (
+                !isNaN(highValueGVA2) &&
+                !isNaN(lowValueGVA2) &&
+                !isNaN(ValueGVA2)
+            ) {
+                if (highValueGVA2 < ValueGVA2 || ValueGVA2 < lowValueGVA2) {
+                    if (!audioGVA2) {
+                        audioRef.current?.play();
+                        setAudioGVA2(true);
+                        setExceedThresholdGVA2(true);
+                    }
+                } else {
                     setAudioGVA2(false);
-                };
-                audioRef.current?.addEventListener("ended", audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener("ended", audioEnded);
-                };
+                    setExceedThresholdGVA2(false);
+                }
             }
-        }, [audioGVA2]);
-    
-        const ChangeMaintainGVA_2 = async () => {
-            try {
-                const newValue = !maintainGVA2;
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                    { GVA2_Maintain: newValue }
-                );
-                setMaintainGVA2(newValue);
-                
-                toast.current?.show({
-                    severity: "info",
-                    summary: "Rejected",
-                    detail: "Change successfully",
-                    life: 3000,
-                });
-                fetchData()
-    
-                
-            } catch (error) {}
-        };
-    
-    
-        const confirmGVA_2= () => {
-            confirmDialog({
-                message: "Do you want to change the status?",
-                header: "Change Confirmation GVA FIQ-1901",
-                icon: "pi pi-info-circle",
-                accept: () => ChangeMaintainGVA_2(),
+            fetchData();
+        }
+    }, [HighGVA2, GVA2, audioGVA2, LowGVA2, maintainGVA2]);
+
+    useEffect(() => {
+        if (audioGVA2) {
+            const audioEnded = () => {
+                setAudioGVA2(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioGVA2]);
+
+    const ChangeMaintainGVA_2 = async () => {
+        try {
+            const newValue = !maintainGVA2;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { GVA2_Maintain: newValue }
+            );
+            setMaintainGVA2(newValue);
+
+            toast.current?.show({
+                severity: "info",
+                summary: "GVA FIQ-1902",
+                detail: "Success ",
+                life: 3000,
             });
-        };    
+            fetchData();
+        } catch (error) {}
+    };
 
-    
-        //================================ GVA1 FIQ 1901 ======================================================
+    const confirmGVA_2 = () => {
+        confirmDialog({
+            message: "Do you want to change the status?",
+            header: " GVA FIQ-1902",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeMaintainGVA_2(),
+        });
+    };
 
-       
-const [lineDuty1901,setLineduty1901]=useState<boolean>(false)
-const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
+    //================================ GVA1 FIQ 1901 ======================================================
 
-        const ChangeStatusFIQ = async () => {
-            try {
-                const newValue1 = !lineDuty1901;
-                const newValue2 = !lineDuty1902;
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                    { FIQ1901_LineDuty: newValue1,FIQ1902_LineDuty:newValue2 }
-                );
-                setLineduty1901(newValue1);
-                setLineduty1902(newValue2);
-                
-                toast.current?.show({
-                    severity: "info",
-                    summary: "Rejected",
-                    detail: "Change successfully",
-                    life: 3000,
-                });
-                fetchData()
-    
-                
-            } catch (error) {}
-        };
-        const confirmLineDuty= () => {
-            confirmDialog({
-                message: "Do you want to change the line duty?",
-                header: "Change confirmation",
-                icon: "pi pi-info-circle",
-                accept: () => ChangeStatusFIQ(),
+    const ChangeStatusFIQ = async () => {
+        try {
+            const newValue1 = !lineDuty1901;
+            const newValue2 = !lineDuty1902;
+
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+            );
+            setLineduty1901(newValue1);
+            setLineduty1902(newValue2);
+
+            toast.current?.show({
+                severity: "info",
+                detail: "Success ",
+                life: 3000,
             });
-        };    
-
- 
+            fetchData();
+        } catch (error) {}
+    };
+    const confirmLineDuty = () => {
+        confirmDialog({
+            message: "Do you want to change the line duty?",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeStatusFIQ(),
+        });
+    };
 
     const fetchData = async () => {
         try {
@@ -1526,10 +1447,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             );
             setLowGVF1(LowGVF1?.value || null);
 
-
-
-
-
             const HighSVA1 = res.data.find(
                 (item: any) => item.key === "SVA1_High"
             );
@@ -1550,9 +1467,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             );
             setLowGVA1(LowGVA1?.value || null);
 
-
-
-
             const HighSVA2 = res.data.find(
                 (item: any) => item.key === "SVA2_High"
             );
@@ -1572,10 +1486,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 (item: any) => item.key === "GVA2_Low"
             );
             setLowGVA2(LowGVA2?.value || null);
-
-
-
-
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "PT_1901_maintain"
@@ -1607,9 +1517,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             );
             setMaintainGD_1903(MaintainGD_1903?.value || false);
 
-
-
-
             const MaintainSVF_1 = res.data.find(
                 (item: any) => item.key === "SVF1_Maintain"
             );
@@ -1629,9 +1536,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 (item: any) => item.key === "GVA1_Maintain"
             );
             setMaintainGVA1(MaintainGVA_1?.value || false);
-
-
-
 
             const MaintainSVF_2 = res.data.find(
                 (item: any) => item.key === "SVF2_Maintain"
@@ -1653,9 +1557,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             );
             setMaintainGVA2(MaintainGVA_2?.value || false);
 
-
-
-
             const LineDuty1901 = res.data.find(
                 (item: any) => item.key === "FIQ1901_LineDuty"
             );
@@ -1668,8 +1569,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
-
-
     };
 
     useEffect(() => {
@@ -1712,17 +1611,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
-                // let decimalSVF1: string | number = "";
-
-                // if (SVF1 !== null) {
-                //     const SVF1Number = parseFloat(SVF1);
-                //     if (!isNaN(SVF1Number)) {
-                //         decimalSVF1 = formatNumberWithCommas(SVF1Number);
-                //     } else {
-                //         decimalSVF1 = "";
-                //     }
-                // }
-
                 const roundedSVF1 =
                     SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
                 return {
@@ -1736,17 +1624,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    padding:2,
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdSVF1 && !maintainSVF1
-                                        ? "#ff5656"
-                                        : maintainSVF1
-                                        ? "orange"
-                                        : "transparent",
+                                        exceedThresholdSVF1 && !maintainSVF1
+                                            ? "#ff5656"
+                                            : maintainSVF1
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=> confirmSVF_1()}
+                                onClick={() => confirmSVF_1()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVF} :
                                     </p>
@@ -1759,7 +1657,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedSVF1}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.SM3H}
                                 </p>
                             </div>
@@ -1768,16 +1672,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 };
             }
             if (node.id === "data3") {
-                // let decimalGVF1: string | number = "";
-
-                // if (GVF1 !== null) {
-                //     const SVA1Number = parseFloat(GVF1);
-                //     if (!isNaN(SVA1Number)) {
-                //         decimalGVF1 = formatNumberWithCommas(SVA1Number);
-                //     } else {
-                //         decimalGVF1 = "";
-                //     }
-                // }
                 const roundedGVF1 =
                     GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
                 return {
@@ -1791,20 +1685,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdGVF1 && !maintainGVF1
-                                        ? "#ff5656"
-                                        : maintainGVF1
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
-
-                                    
+                                        exceedThresholdGVF1 && !maintainGVF1
+                                            ? "#ff5656"
+                                            : maintainGVF1
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=> confirmGVF_1()}
-
+                                onClick={() => confirmGVF_1()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVF} :
                                     </p>
@@ -1817,7 +1718,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedGVF1}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.M3H}
                                 </p>
                             </div>
@@ -1839,19 +1746,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdSVA1 && !maintainSVA1
-                                        ? "#ff5656"
-                                        : maintainSVA1
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
-
+                                        exceedThresholdSVA1 && !maintainSVA1
+                                            ? "#ff5656"
+                                            : maintainSVA1
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=>confirmSVA_1()}
-
+                                onClick={() => confirmSVA_1()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVA} :
                                     </p>
@@ -1864,7 +1779,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedSVA1}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.SM3}
                                 </p>
                             </div>
@@ -1887,23 +1808,31 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    backgroundColor:
-                                    exceedThresholdGVA1 && !maintainGVA1
-                                        ? "#ff5656"
-                                        : maintainGVA1
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
-
-
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    background:
+                                        exceedThresholdGVA1 && !maintainGVA1
+                                            ? "#ff5656"
+                                            : maintainGVA1
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=>confirmGVA_1()}
-
+                                onClick={() => confirmGVA_1()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVA} :
                                     </p>
+
                                     <p
                                         style={{
                                             color: colorData,
@@ -1913,7 +1842,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedGVA1}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.M3}
                                 </p>
                             </div>
@@ -1936,17 +1871,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdSVF2 && !maintainSVF2
-                                        ? "#ff5656"
-                                        : maintainSVF2
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
+                                        exceedThresholdSVF2 && !maintainSVF2
+                                            ? "#ff5656"
+                                            : maintainSVF2
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=>confirmSVF_2()}
+                                onClick={() => confirmSVF_2()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVF} :
                                     </p>
@@ -1959,7 +1904,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedSVF2}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.SM3H}
                                 </p>
                             </div>
@@ -1968,17 +1919,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 };
             }
             if (node.id === "data6") {
-                // let decimalGVF2: string | number = "";
-
-                // if (GVF2 !== null) {
-                //     const GVF2Number = parseFloat(GVF2);
-                //     if (!isNaN(GVF2Number)) {
-                //         decimalGVF2 = formatNumberWithCommas(GVF2Number);
-                //     } else {
-                //         decimalGVF2 = "";
-                //     }
-                // }
-
                 const roundedGVF2 =
                     GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
 
@@ -1993,17 +1933,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdGVF2&& !maintainGVF2
-                                        ? "#ff5656"
-                                        : maintainGVF2
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
+                                        exceedThresholdGVF2 && !maintainGVF2
+                                            ? "#ff5656"
+                                            : maintainGVF2
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=> confirmGVF_2()}
+                                onClick={() => confirmGVF_2()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVF} :
                                     </p>
@@ -2016,7 +1966,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedGVF2}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.M3H}
                                 </p>
                             </div>
@@ -2039,17 +1995,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdSVA2&& !maintainSVA2
-                                        ? "#ff5656"
-                                        : maintainSVA2
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
+                                        exceedThresholdSVA2 && !maintainSVA2
+                                            ? "#ff5656"
+                                            : maintainSVA2
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=> confirmSVA_2()}
+                                onClick={() => confirmSVA_2()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.SVA} :
                                     </p>
@@ -2062,7 +2028,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedSVA2}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.SM3}
                                 </p>
                             </div>
@@ -2071,16 +2043,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 };
             }
             if (node.id === "data8") {
-                // let decimalGVA2: string | number = "";
-
-                // if (GVA2 !== null) {
-                //     const GVA2Number = parseFloat(GVA2);
-                //     if (!isNaN(GVA2Number)) {
-                //         decimalGVA2 = formatNumberWithCommas(GVA2Number);
-                //     } else {
-                //         decimalGVA2 = "";
-                //     }
-                // }
                 const roundedGVA2 =
                     GVA2 !== null ? parseFloat(GVA2).toFixed(2) : "";
 
@@ -2095,17 +2057,27 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
+                                    bottom: 7,
+                                    padding: 2,
+                                    borderRadius: 5,
                                     backgroundColor:
-                                    exceedThresholdGVA2&& !maintainGVA2
-                                        ? "#ff5656"
-                                        : maintainGVA2
-                                        ? "orange"
-                                        : "transparent",
-                                    padding:2,
+                                        exceedThresholdGVA2 && !maintainGVA2
+                                            ? "#ff5656"
+                                            : maintainGVA2
+                                            ? "orange"
+                                            : "transparent",
                                 }}
-                                onClick={()=> confirmGVA_2()}
+                                onClick={() => confirmGVA_2()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.GVA} :
                                     </p>
@@ -2118,7 +2090,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedGVA2}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.M3}
                                 </p>
                             </div>
@@ -2143,6 +2121,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
                                     backgroundColor:
                                         exceedThreshold3 && !maintainPT_1903
                                             ? "#ff5656"
@@ -2150,10 +2129,16 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={()=> confirmPT_1903()}
-
+                                onClick={() => confirmPT_1903()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.PT_1903} :
                                     </p>
@@ -2166,7 +2151,15 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedPT03}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>BarG</p>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    BarG
+                                </p>
                             </div>
                         ),
                     },
@@ -2189,6 +2182,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
                                     backgroundColor:
                                         exceedThreshold && !maintainPT_1901
                                             ? "#ff5656"
@@ -2196,10 +2190,16 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                             ? "orange"
                                             : "transparent",
                                 }}
-
-                                onClick={()=> confirmPT_1901()}
+                                onClick={() => confirmPT_1901()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.PT_1901} :
                                     </p>
@@ -2212,7 +2212,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedPT01}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.BAR}
                                 </p>
                             </div>
@@ -2237,6 +2243,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    position: "relative",
                                     backgroundColor:
                                         exceedThreshold2 && !maintainPT_1902
                                             ? "#ff5656"
@@ -2245,9 +2252,16 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={()=> confirmPT_1902()}
+                                onClick={() => confirmPT_1902()}
                             >
-                                <div style={{ display: "flex" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     <p style={{ color: colorNameValue }}>
                                         {ValueGas.PT_1902} :
                                     </p>
@@ -2260,7 +2274,13 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         {roundedPT02}
                                     </p>
                                 </div>
-                                <p style={{ color: colorNameValue }}>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
                                     {KeyGas.BAR}
                                 </p>
                             </div>
@@ -2310,72 +2330,68 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                         }}
                                     >
                                         {" "}
-                                        EVC 02 :{" "}
+                                        EVC 02 : {" "}
                                     </p>
                                 </div>
 
                                 <div style={{}}>
-                                    <p>
-                                        {checkConnectData ? (
-                                            <p
+                                    <p style={{marginLeft:5}}>
+                                        {PLC_STT === '1' ? (
+                                            <span
                                                 style={{
                                                     color: "#25d125",
-                                                    marginLeft: 15,
                                                 }}
                                             >
                                                 Connected
-                                            </p>
+                                            </span>
                                         ) : (
-                                            <p
+                                            <span
                                                 style={{
-                                                    color: "white",
-                                                    marginLeft: 15,
+                                                    color: "#ff5656",
                                                 }}
                                             >
                                                 Disconnect
-                                            </p>
+                                            </span>
                                         )}
                                     </p>
-                                    <p>
-                                        {checkConnectData ? (
-                                            <p
+                                    <p style={{marginLeft:5}}>
+
+                                    {EVC_STT01 === '1' ? (
+                                            <span
                                                 style={{
                                                     color: "#25d125",
-                                                    marginLeft: 15,
                                                 }}
                                             >
                                                 Connected
-                                            </p>
+                                            </span>
                                         ) : (
-                                            <p
+                                            <span
                                                 style={{
-                                                    color: "white",
-                                                    marginLeft: 15,
+                                                    color: "#ff5656",
                                                 }}
                                             >
                                                 Disconnect
-                                            </p>
+                                            </span>
                                         )}
                                     </p>
-                                    <p>
-                                        {checkConnectData ? (
-                                            <p
+                                    <p style={{marginLeft:5}}>
+
+                                    {EVC_STT02 === '1' ? (
+                                            <span
                                                 style={{
                                                     color: "#25d125",
-                                                    marginLeft: 15,
                                                 }}
                                             >
                                                 Connected
-                                            </p>
+                                            </span>
                                         ) : (
-                                            <p
+                                            <span
                                                 style={{
-                                                    color: "white",
-                                                    marginLeft: 15,
+                                                    color: "#ff5656",
                                                 }}
                                             >
                                                 Disconnect
-                                            </p>
+                                            </span>
                                         )}
                                     </p>
                                 </div>
@@ -2432,6 +2448,10 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    padding: 5,
+                                    position: "relative",
+                                    bottom: 4,
+                                    borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
                                             ? "#ff5656"
@@ -2440,7 +2460,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={()=>confirmGD_1901()}
+                                onClick={() => confirmGD_1901()}
                             >
                                 <p style={{}}>{roundedGD01} LEL</p>
                             </div>
@@ -2461,6 +2481,11 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    padding: 5,
+
+                                    position: "relative",
+                                    bottom: 4,
+                                    borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGD02 && !maintainGD_1902
                                             ? "#ff5656"
@@ -2470,7 +2495,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
 
                                     cursor: "pointer",
                                 }}
-                                onClick={()=> confirmGD_1902()}
+                                onClick={() => confirmGD_1902()}
                             >
                                 <p
                                     style={{
@@ -2497,6 +2522,11 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                 style={{
                                     fontSize: 18,
                                     fontWeight: 500,
+                                    padding: 5,
+                                    position: "relative",
+
+                                    bottom: 4,
+                                    borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGD03 && !maintainGD_1903
                                             ? "#ff5656"
@@ -2506,7 +2536,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
 
                                     cursor: "pointer",
                                 }}
-                                onClick={()=> confirmGD_1903()}
+                                onClick={() => confirmGD_1903()}
                             >
                                 <p
                                     style={{
@@ -2549,13 +2579,22 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                 style={{
                                     fontSize: 32,
                                     fontWeight: 500,
-                                 
                                 }}
                                 onClick={confirmLineDuty}
-                                >
-                                    FIQ-1901
-                                    {lineDuty1901 && <span style={{  marginLeft:30}}><i className="pi pi-check" style={{ fontSize: 35, color:'green', fontWeight:700}}></i></span>}
-
+                            >
+                                FIQ-1901
+                                {lineDuty1901 && (
+                                    <span style={{ marginLeft: 30 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
                             </div>
                         ),
                     },
@@ -2574,12 +2613,22 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                                 style={{
                                     fontSize: 32,
                                     fontWeight: 500,
-                                 
                                 }}
                                 onClick={confirmLineDuty}
-                                >
-                                    FIQ-1902
-                                    {lineDuty1902 && <span style={{  marginLeft:30}}><i className="pi pi-check" style={{ fontSize: 35, color:'green', fontWeight:700}}></i></span>}
+                            >
+                                FIQ-1902
+                                {lineDuty1902 && (
+                                    <span style={{ marginLeft: 30 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
                             </div>
                         ),
                     },
@@ -2590,7 +2639,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
@@ -2648,8 +2697,8 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
         Header: { x: -1146.0797880182224, y: 343.9694534020156 },
         PCV01: { x: -600.44289821967, y: 803.2924339111273 },
         PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
-        PCV_NUM01: { x: -685.509356814222, y: 647.8453966003194 },
-        PCV_NUM02: { x: -684.9095065313029, y: 1347.8359120884465 },
+        PCV_NUM01: { x: -705.509356814222, y: 647.8453966003194 },
+        PCV_NUM02: { x: -704.9095065313029, y: 1363.8359120884465 },
         PCV_ballVavle_Small1: {
             x: -463.45750208249893,
             y: 796.2045791299236,
@@ -2676,7 +2725,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
         },
         PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
         PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-        PSV01: { x: 602.1731993621377, y: 559.5742417551456 },
+        PSV01: { x: 545.8473394037572, y: 553.5105157948386 },
         PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
         PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
         PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
@@ -2696,7 +2745,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
         PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
         PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
         Pressure_Trans01: { x: -1144.6672900563185, y: 775.737751310433 },
-        Pressure_Trans02: { x: -326.82628571826723, y: 543.387636352668 },
+        Pressure_Trans02: { x: -326.8262857182672, y: 545.387636352668 },
         Pressure_Trans03: {
             x: -327.47184043716663,
             y: 1434.9801685486188,
@@ -3795,7 +3844,9 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             type: "custom",
             data: {
                 label: (
-                    <div style={{ fontSize: 25, display: "flex" }}>
+                    <div
+                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
+                    >
                         <PCV_01_Otsuka />
                     </div>
                 ),
@@ -3805,7 +3856,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 270,
+                width: 310,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3817,7 +3868,9 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             type: "custom",
             data: {
                 label: (
-                    <div>
+                    <div
+                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
+                    >
                         <PCV_02_Otsuka />
                     </div>
                 ),
@@ -3827,7 +3880,8 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             targetPosition: Position.Top,
             style: {
                 border: background,
-                width: 270,
+                width: 310,
+
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3873,12 +3927,10 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                             fontSize: 32,
                             fontWeight: 500,
                         }}
-
                         onClick={confirmLineDuty}
                     >
                         FIQ-1901
                         {lineDuty1901 && <span>1901</span>}
-
                     </div>
                 ),
             },
@@ -3902,11 +3954,9 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                             fontWeight: 500,
                         }}
                         onClick={confirmLineDuty}
-
                     >
                         FIQ-1902
                         {lineDuty1902 && <span>1902</span>}
-
                     </div>
                 ),
             },
@@ -4431,7 +4481,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 label: <div>4</div>,
             },
 
-            sourcePosition: Position.Right,
+            sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
@@ -4447,7 +4497,9 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             type: "custom",
             data: {
                 label: (
-                    <div style={{ fontSize: 25, display: "flex" }}>
+                    <div
+                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
+                    >
                         <PSV01_Otsuka />
                     </div>
                 ),
@@ -4457,7 +4509,7 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 270,
+                width: 310,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4743,46 +4795,46 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
             },
             targetPosition: Position.Bottom,
         },
-        {
-            id: "HELP",
-            data: {
-                label: (
-                    <div>
-                        <div
-                            style={{
-                                textAlign: "center",
-                                cursor: "pointer",
-                            }}
-                        >
-                            <p
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                    border: "5px solid white",
-                                    borderRadius: 50,
-                                    fontWeight: 600,
-                                    color: "white",
-                                    fontSize: 30,
-                                }}
-                                onClick={() => setVisible(true)}
-                            >
-                                ?
-                            </p>
-                        </div>
-                    </div>
-                ),
-            },
+        // {
+        //     id: "HELP",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <div
+        //                     style={{
+        //                         textAlign: "center",
+        //                         cursor: "pointer",
+        //                     }}
+        //                 >
+        //                     <p
+        //                         style={{
+        //                             width: 50,
+        //                             height: 50,
+        //                             border: "5px solid white",
+        //                             borderRadius: 50,
+        //                             fontWeight: 600,
+        //                             color: "white",
+        //                             fontSize: 30,
+        //                         }}
+        //                         onClick={() => setVisible(true)}
+        //                     >
+        //                         ?
+        //                     </p>
+        //                 </div>
+        //             </div>
+        //         ),
+        //     },
 
-            position: positions.HELP,
+        //     position: positions.HELP,
 
-            style: {
-                background: background,
-                border: background,
-                width: 10,
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //     style: {
+        //         background: background,
+        //         border: background,
+        //         width: 10,
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
         // =============== TIME  =======================
 
         {
@@ -5991,16 +6043,15 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
     //     [setNodes, setPositions, editingEnabled]
     // );
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
-    // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    // }, [positions]);
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
+    useEffect(() => {
+        localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    }, [positions]);
 
     return (
         <div>
-
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
@@ -6008,19 +6059,10 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
-        
-<Toast ref={toast} />
+            <Toast ref={toast} />
             <ConfirmDialog />
 
-           
-
-         
-
-            
-
-          
-
-            <Dialog
+            {/* <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
                 style={{
@@ -6036,10 +6078,10 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                         </p>
                     )
                 )}
-            </Dialog>
+            </Dialog> */}
             <div
                 style={{
-                    borderRadius:5,
+                    borderRadius: 5,
                     width: "100%",
                     height: "100vh",
                     position: "relative",
@@ -6091,8 +6133,6 @@ const [lineDuty1902,setLineduty1902]=useState<boolean>(true)
                     <Controls />
                 </ReactFlow>
             </div>
-
-
         </div>
     );
 }

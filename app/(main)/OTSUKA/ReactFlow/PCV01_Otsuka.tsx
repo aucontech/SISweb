@@ -162,17 +162,20 @@ export default function PCV_01_Otsuka() {
          
 
             <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', justifyContent:'space-between', fontWeight:500  }} onClick={handleButtonToggle}>
-                 <p style={{color:colorNameValue,}}>PCV-1901 : </p> 
+                 <p style={{color:colorNameValue,}}>PCV-1901 : Set</p> 
                   <p style={{marginLeft:20, color:colorData}} > {upData} </p> 
                   <p style={{marginLeft:10,color:colorNameValue,}}>BarG</p>
 
            </div>
             
             <OverlayPanel ref={op}>
-                <div>
-                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
 
-                    <Button label="Update" onClick={handleButtonClick} />
+                
+
+                <div style={{display:'flex', flexDirection:'column', width:120}}>
+                    <p style={{fontWeight:500}}>PCV-1901</p>
+                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
+                    <Button style={{marginTop:5}} label="Update" onClick={handleButtonClick} />
                 </div>
             </OverlayPanel>
         </div>
