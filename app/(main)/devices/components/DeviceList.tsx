@@ -134,10 +134,10 @@ const DeviceList: React.FC<Props> = () => {
         const value = e.target.value;
         setTextSearch(value);
     };
-    const _onClickSelection = (e: any) => {
-        setSelectedDevice(e.value);
-        setIsVisible(true);
-    };
+    // const _onClickSelection = (e: any) => {
+    //     setSelectedDevice(e.value);
+    //     setIsVisible(true);
+    // };
     return (
         <>
             <div>
@@ -161,7 +161,7 @@ const DeviceList: React.FC<Props> = () => {
                         first={lazyState.first}
                         dataKey="id"
                         onPage={_onInvsPaging}
-                        onSelectionChange={(e) => _onClickSelection(e)}
+                        // onSelectionChange={(e) => _onClickSelection(e)}
                     >
                         <Column
                             sortable

@@ -5,13 +5,17 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
-//import tingting from "./Notification.mp3";
 import "./AlarmBellCssBlink.css"
-export default function Alarmbell() {
+
+import { PiBellSimpleRingingBold } from "react-icons/pi";
+
+export default function AlarmOTSUKA() {
+
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
     }
+
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
     const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
@@ -115,99 +119,22 @@ export default function Alarmbell() {
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
 
-        const handleMarkAllAsRead = () => {
-            const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
-            ws.current?.send(JSON.stringify(ReadAllAlarm));
-    
-            const obj3 = { unsubCmd: { cmdId: 1 } };
-            const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-            ws.current?.send(JSON.stringify(obj3));
-            ws.current?.send(JSON.stringify(obj2));
-        };
     return (
         <div>
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-
             <div className="flex">
-                {totalCount && (
-                    <div className={styles.totalCount}>
-                        <p className={styles.totalCount_p}>
-                            {totalCount.totalSubjects}
-                        </p>
-                    </div>
-                )}
 
-                {totalCount ? ( 
-
-                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
-                 <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
+           {totalCount ? ( 
+                    <div className="ColorRed" style={{ fontSize:40, display:'flex', cursor:'pointer' }} onClick={()=> router.push('/SetupData')} >
+                 <p style={{marginRight:15}} >Alarming</p>  <p style={{marginTop:5}}>  <PiBellSimpleRingingBold size={50} /> </p> 
 
                     </div>
                  ) : (
-                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
-
-                    <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
-                    </div>
-                 )}
-                
-
-
-                
+                    ""
+                 )} 
             </div>
-            <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.overlayPanel}>
-                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
-                       
-                       <div >
-                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
-                        </div>
-
-                        {totalCount ? ( 
-                                <div className="MarkAllBell">
-
-                    <p style={{fontWeight:500,  marginTop:4,cursor:'pointer' }} onClick={handleMarkAllAsRead}> Mark all as read</p>
-
-                                </div>
-
-                        ) : ("")}
-                    </div>
-                    <hr />
-
-                    {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
-                            {dataAlarm}
-                        </div>
-                    ) : (
-                        <div className={styles.alarmEmpty}>
-                            <Image
-                                src="/demo/images/logoBell/bel.svg"
-                                width={200}
-                                height={200}
-                                alt="Picture of the author"
-                            />
-                        </div>
-                    )}
-                    <div style={{ padding: 20 }}>
-                        <Button
-                            onClick={() => router.push("/SetupData")}
-                            className={styles.buttonViewAll}
-                        >
-                            View All
-                        </Button>
-                    </div>
-                    <div></div>
-                </div>
-            </OverlayPanel>
         </div>
     );
 }

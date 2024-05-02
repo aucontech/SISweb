@@ -69,6 +69,8 @@ export default function ScoreCard_Otsuka() {
     const [DOBeacon,setDOBeacon] =useState<string | null>(null);
     const [Map,setMap] =useState<string | null>(null);
 
+    const [DO_SV1,setDO_SV1] = useState<string | null>(null);
+
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -137,7 +139,6 @@ export default function ScoreCard_Otsuka() {
 
                         PT1: setPT03,
 
-
                         time:setTimeUpdate,
 
                         DI_ZSC_1: setNC,
@@ -162,6 +163,8 @@ export default function ScoreCard_Otsuka() {
                         EVC_01_Remain_Battery_Service_Life:setRebattery01,
                         EVC_02_Remain_Battery_Service_Life:setRebattery02,
 
+
+
                         DI_UPS_BATTERY:setUpsBattery,
                         DI_UPS_CHARGING:setUpsCharging,
                         DI_UPS_ALARM:setUpsAlarm,
@@ -175,7 +178,9 @@ export default function ScoreCard_Otsuka() {
                         DI_RESET:setDIReset,
                         DO_HR_01:setDOHorn,
                         DO_BC_01:setDOBeacon,
-                        
+
+                        DO_SV1:setDO_SV1,
+
                         DI_MAP_1:setMap
                     };
 
@@ -198,95 +203,95 @@ export default function ScoreCard_Otsuka() {
     <div>
 
 
-        <div style={{width:'100%', }} >
+        <div style={{width:'100%', display:'flex', justifyContent:'space-between' }} >
 
-            <div style={{width:'50%', height:'auto', fontWeight:600}}>
+            <div style={{width:'49%', height:'auto', fontWeight:600, border:'1px solid black'}}>
                     <div style={{display:'flex', }}  >
-                        <div style={{width:'65%', border:'1px solid black', }}>
+                        <div style={{width:'65%', border:'1px solid white', }}>
 
                             <div>
-                                <div style={{border:'0.5px solid black',background:'#21c43a', padding:5, textAlign:'center'}}>
+                                <div style={{border:'0.5px solid white',background:'#21c43a', padding:5, textAlign:'center'}}>
                                     OTSUKA
                                 </div>
-                                <div style={{border:'0.5px solid black', padding:5, textAlign:'center',background:'#B0C4DE'}}>
+                                <div style={{border:'0.5px solid white', padding:5, textAlign:'center',background:'#B0C4DE'}}>
                                     EVC Parameter - {timeUpdate?.slice(10,19)}
                                 </div>
-                                <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                                <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Output Pressure (Bara)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Temperature (°C)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Flow (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Standard Volume Flow (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Accumulated (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Standard Volume Accumulated (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Vm Yesterday (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Standard Volume Vb Yesterday (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Vm Today (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Standard Volume Vb Today (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Remainning Battery (Months)</p>
                             </div>
                         </div>
 
                         <div >
 
-                            <div style={{border:'0.5px solid black',padding:5, background:'#B0C4DE', textAlign:'center'}}>
+                            <div style={{border:'0.5px solid white',padding:5, background:'#B0C4DE', textAlign:'center'}}>
                             PLC Parameter - {timeUpdate?.slice(10,19)}
                             </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Input Pressure (BarG)</p>
                             </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1901 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1902 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1903 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SDV-SOLENOID (0: OFF - 1: ON)</p>
                             </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SDV-ZSO (0: OFF - 1: ON) </p>
                             </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SDV-ZSC (0: OFF - 1: ON) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_BATTERY (0 :Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_CHARGING (0: Normal - 1: Charging)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_MODE (Normal -UPS Running -Charging - No Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SELECT_SW (0: Local - 1: Remote)</p>
                             </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>RESET (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Emergency Stop_NC (0: Emergency - 1: Normal)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Emergency Stop_NO (0: Normal - 1: Emergency) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>HORN (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>BEACON (0: OFF - 1: ON)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>MAP (0: Normal - 1: Emergency)</p>
                             </div> 
                         </div>
                     </div>
-                        <div style={{width:'35%', border:'1px solid black', textAlign:'center'}} >
+                        <div style={{width:'35%', border:'1px solid white', textAlign:'center'}} >
                         <div>
-                            <div style={{border:'0.5px solid black',background:'#21c43a', padding:5}}>
+                            <div style={{border:'0.5px solid white',background:'#21c43a', padding:5}}>
 
                             {timeUpdate?.slice(0,10)}
 
@@ -294,38 +299,38 @@ export default function ScoreCard_Otsuka() {
                            <div style={{display:'flex'}}>
 
                             <div style={{width:'50%',}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid black' ,background:'#B0C4DE' }} >
+                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }} >
                                 <p>EVC-1901</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{PT01}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{Temperature01}</p>
                             </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{GVF1}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{SVF1}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{GVA1}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{SVA1}</p>
                             </div>
-                           <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                           <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{VmLastDay01}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{VbLastDay01}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{VmToday01}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{VbToDay01}</p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }} >
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>{ReBattery01}</p>
                             </div>
                             </div>
@@ -335,55 +340,55 @@ export default function ScoreCard_Otsuka() {
 
 
                             <div style={{width:'50%'}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid black' ,background:'#B0C4DE' }}>
+                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }}>
                                 <p>
                                 EVC-1902
                                 </p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {PT02}
                                 </p>
                             </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {Temperature02}
                                 </p>
-                            </div><div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div><div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {GVF2}
                                 </p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {SVF2}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {GVA2}
                                 </p>
-                            </div>  <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div>  <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {SVA2}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 <p>{VmLastDay02}</p>
 
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 <p>{VbLastDay02}</p>
 
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {VmToday02}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                             <p>{VbToDay02}</p>
 
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {ReBattery02}
                                 </p>
@@ -396,7 +401,7 @@ export default function ScoreCard_Otsuka() {
                         </div>
                         <div>
                         <div >
-                                <div style={{border:'0.5px solid black',padding:5,background:'#B0C4DE'}}>
+                                <div style={{border:'0.5px solid white',padding:5,background:'#B0C4DE'}}>
 
                                     <p>
 
@@ -405,80 +410,80 @@ export default function ScoreCard_Otsuka() {
                                     </p>
                             </div>
 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {PT03}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {GD1}
                                 </p>
                             </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {GD2}
                                
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {GD3}
                               
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
-                                Null
+                                {DO_SV1}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {NO}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {NC}
 
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {UpsBattery}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {UpsCharging}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {UpsAlarm}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {UpsMode}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {SelectSW}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {DIReset}
                                 </p>
                             </div> 
-                             <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                             <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {EmergencyNC}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {EmergencyNO}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                {DOHorn}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                               {DOBeacon}
                                 </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid black',fontSize:11  }}>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
                                 <p>
                                 {Map}
                                 </p>
@@ -492,7 +497,297 @@ export default function ScoreCard_Otsuka() {
                 
                 </div>   
         
+                <div style={{width:'49%', height:'auto', fontWeight:600 ,border:'1px solid black',}}>
+                    <div style={{display:'flex', }}  >
+                        <div style={{width:'65%', border:'1px solid white', }}>
 
+                            <div>
+                                <div style={{border:'0.5px solid white',background:'#21c43a', padding:5, textAlign:'center'}}>
+                                IGUACU
+                                </div>
+                                <div style={{border:'0.5px solid white', padding:5, textAlign:'center',background:'#B0C4DE'}}>
+                                    EVC Parameter - {timeUpdate?.slice(10,19)}
+                                </div>
+                                <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Output Pressure (Bara)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Temperature (°C)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gross Volume Flow (m³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Standard Volume Flow (Sm³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gross Volume Accumulated (m³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Standard Volume Accumulated (Sm³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gross Volume Vm Yesterday (m³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Standard Volume Vb Yesterday (Sm³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gross Volume Vm Today (m³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Standard Volume Vb Today (Sm³)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Remainning Battery (Months)</p>
+                            </div>
+                        </div>
+
+                        <div >
+
+                            <div style={{border:'0.5px solid white',padding:5, background:'#B0C4DE', textAlign:'center'}}>
+                            PLC Parameter - {timeUpdate?.slice(10,19)}
+                            </div>
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Input Pressure (BarG)</p>
+                            </div>
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gas Detector GD-1901 (%LEL)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gas Detector GD-1902 (%LEL)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Gas Detector GD-1903 (%LEL)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>SDV-SOLENOID (0: OFF - 1: ON)</p>
+                            </div>
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>SDV-ZSO (0: OFF - 1: ON) </p>
+                            </div>
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>SDV-ZSC (0: OFF - 1: ON) </p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>UPS_BATTERY (0 :Normal - 1: Battery)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>UPS_CHARGING (0: Normal - 1: Charging)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>UPS_MODE (Normal -UPS Running -Charging - No Battery)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>SELECT_SW (0: Local - 1: Remote)</p>
+                            </div>
+                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>RESET (0: OFF - 1: ON)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Emergency Stop_NC (0: Emergency - 1: Normal)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>Emergency Stop_NO (0: Normal - 1: Emergency) </p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>HORN (0: OFF - 1: ON)</p>
+                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>BEACON (0: OFF - 1: ON)</p>
+                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>MAP (0: Normal - 1: Emergency)</p>
+                            </div> 
+                        </div>
+                    </div>
+                        <div style={{width:'35%', border:'1px solid white', textAlign:'center'}} >
+                        <div>
+                            <div style={{border:'0.5px solid white',background:'#21c43a', padding:5}}>
+
+                            {timeUpdate?.slice(0,10)}
+
+                            </div>
+                           <div style={{display:'flex'}}>
+
+                            <div style={{width:'50%',}}>
+                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }} >
+                                <p>EVC-1901</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{PT01}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{Temperature01}</p>
+                            </div> 
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{GVF1}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{SVF1}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{GVA1}</p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{SVA1}</p>
+                            </div>
+                           <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{VmLastDay01}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{VbLastDay01}</p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{VmToday01}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{VbToDay01}</p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
+                                <p>{ReBattery01}</p>
+                            </div>
+                            </div>
+
+
+
+
+
+                            <div style={{width:'50%'}}>
+                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }}>
+                                <p>
+                                EVC-1902
+                                </p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {PT02}
+                                </p>
+                            </div> 
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {Temperature02}
+                                </p>
+                            </div><div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {GVF2}
+                                </p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {SVF2}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {GVA2}
+                                </p>
+                            </div>  <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {SVA2}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                <p>{VmLastDay02}</p>
+
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                <p>{VbLastDay02}</p>
+
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {VmToday02}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                            <p>{VbToDay02}</p>
+
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {ReBattery02}
+                                </p>
+                            </div>
+
+                            </div>
+
+                           </div>
+                            
+                        </div>
+                        <div>
+                        <div >
+                                <div style={{border:'0.5px solid white',padding:5,background:'#B0C4DE'}}>
+
+                                    <p>
+
+                            S7-1200
+
+                                    </p>
+                            </div>
+
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {PT03}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {GD1}
+                                </p>
+                            </div>
+                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {GD2}
+                               
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {GD3}
+                              
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {DO_SV1}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {NO}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {NC}
+
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {UpsBattery}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {UpsCharging}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {UpsAlarm}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {UpsMode}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {SelectSW}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {DIReset}
+                                </p>
+                            </div> 
+                             <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {EmergencyNC}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {EmergencyNO}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                               {DOHorn}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                              {DOBeacon}
+                                </p>
+                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
+                                <p>
+                                {Map}
+                                </p>
+                            </div>
+                        </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                
+                </div> 
         </div>
     <br />
  
