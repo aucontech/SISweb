@@ -1,6 +1,9 @@
 /* components/CustomerReport.module.css */
 .grid {
     display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .col {
@@ -11,5 +14,5 @@
 
 .label {
     margin-bottom: 24px; /* Đảm bảo khoảng cách đều */
-    //text-align: center;
+    padding: 3px;
 }
