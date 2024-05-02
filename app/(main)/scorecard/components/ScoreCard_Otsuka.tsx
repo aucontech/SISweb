@@ -539,7 +539,7 @@ export default function ScoreCard_Otsuka() {
                             PLC Parameter - {timeUpdate?.slice(10,19)}
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Input Pressure (BarG)</p>\
+                                <p>Input Pressure (BarG)</p>
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1901 (%LEL)</p>
