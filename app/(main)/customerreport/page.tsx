@@ -6,7 +6,7 @@ import styles from "./CustomerReport.module.css";
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
-import { saveAs } from "file-saver";
+import { saveAs } from 'file-saver';
 
 const defaultValue = {
     grossVolumeVmB1: 0,
@@ -19,8 +19,8 @@ const defaultValue = {
     energyQB2: 0,
     avgTemperatureB1: 0.0,
     avgTemperatureB2: 0.0,
-    avgPressureB1: 0.0,
-    avgPressureB2: 0.0,
+    avgPresssureB1: 0.0,
+    avgPresssureB2: 0.0,
     grossVolumeAccumulatedB1: 0,
     grossVolumeAccumulatedB2: 0,
     standardVolumeAccumulatedB1: 0,
@@ -117,13 +117,13 @@ const CustomerReport = () => {
                     newReportData.avgTemperatureB2;
                 setReportData(newReportData);
                 break;
-            case "avgPressureB1":
-                console.log("avgPressureB1");
-                newReportData.avgPressureCon = newReportData.avgPressureB1;
+            case "avgPresssureB1":
+                console.log("avgPresssureB1");
+                newReportData.avgPresssureCon = newReportData.avgPresssureB1;
                 setReportData(newReportData);
                 break;
-            case "avgPressureB2":
-                newReportData.avgPressureCon = newReportData.avgPressureB2;
+            case "avgPresssureB2":
+                newReportData.avgPresssureCon = newReportData.avgPresssureB2;
                 setReportData(newReportData);
                 break;
             case "grossVolumeAccumulatedB1":
@@ -154,30 +154,27 @@ const CustomerReport = () => {
 
     const handleExportReport = () => {
         exportReport(reportData)
-            .then((response: any) => {
-                // const contentDisposition = response.headers.get('content-disposition');
-                const contentDisposition: any =
-                    response.headers["content-disposition"];
-                let fileName = "report.xlsx";
-                // In giá trị của Content-Disposition
-                console.log(contentDisposition);
-                if (contentDisposition) {
-                    // Sử dụng Regular Expression để tìm filename
-                    const filenameMatch =
-                        contentDisposition.match(/filename="([^"]+)"/);
 
-                    // Kiểm tra xem có tìm thấy kết quả phù hợp không
-                    if (filenameMatch) {
-                        fileName = filenameMatch[1];
-                        console.log("Tên file:", fileName);
-                    } else {
-                        console.log(
-                            "Không tìm thấy tên file trong Content-Disposition"
-                        );
-                    }
+            .then(response => {
+               // const contentDisposition = response.headers.get('content-disposition');
+               const contentDisposition = response.headers['content-disposition'];
+               let fileName="report.xlsx"
+               // In giá trị của Content-Disposition
+               console.log(contentDisposition);
+               if (contentDisposition) {
+                // Sử dụng Regular Expression để tìm filename
+                const filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
+
+                // Kiểm tra xem có tìm thấy kết quả phù hợp không
+                if (filenameMatch) {
+                    fileName = filenameMatch[1];
+                  console.log('Tên file:', fileName);
                 } else {
-                    console.log("Header Content-Disposition không tồn tại");
+                  console.log('Không tìm thấy tên file trong Content-Disposition');
                 }
+              } else {
+                console.log('Header Content-Disposition không tồn tại');
+              }
                 // if (contentDisposition) {
                 //     const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
                 //     if (filenameMatch && filenameMatch[1]) {
@@ -186,106 +183,123 @@ const CustomerReport = () => {
                 // }
                 saveAs(response.data, fileName);
             })
-            .catch((err) => {
-                console.error("Error exporting report:", err);
+            .catch(err => {
+                console.error('Error exporting report:', err);
             });
     };
     return (
         <>
+
+        <div>
+
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+
+                <div style={{width:'80%'}}>
             <FilterReport
                 onAction={_onFilterChange}
                 showDevice={true}
                 showDate={true}
             />
 
+</div>
+
+<div style={{}}>
+            <Button onClick={handleExportReport}>Export Report</Button>
+            </div>
+                </div>
+
+             
+            </div>
             {reportData.device && <h2>{reportData.device.name} CUSTOMER</h2>}
+            <div style={{background:'white', borderRadius:5}}>
             <div className={styles.grid}>
-                <div className={styles.col}>
-                    <p className={styles.label}>Daily Report</p>
-                    <p className={styles.label}>Gross Volume Vm (m3)</p>
-                    <p className={styles.label}>Standard Volume Vb (Sm3)</p>
-                    <p className={styles.label}>Gross Heating Value (Mj/Sm3)</p>
+                <div  >
+                    <p style={{fontSize:23, fontWeight:500, marginBottom:33, marginTop:10 }}>Daily Report</p>
+                    <p className={styles.label}>Gross Volume Vm (m³)</p>
+                    <p className={styles.label}>Standard Volume Vb (Sm³)</p>    
+                    <p className={styles.label}>Gross Heating Value (MJ/Sm³)</p>
                     <p className={styles.label}>Energy Q (MMBTU)</p>
                     <p className={styles.label}>Average Temperature (℃)</p>
                     <p className={styles.label}>Average Pressure (Bara)</p>
                     <p className={styles.label}>
-                        Gross Volume Accumulated (m3)
+                        Gross Volume Accumulated (m³)
                     </p>
                     <p className={styles.label}>
-                        Standard Volume Accumulated (Sm3)
+                        Standard Volume Accumulated (Sm³)
                     </p>
                 </div>
                 <div className={styles.col}>
-                    <p className="w-full text-center">EVC 1901</p>
+                    <p style={{fontSize:20, fontWeight:500, textAlign:'center'}}>EVC 1901</p>
                     <InputText
+                    
                         value={reportData.grossVolumeVmB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.standardVolumeVbB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.heatingValueB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.energyQB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.avgTemperatureB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
-                        value={reportData.avgPressureB1}
-                        className="w-full text-center"
+                        value={reportData.avgPresssureB1}
+                        className="w-full text-center mt-2"
                     />
 
                     <InputText
                         value={reportData.grossVolumeAccumulatedB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.standardVolumeAccumulatedB1}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                 </div>
                 <div className={styles.col}>
-                    <p className="w-full text-center">Duty</p>
+                    <p style={{fontSize:20, fontWeight:500, textAlign:'center'}}>Duty</p>
                     <Button
                         onClick={() => handleDutyClick("grossVolumeVmB1")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("standardVolumeVbB1")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("heatingValueB1")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("energyQB1")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("avgTemperatureB1")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
-                        onClick={() => handleDutyClick("avgPressureB1")}
-                        className="w-full"
+                        onClick={() => handleDutyClick("avgPresssureB1")}
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
@@ -293,7 +307,7 @@ const CustomerReport = () => {
                         onClick={() =>
                             handleDutyClick("grossVolumeAccumulatedB1")
                         }
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
@@ -302,82 +316,82 @@ const CustomerReport = () => {
                         onClick={() =>
                             handleDutyClick("standardVolumeAccumulatedB1")
                         }
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                 </div>
                 <div className={styles.col}>
-                    <p className="w-full text-center">EVC 1902</p>
+                    <p style={{fontSize:20, fontWeight:500, textAlign:'center'}}>EVC 1902</p>
                     <InputText
                         value={reportData.grossVolumeVmB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.standardVolumeVbB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.heatingValueB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.energyQB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
 
                     <InputText
                         value={reportData.avgTemperatureB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
-                        value={reportData.avgPressureB2}
-                        className="w-full text-center"
+                        value={reportData.avgPresssureB2}
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.grossVolumeAccumulatedB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData.standardVolumeAccumulatedB2}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                 </div>
                 <div className={styles.col}>
-                    <p className="w-full text-center">Duty</p>
+                    <p style={{fontSize:20, fontWeight:500, textAlign:'center'}}>Duty</p>
                     <Button
                         onClick={() => handleDutyClick("grossVolumeVmB2")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("standardVolumeVbB2")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("heatingValueB2")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("energyQB2")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
                         onClick={() => handleDutyClick("avgTemperatureB2")}
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                     <Button
-                        onClick={() => handleDutyClick("avgPressureB2")}
-                        className="w-full"
+                        onClick={() => handleDutyClick("avgPresssureB2")}
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
@@ -385,7 +399,7 @@ const CustomerReport = () => {
                         onClick={() =>
                             handleDutyClick("grossVolumeAccumulatedB2")
                         }
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
@@ -393,48 +407,51 @@ const CustomerReport = () => {
                         onClick={() =>
                             handleDutyClick("standardVolumeAccumulatedB2")
                         }
-                        className="w-full"
+                        className="w-full mt-2"
                     >
                         Action
                     </Button>
                 </div>
                 <div className={styles.col}>
-                    <p className="w-full text-center">Consumption</p>
+                    <p style={{fontSize:20, fontWeight:500, textAlign:'center'}}>Consumption</p>
                     <InputText
                         value={reportData?.grossVolumeVmCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.standardVolumeVbCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.heatingValueCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.energyCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.avgTemperatureCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
-                        value={reportData?.avgPressureCon ?? ""}
-                        className="w-full text-center"
+                        value={reportData?.avgPresssureCon ?? ""}
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.grossVolumeAccumulatedCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                     <InputText
                         value={reportData?.standardVolumeAccumulatedCon ?? ""}
-                        className="w-full text-center"
+                        className="w-full text-center mt-2"
                     />
                 </div>
+
+                
             </div>
-            <Button onClick={handleExportReport}>Export Report</Button>
+           
+            </div>
         </>
     );
 };

@@ -221,9 +221,9 @@ export default function ScoreCard_Otsuka() {
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Temperature (°C)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Flow (m³)</p>
+                                <p>Gross Volume Flow (m³/h)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Flow (Sm³)</p>
+                                <p>Standard Volume Flow (Sm³/h)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Accumulated (m³)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
@@ -513,9 +513,9 @@ export default function ScoreCard_Otsuka() {
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Temperature (°C)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Flow (m³)</p>
+                                <p>Gross Volume Flow (m³/h)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Flow (Sm³)</p>
+                                <p>Standard Volume Flow (Sm³/h)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gross Volume Accumulated (m³)</p>
                             </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
@@ -539,7 +539,7 @@ export default function ScoreCard_Otsuka() {
                             PLC Parameter - {timeUpdate?.slice(10,19)}
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Input Pressure (BarG)</p>
+                                <p>Input Pressure (BarG)</p>\
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1901 (%LEL)</p>
