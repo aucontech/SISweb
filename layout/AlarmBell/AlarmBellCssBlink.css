@@ -11,6 +11,20 @@
 
   }
 
+  @keyframes Blink1 {
+    0% { color: red; }
+50% { color:white; }
+100% { color: red; }
+}
+
+  .ColorRed {
+    animation: Blink1 0.7s infinite;
+    border-radius: 50px;
+
+
+  }
+
+
   .MarkAllBell{
     width: 150px;
     height:30px;

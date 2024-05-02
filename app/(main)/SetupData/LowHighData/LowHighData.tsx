@@ -3607,112 +3607,6 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
       const dataEVC01 = [
 
 
-        { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbToDay01}> VB Today</span> ,
-
-        value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} c</span>, 
-        high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVbToDay01}
-        checked={maintainVbToDay01}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmToDay01}> VM Today</span> ,
-
-        value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} c</span>, 
-        high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVmToDay01}
-        checked={maintainVmToDay01}
-    ></Checkbox>
-
-       },
-
-       { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
-       name: <span style={combineCss.CSS_VbLastDay01}> VB Yesterday</span> ,
-
-       value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} c</span>, 
-       high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-       Maintain:   <Checkbox
-       style={{ marginRight: 20, }}
-       onChange={ChangeMaintainVbLastDay01}
-       checked={maintainVbLastDay01}
-   ></Checkbox>
-
-      },
-
-        { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmLastDay01}> VM Yesterday</span> ,
-
-        value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} c</span>, 
-        high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVmLastDay01}
-        checked={maintainVmLastDay01}
-    ></Checkbox>
-
-       },
-
-  
-
-        { timeUpdate: <span style={combineCss.CSS_Rebattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Rebattery}> Remain Battery</span> ,
-
-        value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} c</span>, 
-        high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='High' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainReBattery01}
-        checked={maintainReBattery01}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Temperature}>Temperature </span> ,
-
-        value: <span style={combineCss.CSS_Temperature} > {Temperature01} c</span>, 
-        high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='High' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainTemperature01}
-        checked={maintainTemperature01}
-    ></Checkbox>
-
-       },
-        
-        { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSpt02}>PT-1901</span> ,
-
-        value: <span style={combineCss.CSSpt02} > {PT02} Bara</span>, 
-        high: <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSpt02}    placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainPT_1901}
-        checked={maintainPT_1901}
-    ></Checkbox>
-
-       },
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF1}>SVF FIQ-1901	 </span> ,
 
@@ -3773,114 +3667,118 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
      ></Checkbox>
 
         },
+        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSpt03}>PT-1901 </span> ,
+        value: <span style={combineCss.CSSpt03} > {PT02} Bara</span> , 
+        high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainPT_1901}
+     checked={maintainPT_1901}
+ ></Checkbox>
+    },
 
+
+        { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbToDay01}> VB Today</span> ,
+
+        value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} Sm³</span>, 
+        high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbToDay01}
+        checked={maintainVbToDay01}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmToDay01}> VM Today</span> ,
+
+        value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} m³</span>, 
+        high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmToDay01}
+        checked={maintainVmToDay01}
+    ></Checkbox>
+
+       },
+
+       { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
+       name: <span style={combineCss.CSS_VbLastDay01}> VB Yesterday</span> ,
+
+       value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} Sm³</span>, 
+       high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainVbLastDay01}
+       checked={maintainVbLastDay01}
+   ></Checkbox>
+
+      },
+
+        { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmLastDay01}> VM Yesterday </span> ,
+
+        value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} m³</span>, 
+        high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmLastDay01}
+        checked={maintainVmLastDay01}
+    ></Checkbox>
+
+       },
+
+  
+
+        { timeUpdate: <span style={combineCss.CSS_Rebattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Rebattery}> Remain Battery</span> ,
+
+        value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
+        high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='High' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainReBattery01}
+        checked={maintainReBattery01}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Temperature}>Temperature </span> ,
+
+        value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
+        high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='High' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTemperature01}
+        checked={maintainTemperature01}
+    ></Checkbox>
+
+       },
+        
+
+  
 
       ]
 
       const dataEVC02 = [
-
-        { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbToDay02}> VB Today</span> ,
-
-        value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} c</span>, 
-        high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVbToDay02}
-        checked={maintainVbToDay02}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmToDay02}> VM Today</span> ,
-
-        value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} c</span>, 
-        high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVmToDay02}
-        checked={maintainVmToDay02}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbLastDay02}> VB Yesterday</span> ,
-
-        value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} c</span>, 
-        high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVbLastDay02}
-        checked={maintainVbLastDay02}
-    ></Checkbox>
-
-       },
-        { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmLastDay02}> VM Yesterday</span> ,
-
-        value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} c</span>, 
-        high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainVmLastDay02}
-        checked={maintainVmLastDay02}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Rebattery02}> Remain Battery</span> ,
-
-        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery01} c</span>, 
-        high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='High' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainReBattery02}
-        checked={maintainReBattery02}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Temperature02}>Temperature </span> ,
-
-        value: <span style={combineCss.CSS_Temperature02} > {Temperature01} c</span>, 
-        high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='High' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainTemperature02}
-        checked={maintainTemperature02}
-    ></Checkbox>
-
-       },
-
-        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
-            name: <span style={combineCss.CSSpt03}>PT-1902 </span> ,
-            value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
-            high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainPT_1902}
-         checked={maintainPT_1902}
-     ></Checkbox>
-        },
-
 
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF2}>SVF FIQ-1902	 </span> ,
@@ -3935,44 +3833,121 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={(e:any) => setMaintainGVA2(e.target.checked)} 
+         onChange={ChangeMaintainGVA_02} 
          checked={maintainGVA2}
      ></Checkbox>
 
         },
+        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSpt03}>PT-1902 </span> ,
+        value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
+        high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainPT_1902}
+     checked={maintainPT_1902}
+ ></Checkbox>
+    },
+
+        { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbToDay02}> VB Today</span> ,
+
+        value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} Sm³</span>, 
+        high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbToDay02}
+        checked={maintainVbToDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmToDay02}> VM Today</span> ,
+
+        value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} m³</span>, 
+        high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmToDay02}
+        checked={maintainVmToDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VbLastDay02}> VB Yesterday</span> ,
+
+        value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} Sm³</span>, 
+        high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVbLastDay02}
+        checked={maintainVbLastDay02}
+    ></Checkbox>
+
+       },
+        { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_VmLastDay02}> VM Yesterday </span> ,
+
+        value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} m³</span>, 
+        high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainVmLastDay02}
+        checked={maintainVmLastDay02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Rebattery02}> Remain Battery</span> ,
+
+        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery01} Months</span>, 
+        high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='High' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainReBattery02}
+        checked={maintainReBattery02}
+    ></Checkbox>
+
+       },
+
+        { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Temperature02}>Temperature </span> ,
+
+        value: <span style={combineCss.CSS_Temperature02} > {Temperature01} °C</span>, 
+        high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='High' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTemperature02}
+        checked={maintainTemperature02}
+    ></Checkbox>
+
+       },
+
+ 
+
+
+ 
+   
       ]
 
       const dataPLC = [
-
-
-
-        { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
-        value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} BarG</span> , 
-         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainUpsCharging}
-      checked={maintainUpsCharging}
-  ></Checkbox>
-
-        },
-
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} BarG</span> , 
-         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainUpsBattery}
-      checked={maintainUpsBattery}
-  ></Checkbox>
-
-        },
 
         { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
         name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
@@ -4029,6 +4004,36 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
   ></Checkbox>
 
      },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
+        value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} BarG</span> , 
+         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainUpsCharging}
+      checked={maintainUpsCharging}
+  ></Checkbox>
+
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} BarG</span> , 
+         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainUpsBattery}
+      checked={maintainUpsBattery}
+  ></Checkbox>
+
+        },
+
+     
       ]
 
     return (
