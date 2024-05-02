@@ -208,8 +208,6 @@ export default function Alarmbell() {
                     <div></div>
                 </div>
             </OverlayPanel>
-
-
         </div>
     );
 }

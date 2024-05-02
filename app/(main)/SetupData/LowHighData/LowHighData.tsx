@@ -3667,11 +3667,11 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
      ></Checkbox>
 
         },
-        { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSpt03}>PT-1901 </span> ,
-        value: <span style={combineCss.CSSpt03} > {PT02} Bara</span> , 
-        high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
+        { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSpt02}>PT-1901 </span> ,
+        value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
+        high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
@@ -4052,7 +4052,7 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
         </div>
      
       
-        <div style={{width:'100%' ,  }}>
+        <div style={{width:'100%' , padding:5, background:'white', borderRadius:5 }}>
 
             <h4>EVC 01</h4>
         <DataTable  value={dataEVC01} size={'small'}  showGridlines  >
@@ -4071,7 +4071,7 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
     </div>
 <br />
 
-    <div style={{width:'100%' ,  }}>
+    <div style={{width:'100%' , padding:5, background:'white', borderRadius:5  }}>
 
 <h4>EVC 02</h4>
 <DataTable  value={dataEVC02} size={'small'}  showGridlines  >
@@ -4090,7 +4090,7 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
 </div>
 <br />
 
-<div style={{width:'100%' ,  }}>
+<div style={{width:'100%' ,  padding:5, background:'white', borderRadius:5 }}>
 
 <h4>PLC</h4>
 <DataTable  value={dataPLC} size={'small'}  showGridlines  >

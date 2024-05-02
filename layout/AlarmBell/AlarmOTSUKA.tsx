@@ -124,89 +124,17 @@ export default function AlarmOTSUKA() {
             <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
-
             <div className="flex">
-                {/* {totalCount && (
-                    <div className={styles.totalCount}>
-                        <p className={styles.totalCount_p}>
-                            {totalCount.totalSubjects}
-                        </p>
-                    </div>
-                )} */}
-
-                {/* {totalCount ? ( 
-
-                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
-                 <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
-
-                    </div>
-                 ) : (
-                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
-
-                    <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
-                    </div>
-                 )} */}
-                
 
            {totalCount ? ( 
-
-                    <div className="ColorRed" style={{ fontSize:40, display:'flex' }}>
-                 
+                    <div className="ColorRed" style={{ fontSize:40, display:'flex', cursor:'pointer' }} onClick={()=> router.push('/SetupData')} >
                  <p style={{marginRight:15}} >Alarming</p>  <p style={{marginTop:5}}>  <PiBellSimpleRingingBold size={50} /> </p> 
 
                     </div>
                  ) : (
                     ""
                  )} 
-                
             </div>
-            {/* <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.overlayPanel}>
-                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
-                       
-                       <div >
-                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
-                        </div>
-
-                     
-                    </div>
-                    <hr />
-
-                    {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
-                            {dataAlarm}
-                        </div>
-                    ) : (
-                        <div className={styles.alarmEmpty}>
-                            <Image
-                                src="/demo/images/logoBell/bel.svg"
-                                width={200}
-                                height={200}
-                                alt="Picture of the author"
-                            />
-                        </div>
-                    )}
-                    <div style={{ padding: 20 }}>
-                        <Button
-                            onClick={() => router.push("/SetupData")}
-                            className={styles.buttonViewAll}
-                        >
-                            View All
-                        </Button>
-                    </div>
-                    <div></div>
-                </div>
-            </OverlayPanel> */}
-
-
         </div>
     );
 }
