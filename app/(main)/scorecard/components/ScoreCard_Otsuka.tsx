@@ -270,7 +270,7 @@ export default function ScoreCard_Otsuka() {
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_MODE (Normal -UPS Running -Charging - No Battery)</p>
+                                <p>UPS_MODE (Normal - UPS Running - Charging - No Battery)</p>
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SELECT_SW (0: Local - 1: Remote)</p>
                             </div>
@@ -539,7 +539,7 @@ export default function ScoreCard_Otsuka() {
                             PLC Parameter - {timeUpdate?.slice(10,19)}
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Input Pressure (BarG)</p>\
+                                <p>Input Pressure (BarG)</p>
                             </div>
                             <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>Gas Detector GD-1901 (%LEL)</p>
@@ -562,7 +562,7 @@ export default function ScoreCard_Otsuka() {
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_MODE (Normal -UPS Running -Charging - No Battery)</p>
+                                <p>UPS_MODE (Normal - UPS Running - Charging - No Battery)</p>
                             </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
                                 <p>SELECT_SW (0: Local - 1: Remote)</p>
                             </div>
