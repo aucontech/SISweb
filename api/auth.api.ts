@@ -24,3 +24,7 @@ export const refreshTokenFun = (
 export const getCurrentUser = (): Promise<any> => {
     return httpApi.get<any>("/auth/user");
 };
+
+export const changePassword = (reqData: any): Promise<any> => {
+    return httpApi.post<any>("/auth/changePassword", { ...reqData });
+};

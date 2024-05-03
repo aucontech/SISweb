@@ -5,3 +5,7 @@ export const getDevices = (reqParams: any): Promise<any> => {
         params: { ...reqParams },
     });
 };
+
+export const getDeviceById = (deviceId: string): Promise<any> => {
+    return httpApi.get<any>(`/device/${deviceId}`);
+};

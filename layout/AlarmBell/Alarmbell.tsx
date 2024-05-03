@@ -5,8 +5,23 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
-//import tingting from "./Notification.mp3";
-import "./AlarmBellCssBlink.css"
+
+import "./AlarmBellCssBlink.css";
+
+interface Notification {
+    // subject: string;
+    // text: string;
+}
+interface WebSocketMessage {
+    update: any;
+    cmdUpdateType: string;
+    notifications: Notification[];
+    totalUnreadCount: string;
+}
+
+interface Item {
+    [key: string]: string | number; // Example properties
+}
 export default function Alarmbell() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
@@ -14,26 +29,15 @@ export default function Alarmbell() {
     }
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
-    const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
-    interface Notification {
-        subject: string;
-        text: string;
-    }
-    interface WebSocketMessage {
-        update: any;
-        cmdUpdateType: string;
-        notifications: Notification[];
-        totalUnreadCount: string;
-    }
+
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -43,8 +47,6 @@ export default function Alarmbell() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
-
-
         };
 
         ws.current.onclose = () => {
@@ -56,7 +58,6 @@ export default function Alarmbell() {
             ws.current?.close();
         };
     }, []);
-
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -76,8 +77,6 @@ export default function Alarmbell() {
                 ) {
                     setNotifications(dataReceive.notifications);
                 }
-
-             
             };
         }
 
@@ -85,25 +84,41 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed,]);
+    }, [totalUnreadCount, obj1Processed]);
+    const createQueryString = (name: any, value: any) => {
+        const params = new URLSearchParams();
+        params.set(name, value);
 
-
-    const dataAlarm = notifications.slice(0, 6).map((item, index) => {
+        return params.toString();
+    };
+    const handleClick = (item: Item) => () => {
+        router.push("/alarmhistory?" + createQueryString("deviceid", item));
+    };
+    const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
         const isAlarm = item.subject.includes("New alarm");
         const subjectStyle = {
-            color: isAlarm ? "red" : "blue" 
+            color: isAlarm ? "red" : "blue",
         };
+        console.log("item", item);
         return (
-            <div key={index} style={{ padding: "0px 10px" }}>
+            <div
+                key={index}
+                style={{ padding: "0px 10px" }}
+                onClick={handleClick(item?.info?.stateEntityId?.id)}
+                onMouseOver={(e) => (e.currentTarget.style.cursor = "pointer")} // Sets cursor to pointer on hover
+                onMouseOut={(e) => (e.currentTarget.style.cursor = "auto")} // Resets cursor when not hovering
+            >
                 <div>
-                    <p className={styles.subject} style={subjectStyle}>{item.subject}</p>
+                    <p className={styles.subject} style={{ ...subjectStyle }}>
+                        {item.subject}
+                    </p>
                     <p>{item.text}</p>
                     <hr />
                 </div>
             </div>
         );
     });
-    
+
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
 
@@ -114,16 +129,15 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
+    const handleMarkAllAsRead = () => {
+        const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
+        ws.current?.send(JSON.stringify(ReadAllAlarm));
 
-        const handleMarkAllAsRead = () => {
-            const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
-            ws.current?.send(JSON.stringify(ReadAllAlarm));
-    
-            const obj3 = { unsubCmd: { cmdId: 1 } };
-            const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-            ws.current?.send(JSON.stringify(obj3));
-            ws.current?.send(JSON.stringify(obj2));
-        };
+        const obj3 = { unsubCmd: { cmdId: 1 } };
+        const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
+        ws.current?.send(JSON.stringify(obj3));
+        ws.current?.send(JSON.stringify(obj2));
+    };
     return (
         <div>
             <audio ref={audioRef}>
@@ -139,47 +153,77 @@ export default function Alarmbell() {
                     </div>
                 )}
 
-                {totalCount ? ( 
-
-                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
-                 <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
-
+                {totalCount ? (
+                    <div
+                        className="BackgroundRed"
+                        style={{
+                            width: 30,
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <i
+                            className="pi pi-bell"
+                            style={{
+                                fontSize: "1.5rem",
+                                cursor: "pointer",
+                                color: "white",
+                                marginTop: 3,
+                            }}
+                            onClick={(e) => op?.current?.toggle(e)}
+                        />
                     </div>
-                 ) : (
-                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
-
-                    <i
-                    className="pi pi-bell"
-                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
-                    onClick={(e) => op?.current?.toggle(e)}
-                />
+                ) : (
+                    <div
+                        style={{
+                            width: 30,
+                            textAlign: "center",
+                            alignItems: "center",
+                            borderRadius: 50,
+                            marginTop: 3,
+                        }}
+                    >
+                        <i
+                            className="pi pi-bell"
+                            style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                            onClick={(e) => op?.current?.toggle(e)}
+                        />
                     </div>
-                 )}
-                
-
-
-                
+                )}
             </div>
             <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
                 <div className={styles.overlayPanel}>
-                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
-                       
-                       <div >
-                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
+                    <div
+                        style={{
+                            padding: "10px 20px ",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p style={{ fontSize: 20, fontWeight: 600 }}>
+                                Alarms
+                            </p>
                         </div>
 
-                        {totalCount ? ( 
-                                <div className="MarkAllBell">
-
-                    <p style={{fontWeight:500,  marginTop:4,cursor:'pointer' }} onClick={handleMarkAllAsRead}> Mark all as read</p>
-
-                                </div>
-
-                        ) : ("")}
+                        {totalCount ? (
+                            <div className="MarkAllBell">
+                                <p
+                                    style={{
+                                        fontWeight: 500,
+                                        marginTop: 4,
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={handleMarkAllAsRead}
+                                >
+                                    {" "}
+                                    Mark all as read
+                                </p>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                     </div>
                     <hr />
 
@@ -199,7 +243,7 @@ export default function Alarmbell() {
                     )}
                     <div style={{ padding: 20 }}>
                         <Button
-                            onClick={() => router.push("/SetupData")}
+                            onClick={() => router.push("/alarmhistory")}
                             className={styles.buttonViewAll}
                         >
                             View All

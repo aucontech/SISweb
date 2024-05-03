@@ -1,12 +1,30 @@
 "use client";
 import AlarmList from "./components/AlarmList";
 import FilterAlarm from "./components/FilterAlarm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { getDeviceById } from "@/api/device.api";
 const Alarm = () => {
+    const router: any = useRouter();
+    const searchParams = useSearchParams();
+    const deviceid = searchParams.get("deviceid");
     const [filters, setFilters] = useState<any>({});
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
     };
+
+    useEffect(() => {
+        if (deviceid !== null) {
+            getDeviceById(deviceid)
+                .then((resp) => resp.data)
+                .then((res) => {
+                    console.log(res);
+                    setFilters({ ...filters, device: res });
+                });
+        }
+    }, [deviceid]);
+    console.log(filters);
     return (
         <>
             <div>

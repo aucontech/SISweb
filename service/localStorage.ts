@@ -18,11 +18,10 @@ export const persistUser = (user: any): void => {
     localStorage.setItem("user", JSON.stringify(user));
 };
 
-// export const readUser = (): UserModel | null => {
-//     const userStr = localStorage.getItem("user");
-
-//     return userStr ? JSON.parse(userStr) : testUser;
-// };
+export const readUser = (): any | null => {
+    const userStr = localStorage.getItem("user");
+    return userStr ? JSON.parse(userStr) : null;
+};
 
 export const deleteToken = (): void => {
     localStorage.removeItem("accessToken");

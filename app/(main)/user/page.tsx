@@ -1,8 +1,72 @@
+"use client";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-const page = () => {
+import { useCallback, useState, useRef, useEffect } from "react";
+import { UIUtils } from "@/service/Utils";
+import { Toast } from "primereact/toast";
+import { changePassword } from "@/api/auth.api";
+import {
+    readUser,
+    persistRefreshToken,
+    persistToken,
+} from "@/service/localStorage";
+
+const UserPage = () => {
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmNewPassword, setConfirmNewPassword] = useState("");
+    const toast = useRef<Toast>(null);
+    //const [user, setUser] = useState<any>(null);
+
+    const _handleChangePassword = () => {
+        console.log(newPassword);
+        console.log(confirmNewPassword);
+        if (newPassword !== confirmNewPassword) {
+            console.log("New password and confirm new password do not match");
+            UIUtils.showError({
+                error: "New password and confirm new password do not match",
+                toast: toast.current,
+            });
+            return;
+        }
+        if (
+            newPassword === "" ||
+            confirmNewPassword === "" ||
+            currentPassword === ""
+        ) {
+            UIUtils.showError({
+                error: "Please fill in all fields",
+                toast: toast.current,
+            });
+            return;
+        }
+        //  if (!user) return;
+        let reqData = {
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+        };
+        changePassword(reqData)
+            .then((resp) => resp.data)
+            .then((res: any) => {
+                UIUtils.showInfo({
+                    detail: "Password changed successfully",
+                    toast: toast.current,
+                });
+                console.log(res);
+                persistToken(res.token);
+                persistRefreshToken(res.refreshToken);
+            })
+            .catch((err) => {
+                console.log(err);
+                UIUtils.showError({
+                    error: err?.response?.data?.message,
+                    toast: toast.current,
+                });
+            });
+    };
     return (
         <>
+            <Toast ref={toast} />
             <h2>Change Password</h2>
             <div className="col-12 md:col-6">
                 <div className="card p-fluid">
@@ -14,7 +78,13 @@ const page = () => {
                             Current password
                         </label>
                         <div className="col-12 md:col-10">
-                            <InputText id="name3" type="text" />
+                            <InputText
+                                value={currentPassword}
+                                onChange={(e) => {
+                                    setCurrentPassword(e.target.value);
+                                }}
+                                type="password"
+                            />
                         </div>
                     </div>
                     <div className="field grid">
@@ -25,7 +95,12 @@ const page = () => {
                             New password
                         </label>
                         <div className="col-12 md:col-10">
-                            <InputText id="email3" type="text" />
+                            <InputText
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                id="email3"
+                                type="password"
+                            />
                         </div>
                     </div>
                     <div className="field grid">
@@ -36,13 +111,21 @@ const page = () => {
                             Confirm new password
                         </label>
                         <div className="col-12 md:col-10">
-                            <InputText id="email3" type="text" />
+                            <InputText
+                                value={confirmNewPassword}
+                                onChange={(e) => {
+                                    setConfirmNewPassword(e.target.value);
+                                }}
+                                id="email3"
+                                type="password"
+                            />
                         </div>
                     </div>
                 </div>
+                <Button onClick={_handleChangePassword}>Change password</Button>
             </div>
         </>
     );
 };
 
-export default page;
+export default UserPage;
