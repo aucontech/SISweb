@@ -1,13 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css"
 
-import { PiBellSimpleRingingBold } from "react-icons/pi";
 
 export default function AlarmOTSUKA() {
 
@@ -18,7 +14,6 @@ export default function AlarmOTSUKA() {
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
-    const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
@@ -47,8 +42,6 @@ export default function AlarmOTSUKA() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
-
-
         };
 
         ws.current.onclose = () => {
@@ -73,7 +66,6 @@ export default function AlarmOTSUKA() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
-                    audioRef.current?.play();
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
@@ -91,22 +83,6 @@ export default function AlarmOTSUKA() {
         }
     }, [totalUnreadCount, obj1Processed,]);
 
-
-    const dataAlarm = notifications.slice(0, 6).map((item, index) => {
-        const isAlarm = item.subject.includes("New alarm");
-        const subjectStyle = {
-            color: isAlarm ? "red" : "blue" 
-        };
-        return (
-            <div key={index} style={{ padding: "0px 10px" }}>
-                <div>
-                    <p className={styles.subject} style={subjectStyle}>{item.subject}</p>
-                    <p>{item.text}</p>
-                    <hr />
-                </div>
-            </div>
-        );
-    });
     
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
@@ -118,7 +94,6 @@ export default function AlarmOTSUKA() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
-
     return (
         <div>
             <audio ref={audioRef}>
@@ -127,12 +102,15 @@ export default function AlarmOTSUKA() {
             <div className="flex">
 
            {totalCount ? ( 
-                    <div className="ColorRed" style={{ fontSize:40, display:'flex', cursor:'pointer' }} onClick={()=> router.push('/SetupData')} >
-                 <p style={{marginRight:15}} >Alarming</p>  <p style={{marginTop:5}}>  <PiBellSimpleRingingBold size={50} /> </p> 
+                    <div  style={{ fontSize:50,  cursor:'pointer', background:'#DD0000',borderRadius:10, width:260, height:100,textAlign:'center',alignItems:'center', }} onClick={()=> router.push('/SetupData')} >
+                 <p style={{marginRight:15, color:'white',marginTop:10   }} >Alarming</p>  <p style={{marginTop:5}}>  </p> 
 
                     </div>
                  ) : (
-                    ""
+                    <div  style={{ fontSize:50,  cursor:'pointer', background:'green',borderRadius:10, width:260, height:100 ,alignItems:'center',textAlign:'center' }} onClick={()=> router.push('/SetupData')} >
+                 <p style={{marginRight:15, color:'white', marginTop:10   }} >Normal</p>  <p style={{marginTop:5}}>  </p> 
+
+                    </div>
                  )} 
             </div>
         </div>

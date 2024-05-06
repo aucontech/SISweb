@@ -30,9 +30,11 @@ export default function Alarmbell() {
     }
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
+    console.log('data: ', data);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    console.log('notifications: ', notifications);
     const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
 
     useEffect(() => {
@@ -88,21 +90,26 @@ export default function Alarmbell() {
     }, [totalUnreadCount, obj1Processed,]);
 
 
-    const dataAlarm = notifications.slice(0, 6).map((item, index) => {
+    const dataAlarm = notifications.slice(0, 6).map((item:any, index:any) => {
         const isAlarm = item.subject.includes("New alarm");
         const subjectStyle = {
-            color: isAlarm ? "red" : "blue" 
+            
+        
         };
         return (
             <div key={index} style={{ padding: "0px 10px" }}>
-                <div>
-                    <p className={styles.subject} style={subjectStyle}>{item.subject}</p>
-                    <p>{item.text}</p>
-                    <hr />
+                <div >
+
+                    <p  className={styles.subject} style={{color: isAlarm ? "red" : "blue",}}>{item.info.alarmOriginatorName} {item.info.alarmType}</p>
+                    <p>{item.createdTime}</p>
                 </div>
+                <hr />
+
             </div>
         );
     });
+
+ 
     
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
@@ -124,10 +131,12 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         };
+
+        
     return (
         <div>
             <audio ref={audioRef}>
-                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
+                <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
@@ -159,13 +168,10 @@ export default function Alarmbell() {
                 />
                     </div>
                  )}
-                
 
-
-                
             </div>
-            <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.overlayPanel}>
+            <OverlayPanel style={{ marginLeft: 10,}} ref={op}>
+                <div >
                     <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
                        
                        <div >

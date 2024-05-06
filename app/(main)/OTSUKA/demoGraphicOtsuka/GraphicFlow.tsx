@@ -3965,7 +3965,7 @@ useEffect(() => {
     const [edges, setEdges, onEdgesChange] = useEdgesState<any>(DemoEdges);
 
 
-
+    const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 
     return (
         <div>
@@ -4018,9 +4018,11 @@ useEffect(() => {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     nodesDraggable={false} // Cho phép kéo thả các nút
-                    fitView
-                    minZoom={0.5}
-                    maxZoom={2}
+                    // fitView
+                    minZoom={0.1}
+                    maxZoom={10}
+
+                    defaultViewport={defaultViewport}
                 >
                     <Controls />
                 </ReactFlow>

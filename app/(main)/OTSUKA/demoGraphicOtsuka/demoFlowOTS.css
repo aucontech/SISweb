@@ -9,3 +9,7 @@
 .HelpHover:hover{
     color: red;
 }
+
+.react-flow__controls-interactive{
+    display: none;
+}

@@ -41,11 +41,7 @@
     color:#036E9B ;
 
 }
-.buttonUpdateSetData:hover{
 
-    background-color: #0e8abe;
-    transition: ease-in-out 0.3s;
-  }
 
     @keyframes Blink {
         0% { background-color: red; }
