@@ -65,7 +65,6 @@ const CustomerReport = () => {
         }
     }, [filters, _fetchDateReport]);
 
-    console.log(reportData);
     const handleDutyClick = (duty: string) => {
         let newReportData = { ...reportData };
         switch (duty) {

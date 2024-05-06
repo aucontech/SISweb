@@ -28,3 +28,6 @@ export const getCurrentUser = (): Promise<any> => {
 export const changePassword = (reqData: any): Promise<any> => {
     return httpApi.post<any>("/auth/changePassword", { ...reqData });
 };
+export const updateProfile = (reqData: any): Promise<any> => {
+    return httpApi.post<any>("/user?sendActivationMail=false", { ...reqData });
+};
