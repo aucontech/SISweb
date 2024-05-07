@@ -1,12 +1,13 @@
 import type { AppTopbarRef } from "@/types";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
+import { logout } from "@/api/auth.api";
 import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import AppBreadcrumb from "./AppBreadCrumb";
 import { LayoutContext } from "./context/layoutcontext";
 import Alarmbell from "./AlarmBell/Alarmbell";
-
+import { useRouter } from "next/navigation";
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
+    const router = useRouter();
     const { onMenuToggle, showProfileSidebar, showConfigSidebar } =
         useContext(LayoutContext);
     const menubuttonRef = useRef(null);
@@ -18,6 +19,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current,
     }));
+    const handleLogOut = () => {
+        logout().then(() => {
+            router.push("/login");
+        });
+    };
 
     return (
         <div className="layout-topbar">
@@ -52,7 +58,16 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                             onClick={onConfigButtonClick}
                         ></Button>
                     </li>
-                   
+                    <li className="ml-3">
+                        <a
+                            className="cursor-pointer flex mt-2 surface-border align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
+                            onClick={handleLogOut}
+                        >
+                            <span>
+                                <i className="pi pi-power-off text-xl text-primary"></i>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -31,3 +31,7 @@ export const changePassword = (reqData: any): Promise<any> => {
 export const updateProfile = (reqData: any): Promise<any> => {
     return httpApi.post<any>("/user?sendActivationMail=false", { ...reqData });
 };
+
+export const logout = (): Promise<any> => {
+    return httpApi.post<any>("/auth/logout");
+};

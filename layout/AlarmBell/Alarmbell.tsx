@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
-import { readToken } from "@/service/localStorage";
+import { readToken, readUser } from "@/service/localStorage";
 
 import "./AlarmBellCssBlink.css";
 
@@ -38,7 +38,13 @@ export default function Alarmbell() {
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    useEffect(() => {
+        const user = readUser();
+        if (user) {
+            setCurrentUser(user);
+        }
+    }, []);
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -92,14 +98,20 @@ export default function Alarmbell() {
         return params.toString();
     };
     const handleClick = (item: Item) => () => {
-        router.push("/alarmhistory?" + createQueryString("deviceid", item));
+        if (currentUser.authority === "CUSTOMER_USER") {
+            router.push(
+                "/alarmhistorycustomer?" + createQueryString("deviceid", item)
+            );
+        } else {
+            router.push("/alarmhistory?" + createQueryString("deviceid", item));
+        }
     };
     const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
         const isAlarm = item.subject.includes("New alarm");
         const subjectStyle = {
             color: isAlarm ? "red" : "blue",
         };
-        console.log("item", item);
+
         return (
             <div
                 key={index}
