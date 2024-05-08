@@ -126,8 +126,10 @@ export default function LowHighData() {
                         DO_BC_01:setDOBeacon,
 
                         
-                        DI_MAP_1:setMap
-
+                        DI_MAP_1:setMap,
+                        DI_ZSC_1: setZSC_1,
+                        DI_ZSO_1: setZSO_1,
+                        DO_SV1:setDO_SV1,
 
                     };
 
@@ -3052,6 +3054,215 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
 
 
 //===========================================================================================
+
+//===========================================================================================
+
+const [DO_SV1,setDO_SV1] =useState<string | null>(null);
+
+const [AudioDO_SV1, setAudioDO_SV1] = useState(false);
+const [inputHighDO_SV1, setInputHighDO_SV1] = useState<any>();
+const [inputLowDO_SV1, setInputLowDO_SV1] = useState<any>();
+const [HighDO_SV1, setHighDO_SV1] = useState<number | null>(null);
+const [LowDO_SV1, setLowDO_SV1] = useState<number | null>(null);
+const [AlarmDO_SV1, setAlarmDO_SV1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighDO_SV1 === 'string' && typeof LowDO_SV1 === 'string' && DO_SV1 !== null && maintainDO_SV1 === false) {
+            const highValue = parseFloat(HighDO_SV1);
+            const lowValue = parseFloat(LowDO_SV1);
+            const DO_SV1Value = parseFloat(DO_SV1);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV1Value)) {
+                if (highValue < DO_SV1Value || DO_SV1Value < lowValue) {
+                    if (!AudioDO_SV1) {
+                        audioRef.current?.play();
+                        setAudioDO_SV1(true);
+                        setAlarmDO_SV1(true);
+                    }
+                } else {
+                    setAudioDO_SV1(false);
+                    setAlarmDO_SV1(false);
+                }
+            } 
+        } 
+    }, [HighDO_SV1, DO_SV1, AudioDO_SV1, LowDO_SV1,maintainDO_SV1]);
+
+    useEffect(() => {
+        if (AudioDO_SV1) {
+            const audioEnded = () => {
+                setAudioDO_SV1(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioDO_SV1]);
+
+    const handleInputChangeHighDO_SV1 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighDO_SV1(newValue);
+    };
+
+    const handleInputChangeLowDO_SV1 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowDO_SV1(newValue2);
+    };
+    const ChangeMaintainDO_SV1 = async () => {
+        try {
+            const newValue = !maintainDO_SV1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainDO_SV1(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+//===========================================================================================
+
+const [ZSC_1,setZSC_1] =useState<string | null>(null);
+
+const [AudioZSC_1, setAudioZSC_1] = useState(false);
+const [inputHighZSC_1, setInputHighZSC_1] = useState<any>();
+const [inputLowZSC_1, setInputLowZSC_1] = useState<any>();
+const [HighZSC_1, setHighZSC_1] = useState<number | null>(null);
+const [LowZSC_1, setLowZSC_1] = useState<number | null>(null);
+const [AlarmZSC_1, setAlarmZSC_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainZSC_1, setMaintainZSC_1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighZSC_1 === 'string' && typeof LowZSC_1 === 'string' && ZSC_1 !== null && maintainZSC_1 === false) {
+            const highValue = parseFloat(HighZSC_1);
+            const lowValue = parseFloat(LowZSC_1);
+            const ZSC_1Value = parseFloat(ZSC_1);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ZSC_1Value)) {
+                if (highValue < ZSC_1Value || ZSC_1Value < lowValue) {
+                    if (!AudioZSC_1) {
+                        audioRef.current?.play();
+                        setAudioZSC_1(true);
+                        setAlarmZSC_1(true);
+                    }
+                } else {
+                    setAudioZSC_1(false);
+                    setAlarmZSC_1(false);
+                }
+            } 
+        } 
+    }, [HighZSC_1, ZSC_1, AudioZSC_1, LowZSC_1,maintainZSC_1]);
+
+    useEffect(() => {
+        if (AudioZSC_1) {
+            const audioEnded = () => {
+                setAudioZSC_1(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioZSC_1]);
+
+    const handleInputChangeHighZSC_1 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighZSC_1(newValue);
+    };
+
+    const handleInputChangeLowZSC_1 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowZSC_1(newValue2);
+    };
+    const ChangeMaintainZSC_1 = async () => {
+        try {
+            const newValue = !maintainZSC_1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainZSC_1(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+//===========================================================================================
+
+const [ZSO_1,setZSO_1] =useState<string | null>(null);
+
+const [AudioZSO_1, setAudioZSO_1] = useState(false);
+const [inputHighZSO_1, setInputHighZSO_1] = useState<any>();
+const [inputLowZSO_1, setInputLowZSO_1] = useState<any>();
+const [HighZSO_1, setHighZSO_1] = useState<number | null>(null);
+const [LowZSO_1, setLowZSO_1] = useState<number | null>(null);
+const [AlarmZSO_1, setAlarmZSO_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighZSO_1 === 'string' && typeof LowZSO_1 === 'string' && ZSO_1 !== null && maintainZSO_1 === false) {
+            const highValue = parseFloat(HighZSO_1);
+            const lowValue = parseFloat(LowZSO_1);
+            const ZSO_1Value = parseFloat(ZSO_1);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ZSO_1Value)) {
+                if (highValue < ZSO_1Value || ZSO_1Value < lowValue) {
+                    if (!AudioZSO_1) {
+                        audioRef.current?.play();
+                        setAudioZSO_1(true);
+                        setAlarmZSO_1(true);
+                    }
+                } else {
+                    setAudioZSO_1(false);
+                    setAlarmZSO_1(false);
+                }
+            } 
+        } 
+    }, [HighZSO_1, ZSO_1, AudioZSO_1, LowZSO_1,maintainZSO_1]);
+
+    useEffect(() => {
+        if (AudioZSO_1) {
+            const audioEnded = () => {
+                setAudioZSO_1(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioZSO_1]);
+
+    const handleInputChangeHighZSO_1 = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighZSO_1(newValue);
+    };
+
+    const handleInputChangeLowZSO_1 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowZSO_1(newValue2);
+    };
+    const ChangeMaintainZSO_1 = async () => {
+        try {
+            const newValue = !maintainZSO_1;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { UPS_CHARGING_MAINTAIN: newValue }
+            );
+            setMaintainZSO_1(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
     useEffect(() => {
         setInputValue(highEK1PressureValue); 
         setInputValue2(lowEK1PressureValue); 
@@ -3940,12 +4151,24 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
 
        },
 
- 
-
-
- 
-   
       ]
+
+      const DataCharging = UpsCharging === "0" ? "Normal" : UpsCharging === "1" ? "Charging" : null
+      const DataBattery = UpsBattery === "0" ? "Normal" : UpsBattery === "1" ? "Battery" : null
+      const DataAlarm = UpsAlarm === "0" ? "Normal" : UpsAlarm === "1" ? "No Battery" : null
+      const DataMode = UpsMode === "0" ? "Error" : UpsMode === "1" ? "Using Battery" : UpsMode === "2" ? "Charging Battery" : UpsMode === "3" ? "Disconnected Battery" : UpsMode === "4" ? "Normal" : null
+      const DataZSC_1 = ZSC_1 === "0" ? "On" : ZSC_1 === "1" ? "Off" : null
+      const DataZSO_1 = ZSO_1 === "0" ? "Off" : ZSO_1 === "1" ? "On" : null
+      const DataSelectSW = SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null
+      const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null
+      const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
+      const DataBeacon = DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null
+      const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
+      const DataEmergencyNC = EmergencyNC === "0" ? "Normal" : EmergencyNC === "1" ? "Emergency" : null
+      const DataEmergencyNO = EmergencyNO === "0" ? "Emergency" : EmergencyNO === "1" ? "Normal" : null
+      const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
+
+
 
       const dataPLC = [
 
@@ -4005,35 +4228,74 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
 
      },
 
-        { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
-        value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} BarG</span> , 
-         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainUpsCharging}
-      checked={maintainUpsCharging}
-  ></Checkbox>
-
+     
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS CHARGING </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsCharging} {DataCharging}</span> , 
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} BarG</span> , 
-         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainUpsBattery}
-      checked={maintainUpsBattery}
-  ></Checkbox>
-
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} {DataBattery}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS ALARM </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsAlarm} {DataAlarm}</span> , 
         },
 
-     
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS MODE </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsMode} {DataMode}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {UpsCharging} {DataCharging}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>SDV ZSC 1 </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {ZSC_1} {DataZSC_1}</span> , 
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>SDV ZSO </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {ZSO_1} {DataZSO_1}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>SELECT SW </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {SelectSW} {DataSelectSW}</span> , 
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>RESET </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {DIReset} {DataReset}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}> HORN </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {DOHorn} {DataHorn}</span> , 
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>BEACON </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {DOBeacon} {DataBeacon}</span> , 
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>SDV-SOLENOID </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {DO_SV1} {DataSV_1}</span> , 
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>Emergency Stop NC </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {EmergencyNC} {DataEmergencyNC}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>Emergency Stop NO </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {EmergencyNO} {DataEmergencyNO}</span> , 
+        },
+        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsBattery}>MAP </span> ,
+        value: <span style={combineCss.CSS_UpsBattery} > {Map} {DataMap}</span> , 
+        },
       ]
 
     return (
