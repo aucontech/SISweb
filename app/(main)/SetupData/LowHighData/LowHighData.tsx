@@ -127,13 +127,14 @@ export default function LowHighData() {
 
                         DI_RESET:setDIReset,
                         DO_HR_01:setDOHorn,
-                        DO_BC_01:setDOBeacon,
 
                         
                         DI_MAP_1:setMap,
                         DI_ZSC_1: setZSC_1,
                         DI_ZSO_1: setZSO_1,
                         DO_SV1:setDO_SV1,
+                        DO_BC_01:setBeacon
+
 
                     };
 
@@ -443,102 +444,177 @@ setMaintainVbToDay02(MaintainVbToDay_02?.value || false);
 
 //=====================================================================================
 
-const HighUpsBattery = res.data.find((item: any) => item.key === "UPS_BATTERY_HIGH");
+const HighUpsBattery = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_High");
 setHighUpsBattery(HighUpsBattery?.value || null);
-const LowUpsBattery = res.data.find((item: any) => item.key === "UPS_BATTERY_LOW");
+const LowUpsBattery = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_Low");
 setLowUpsBattery(LowUpsBattery?.value || null);
+
+const MaintainUpsBattery = res.data.find(
+    (item: any) => item.key === "DI_UPS_BATTERY_Maintain"
+);
+setMaintainUpsBattery(MaintainUpsBattery?.value || false);
 //=====================================================================================
 
 
-const HighUpsCharging = res.data.find((item: any) => item.key === "UPS_CHARGING_HIGH");
+const HighUpsCharging = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_High");
 setHighUpsCharging(HighUpsCharging?.value || null);
-const LowUpsCharging = res.data.find((item: any) => item.key === "UPS_CHARGING_LOW");
+const LowUpsCharging = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_Low");
 setLowUpsCharging(LowUpsCharging?.value || null);
+const MaintainUpsCharging = res.data.find(
+    (item: any) => item.key === "DI_UPS_CHARGING_Maintain"
+);
+setMaintainUpsCharging(MaintainUpsCharging?.value || false);
 //=====================================================================================
 
-const HighUpsAlarm = res.data.find((item: any) => item.key === "UPS_ALARM_HIGH");
+const HighUpsAlarm = res.data.find((item: any) => item.key === "DI_UPS_ALARM_High");
 setHighUpsAlarm(HighUpsAlarm?.value || null);
-const LowUpsAlarm = res.data.find((item: any) => item.key === "UPS_ALARM_LOW");
+const LowUpsAlarm = res.data.find((item: any) => item.key === "DI_UPS_ALARM_Low");
 setLowUpsAlarm(LowUpsAlarm?.value || null);
 
 const MaintainUpsAlarm = res.data.find(
-    (item: any) => item.key === "UPS_ALARM_MAINTAIN"
+    (item: any) => item.key === "DI_UPS_ALARM_Maintain"
 );
 setMaintainUpsAlarm(MaintainUpsAlarm?.value || false);
 //=====================================================================================
 
-const HighUpsMode = res.data.find((item: any) => item.key === "UPS_MODE_HIGH");
+const HighUpsMode = res.data.find((item: any) => item.key === "UPS_Mode_High");
 setHighUpsMode(HighUpsMode?.value || null);
-const LowUpsMode = res.data.find((item: any) => item.key === "UPS_MODE_LOW");
+const LowUpsMode = res.data.find((item: any) => item.key === "UPS_Mode_Low");
 setLowUpsMode(LowUpsMode?.value || null);
 
 const MaintainUpsMode = res.data.find(
-    (item: any) => item.key === "UPS_MODE_MAINTAIN"
+    (item: any) => item.key === "UPS_Mode_Maintain"
 );
 setMaintainUpsMode(MaintainUpsMode?.value || false);
 //=====================================================================================
-const HighSelectSW = res.data.find((item: any) => item.key === "SELECT_WS_HIGH");
+const HighSelectSW = res.data.find((item: any) => item.key === "DI_SELECT_SW_High");
 setHighSelectSW(HighSelectSW?.value || null);
-const LowSelectSW = res.data.find((item: any) => item.key === "SELECT_WS_LOW");
+const LowSelectSW = res.data.find((item: any) => item.key === "DI_SELECT_SW_Low");
 setLowSelectSW(LowSelectSW?.value || null);
 
 const MaintainSelect = res.data.find(
-    (item: any) => item.key === "SELECT_WS_MAINTAIN"
+    (item: any) => item.key === "DI_SELECT_SW_Maintain"
 );
 setMaintainSelectSW(MaintainSelect?.value || false);
 //=====================================================================================
 
-const HighEmergencyNC = res.data.find((item: any) => item.key === "EMERGENCY_NC_HIGH");
+const HighEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NO_High");
 setHighEmergencyNC(HighEmergencyNC?.value || null);
-const LowEmergencyNC = res.data.find((item: any) => item.key === "EMERGENCY_NC_LOW");
+const LowEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NO_Low");
 setLowEmergencyNC(LowEmergencyNC?.value || null);
 
 const MaintainEmergencyNC = res.data.find(
-    (item: any) => item.key === "EMERGENCY_NC_MAINTAIN"
+    (item: any) => item.key === "Emergency_NO_Maintain"
 );
 setMaintainEmergencyNC(MaintainEmergencyNC?.value || false);
 //=====================================================================================
 
-const HighEmergencyNO = res.data.find((item: any) => item.key === "EMERGENCY_NO_HIGH");
+const HighEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NC_High");
 setHighEmergencyNO(HighEmergencyNO?.value || null);
-const LowEmergencyNO = res.data.find((item: any) => item.key === "EMERGENCY_NO_LOW");
+const LowEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NC_Low");
 setLowEmergencyNO(LowEmergencyNO?.value || null);
 
 const MaintainEmergencyNO = res.data.find(
-    (item: any) => item.key === "EMERGENCY_NC_MAINTAIN"
+    (item: any) => item.key === "Emergency_NC_Maintain"
 );
 setMaintainEmergencyNO(MaintainEmergencyNO?.value || false);
 //=====================================================================================
 
 
-
 //=====================================================================================
 
+const HighDIReset = res.data.find((item: any) => item.key === "DI_RESET_High");
+setHighDIReset(HighDIReset?.value || null);
+const LowDIReset = res.data.find((item: any) => item.key === "DI_RESET_Low");
+setLowDIReset(LowDIReset?.value || null);
 
-
-//=====================================================================================
-
-//=====================================================================================
-
-
-
-     
-
-
-//=====================================================================================
-
-const MaintainUpsBattery = res.data.find(
-    (item: any) => item.key === "UPS_BATTERY_MAINTAIN"
+const MaintainDIReset = res.data.find(
+    (item: any) => item.key === "DI_RESET_Maintain"
 );
-setMaintainUpsBattery(MaintainUpsBattery?.value || false);
+setMaintainDIReset(MaintainDIReset?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighDIHorn = res.data.find((item: any) => item.key === "DO_HR_01_High");
+setHighDOHorn(HighDIHorn?.value || null);
+const LowDIHorn = res.data.find((item: any) => item.key === "DO_HR_01_Low");
+setLowDOHorn(LowDIHorn?.value || null);
+
+const MaintainDIHorn = res.data.find(
+    (item: any) => item.key === "DO_HR_01_Maintain"
+);
+setMaintainDOHorn(MaintainDIHorn?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_High");
+setHighDO_SV1(HighSOLENOID?.value || null);
+const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_Low");
+setLowDO_SV1(LowSOLENOID?.value || null);
+
+const MaintainSOLENOID = res.data.find(
+    (item: any) => item.key === "DO_SV_01_Maintain"
+);
+setMaintainDO_SV1(MaintainSOLENOID?.value || false);
+//=====================================================================================
+
 
 
 //=====================================================================================
-const MaintainUpsCharging = res.data.find(
-    (item: any) => item.key === "UPS_CHARGING_MAINTAIN"
-);
-setMaintainUpsCharging(MaintainUpsCharging?.value || false);
 
+const HighZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_High");
+setInputHighZSC_1(HighZSC?.value || null);
+const LowZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_Low");
+setInputLowZSC_1(LowZSC?.value || null);
+
+const MaintainZSC_0 = res.data.find(
+    (item: any) => item.key === "DI_ZSO_1_Maintain"
+);
+setMaintainZSC_1(MaintainZSC_0?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighZSO = res.data.find((item: any) => item.key === "DI_ZSO_1_High");
+setHighZSO_1(HighZSO?.value || null);
+const LowZSO = res.data.find((item: any) => item.key === "DI_ZSO_1_Low");
+setLowZSO_1(LowZSO?.value || null);
+
+const MaintainZSO = res.data.find(
+    (item: any) => item.key === "DI_ZSC_1_Maintain"
+);
+setMaintainZSO_1(MaintainZSO?.value || false);
+//=====================================================================================
+
+
+
+//=====================================================================================
+
+const HighMap = res.data.find((item: any) => item.key === "DI_MAP_1_High");
+setHighMap(HighMap?.value || null);
+const LowMap = res.data.find((item: any) => item.key === "DI_MAP_1_Low");
+setLowMap(LowMap?.value || null);
+
+const MaintainMap = res.data.find(
+    (item: any) => item.key === "DI_MAP_1_Maintain"
+);
+setMaintainMap(MaintainMap?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighBeacon = res.data.find((item: any) => item.key === "DO_BC_01_High");
+setHighBeacon(HighBeacon?.value || null);
+const LowBeacon = res.data.find((item: any) => item.key === "DO_BC_01_Low");
+setLowBeacon(LowBeacon?.value || null);
+
+const MaintainBeacon = res.data.find(
+    (item: any) => item.key === "DO_BC_01_Maintain"
+);
+setMaintainBeacon(MaintainBeacon?.value || false);
+//=====================================================================================
 
 //=====================================================================================
 
@@ -2351,7 +2427,7 @@ const [maintainUpsBattery, setMaintainUpsBattery] = useState<boolean>(false);
             const newValue = !maintainUpsBattery;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_BATTERY_MAINTAIN: newValue }
+                { DI_UPS_BATTERY_Maintain: newValue }
             );
             setMaintainUpsBattery(newValue);
             
@@ -2420,7 +2496,7 @@ const [maintainUpsCharging, setMaintainUpsCharging] = useState<boolean>(false);
             const newValue = !maintainUpsCharging;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_UPS_CHARGING_Maintain: newValue }
             );
             setMaintainUpsCharging(newValue);
             
@@ -2489,7 +2565,7 @@ const [maintainUpsAlarm, setMaintainUpsAlarm] = useState<boolean>(false);
             const newValue = !maintainUpsAlarm;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_UPS_ALARM_Maintain: newValue }
             );
             setMaintainUpsAlarm(newValue);
             
@@ -2558,7 +2634,7 @@ const [maintainUpsMode, setMaintainUpsMode] = useState<boolean>(false);
             const newValue = !maintainUpsMode;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { UPS_Mode_Maintain: newValue }
             );
             setMaintainUpsMode(newValue);
             
@@ -2628,7 +2704,7 @@ const [maintainSelectSW, setMaintainSelectSW] = useState<boolean>(false);
             const newValue = !maintainSelectSW;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_SELECT_SW_Maintain: newValue }
             );
             setMaintainSelectSW(newValue);
             
@@ -2698,7 +2774,7 @@ const [maintainEmergencyNC, setMaintainEmergencyNC] = useState<boolean>(false);
             const newValue = !maintainEmergencyNC;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { Emergency_NC_Maintain: newValue }
             );
             setMaintainEmergencyNC(newValue);
             
@@ -2768,7 +2844,7 @@ const [maintainEmergencyNO, setMaintainEmergencyNO] = useState<boolean>(false);
             const newValue = !maintainEmergencyNO;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { Emergency_NO_Maintain: newValue }
             );
             setMaintainEmergencyNO(newValue);
             
@@ -2837,7 +2913,7 @@ const [maintainDIReset, setMaintainDIReset] = useState<boolean>(false);
             const newValue = !maintainDIReset;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_RESET_Maintain: newValue }
             );
             setMaintainDIReset(newValue);
             
@@ -2908,7 +2984,7 @@ const [maintainDOHorn, setMaintainDOHorn] = useState<boolean>(false);
             const newValue = !maintainDOHorn;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DO_HR_01_Maintain: newValue }
             );
             setMaintainDOHorn(newValue);
             
@@ -2919,77 +2995,7 @@ const [maintainDOHorn, setMaintainDOHorn] = useState<boolean>(false);
 
 //===========================================================================================
 
-//===========================================================================================
 
-const [DOBeacon,setDOBeacon] =useState<string | null>(null);
-
-
-
-const [AudioDOBeacon, setAudioDOBeacon] = useState(false);
-const [inputHighDOBeacon, setInputHighDOBeacon] = useState<any>();
-const [inputLowDOBeacon, setInputLowDOBeacon] = useState<any>();
-const [HighDOBeacon, setHighDOBeacon] = useState<number | null>(null);
-const [LowDOBeacon, setLowDOBeacon] = useState<number | null>(null);
-const [AlarmDOBeacon, setAlarmDOBeacon] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDOBeacon, setMaintainDOBeacon] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDOBeacon === 'string' && typeof LowDOBeacon === 'string' && DOBeacon !== null && maintainDOBeacon === false) {
-            const highValue = parseFloat(HighDOBeacon);
-            const lowValue = parseFloat(LowDOBeacon);
-            const DOBeaconValue = parseFloat(DOBeacon);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DOBeaconValue)) {
-                if (highValue < DOBeaconValue || DOBeaconValue < lowValue) {
-                    if (!AudioDOBeacon) {
-                        audioRef.current?.play();
-                        setAudioDOBeacon(true);
-                        setAlarmDOBeacon(true);
-                    }
-                } else {
-                    setAudioDOBeacon(false);
-                    setAlarmDOBeacon(false);
-                }
-            } 
-        } 
-    }, [HighDOBeacon, DOBeacon, AudioDOBeacon, LowDOBeacon,maintainDOBeacon]);
-
-    useEffect(() => {
-        if (AudioDOBeacon) {
-            const audioEnded = () => {
-                setAudioDOBeacon(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDOBeacon]);
-
-    const handleInputChangeHighDOBeacon = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDOBeacon(newValue);
-    };
-
-    const handleInputChangeLowDOBeacon = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDOBeacon(newValue2);
-    };
-    const ChangeMaintainDOBeacon = async () => {
-        try {
-            const newValue = !maintainDOBeacon;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
-            );
-            setMaintainDOBeacon(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
 
 
 //===========================================================================================
@@ -3051,7 +3057,7 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
             const newValue = !maintainMap;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_MAP_1_Maintain: newValue }
             );
             setMaintainMap(newValue);
             
@@ -3121,7 +3127,7 @@ const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
             const newValue = !maintainDO_SV1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DO_SV_01_Maintain: newValue }
             );
             setMaintainDO_SV1(newValue);
             
@@ -3190,7 +3196,7 @@ const [maintainZSC_1, setMaintainZSC_1] = useState<boolean>(false);
             const newValue = !maintainZSC_1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_ZSC_1_Maintain: newValue }
             );
             setMaintainZSC_1(newValue);
             
@@ -3259,7 +3265,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
             const newValue = !maintainZSO_1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_CHARGING_MAINTAIN: newValue }
+                { DI_ZSO_1_Maintain: newValue }
             );
             setMaintainZSO_1(newValue);
             
@@ -3269,6 +3275,76 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
 
 //===========================================================================================
+
+//===========================================================================================
+
+const [Beacon,setBeacon] =useState<string | null>(null);
+const [AudioBeacon, setAudioBeacon] = useState(false);
+const [inputHighBeacon, setInputHighBeacon] = useState<any>();
+const [inputLowBeacon, setInputLowBeacon] = useState<any>();
+const [HighBeacon, setHighBeacon] = useState<number | null>(null);
+const [LowBeacon, setLowBeacon] = useState<number | null>(null);
+const [AlarmBeacon, setAlarmBeacon] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighBeacon === 'string' && typeof LowBeacon === 'string' && Beacon !== null && maintainBeacon === false) {
+            const highValue = parseFloat(HighBeacon);
+            const lowValue = parseFloat(LowBeacon);
+            const BeaconValue = parseFloat(Beacon);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(BeaconValue)) {
+                if (highValue < BeaconValue || BeaconValue < lowValue) {
+                    if (!AudioBeacon) {
+                        audioRef.current?.play();
+                        setAudioBeacon(true);
+                        setAlarmBeacon(true);
+                    }
+                } else {
+                    setAudioBeacon(false);
+                    setAlarmBeacon(false);
+                }
+            } 
+        } 
+    }, [HighBeacon, Beacon, AudioBeacon, LowBeacon,maintainBeacon]);
+
+    useEffect(() => {
+        if (AudioBeacon) {
+            const audioEnded = () => {
+                setAudioBeacon(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [AudioBeacon]);
+
+    const handleInputChangeHighBeacon = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighBeacon(newValue);
+    };
+
+    const handleInputChangeLowBeacon = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowBeacon(newValue2);
+    };
+    const ChangeMaintainBeacon = async () => {
+        try {
+            const newValue = !maintainBeacon;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { DO_BC_01_Maintain: newValue }
+            );
+            setMaintainBeacon(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+
+//===========================================================================================
+
 
     useEffect(() => {
         setInputValue(highEK1PressureValue); 
@@ -3361,6 +3437,43 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
         setInputHighUpsCharging(HighUpsCharging)
         setInputLowUpsCharging(LowUpsCharging)
 
+        setInputHighUpsAlarm(HighUpsAlarm)
+        setInputLowUpsAlarm(LowUpsAlarm)
+
+        setInputHighUpsMode(HighUpsMode)
+        setInputLowUpsMode(LowUpsMode)
+
+        setInputHighSelectSW(HighSelectSW)
+        setInputLowSelectSW(LowSelectSW)
+
+        setInputHighEmergencyNC(HighEmergencyNC)
+        setInputLowEmergencyNC(LowEmergencyNC)
+
+        setInputHighEmergencyNO(HighEmergencyNO)
+        setInputLowEmergencyNO(LowEmergencyNO)
+
+        setInputHighDIReset(HighDIReset)
+        setInputLowDIReset(LowDIReset)
+
+        setInputHighDOHorn(HighDOHorn)
+        setInputLowDOHorn(LowDOHorn)
+
+        setInputHighMap(HighMap)
+        setInputLowMap(LowMap)
+
+        setInputHighZSC_1(HighZSC_1)
+        setInputLowZSC_1(LowZSC_1)
+
+        setInputHighZSO_1(HighZSO_1)
+        setInputLowZSO_1(LowZSO_1)
+
+        setInputHighDO_SV1(HighDO_SV1)
+        setInputLowDO_SV1(LowDO_SV1)
+
+
+        setInputHighBeacon(HighBeacon)
+        setInputLowBeacon(LowBeacon)
+
     }, [highEK1PressureValue, lowEK1PressureValue,
          highEK2PressureValue, lowEK2PressureValue ,
          highEK3PressureValue, lowEK3PressureValue, 
@@ -3397,10 +3510,25 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
          HighVbToDay02, LowVbToDay02 ,
 
          HighUpsBattery, LowUpsBattery ,
-
          HighUpsCharging, LowUpsCharging ,
+         HighUpsAlarm, LowUpsAlarm ,
+         HighUpsMode, LowUpsMode ,
 
+         HighSelectSW, LowSelectSW ,
 
+         HighEmergencyNO, LowEmergencyNO ,
+         HighEmergencyNC, LowEmergencyNC ,
+
+         HighDIReset, LowDIReset ,
+
+         HighDOHorn, LowDOHorn ,
+         HighMap, LowMap ,
+         
+         HighZSC_1, LowZSC_1 ,
+         HighZSO_1, LowZSO_1 ,
+         HighDO_SV1, LowDO_SV1 ,
+         HighBeacon, LowBeacon ,
+         
         ]);
     
     const handleButtonClick = async () => {
@@ -3430,6 +3558,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                     EVC_01_Temperature_High:inputHighTemperature01, EVC_01_Temperature_Low:inputLowTemperature01,
                     EVC_02_Temperature_High:inputHighTemperature02, EVC_02_Temperature_Low:inputLowTemperature02,
 
+          
 
 
                     EVC_01_Remain_Battery_Service_Life_High:inputHighReBattery01, EVC_01_Remain_Battery_Service_Life_Low:inputLowReBattery01,
@@ -3447,10 +3576,30 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                     EVC_01_Vm_of_Current_Day_High:inputHighVmToDay01, EVC_01_Vm_of_Current_Day_Low:inputLowVmToDay01,
                     EVC_02_Vm_of_Current_Day_High:inputHighVmToDay02, EVC_02_Vm_of_Current_Day_Low:inputLowVmToDay02,
 
-                    UPS_BATTERY_HIGH:inputHighUpsBattery, UPS_BATTERY_LOW:inputLowUpsBattery,
+                    DI_UPS_BATTERY_High:inputHighUpsBattery, DI_UPS_BATTERY_Low:inputLowUpsBattery,
+                    DI_UPS_CHARGING_High:inputHighUpsCharging, DI_UPS_CHARGING_Low:inputLowUpsCharging,
 
-                    UPS_CHARGING_HIGH:inputHighUpsCharging, UPS_CHARGING_LOW:inputLowUpsCharging,
+                    DI_UPS_ALARM_High:inputHighUpsAlarm, DI_UPS_ALARM_Low:inputLowUpsAlarm,
+                    UPS_Mode_High:inputHighUpsMode, UPS_Mode_Low:inputLowUpsMode,
 
+                    DI_SELECT_SW_High:inputHighSelectSW, DI_SELECT_SW_Low:inputLowSelectSW,
+
+                    Emergency_NO_High:inputHighEmergencyNO, Emergency_NO_Low:inputLowEmergencyNO,
+                    Emergency_NC_High:inputHighEmergencyNC, Emergency_NC_Low:inputLowEmergencyNC,
+
+                    DI_RESET_High:inputHighDIReset, DI_RESET_Low:inputLowDIReset,
+
+                    DO_HR_01_High:inputHighDOHorn, DO_HR_01_Low:inputLowDOHorn,
+
+
+
+                    DI_MAP_1_High:inputHighMap, DI_MAP_1_Low:inputLowMap,
+
+                    DI_ZSC_1_High:inputHighZSC_1, DI_ZSC_1_Low:inputLowZSC_1,
+                    DI_ZSO_1_High:inputHighZSO_1, DI_ZSO_1_Low:inputLowZSO_1,
+
+                    DO_SV_01_High:inputHighDO_SV1, DO_SV_01_Low:inputLowDO_SV1,
+                    DO_BC_01_High:inputHighBeacon, DO_BC_01_Low:inputLowBeacon,
 
                 }
             );
@@ -3546,8 +3695,42 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
             setHighUpsCharging(inputHighUpsCharging);
             setLowUpsCharging(inputLowUpsCharging);
 
-      
+            setHighUpsAlarm(inputHighUpsAlarm);
+            setLowUpsAlarm(inputLowUpsAlarm);
 
+            setHighUpsMode(inputHighUpsMode);
+            setLowUpsMode(inputLowUpsMode);
+
+            setHighSelectSW(inputHighSelectSW);
+            setLowSelectSW(inputLowSelectSW);
+
+            setHighEmergencyNC(inputHighEmergencyNC);
+            setLowEmergencyNC(inputLowEmergencyNC);
+
+            setHighEmergencyNO(inputHighEmergencyNO);
+            setLowEmergencyNO(inputLowEmergencyNO);
+
+            setHighDIReset(inputHighDIReset);
+            setLowDIReset(inputLowDIReset);
+
+            setHighDOHorn(inputHighDOHorn);
+            setLowDOHorn(inputLowDOHorn);
+
+            setHighMap(inputHighMap);
+            setLowMap(inputLowMap);
+
+            setHighZSC_1(inputHighZSC_1);
+            setLowZSC_1(inputLowZSC_1);
+
+            setHighZSO_1(inputHighZSO_1);
+            setLowZSO_1(inputLowZSO_1);
+
+
+            setHighDO_SV1(inputHighDO_SV1);
+            setLowDO_SV1(inputLowDO_SV1);
+
+            setHighBeacon(inputHighBeacon);
+            setLowBeacon(inputLowBeacon);
         } catch (error) {
             console.log("error: ", error);
            
@@ -3817,6 +4000,125 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 color:AlarmUpsCharging && !maintainUpsCharging
                 ? "#ff5656"
                 : maintainUpsCharging
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_UpsAlarm: {
+                color:AlarmUpsAlarm && !maintainUpsAlarm
+                ? "#ff5656"
+                : maintainUpsAlarm
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+            CSS_UpsMode: {
+                color:AlarmUpsMode && !maintainUpsMode
+                ? "#ff5656"
+                : maintainUpsMode
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            }, 
+              CSS_SelectSW: {
+                color:AlarmSelectSW && !maintainSelectSW
+                ? "#ff5656"
+                : maintainSelectSW
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_EmergencyNO: {
+                color:AlarmEmergencyNO && !maintainEmergencyNO
+                ? "#ff5656"
+                : maintainEmergencyNO
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_EmergencyNC: {
+                color:AlarmEmergencyNC && !maintainEmergencyNC
+                ? "#ff5656"
+                : maintainEmergencyNC
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_Reset: {
+                color:AlarmDIReset && !maintainDIReset
+                ? "#ff5656"
+                : maintainDIReset
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_Horn: {
+                color:AlarmDOHorn && !maintainDOHorn
+                ? "#ff5656"
+                : maintainDOHorn
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+           
+
+            CSS_Map: {
+                color:AlarmMap && !maintainMap
+                ? "#ff5656"
+                : maintainMap
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_ZSC: {
+                color:AlarmZSC_1 && !maintainZSC_1
+                ? "#ff5656"
+                : maintainZSC_1
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+
+            CSS_ZSO: {
+                color:AlarmZSO_1 && !maintainZSO_1
+                ? "#ff5656"
+                : maintainZSO_1
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+              CSS_SELENOID: {
+                color:AlarmDO_SV1 && !maintainDO_SV1
+                ? "#ff5656"
+                : maintainDO_SV1
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400
+            },
+
+            CSS_Beacon: {
+                color:AlarmBeacon && !maintainBeacon
+                ? "#ff5656"
+                : maintainBeacon
                 ? "orange"
                 : "" ,
                 height:25,
@@ -4171,7 +4473,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
       const DataSelectSW = SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null
       const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null
       const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
-      const DataBeacon = DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null
+      const DataBeacon = Beacon === "0" ? "Off" : Beacon === "1" ? "On" : null
       const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
       const DataEmergencyNC = EmergencyNC === "0" ? "Normal" : EmergencyNC === "1" ? "Emergency" : null
       const DataEmergencyNO = EmergencyNO === "0" ? "Emergency" : EmergencyNO === "1" ? "Normal" : null
@@ -4238,72 +4540,184 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
      },
 
      
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS CHARGING </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsCharging} {DataCharging}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
+        value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} {DataCharging}</span> , 
+        high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='Low' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainUpsCharging}
+        checked={maintainUpsCharging}
+    ></Checkbox>
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
         value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} {DataBattery}</span> , 
+        high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='Low' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainUpsBattery}
+        checked={maintainUpsBattery}
+    ></Checkbox>
         },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS ALARM </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsAlarm} {DataAlarm}</span> , 
-        },
-
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS MODE </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsMode} {DataMode}</span> , 
-        },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {UpsCharging} {DataCharging}</span> , 
-        },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>SDV ZSC 1 </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {ZSC_1} {DataZSC_1}</span> , 
-        },
-
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>SDV ZSO </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {ZSO_1} {DataZSO_1}</span> , 
-        },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>SELECT SW </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {SelectSW} {DataSelectSW}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_UpsAlarm} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsAlarm}>UPS ALARM </span> ,
+        value: <span style={combineCss.CSS_UpsAlarm} > {UpsAlarm} {DataAlarm}</span> , 
+        high: <InputText style={combineCss.CSS_UpsAlarm}   placeholder='High' step="0.1" type='number' value={inputHighUpsAlarm} onChange={handleInputChangeHighUpsAlarm} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_UpsAlarm}   placeholder='Low' step="0.1" type='number' value={inputLowUpsAlarm} onChange={handleInputChangeLowUpsAlarm} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainUpsAlarm}
+        checked={maintainUpsAlarm}
+    ></Checkbox>
         },
 
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>RESET </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {DIReset} {DataReset}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_UpsMode} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_UpsMode}>UPS MODE </span> ,
+        value: <span style={combineCss.CSS_UpsMode} > {UpsMode} {DataMode}</span> , 
+        high: <InputText style={combineCss.CSS_UpsMode}   placeholder='High' step="0.1" type='number' value={inputHighUpsMode} onChange={handleInputChangeHighUpsMode} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_UpsMode}   placeholder='Low' step="0.1" type='number' value={inputLowUpsMode} onChange={handleInputChangeLowUpsMode} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainUpsMode}
+        checked={maintainUpsMode}
+    ></Checkbox>
         },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}> HORN </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {DOHorn} {DataHorn}</span> , 
+       
+    
+        { timeUpdate: <span style={combineCss.CSS_SelectSW} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_SelectSW}>SELECT SW </span> ,
+        value: <span style={combineCss.CSS_SelectSW} > {SelectSW} {DataSelectSW}</span> , 
+        high: <InputText style={combineCss.CSS_SelectSW}   placeholder='High' step="0.1" type='number' value={inputHighSelectSW} onChange={handleInputChangeHighSelectSW} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_SelectSW}   placeholder='Low' step="0.1" type='number' value={inputLowSelectSW} onChange={handleInputChangeLowSelectSW} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainSelectSW}
+        checked={maintainSelectSW}
+    ></Checkbox>
         },
 
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>BEACON </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {DOBeacon} {DataBeacon}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_Reset} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Reset}>RESET </span> ,
+        value: <span style={combineCss.CSS_Reset} > {DIReset} {DataReset}</span> , 
+        high: <InputText style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputHighDIReset} onChange={handleInputChangeHighDIReset} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputLowDIReset} onChange={handleInputChangeLowDIReset} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainDIReset}
+        checked={maintainDIReset}
+    ></Checkbox>
+        },
+     
+        { timeUpdate: <span style={combineCss.CSS_SELENOID} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_SELENOID}>SDV-SOLENOID </span> ,
+        value: <span style={combineCss.CSS_SELENOID} > {DO_SV1} {DataSV_1}</span> , 
+        high: <InputText style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputHighDO_SV1} onChange={handleInputChangeHighDO_SV1} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputLowDO_SV1} onChange={handleInputChangeLowDO_SV1} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainDO_SV1}
+        checked={maintainDO_SV1}
+    ></Checkbox>
         },
 
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>SDV-SOLENOID </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {DO_SV1} {DataSV_1}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_EmergencyNC} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_EmergencyNC}>Emergency NC </span> ,
+        value: <span style={combineCss.CSS_EmergencyNC} > {EmergencyNC} {DataEmergencyNC}</span> , 
+        high: <InputText style={combineCss.CSS_EmergencyNC}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNC} onChange={handleInputChangeHighEmergencyNC} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_EmergencyNC}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNC} onChange={handleInputChangeLowEmergencyNC} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainEmergencyNC}
+        checked={maintainEmergencyNC}
+    ></Checkbox>
+        },
+        { timeUpdate: <span style={combineCss.CSS_EmergencyNO} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_EmergencyNO}>Emergency NO </span> ,
+        value: <span style={combineCss.CSS_EmergencyNO} > {EmergencyNO} {DataEmergencyNO}</span> , 
+        high: <InputText style={combineCss.CSS_EmergencyNO}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNO} onChange={handleInputChangeHighEmergencyNO} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_EmergencyNO}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNO} onChange={handleInputChangeLowEmergencyNO} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainEmergencyNO}
+        checked={maintainEmergencyNO}
+    ></Checkbox>
         },
 
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>Emergency Stop NC </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {EmergencyNC} {DataEmergencyNC}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_Horn} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Horn}>Horn </span> ,
+        value: <span style={combineCss.CSS_Horn} > {DOHorn} {DataHorn}</span> , 
+        high: <InputText style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputHighDOHorn} onChange={handleInputChangeHighDOHorn} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputLowDOHorn} onChange={handleInputChangeLowDOHorn} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainDOHorn}
+        checked={maintainDOHorn}
+    ></Checkbox>
         },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>Emergency Stop NO </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {EmergencyNO} {DataEmergencyNO}</span> , 
+        { timeUpdate: <span style={combineCss.CSS_ZSC} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_ZSC}>SDV ZSC 1 </span> ,
+        value: <span style={combineCss.CSS_ZSC} > {ZSC_1} {DataZSC_1}</span> , 
+        high: <InputText style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputHighZSC_1} onChange={handleInputChangeHighZSC_1} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputLowZSC_1} onChange={handleInputChangeLowZSC_1} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainZSC_1}
+        checked={maintainZSC_1}
+    ></Checkbox>
         },
-        { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>MAP </span> ,
-        value: <span style={combineCss.CSS_UpsBattery} > {Map} {DataMap}</span> , 
+
+        { timeUpdate: <span style={combineCss.CSS_ZSO} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_ZSO}>SDV ZSO </span> ,
+        value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
+        high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowZSO_1} onChange={handleInputChangeLowZSO_1} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainZSO_1}
+        checked={maintainZSO_1}
+    ></Checkbox>
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_Map} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Map}>MAP </span> ,
+        value: <span style={combineCss.CSS_Map} > {Map} {DataMap}</span> , 
+        high: <InputText style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputHighMap} onChange={handleInputChangeHighMap} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputLowMap} onChange={handleInputChangeLowMap} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainMap}
+        checked={maintainMap}
+    ></Checkbox>
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_Beacon} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSS_Beacon}>Beacon </span> ,
+        value: <span style={combineCss.CSS_Beacon} > {Beacon} {DataBeacon}</span> , 
+        high: <InputText style={combineCss.CSS_Beacon}   placeholder='High' step="0.1" type='number' value={inputHighBeacon} onChange={handleInputChangeHighBeacon} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSS_Beacon}   placeholder='Low' step="0.1" type='number' value={inputLowBeacon} onChange={handleInputChangeLowBeacon} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainBeacon}
+        checked={maintainBeacon}
+    ></Checkbox>
         },
       ]
 

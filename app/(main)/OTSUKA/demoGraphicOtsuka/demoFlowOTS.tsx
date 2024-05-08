@@ -492,7 +492,7 @@ export default function DemoFlowOTS() {
             const newValue = !maintainGD_1901;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1901_maintain: newValue }
+                { GD1_Maintain: newValue }
             );
             setMaintainGD_1901(newValue);
 
@@ -576,7 +576,7 @@ export default function DemoFlowOTS() {
             const newValue = !maintainGD_1902;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1902_maintain: newValue }
+                { GD2_Maintain: newValue }
             );
             setMaintainGD_1902(newValue);
 
@@ -660,7 +660,7 @@ export default function DemoFlowOTS() {
             const newValue = !maintainGD_1903;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1903_maintain: newValue }
+                { GD3_Maintain: newValue }
             );
             setMaintainGD_1903(newValue);
 
@@ -1401,32 +1401,32 @@ export default function DemoFlowOTS() {
             setLowPT03(LowPT1903?.value || null);
 
             const HighGD01 = res.data.find(
-                (item: any) => item.key === "GD_High_1"
+                (item: any) => item.key === "GD1_High"
             );
             setHighGD01(HighGD01?.value || null);
 
             const LowGD01 = res.data.find(
-                (item: any) => item.key === "GD_Low_1"
+                (item: any) => item.key === "GD1_Low"
             );
             setLowGD01(LowGD01?.value || null);
 
             const HighGD02 = res.data.find(
-                (item: any) => item.key === "GD_High_2"
+                (item: any) => item.key === "GD2_High"
             );
             setHighGD02(HighGD02?.value || null);
 
             const LowGD02 = res.data.find(
-                (item: any) => item.key === "GD_Low_2"
+                (item: any) => item.key === "GD2_Low"
             );
             setLowGD02(LowGD02?.value || null);
 
             const HighGD03 = res.data.find(
-                (item: any) => item.key === "GD_High_3"
+                (item: any) => item.key === "GD3_High"
             );
             setHighGD03(HighGD03?.value || null);
 
             const LowGD03 = res.data.find(
-                (item: any) => item.key === "GD_Low_3"
+                (item: any) => item.key === "GD3_Low"
             );
             setLowGD03(LowGD03?.value || null);
 

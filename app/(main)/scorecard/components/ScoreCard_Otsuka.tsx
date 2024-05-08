@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import "./ScoreCard.css"
 
 interface StateMap {
     [key: string]:
@@ -8,11 +11,11 @@ interface StateMap {
         | undefined;
 }
 export default function ScoreCard_Otsuka() {
-
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<string | null>(null);
+    const [isVisible, setIsVisible] = useState(true);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
     const [SVF1, setSVF1] = useState<string | null>(null);
@@ -44,37 +47,41 @@ export default function ScoreCard_Otsuka() {
     const [VbLastDay01, setVbLastDay01] = useState<string | null>(null);
     const [VbLastDay02, setVbLastDay02] = useState<string | null>(null);
 
-    const [VmToday01,setVmToday01] =  useState<string | null>(null);
-    const [VmToday02,setVmToday02] =  useState<string | null>(null);
+    const [VmToday01, setVmToday01] = useState<string | null>(null);
+    const [VmToday02, setVmToday02] = useState<string | null>(null);
 
     const [VbToDay01, setVbToDay01] = useState<string | null>(null);
     const [VbToDay02, setVbToDay02] = useState<string | null>(null);
 
-    const [ReBattery01,setRebattery01] = useState<string | null>(null);
-    const [ReBattery02,setRebattery02] = useState<string | null>(null);
+    const [ReBattery01, setRebattery01] = useState<string | null>(null);
+    const [ReBattery02, setRebattery02] = useState<string | null>(null);
 
-    const [UpsBattery,setUpsBattery] = useState<string | null>(null);
-    const [UpsCharging,setUpsCharging] = useState<string | null>(null);
-    const [UpsAlarm,setUpsAlarm] = useState<string | null>(null);
-    const [UpsMode,setUpsMode] = useState<string | null>(null);
+    const [UpsBattery, setUpsBattery] = useState<string | null>(null);
+    const [UpsCharging, setUpsCharging] = useState<string | null>(null);
+    const [UpsAlarm, setUpsAlarm] = useState<string | null>(null);
+    const [UpsMode, setUpsMode] = useState<string | null>(null);
 
-    const [SelectSW,setSelectSW] = useState<string | null>(null);
+    const [SelectSW, setSelectSW] = useState<string | null>(null);
 
-    const [EmergencyNC,setEmergencyNC] =useState<string | null>(null);
-    const [EmergencyNO,setEmergencyNO] =useState<string | null>(null);
+    const [EmergencyNC, setEmergencyNC] = useState<string | null>(null);
+    const [EmergencyNO, setEmergencyNO] = useState<string | null>(null);
 
-    const [DIReset,setDIReset] =useState<string | null>(null);
+    const [DIReset, setDIReset] = useState<string | null>(null);
 
-    const [DOHorn,setDOHorn] =useState<string | null>(null);
-    const [DOBeacon,setDOBeacon] =useState<string | null>(null);
-    const [Map,setMap] =useState<string | null>(null);
+    const [DOHorn, setDOHorn] = useState<string | null>(null);
+    const [DOBeacon, setDOBeacon] = useState<string | null>(null);
+    const [Map, setMap] = useState<string | null>(null);
 
-    const [DO_SV1,setDO_SV1] = useState<string | null>(null);
-
+    const [DO_SV1, setDO_SV1] = useState<string | null>(null);
+    const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
+ 
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-
+    const handleClick = () => {
+        setIsVisible(!isVisible);
+      };
+    
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -139,49 +146,50 @@ export default function ScoreCard_Otsuka() {
 
                         PT1: setPT03,
 
-                        time:setTimeUpdate,
+                        time: setTimeUpdate,
 
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        EVC_01_Temperature:setTemperature01,
-                        EVC_02_Temperature:setTemperature02,
+                        EVC_01_Temperature: setTemperature01,
+                        EVC_02_Temperature: setTemperature02,
 
-                        EVC_01_Vm_of_Last_Day: setVmLastDay01 ,
-                        EVC_02_Vm_of_Last_Day:setVmLastDay02 , 
+                        EVC_01_Vm_of_Last_Day: setVmLastDay01,
+                        EVC_02_Vm_of_Last_Day: setVmLastDay02,
 
-                        EVC_01_Vb_of_Last_Day: setVbLastDay01 ,
-                        EVC_02_Vb_of_Last_Day:setVbLastDay02 , 
+                        EVC_01_Vb_of_Last_Day: setVbLastDay01,
+                        EVC_02_Vb_of_Last_Day: setVbLastDay02,
 
+                        EVC_01_Vm_of_Current_Day: setVmToday01,
+                        EVC_02_Vm_of_Current_Day: setVmToday02,
 
-                        EVC_01_Vm_of_Current_Day:setVmToday01,
-                        EVC_02_Vm_of_Current_Day:setVmToday02,
-
-                        EVC_01_Vb_of_Current_Day: setVbToDay01 ,
+                        EVC_01_Vb_of_Current_Day: setVbToDay01,
                         EVC_02_Vb_of_Current_Day: setVbToDay02,
 
-                        EVC_01_Remain_Battery_Service_Life:setRebattery01,
-                        EVC_02_Remain_Battery_Service_Life:setRebattery02,
+                        EVC_01_Remain_Battery_Service_Life: setRebattery01,
+                        EVC_02_Remain_Battery_Service_Life: setRebattery02,
 
+                        DI_UPS_BATTERY: setUpsBattery,
+                        DI_UPS_CHARGING: setUpsCharging,
+                        DI_UPS_ALARM: setUpsAlarm,
+                        UPS_Mode: setUpsMode,
 
+                        DI_SELECT_SW: setSelectSW,
 
-                        DI_UPS_BATTERY:setUpsBattery,
-                        DI_UPS_CHARGING:setUpsCharging,
-                        DI_UPS_ALARM:setUpsAlarm,
-                        UPS_Mode:setUpsMode,
+                        Emergency_NC: setEmergencyNC,
+                        Emergency_NO: setEmergencyNO,
 
-                        DI_SELECT_SW:setSelectSW,
+                        DI_RESET: setDIReset,
+                        DO_HR_01: setDOHorn,
+                        DO_BC_01: setDOBeacon,
 
-                        Emergency_NC:setEmergencyNC,
-                        Emergency_NO:setEmergencyNO,
+                        DO_SV1: setDO_SV1,
 
-                        DI_RESET:setDIReset,
-                        DO_HR_01:setDOHorn,
-                        DO_BC_01:setDOBeacon,
+                        DI_MAP_1: setMap,
 
-                        DO_SV1:setDO_SV1,
+                        EVC_01_Conn_STT: setEVC_STT01,
 
-                        DI_MAP_1:setMap
+                 
                     };
 
                     keys.forEach((key) => {
@@ -196,603 +204,341 @@ export default function ScoreCard_Otsuka() {
         }
     }, [data]);
 
+    const tagNameEVC = {
+        outputPressure: "Output Pressure (Bara)",
+        Temperature: "Temperature (°C)",
+        GVF: "Gross Volume Flow (m³/h)",
+        SVF: "Standard Volume Flow (Sm³/h)",
+        GVA: "Gross Volume Accumulated (m³)",
+        SVA: "Standard Volume Accumulated (Sm³)",
+        VbToday: "Standard Volume Vb Today (Sm³)",
+        VbLastDay: "Standard Volume Vb Yesterday (Sm³)",
+        VmToday: "Gross Volume Vm Today (m³)",
+        VmLastDay: "Gross Volume Vm Yesterday (m³)",
+        ReBattery: "Remainning Battery (Months)",
+
+    };
+
+    const tagNamePLC = {
+        PT03: "Input Pressure (BarG)",
+        GD1: "Gas Detector GD-1901 (%LEL)",
+        GD2: "Gas Detector GD-1902 (%LEL)",
+        GD3: "Gas Detector GD-1903 (%LEL)",
+        DO_SV1: "SDV-SOLENOID (0: OFF - 1: ON)",
+        ZSC: "SDV-ZSO (0: ON - 1: OFF)",
+        ZSO: "SDV-ZSC (0: OFF - 1: ON)",
+        UPS_BATTERY : "UPS_BATTERY (0 :Normal - 1: Battery)",
+        UPS_CHARGING : "UPS_CHARGING (0: Normal - 1: Charging)",
+        UPS_ALARM : "UPS_ALARM (0: Normal - 1: Battery)",
+        UPS_MODE : "UPS_MODE (Normal - UPS Running - Charging - No Battery)",
+        SELECT_SW:"SELECT_SW (0: Local - 1: Remote)",
+        RESET:"RESET (0: OFF - 1: ON)",
+        EmergencyStop_NC:"Emergency Stop_NC (0: Emergency - 1: Normal)",
+        EmergencyStop_NO:"Emergency Stop_NC (0: Normal - 1: Emergency)",
+        HORN:"HORN (0: OFF - 1: ON)",
+        BEACON:"BEACON (0: OFF - 1: ON)" ,
+        MAP:"MAP (0: Normal - 1: Emergency)" ,
+
+  
+    };
+    const DataCharging = UpsCharging === "0" ? "Normal" : UpsCharging === "1" ? "Charging" : null
+    const DataBattery = UpsBattery === "0" ? "Normal" : UpsBattery === "1" ? "Battery" : null
+    const DataAlarm = UpsAlarm === "0" ? "Normal" : UpsAlarm === "1" ? "No Battery" : null
+    const DataMode = UpsMode === "0" ? "Error" : UpsMode === "1" ? "Using Battery" : UpsMode === "2" ? "Charging Battery" : UpsMode === "3" ? "Disconnected Battery" : UpsMode === "4" ? "Normal" : null
+    const DataZSC_1 = NC === "0" ? "On" : NC === "1" ? "Off" : null
+    const DataZSO_1 = NO === "0" ? "Off" : NO === "1" ? "On" : null
+    const DataSelectSW = SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null
+    const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null
+    const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
+    const DataBeacon = DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null
+    const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
+    const DataEmergencyNC = EmergencyNC === "0" ? "Normal" : EmergencyNC === "1" ? "Emergency" : null
+    const DataEmergencyNO = EmergencyNO === "0" ? "Emergency" : EmergencyNO === "1" ? "Normal" : null
+    const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
 
 
+    const dataEVC = [
+        {
+            name: <span>{tagNameEVC.outputPressure}</span>,
+            evc1901: <span style={{}}>{PT01}</span>,
+            evc1902: <span style={{}}> {PT02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.Temperature}</span>,
+            evc1901: <span style={{}}>{Temperature01}</span>,
+            evc1902: <span style={{}}> {Temperature02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.GVF}</span>,
+            evc1901: <span style={{}}>{GVF1}</span>,
+            evc1902: <span style={{}}> {GVF2}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.SVF}</span>,
+            evc1901: <span style={{}}>{SVF1}</span>,
+            evc1902: <span style={{}}> {SVF2}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.GVA}</span>,
+            evc1901: <span style={{}}>{GVA1}</span>,
+            evc1902: <span style={{}}> {GVA2}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.SVA}</span>,
+            evc1901: <span style={{}}>{SVA1}</span>,
+            evc1902: <span style={{}}> {SVA2}</span>,
+        },
 
-  return (
-    <div>
+        {
+            name: <span>{tagNameEVC.VbToday}</span>,
+            evc1901: <span style={{}}>{VbToDay01}</span>,
+            evc1902: <span style={{}}> {VbToDay02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.VbLastDay}</span>,
+            evc1901: <span style={{}}>{VbLastDay01}</span>,
+            evc1902: <span style={{}}> {VbLastDay02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.VmToday}</span>,
+            evc1901: <span style={{}}>{VmToday01}</span>,
+            evc1902: <span style={{}}> {VmToday02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.VmLastDay}</span>,
+            evc1901: <span style={{}}>{VmLastDay01}</span>,
+            evc1902: <span style={{}}> {VmLastDay02}</span>,
+        },
+        {
+            name: <span>{tagNameEVC.ReBattery}</span>,
+            evc1901: <span style={{}}>{ReBattery01}</span>,
+            evc1902: <span style={{}}> {ReBattery02}</span>,
+        },
+    ];
 
+    const dataPLC = [
+        {
+            name: <span>{tagNamePLC.PT03}</span>,
+            PLC: <span style={{}}>{PT03}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD1}</span>,
+            PLC: <span style={{}}>{GD1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD2}</span>,
+            PLC: <span style={{}}>{GD2}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD3}</span>,
+            PLC: <span style={{}}>{GD3}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.DO_SV1}</span>,
+            PLC: <span style={{}}>{DataSV_1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.ZSC}</span>,
+            PLC: <span style={{}}>{DataZSC_1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.ZSO}</span>,
+            PLC: <span style={{}}>{DataZSO_1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.UPS_BATTERY}</span>,
+            PLC: <span style={{}}>{DataBattery}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.UPS_CHARGING}</span>,
+            PLC: <span style={{}}>{DataCharging}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.UPS_ALARM}</span>,
+            PLC: <span style={{}}>{DataAlarm}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.UPS_MODE}</span>,
+            PLC: <span style={{}}>{DataMode}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.SELECT_SW}</span>,
+            PLC: <span style={{}}>{DataSelectSW}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.RESET}</span>,
+            PLC: <span style={{}}>{DataReset}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
+            PLC: <span style={{}}>{DataEmergencyNC}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.EmergencyStop_NO}</span>,
+            PLC: <span style={{}}>{DataEmergencyNO}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.HORN}</span>,
+            PLC: <span style={{}}>{DataHorn}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.BEACON}</span>,
+            PLC: <span style={{}}>{DataBeacon}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.MAP}</span>,
+            PLC: <span style={{}}>{DataMap}</span>,
+        },
+    ];
 
-        <div style={{width:'100%', display:'flex', justifyContent:'space-between' }} >
-
-            <div style={{width:'49%', height:'auto', fontWeight:600, border:'1px solid black'}}>
-                    <div style={{display:'flex', }}  >
-                        <div style={{width:'65%', border:'1px solid white', }}>
-
-                            <div>
-                                <div style={{border:'0.5px solid white',background:'#21c43a', padding:5, textAlign:'center'}}>
-                                    OTSUKA
-                                </div>
-                                <div style={{border:'0.5px solid white', padding:5, textAlign:'center',background:'#B0C4DE'}}>
-                                    EVC Parameter - {timeUpdate?.slice(10,19)}
-                                </div>
-                                <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Output Pressure (Bara)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Temperature (°C)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Flow (m³/h)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Flow (Sm³/h)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Accumulated (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Accumulated (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Vm Yesterday (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Vb Yesterday (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Vm Today (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Vb Today (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Remainning Battery (Months)</p>
-                            </div>
+    return (
+        <div>
+            <div style={{ width: "49%" }}>
+                <div
+                    style={{
+                        background: "#64758B",
+                        color: "white",
+                        borderRadius: "10px 10px 0 0",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: "5px 5px 0px 5px",
+                        }}
+                    >
+                        <div style={{ fontSize: 30, fontWeight: 700 }}>
+                            {" "}
+                            OTSUKA
                         </div>
-
-                        <div >
-
-                            <div style={{border:'0.5px solid white',padding:5, background:'#B0C4DE', textAlign:'center'}}>
-                            PLC Parameter - {timeUpdate?.slice(10,19)}
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Input Pressure (BarG)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1901 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1902 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1903 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-SOLENOID (0: OFF - 1: ON)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-ZSO (0: OFF - 1: ON) </p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-ZSC (0: OFF - 1: ON) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_BATTERY (0 :Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_CHARGING (0: Normal - 1: Charging)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_MODE (Normal - UPS Running - Charging - No Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SELECT_SW (0: Local - 1: Remote)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>RESET (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Emergency Stop_NC (0: Emergency - 1: Normal)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Emergency Stop_NO (0: Normal - 1: Emergency) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>HORN (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>BEACON (0: OFF - 1: ON)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>MAP (0: Normal - 1: Emergency)</p>
-                            </div> 
+                        <div style={{ fontSize: 18, fontWeight: 600 }}>
+                            {" "}
+                            Connection
                         </div>
                     </div>
-                        <div style={{width:'35%', border:'1px solid white', textAlign:'center'}} >
-                        <div>
-                            <div style={{border:'0.5px solid white',background:'#21c43a', padding:5}}>
-
-                            {timeUpdate?.slice(0,10)}
-
-                            </div>
-                           <div style={{display:'flex'}}>
-
-                            <div style={{width:'50%',}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }} >
-                                <p>EVC-1901</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{PT01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{Temperature01}</p>
-                            </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{GVF1}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{SVF1}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{GVA1}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{SVA1}</p>
-                            </div>
-                           <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VmLastDay01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VbLastDay01}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VmToday01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VbToDay01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{ReBattery01}</p>
-                            </div>
-                            </div>
-
-
-
-
-
-                            <div style={{width:'50%'}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }}>
-                                <p>
-                                EVC-1902
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {PT02}
-                                </p>
-                            </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {Temperature02}
-                                </p>
-                            </div><div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GVF2}
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {SVF2}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GVA2}
-                                </p>
-                            </div>  <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {SVA2}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                <p>{VmLastDay02}</p>
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                <p>{VbLastDay02}</p>
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {VmToday02}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                            <p>{VbToDay02}</p>
-
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {ReBattery02}
-                                </p>
-                            </div>
-
-                            </div>
-
-                           </div>
-                            
-                        </div>
-                        <div>
-                        <div >
-                                <div style={{border:'0.5px solid white',padding:5,background:'#B0C4DE'}}>
-
-                                    <p>
-
-                            S7-1200
-
-                                    </p>
-                            </div>
-
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {PT03}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD1}
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD2}
-                               
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD3}
-                              
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {DO_SV1}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {NO}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {NC}
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsBattery}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsCharging}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsAlarm}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {UpsMode}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {SelectSW}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {DIReset}
-                                </p>
-                            </div> 
-                             <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {EmergencyNC}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {EmergencyNO}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {DOHorn}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                              {DOBeacon}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {Map}
-                                </p>
-                            </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "0px 5px 0px 5px",
+                        }}
+                    >
+                        <div style={{ width: "50%" }}>
+                            {" "}
+                            Otsuka Thang Nutrition Co. Ltd
                         </div>
 
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                                width: "50%",
+                            }}
+                        >
+                            {" "}
+                            <div>
+                                Status :{" "}
+                                {EVC_STT01 === "0" ? (
+                                    <span style={{ color: "#3DE644" }}>
+                                        {" "}
+                                        Good
+                                    </span>
+                                ) : (
+                                    <span style={{ color: "red" }}>
+                                        {" "}
+                                        Disconnect
+                                    </span>
+                                )}{" "}
+                            </div>{" "}
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "0px 5px 5px 5px",
+                        }}
+                    >
+                        <div style={{ width: "50%" }}>
+                            Phu My 3 Specialized Industrial Park
                         </div>
 
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                                width: "50%",
+                            }}
+                        >
+                            {" "}
+                            <div>Updated on : {timeUpdate} </div>{" "}
+                        </div>
                     </div>
                 </div>
-                
-                </div>   
-        
-                <div style={{width:'49%', height:'auto', fontWeight:600 ,border:'1px solid black',}}>
-                    <div style={{display:'flex', }}  >
-                        <div style={{width:'65%', border:'1px solid white', }}>
+                <DataTable
+                    value={dataEVC}
+                    size="small"
+                    tableStyle={{ minWidth: "40rem" }}
+                >
+                    <Column field="name" header="EVC Parameter"></Column>
+                    <Column
+                        field="evc1901"
+                        header={
+                            <span
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                }}
+                            >
+                                EVC-1901
+                            </span>
+                        }
+                    ></Column>
+                    <Column field="evc1902" header="EVC-1902"></Column>
+                </DataTable>
+                {isVisible ? (
 
-                            <div>
-                                <div style={{border:'0.5px solid white',background:'#21c43a', padding:5, textAlign:'center'}}>
-                                IGUACU
-                                </div>
-                                <div style={{border:'0.5px solid white', padding:5, textAlign:'center',background:'#B0C4DE'}}>
-                                    EVC Parameter - {timeUpdate?.slice(10,19)}
-                                </div>
-                                <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Output Pressure (Bara)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Temperature (°C)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Flow (m³/h)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Flow (Sm³/h)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Accumulated (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Accumulated (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Vm Yesterday (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Vb Yesterday (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gross Volume Vm Today (m³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Standard Volume Vb Today (Sm³)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Remainning Battery (Months)</p>
-                            </div>
-                        </div>
-
-                        <div >
-
-                            <div style={{border:'0.5px solid white',padding:5, background:'#B0C4DE', textAlign:'center'}}>
-                            PLC Parameter - {timeUpdate?.slice(10,19)}
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Input Pressure (BarG)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1901 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1902 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Gas Detector GD-1903 (%LEL)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-SOLENOID (0: OFF - 1: ON)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-ZSO (0: OFF - 1: ON) </p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SDV-ZSC (0: OFF - 1: ON) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_BATTERY (0 :Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_CHARGING (0: Normal - 1: Charging)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_ALARM  (0: Normal - 1: Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>UPS_MODE (Normal - UPS Running - Charging - No Battery)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>SELECT_SW (0: Local - 1: Remote)</p>
-                            </div>
-                            <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>RESET (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Emergency Stop_NC (0: Emergency - 1: Normal)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>Emergency Stop_NO (0: Normal - 1: Emergency) </p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>HORN (0: OFF - 1: ON)</p>
-                            </div>  <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>BEACON (0: OFF - 1: ON)</p>
-                            </div> <div style={{alignItems:'flex-start', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>MAP (0: Normal - 1: Emergency)</p>
-                            </div> 
-                        </div>
-                    </div>
-                        <div style={{width:'35%', border:'1px solid white', textAlign:'center'}} >
-                        <div>
-                            <div style={{border:'0.5px solid white',background:'#21c43a', padding:5}}>
-
-                            {timeUpdate?.slice(0,10)}
-
-                            </div>
-                           <div style={{display:'flex'}}>
-
-                            <div style={{width:'50%',}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }} >
-                                <p>EVC-1901</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{PT01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{Temperature01}</p>
-                            </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{GVF1}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{SVF1}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{GVA1}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{SVA1}</p>
-                            </div>
-                           <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VmLastDay01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VbLastDay01}</p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VmToday01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{VbToDay01}</p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }} >
-                                <p>{ReBattery01}</p>
-                            </div>
-                            </div>
-
-
-
-
-
-                            <div style={{width:'50%'}}>
-                            <div style={{textAlign:'center', padding:5, border:'0.5px solid white' ,background:'#B0C4DE' }}>
-                                <p>
-                                EVC-1902
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {PT02}
-                                </p>
-                            </div> 
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {Temperature02}
-                                </p>
-                            </div><div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GVF2}
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {SVF2}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GVA2}
-                                </p>
-                            </div>  <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {SVA2}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                <p>{VmLastDay02}</p>
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                <p>{VbLastDay02}</p>
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {VmToday02}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                            <p>{VbToDay02}</p>
-
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {ReBattery02}
-                                </p>
-                            </div>
-
-                            </div>
-
-                           </div>
-                            
-                        </div>
-                        <div>
-                        <div >
-                                <div style={{border:'0.5px solid white',padding:5,background:'#B0C4DE'}}>
-
-                                    <p>
-
-                            S7-1200
-
-                                    </p>
-                            </div>
-
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {PT03}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD1}
-                                </p>
-                            </div>
-                            <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD2}
-                               
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {GD3}
-                              
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {DO_SV1}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {NO}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {NC}
-
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsBattery}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsCharging}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {UpsAlarm}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {UpsMode}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {SelectSW}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {DIReset}
-                                </p>
-                            </div> 
-                             <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {EmergencyNC}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {EmergencyNO}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                               {DOHorn}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                              {DOBeacon}
-                                </p>
-                            </div> <div style={{textAlign:'center', padding:3, border:'0.5px solid white',fontSize:11  }}>
-                                <p>
-                                {Map}
-                                </p>
-                            </div>
-                        </div>
-
-                        </div>
+                    <div className="ShowMore" style={{ padding:4, textAlign:'center', cursor:'pointer',}} >
+                    <p style={{fontWeight:600}}   onClick={handleClick}>Show More</p>
 
                     </div>
+           
+                 ) : (
+<div>
+                    <DataTable
+                    value={dataPLC}
+                    size="small"
+                    tableStyle={{ minWidth: "40rem" }}
+                >
+                    <Column field="name" header="PLC Parameter"></Column>
+                    <Column
+                        field="PLC"
+                        header={
+                            <span
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                }}
+                            >
+                                S7-1200
+                            </span>
+                        }
+                    ></Column>
+                </DataTable>
+                <div className="ShowMore" style={{ padding:4, textAlign:'center', cursor:'pointer',}} >
+                    <p style={{fontWeight:600}}  onClick={handleClick}>Show Less</p>
+
+                    </div>
+
                 </div>
-                
-                </div> 
+                  )}
+            </div>
+
+            
+      
+     
         </div>
-    <br />
- 
-
-
-    </div>
-  )
+    );
 }
