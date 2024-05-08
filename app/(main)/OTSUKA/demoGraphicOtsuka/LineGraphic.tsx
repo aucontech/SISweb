@@ -223,38 +223,7 @@ export default function LineGraphic() {
             targetPosition: Position.Left,
             style: { border: "none", width: 30, height: 10, background: line },
         },
-
         
-        // {
-        //     id: "BallValue01",
-        //     position: positions.BallValue01,
-        //     type: "custom",
-        //     data: {
-        //         label: <div>
-        //                 <BallValue01 onDataLine1={handleIsAnimatedChange} />
-
-        //         </div>,
-        //     },
- 
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: { border: "none", width: 30, height: 10, background: line },
-        // },
-        // {
-        //     id: "BallValue02",
-        //     position: positions.BallValue02,
-        //     type: "custom",
-        //     data: {
-        //         label: <div>
-        //                 <BallValue02 onDataLine2={handleIsAnimatedChange2} />
-
-        //         </div>,
-        //     },
- 
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: { border: "none", width: 30, height: 10, background: line },
-        // },
         {
             id: "BallValue07",
             position: positions.BallValue07,
