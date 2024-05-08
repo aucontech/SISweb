@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken, readUser } from "@/service/localStorage";
-
 import "./AlarmBellCssBlink.css";
-
 interface Notification {
     // subject: string;
     // text: string;
@@ -18,52 +16,178 @@ interface WebSocketMessage {
     notifications: Notification[];
     totalUnreadCount: string;
 }
-
 interface Item {
     [key: string]: string | number; // Example properties
 }
 export default function Alarmbell() {
-    let token: string | null = "";
-    if (typeof window !== "undefined") {
-        token = readToken();
-    }
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
-
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
-
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [currentUser, setCurrentUser] = useState<any>(null);
+    const [alarmCount, setAlarmCount] = useState<number>(0);
     useEffect(() => {
         const user = readUser();
         if (user) {
             setCurrentUser(user);
         }
     }, []);
-    useEffect(() => {
-        ws.current = new WebSocket(url);
-
-        const obj1 = { unreadCountSubCmd: { cmdId: 1 } };
-
-        ws.current.onopen = () => {
-            console.log("WebSocket connection opened.");
-            ws.current?.send(JSON.stringify(obj1));
-        };
-
-        ws.current.onclose = () => {
-            console.log("WebSocket connection closed.");
-        };
-
-        return () => {
-            console.log("Cleaning up WebSocket connection.");
-            ws.current?.close();
-        };
+    const sendData = useCallback((data: any) => {
+        if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+            ws.current.send(data);
+        }
     }, []);
+
+    const playNotificationSound = useCallback(() => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    }, []);
+    const connectWebSocket = useCallback(
+        (token: string) => {
+            ws.current = new WebSocket(
+                `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
+            );
+            ws.current.onopen = () => {
+                console.log("WebSocket connection opened.");
+                //  setLoading(false);
+                let data = {
+                    alarmCountCmds: [
+                        {
+                            query: {
+                                severityList: ["CRITICAL"],
+                                statusList: ["ACTIVE"],
+                                searchPropagatedAlarms: false,
+                                assigneeId: null,
+                            },
+                            cmdId: 2,
+                        },
+                    ],
+                    alarmDataCmds: [
+                        {
+                            query: {
+                                entityFilter: {
+                                    type: "entityList",
+                                    resolveMultiple: true,
+                                    entityType: "DEVICE",
+                                    entityList: [
+                                        "6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                        "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                    ],
+                                },
+                                pageLink: {
+                                    page: 0,
+                                    pageSize: 10,
+                                    textSearch: null,
+                                    typeList: [],
+                                    severityList: ["CRITICAL"],
+                                    statusList: ["ACTIVE", "UNACK"],
+                                    searchPropagatedAlarms: false,
+                                    sortOrder: {
+                                        key: {
+                                            key: "createdTime",
+                                            type: "ALARM_FIELD",
+                                        },
+                                        direction: "DESC",
+                                    },
+                                    timeWindow: 86400000,
+                                },
+                                alarmFields: [
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "createdTime",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "originator",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "type",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "severity",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "status",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "assignee",
+                                    },
+                                ],
+                                entityFields: [],
+                                latestValues: [],
+                            },
+                            cmdId: 1,
+                        },
+                    ],
+                };
+
+                sendData(JSON.stringify(data));
+            };
+
+            ws.current.onmessage = (evt: any) => {
+                const dataReceive: any = JSON.parse(evt.data);
+                console.log("dataReceive", dataReceive);
+                if (dataReceive && dataReceive["cmdId"] === 2) {
+                    setAlarmCount(dataReceive.count);
+                }
+                if (dataReceive && dataReceive["cmdId"] === 1) {
+                    let dataAlarm = dataReceive.data.data;
+                    if (notifications.length === 0) {
+                        console.log("dataAlarm", dataAlarm);
+                        const updatedAlarms = dataAlarm.map((alarm: any) => ({
+                            ...alarm,
+                            shouldPlaySound: true,
+                        }));
+
+                        setNotifications(updatedAlarms);
+                    } else {
+                    }
+                }
+            };
+            ws.current.onclose = () => {
+                console.log(
+                    "WebSocket connection closed. Trying to reconnect..."
+                );
+                setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+            };
+            ws.current.onerror = (error) => {
+                console.error("WebSocket error:", error);
+                setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+                // UIUtils.showError({});
+            };
+        },
+        [sendData]
+    );
+    const ring = useCallback(() => {
+        notifications.forEach((notif: any) => {
+            if (notif.shouldPlaySound) {
+                playNotificationSound();
+            }
+        });
+    }, [notifications]);
+
+    useEffect(() => {
+        ring();
+    }, [notifications, ring]);
+    useEffect(() => {
+        let token: string | null = null;
+        if (typeof window !== "undefined") {
+            token = readToken();
+            console.log("Token", token);
+            if (token) {
+                connectWebSocket(token);
+            }
+        }
+    }, [connectWebSocket]);
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -106,30 +230,30 @@ export default function Alarmbell() {
             router.push("/alarmhistory?" + createQueryString("deviceid", item));
         }
     };
-    const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
-        const isAlarm = item.subject.includes("New alarm");
-        const subjectStyle = {
-            color: isAlarm ? "red" : "blue",
-        };
+    // const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
+    //     const isAlarm = item.subject.includes("New alarm");
+    //     const subjectStyle = {
+    //         color: isAlarm ? "red" : "blue",
+    //     };
 
-        return (
-            <div
-                key={index}
-                style={{ padding: "0px 10px" }}
-                onClick={handleClick(item?.info?.stateEntityId?.id)}
-                onMouseOver={(e) => (e.currentTarget.style.cursor = "pointer")} // Sets cursor to pointer on hover
-                onMouseOut={(e) => (e.currentTarget.style.cursor = "auto")} // Resets cursor when not hovering
-            >
-                <div>
-                    <p className={styles.subject} style={{ ...subjectStyle }}>
-                        {item.subject}
-                    </p>
-                    <p>{item.text}</p>
-                    <hr />
-                </div>
-            </div>
-        );
-    });
+    //     return (
+    //         <div
+    //             key={index}
+    //             style={{ padding: "0px 10px" }}
+    //             onClick={handleClick(item?.info?.stateEntityId?.id)}
+    //             onMouseOver={(e) => (e.currentTarget.style.cursor = "pointer")} // Sets cursor to pointer on hover
+    //             onMouseOut={(e) => (e.currentTarget.style.cursor = "auto")} // Resets cursor when not hovering
+    //         >
+    //             <div>
+    //                 <p className={styles.subject} style={{ ...subjectStyle }}>
+    //                     {item.subject}
+    //                 </p>
+    //                 <p>{item.text}</p>
+    //                 <hr />
+    //             </div>
+    //         </div>
+    //     );
+    // });
 
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
@@ -150,18 +274,17 @@ export default function Alarmbell() {
         ws.current?.send(JSON.stringify(obj3));
         ws.current?.send(JSON.stringify(obj2));
     };
+    console.log("alarmCount", alarmCount);
     return (
         <div>
-            <audio ref={audioRef}>
+            <audio ref={audioRef} loop>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
-                {totalCount && (
+                {alarmCount > 0 && (
                     <div className={styles.totalCount}>
-                        <p className={styles.totalCount_p}>
-                            {totalCount.totalSubjects}
-                        </p>
+                        <p className={styles.totalCount_p}>{alarmCount}</p>
                     </div>
                 )}
 
@@ -204,64 +327,58 @@ export default function Alarmbell() {
                 )}
             </div>
             <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.overlayPanel}>
-                    <div
-                        style={{
-                            padding: "10px 20px ",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>
-                            <p style={{ fontSize: 20, fontWeight: 600 }}>
-                                Alarms
-                            </p>
-                        </div>
-
-                        {totalCount ? (
-                            <div className="MarkAllBell">
-                                <p
-                                    style={{
-                                        fontWeight: 500,
-                                        marginTop: 4,
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={handleMarkAllAsRead}
-                                >
-                                    {" "}
-                                    Mark all as read
-                                </p>
-                            </div>
-                        ) : (
-                            ""
-                        )}
-                    </div>
-                    <hr />
-
-                    {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
-                            {dataAlarm}
-                        </div>
-                    ) : (
-                        <div className={styles.alarmEmpty}>
-                            <Image
-                                src="/demo/images/logoBell/bel.svg"
-                                width={200}
-                                height={200}
-                                alt="Picture of the author"
-                            />
-                        </div>
-                    )}
-                    <div style={{ padding: 20 }}>
+                <div className={styles.notificationContainer}>
+                    <div className={styles.notificationHeader}>
+                        <h3>Notifications</h3>
                         <Button
-                            onClick={() => router.push("/alarmhistory")}
-                            className={styles.buttonViewAll}
-                        >
-                            View All
-                        </Button>
+                            label="Mark all as read"
+                            onClick={handleMarkAllAsRead}
+                        />
                     </div>
-                    <div></div>
+                    <div className={styles.notificationBody}>
+                        {notifications.map((item, index) => (
+                            <div
+                                key={index}
+                                className={styles.notificationItem}
+                                onClick={handleClick(item)}
+                            >
+                                <div className={styles.notificationItemContent}>
+                                    <div
+                                        className={
+                                            styles.notificationItemContentIcon
+                                        }
+                                    >
+                                        <Image
+                                            src="/images/alarm.png"
+                                            alt="alarm"
+                                            width={30}
+                                            height={30}
+                                        />
+                                    </div>
+                                    <div
+                                        className={
+                                            styles.notificationItemContentText
+                                        }
+                                    >
+                                        <p
+                                            className={
+                                                styles.notificationItemContentTextSubject
+                                            }
+                                        >
+                                            {item.subject}
+                                        </p>
+                                        <p
+                                            className={
+                                                styles.notificationItemContentTextText
+                                            }
+                                        >
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </OverlayPanel>
         </div>
