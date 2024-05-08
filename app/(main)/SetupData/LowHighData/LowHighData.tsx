@@ -82,18 +82,23 @@ export default function LowHighData() {
                         EVC_01_Flow_at_Measurement_Condition: setGVF1,
                         EVC_01_Flow_at_Base_Condition: setSVF1,
                         EVC_01_Volume_at_Base_Condition: setSVA1,
-                        EVC_01_Vm_Adjustable_Counter: setGVA1,
+                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
 
                         EVC_02_Flow_at_Measurement_Condition: setGVF2,
                         EVC_02_Flow_at_Base_Condition: setSVF2,
                         EVC_02_Volume_at_Base_Condition: setSVA2,
-                        EVC_02_Vm_Adjustable_Counter: setGVA2,
+                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
 
                         time: setTimeUpdate,
 
 
                         EVC_01_Temperature:setTemperature01,
                         EVC_02_Temperature:setTemperature02,
+
+                        EVC_01_Remain_Battery_Service_Life:setRebattery01,
+                        EVC_02_Remain_Battery_Service_Life:setRebattery02,
+
+
 
                         EVC_01_Vm_of_Last_Day: setVmLastDay01 ,
                         EVC_02_Vm_of_Last_Day:setVmLastDay02 , 
@@ -108,8 +113,7 @@ export default function LowHighData() {
                         EVC_01_Vb_of_Current_Day: setVbToDay01 ,
                         EVC_02_Vb_of_Current_Day: setVbToDay02,
 
-                        EVC_01_Remain_Battery_Service_Life:setRebattery01,
-                        EVC_02_Remain_Battery_Service_Life:setRebattery02,
+                     
 
                         DI_UPS_BATTERY:setUpsBattery,
                         DI_UPS_CHARGING:setUpsCharging,
@@ -154,144 +158,289 @@ export default function LowHighData() {
             );
 //=====================================================================================
     
-            const highEK1PressureItem = res.data.find((item: any) => item.key === "High_EK1_Pressure");
+            const highEK1PressureItem = res.data.find((item: any) => item.key === "EVC_01_Pressure_High");
             setHighEK1PressureValue(highEK1PressureItem?.value || null);
-            const lowEK1PressureItem = res.data.find((item: any) => item.key === "Low_EK1_Pressure");
+            const lowEK1PressureItem = res.data.find((item: any) => item.key === "EVC_01_Pressure_Low");
             setLowEK1PressureValue(lowEK1PressureItem?.value || null);
 
-            const highEK2PressureItem = res.data.find((item: any) => item.key === "High_EK2_Pressure");
+            const highEK2PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_High");
             setHighEK2PressureValue(highEK2PressureItem?.value || null);
-            const lowEK2PressureItem = res.data.find((item: any) => item.key === "Low_EK2_Pressure");
+            const lowEK2PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_Low");
             setLowEK2PressureValue(lowEK2PressureItem?.value || null);
 
-            const highEK3PressureItem = res.data.find((item: any) => item.key === "High_EK3_Pressure");
+            const highEK3PressureItem = res.data.find((item: any) => item.key === "PT1_High");
             setHighEK3PressureValue(highEK3PressureItem?.value || null);
-            const lowEK3PressureItem = res.data.find((item: any) => item.key === "Low_EK3_Pressure");
+            const lowEK3PressureItem = res.data.find((item: any) => item.key === "PT1_Low");
             setLowEK3PressureValue(lowEK3PressureItem?.value || null);
 
+            const MaintainPT_1901 = res.data.find(
+                (item: any) => item.key === "EVC_01_Pressure_Maintain"
+            );
+            setMaintainPT_1901(MaintainPT_1901?.value || false);
+
+            const MaintainPT_1902 = res.data.find(
+                (item: any) => item.key === "EVC_02_Pressure_Maintain"
+            );
+            setMaintainPT_1902(MaintainPT_1902?.value || false);
+
+            const MaintainPT_1903 = res.data.find(
+                (item: any) => item.key === "PT1_Maintain"
+            );
+            setMaintainPT_1903(MaintainPT_1903?.value || false);
 //=====================================================================================
 
-            const HighGD01 = res.data.find((item: any) => item.key === "GD_High_1");
+            const HighGD01 = res.data.find((item: any) => item.key === "GD1_High");
             setHighGD01(HighGD01?.value || null);
-            const LowGD01 = res.data.find((item: any) => item.key === "GD_Low_1");
+            const LowGD01 = res.data.find((item: any) => item.key === "GD1_Low");
             setLowGD01(LowGD01?.value || null);
 
-            const HighGD02 = res.data.find((item: any) => item.key === "GD_High_2");
+            const HighGD02 = res.data.find((item: any) => item.key === "GD2_High");
             setHighGD02(HighGD02?.value || null);
-            const LowGD02 = res.data.find((item: any) => item.key === "GD_Low_2");
+            const LowGD02 = res.data.find((item: any) => item.key === "GD2_Low");
             setLowGD02(LowGD02?.value || null);
 
-            const HighGD03 = res.data.find((item: any) => item.key === "GD_High_3");
+            const HighGD03 = res.data.find((item: any) => item.key === "GD3_High");
             setHighGD03(HighGD03?.value || null);
-            const LowGD03 = res.data.find((item: any) => item.key === "GD_Low_3");
+            const LowGD03 = res.data.find((item: any) => item.key === "GD3_Low");
             setLowGD03(LowGD03?.value || null);
 
-            const HighGVF1 = res.data.find((item: any) => item.key === "GVF1_High");
+
+            const MaintainGD_1901 = res.data.find(
+                (item: any) => item.key === "GD1_Maintain"
+            );
+            setMaintainGD_1901(MaintainGD_1901?.value || false);
+
+            const MaintainGD_1902 = res.data.find(
+                (item: any) => item.key === "GD2_Maintain"
+            );
+            setMaintainGD_1902(MaintainGD_1902?.value || false);
+
+            const MaintainGD_1903 = res.data.find(
+                (item: any) => item.key === "GD3_Maintain"
+            );
+            setMaintainGD_1903(MaintainGD_1903?.value || false);            
+//=====================================================================================
+
+            const HighGVF1 = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High");
             setHighGVF1(HighGVF1?.value || null);
-            const LowGVF1 = res.data.find((item: any) => item.key === "GVF1_Low");
+            const LowGVF1 = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low");
             setLowGVF1(LowGVF1?.value || null);
 
-            const HighSVF1 = res.data.find((item: any) => item.key === "SVF1_High");
+            const HighSVF1 = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High");
             setHighSVF1(HighSVF1?.value || null);
-            const LowSVF1 = res.data.find((item: any) => item.key === "SVF1_Low");
+            const LowSVF1 = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low");
             setLowSVF1(LowSVF1?.value || null);
 
-            const HighSVA1 = res.data.find((item: any) => item.key === "SVA1_High");
+            const HighSVA1 = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_High");
             setHighSVA1(HighSVA1?.value || null);
-            const LowSVA1 = res.data.find((item: any) => item.key === "SVA1_Low");
+            const LowSVA1 = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_Low");
             setLowSVA1(LowSVA1?.value || null);
 
-            const HighGVA1 = res.data.find((item: any) => item.key === "GVA1_High");
+            const HighGVA1 = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_High");
             setHighGVA1(HighGVA1?.value || null);
-            const LowGVA1 = res.data.find((item: any) => item.key === "GVA1_Low");
+            const LowGVA1 = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_Low");
             setLowGVA1(LowGVA1?.value || null);
 
-            const HighGVF2 = res.data.find((item: any) => item.key === "GVF2_High");
+            const HighGVF2 = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High");
             setHighGVF2(HighGVF2?.value || null);
-            const LowGVF2 = res.data.find((item: any) => item.key === "GVF2_Low");
+            const LowGVF2 = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low");
             setLowGVF2(LowGVF2?.value || null);
 
-            const HighSVF2 = res.data.find((item: any) => item.key === "SVF2_High");
+            const HighSVF2 = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High");
             setHighSVF2(HighSVF2?.value || null);
-            const LowSVF2 = res.data.find((item: any) => item.key === "SVF2_Low");
+            const LowSVF2 = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low");
             setLowSVF2(LowSVF2?.value || null);
 
-            const HighSVA2 = res.data.find((item: any) => item.key === "SVA2_High");
+            const HighSVA2 = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_High");
             setHighSVA2(HighSVA2?.value || null);
-            const LowSVA2 = res.data.find((item: any) => item.key === "SVA2_Low");
+            const LowSVA2 = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Low");
             setLowSVA2(LowSVA2?.value || null);
 
-            const HighGVA2 = res.data.find((item: any) => item.key === "GVA2_High");
+            const HighGVA2 = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High");
             setHighGVA2(HighGVA2?.value || null);
-            const LowGVA2 = res.data.find((item: any) => item.key === "GVA2_Low");
+            const LowGVA2 = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low");
             setLowGVA2(LowGVA2?.value || null);
+
+
+            const MaintainSVF_1 = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
+            );
+            setMaintainSVF1(MaintainSVF_1?.value || false);
+
+            const MaintainGVF_1 = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
+            );
+            setMaintainGVF1(MaintainGVF_1?.value || false);
+
+            const MaintainSVA_1 = res.data.find(
+                (item: any) => item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
+            );
+            setMaintainSVA1(MaintainSVA_1?.value || false);
+
+            const MaintainGVA_1 = res.data.find(
+                (item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_Maintain"
+            );
+            setMaintainGVA1(MaintainGVA_1?.value || false);
+
+            const MaintainSVF_2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Maintain" 
+            );
+            setMaintainSVF2(MaintainSVF_2?.value || false);
+
+            const MaintainGVF_2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
+            );
+            setMaintainGVF2(MaintainGVF_2?.value || false);
+
+            const MaintainSVA_2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
+            );
+            setMaintainSVA2(MaintainSVA_2?.value || false);
+
+            const MaintainGVA_2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Maintain"
+            );
+            setMaintainGVA2(MaintainGVA_2?.value || false);
 //=====================================================================================
 
-            const HightTemperature01 = res.data.find((item: any) => item.key === "TEMPERATURE_01_HIGH");
+            const HightTemperature01 = res.data.find((item: any) => item.key === "EVC_01_Temperature_High");
             setHighTemperature01(HightTemperature01?.value || null);
-            const LowTemperature01 = res.data.find((item: any) => item.key === "TEMPERATURE_01_LOW");
+            const LowTemperature01 = res.data.find((item: any) => item.key === "EVC_01_Temperature_Low");
             setLowTemperature01(LowTemperature01?.value || null);
 
-            const HightTemperature02 = res.data.find((item: any) => item.key === "TEMPERATURE_02_HIGH");
+            const HightTemperature02 = res.data.find((item: any) => item.key === "EVC_02_Temperature_High");
             setHighTemperature02(HightTemperature02?.value || null);
-            const LowTemperature02 = res.data.find((item: any) => item.key === "TEMPERATURE_02_LOW");
+            const LowTemperature02 = res.data.find((item: any) => item.key === "EVC_02_Temperature_Low");
             setLowTemperature02(LowTemperature02?.value || null);
 
-            const HighReBattery01 = res.data.find((item: any) => item.key === "REMAIN_BATTERY01_HIGH");
-            setHighReBattery01(HighReBattery01?.value || null);
-            const LowReBattery01 = res.data.find((item: any) => item.key === "REMAIN_BATTERY01_LOW");
-            setLowReBattery01(LowReBattery01?.value || null);
 
-            const HighReBattery02 = res.data.find((item: any) => item.key === "REMAIN_BATTERY02_HIGH");
-            setHighReBattery02(HighReBattery02?.value || null);
-            const LowReBattery02 = res.data.find((item: any) => item.key === "REMAIN_BATTERY02_LOW");
-            setLowReBattery02(LowReBattery02?.value || null);
+            const MaintainTemperature_01 = res.data.find(
+                (item: any) => item.key === "EVC_01_Temperature_Maintain"
+            );
+            setMaintainTemperature01(MaintainTemperature_01?.value || false);
+
+
+            const MaintainTemperature_02 = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_Maintain"
+            );
+            setMaintainTemperature02(MaintainTemperature_02?.value || false);
 //=====================================================================================
 
-            const HighVmLastDay01 = res.data.find((item: any) => item.key === "VM_LASTDAY01_HIGH");
+
+            const HighReBattery01 = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_High");
+            setHighReBattery01(HighReBattery01?.value || null);
+            const LowReBattery01 = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
+            setLowReBattery01(LowReBattery01?.value || null);
+
+            const HighReBattery02 = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_High");
+            setHighReBattery02(HighReBattery02?.value || null);
+            const LowReBattery02 = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_Low");
+            setLowReBattery02(LowReBattery02?.value || null);
+
+
+            const MaintainReBattery_01 = res.data.find(
+                (item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Maintain"
+            );
+            setMaintainReBattery01(MaintainReBattery_01?.value || false);
+
+            const MaintainReBattery_02 = res.data.find(
+                (item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_Maintain"
+            );
+            setMaintainReBattery02(MaintainReBattery_02?.value || false);
+//=====================================================================================
+
+            const HighVmLastDay01 = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_High");
             setHighVmLastDay01(HighVmLastDay01?.value || null);
-            const LowVmLastDay01 = res.data.find((item: any) => item.key === "VM_LASTDAY01_LOW");
+            const LowVmLastDay01 = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_Low");
             setLowVmLastDay01(LowVmLastDay01?.value || null);
 
 
-            const HighVmLastDay02 = res.data.find((item: any) => item.key === "VM_LASTDAY02_HIGH");
+            const HighVmLastDay02 = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_High");
             setHighVmLastDay02(HighVmLastDay02?.value || null);
-            const LowVmLastDay02 = res.data.find((item: any) => item.key === "VM_LASTDAY02_LOW");
+            const LowVmLastDay02 = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_Low");
             setLowVmLastDay02(LowVmLastDay02?.value || null);
 
-            const HighVbLastDay01 = res.data.find((item: any) => item.key === "VB_LASTDAY01_HIGH");
+            const HighVbLastDay01 = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_High");
             setHighVbLastDay01(HighVbLastDay01?.value || null);
-            const LowVbLastDay01 = res.data.find((item: any) => item.key === "VB_LASTDAY01_LOW");
+            const LowVbLastDay01 = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_Low");
             setLowVbLastDay01(LowVbLastDay01?.value || null);
 
 
-            const HighVbLastDay02 = res.data.find((item: any) => item.key === "VB_LASTDAY02_HIGH");
+            const HighVbLastDay02 = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_High");
             setHighVbLastDay02(HighVbLastDay02?.value || null);
-            const LowVbLastDay02 = res.data.find((item: any) => item.key === "VB_LASTDAY02_LOW");
+            const LowVbLastDay02 = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_Low");
             setLowVbLastDay02(LowVbLastDay02?.value || null);
+
+
+            const MaintainVmLastDay_01 = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Last_Day_Maintain"
+            );
+            setMaintainVmLastDay01(MaintainVmLastDay_01?.value || false);
+
+
+            const MaintainVmLastDay_02 = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
+            );
+            setMaintainVmLastDay02(MaintainVmLastDay_02?.value || false);
+
+
+            const MaintainVbLastDay_01 = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Last_Day_Maintain"
+            );
+            setMaintainVbLastDay01(MaintainVbLastDay_01?.value || false);
+
+
+            const MaintainVbLastDay_02 = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Last_Day_Maintain"
+            );
+            setMaintainVbLastDay02(MaintainVbLastDay_02?.value || false);
 //=====================================================================================
 
-const HighVmToDay01 = res.data.find((item: any) => item.key === "VM_TODAY01_HIGH");
+const HighVmToDay01 = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_High");
 setHighVmToDay01(HighVmToDay01?.value || null);
-const LowVmToDay01 = res.data.find((item: any) => item.key === "VM_TODAY01_LOW");
+const LowVmToDay01 = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_Low");
 setLowVmToDay01(LowVmToDay01?.value || null);
 
 
-const HighVmToDay02 = res.data.find((item: any) => item.key === "VM_TODAY02_HIGH");
+const HighVmToDay02 = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_High");
 setHighVmToDay02(HighVmToDay02?.value || null);
-const LowVmToDay02 = res.data.find((item: any) => item.key === "VM_TODAY02_LOW");
+const LowVmToDay02 = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_Low");
 setLowVmToDay02(LowVmToDay02?.value || null);
 
-const HighVbToDay01 = res.data.find((item: any) => item.key === "VB_TODAY01_HIGH");
+const HighVbToDay01 = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_High");
 setHighVbToDay01(HighVbToDay01?.value || null);
-const LowVbToDay01 = res.data.find((item: any) => item.key === "VB_TODAY01_LOW");
+const LowVbToDay01 = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_Low");
 setLowVbToDay01(LowVbToDay01?.value || null);
 
 
-const HighVbToDay02 = res.data.find((item: any) => item.key === "VB_TODAY02_HIGH");
+const HighVbToDay02 = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_High");
 setHighVbToDay02(HighVbToDay02?.value || null);
-const LowVbToDay02 = res.data.find((item: any) => item.key === "VB_TODAY02_LOW");
+const LowVbToDay02 = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_Low");
 setLowVbToDay02(LowVbToDay02?.value || null);
+
+const MaintainVmToDay_01 = res.data.find(
+    (item: any) => item.key === "EVC_01_Vm_of_Current_Day_Maintain"
+);
+setMaintainVmToDay01(MaintainVmToDay_01?.value || false);
+
+
+const MaintainVmToDay_02 = res.data.find(
+    (item: any) => item.key === "EVC_02_Vm_of_Current_Day_Maintain"
+);
+setMaintainVmToDay02(MaintainVmToDay_02?.value || false);
+
+
+const MaintainVbToDay_01 = res.data.find(
+    (item: any) => item.key === "EVC_01_Vb_of_Current_Day_Maintain"
+);
+setMaintainVbToDay01(MaintainVbToDay_01?.value || false);
+
+
+const MaintainVbToDay_02 = res.data.find(
+    (item: any) => item.key === "EVC_02_Vb_of_Current_Day_Maintain"
+);
+setMaintainVbToDay02(MaintainVbToDay_02?.value || false);
+
 //=====================================================================================
 
 const HighUpsBattery = res.data.find((item: any) => item.key === "UPS_BATTERY_HIGH");
@@ -361,160 +510,19 @@ const MaintainEmergencyNO = res.data.find(
 setMaintainEmergencyNO(MaintainEmergencyNO?.value || false);
 //=====================================================================================
 
-            const MaintainPT_1901 = res.data.find(
-                (item: any) => item.key === "PT_1901_maintain"
-            );
-            setMaintainPT_1901(MaintainPT_1901?.value || false);
 
-            const MaintainPT_1902 = res.data.find(
-                (item: any) => item.key === "PT_1902_maintain"
-            );
-            setMaintainPT_1902(MaintainPT_1902?.value || false);
-
-            const MaintainPT_1903 = res.data.find(
-                (item: any) => item.key === "PT_1903_maintain"
-            );
-            setMaintainPT_1903(MaintainPT_1903?.value || false);
-//=====================================================================================
-
-            const MaintainGD_1901 = res.data.find(
-                (item: any) => item.key === "GD_1901_maintain"
-            );
-            setMaintainGD_1901(MaintainGD_1901?.value || false);
-
-            const MaintainGD_1902 = res.data.find(
-                (item: any) => item.key === "GD_1902_maintain"
-            );
-            setMaintainGD_1902(MaintainGD_1902?.value || false);
-
-            const MaintainGD_1903 = res.data.find(
-                (item: any) => item.key === "GD_1903_maintain"
-            );
-            setMaintainGD_1903(MaintainGD_1903?.value || false);
-
-//=====================================================================================
-
-
-            const MaintainSVF_1 = res.data.find(
-                (item: any) => item.key === "SVF1_Maintain"
-            );
-            setMaintainSVF1(MaintainSVF_1?.value || false);
-
-            const MaintainGVF_1 = res.data.find(
-                (item: any) => item.key === "GVF1_Maintain"
-            );
-            setMaintainGVF1(MaintainGVF_1?.value || false);
-
-            const MaintainSVA_1 = res.data.find(
-                (item: any) => item.key === "SVA1_Maintain"
-            );
-            setMaintainSVA1(MaintainSVA_1?.value || false);
-
-            const MaintainGVA_1 = res.data.find(
-                (item: any) => item.key === "GVA1_Maintain"
-            );
-            setMaintainGVA1(MaintainGVA_1?.value || false);
 
 //=====================================================================================
 
 
 
-            const MaintainSVF_2 = res.data.find(
-                (item: any) => item.key === "SVF2_Maintain"
-            );
-            setMaintainSVF2(MaintainSVF_2?.value || false);
-
-            const MaintainGVF_2 = res.data.find(
-                (item: any) => item.key === "GVF2_Maintain"
-            );
-            setMaintainGVF2(MaintainGVF_2?.value || false);
-
-            const MaintainSVA_2 = res.data.find(
-                (item: any) => item.key === "SVA2_Maintain"
-            );
-            setMaintainSVA2(MaintainSVA_2?.value || false);
-
-            const MaintainGVA_2 = res.data.find(
-                (item: any) => item.key === "GVA2_Maintain"
-            );
-            setMaintainGVA2(MaintainGVA_2?.value || false);
 //=====================================================================================
-
-            const MaintainTemperature_01 = res.data.find(
-                (item: any) => item.key === "maintain_Temperature01"
-            );
-            setMaintainTemperature01(MaintainTemperature_01?.value || false);
-
-
-            const MaintainTemperature_02 = res.data.find(
-                (item: any) => item.key === "maintain_Temperature02"
-            );
-            setMaintainTemperature02(MaintainTemperature_02?.value || false);
 
 //=====================================================================================
 
 
-            const MaintainReBattery_01 = res.data.find(
-                (item: any) => item.key === "REMAIN_BATTERY01_MAINTAIN"
-            );
-            setMaintainReBattery01(MaintainReBattery_01?.value || false);
 
-
-            const MaintainReBattery_02 = res.data.find(
-                (item: any) => item.key === "REMAIN_BATTERY02_MAINTAIN"
-            );
-            setMaintainReBattery02(MaintainReBattery_02?.value || false);
-
-//=====================================================================================
-
-            const MaintainVmLastDay_01 = res.data.find(
-                (item: any) => item.key === "VM_LASTDAY01_MAINTAIN"
-            );
-            setMaintainVmLastDay01(MaintainVmLastDay_01?.value || false);
-
-
-            const MaintainVmLastDay_02 = res.data.find(
-                (item: any) => item.key === "VM_LASTDAY02_MAINTAIN"
-            );
-            setMaintainVmLastDay02(MaintainVmLastDay_02?.value || false);
-
-
-            const MaintainVbLastDay_01 = res.data.find(
-                (item: any) => item.key === "VB_LASTDAY01_MAINTAIN"
-            );
-            setMaintainVbLastDay01(MaintainVbLastDay_01?.value || false);
-
-
-            const MaintainVbLastDay_02 = res.data.find(
-                (item: any) => item.key === "VB_LASTDAY02_MAINTAIN"
-            );
-            setMaintainVbLastDay02(MaintainVbLastDay_02?.value || false);
-//=====================================================================================
-
-
-
-            const MaintainVmToDay_01 = res.data.find(
-                (item: any) => item.key === "VM_TODAY01_MAINTAIN"
-            );
-            setMaintainVmToDay01(MaintainVmToDay_01?.value || false);
-
-
-            const MaintainVmToDay_02 = res.data.find(
-                (item: any) => item.key === "VM_TODAY02_MAINTAIN"
-            );
-            setMaintainVmToDay02(MaintainVmToDay_02?.value || false);
-       
-
-            const MaintainVbToDay_01 = res.data.find(
-                (item: any) => item.key === "VB_TODAY01_MAINTAIN"
-            );
-            setMaintainVbToDay01(MaintainVbToDay_01?.value || false);
-
-
-            const MaintainVbToDay_02 = res.data.find(
-                (item: any) => item.key === "VB_TODAY02_MAINTAIN"
-            );
-            setMaintainVbToDay02(MaintainVbToDay_02?.value || false);
+     
 
 
 //=====================================================================================
@@ -602,7 +610,7 @@ const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
             const newValue = !maintainPT_1901;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1901_maintain: newValue }
+                { EVC_01_Pressure_Maintain: newValue }
             );
             setMaintainPT_1901(newValue);
             
@@ -672,7 +680,7 @@ const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
             const newValue = !maintainPT_1902;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1902_maintain: newValue }
+                { EVC_02_Pressure_Maintain: newValue }
             );
             setMaintainPT_1902(newValue);
             
@@ -739,7 +747,7 @@ const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
             const newValue = !maintainPT_1903;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1903_maintain: newValue }
+                { PT1_Maintain: newValue }
             );
             setMaintainPT_1903(newValue);
             
@@ -806,7 +814,7 @@ const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
             const newValue = !maintainGD_1901;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1901_maintain: newValue }
+                { GD1_Maintain: newValue }
             );
             setMaintainGD_1901(newValue);
             
@@ -871,7 +879,7 @@ const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
             const newValue = !maintainGD_1902;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1902_maintain: newValue }
+                { GD2_Maintain: newValue }
             );
             setMaintainGD_1902(newValue);
             
@@ -937,7 +945,7 @@ const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
             const newValue = !maintainGD_1903;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD_1903_maintain: newValue }
+                { GD3_Maintain: newValue }
             );
             setMaintainGD_1903(newValue);
             
@@ -1004,7 +1012,7 @@ const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
             const newValue = !maintainGVF1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVF1_Maintain: newValue }
+                { EVC_01_Flow_at_Measurement_Condition_Maintain: newValue }
             );
             setMaintainGVF1(newValue);
             
@@ -1071,7 +1079,7 @@ const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
             const newValue = !maintainSVF1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVF1_Maintain: newValue }
+                { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
             );
             setMaintainSVF1(newValue);
             
@@ -1139,7 +1147,7 @@ const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
             const newValue = !maintainSVA1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVA1_Maintain: newValue }
+                { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
             );
             setMaintainSVA1(newValue);
             
@@ -1206,7 +1214,7 @@ const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
             const newValue = !maintainGVA1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVA1_Maintain: newValue }
+                { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
             );
             setMaintainGVA1(newValue);
             
@@ -1274,7 +1282,7 @@ const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
             const newValue = !maintainGVF2;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVF2_Maintain: newValue }
+                { EVC_02_Flow_at_Measurement_Condition_Maintain: newValue }
             );
             setMaintainGVF2(newValue);
             
@@ -1340,7 +1348,7 @@ const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
             const newValue = !maintainSVF2;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVF2_Maintain: newValue }
+                { EVC_02_Flow_at_Base_Condition_Maintain: newValue }
             );
             setMaintainSVF2(newValue);
             
@@ -1407,7 +1415,7 @@ const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
             const newValue = !maintainSVA2;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVA2_Maintain: newValue }
+                { EVC_02_Volume_at_Base_Condition_Maintain: newValue }
             );
             setMaintainSVA2(newValue);
             
@@ -1473,7 +1481,7 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
             const newValue = !maintainGVA2;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVA2_Maintain: newValue }
+                { EVC_02_Volume_at_Measurement_Condition_Maintain: newValue }
             );
             setMaintainGVA2(newValue);
             
@@ -1540,7 +1548,7 @@ const [maintainTemperature01, setMaintainTemperature01] = useState<boolean>(fals
             const newValue = !maintainTemperature01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { maintain_Temperature01: newValue }
+                { EVC_01_Temperature_Maintain: newValue }
             );
             setMaintainTemperature01(newValue);
             
@@ -1549,7 +1557,6 @@ const [maintainTemperature01, setMaintainTemperature01] = useState<boolean>(fals
     };
 // ========================== EVC 01 TEMPERATURE ============================================
 
-// ========================== EVC 01 TEMPERATURE ============================================
 const [Temperature02, setTemperature02] = useState<string | null>(null);
 
 const [AudioTemperature02, setAudioTemperature02] = useState(false);
@@ -1607,7 +1614,7 @@ const [maintainTemperature02, setMaintainTemperature02] = useState<boolean>(fals
             const newValue = !maintainTemperature02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { maintain_Temperature02: newValue }
+                { EVC_02_Temperature_Maintain: newValue }
             );
             setMaintainTemperature02(newValue);
             
@@ -1676,7 +1683,7 @@ const [maintainReBattery01, setMaintainReBattery01] = useState<boolean>(false);
             const newValue = !maintainReBattery01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { REMAIN_BATTERY01_MAINTAIN: newValue }
+                { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
             );
             setMaintainReBattery01(newValue);
             
@@ -1743,7 +1750,7 @@ const [maintainReBattery02, setMaintainReBattery02] = useState<boolean>(false);
             const newValue = !maintainReBattery02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { REMAIN_BATTERY02_MAINTAIN: newValue }
+                { EVC_02_Remain_Battery_Service_Life_Maintain: newValue }
             );
             setMaintainReBattery02(newValue);
             
@@ -1809,7 +1816,7 @@ const [maintainVmLastDay01, setMaintainVmLastDay01] = useState<boolean>(false);
             const newValue = !maintainVmLastDay01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VM_LASTDAY01_MAINTAIN: newValue }
+                { EVC_01_Vm_of_Last_Day_Maintain: newValue }
             );
             setMaintainVmLastDay01(newValue);
             
@@ -1875,7 +1882,7 @@ const [maintainVmLastDay02, setMaintainVmLastDay02] = useState<boolean>(false);
             const newValue = !maintainVmLastDay02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VM_LASTDAY02_MAINTAIN: newValue }
+                { EVC_02_Vm_of_Last_Day_Maintain: newValue }
             );
             setMaintainVmLastDay02(newValue);
             
@@ -1943,7 +1950,7 @@ const [maintainVbLastDay01, setMaintainVbLastDay01] = useState<boolean>(false);
             const newValue = !maintainVbLastDay01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VB_LASTDAVB_LASTDAY01_MAINTAINY01_MAINTAIN: newValue }
+                { EVC_01_Vb_of_Last_Day_Maintain: newValue }
             );
             setMaintainVbLastDay01(newValue);
             
@@ -2009,7 +2016,7 @@ const [maintainVbLastDay02, setMaintainVbLastDay02] = useState<boolean>(false);
             const newValue = !maintainVbLastDay02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VB_LASTDAY02_MAINTAIN: newValue }
+                { EVC_02_Vb_of_Last_Day_Maintain: newValue }
             );
             setMaintainVbLastDay02(newValue);
             
@@ -2078,7 +2085,7 @@ const [maintainVmToDay01, setMaintainVmToDay01] = useState<boolean>(false);
             const newValue = !maintainVmToDay01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VM_TODAY01_MAINTAIN: newValue }
+                { EVC_01_Vm_of_Current_Day_Maintain: newValue }
             );
             setMaintainVmToDay01(newValue);
             
@@ -2144,7 +2151,7 @@ const [maintainVmToDay02, setMaintainVmToDay02] = useState<boolean>(false);
             const newValue = !maintainVmToDay02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VM_TODAY02_MAINTAIN: newValue }
+                { EVC_02_Vm_of_Current_Day_Maintain: newValue }
             );
             setMaintainVmToDay02(newValue);
             
@@ -2212,7 +2219,7 @@ const [maintainVbToDay01, setMaintainVbToDay01] = useState<boolean>(false);
             const newValue = !maintainVbToDay01;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VB_TODAY01_MAINTAIN: newValue }
+                { EVC_01_Vb_of_Current_Day_Maintain: newValue }
             );
             setMaintainVbToDay01(newValue);
             
@@ -2278,7 +2285,7 @@ const [maintainVbToDay02, setMaintainVbToDay02] = useState<boolean>(false);
             const newValue = !maintainVbToDay02;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { VB_TODAY02_MAINTAIN: newValue }
+                { EVC_02_Vb_of_Current_Day_Maintain: newValue }
             );
             setMaintainVbToDay02(newValue);
             
@@ -3404,39 +3411,41 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                     High_EK2_Pressure: inputValueEK2Hight, Low_EK2_Pressure:inputValueEK1Low,
                     High_EK3_Pressure:inputValueEK3Hight, Low_EK3_Pressure:inputValueEK3Low,
                 
-                    GD_High_1:inputHighGD01, GD_Low_1:inputLowGD01,
-                    GD_High_2:inputHighGD02, GD_Low_2:inputLowGD02,
-                    GD_High_3:inputHighGD03, GD_Low_3:inputLowGD03,
+                    GD1_High:inputHighGD01, GD1_Low:inputLowGD01,
+                    GD2_High:inputHighGD02, GD2_Low:inputLowGD02,
+                    GD3_High:inputHighGD03, GD3_Low:inputLowGD03,
 
 
-                    GVF1_High:inputHighGVF1, GVF1_Low:inputLowGVF1,
-                    SVF1_High:inputHighSVF1, SVF1_Low:inputLowSVF1,
-                    SVA1_High:inputHighSVA1, SVA1_Low:inputLowSVA1,
-                    GVA1_High:inputHighGVA1, GVA1_Low:inputLowGVA1,
+                    EVC_01_Flow_at_Measurement_Condition_High:inputHighGVF1, EVC_01_Flow_at_Measurement_Condition_Low:inputLowGVF1,
+                    EVC_01_Flow_at_Base_Condition_High:inputHighSVF1, EVC_01_Flow_at_Base_Condition_Low:inputLowSVF1,
+                    EVC_01_Volume_at_Base_Condition_High:inputHighSVA1, EVC_01_Volume_at_Base_Condition_Low:inputLowSVA1,
+                    EVC_01_Volume_at_Measurement_Condition_High:inputHighGVA1, EVC_01_Volume_at_Measurement_Condition_Low:inputLowGVA1,
 
 
-                    GVF2_High:inputHighGVF2, GVF2_Low:inputLowGVF2,
-                    SVF2_High:inputHighSVF2, SVF2_Low:inputLowSVF2,
-                    SVA2_High:inputHighSVA2, SVA2_Low:inputLowSVA2,
-                    GVA2_High:inputHighGVA2, GVA2_Low:inputLowGVA2,
+                    EVC_02_Flow_at_Measurement_Condition_High:inputHighGVF2, EVC_02_Flow_at_Measurement_Condition_Low:inputLowGVF2,
+                    EVC_02_Flow_at_Base_Condition_High:inputHighSVF2, EVC_02_Flow_at_Base_Condition_Low:inputLowSVF2,
+                    EVC_02_Volume_at_Base_Condition_High:inputHighSVA2, EVC_02_Volume_at_Base_Condition_Low:inputLowSVA2,
+                    EVC_02_Volume_at_Measurement_Condition_High:inputHighGVA2, EVC_02_Volume_at_Measurement_Condition_Low:inputLowGVA2,
 
-                    TEMPERATURE_01_HIGH:inputHighTemperature01, TEMPERATURE_01_LOW:inputLowTemperature01,
-                    TEMPERATURE_02_HIGH:inputHighTemperature02, TEMPERATURE_02_LOW:inputLowTemperature02,
+                    EVC_01_Temperature_High:inputHighTemperature01, EVC_01_Temperature_Low:inputLowTemperature01,
+                    EVC_02_Temperature_High:inputHighTemperature02, EVC_02_Temperature_Low:inputLowTemperature02,
 
-                    REMAIN_BATTERY01_HIGH:inputHighReBattery01, REMAIN_BATTERY01_LOW:inputLowReBattery01,
-                    REMAIN_BATTERY02_HIGH:inputHighReBattery02, REMAIN_BATTERY02_LOW:inputLowReBattery02,
 
-                    VM_LASTDAY01_HIGH:inputHighVmLastDay01, VM_LASTDAY01_LOW:inputLowVmLastDay01,
-                    VM_LASTDAY02_HIGH:inputHighVmLastDay02, VM_LASTDAY02_LOW:inputLowVmLastDay02,
 
-                    VB_LASTDAY01_HIGH:inputHighVbLastDay01, VB_LASTDAY01_LOW:inputLowVbLastDay01,
-                    VB_LASTDAY02_HIGH:inputHighVbLastDay02, VB_LASTDAY02_LOW:inputLowVbLastDay02,
+                    EVC_01_Remain_Battery_Service_Life_High:inputHighReBattery01, EVC_01_Remain_Battery_Service_Life_Low:inputLowReBattery01,
+                    EVC_02_Remain_Battery_Service_Life_High:inputHighReBattery02, EVC_02_Remain_Battery_Service_Life_Low:inputLowReBattery02,
 
-                    VB_TODAY01_HIGH:inputHighVbToDay01, VB_TODAY01_LOW:inputLowVbToDay01,
-                    VB_TODAY02_HIGH:inputHighVbToDay02, VB_TODAY02_LOW:inputLowVbToDay02,
+                    EVC_01_Vm_of_Last_Day_High:inputHighVmLastDay01, EVC_01_Vm_of_Last_Day_Low:inputLowVmLastDay01,
+                    EVC_02_Vm_of_Last_Day_High:inputHighVmLastDay02, EVC_02_Vm_of_Last_Day_Low:inputLowVmLastDay02,
 
-                    VM_TODAY01_HIGH:inputHighVmToDay01, VM_TODAY01_LOW:inputLowVmToDay01,
-                    VM_TODAY02_HIGH:inputHighVmToDay02, VM_TODAY02_LOW:inputLowVmToDay02,
+                    EVC_01_Vb_of_Last_Day_High:inputHighVbLastDay01, EVC_01_Vb_of_Last_Day_Low:inputLowVbLastDay01,
+                    EVC_02_Vb_of_Last_Day_High:inputHighVbLastDay02, EVC_02_Vb_of_Last_Day_Low:inputLowVbLastDay02,
+
+                    EVC_01_Vb_of_Current_Day_High:inputHighVbToDay01, EVC_01_Vb_of_Current_Day_Low:inputLowVbToDay01,
+                    EVC_02_Vb_of_Current_Day_High:inputHighVbToDay02, EVC_02_Vb_of_Current_Day_Low:inputLowVbToDay02,
+
+                    EVC_01_Vm_of_Current_Day_High:inputHighVmToDay01, EVC_01_Vm_of_Current_Day_Low:inputLowVmToDay01,
+                    EVC_02_Vm_of_Current_Day_High:inputHighVmToDay02, EVC_02_Vm_of_Current_Day_Low:inputLowVmToDay02,
 
                     UPS_BATTERY_HIGH:inputHighUpsBattery, UPS_BATTERY_LOW:inputLowUpsBattery,
 
@@ -3552,7 +3561,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainPT_1901
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400,
             },
@@ -3561,7 +3570,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainPT_1902
                 ? "orange"
-                : "black"  ,
+                : ""  ,
                 height:25,
                 fontWeight:400
             },
@@ -3570,7 +3579,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainPT_1903
                 ? "orange"
-                : "black"  ,
+                : ""  ,
                 height:25,
                 fontWeight:400
             },
@@ -3580,7 +3589,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGD_1901
                 ? "orange"
-                : "black"  ,
+                : ""  ,
                 height:25,
                 fontWeight:400
             },
@@ -3589,7 +3598,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGD_1902
                 ? "orange"
-                : "black"   ,
+                : ""   ,
                 height:25,
                 fontWeight:400
             },
@@ -3598,7 +3607,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGD_1903
                 ? "orange"
-                : "black"   ,
+                : ""   ,
                 height:25,
                 fontWeight:400
             },
@@ -3607,7 +3616,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGVF1
                 ? "orange"
-                : "black"    ,
+                : ""    ,
                 height:25,
                 fontWeight:400
             },
@@ -3616,7 +3625,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainSVF1
                 ? "orange"
-                : "black"    ,
+                : ""    ,
                 height:25,
                 fontWeight:400
             },
@@ -3625,7 +3634,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainSVA1
                 ? "orange"
-                : "black"   ,
+                : ""   ,
                 height:25,
                 fontWeight:400
             },
@@ -3634,7 +3643,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGVA1
                 ? "orange"
-                : "black"   ,
+                : ""   ,
                 height:25,
                 fontWeight:400
             },
@@ -3643,7 +3652,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGVF2
                 ? "orange"
-                : "black"  ,
+                : ""  ,
                 height:25,
                 fontWeight:400
             },
@@ -3652,7 +3661,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainSVF2
                 ? "orange"
-                : "black"  ,
+                : ""  ,
                 height:25,
                 fontWeight:400
             },
@@ -3661,7 +3670,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainSVA2
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3670,7 +3679,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainGVA2
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3680,7 +3689,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainTemperature01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3691,7 +3700,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainTemperature02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3702,7 +3711,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainReBattery01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3711,7 +3720,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainReBattery02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3722,7 +3731,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVmLastDay01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3731,7 +3740,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVmLastDay02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3742,7 +3751,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVbLastDay01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3751,7 +3760,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVbLastDay02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3761,7 +3770,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVmToDay01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3770,7 +3779,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVmToDay02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3781,7 +3790,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVbToDay01
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3790,7 +3799,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainVbToDay02
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3800,7 +3809,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainUpsBattery
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3809,7 +3818,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
                 ? "#ff5656"
                 : maintainUpsCharging
                 ? "orange"
-                : "black" ,
+                : "" ,
                 height:25,
                 fontWeight:400
             },
@@ -3823,7 +3832,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_SVF1} > {SVF1} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_SVF1}   placeholder='Low' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -3838,7 +3847,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_GVF1} > {GVF1} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_GVF1}   placeholder='Low' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -3854,7 +3863,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_SVA1} >  {SVA1} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_SVA1}   placeholder='Low' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -3869,7 +3878,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_GVA1} > {GVA1} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputHighGVA1} onChange={handleInputChangeHighGVA1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_GVA1}   placeholder='Low' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -3882,7 +3891,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
         name: <span style={combineCss.CSSpt02}>PT-1901 </span> ,
         value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSpt02}   placeholder='High' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSSpt02}   placeholder='Low' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
@@ -3897,7 +3906,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -3912,7 +3921,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -3927,7 +3936,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
        value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} Sm³</span>, 
        high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
+       low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
@@ -3942,7 +3951,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -3959,7 +3968,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
         high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='High' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -3974,7 +3983,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
         high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='High' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -3997,7 +4006,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_SVF2} > {SVF2} m³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_SVF2}   placeholder='Low' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -4011,7 +4020,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_GVF2} > {GVF2} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_GVF2}   placeholder='Low' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -4026,7 +4035,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_SVA2} > {SVA2} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_SVA2}   placeholder='Low' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -4040,7 +4049,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_GVA2} > {GVA2} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSS_GVA2}   placeholder='Low' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -4067,7 +4076,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4082,7 +4091,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4097,7 +4106,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4111,7 +4120,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='High' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4126,7 +4135,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_Rebattery02} > {ReBattery01} Months</span>, 
         high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='High' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4141,7 +4150,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
         value: <span style={combineCss.CSS_Temperature02} > {Temperature01} °C</span>, 
         high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='High' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
+        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
@@ -4176,7 +4185,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
         name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
         value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
+         low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
@@ -4190,7 +4199,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
      name: <span style={combineCss.CSSgd01}>GD-1901 </span> ,
      value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
       high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
+      low:  <InputText style={combineCss.CSSgd01}   placeholder='Low' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
@@ -4204,7 +4213,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
      name: <span style={combineCss.CSSgd02}>GD-1902 </span> ,
      value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
       high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
+      low:  <InputText style={combineCss.CSSgd02}   placeholder='Low' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
@@ -4218,7 +4227,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
      name: <span style={combineCss.CSSgd03}>GD-1903 </span> ,
      value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
       high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
+      low:  <InputText style={combineCss.CSSgd03}   placeholder='Low' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
@@ -4314,10 +4323,10 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
         </div>
      
       
-        <div style={{width:'100%' , padding:5, background:'white', borderRadius:5 }}>
+        <div style={{width:'100%' , padding:5, borderRadius:5 }}>
 
             <h4>EVC 01</h4>
-        <DataTable  value={dataEVC01} size={'small'}  showGridlines  >
+        <DataTable  value={dataEVC01} size={'small'}    >
       <Column field="timeUpdate" header="Time Update" />
       {/* <Column field="modbus" header="Modbus" /> */}
 
@@ -4333,10 +4342,10 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
     </div>
 <br />
 
-    <div style={{width:'100%' , padding:5, background:'white', borderRadius:5  }}>
+    <div style={{width:'100%' , padding:5, borderRadius:5  }}>
 
 <h4>EVC 02</h4>
-<DataTable  value={dataEVC02} size={'small'}  showGridlines  >
+<DataTable  value={dataEVC02} size={'small'}    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
 
@@ -4352,10 +4361,10 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 </div>
 <br />
 
-<div style={{width:'100%' ,  padding:5, background:'white', borderRadius:5 }}>
+<div style={{width:'100%' ,  padding:5,  borderRadius:5 }}>
 
 <h4>PLC</h4>
-<DataTable  value={dataPLC} size={'small'}  showGridlines  >
+<DataTable  value={dataPLC} size={'small'}    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
 
