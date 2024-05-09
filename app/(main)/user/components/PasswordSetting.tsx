@@ -61,9 +61,10 @@ const PasswordSetting = () => {
     return (
         <>
             <Toast ref={toast} />
-            <h5>Change Password</h5>
+
             <div className="col-12 md:col-6">
                 <div className="card p-fluid">
+                    <h5>Change Password</h5>
                     <div className="field grid">
                         <label
                             htmlFor="name3"
