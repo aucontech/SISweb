@@ -85,7 +85,7 @@ export default function Alarmbell() {
                                     textSearch: null,
                                     typeList: [],
                                     severityList: ["CRITICAL"],
-                                    statusList: ["ACTIVE", "UNACK"],
+                                    statusList: ["ACTIVE"],
                                     searchPropagatedAlarms: false,
                                     sortOrder: {
                                         key: {
@@ -94,7 +94,7 @@ export default function Alarmbell() {
                                         },
                                         direction: "DESC",
                                     },
-                                    timeWindow: 86400000,
+                                    timeWindow: 604800000,
                                 },
                                 alarmFields: [
                                     {
@@ -140,15 +140,19 @@ export default function Alarmbell() {
                     setAlarmCount(dataReceive.count);
                 }
                 if (dataReceive && dataReceive["cmdId"] === 1) {
-                    let dataAlarm = dataReceive.data.data;
-                    if (notifications.length === 0) {
-                        console.log("dataAlarm", dataAlarm);
-                        const updatedAlarms = dataAlarm.map((alarm: any) => ({
-                            ...alarm,
-                            shouldPlaySound: true,
-                        }));
+                    if (dataReceive.data && dataReceive.data.data) {
+                        let dataAlarm = dataReceive?.data.data;
+                        if (notifications.length === 0) {
+                            console.log("dataAlarm", dataAlarm);
+                            const updatedAlarms = dataAlarm.map(
+                                (alarm: any) => ({
+                                    ...alarm,
+                                    shouldPlaySound: true,
+                                })
+                            );
 
-                        setNotifications(updatedAlarms);
+                            setNotifications(updatedAlarms);
+                        }
                     } else {
                     }
                 }
@@ -174,7 +178,7 @@ export default function Alarmbell() {
             }
         });
     }, [notifications]);
-
+    console.log("notifications", notifications);
     useEffect(() => {
         ring();
     }, [notifications, ring]);
@@ -230,30 +234,19 @@ export default function Alarmbell() {
             router.push("/alarmhistory?" + createQueryString("deviceid", item));
         }
     };
-    // const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
-    //     const isAlarm = item.subject.includes("New alarm");
-    //     const subjectStyle = {
-    //         color: isAlarm ? "red" : "blue",
-    //     };
-
-    //     return (
-    //         <div
-    //             key={index}
-    //             style={{ padding: "0px 10px" }}
-    //             onClick={handleClick(item?.info?.stateEntityId?.id)}
-    //             onMouseOver={(e) => (e.currentTarget.style.cursor = "pointer")} // Sets cursor to pointer on hover
-    //             onMouseOut={(e) => (e.currentTarget.style.cursor = "auto")} // Resets cursor when not hovering
-    //         >
-    //             <div>
-    //                 <p className={styles.subject} style={{ ...subjectStyle }}>
-    //                     {item.subject}
-    //                 </p>
-    //                 <p>{item.text}</p>
-    //                 <hr />
-    //             </div>
-    //         </div>
-    //     );
-    // });
+    const _renderAlarms = () => {
+        return notifications.map((item, index) => (
+            <React.Fragment key={index}>
+                <div>
+                    <p className={styles.subject} style={{ color: "red" }}>
+                        Subject Placeholder
+                    </p>
+                    <p>Description Placeholder</p>
+                </div>
+                <hr />
+            </React.Fragment>
+        ));
+    };
 
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
@@ -327,58 +320,66 @@ export default function Alarmbell() {
                 )}
             </div>
             <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.notificationContainer}>
-                    <div className={styles.notificationHeader}>
-                        <h3>Notifications</h3>
-                        <Button
-                            label="Mark all as read"
-                            onClick={handleMarkAllAsRead}
-                        />
-                    </div>
-                    <div className={styles.notificationBody}>
-                        {notifications.map((item, index) => (
-                            <div
-                                key={index}
-                                className={styles.notificationItem}
-                                onClick={handleClick(item)}
-                            >
-                                <div className={styles.notificationItemContent}>
-                                    <div
-                                        className={
-                                            styles.notificationItemContentIcon
-                                        }
-                                    >
-                                        <Image
-                                            src="/images/alarm.png"
-                                            alt="alarm"
-                                            width={30}
-                                            height={30}
-                                        />
-                                    </div>
-                                    <div
-                                        className={
-                                            styles.notificationItemContentText
-                                        }
-                                    >
-                                        <p
-                                            className={
-                                                styles.notificationItemContentTextSubject
-                                            }
-                                        >
-                                            {item.subject}
-                                        </p>
-                                        <p
-                                            className={
-                                                styles.notificationItemContentTextText
-                                            }
-                                        >
-                                            {item.text}
-                                        </p>
-                                    </div>
-                                </div>
+                <div className={styles.overlayPanel}>
+                    <div
+                        style={{
+                            padding: "10px 20px ",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p style={{ fontSize: 20, fontWeight: 600 }}>
+                                Alarms
+                            </p>
+                        </div>
+
+                        {totalCount ? (
+                            <div className="MarkAllBell">
+                                <p
+                                    style={{
+                                        fontWeight: 500,
+                                        marginTop: 4,
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={handleMarkAllAsRead}
+                                >
+                                    {" "}
+                                    Mark all as read
+                                </p>
                             </div>
-                        ))}
+                        ) : (
+                            ""
+                        )}
                     </div>
+                    <hr />
+
+                    {notifications.length > 0 ? (
+                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
+                            <div style={{ padding: "0px 10px" }}>
+                                {_renderAlarms()}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className={styles.alarmEmpty}>
+                            <Image
+                                src="/demo/images/logoBell/bel.svg"
+                                width={200}
+                                height={200}
+                                alt="Picture of the author"
+                            />
+                        </div>
+                    )}
+                    <div style={{ padding: 20 }}>
+                        <Button
+                            onClick={() => router.push("/alarmhistory")}
+                            className={styles.buttonViewAll}
+                        >
+                            View All
+                        </Button>
+                    </div>
+                    <div></div>
                 </div>
             </OverlayPanel>
         </div>
