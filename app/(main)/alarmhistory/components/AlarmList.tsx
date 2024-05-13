@@ -62,7 +62,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                 if (textSearch !== "") {
                     reqParams = {
                         ...reqParams,
-                        textSearch,
+                        textSearch: encodeURIComponent(textSearch),
                     };
                 }
                 let alarmType = filters?.alarmType;
