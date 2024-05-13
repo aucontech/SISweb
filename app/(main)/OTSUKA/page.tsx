@@ -2,6 +2,7 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
 import LowHighData from "./LowHighData/LowHighData";
+import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 const TabOtsuka = () => {
 
 
@@ -9,8 +10,8 @@ const TabOtsuka = () => {
         <div className="grid">
             <div style={{ width: "100%" }}>
 
-                
-                {/* <TabView>
+{/*                 
+                <TabView>
               
                  
                      <TabPanel header="Graphic">
@@ -18,7 +19,7 @@ const TabOtsuka = () => {
                     </TabPanel>
                   
                     <TabPanel header="Set Data">
-                        <LowHighData />
+                        <AlarmOTSUKA />
                     </TabPanel>
              
                 </TabView> */}

@@ -5,17 +5,16 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
-import "./AlarmBellCssBlink.css"
+//import tingting from "./Notification.mp3";
+import "./AlarmBellCssBlink.css";
 
-import { PiBellSimpleRingingBold } from "react-icons/pi";
+import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
 
 export default function AlarmOTSUKA() {
-
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
     }
-
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
     const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
@@ -34,9 +33,11 @@ export default function AlarmOTSUKA() {
     }
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
+    console.log("data: ", data);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    console.log("notifications: ", notifications);
     const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
 
     useEffect(() => {
@@ -47,8 +48,6 @@ export default function AlarmOTSUKA() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
-
-
         };
 
         ws.current.onclose = () => {
@@ -61,6 +60,16 @@ export default function AlarmOTSUKA() {
         };
     }, []);
 
+    const subjectCount = notifications.length;
+    let totalSubjectDisplay: string | number = subjectCount;
+
+    if (subjectCount > 99) {
+        totalSubjectDisplay = "99+";
+    }
+    const totalCount: any =
+        subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
+
+ 
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -73,15 +82,13 @@ export default function AlarmOTSUKA() {
                     setTotalUnreadCount(dataReceive.totalUnreadCount);
                     setData([...data, dataReceive]);
                     setObj1Processed(true);
-                    audioRef.current?.play();
+                    // audioRef.current?.play();
                 } else if (
                     dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
                     dataReceive.notifications
                 ) {
                     setNotifications(dataReceive.notifications);
                 }
-
-             
             };
         }
 
@@ -89,51 +96,62 @@ export default function AlarmOTSUKA() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed,]);
-
-
-    const dataAlarm = notifications.slice(0, 6).map((item, index) => {
-        const isAlarm = item.subject.includes("New alarm");
-        const subjectStyle = {
-            color: isAlarm ? "red" : "blue" 
-        };
-        return (
-            <div key={index} style={{ padding: "0px 10px" }}>
-                <div>
-                    <p className={styles.subject} style={subjectStyle}>{item.subject}</p>
-                    <p>{item.text}</p>
-                    <hr />
-                </div>
-            </div>
-        );
-    });
-    
-    const subjectCount = notifications.length;
-    let totalSubjectDisplay: string | number = subjectCount;
-
-    if (subjectCount > 99) {
-        totalSubjectDisplay = "99+";
-    }
-
-    const totalCount =
-        subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
-
+    }, [totalUnreadCount, obj1Processed]);
 
     return (
         <div>
-            <audio ref={audioRef}>
+            {/* <audio ref={audioRef}>
                 <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
-            </audio>
+            </audio> */}
             <div className="flex">
-
-           {totalCount ? ( 
-                    <div className="ColorRed" style={{ fontSize:40, display:'flex', cursor:'pointer' }} onClick={()=> router.push('/SetupData')} >
-                 <p style={{marginRight:15}} >Alarming</p>  <p style={{marginTop:5}}>  <PiBellSimpleRingingBold size={50} /> </p> 
-
-                    </div>
-                 ) : (
-                    ""
-                 )} 
+                {totalCount ? (
+                      <div
+                      style={{
+                          fontSize: 50,
+                          cursor: "pointer",
+                          background:"#DD0000",
+                          borderRadius: 10,
+                          width: 260,
+                          height: 100,
+                          textAlign: "center",
+                          alignItems: "center",
+                      }}
+                      onClick={() => router.push("/SetupData")}
+                  >
+                      <p
+                          style={{
+                              color: "white",
+                              marginTop: 10,
+                          }}
+                      >
+                          Alarming
+                      </p>
+                  </div>
+                ) : (
+                    <div
+                    style={{
+                        fontSize: 50,
+                        cursor: "pointer",
+                        background:"green",
+                        borderRadius: 10,
+                        width: 260,
+                        height: 100,
+                        textAlign: "center",
+                        alignItems: "center",
+                    }}
+                    onClick={() => router.push("/SetupData")}
+                >
+                    <p
+                        style={{
+                            color: "white",
+                            marginTop: 10,
+                        }}
+                    >
+                        Normal
+                    </p>
+                </div>
+                )}
+              
             </div>
         </div>
     );

@@ -4,24 +4,12 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
-import { readToken, readUser } from "@/service/localStorage";
+import { readToken } from "@/service/localStorage";
+//import tingting from "./Notification.mp3";
+import "./AlarmBellCssBlink.css"
 
-import "./AlarmBellCssBlink.css";
+import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
 
-interface Notification {
-    // subject: string;
-    // text: string;
-}
-interface WebSocketMessage {
-    update: any;
-    cmdUpdateType: string;
-    notifications: Notification[];
-    totalUnreadCount: string;
-}
-
-interface Item {
-    [key: string]: string | number; // Example properties
-}
 export default function Alarmbell() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
@@ -29,22 +17,29 @@ export default function Alarmbell() {
     }
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_ALARM_BELL}${token}`;
     const audioRef = useRef<HTMLAudioElement>(null);
+    const [prevTotalCount, setPrevTotalCount] = useState<number>(0);
 
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
-
+    interface Notification {
+        subject: string;
+        text: string;
+    }
+    interface WebSocketMessage {
+        update: any;
+        cmdUpdateType: string;
+        notifications: Notification[];
+        totalUnreadCount: string;
+    }
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
+    console.log('data: ', data);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    const [currentUser, setCurrentUser] = useState<any>(null);
-    useEffect(() => {
-        const user = readUser();
-        if (user) {
-            setCurrentUser(user);
-        }
-    }, []);
+    console.log('notifications: ', notifications);
+    const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
+
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -53,6 +48,8 @@ export default function Alarmbell() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
+
+
         };
 
         ws.current.onclose = () => {
@@ -64,6 +61,7 @@ export default function Alarmbell() {
             ws.current?.close();
         };
     }, []);
+
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -83,6 +81,8 @@ export default function Alarmbell() {
                 ) {
                     setNotifications(dataReceive.notifications);
                 }
+
+             
             };
         }
 
@@ -90,47 +90,47 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed]);
-    const createQueryString = (name: any, value: any) => {
-        const params = new URLSearchParams();
-        params.set(name, value);
+    }, [totalUnreadCount, obj1Processed,]);
 
-        return params.toString();
-    };
-    const handleClick = (item: Item) => () => {
-        if (currentUser.authority === "CUSTOMER_USER") {
-            router.push(
-                "/alarmsummarycustomer?" + createQueryString("deviceid", item)
-            );
-        } else {
-            router.push("/alarmsummary?" + createQueryString("deviceid", item));
-        }
-    };
-    const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
+
+    const dataAlarm = notifications.slice(0, 6).map((item: any, index: any) => {
         const isAlarm = item.subject.includes("New alarm");
-        const subjectStyle = {
-            color: isAlarm ? "red" : "blue",
-        };
-
+        const subjectStyle = {};
+    
+        // Chuyển đổi createTime thành định dạng mong muốn
+        const createTime = new Date(item.createdTime);
+        const formattedTime = `${createTime.getDate()}/${createTime.getMonth() + 1}/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(-2)}:${("0" + createTime.getMinutes()).slice(-2)}:${("0" + createTime.getSeconds()).slice(-2)}`;
+    
         return (
-            <div
-                key={index}
-                style={{ padding: "0px 10px" }}
-                onClick={handleClick(item?.info?.stateEntityId?.id)}
-                onMouseOver={(e) => (e.currentTarget.style.cursor = "pointer")} // Sets cursor to pointer on hover
-                onMouseOut={(e) => (e.currentTarget.style.cursor = "auto")} // Resets cursor when not hovering
-            >
-                <div>
-                    <p className={styles.subject} style={{ ...subjectStyle }}>
-                        {item.subject}
-                    </p>
-                    <p>{item.text}</p>
-                    <hr />
+            <div key={index} style={{ padding: "0px 10px",  }}>
+
+
+
+                <div style={{border: isAlarm ? "2px solid orange" : "2px solid blue", padding:20, borderRadius:5, }} >
+
+                    <div style={{display:'flex'}}>
+                <PiBellRingingBold size={50} />
+                    <div style={{marginLeft:20}}>
+                    <p className={styles.subject} style={{  }}>{item.info.alarmOriginatorName} {item.info.alarmType}</p>
+                    <p>{formattedTime}</p>
+                    </div>
                 </div>
+              <div style={{marginTop:10,display:'flex',justifyContent:'flex-end'  }} >
+                <Button style={{width:'100%', textAlign:'center',justifyContent:'center' }}>
+                View More
+                </Button>
+              </div>
+
+                </div>
+                
+                <hr />
             </div>
         );
     });
+    
 
+ 
+    
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
 
@@ -141,19 +141,22 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
-    const handleMarkAllAsRead = () => {
-        const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
-        ws.current?.send(JSON.stringify(ReadAllAlarm));
 
-        const obj3 = { unsubCmd: { cmdId: 1 } };
-        const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-        ws.current?.send(JSON.stringify(obj3));
-        ws.current?.send(JSON.stringify(obj2));
-    };
+        const handleMarkAllAsRead = () => {
+            const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
+            ws.current?.send(JSON.stringify(ReadAllAlarm));
+    
+            const obj3 = { unsubCmd: { cmdId: 1 } };
+            const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
+            ws.current?.send(JSON.stringify(obj3));
+            ws.current?.send(JSON.stringify(obj2));
+        };
+
+        
     return (
         <div>
             <audio ref={audioRef}>
-                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
+                <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
@@ -165,82 +168,49 @@ export default function Alarmbell() {
                     </div>
                 )}
 
-                {totalCount ? (
-                    <div
-                        className="BackgroundRed"
-                        style={{
-                            width: 30,
-                            textAlign: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <i
-                            className="pi pi-bell"
-                            style={{
-                                fontSize: "1.5rem",
-                                cursor: "pointer",
-                                color: "white",
-                                marginTop: 3,
-                            }}
-                            onClick={(e) => op?.current?.toggle(e)}
-                        />
+                {totalCount ? ( 
+
+                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
+                 <i
+                    className="pi pi-bell"
+                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
+                    onClick={(e) => op?.current?.toggle(e)}
+                />
+
                     </div>
-                ) : (
-                    <div
-                        style={{
-                            width: 30,
-                            textAlign: "center",
-                            alignItems: "center",
-                            borderRadius: 50,
-                            marginTop: 3,
-                        }}
-                    >
-                        <i
-                            className="pi pi-bell"
-                            style={{ fontSize: "1.5rem", cursor: "pointer" }}
-                            onClick={(e) => op?.current?.toggle(e)}
-                        />
+                 ) : (
+                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
+
+                    <i
+                    className="pi pi-bell"
+                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
+                    onClick={(e) => op?.current?.toggle(e)}
+                />
                     </div>
-                )}
+                 )}
+
             </div>
-            <OverlayPanel style={{ marginLeft: 10 }} ref={op}>
-                <div className={styles.overlayPanel}>
-                    <div
-                        style={{
-                            padding: "10px 20px ",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>
-                            <p style={{ fontSize: 20, fontWeight: 600 }}>
-                                Alarms
-                            </p>
+            <OverlayPanel style={{ marginLeft: 10,minWidth:450}} ref={op}>
+                <div >
+                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
+                       
+                       <div >
+                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
                         </div>
 
-                        {totalCount ? (
-                            <div className="MarkAllBell">
-                                <p
-                                    style={{
-                                        fontWeight: 500,
-                                        marginTop: 4,
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={handleMarkAllAsRead}
-                                >
-                                    {" "}
-                                    Mark all as read
-                                </p>
-                            </div>
-                        ) : (
-                            ""
-                        )}
+                        {totalCount ? ( 
+                                <div className="MarkAllBell">
+
+                    <p style={{fontWeight:500,  marginTop:4,cursor:'pointer' }} onClick={handleMarkAllAsRead}> Mark all as read</p>
+
+                                </div>
+
+                        ) : ("")}
                     </div>
                     <hr />
 
                     {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
+                        <div style={{ overflowY: "auto", maxHeight: 400, }}>
                             {dataAlarm}
                         </div>
                     ) : (
@@ -253,15 +223,7 @@ export default function Alarmbell() {
                             />
                         </div>
                     )}
-                    <div style={{ padding: 20 }}>
-                        <Button
-                            onClick={() => router.push("/alarmhistory")}
-                            className={styles.buttonViewAll}
-                        >
-                            View All
-                        </Button>
-                    </div>
-                    <div></div>
+                   
                 </div>
             </OverlayPanel>
         </div>

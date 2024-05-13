@@ -163,13 +163,13 @@ export default function PSV01_Otsuka() {
 
          
 <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', fontWeight:500  }} onClick={handleButtonToggle}>
-                 <p style={{color:colorNameValue,}}>PSV-1901 : Set</p> 
+                 <p style={{color:colorNameValue,}}>PSV-1901 </p> 
                   <p style={{marginLeft:20,color:colorData}} > {upData} </p> 
                   <p style={{marginLeft:10,color:colorNameValue}}>BarG</p>
 
            </div>
             
-            <OverlayPanel ref={op}>
+            {/* <OverlayPanel ref={op}>
                 <div style={{display:'flex', flexDirection:'column', width:120}}>
                 <p  style={{fontWeight:500}}>PSV-1901</p>
 
@@ -177,7 +177,7 @@ export default function PSV01_Otsuka() {
 
                     <Button style={{marginTop:5}} label="Update" onClick={handleButtonClick} />
                 </div>
-            </OverlayPanel>
+            </OverlayPanel> */}
         </div>
     );
 }
