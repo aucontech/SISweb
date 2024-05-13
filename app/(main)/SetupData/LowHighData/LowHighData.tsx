@@ -10,11 +10,16 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "./LowHighOtsuka.css"
 import { Checkbox } from 'primereact/checkbox';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
+import SetAttribute from './SetAttribute';
 
 interface StateMap {
+
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
+
 }
 
 export default function LowHighData() {
@@ -26,6 +31,7 @@ export default function LowHighData() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [data, setData] = useState<any[]>([]);
 
+    const toast = useRef<Toast>(null);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -498,24 +504,24 @@ const MaintainSelect = res.data.find(
 setMaintainSelectSW(MaintainSelect?.value || false);
 //=====================================================================================
 
-const HighEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NO_High");
+const HighEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NC_High");
 setHighEmergencyNC(HighEmergencyNC?.value || null);
-const LowEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NO_Low");
+const LowEmergencyNC = res.data.find((item: any) => item.key === "Emergency_NC_Low");
 setLowEmergencyNC(LowEmergencyNC?.value || null);
 
 const MaintainEmergencyNC = res.data.find(
-    (item: any) => item.key === "Emergency_NO_Maintain"
+    (item: any) => item.key === "Emergency_NC_Maintain"
 );
 setMaintainEmergencyNC(MaintainEmergencyNC?.value || false);
 //=====================================================================================
 
-const HighEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NC_High");
+const HighEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NO_High");
 setHighEmergencyNO(HighEmergencyNO?.value || null);
-const LowEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NC_Low");
+const LowEmergencyNO = res.data.find((item: any) => item.key === "Emergency_NO_Low");
 setLowEmergencyNO(LowEmergencyNO?.value || null);
 
 const MaintainEmergencyNO = res.data.find(
-    (item: any) => item.key === "Emergency_NC_Maintain"
+    (item: any) => item.key === "Emergency_NO_Maintain"
 );
 setMaintainEmergencyNO(MaintainEmergencyNO?.value || false);
 //=====================================================================================
@@ -3342,17 +3348,16 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         } catch (error) {}
     };
 
-
 //===========================================================================================
 
 
     useEffect(() => {
+
         setInputValue(highEK1PressureValue); 
         setInputValue2(lowEK1PressureValue); 
 
         setInputValueEK2High(highEK2PressureValue); 
         setInputValueEK2Low(lowEK2PressureValue); 
-
 
         setInputValueEK3High(highEK3PressureValue); 
         setInputValueEK3Low(lowEK3PressureValue);    
@@ -3366,10 +3371,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         setInputHighGD03(HighGD03)
         setInputLowGD03(LowGD03)
 
-
         setInputHighGVF1(HighGVF1)
         setInputLowGVF1(LowGVF1)
-
 
         setInputHighSVF1(HighSVF1)
         setInputLowSVF1(LowSVF1)
@@ -3380,10 +3383,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         setInputHighGVA1(HighGVA1)
         setInputLowGVA1(LowGVA1)
 
-
         setInputHighGVF2(HighGVF2)
         setInputLowGVF2(LowGVF2)
-
 
         setInputHighSVF2(HighSVF2)
         setInputLowSVF2(LowSVF2)
@@ -3417,7 +3418,6 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         setInputHighVbLastDay02(HighVbLastDay02)
         setInputLowVbLastDay02(LowVbLastDay02)
-
 
         setInputHighVmToDay01(HighVmToDay01)
         setInputLowVmToDay01(LowVmToDay01)
@@ -3486,8 +3486,6 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
          HighSVA1, LowSVA1 ,
          HighGVA1, LowGVA1 ,
 
-
-         
          HighGVF2, LowGVF2 ,
          HighSVF2, LowSVF2 ,
          HighSVA2, LowSVA2 ,
@@ -3534,21 +3532,19 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { High_EK1_Pressure: inputValue,Low_EK1_Pressure:inputValue2,
-                    High_EK2_Pressure: inputValueEK2Hight, Low_EK2_Pressure:inputValueEK1Low,
-                    High_EK3_Pressure:inputValueEK3Hight, Low_EK3_Pressure:inputValueEK3Low,
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { EVC_01_Pressure_High: inputValue,EVC_01_Pressure_Low:inputValue2,
+                    EVC_02_Pressure_High: inputValueEK2Hight, EVC_02_Pressure_Low:inputValueEK1Low,
+                    PT1_High:inputValueEK3Hight, PT1_Low:inputValueEK3Low,
                 
                     GD1_High:inputHighGD01, GD1_Low:inputLowGD01,
                     GD2_High:inputHighGD02, GD2_Low:inputLowGD02,
                     GD3_High:inputHighGD03, GD3_Low:inputLowGD03,
 
-
                     EVC_01_Flow_at_Measurement_Condition_High:inputHighGVF1, EVC_01_Flow_at_Measurement_Condition_Low:inputLowGVF1,
                     EVC_01_Flow_at_Base_Condition_High:inputHighSVF1, EVC_01_Flow_at_Base_Condition_Low:inputLowSVF1,
                     EVC_01_Volume_at_Base_Condition_High:inputHighSVA1, EVC_01_Volume_at_Base_Condition_Low:inputLowSVA1,
                     EVC_01_Volume_at_Measurement_Condition_High:inputHighGVA1, EVC_01_Volume_at_Measurement_Condition_Low:inputLowGVA1,
-
 
                     EVC_02_Flow_at_Measurement_Condition_High:inputHighGVF2, EVC_02_Flow_at_Measurement_Condition_Low:inputLowGVF2,
                     EVC_02_Flow_at_Base_Condition_High:inputHighSVF2, EVC_02_Flow_at_Base_Condition_Low:inputLowSVF2,
@@ -3557,9 +3553,6 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
                     EVC_01_Temperature_High:inputHighTemperature01, EVC_01_Temperature_Low:inputLowTemperature01,
                     EVC_02_Temperature_High:inputHighTemperature02, EVC_02_Temperature_Low:inputLowTemperature02,
-
-          
-
 
                     EVC_01_Remain_Battery_Service_Life_High:inputHighReBattery01, EVC_01_Remain_Battery_Service_Life_Low:inputLowReBattery01,
                     EVC_02_Remain_Battery_Service_Life_High:inputHighReBattery02, EVC_02_Remain_Battery_Service_Life_Low:inputLowReBattery02,
@@ -3590,8 +3583,6 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                     DI_RESET_High:inputHighDIReset, DI_RESET_Low:inputLowDIReset,
 
                     DO_HR_01_High:inputHighDOHorn, DO_HR_01_Low:inputLowDOHorn,
-
-
 
                     DI_MAP_1_High:inputHighMap, DI_MAP_1_Low:inputLowMap,
 
@@ -3731,11 +3722,28 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
             setHighBeacon(inputHighBeacon);
             setLowBeacon(inputLowBeacon);
+
+            toast.current?.show({
+                severity: "info",
+                detail: "Success ",
+                life: 3000,
+            });
         } catch (error) {
             console.log("error: ", error);
+            toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
+
            
         }
     };
+
+    const confirmUpData = () => {
+        confirmDialog({
+            message: "Are you sure you updated the data?",
+            header: "Confirmation",
+            icon: "pi pi-info-circle",
+            accept: () => handleButtonClick(),
+        });
+    }
 
 
       const combineCss = {
@@ -3747,6 +3755,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
+                padding:10
             },
             CSSpt03 : {
                 color:exceedThreshold2 && !maintainPT_1902
@@ -3755,7 +3764,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""  ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSSpt01 : {
                 color:exceedThreshold3 && !maintainPT_1903
@@ -3764,7 +3774,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""  ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSSgd01 : {
@@ -3774,7 +3785,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""  ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSSgd02 : {
                 color:AlarmGD02 && !maintainGD_1902
@@ -3783,7 +3795,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""   ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSSgd03 : {
                 color:AlarmGD03 && !maintainGD_1903
@@ -3792,7 +3805,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""   ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_GVF1 : {
                 color:AlarmGVF1 && !maintainGVF1
@@ -3801,7 +3815,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""    ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_SVF1 : {
                 color:AlarmSVF1&& !maintainSVF1
@@ -3810,7 +3825,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""    ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
              CSS_SVA1 : {
                 color:AlarmSVA1 && !maintainSVA1
@@ -3819,7 +3835,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""   ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_GVA1 : {
                 color:AlarmGVA1 && !maintainGVA1
@@ -3828,7 +3845,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""   ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_GVF2 : {
                 color:AlarmGVF2 && !maintainGVF2
@@ -3837,7 +3855,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""  ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_SVF2 : {
                 color:AlarmSVF2 && !maintainSVF2
@@ -3846,7 +3865,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : ""  ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
              CSS_SVA2 : {
                 color:AlarmSVA2&& !maintainSVA2
@@ -3855,7 +3875,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_GVA2 : {
                 color:AlarmGVA2 && !maintainGVA2
@@ -3864,7 +3885,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_Temperature : {
@@ -3874,7 +3896,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -3885,7 +3908,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -3896,7 +3920,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_Rebattery02 : {
                 color:AlarmReBattery02 && !maintainReBattery02
@@ -3905,7 +3930,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -3916,7 +3942,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_VmLastDay02 : {
                 color:AlarmVmLastDay02 && !maintainVmLastDay02
@@ -3925,7 +3952,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -3936,7 +3964,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_VbLastDay02 : {
                 color:AlarmVbLastDay02 && !maintainVbLastDay02
@@ -3945,7 +3974,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_VmToDay01 : {
@@ -3955,7 +3985,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_VmToDay02 : {
                 color:AlarmVmToDay02 && !maintainVmToDay02
@@ -3964,7 +3995,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -3975,7 +4007,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_VbToDay02 : {
                 color:AlarmVbToDay02 && !maintainVbToDay02
@@ -3984,7 +4017,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_UpsBattery : {
@@ -3994,7 +4028,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_UpsCharging: {
                 color:AlarmUpsCharging && !maintainUpsCharging
@@ -4003,7 +4038,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_UpsAlarm: {
                 color:AlarmUpsAlarm && !maintainUpsAlarm
@@ -4012,7 +4048,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
             CSS_UpsMode: {
                 color:AlarmUpsMode && !maintainUpsMode
@@ -4021,7 +4058,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             }, 
               CSS_SelectSW: {
                 color:AlarmSelectSW && !maintainSelectSW
@@ -4030,7 +4068,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_EmergencyNO: {
@@ -4040,7 +4079,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_EmergencyNC: {
@@ -4050,7 +4090,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_Reset: {
@@ -4060,7 +4101,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_Horn: {
@@ -4070,7 +4112,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
            
 
@@ -4081,7 +4124,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -4092,7 +4136,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
 
@@ -4103,7 +4148,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
               CSS_SELENOID: {
                 color:AlarmDO_SV1 && !maintainDO_SV1
@@ -4112,7 +4158,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
 
             CSS_Beacon: {
@@ -4122,7 +4169,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 ? "orange"
                 : "" ,
                 height:25,
-                fontWeight:400
+                fontWeight:400,
+                padding:10
             },
       };
 
@@ -4135,7 +4183,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SVF1} > {SVF1} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF1}   placeholder='Low' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainSVF_01}
@@ -4150,7 +4198,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_GVF1} > {GVF1} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF1}   placeholder='Low' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGVF_01}
@@ -4166,7 +4214,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SVA1} >  {SVA1} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA1}   placeholder='Low' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainSVA_01}
@@ -4181,7 +4229,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_GVA1} > {GVA1} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputHighGVA1} onChange={handleInputChangeHighGVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA1}   placeholder='Low' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGVA_01}
@@ -4194,7 +4242,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt02}   placeholder='Low' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainPT_1901}
@@ -4209,7 +4257,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVbToDay01}
@@ -4224,7 +4272,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVmToDay01}
@@ -4239,7 +4287,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} Sm³</span>, 
        high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+       update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainVbLastDay01}
@@ -4254,7 +4302,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVmLastDay01}
@@ -4271,7 +4319,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
         high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainReBattery01}
@@ -4286,7 +4334,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
         high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainTemperature01}
@@ -4309,7 +4357,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SVF2} > {SVF2} m³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF2}   placeholder='Low' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainSVF_02}
@@ -4323,7 +4371,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_GVF2} > {GVF2} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF2}   placeholder='Low' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGVF_02}
@@ -4338,7 +4386,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SVA2} > {SVA2} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA2}   placeholder='Low' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainSVA_02}
@@ -4352,7 +4400,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_GVA2} > {GVA2} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA2}   placeholder='Low' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGVA_02} 
@@ -4365,7 +4413,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
         high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainPT_1902}
@@ -4379,7 +4427,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVbToDay02}
@@ -4394,7 +4442,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVmToDay02}
@@ -4409,7 +4457,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVbLastDay02}
@@ -4423,7 +4471,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainVmLastDay02}
@@ -4435,10 +4483,10 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_Rebattery02}> Remain Battery</span> ,
 
-        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery01} Months</span>, 
+        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery02} Months</span>, 
         high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainReBattery02}
@@ -4450,10 +4498,10 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_Temperature02}>Temperature </span> ,
 
-        value: <span style={combineCss.CSS_Temperature02} > {Temperature01} °C</span>, 
+        value: <span style={combineCss.CSS_Temperature02} > {Temperature02} °C</span>, 
         high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainTemperature02}
@@ -4475,11 +4523,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
       const DataBeacon = Beacon === "0" ? "Off" : Beacon === "1" ? "On" : null
       const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
-      const DataEmergencyNC = EmergencyNC === "0" ? "Normal" : EmergencyNC === "1" ? "Emergency" : null
-      const DataEmergencyNO = EmergencyNO === "0" ? "Emergency" : EmergencyNO === "1" ? "Normal" : null
+      const DataEmergencyNC = EmergencyNC === "0" ? "Emergency" : EmergencyNC === "1" ? "Normal" : null
+      const DataEmergencyNO = EmergencyNO === "0" ? "Normal" : EmergencyNO === "1" ? "Emergency" : null
       const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
-
-
 
       const dataPLC = [
 
@@ -4488,7 +4534,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainPT_1903}
@@ -4502,7 +4548,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
       high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd01}   placeholder='Low' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainGD_01}
@@ -4516,7 +4562,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
       high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd02}   placeholder='Low' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainGD_02}
@@ -4530,7 +4576,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
       high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd03}   placeholder='Low' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainGD_03}
@@ -4545,7 +4591,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} {DataCharging}</span> , 
         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='Low' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainUpsCharging}
@@ -4558,7 +4604,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} {DataBattery}</span> , 
         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='Low' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainUpsBattery}
@@ -4570,7 +4616,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_UpsAlarm} > {UpsAlarm} {DataAlarm}</span> , 
         high: <InputText style={combineCss.CSS_UpsAlarm}   placeholder='High' step="0.1" type='number' value={inputHighUpsAlarm} onChange={handleInputChangeHighUpsAlarm} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsAlarm}   placeholder='Low' step="0.1" type='number' value={inputLowUpsAlarm} onChange={handleInputChangeLowUpsAlarm} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainUpsAlarm}
@@ -4583,7 +4629,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_UpsMode} > {UpsMode} {DataMode}</span> , 
         high: <InputText style={combineCss.CSS_UpsMode}   placeholder='High' step="0.1" type='number' value={inputHighUpsMode} onChange={handleInputChangeHighUpsMode} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsMode}   placeholder='Low' step="0.1" type='number' value={inputLowUpsMode} onChange={handleInputChangeLowUpsMode} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainUpsMode}
@@ -4597,7 +4643,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SelectSW} > {SelectSW} {DataSelectSW}</span> , 
         high: <InputText style={combineCss.CSS_SelectSW}   placeholder='High' step="0.1" type='number' value={inputHighSelectSW} onChange={handleInputChangeHighSelectSW} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_SelectSW}   placeholder='Low' step="0.1" type='number' value={inputLowSelectSW} onChange={handleInputChangeLowSelectSW} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainSelectSW}
@@ -4610,7 +4656,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Reset} > {DIReset} {DataReset}</span> , 
         high: <InputText style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputHighDIReset} onChange={handleInputChangeHighDIReset} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputLowDIReset} onChange={handleInputChangeLowDIReset} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainDIReset}
@@ -4623,7 +4669,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_SELENOID} > {DO_SV1} {DataSV_1}</span> , 
         high: <InputText style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputHighDO_SV1} onChange={handleInputChangeHighDO_SV1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputLowDO_SV1} onChange={handleInputChangeLowDO_SV1} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainDO_SV1}
@@ -4636,7 +4682,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_EmergencyNC} > {EmergencyNC} {DataEmergencyNC}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNC}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNC} onChange={handleInputChangeHighEmergencyNC} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_EmergencyNC}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNC} onChange={handleInputChangeLowEmergencyNC} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainEmergencyNC}
@@ -4648,7 +4694,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_EmergencyNO} > {EmergencyNO} {DataEmergencyNO}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNO}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNO} onChange={handleInputChangeHighEmergencyNO} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_EmergencyNO}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNO} onChange={handleInputChangeLowEmergencyNO} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainEmergencyNO}
@@ -4661,7 +4707,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Horn} > {DOHorn} {DataHorn}</span> , 
         high: <InputText style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputHighDOHorn} onChange={handleInputChangeHighDOHorn} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputLowDOHorn} onChange={handleInputChangeLowDOHorn} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainDOHorn}
@@ -4673,7 +4719,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_ZSC} > {ZSC_1} {DataZSC_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputHighZSC_1} onChange={handleInputChangeHighZSC_1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputLowZSC_1} onChange={handleInputChangeLowZSC_1} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainZSC_1}
@@ -4686,7 +4732,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowZSO_1} onChange={handleInputChangeLowZSO_1} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainZSO_1}
@@ -4699,7 +4745,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Map} > {Map} {DataMap}</span> , 
         high: <InputText style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputHighMap} onChange={handleInputChangeHighMap} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputLowMap} onChange={handleInputChangeLowMap} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainMap}
@@ -4712,7 +4758,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         value: <span style={combineCss.CSS_Beacon} > {Beacon} {DataBeacon}</span> , 
         high: <InputText style={combineCss.CSS_Beacon}   placeholder='High' step="0.1" type='number' value={inputHighBeacon} onChange={handleInputChangeHighBeacon} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Beacon}   placeholder='Low' step="0.1" type='number' value={inputLowBeacon} onChange={handleInputChangeLowBeacon} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={handleButtonClick} > Update </button>,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainBeacon}
@@ -4725,8 +4771,13 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
             
             <audio ref={audioRef}>
-            <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
+            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
         </audio>
+        <Toast ref={toast} />
+
+        <ConfirmDialog />
+
+
             <div>
 
                 <div style={{display:'flex' }}>
@@ -4735,11 +4786,13 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         </div>
         <hr />
         </div>
+
+
      
       
-        <div style={{width:'100%' , padding:5, borderRadius:5 }}>
+        <div style={{width:'100%' , padding:10, borderRadius:5 }}>
 
-            <h4>EVC 01</h4>
+            <h4>EVC 01 -  Prameter & configuration  </h4>
         <DataTable  value={dataEVC01} size={'small'}    >
       <Column field="timeUpdate" header="Time Update" />
       {/* <Column field="modbus" header="Modbus" /> */}
@@ -4753,12 +4806,13 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       <Column field="update" header="Update" />
 
     </DataTable>
+
     </div>
 <br />
 
-    <div style={{width:'100%' , padding:5, borderRadius:5  }}>
+    <div style={{width:'100%' , padding:10, borderRadius:5  }}>
 
-<h4>EVC 02</h4>
+<h4>EVC 02 - Parameter & configuration</h4>
 <DataTable  value={dataEVC02} size={'small'}    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
@@ -4775,9 +4829,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 </div>
 <br />
 
-<div style={{width:'100%' ,  padding:5,  borderRadius:5 }}>
+<div style={{width:'100%' ,  padding:10,  borderRadius:5 }}>
 
-<h4>PLC</h4>
+<h4>PLC - Parameter & configuration</h4>
 <DataTable  value={dataPLC} size={'small'}    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
@@ -4791,6 +4845,12 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 <Column field="update" header="Update" />
 
 </DataTable>
+<br />
+
+</div>
+<div style={{width:'100%' ,  padding:5,  borderRadius:5 }}>
+
+<SetAttribute/>
 </div>
     </div>
     

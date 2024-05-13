@@ -15,7 +15,7 @@ export default function ScoreCard_Otsuka() {
 
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<string | null>(null);
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
     const [SVF1, setSVF1] = useState<string | null>(null);
@@ -225,16 +225,16 @@ export default function ScoreCard_Otsuka() {
         GD2: "Gas Detector GD-1902 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
         DO_SV1: "SDV-SOLENOID (0: OFF - 1: ON)",
-        ZSC: "SDV-ZSO (0: ON - 1: OFF)",
-        ZSO: "SDV-ZSC (0: OFF - 1: ON)",
-        UPS_BATTERY : "UPS_BATTERY (0 :Normal - 1: Battery)",
-        UPS_CHARGING : "UPS_CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM : "UPS_ALARM (0: Normal - 1: Battery)",
-        UPS_MODE : "UPS_MODE (Normal - UPS Running - Charging - No Battery)",
-        SELECT_SW:"SELECT_SW (0: Local - 1: Remote)",
+        ZSC: "SDV-ZSC (0: ON - 1: OFF)",
+        ZSO: "SDV-ZSO (0: OFF - 1: ON)",
+        UPS_BATTERY : "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_CHARGING : "UPS CHARGING (0: Normal - 1: Charging)",
+        UPS_ALARM : "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_MODE :  "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
+        SELECT_SW:"SELECT SW (0: Local - 1: Remote)",
         RESET:"RESET (0: OFF - 1: ON)",
-        EmergencyStop_NC:"Emergency Stop_NC (0: Emergency - 1: Normal)",
-        EmergencyStop_NO:"Emergency Stop_NC (0: Normal - 1: Emergency)",
+        EmergencyStop_NC:"Emergency Stop NC (0: Emergency - 1: Normal)",
+        EmergencyStop_NO:"Emergency Stop NO (0: Normal - 1: Emergency)",
         HORN:"HORN (0: OFF - 1: ON)",
         BEACON:"BEACON (0: OFF - 1: ON)" ,
         MAP:"MAP (0: Normal - 1: Emergency)" ,
@@ -245,15 +245,15 @@ export default function ScoreCard_Otsuka() {
     const DataBattery = UpsBattery === "0" ? "Normal" : UpsBattery === "1" ? "Battery" : null
     const DataAlarm = UpsAlarm === "0" ? "Normal" : UpsAlarm === "1" ? "No Battery" : null
     const DataMode = UpsMode === "0" ? "Error" : UpsMode === "1" ? "Using Battery" : UpsMode === "2" ? "Charging Battery" : UpsMode === "3" ? "Disconnected Battery" : UpsMode === "4" ? "Normal" : null
-    const DataZSC_1 = NC === "0" ? "On" : NC === "1" ? "Off" : null
+    const DataZSC_1 = NC === "0" ? "Off" : NC === "1" ? "On" : null
     const DataZSO_1 = NO === "0" ? "Off" : NO === "1" ? "On" : null
     const DataSelectSW = SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null
     const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null
     const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
     const DataBeacon = DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null
     const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
-    const DataEmergencyNC = EmergencyNC === "0" ? "Normal" : EmergencyNC === "1" ? "Emergency" : null
-    const DataEmergencyNO = EmergencyNO === "0" ? "Emergency" : EmergencyNO === "1" ? "Normal" : null
+    const DataEmergencyNC = EmergencyNC === "0" ? " Emergency" : EmergencyNC === "1" ? "Normal" : null
+    const DataEmergencyNO = EmergencyNO === "0" ? "Normal" : EmergencyNO === "1" ? " Emergency" : null
     const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
 
 
@@ -370,13 +370,14 @@ export default function ScoreCard_Otsuka() {
             PLC: <span style={{}}>{DataReset}</span>,
         },
         {
-            name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
-            PLC: <span style={{}}>{DataEmergencyNC}</span>,
-        },
-        {
             name: <span>{tagNamePLC.EmergencyStop_NO}</span>,
             PLC: <span style={{}}>{DataEmergencyNO}</span>,
         },
+        {
+            name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
+            PLC: <span style={{}}>{DataEmergencyNC}</span>,
+        },
+      
         {
             name: <span>{tagNamePLC.HORN}</span>,
             PLC: <span style={{}}>{DataHorn}</span>,
@@ -441,14 +442,16 @@ export default function ScoreCard_Otsuka() {
                             <div>
                                 Status :{" "}
                                 {EVC_STT01 === "0" ? (
-                                    <span style={{ color: "#3DE644" }}>
-                                        {" "}
-                                        Good
-                                    </span>
-                                ) : (
                                     <span style={{ color: "red" }}>
                                         {" "}
                                         Disconnect
+
+                                    </span>
+                                ) : (
+                                    <span style={{ color: "#3DE644" }}>
+                                        {" "}
+                                        Good
+
                                     </span>
                                 )}{" "}
                             </div>{" "}
@@ -480,7 +483,6 @@ export default function ScoreCard_Otsuka() {
                 <DataTable
                     value={dataEVC}
                     size="small"
-                    tableStyle={{ minWidth: "40rem" }}
                 >
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
@@ -498,19 +500,11 @@ export default function ScoreCard_Otsuka() {
                     ></Column>
                     <Column field="evc1902" header="EVC-1902"></Column>
                 </DataTable>
-                {isVisible ? (
-
-                    <div className="ShowMore" style={{ padding:4, textAlign:'center', cursor:'pointer',}} >
-                    <p style={{fontWeight:600}}   onClick={handleClick}>Show More</p>
-
-                    </div>
-           
-                 ) : (
-<div>
+                
+                    <div>
                     <DataTable
                     value={dataPLC}
                     size="small"
-                    tableStyle={{ minWidth: "40rem" }}
                 >
                     <Column field="name" header="PLC Parameter"></Column>
                     <Column
@@ -527,13 +521,8 @@ export default function ScoreCard_Otsuka() {
                         }
                     ></Column>
                 </DataTable>
-                <div className="ShowMore" style={{ padding:4, textAlign:'center', cursor:'pointer',}} >
-                    <p style={{fontWeight:600}}  onClick={handleClick}>Show Less</p>
-
-                    </div>
-
+               
                 </div>
-                  )}
             </div>
 
             

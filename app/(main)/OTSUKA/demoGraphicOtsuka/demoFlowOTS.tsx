@@ -1361,7 +1361,8 @@ export default function DemoFlowOTS() {
     };
     const confirmLineDuty = () => {
         confirmDialog({
-            message: "Do you want to change the line duty?",
+            header: "Comfirmation",
+            message: "Are you sure to change Line Duty?",
             icon: "pi pi-info-circle",
             accept: () => ChangeStatusFIQ(),
         });
@@ -1374,29 +1375,29 @@ export default function DemoFlowOTS() {
             );
 
             const highEVCPressureItem = res.data.find(
-                (item: any) => item.key === "High_EK1_Pressure"
+                (item: any) => item.key === "EVC_01_Pressure_High"
             );
             setHighPT01(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
-                (item: any) => item.key === "Low_EK1_Pressure"
+                (item: any) => item.key === "EVC_01_Pressure_Low"
             );
             setLowPT01(lowEVCPressureItem?.value || null);
 
             const HighPT1902 = res.data.find(
-                (item: any) => item.key === "High_EK2_Pressure"
+                (item: any) => item.key === "EVC_02_Pressure_High"
             );
             setHighPT02(HighPT1902?.value || null);
             const LowPT1902 = res.data.find(
-                (item: any) => item.key === "Low_EK2_Pressure"
+                (item: any) => item.key === "EVC_02_Pressure_Low"
             );
             setLowPT02(LowPT1902?.value || null);
 
             const HighPT1903 = res.data.find(
-                (item: any) => item.key === "High_EK3_Pressure"
+                (item: any) => item.key === "PT1_High"
             );
             setHighPT03(HighPT1903?.value || null);
             const LowPT1903 = res.data.find(
-                (item: any) => item.key === "Low_EK3_Pressure"
+                (item: any) => item.key === "PT1_Low"
             );
             setLowPT03(LowPT1903?.value || null);
 
@@ -1431,132 +1432,172 @@ export default function DemoFlowOTS() {
             setLowGD03(LowGD03?.value || null);
 
             const HighSVF1 = res.data.find(
-                (item: any) => item.key === "SVF1_High"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setHighSVF1(HighSVF1?.value || null);
 
             const LowSVF1 = res.data.find(
-                (item: any) => item.key === "SVF1_Low"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setLowSVF1(LowSVF1?.value || null);
 
             const HighGVF1 = res.data.find(
-                (item: any) => item.key === "GVF1_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setHighGVF1(HighGVF1?.value || null);
 
             const LowGVF1 = res.data.find(
-                (item: any) => item.key === "GVF1_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setLowGVF1(LowGVF1?.value || null);
 
             const HighSVA1 = res.data.find(
-                (item: any) => item.key === "SVA1_High"
+                (item: any) =>
+                    item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
             setHighSVA1(HighSVA1?.value || null);
 
             const LowSVA1 = res.data.find(
-                (item: any) => item.key === "SVA1_Low"
+                (item: any) =>
+                    item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
             setLowSVA1(LowSVA1?.value || null);
 
             const HighGVA1 = res.data.find(
-                (item: any) => item.key === "GVA1_High"
+                (item: any) =>
+                    item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
             setHighGVA1(HighGVA1?.value || null);
 
             const LowGVA1 = res.data.find(
-                (item: any) => item.key === "GVA1_Low"
+                (item: any) =>
+                    item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
             setLowGVA1(LowGVA1?.value || null);
 
+            const HighSVF2 = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+            );
+            setHighSVF2(HighSVF2?.value || null);
+
+            const LowSVF2 = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+            );
+            setLowSVF2(LowSVF2?.value || null);
+
+            const HighGVF2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
+            );
+            setHighGVF2(HighGVF2?.value || null);
+
+            const LowGVF2 = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
+            );
+            setLowGVF2(LowGVF2?.value || null);
+
             const HighSVA2 = res.data.find(
-                (item: any) => item.key === "SVA2_High"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
             setHighSVA2(HighSVA2?.value || null);
 
             const LowSVA2 = res.data.find(
-                (item: any) => item.key === "SVA2_Low"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
             setLowSVA2(LowSVA2?.value || null);
 
             const HighGVA2 = res.data.find(
-                (item: any) => item.key === "GVA2_High"
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
             setHighGVA2(HighGVA2?.value || null);
 
             const LowGVA2 = res.data.find(
-                (item: any) => item.key === "GVA2_Low"
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
             setLowGVA2(LowGVA2?.value || null);
 
             const MaintainPT_1901 = res.data.find(
-                (item: any) => item.key === "PT_1901_maintain"
+                (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
             setMaintainPT_1901(MaintainPT_1901?.value || false);
 
             const MaintainPT_1902 = res.data.find(
-                (item: any) => item.key === "PT_1902_maintain"
+                (item: any) => item.key === "EVC_02_Pressure_Maintain"
             );
             setMaintainPT_1902(MaintainPT_1902?.value || false);
 
             const MaintainPT_1903 = res.data.find(
-                (item: any) => item.key === "PT_1903_maintain"
+                (item: any) => item.key === "PT1_Maintain"
             );
             setMaintainPT_1903(MaintainPT_1903?.value || false);
 
             const MaintainGD_1901 = res.data.find(
-                (item: any) => item.key === "GD_1901_maintain"
+                (item: any) => item.key === "GD1_Maintain"
             );
             setMaintainGD_1901(MaintainGD_1901?.value || false);
 
             const MaintainGD_1902 = res.data.find(
-                (item: any) => item.key === "GD_1902_maintain"
+                (item: any) => item.key === "GD2_Maintain"
             );
             setMaintainGD_1902(MaintainGD_1902?.value || false);
 
             const MaintainGD_1903 = res.data.find(
-                (item: any) => item.key === "GD_1903_maintain"
+                (item: any) => item.key === "GD3_Maintain"
             );
             setMaintainGD_1903(MaintainGD_1903?.value || false);
 
             const MaintainSVF_1 = res.data.find(
-                (item: any) => item.key === "SVF1_Maintain"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
             setMaintainSVF1(MaintainSVF_1?.value || false);
 
             const MaintainGVF_1 = res.data.find(
-                (item: any) => item.key === "GVF1_Maintain"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
             setMaintainGVF1(MaintainGVF_1?.value || false);
 
             const MaintainSVA_1 = res.data.find(
-                (item: any) => item.key === "SVA1_Maintain"
+                (item: any) =>
+                    item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
             setMaintainSVA1(MaintainSVA_1?.value || false);
 
             const MaintainGVA_1 = res.data.find(
-                (item: any) => item.key === "GVA1_Maintain"
+                (item: any) =>
+                    item.key ===
+                    "EVC_01_Volume_at_Measurement_Condition_Maintain"
             );
             setMaintainGVA1(MaintainGVA_1?.value || false);
 
             const MaintainSVF_2 = res.data.find(
-                (item: any) => item.key === "SVF2_Maintain"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
             setMaintainSVF2(MaintainSVF_2?.value || false);
 
             const MaintainGVF_2 = res.data.find(
-                (item: any) => item.key === "GVF2_Maintain"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
             setMaintainGVF2(MaintainGVF_2?.value || false);
 
             const MaintainSVA_2 = res.data.find(
-                (item: any) => item.key === "SVA2_Maintain"
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
             setMaintainSVA2(MaintainSVA_2?.value || false);
 
             const MaintainGVA_2 = res.data.find(
-                (item: any) => item.key === "GVA2_Maintain"
+                (item: any) =>
+                    item.key ===
+                    "EVC_02_Volume_at_Measurement_Condition_Maintain"
             );
             setMaintainGVA2(MaintainGVA_2?.value || false);
 
@@ -1638,7 +1679,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmSVF_1()}
+                                // onClick={() => confirmSVF_1()}
                             >
                                 <div
                                     style={{
@@ -1699,7 +1740,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmGVF_1()}
+                                // onClick={() => confirmGVF_1()}
                             >
                                 <div
                                     style={{
@@ -1760,7 +1801,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmSVA_1()}
+                                // onClick={() => confirmSVA_1()}
                             >
                                 <div
                                     style={{
@@ -1822,7 +1863,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmGVA_1()}
+                                // onClick={() => confirmGVA_1()}
                             >
                                 <div
                                     style={{
@@ -1885,7 +1926,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmSVF_2()}
+                                // onClick={() => confirmSVF_2()}
                             >
                                 <div
                                     style={{
@@ -1947,7 +1988,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmGVF_2()}
+                                // onClick={() => confirmGVF_2()}
                             >
                                 <div
                                     style={{
@@ -2009,7 +2050,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmSVA_2()}
+                                // onClick={() => confirmSVA_2()}
                             >
                                 <div
                                     style={{
@@ -2071,7 +2112,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmGVA_2()}
+                                // onClick={() => confirmGVA_2()}
                             >
                                 <div
                                     style={{
@@ -2132,7 +2173,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmPT_1903()}
+                                // onClick={() => confirmPT_1903()}
                             >
                                 <div
                                     style={{
@@ -2193,7 +2234,7 @@ export default function DemoFlowOTS() {
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                onClick={() => confirmPT_1901()}
+                                // onClick={() => confirmPT_1901()}
                             >
                                 <div
                                     style={{
@@ -2255,7 +2296,7 @@ export default function DemoFlowOTS() {
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={() => confirmPT_1902()}
+                                // onClick={() => confirmPT_1902()}
                             >
                                 <div
                                     style={{
@@ -2461,7 +2502,7 @@ export default function DemoFlowOTS() {
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                onClick={() => confirmGD_1901()}
+                                // onClick={() => confirmGD_1901()}
                             >
                                 <p style={{}}>{roundedGD01} LEL</p>
                             </div>
@@ -2496,7 +2537,7 @@ export default function DemoFlowOTS() {
 
                                     cursor: "pointer",
                                 }}
-                                onClick={() => confirmGD_1902()}
+                                // onClick={() => confirmGD_1902()}
                             >
                                 <p
                                     style={{
@@ -2537,7 +2578,7 @@ export default function DemoFlowOTS() {
 
                                     cursor: "pointer",
                                 }}
-                                onClick={() => confirmGD_1903()}
+                                // onClick={() => confirmGD_1903()}
                             >
                                 <p
                                     style={{
@@ -2568,9 +2609,6 @@ export default function DemoFlowOTS() {
             }
 
             if (node.id === "FIQ_1901") {
-                const roundedGD03 =
-                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -2602,9 +2640,6 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "FIQ_1902") {
-                const roundedGD03 =
-                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -2645,19 +2680,19 @@ export default function DemoFlowOTS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -491.4880891634929, y: 347.091836124464 },
               ArrowRight: { x: 768.0423568651795, y: 1013.0512757003828 },
               ArrowRight1: { x: -1238.8396996628176, y: 1015.1651331139306 },
-              BallValue01: { x: -1128.7252492515188, y: 1191.6262752572804 },
+              BallValue01: { x: -1149.4000721307239, y: 1191.1980297895232 },
               BallValue02: { x: -901.8172406747104, y: 1191.399667617022 },
-              BallValue03: { x: -701.4277571154358, y: 811.268852001003 },
+              BallValue03: { x: -702.8553801271846, y: 811.3274439848915 },
               BallValue04: { x: -701.8672275157428, y: 1196.0644365920487 },
-              BallValue05: { x: -408.81817382654674, y: 812.3988197919385 },
-              BallValue06: { x: -408.92842757827566, y: 1195.0575990996279 },
-              BallValue07: { x: -109.976146570266, y: 732.5849962342946 },
+              BallValue05: { x: -379.1400970130792, y: 811.3879543154436 },
+              BallValue06: { x: -378.7585718991443, y: 1195.3617019839396 },
+              BallValue07: { x: -148.91185739539094, y: 731.5064751667989 },
               BallValue08: { x: 511.81515033374035, y: 732.8905369491654 },
-              BallValue09: { x: -109.18869777338799, y: 1276.8905722131906 },
+              BallValue09: { x: -148.41120071237717, y: 1276.9108163342823 },
               BallValue10: { x: 512.076750938122, y: 1276.6662483937687 },
               BallValueCenter: { x: 216.68461956782312, y: 991.2550857949235 },
               BallValueCenter_Check: {
@@ -2688,14 +2723,14 @@ export default function DemoFlowOTS() {
               GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
               GD1_Name1901: { x: -617.0174367324778, y: 922.7999982291198 },
               GD1_Value1901: { x: -617.2309648261335, y: 962.7951649681137 },
-              GD2: { x: -42.50089224243885, y: 1021.4354854552315 },
-              GD2_Name1902: { x: -67.54434225774708, y: 923.5792056424372 },
-              GD2_Value1902: { x: -67.91457554484958, y: 963.1203079122581 },
+              GD2: { x: -47.46103028411346, y: 1018.1287267607815 },
+              GD2_Name1902: { x: -72.83116997303412, y: 923.5792056424372 },
+              GD2_Value1902: { x: -72.8747135865242, y: 963.9469975858706 },
               GD3: { x: 473.0164899350001, y: 1017.3652081335781 },
               GD3_Name1903: { x: 446.44939138278767, y: 922.3542185615489 },
               GD3_Value1903: { x: 446.16846035566243, y: 961.7240910379097 },
               GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
-              GD_none2: { x: -7.7844474100276955, y: 1044.8685851757357 },
+              GD_none2: { x: -12.744585451702278, y: 1044.8685851757357 },
               GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1146.0797880182224, y: 343.9694534020156 },
@@ -2738,30 +2773,33 @@ export default function DemoFlowOTS() {
               PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
               PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
               PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
-              PT2: { x: -21.651669453574158, y: 1195.9276507252328 },
-              PT3: { x: -22.68528485027099, y: 654.3057712932034 },
+              PT2: { x: -47.151669453574186, y: 1198.9276507252328 },
+              PT3: { x: -40.04576799613213, y: 655.9591506404283 },
               PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
-              PT_col2: { x: 17.862308874268933, y: 729.2802360193444 },
-              PT_col3: { x: 18.093270328360745, y: 1270.9966728522536 },
+              PT_col2: { x: -0.32486394520464046, y: 731.7603050401818 },
+              PT_col3: { x: -7.906729671639255, y: 1274.4966728522536 },
               PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
-              PT_none2: { x: 12.872468321767258, y: 683.258994488236 },
-              PT_none3: { x: 12.893848453058297, y: 1216.7858497116608 },
+              PT_none2: { x: -6.0573098043296625, y: 689.045822203523 },
+              PT_none3: { x: -12.606151546941703, y: 1236.7858497116608 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: -1144.6672900563185, y: 775.737751310433 },
-              Pressure_Trans02: { x: -325.0768436440115, y: 541.6022097871528 },
-              Pressure_Trans03: {
-                  x: -327.47184043716663,
-                  y: 1434.9801685486188,
+              Pressure_Trans01: {
+                  x: -1145.3119986237837,
+                  y: 741.9475208243597,
               },
-              SDV: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_Ball: { x: -1108.7415047384393, y: 1243.8057655958721 },
-              SDV_IMG: { x: -1128.9943569208203, y: 972.9252744312048 },
+              Pressure_Trans02: { x: -346.0242267725056, y: 541.0650973992427 },
+              Pressure_Trans03: {
+                  x: -353.0089246774792,
+                  y: 1442.0419756158065,
+              },
+              SDV: { x: -1155.9953335348948, y: 927.1381678494187 },
+              SDV_Ball: { x: -1129.952204883766, y: 1243.8057655958721 },
+              SDV_IMG: { x: -1151.2765188199892, y: 972.5929820963458 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1089.4833742545557, y: 1045.0428308586213 },
+              SDV_None: { x: -1108.7658289321253, y: 1046.0069535924997 },
               T_juntion_11: { x: 365.1924037601432, y: 761.5664930235843 },
-              T_juntion_14: { x: 51.19739447051353, y: 1267.8592609282646 },
-              Tank: { x: -921.5169052023348, y: 949.94544810155 },
+              T_juntion_14: { x: 32.45090621777757, y: 1269.1954166335288 },
+              Tank: { x: -923.4796899745505, y: 958.6175905097743 },
               Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
               Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
               Temperature_Trans01: {
@@ -2773,9 +2811,9 @@ export default function DemoFlowOTS() {
                   y: 1445.5258186779024,
               },
               VavleWay: { x: 130.10547762418554, y: 1009.7718094592451 },
-              animation_line7: { x: -57.33638520737881, y: 786.0142010748291 },
+              animation_line7: { x: -93.84620293649371, y: 785.9385366383195 },
               animation_line8: { x: 534.5875681565667, y: 785.9286837518672 },
-              animation_line9: { x: -53.98482361983602, y: 1329.7796968105158 },
+              animation_line9: { x: -95.98813080519058, y: 1330.4088031986948 },
               animation_line10: { x: 534.2944515129055, y: 1329.9134977535994 },
               animation_line11: { x: 408.14915225646655, y: 785.6291840355361 },
               animation_line12: { x: 280.9850323278604, y: 1044.4121840565192 },
@@ -2783,7 +2821,7 @@ export default function DemoFlowOTS() {
                   x: 166.17450133771734,
                   y: 1044.2699746503904,
               },
-              animation_line14: { x: 94.07809660966518, y: 1330.0304864638001 },
+              animation_line14: { x: 74.45070020889887, y: 1330.435716875898 },
               animation_line15: { x: 534.0396421290242, y: 1330.0605161042722 },
               borderWhite: { x: -1259.8488098276323, y: 334.804469377478 },
               data1: { x: 138.48451703477264, y: 596.2740760310676 },
@@ -2796,13 +2834,13 @@ export default function DemoFlowOTS() {
               data8: { x: 128.41451145597324, y: 1658.7248430688853 },
               line1: { x: -1256.32578393197, y: 1045.0932625914143 },
               line2: { x: -824.7490621134568, y: 1045.059045857194 },
-              line3: { x: -679.4548405099899, y: 864.3210507007146 },
+              line3: { x: -680.3194052337228, y: 864.6856154244473 },
               line4: { x: -679.8288704580859, y: 1247.5473074652164 },
-              line5: { x: -386.35311440840894, y: 864.5020291308545 },
-              line6: { x: -386.02218778401766, y: 1247.470831450982 },
-              line7: { x: -210.82907734671454, y: 1052.6632425418165 },
-              line8: { x: -87.61107491463122, y: 784.7281266640797 },
-              line9: { x: -87.10280598982942, y: 1328.8966206192802 },
+              line5: { x: -356.28246901534476, y: 864.5020291308545 },
+              line6: { x: -356.74417743740685, y: 1248.0475386438104 },
+              line7: { x: -223.55677539605932, y: 1052.1632425418165 },
+              line8: { x: -126.53998672902242, y: 784.6446762271928 },
+              line9: { x: -126.44567146482501, y: 1329.544487114958 },
               line10: { x: 534.6840573888813, y: 784.8089932160253 },
               line11: { x: 534.738997393544, y: 1329.1045170701034 },
               line12: { x: 669.453281622097, y: 1042.0651701525298 },
@@ -2815,7 +2853,7 @@ export default function DemoFlowOTS() {
                   x: -467.9401692198322,
                   y: 1268.7449655852304,
               },
-              overlay_line7: { x: -267.2148544974418, y: 1051.46019515747 },
+              overlay_line7: { x: -257.28674845081446, y: 1050.8686815721135 },
               overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
               timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
           };
@@ -3319,7 +3357,7 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: 500,
                         }}
                     >
@@ -3332,8 +3370,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 150,
-                height: 55,
+                width: 120,
+                height: 45,
             },
             targetPosition: Position.Bottom,
         },
@@ -5355,7 +5393,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: line,
-                width: 130,
+                width: 100,
                 height: 22,
             },
         },
@@ -6144,7 +6182,10 @@ export default function DemoFlowOTS() {
     return (
         <div>
             <audio ref={audioRef}>
-                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
+                <source
+                    src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
+                    type="audio/mpeg"
+                />
             </audio>
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
@@ -6153,7 +6194,7 @@ export default function DemoFlowOTS() {
             <Toast ref={toast} />
             <ConfirmDialog />
 
-            {/* <Dialog
+            <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
                 style={{
@@ -6169,7 +6210,7 @@ export default function DemoFlowOTS() {
                         </p>
                     )
                 )}
-            </Dialog> */}
+            </Dialog>
             <div
                 style={{
                     borderRadius: 5,

@@ -7,6 +7,9 @@ import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
 //import tingting from "./Notification.mp3";
 import "./AlarmBellCssBlink.css"
+
+import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
+
 export default function Alarmbell() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
@@ -90,24 +93,41 @@ export default function Alarmbell() {
     }, [totalUnreadCount, obj1Processed,]);
 
 
-    const dataAlarm = notifications.slice(0, 6).map((item:any, index:any) => {
+    const dataAlarm = notifications.slice(0, 6).map((item: any, index: any) => {
         const isAlarm = item.subject.includes("New alarm");
-        const subjectStyle = {
-            
-        
-        };
+        const subjectStyle = {};
+    
+        // Chuyển đổi createTime thành định dạng mong muốn
+        const createTime = new Date(item.createdTime);
+        const formattedTime = `${createTime.getDate()}/${createTime.getMonth() + 1}/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(-2)}:${("0" + createTime.getMinutes()).slice(-2)}:${("0" + createTime.getSeconds()).slice(-2)}`;
+    
         return (
-            <div key={index} style={{ padding: "0px 10px" }}>
-                <div >
+            <div key={index} style={{ padding: "0px 10px",  }}>
 
-                    <p  className={styles.subject} style={{color: isAlarm ? "red" : "blue",}}>{item.info.alarmOriginatorName} {item.info.alarmType}</p>
-                    <p>{item.createdTime}</p>
+
+
+                <div style={{border: isAlarm ? "2px solid orange" : "2px solid blue", padding:20, borderRadius:5, }} >
+
+                    <div style={{display:'flex'}}>
+                <PiBellRingingBold size={50} />
+                    <div style={{marginLeft:20}}>
+                    <p className={styles.subject} style={{  }}>{item.info.alarmOriginatorName} {item.info.alarmType}</p>
+                    <p>{formattedTime}</p>
+                    </div>
                 </div>
-                <hr />
+              <div style={{marginTop:10,display:'flex',justifyContent:'flex-end'  }} >
+                <Button style={{width:'100%', textAlign:'center',justifyContent:'center' }}>
+                View More
+                </Button>
+              </div>
 
+                </div>
+                
+                <hr />
             </div>
         );
     });
+    
 
  
     
@@ -170,7 +190,7 @@ export default function Alarmbell() {
                  )}
 
             </div>
-            <OverlayPanel style={{ marginLeft: 10,}} ref={op}>
+            <OverlayPanel style={{ marginLeft: 10,minWidth:450}} ref={op}>
                 <div >
                     <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
                        
@@ -190,7 +210,7 @@ export default function Alarmbell() {
                     <hr />
 
                     {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 300 }}>
+                        <div style={{ overflowY: "auto", maxHeight: 400, }}>
                             {dataAlarm}
                         </div>
                     ) : (
@@ -203,15 +223,7 @@ export default function Alarmbell() {
                             />
                         </div>
                     )}
-                    <div style={{ padding: 20 }}>
-                        <Button
-                            onClick={() => router.push("/SetupData")}
-                            className={styles.buttonViewAll}
-                        >
-                            View All
-                        </Button>
-                    </div>
-                    <div></div>
+                   
                 </div>
             </OverlayPanel>
         </div>
