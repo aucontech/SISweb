@@ -17,16 +17,16 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-home",
                             to: "/OTSUKA",
                         },
-                        {
-                            label: "Setup Data",
-                            icon: "pi pi-fw pi-home",
-                            to: "/SetupData",
-                        },
-                        {
-                            label: "Score card",
-                            icon: "pi pi-fw pi-home",
-                            to: "/scorecard",
-                        },
+                        // {
+                        //     label: "Setup Data",
+                        //     icon: "pi pi-fw pi-home",
+                        //     to: "/SetupData",
+                        // },
+                        // {
+                        //     label: "Score card",
+                        //     icon: "pi pi-fw pi-home",
+                        //     to: "/scorecard",
+                        // },
                     ],
                 },
                 {
@@ -36,13 +36,13 @@ const AppMenu = () => {
                         {
                             label: "Alarm Summary",
                             icon: "pi pi-fw pi-comment",
-                            to: "/notifications",
+                            to: "/alarmsummarycustomer",
                         },
-                        {
-                            label: "Alarm History",
-                            icon: "pi pi-fw pi-calendar",
-                            to: "/alarmhistorycustomer",
-                        },
+                        // {
+                        //     label: "Alarm History",
+                        //     icon: "pi pi-fw pi-calendar",
+                        //     to: "/alarmhistorycustomer",
+                        // },
                     ],
                 },
                 {
@@ -94,7 +94,7 @@ const AppMenu = () => {
                         {
                             label: "Alarm Summary",
                             icon: "pi pi-fw pi-comment",
-                            to: "/notifications",
+                            to: "/alarmsummary",
                         },
                         {
                             label: "Alarm History",

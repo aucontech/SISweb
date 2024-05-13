@@ -100,10 +100,12 @@ export default function Alarmbell() {
     const handleClick = (item: Item) => () => {
         if (currentUser.authority === "CUSTOMER_USER") {
             router.push(
-                "/alarmhistorycustomer?" + createQueryString("deviceid", item)
+                "/alarmsummarycustomer?" + createQueryString("deviceid", item)
             );
         } else {
-            router.push("/alarmhistory?" + createQueryString("deviceid", item));
+            router.push(
+                "/alarmsummarycustomer?" + createQueryString("deviceid", item)
+            );
         }
     };
     const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
