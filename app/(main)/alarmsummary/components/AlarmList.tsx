@@ -71,7 +71,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                 if (alarmType && alarmType.type) {
                     reqParams = {
                         ...reqParams,
-                        typeList: alarmType.type,
+                        typeList: encodeURIComponent(alarmType.type),
                     };
                 }
                 console.log(filters);

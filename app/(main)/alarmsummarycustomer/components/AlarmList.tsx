@@ -66,11 +66,14 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         textSearch: encodeURIComponent(textSearch),
                     };
                 }
+
+                console.log(encodeURIComponent(textSearch));
+
                 let alarmType = filters?.alarmType;
                 if (alarmType && alarmType.type) {
                     reqParams = {
                         ...reqParams,
-                        typeList: alarmType.type,
+                        typeList: encodeURIComponent(alarmType.type),
                     };
                 }
                 console.log(filters);
