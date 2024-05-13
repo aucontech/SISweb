@@ -103,9 +103,7 @@ export default function Alarmbell() {
                 "/alarmsummarycustomer?" + createQueryString("deviceid", item)
             );
         } else {
-            router.push(
-                "/alarmsummarycustomer?" + createQueryString("deviceid", item)
-            );
+            router.push("/alarmsummary?" + createQueryString("deviceid", item));
         }
     };
     const dataAlarm = notifications.slice(0, 6).map((item: any, index) => {
