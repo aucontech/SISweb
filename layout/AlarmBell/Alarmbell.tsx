@@ -80,10 +80,77 @@ export default function Alarmbell() {
                     {
                         query: {
                             severityList: ["CRITICAL"],
-                            statusList: ["ACTIVE"],
+                            statusList: ["ACTIVE", "UNACK"],
                             searchPropagatedAlarms: false,
                             assigneeId: null,
+                            entityFilter: {
+                                type: "entityList",
+                                resolveMultiple: true,
+                                entityType: "DEVICE",
+                                entityList: [
+                                    //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                    "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                                    // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                ],
+                            },
                         },
+                        // query: {
+                        //     entityFilter: {
+                        //         type: "entityList",
+                        //         resolveMultiple: true,
+                        //         entityType: "DEVICE",
+                        //         entityList: [
+                        //             //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                        //             "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                        //             "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                        //         ],
+                        //     },
+                        //     pageLink: {
+                        //         page: 0,
+                        //         pageSize: 10,
+                        //         textSearch: null,
+                        //         typeList: [],
+                        //         severityList: ["CRITICAL"],
+                        //         statusList: ["ACTIVE", "UNACK"],
+                        //         searchPropagatedAlarms: false,
+                        //         sortOrder: {
+                        //             key: {
+                        //                 key: "createdTime",
+                        //                 type: "ALARM_FIELD",
+                        //             },
+                        //             direction: "DESC",
+                        //         },
+                        //         timeWindow: 2592000,
+                        //     },
+                        //     alarmFields: [
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "createdTime",
+                        //         },
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "originator",
+                        //         },
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "type",
+                        //         },
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "severity",
+                        //         },
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "status",
+                        //         },
+                        //         {
+                        //             type: "ALARM_FIELD",
+                        //             key: "assignee",
+                        //         },
+                        //     ],
+                        //     entityFields: [],
+                        //     latestValues: [],
+                        // },
                         cmdId: 2,
                     },
                 ],
@@ -95,7 +162,9 @@ export default function Alarmbell() {
                                 resolveMultiple: true,
                                 entityType: "DEVICE",
                                 entityList: [
-                                    "6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                    //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                    //"28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                    "b92cda00-07c9-11ef-973a-dde5fe61203a",
                                     "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
                                 ],
                             },
@@ -114,7 +183,7 @@ export default function Alarmbell() {
                                     },
                                     direction: "DESC",
                                 },
-                                timeWindow: 604800000,
+                                timeWindow: 2592000,
                             },
                             alarmFields: [
                                 {
@@ -156,14 +225,15 @@ export default function Alarmbell() {
         ws.current.onmessage = async (evt: any) => {
             const dataReceive: any = JSON.parse(evt.data);
             console.log("dataReceive", dataReceive);
-            if (dataReceive && dataReceive["cmdId"] === 2) {
-                setAlarmCount(dataReceive.count);
-            }
+            // if (dataReceive && dataReceive["cmdId"] === 2) {
+            //     setAlarmCount(dataReceive.count);
+            // }
             if (dataReceive && dataReceive["cmdId"] === 1) {
                 //  const currentNotifications = notificationsRef.current;
                 //console.log("Current notifications:", currentNotifications);
                 if (dataReceive.data && dataReceive.data.data) {
                     let dataAlarm = [...dataReceive?.data?.data];
+                    setAlarmCount(dataAlarm.length);
                     if (notifications && notifications.length !== 0) {
                         console.log("nhanh 1", notifications.length);
                         let updatedAlarms = await Promise.all(
@@ -362,6 +432,32 @@ export default function Alarmbell() {
     // }, [notifications]);
     useEffect(() => {
         notificationsRef.current = notifications;
+        notifications.forEach((notif: any, index) => {
+            if (notif.shouldPlaySound === true) {
+                const audioEl = audioRefs.current[notif.id.id];
+                console.log("audioEl", audioEl);
+                if (audioEl) {
+                    const playPromise = audioEl.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .catch((error) => {
+                                // Auto-play was prevented
+                                // Show a UI element to let the user manually start playback
+                            })
+                            .then(() => {
+                                // Auto-play started
+                            });
+                    }
+                }
+            } else {
+                const audioEl = audioRefs.current[notif.id.id];
+                console.log("audioEl", audioEl);
+                if (audioEl) {
+                    audioEl.pause();
+                    audioEl.currentTime = 0; // Đặt thời gian trở về đầu để chuẩn bị cho lần phát tiếp theo nếu cần
+                }
+            }
+        });
     }, [notifications]);
 
     useEffect(() => {
@@ -447,47 +543,14 @@ export default function Alarmbell() {
         ws.current?.send(JSON.stringify(obj2));
     };
 
-    useEffect(() => {
-        notifications.forEach((notif: any, index) => {
-            if (notif.shouldPlaySound) {
-                const audioEl = audioRefs.current[notif.id.id];
-                if (audioEl) {
-                    const playPromise = audioEl.play();
-                    if (playPromise !== undefined) {
-                        playPromise
-                            .catch((error) => {
-                                // Auto-play was prevented
-                                // Show a UI element to let the user manually start playback
-                            })
-                            .then(() => {
-                                // Auto-play started
-                            });
-                    }
-                }
-            } else {
-                const audioEl = audioRefs.current[notif.id.id];
-                if (audioEl) {
-                    const playPromise = audioEl.pause();
-                    if (playPromise !== undefined) {
-                        // playPromise
-                        //     .catch((error) => {
-                        //         // Auto-play was prevented
-                        //         // Show a UI element to let the user manually start playback
-                        //     })
-                        //     .then(() => {
-                        //         // Auto-play started
-                        //     });
-                    }
-                }
-            }
-        });
-    }, [notifications]);
+    useEffect(() => {}, [notifications]);
 
     console.log("alarmCount", alarmCount);
     console.log("notifications", notifications);
     return (
         <div>
             {notifications &&
+                notifications.length > 0 &&
                 notifications.map((item: any, index: number) => (
                     <div key={index}>
                         <audio
