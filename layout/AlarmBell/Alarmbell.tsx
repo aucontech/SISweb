@@ -37,6 +37,7 @@ export default function Alarmbell() {
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const notificationsRef = useRef(notifications);
+
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
     useEffect(() => {
@@ -45,11 +46,11 @@ export default function Alarmbell() {
             setCurrentUser(user);
         }
     }, []);
-    const sendData = (data: any) => {
+    const sendData = useCallback((data: any) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             ws.current.send(data);
         }
-    };
+    }, []);
 
     const _fetchAttributeData = useCallback(
         async (deviceId: string, key: string) => {
@@ -183,7 +184,7 @@ export default function Alarmbell() {
                                     },
                                     direction: "DESC",
                                 },
-                                timeWindow: 2592000,
+                                timeWindow: 86400000,
                             },
                             alarmFields: [
                                 {
@@ -229,7 +230,7 @@ export default function Alarmbell() {
             //     setAlarmCount(dataReceive.count);
             // }
             if (dataReceive && dataReceive["cmdId"] === 1) {
-                //  const currentNotifications = notificationsRef.current;
+                const currentNotifications = [...notificationsRef.current];
                 //console.log("Current notifications:", currentNotifications);
                 if (dataReceive.data && dataReceive.data.data) {
                     let dataAlarm = [...dataReceive?.data?.data];
@@ -432,7 +433,11 @@ export default function Alarmbell() {
     // }, [notifications]);
     useEffect(() => {
         notificationsRef.current = notifications;
-        notifications.forEach((notif: any, index) => {
+    }, [notifications]);
+
+    useEffect(() => {
+        let currentNotifications = notificationsRef.current;
+        currentNotifications.forEach((notif: any, index) => {
             if (notif.shouldPlaySound === true) {
                 const audioEl = audioRefs.current[notif.id.id];
                 console.log("audioEl", audioEl);
@@ -458,7 +463,12 @@ export default function Alarmbell() {
                 }
             }
         });
-    }, [notifications]);
+    }, [notificationsRef.current]);
+
+    useEffect(() => {
+        console.log("render ne");
+        setNotifications((prev) => prev);
+    }, []);
 
     useEffect(() => {
         let token: string | null = null;
