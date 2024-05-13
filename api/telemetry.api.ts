@@ -23,6 +23,21 @@ export const getSeverAttributesByAsset = (asseetId: string): Promise<any> => {
     );
 };
 
+// export const getSeverAttributesByDevice = (deviceId: string): Promise<any> => {
+//     console.log(deviceId);
+//     return httpApi.get<any>(
+//         `/plugins/telemetry/ASSET/${deviceId}/values/attributes/SERVER_SCOPE`
+//     );
+// };
+export const getSeverAttributesByDeviceandKeys = (
+    deviceId: string,
+    keys: string
+): Promise<any> => {
+    return httpApi.get<any>(
+        `/plugins/telemetry/DEVICE/${deviceId}/values/attributes/SERVER_SCOPE?keys=${keys}`
+    );
+};
+
 export const saveOrUpdateSeverAttributesByAsseet = (
     assetId: string,
     attribute: any

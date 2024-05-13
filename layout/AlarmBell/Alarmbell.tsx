@@ -1,14 +1,21 @@
+"use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { getSeverAttributesByDeviceandKeys } from "@/api/telemetry.api";
 import styles from "./AlarmBell.module.css";
 import { readToken, readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
+import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
+import { PrimeIcons } from "primereact/api";
+import { co } from "@fullcalendar/core/internal-common";
+
 interface Notification {
     // subject: string;
     // text: string;
+    shouldPlaySound: boolean;
 }
 interface WebSocketMessage {
     update: any;
@@ -20,14 +27,16 @@ interface Item {
     [key: string]: string | number; // Example properties
 }
 export default function Alarmbell() {
-    const audioRef = useRef<HTMLAudioElement>(null);
+    const audioRefs = useRef<HTMLAudioElement[]>([]);
     const op = useRef<OverlayPanel>(null);
     const router = useRouter();
+
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    const notificationsRef = useRef(notifications);
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
     useEffect(() => {
@@ -36,152 +45,325 @@ export default function Alarmbell() {
             setCurrentUser(user);
         }
     }, []);
-    const sendData = useCallback((data: any) => {
+    const sendData = (data: any) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             ws.current.send(data);
         }
-    }, []);
+    };
 
-    const playNotificationSound = useCallback(() => {
-        if (audioRef.current) {
-            audioRef.current.play();
-        }
-    }, []);
-    const connectWebSocket = useCallback(
-        (token: string) => {
-            ws.current = new WebSocket(
-                `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
+    const _fetchAttributeData = useCallback(
+        async (deviceId: string, key: string) => {
+            return getSeverAttributesByDeviceandKeys(deviceId, key).then(
+                (resp) => {
+                    const res = resp.data;
+                    if (res && res.length === 0) {
+                        return saveOrUpdateSeverAttributesByDevice(deviceId, {
+                            [key]: true,
+                        }).then(() => true);
+                    }
+                    return res[0].value;
+                }
             );
-            ws.current.onopen = () => {
-                console.log("WebSocket connection opened.");
-                //  setLoading(false);
-                let data = {
-                    alarmCountCmds: [
-                        {
-                            query: {
+        },
+        []
+    );
+
+    const connectWebSocket = (token: string) => {
+        ws.current = new WebSocket(
+            `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
+        );
+        ws.current.onopen = () => {
+            console.log("WebSocket connection opened.");
+            //  setLoading(false);
+            let data = {
+                alarmCountCmds: [
+                    {
+                        query: {
+                            severityList: ["CRITICAL"],
+                            statusList: ["ACTIVE"],
+                            searchPropagatedAlarms: false,
+                            assigneeId: null,
+                        },
+                        cmdId: 2,
+                    },
+                ],
+                alarmDataCmds: [
+                    {
+                        query: {
+                            entityFilter: {
+                                type: "entityList",
+                                resolveMultiple: true,
+                                entityType: "DEVICE",
+                                entityList: [
+                                    "6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                    "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                ],
+                            },
+                            pageLink: {
+                                page: 0,
+                                pageSize: 10,
+                                textSearch: null,
+                                typeList: [],
                                 severityList: ["CRITICAL"],
                                 statusList: ["ACTIVE"],
                                 searchPropagatedAlarms: false,
-                                assigneeId: null,
-                            },
-                            cmdId: 2,
-                        },
-                    ],
-                    alarmDataCmds: [
-                        {
-                            query: {
-                                entityFilter: {
-                                    type: "entityList",
-                                    resolveMultiple: true,
-                                    entityType: "DEVICE",
-                                    entityList: [
-                                        "6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                                        "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                    ],
-                                },
-                                pageLink: {
-                                    page: 0,
-                                    pageSize: 10,
-                                    textSearch: null,
-                                    typeList: [],
-                                    severityList: ["CRITICAL"],
-                                    statusList: ["ACTIVE"],
-                                    searchPropagatedAlarms: false,
-                                    sortOrder: {
-                                        key: {
-                                            key: "createdTime",
-                                            type: "ALARM_FIELD",
-                                        },
-                                        direction: "DESC",
-                                    },
-                                    timeWindow: 604800000,
-                                },
-                                alarmFields: [
-                                    {
-                                        type: "ALARM_FIELD",
+                                sortOrder: {
+                                    key: {
                                         key: "createdTime",
-                                    },
-                                    {
                                         type: "ALARM_FIELD",
-                                        key: "originator",
                                     },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "type",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "severity",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "status",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "assignee",
-                                    },
-                                ],
-                                entityFields: [],
-                                latestValues: [],
+                                    direction: "DESC",
+                                },
+                                timeWindow: 604800000,
                             },
-                            cmdId: 1,
+                            alarmFields: [
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "createdTime",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "originator",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "type",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "severity",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "status",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "assignee",
+                                },
+                            ],
+                            entityFields: [],
+                            latestValues: [],
                         },
-                    ],
-                };
-
-                sendData(JSON.stringify(data));
+                        cmdId: 1,
+                    },
+                ],
             };
 
-            ws.current.onmessage = (evt: any) => {
-                const dataReceive: any = JSON.parse(evt.data);
-                console.log("dataReceive", dataReceive);
-                if (dataReceive && dataReceive["cmdId"] === 2) {
-                    setAlarmCount(dataReceive.count);
-                }
-                if (dataReceive && dataReceive["cmdId"] === 1) {
-                    if (dataReceive.data && dataReceive.data.data) {
-                        let dataAlarm = dataReceive?.data.data;
-                        if (notifications.length === 0) {
-                            console.log("dataAlarm", dataAlarm);
-                            const updatedAlarms = dataAlarm.map(
-                                (alarm: any) => ({
-                                    ...alarm,
-                                    shouldPlaySound: true,
-                                })
-                            );
+            sendData(JSON.stringify(data));
+        };
 
-                            setNotifications(updatedAlarms);
-                        }
-                    } else {
-                    }
-                }
-            };
-            ws.current.onclose = () => {
-                console.log(
-                    "WebSocket connection closed. Trying to reconnect..."
-                );
-                setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
-            };
-            ws.current.onerror = (error) => {
-                console.error("WebSocket error:", error);
-                setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
-                // UIUtils.showError({});
-            };
-        },
-        [sendData]
-    );
-    const ring = useCallback(() => {
-        notifications.forEach((notif: any) => {
-            if (notif.shouldPlaySound) {
-                playNotificationSound();
+        ws.current.onmessage = async (evt: any) => {
+            const dataReceive: any = JSON.parse(evt.data);
+            console.log("dataReceive", dataReceive);
+            if (dataReceive && dataReceive["cmdId"] === 2) {
+                setAlarmCount(dataReceive.count);
             }
-        });
-    }, [notifications]);
-    console.log("notifications", notifications);
+            if (dataReceive && dataReceive["cmdId"] === 1) {
+                //  const currentNotifications = notificationsRef.current;
+                //console.log("Current notifications:", currentNotifications);
+                if (dataReceive.data && dataReceive.data.data) {
+                    let dataAlarm = [...dataReceive?.data?.data];
+                    if (notifications && notifications.length !== 0) {
+                        console.log("nhanh 1", notifications.length);
+                        let updatedAlarms = await Promise.all(
+                            dataAlarm.map(async (alarm: any) => {
+                                let tag = alarm?.details?.data?.split(",")[0];
+                                console.log(tag);
+                                let shouldRing = true;
+                                let maintained = null;
+                                if (tag !== null && tag !== undefined) {
+                                    maintained = await _fetchAttributeData(
+                                        alarm.entityId.id,
+                                        tag + "_Maintain"
+                                    );
+                                }
+                                return {
+                                    ...alarm,
+                                    shouldPlaySound:
+                                        maintained !== null
+                                            ? !maintained
+                                            : shouldRing,
+                                };
+                            })
+                        );
+
+                        console.log("updatedAlarms", updatedAlarms);
+                        setNotifications(updatedAlarms);
+                    } else {
+                        console.log("nhanh 2");
+                        const currentNotifications = [
+                            ...notificationsRef.current,
+                        ];
+                        console.log(
+                            "Currentnotifications:",
+                            currentNotifications
+                        );
+                        let dataAlarmIds = [...dataAlarm].map(
+                            (item: any) => item.id.id
+                        );
+                        console.log("dataAlarmIds", dataAlarmIds);
+                        console.log("notifications", [...currentNotifications]);
+                        let newNotifications = currentNotifications.filter(
+                            (item: any) => dataAlarmIds.includes(item.id.id)
+                        ); //KO CÓ TRONG
+                        console.log("newNotifications", currentNotifications);
+                        //lọc ra những alarm mới chưa có shouldPlaySound
+                        let newNotificationsIds = [...newNotifications].map(
+                            (item: any) => item.id.id
+                        );
+                        console.log("newNotificationsIds", newNotificationsIds);
+                        let newAlarm = [...dataAlarm].filter(
+                            (item: any) =>
+                                !newNotificationsIds.includes(item.id.id)
+                        );
+                        console.log("newAlarm", newAlarm);
+                        let updatedAlarms = await Promise.all(
+                            [...newAlarm].map(async (alarm: any) => {
+                                let tag = alarm?.details?.data?.split(",")[0];
+                                let shouldRing = true;
+                                let maintained = null;
+                                if (tag !== null && tag !== undefined) {
+                                    maintained = await _fetchAttributeData(
+                                        alarm.entityId.id,
+                                        tag + "_Maintain"
+                                    );
+                                }
+                                return {
+                                    ...alarm,
+                                    shouldPlaySound:
+                                        maintained !== null
+                                            ? !maintained
+                                            : shouldRing,
+                                };
+                            })
+                        );
+                        setNotifications([
+                            ...updatedAlarms,
+                            ...newNotifications,
+                        ]);
+                    }
+                } else {
+                }
+            }
+        };
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed. Trying to reconnect...");
+            setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+        };
+        ws.current.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+            // UIUtils.showError({});
+        };
+    };
+
+    // useEffect(() => {
+    //     if (!ws.current) return;
+    //     const handleMessage = async (evt: any) => {
+    //         const dataReceive: any = JSON.parse(evt.data);
+    //         console.log("dataReceive", dataReceive);
+    //         if (dataReceive && dataReceive["cmdId"] === 2) {
+    //             setAlarmCount(dataReceive.count);
+    //         }
+    //         if (dataReceive && dataReceive["cmdId"] === 1) {
+    //             if (dataReceive.data && dataReceive.data.data) {
+    //                 let dataAlarm = [...dataReceive?.data?.data];
+    //                 let currentNotifications = notificationsRef.current;
+    //                 if (
+    //                     currentNotifications &&
+    //                     currentNotifications.length !== 0
+    //                 ) {
+    //                     // console.log("nhanh 1", notifications.length);
+    //                     let updatedAlarms = await Promise.all(
+    //                         dataAlarm.map(async (alarm: any) => {
+    //                             let tag = alarm?.details?.data?.split(",")[0];
+    //                             console.log(tag);
+    //                             let shouldRing = true;
+    //                             let maintained = null;
+    //                             if (tag !== null && tag !== undefined) {
+    //                                 maintained = await _fetchAttributeData(
+    //                                     alarm.entityId.id,
+    //                                     tag + "_Maintain"
+    //                                 );
+    //                             }
+    //                             return {
+    //                                 ...alarm,
+    //                                 shouldPlaySound:
+    //                                     maintained !== null
+    //                                         ? !maintained
+    //                                         : shouldRing,
+    //                             };
+    //                         })
+    //                     );
+    //                     // console.log("updatedAlarms", updatedAlarms);
+    //                     setNotifications(updatedAlarms);
+    //                 } else {
+    //                     console.log("nhanh 2");
+    //                     const currentNotifications = notificationsRef.current;
+    //                     console.log(
+    //                         "Currentnotifications:",
+    //                         currentNotifications
+    //                     );
+    //                     let dataAlarmIds = dataAlarm.map(
+    //                         (item: any) => item.id.id
+    //                     );
+    //                     console.log("dataAlarmIds", dataAlarmIds);
+    //                     console.log("notifications", [...currentNotifications]);
+    //                     let newNotifications = [...currentNotifications].filter(
+    //                         (item: any) => dataAlarmIds.includes(item.id.id)
+    //                     ); //KO CÓ TRONG
+    //                     console.log("newNotifications", newNotifications);
+    //                     //lọc ra những alarm mới chưa có shouldPlaySound
+    //                     let newNotificationsIds = [...newNotifications].map(
+    //                         (item: any) => item.id.id
+    //                     );
+    //                     console.log("newNotificationsIds", newNotificationsIds);
+    //                     let newAlarm = dataAlarm.filter(
+    //                         (item: any) =>
+    //                             !newNotificationsIds.includes(item.id.id)
+    //                     );
+    //                     console.log("newAlarm", newAlarm);
+    //                     let updatedAlarms = await Promise.all(
+    //                         newAlarm.map(async (alarm: any) => {
+    //                             let tag = alarm?.details?.data?.split(",")[0];
+    //                             let shouldRing = true;
+    //                             let maintained = null;
+    //                             if (tag !== null && tag !== undefined) {
+    //                                 maintained = await _fetchAttributeData(
+    //                                     alarm.entityId.id,
+    //                                     tag + "_Maintain"
+    //                                 );
+    //                             }
+    //                             return {
+    //                                 ...alarm,
+    //                                 shouldPlaySound:
+    //                                     maintained !== null
+    //                                         ? !maintained
+    //                                         : shouldRing,
+    //                             };
+    //                         })
+    //                     );
+    //                     setNotifications([
+    //                         ...updatedAlarms,
+    //                         ...newNotifications,
+    //                     ]);
+    //                 }
+    //             } else {
+    //             }
+    //         }
+    //     };
+    //     ws.current.onmessage = handleMessage;
+    //     return () => {
+    //         if (ws.current) {
+    //             ws.current.onmessage = null;
+    //         }
+    //     };
+    // }, [notifications]);
     useEffect(() => {
-        ring();
-    }, [notifications, ring]);
+        notificationsRef.current = notifications;
+    }, [notifications]);
+
     useEffect(() => {
         let token: string | null = null;
         if (typeof window !== "undefined") {
@@ -191,34 +373,13 @@ export default function Alarmbell() {
                 connectWebSocket(token);
             }
         }
-    }, [connectWebSocket]);
+        return () => {
+            if (ws.current) {
+                ws.current.close();
+            }
+        };
+    }, []);
 
-    useEffect(() => {
-        const obj3 = { unsubCmd: { cmdId: 1 } };
-        const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                const dataReceive = JSON.parse(evt.data) as WebSocketMessage;
-                if (dataReceive.update !== null) {
-                    setTotalUnreadCount(dataReceive.totalUnreadCount);
-                    setData([...data, dataReceive]);
-                    setObj1Processed(true);
-                    audioRef.current?.play();
-                } else if (
-                    dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
-                    dataReceive.notifications
-                ) {
-                    setNotifications(dataReceive.notifications);
-                }
-            };
-        }
-
-        if (obj1Processed) {
-            ws.current?.send(JSON.stringify(obj3));
-            ws.current?.send(JSON.stringify(obj2));
-        }
-    }, [totalUnreadCount, obj1Processed]);
     const createQueryString = (name: any, value: any) => {
         const params = new URLSearchParams();
         params.set(name, value);
@@ -234,14 +395,32 @@ export default function Alarmbell() {
             router.push("/alarmhistory?" + createQueryString("deviceid", item));
         }
     };
+    const handleTurnOffAlarm = (id: string) => {
+        const updatedNotifications = notifications.map((notification: any) => {
+            if (notification.id.id === id) {
+                return { ...notification, shouldPlaySound: false };
+            }
+            return notification;
+        });
+        setNotifications(updatedNotifications);
+    };
     const _renderAlarms = () => {
-        return notifications.map((item, index) => (
+        return notifications.map((item: any, index) => (
             <React.Fragment key={index}>
                 <div>
                     <p className={styles.subject} style={{ color: "red" }}>
-                        Subject Placeholder
+                        New alarm `{`${item.type}`}`
                     </p>
-                    <p>Description Placeholder</p>
+                    {item.shouldPlaySound && (
+                        <i
+                            onClick={() => handleTurnOffAlarm(item.id.id)}
+                            className="pi pi-volume-up"
+                            style={{ fontSize: "2rem" }}
+                        />
+                    )}
+                    <p>
+                        Severity {item.severity}; Station: {item.originatorName}
+                    </p>
                 </div>
                 <hr />
             </React.Fragment>
@@ -267,13 +446,60 @@ export default function Alarmbell() {
         ws.current?.send(JSON.stringify(obj3));
         ws.current?.send(JSON.stringify(obj2));
     };
+
+    useEffect(() => {
+        notifications.forEach((notif: any, index) => {
+            if (notif.shouldPlaySound) {
+                const audioEl = audioRefs.current[notif.id.id];
+                if (audioEl) {
+                    const playPromise = audioEl.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .catch((error) => {
+                                // Auto-play was prevented
+                                // Show a UI element to let the user manually start playback
+                            })
+                            .then(() => {
+                                // Auto-play started
+                            });
+                    }
+                }
+            } else {
+                const audioEl = audioRefs.current[notif.id.id];
+                if (audioEl) {
+                    const playPromise = audioEl.pause();
+                    if (playPromise !== undefined) {
+                        // playPromise
+                        //     .catch((error) => {
+                        //         // Auto-play was prevented
+                        //         // Show a UI element to let the user manually start playback
+                        //     })
+                        //     .then(() => {
+                        //         // Auto-play started
+                        //     });
+                    }
+                }
+            }
+        });
+    }, [notifications]);
+
     console.log("alarmCount", alarmCount);
+    console.log("notifications", notifications);
     return (
         <div>
-            <audio ref={audioRef} loop>
-                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
-            </audio>
-
+            {notifications &&
+                notifications.map((item: any, index: number) => (
+                    <div key={index}>
+                        <audio
+                            loop={true}
+                            ref={(el: HTMLAudioElement) => {
+                                audioRefs.current[item.id.id] = el;
+                            }}
+                            src="/audios/NotificationCuu.mp3"
+                            //preload="auto"
+                        ></audio>
+                    </div>
+                ))}
             <div className="flex">
                 {alarmCount > 0 && (
                     <div className={styles.totalCount}>
