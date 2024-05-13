@@ -7,11 +7,12 @@ const Banking = () => {
         <div className="grid">
             <div style={{ width: "100%" }}>
                 <TabView>
-                    <TabPanel header="Read">
-                        <NotificationList unreadOnly={false} />
+                    <TabPanel header=" UnRead">
+                    <NotificationList unreadOnly={true} />
                     </TabPanel>
-                    <TabPanel header="UnRead">
-                        <NotificationList unreadOnly={true} />
+                    <TabPanel header="Read">
+                    <NotificationList unreadOnly={false} />
+
                     </TabPanel>
                 </TabView>
             </div>

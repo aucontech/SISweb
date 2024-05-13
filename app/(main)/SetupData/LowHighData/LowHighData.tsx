@@ -4173,6 +4173,15 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 padding:10
             },
       };
+      const SVF1format = SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+      const GVF1format = GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+      const SVA1format = SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
+      const GVA1format = GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
+
+      const VBTodayformat = VbToDay01 !== null ? parseFloat(VbToDay01).toFixed(2) : "";
+      const VMTodayformat = VmToDay01 !== null ? parseFloat(VmToDay01).toFixed(2) : "";
+      const VBLastdayformat = VbLastDay01 !== null ? parseFloat(VbLastDay01).toFixed(2) : "";
+      const VMLastdayformat = VmLastDay01 !== null ? parseFloat(VmLastDay01).toFixed(2) : "";
 
       const dataEVC01 = [
 
@@ -4180,7 +4189,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF1}>SVF FIQ-1901	 </span> ,
 
-        value: <span style={combineCss.CSS_SVF1} > {SVF1} sm³/h </span> , 
+        value: <span style={combineCss.CSS_SVF1} > {SVF1format} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF1}   placeholder='Low' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4195,7 +4204,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         name: <span style={combineCss.CSS_GVF1}>GVF FIQ-1901	 </span> ,
 
 
-        value: <span style={combineCss.CSS_GVF1} > {GVF1} m³/h</span> , 
+        value: <span style={combineCss.CSS_GVF1} > {GVF1format} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF1}   placeholder='Low' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4211,7 +4220,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         name: <span  style={combineCss.CSS_SVA1}>SVA FIQ-1901	 </span> ,
         // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
 
-        value: <span style={combineCss.CSS_SVA1} >  {SVA1} sm³</span> , 
+        value: <span style={combineCss.CSS_SVA1} >  {SVA1format} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA1}   placeholder='Low' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4226,7 +4235,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         name: <span style={combineCss.CSS_GVA1}>GVA FIQ-1901	 </span> ,
         // modbus: <span  style={combineCss.CSS_GVA1}>40872	 </span> ,
 
-        value: <span style={combineCss.CSS_GVA1} > {GVA1} m³</span> , 
+        value: <span style={combineCss.CSS_GVA1} > {GVA1format} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputHighGVA1} onChange={handleInputChangeHighGVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA1}   placeholder='Low' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4254,7 +4263,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VbToDay01}> VB Today</span> ,
 
-        value: <span style={combineCss.CSS_VbToDay01} > {VbToDay01} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbToDay01} > {VBTodayformat} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4269,7 +4278,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VmToDay01}> VM Today</span> ,
 
-        value: <span style={combineCss.CSS_VmToDay01} > {VmToDay01} m³</span>, 
+        value: <span style={combineCss.CSS_VmToDay01} > {VMTodayformat} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4284,7 +4293,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
        name: <span style={combineCss.CSS_VbLastDay01}> VB Yesterday</span> ,
 
-       value: <span style={combineCss.CSS_VbLastDay01} > {VbLastDay01} Sm³</span>, 
+       value: <span style={combineCss.CSS_VbLastDay01} > {VBLastdayformat} Sm³</span>, 
        high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4299,7 +4308,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VmLastDay01}> VM Yesterday </span> ,
 
-        value: <span style={combineCss.CSS_VmLastDay01} > {VmLastDay01} m³</span>, 
+        value: <span style={combineCss.CSS_VmLastDay01} > {VMLastdayformat} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4347,14 +4356,22 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
   
 
       ]
+      const SVF2format = SVF2 !== null ? parseFloat(SVF2).toFixed(2) : "";
+      const GVF2format = GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
+      const SVA2format = SVA2 !== null ? parseFloat(SVA2).toFixed(2) : "";
+      const GVA2format = GVA2 !== null ? parseFloat(GVA2).toFixed(2) : "";
 
+      const VBTodayformat2 = VbToDay02 !== null ? parseFloat(VbToDay02).toFixed(2) : "";
+      const VMTodayformat2 = VmToDay02 !== null ? parseFloat(VmToDay02).toFixed(2) : "";
+      const VBLastdayformat2 = VbLastDay02 !== null ? parseFloat(VbLastDay02).toFixed(2) : "";
+      const c = VmLastDay02 !== null ? parseFloat(VmLastDay02).toFixed(2) : "";
       const dataEVC02 = [
 
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVF2}>SVF FIQ-1902	 </span> ,
         // modbus: <span style={combineCss.CSS_SVF2}>  40858 </span> ,
 
-        value: <span style={combineCss.CSS_SVF2} > {SVF2} m³/h </span> , 
+        value: <span style={combineCss.CSS_SVF2} > {SVF2format} m³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF2}   placeholder='Low' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4368,7 +4385,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVF2}>GVF FIQ-1902	 </span> ,
 
-        value: <span style={combineCss.CSS_GVF2} > {GVF2} m³/h</span> , 
+        value: <span style={combineCss.CSS_GVF2} > {GVF2format} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF2}   placeholder='Low' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4383,7 +4400,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
           { timeUpdate: <span style={combineCss.CSS_SVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_SVA2}>SVA FIQ-1902	 </span> ,
 
-        value: <span style={combineCss.CSS_SVA2} > {SVA2} sm³</span> , 
+        value: <span style={combineCss.CSS_SVA2} > {SVA2format} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA2}   placeholder='Low' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4397,7 +4414,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_GVA2} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_GVA2}>GVA FIQ-1902	 </span> ,
 
-        value: <span style={combineCss.CSS_GVA2} > {GVA2} m³</span> , 
+        value: <span style={combineCss.CSS_GVA2} > {GVA2format} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA2}   placeholder='Low' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4424,7 +4441,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VbToDay02}> VB Today</span> ,
 
-        value: <span style={combineCss.CSS_VbToDay02} > {VbToDay02} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbToDay02} > {VBTodayformat2} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4439,7 +4456,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VmToDay02}> VM Today</span> ,
 
-        value: <span style={combineCss.CSS_VmToDay02} > {VmToDay02} m³</span>, 
+        value: <span style={combineCss.CSS_VmToDay02} > {VMTodayformat2} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4454,7 +4471,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VbLastDay02}> VB Yesterday</span> ,
 
-        value: <span style={combineCss.CSS_VbLastDay02} > {VbLastDay02} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbLastDay02} > {VBLastdayformat2} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4468,7 +4485,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
         name: <span style={combineCss.CSS_VmLastDay02}> VM Yesterday </span> ,
 
-        value: <span style={combineCss.CSS_VmLastDay02} > {VmLastDay02} m³</span>, 
+        value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4527,11 +4544,15 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const DataEmergencyNO = EmergencyNO === "0" ? "Normal" : EmergencyNO === "1" ? "Emergency" : null
       const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
 
+
+      const PT01format =
+      PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+
       const dataPLC = [
 
         { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
         name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
-        value: <span style={combineCss.CSSpt01} > {PT01} BarG</span> , 
+        value: <span style={combineCss.CSSpt01} > {PT01format} BarG</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
