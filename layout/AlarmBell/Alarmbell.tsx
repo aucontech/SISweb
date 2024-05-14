@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
 //import tingting from "./Notification.mp3";
-import "./AlarmBellCssBlink.css";
+import "./AlarmBellCssBlink.css"
 
 import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
 
@@ -33,11 +33,11 @@ export default function Alarmbell() {
     }
     const ws = useRef<WebSocket | null>(null);
     const [data, setData] = useState<WebSocketMessage[]>([]);
-    console.log("data: ", data);
+    console.log('data: ', data);
     const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    console.log("notifications: ", notifications);
+    console.log('notifications: ', notifications);
     const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
 
     useEffect(() => {
@@ -48,6 +48,8 @@ export default function Alarmbell() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
+
+
         };
 
         ws.current.onclose = () => {
@@ -59,6 +61,7 @@ export default function Alarmbell() {
             ws.current?.close();
         };
     }, []);
+
 
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
@@ -78,6 +81,8 @@ export default function Alarmbell() {
                 ) {
                     setNotifications(dataReceive.notifications);
                 }
+
+             
             };
         }
 
@@ -85,65 +90,47 @@ export default function Alarmbell() {
             ws.current?.send(JSON.stringify(obj3));
             ws.current?.send(JSON.stringify(obj2));
         }
-    }, [totalUnreadCount, obj1Processed]);
+    }, [totalUnreadCount, obj1Processed,]);
+
 
     const dataAlarm = notifications.slice(0, 6).map((item: any, index: any) => {
         const isAlarm = item.subject.includes("New alarm");
         const subjectStyle = {};
-
+    
         // Chuyển đổi createTime thành định dạng mong muốn
         const createTime = new Date(item.createdTime);
-        const formattedTime = `${createTime.getDate()}/${
-            createTime.getMonth() + 1
-        }/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(
-            -2
-        )}:${("0" + createTime.getMinutes()).slice(-2)}:${(
-            "0" + createTime.getSeconds()
-        ).slice(-2)}`;
-
+        const formattedTime = `${createTime.getDate()}/${createTime.getMonth() + 1}/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(-2)}:${("0" + createTime.getMinutes()).slice(-2)}:${("0" + createTime.getSeconds()).slice(-2)}`;
+    
         return (
-            <div key={index} style={{ padding: "0px 10px" }}>
-                <div
-                    style={{
-                        border: isAlarm ? "2px solid orange" : "2px solid blue",
-                        padding: 20,
-                        borderRadius: 5,
-                    }}
-                >
-                    <div style={{ display: "flex" }}>
-                        <PiBellRingingBold size={50} />
-                        <div style={{ marginLeft: 20 }}>
-                            <p className={styles.subject} style={{}}>
-                                {item.info.alarmOriginatorName}{" "}
-                                {item.info.alarmType}
-                            </p>
-                            <p>{formattedTime}</p>
-                        </div>
-                    </div>
-                    <div
-                        style={{
-                            marginTop: 10,
-                            display: "flex",
-                            justifyContent: "flex-end",
-                        }}
-                    >
-                        <Button
-                            style={{
-                                width: "100%",
-                                textAlign: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            View More
-                        </Button>
+            <div key={index} style={{ padding: "0px 10px",  }}>
+
+
+
+                <div style={{border: isAlarm ? "2px solid orange" : "2px solid blue", padding:20, borderRadius:5, }} >
+
+                    <div style={{display:'flex'}}>
+                <PiBellRingingBold size={50} />
+                    <div style={{marginLeft:20}}>
+                    <p className={styles.subject} style={{  }}>{item.info.alarmOriginatorName} {item.info.alarmType}</p>
+                    <p>{formattedTime}</p>
                     </div>
                 </div>
+              <div style={{marginTop:10, }} >
+                <Button onClick={() => router.push('/notifications') } style={{width:'100%', textAlign:'center',justifyContent:'center' }}>
+                View More
+                </Button>
+              </div>
 
+                </div>
+                
                 <hr />
             </div>
         );
     });
+    
 
+ 
+    
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
 
@@ -154,23 +141,22 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
-    const handleMarkAllAsRead = () => {
-        const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
-        ws.current?.send(JSON.stringify(ReadAllAlarm));
 
-        const obj3 = { unsubCmd: { cmdId: 1 } };
-        const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-        ws.current?.send(JSON.stringify(obj3));
-        ws.current?.send(JSON.stringify(obj2));
-    };
+        const handleMarkAllAsRead = () => {
+            const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
+            ws.current?.send(JSON.stringify(ReadAllAlarm));
+    
+            const obj3 = { unsubCmd: { cmdId: 1 } };
+            const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
+            ws.current?.send(JSON.stringify(obj3));
+            ws.current?.send(JSON.stringify(obj2));
+        };
 
+        
     return (
         <div>
             <audio ref={audioRef}>
-                <source
-                    src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
-                    type="audio/mpeg"
-                />
+                <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
             </audio>
 
             <div className="flex">
@@ -182,82 +168,49 @@ export default function Alarmbell() {
                     </div>
                 )}
 
-                {totalCount ? (
-                    <div
-                        className="BackgroundRed"
-                        style={{
-                            width: 30,
-                            textAlign: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <i
-                            className="pi pi-bell"
-                            style={{
-                                fontSize: "1.5rem",
-                                cursor: "pointer",
-                                color: "white",
-                                marginTop: 3,
-                            }}
-                            onClick={(e) => op?.current?.toggle(e)}
-                        />
+                {totalCount ? ( 
+
+                    <div className="BackgroundRed" style={{width:30, textAlign:'center', alignItems:'center'}}>
+                 <i
+                    className="pi pi-bell"
+                    style={{ fontSize: "1.5rem", cursor: "pointer",color:'white', marginTop:3 }}
+                    onClick={(e) => op?.current?.toggle(e)}
+                />
+
                     </div>
-                ) : (
-                    <div
-                        style={{
-                            width: 30,
-                            textAlign: "center",
-                            alignItems: "center",
-                            borderRadius: 50,
-                            marginTop: 3,
-                        }}
-                    >
-                        <i
-                            className="pi pi-bell"
-                            style={{ fontSize: "1.5rem", cursor: "pointer" }}
-                            onClick={(e) => op?.current?.toggle(e)}
-                        />
+                 ) : (
+                    <div style={{width:30, textAlign:'center', alignItems:'center', borderRadius:50,marginTop:3  }}>
+
+                    <i
+                    className="pi pi-bell"
+                    style={{ fontSize: "1.5rem", cursor: "pointer", }}
+                    onClick={(e) => op?.current?.toggle(e)}
+                />
                     </div>
-                )}
+                 )}
+
             </div>
-            <OverlayPanel style={{ marginLeft: 10, minWidth: 450 }} ref={op}>
-                <div>
-                    <div
-                        style={{
-                            padding: "10px 20px ",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>
-                            <p style={{ fontSize: 20, fontWeight: 600 }}>
-                                Alarms
-                            </p>
+            <OverlayPanel style={{ marginLeft: 10,minWidth:450}} ref={op}>
+                <div >
+                    <div style={{ padding: "10px 20px " , display:'flex', justifyContent:'space-between', alignItems:'center',}}>
+                       
+                       <div >
+                        <p style={{ fontSize: 20, fontWeight: 600,  }}>Alarms</p>
                         </div>
 
-                        {totalCount ? (
-                            <div className="MarkAllBell">
-                                <p
-                                    style={{
-                                        fontWeight: 500,
-                                        marginTop: 4,
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={handleMarkAllAsRead}
-                                >
-                                    {" "}
-                                    Mark all as read
-                                </p>
-                            </div>
-                        ) : (
-                            ""
-                        )}
+                        {totalCount ? ( 
+                                <div className="MarkAllBell">
+
+                    <p style={{fontWeight:500,  marginTop:4,cursor:'pointer' }} onClick={handleMarkAllAsRead}> Mark all as read</p>
+
+                                </div>
+
+                        ) : ("")}
                     </div>
                     <hr />
 
                     {dataAlarm.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 400 }}>
+                        <div style={{ overflowY: "auto", maxHeight: 400, }}>
                             {dataAlarm}
                         </div>
                     ) : (
@@ -270,6 +223,7 @@ export default function Alarmbell() {
                             />
                         </div>
                     )}
+                   
                 </div>
             </OverlayPanel>
         </div>
