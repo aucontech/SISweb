@@ -3,7 +3,7 @@ import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import "./ScoreCard.css"
+import "./ScoreCard.css";
 
 interface StateMap {
     [key: string]:
@@ -74,14 +74,13 @@ export default function ScoreCard_Otsuka() {
 
     const [DO_SV1, setDO_SV1] = useState<string | null>(null);
     const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
- 
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const handleClick = () => {
         setIsVisible(!isVisible);
-      };
-    
+    };
+
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -188,8 +187,6 @@ export default function ScoreCard_Otsuka() {
                         DI_MAP_1: setMap,
 
                         EVC_01_Conn_STT: setEVC_STT01,
-
-                 
                     };
 
                     keys.forEach((key) => {
@@ -216,7 +213,6 @@ export default function ScoreCard_Otsuka() {
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
         ReBattery: "Remainning Battery (Months)",
-
     };
 
     const tagNamePLC = {
@@ -227,35 +223,63 @@ export default function ScoreCard_Otsuka() {
         DO_SV1: "SDV-SOLENOID (0: OFF - 1: ON)",
         ZSC: "SDV-ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
-        UPS_BATTERY : "UPS BATTERY (0 :Normal - 1: Battery)",
-        UPS_CHARGING : "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM : "UPS ALARM (0: Normal - 1: Battery)",
-        UPS_MODE :  "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
-        SELECT_SW:"SELECT SW (0: Local - 1: Remote)",
-        RESET:"RESET (0: OFF - 1: ON)",
-        EmergencyStop_NC:"Emergency Stop NC (0: Emergency - 1: Normal)",
-        EmergencyStop_NO:"Emergency Stop NO (0: Normal - 1: Emergency)",
-        HORN:"HORN (0: OFF - 1: ON)",
-        BEACON:"BEACON (0: OFF - 1: ON)" ,
-        MAP:"MAP (0: Normal - 1: Emergency)" ,
-
-  
+        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
+        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_MODE:
+            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
+        SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
+        RESET: "RESET (0: OFF - 1: ON)",
+        EmergencyStop_NC: "Emergency Stop NC (0: Emergency - 1: Normal)",
+        EmergencyStop_NO: "Emergency Stop NO (0: Normal - 1: Emergency)",
+        HORN: "HORN (0: OFF - 1: ON)",
+        BEACON: "BEACON (0: OFF - 1: ON)",
+        MAP: "MAP (0: Normal - 1: Emergency)",
     };
-    const DataCharging = UpsCharging === "0" ? "Normal" : UpsCharging === "1" ? "Charging" : null
-    const DataBattery = UpsBattery === "0" ? "Normal" : UpsBattery === "1" ? "Battery" : null
-    const DataAlarm = UpsAlarm === "0" ? "Normal" : UpsAlarm === "1" ? "No Battery" : null
-    const DataMode = UpsMode === "0" ? "Error" : UpsMode === "1" ? "Using Battery" : UpsMode === "2" ? "Charging Battery" : UpsMode === "3" ? "Disconnected Battery" : UpsMode === "4" ? "Normal" : null
-    const DataZSC_1 = NC === "0" ? "Off" : NC === "1" ? "On" : null
-    const DataZSO_1 = NO === "0" ? "Off" : NO === "1" ? "On" : null
-    const DataSelectSW = SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null
-    const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null
-    const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null
-    const DataBeacon = DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null
-    const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
-    const DataEmergencyNC = EmergencyNC === "0" ? " Emergency" : EmergencyNC === "1" ? "Normal" : null
-    const DataEmergencyNO = EmergencyNO === "0" ? "Normal" : EmergencyNO === "1" ? " Emergency" : null
-    const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null
-
+    const DataCharging =
+        UpsCharging === "0"
+            ? "Normal"
+            : UpsCharging === "1"
+            ? "Charging"
+            : null;
+    const DataBattery =
+        UpsBattery === "0" ? "Normal" : UpsBattery === "1" ? "Battery" : null;
+    const DataAlarm =
+        UpsAlarm === "0" ? "Normal" : UpsAlarm === "1" ? "No Battery" : null;
+    const DataMode =
+        UpsMode === "0"
+            ? "Error"
+            : UpsMode === "1"
+            ? "Using Battery"
+            : UpsMode === "2"
+            ? "Charging Battery"
+            : UpsMode === "3"
+            ? "Disconnected Battery"
+            : UpsMode === "4"
+            ? "Normal"
+            : null;
+    const DataZSC_1 = NC === "0" ? "Off" : NC === "1" ? "On" : null;
+    const DataZSO_1 = NO === "0" ? "Off" : NO === "1" ? "On" : null;
+    const DataSelectSW =
+        SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null;
+    const DataReset = DIReset === "0" ? "Off" : DIReset === "1" ? "On" : null;
+    const DataHorn = DOHorn === "0" ? "Off" : DOHorn === "1" ? "On" : null;
+    const DataBeacon =
+        DOBeacon === "0" ? "Off" : DOBeacon === "1" ? "On" : null;
+    const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null;
+    const DataEmergencyNC =
+        EmergencyNC === "0"
+            ? " Emergency"
+            : EmergencyNC === "1"
+            ? "Normal"
+            : null;
+    const DataEmergencyNO =
+        EmergencyNO === "0"
+            ? "Normal"
+            : EmergencyNO === "1"
+            ? " Emergency"
+            : null;
+    const DataMap = Map === "0" ? "Normal" : Map === "1" ? "Emergency" : null;
 
     const dataEVC = [
         {
@@ -377,7 +401,7 @@ export default function ScoreCard_Otsuka() {
             name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
             PLC: <span style={{}}>{DataEmergencyNC}</span>,
         },
-      
+
         {
             name: <span>{tagNamePLC.HORN}</span>,
             PLC: <span style={{}}>{DataHorn}</span>,
@@ -445,13 +469,11 @@ export default function ScoreCard_Otsuka() {
                                     <span style={{ color: "red" }}>
                                         {" "}
                                         Disconnect
-
                                     </span>
                                 ) : (
                                     <span style={{ color: "#3DE644" }}>
                                         {" "}
                                         Good
-
                                     </span>
                                 )}{" "}
                             </div>{" "}
@@ -480,10 +502,7 @@ export default function ScoreCard_Otsuka() {
                         </div>
                     </div>
                 </div>
-                <DataTable
-                    value={dataEVC}
-                    size="small"
-                >
+                <DataTable value={dataEVC} size="small">
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
                         field="evc1901"
@@ -500,34 +519,26 @@ export default function ScoreCard_Otsuka() {
                     ></Column>
                     <Column field="evc1902" header="EVC-1902"></Column>
                 </DataTable>
-                
-                    <div>
-                    <DataTable
-                    value={dataPLC}
-                    size="small"
-                >
-                    <Column field="name" header="PLC Parameter"></Column>
-                    <Column
-                        field="PLC"
-                        header={
-                            <span
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "flex-end",
-                                }}
-                            >
-                                S7-1200
-                            </span>
-                        }
-                    ></Column>
-                </DataTable>
-               
+
+                <div>
+                    <DataTable value={dataPLC} size="small">
+                        <Column field="name" header="PLC Parameter"></Column>
+                        <Column
+                            field="PLC"
+                            header={
+                                <span
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                    }}
+                                >
+                                    S7-1200
+                                </span>
+                            }
+                        ></Column>
+                    </DataTable>
                 </div>
             </div>
-
-            
-      
-     
         </div>
     );
 }

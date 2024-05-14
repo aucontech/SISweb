@@ -69,8 +69,6 @@ export default function AlarmOTSUKA() {
     const totalCount: any =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
- 
-
     useEffect(() => {
         const obj3 = { unsubCmd: { cmdId: 1 } };
         const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
@@ -105,53 +103,52 @@ export default function AlarmOTSUKA() {
             </audio> */}
             <div className="flex">
                 {totalCount ? (
-                      <div
-                      style={{
-                          fontSize: 50,
-                          cursor: "pointer",
-                          background:"#DD0000",
-                          borderRadius: 10,
-                          width: 260,
-                          height: 100,
-                          textAlign: "center",
-                          alignItems: "center",
-                      }}
-                      onClick={() => router.push("/SetupData")}
-                  >
-                      <p
-                          style={{
-                              color: "white",
-                              marginTop: 10,
-                          }}
-                      >
-                          Alarming
-                      </p>
-                  </div>
+                    <div
+                        style={{
+                            fontSize: 50,
+                            cursor: "pointer",
+                            background: "#DD0000",
+                            borderRadius: 10,
+                            width: 260,
+                            height: 100,
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                        onClick={() => router.push("/SetupData")}
+                    >
+                        <p
+                            style={{
+                                color: "white",
+                                marginTop: 10,
+                            }}
+                        >
+                            Alarming
+                        </p>
+                    </div>
                 ) : (
                     <div
-                    style={{
-                        fontSize: 50,
-                        cursor: "pointer",
-                        background:"green",
-                        borderRadius: 10,
-                        width: 260,
-                        height: 100,
-                        textAlign: "center",
-                        alignItems: "center",
-                    }}
-                    onClick={() => router.push("/SetupData")}
-                >
-                    <p
                         style={{
-                            color: "white",
-                            marginTop: 10,
+                            fontSize: 50,
+                            cursor: "pointer",
+                            background: "green",
+                            borderRadius: 10,
+                            width: 260,
+                            height: 100,
+                            textAlign: "center",
+                            alignItems: "center",
                         }}
+                        onClick={() => router.push("/SetupData")}
                     >
-                        Normal
-                    </p>
-                </div>
+                        <p
+                            style={{
+                                color: "white",
+                                marginTop: 10,
+                            }}
+                        >
+                            Normal
+                        </p>
+                    </div>
                 )}
-              
             </div>
         </div>
     );

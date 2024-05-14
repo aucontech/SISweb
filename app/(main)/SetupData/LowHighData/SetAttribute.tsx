@@ -3,13 +3,13 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { InputText } from 'primereact/inputtext';
+import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
-import "./LowHighOtsuka.css"
+import "./LowHighOtsuka.css";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { Toast } from "primereact/toast";
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 export default function SetAttribute() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -20,10 +20,9 @@ export default function SetAttribute() {
     const [upData2, setUpData2] = useState<any>([]);
     const [upData3, setUpData3] = useState<any>([]);
 
-
-    const [inputValue, setInputValue] = useState<any>(); 
-    const [inputValue2, setInputValue2] = useState<any>(); 
-    const [inputValue3, setInputValue3] = useState<any>(); 
+    const [inputValue, setInputValue] = useState<any>();
+    const [inputValue2, setInputValue2] = useState<any>();
+    const [inputValue3, setInputValue3] = useState<any>();
 
     const token = readToken();
     const op = useRef<OverlayPanel>(null);
@@ -131,103 +130,79 @@ export default function SetAttribute() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01
-                            .value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.value;
                     setUpData(ballValue);
-                  
-                   
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01
-                            .value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.value;
                     setUpData(updatedData);
-
                 }
 
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
-                      
                     const ballValue2 =
-                    dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02
-                        .value;
-                setUpData2(ballValue2);
-                   
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
+                    setUpData2(ballValue2);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
-                    
-
-
                     const updatedData2 =
-                    dataReceived.update[0].latest.ATTRIBUTE.PCV_02
-                        .value;
-             
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
 
-                setUpData2(updatedData2);
+                    setUpData2(updatedData2);
                 }
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
-                      
                     const ballValue3 =
-                    dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01
-                        .value;
-                setUpData3(ballValue3);
-                   
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01.value;
+                    setUpData3(ballValue3);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
-                    
-
-
                     const updatedData3 =
-                    dataReceived.update[0].latest.ATTRIBUTE.PSV_01
-                        .value;
-             
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.value;
 
-                setUpData3(updatedData3);
+                    setUpData3(updatedData3);
                 }
             };
         }
     }, []);
 
-
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PCV_01: inputValue,  PCV_02: inputValue2, PSV_01: inputValue3,}
+                { PCV_01: inputValue, PCV_02: inputValue2, PSV_01: inputValue3 }
             );
-            setUpData(inputValue)
-            setUpData2(inputValue2)
-            setUpData3(inputValue3)
-
+            setUpData(inputValue);
+            setUpData2(inputValue2);
+            setUpData3(inputValue3);
 
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
                 life: 3000,
             });
-           
         } catch (error) {
             console.log("error: ", error);
-            toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
-           
+            toast.current?.show({
+                severity: "error",
+                summary: "Error",
+                detail: "Message Content",
+                life: 3000,
+            });
         }
     };
 
-
     useEffect(() => {
+        setInputValue(upData);
+        setInputValue2(upData2);
+        setInputValue3(upData3);
+    }, [upData, upData2, upData3]);
 
-        setInputValue(upData); 
-        setInputValue2(upData2); 
-        setInputValue3(upData3); 
-
-        
-    },[upData,upData2,upData3])
-    
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value; // Giữ nguyên chuỗi đầu vào
         setInputValue(newValue);
@@ -242,7 +217,6 @@ export default function SetAttribute() {
         setInputValue3(newValue);
     };
 
-
     const confirmUpData = () => {
         confirmDialog({
             message: "Are you sure you updated the data?",
@@ -250,66 +224,106 @@ export default function SetAttribute() {
             icon: "pi pi-info-circle",
             accept: () => handleButtonClick(),
         });
-    }
+    };
     const combineCss = {
-        PCV : {
-            height:25,
-            fontWeight:400,
-            padding:10
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+            padding: 10,
         },
-    }
+    };
 
     const configuration = [
+        {
+            Name: <span style={combineCss.PCV}>PCV-01 (BarG) </span>,
 
+            Value: (
+                <InputText
+                    style={combineCss.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    inputMode="decimal"
+                />
+            ),
 
-        { 
-
-        Name : <span style={combineCss.PCV}>PCV-01 (BarG) </span> ,
-
-            Value: <InputText style={combineCss.PCV}   placeholder='High' step="0.1" type='Name' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
-
-         Update:   <Button  className='buttonUpdateSetData' style={{marginTop:5}} label="Update" onClick={confirmUpData} />,
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
         },
 
-        { 
+        {
+            Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span>,
 
-            Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span> ,
-    
-            Value: <InputText style={combineCss.PCV}   placeholder='High' step="0.1" type='Name' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />, 
-    
-            Update:   <Button  className='buttonUpdateSetData' style={{marginTop:5}} label="Update" onClick={confirmUpData} />,
-            },
+            Value: (
+                <InputText
+                    style={combineCss.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputValue2}
+                    onChange={handleInputChange2}
+                    inputMode="decimal"
+                />
+            ),
 
-            { 
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
 
-                Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span> ,
-        
-                Value: <InputText style={combineCss.PCV}   placeholder='High' step="0.1" type='Name' value={inputValue3} onChange={handleInputChange3} inputMode="decimal" />, 
-        
-                Update:   <Button  className='buttonUpdateSetData' style={{marginTop:5}} label="Update" onClick={confirmUpData} />,
-                },
-     ]
+        {
+            Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span>,
+
+            Value: (
+                <InputText
+                    style={combineCss.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputValue3}
+                    onChange={handleInputChange3}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+    ];
 
     return (
         <div>
- <Toast ref={toast} />
+            <Toast ref={toast} />
 
+            <div style={{ width: "100%", padding: 5, borderRadius: 5 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"}>
+                    <Column field="Name" header="Name" />
 
-                
-                <div style={{width:'100%' , padding:5, borderRadius:5 }}>
+                    <Column field="Value" header="Value" />
 
-<h4>Station - configuration  </h4>
-<DataTable  value={configuration} size={'small'}    >
-<Column field="Name" header="Name" />
-
-<Column field="Value" header="Value" />
-
-<Column field="Update" header="Update" />
-
-
-
-</DataTable>
-</div>
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
         </div>
     );
 }

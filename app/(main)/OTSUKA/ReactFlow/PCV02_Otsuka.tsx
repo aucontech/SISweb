@@ -1,7 +1,7 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
-import { InputText } from 'primereact/inputtext';
+import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
@@ -13,8 +13,7 @@ export default function PCV_02_Otsuka() {
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
-
-    const [inputValue, setInputValue] = useState<any>(); 
+    const [inputValue, setInputValue] = useState<any>();
 
     const token = readToken();
     const op = useRef<OverlayPanel>(null);
@@ -106,21 +105,18 @@ export default function PCV_02_Otsuka() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02
-                            .value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02
-                            .ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.ts;
                     setUpTS(ballTS);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02
-                            .value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
                     const updateTS =
                         dataReceived.update[0].latest.ATTRIBUTE.PCV_02.ts;
 
@@ -131,7 +127,6 @@ export default function PCV_02_Otsuka() {
         }
     }, []);
 
-
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
@@ -139,33 +134,41 @@ export default function PCV_02_Otsuka() {
                 { PCV_02: inputValue }
             );
             setSensorData(inputValue);
-            setUpData(inputValue)
+            setUpData(inputValue);
             op.current?.hide();
-           
         } catch (error) {
             console.log("error: ", error);
-           
         }
     };
-    
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value); 
+        const newValue = Number(event.target.value);
         setInputValue(newValue);
     };
 
     const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e); 
+        op.current?.toggle(e);
         setInputValue(upData);
     };
 
     return (
         <div>
-
-            <div style={{border:'none',fontSize:25, color:'white', display:'flex',cursor:'pointer', justifyContent:'space-between', fontWeight:500  }} onClick={handleButtonToggle}>
-                 <p style={{color:colorNameValue,}}>PCV-1902</p> 
-                  <p style={{marginLeft:20, color:colorData}} > {upData} </p> 
-                  <p style={{marginLeft:10,color:colorNameValue,}}>BarG</p>
-           </div>
+            <div
+                style={{
+                    border: "none",
+                    fontSize: 25,
+                    color: "white",
+                    display: "flex",
+                    cursor: "pointer",
+                    justifyContent: "space-between",
+                    fontWeight: 500,
+                }}
+                onClick={handleButtonToggle}
+            >
+                <p style={{ color: colorNameValue }}>PCV-1902</p>
+                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
+                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+            </div>
 
             {/* <OverlayPanel ref={op}>
                 <div style={{display:'flex', flexDirection:'column',}}>

@@ -4,13 +4,10 @@ import DemoFlowOTS from "./demoGraphicOtsuka/demoFlowOTS";
 import LowHighData from "./LowHighData/LowHighData";
 import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 const TabOtsuka = () => {
-
-
     return (
         <div className="grid">
             <div style={{ width: "100%" }}>
-
-{/*                 
+                {/*                 
                 <TabView>
               
                  
@@ -23,8 +20,7 @@ const TabOtsuka = () => {
                     </TabPanel>
              
                 </TabView> */}
-                        <DemoFlowOTS />
-
+                <DemoFlowOTS />
             </div>
         </div>
     );
