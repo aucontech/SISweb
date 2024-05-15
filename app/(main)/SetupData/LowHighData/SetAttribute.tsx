@@ -235,7 +235,7 @@ export default function SetAttribute() {
 
     const configuration = [
         {
-            Name: <span style={combineCss.PCV}>PCV-01 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>PCV-1901 (BarG) </span>,
 
             Value: (
                 <InputText
@@ -260,7 +260,7 @@ export default function SetAttribute() {
         },
 
         {
-            Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>PCV-1902 (BarG) </span>,
 
             Value: (
                 <InputText
@@ -285,7 +285,7 @@ export default function SetAttribute() {
         },
 
         {
-            Name: <span style={combineCss.PCV}>PCV-02 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>PSV-1901 (BarG) </span>,
 
             Value: (
                 <InputText
