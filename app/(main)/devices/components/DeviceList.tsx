@@ -16,6 +16,7 @@ interface Props {}
 
 const DeviceList: React.FC<Props> = () => {
     const [devices, setDevices] = useState<any>([]);
+    console.log('devices: ', devices);
     const [totalElements, setTotalElements] = useState<number>(0);
     const [textSearch, setTextSearch] = useState<string>("");
     const toast = useRef<Toast>(null);

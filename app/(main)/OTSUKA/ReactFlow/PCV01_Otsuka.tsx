@@ -168,7 +168,7 @@ export default function PCV_01_Otsuka() {
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>
 
-            <OverlayPanel ref={op}>
+            {/* <OverlayPanel ref={op}>
                 <div
                     style={{
                         display: "flex",
@@ -188,7 +188,7 @@ export default function PCV_01_Otsuka() {
                         onClick={handleButtonClick}
                     />
                 </div>
-            </OverlayPanel>
+            </OverlayPanel> */}
         </div>
     );
 }

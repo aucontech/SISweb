@@ -97,7 +97,6 @@ export default function Alarmbell() {
         const isAlarm = item.subject.includes("New alarm");
         const subjectStyle = {};
     
-        // Chuyển đổi createTime thành định dạng mong muốn
         const createTime = new Date(item.createdTime);
         const formattedTime = `${createTime.getDate()}/${createTime.getMonth() + 1}/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(-2)}:${("0" + createTime.getMinutes()).slice(-2)}:${("0" + createTime.getSeconds()).slice(-2)}`;
     

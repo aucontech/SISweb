@@ -233,9 +233,15 @@ export default function SetAttribute() {
         },
     };
 
+    const configurationName ={
+        PSV: "Pressure Safety Valve ( PSV-1901)" ,
+        PCV1: "Pressure Control Valve (PCV-1901)",
+        PCV2: "Pressure Control Valve (PCV-1902)",
+    }
+
     const configuration = [
         {
-            Name: <span style={combineCss.PCV}>PCV-1901 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>{configurationName.PCV1} (BarG) </span>,
 
             Value: (
                 <InputText
@@ -260,7 +266,7 @@ export default function SetAttribute() {
         },
 
         {
-            Name: <span style={combineCss.PCV}>PCV-1902 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>{configurationName.PCV2} (BarG) </span>,
 
             Value: (
                 <InputText
@@ -285,7 +291,7 @@ export default function SetAttribute() {
         },
 
         {
-            Name: <span style={combineCss.PCV}>PSV-1901 (BarG) </span>,
+            Name: <span style={combineCss.PCV}>{configurationName.PSV} (BarG) </span>,
 
             Value: (
                 <InputText
@@ -316,7 +322,7 @@ export default function SetAttribute() {
 
             <div style={{ width: "100%", padding: 5, borderRadius: 5 }}>
                 <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"}>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

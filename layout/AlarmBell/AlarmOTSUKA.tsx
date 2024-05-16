@@ -39,6 +39,7 @@ export default function AlarmOTSUKA() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     console.log("notifications: ", notifications);
     const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
+    const [wsCalled, setWsCalled] = useState(false);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -48,6 +49,8 @@ export default function AlarmOTSUKA() {
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
             ws.current?.send(JSON.stringify(obj1));
+            setWsCalled(true); // Set state khi đã gọi xong WebSocket
+
         };
 
         ws.current.onclose = () => {
@@ -98,11 +101,10 @@ export default function AlarmOTSUKA() {
 
     return (
         <div>
-            {/* <audio ref={audioRef}>
-                <source src="/audios/NotificationCuu.mp3" type="audio/mpeg" />
-            </audio> */}
+          <div>
+        {wsCalled && (
             <div className="flex">
-                {totalCount ? (
+                {totalCount  ? (
                     <div
                         style={{
                             fontSize: 50,
@@ -150,6 +152,8 @@ export default function AlarmOTSUKA() {
                     </div>
                 )}
             </div>
+        )}
+    </div>
         </div>
     );
 }

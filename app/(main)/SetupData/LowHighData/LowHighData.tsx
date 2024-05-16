@@ -4183,11 +4183,33 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const VBLastdayformat = VbLastDay01 !== null ? parseFloat(VbLastDay01).toFixed(2) : "";
       const VMLastdayformat = VmLastDay01 !== null ? parseFloat(VmLastDay01).toFixed(2) : "";
 
+      const paragraphContents = {
+        SVF: "Standard Volume Flow",
+        GVF: "Gross Volume Flow",
+        SVA: "Standard Volume Accumulated",
+        GVA: "Gross Volume Accumulated",
+        PT: "Output Pressure",
+        TT: "Temperature",
+        PSV: "Pressure Safety Valve",
+        PCV1: "Pressure Control Valve 1901",
+        PCV2: "Pressure Control Valve 1902",
+
+        SSV: "Slam Shut Off Valve",
+        SDV: "Shutdown valve",
+
+        VB_TODAY:"Standard Volume Vb Today",
+        VB_Yesterday:"Standard Volume Vb Yesterday ",
+        VM_TODAY:"Gross Volume Vm Today",
+        VM_Yesterday:"Gross Volume Vm Yesterday",
+        ReBattery:"Remainning Battery"
+
+    };
+
       const dataEVC01 = [
 
 
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SVF1}>SVF FIQ-1901	 </span> ,
+        name: <span style={combineCss.CSS_SVF1}>{paragraphContents.SVF}	 </span> ,
 
         value: <span style={combineCss.CSS_SVF1} > {SVF1format} sm³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
@@ -4201,7 +4223,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVF1} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVF1}>GVF FIQ-1901	 </span> ,
+        name: <span style={combineCss.CSS_GVF1}>{paragraphContents.GVF} </span> ,
 
 
         value: <span style={combineCss.CSS_GVF1} > {GVF1format} m³/h</span> , 
@@ -4217,7 +4239,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
        
           { timeUpdate: <span style={combineCss.CSS_SVA1} >{timeUpdate}</span>,
-        name: <span  style={combineCss.CSS_SVA1}>SVA FIQ-1901	 </span> ,
+        name: <span  style={combineCss.CSS_SVA1}>{paragraphContents.SVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
 
         value: <span style={combineCss.CSS_SVA1} >  {SVA1format} sm³</span> , 
@@ -4232,7 +4254,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVA1} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVA1}>GVA FIQ-1901	 </span> ,
+        name: <span style={combineCss.CSS_GVA1}>{paragraphContents.GVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_GVA1}>40872	 </span> ,
 
         value: <span style={combineCss.CSS_GVA1} > {GVA1format} m³</span> , 
@@ -4247,7 +4269,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSpt02}>PT-1901 </span> ,
+        name: <span style={combineCss.CSSpt02}>{paragraphContents.PT} </span> ,
         value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt02}   placeholder='Low' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
@@ -4258,10 +4280,24 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      checked={maintainPT_1901}
  ></Checkbox>
     },
+    { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
+    name: <span style={combineCss.CSS_Temperature}>{paragraphContents.TT} </span> ,
+
+    value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
+    high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainTemperature01}
+    checked={maintainTemperature01}
+></Checkbox>
+
+   },
 
 
         { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbToDay01}> VB Today</span> ,
+        name: <span style={combineCss.CSS_VbToDay01}> {paragraphContents.VB_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VbToDay01} > {VBTodayformat} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
@@ -4276,7 +4312,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmToDay01}> VM Today</span> ,
+        name: <span style={combineCss.CSS_VmToDay01}>{paragraphContents.VM_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VmToDay01} > {VMTodayformat} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
@@ -4291,7 +4327,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
        { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
-       name: <span style={combineCss.CSS_VbLastDay01}> VB Yesterday</span> ,
+       name: <span style={combineCss.CSS_VbLastDay01}> {paragraphContents.VB_Yesterday}</span> ,
 
        value: <span style={combineCss.CSS_VbLastDay01} > {VBLastdayformat} Sm³</span>, 
        high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
@@ -4306,7 +4342,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       },
 
         { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmLastDay01}> VM Yesterday </span> ,
+        name: <span style={combineCss.CSS_VmLastDay01}> {paragraphContents.VM_Yesterday} </span> ,
 
         value: <span style={combineCss.CSS_VmLastDay01} > {VMLastdayformat} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
@@ -4323,7 +4359,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
   
 
         { timeUpdate: <span style={combineCss.CSS_Rebattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Rebattery}> Remain Battery</span> ,
+        name: <span style={combineCss.CSS_Rebattery}>{paragraphContents.ReBattery}</span> ,
 
         value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
         high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
@@ -4337,25 +4373,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
        },
 
-        { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Temperature}>Temperature </span> ,
-
-        value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
-        high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainTemperature01}
-        checked={maintainTemperature01}
-    ></Checkbox>
-
-       },
-        
-
-  
-
       ]
+
+
       const SVF2format = SVF2 !== null ? parseFloat(SVF2).toFixed(2) : "";
       const GVF2format = GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
       const SVA2format = SVA2 !== null ? parseFloat(SVA2).toFixed(2) : "";
@@ -4365,10 +4385,14 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const VMTodayformat2 = VmToDay02 !== null ? parseFloat(VmToDay02).toFixed(2) : "";
       const VBLastdayformat2 = VbLastDay02 !== null ? parseFloat(VbLastDay02).toFixed(2) : "";
       const c = VmLastDay02 !== null ? parseFloat(VmLastDay02).toFixed(2) : "";
+
+
+
+
       const dataEVC02 = [
 
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SVF2}>SVF FIQ-1902	 </span> ,
+        name: <span style={combineCss.CSS_SVF2}>{paragraphContents.SVF}	 </span> ,
         // modbus: <span style={combineCss.CSS_SVF2}>  40858 </span> ,
 
         value: <span style={combineCss.CSS_SVF2} > {SVF2format} m³/h </span> , 
@@ -4383,7 +4407,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVF2}>GVF FIQ-1902	 </span> ,
+        name: <span style={combineCss.CSS_GVF2}>{paragraphContents.GVF}	 </span> ,
 
         value: <span style={combineCss.CSS_GVF2} > {GVF2format} m³/h</span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
@@ -4398,7 +4422,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
           { timeUpdate: <span style={combineCss.CSS_SVA2} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SVA2}>SVA FIQ-1902	 </span> ,
+        name: <span style={combineCss.CSS_SVA2}>{paragraphContents.SVA}	 </span> ,
 
         value: <span style={combineCss.CSS_SVA2} > {SVA2format} sm³</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
@@ -4412,7 +4436,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVA2} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_GVA2}>GVA FIQ-1902	 </span> ,
+        name: <span style={combineCss.CSS_GVA2}>{paragraphContents.GVA}	 </span> ,
 
         value: <span style={combineCss.CSS_GVA2} > {GVA2format} m³</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
@@ -4426,7 +4450,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSpt03}>PT-1902 </span> ,
+        name: <span style={combineCss.CSSpt03}>{paragraphContents.PT} </span> ,
         value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
         high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
@@ -4437,9 +4461,24 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      checked={maintainPT_1902}
  ></Checkbox>
     },
+    { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
+    name: <span style={combineCss.CSS_Temperature02}>{paragraphContents.TT} </span> ,
+
+    value: <span style={combineCss.CSS_Temperature02} > {Temperature02} °C</span>, 
+    high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainTemperature02}
+    checked={maintainTemperature02}
+></Checkbox>
+
+   },
+
 
         { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbToDay02}> VB Today</span> ,
+        name: <span style={combineCss.CSS_VbToDay02}> {paragraphContents.VB_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VbToDay02} > {VBTodayformat2} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
@@ -4454,7 +4493,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmToDay02}> VM Today</span> ,
+        name: <span style={combineCss.CSS_VmToDay02}> {paragraphContents.VM_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VmToDay02} > {VMTodayformat2} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
@@ -4469,7 +4508,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VbLastDay02}> VB Yesterday</span> ,
+        name: <span style={combineCss.CSS_VbLastDay02}> {paragraphContents.VB_Yesterday}</span> ,
 
         value: <span style={combineCss.CSS_VbLastDay02} > {VBLastdayformat2} Sm³</span>, 
         high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
@@ -4483,7 +4522,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
        },
         { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmLastDay02}> VM Yesterday </span> ,
+        name: <span style={combineCss.CSS_VmLastDay02}> {paragraphContents.VM_Yesterday} </span> ,
 
         value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} m³</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
@@ -4498,7 +4537,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Rebattery02}> Remain Battery</span> ,
+        name: <span style={combineCss.CSS_Rebattery02}>{paragraphContents.ReBattery}</span> ,
 
         value: <span style={combineCss.CSS_Rebattery02} > {ReBattery02} Months</span>, 
         high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
@@ -4512,21 +4551,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
        },
 
-        { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Temperature02}>Temperature </span> ,
-
-        value: <span style={combineCss.CSS_Temperature02} > {Temperature02} °C</span>, 
-        high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainTemperature02}
-        checked={maintainTemperature02}
-    ></Checkbox>
-
-       },
-
+       
       ]
 
       const DataCharging = UpsCharging === "0" ? "Normal" : UpsCharging === "1" ? "Charging" : null
@@ -4548,10 +4573,33 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const PT01format =
       PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
 
+
+      const paragraphContentsPLC = {
+
+        PT03:"Input Pressure",
+        GD1:"Gas Detector GD-1901",
+        GD2:"Gas Detector GD-1902",
+        GD3:"Gas Detector GD-1903",
+        SOLENOID:"SDV-SOLENOID",
+        SDV_SZC:"SDV-ZSC",
+        SDV_SZO:"SDV-ZSO",
+        UPS_BATTERY:"UPS BATTERY",
+        UPS_CHARGING:"UPS CHARGING",
+        UPS_ALARM:" UPS ALARM",
+        UPS_MODE:"UPS MODE",
+        SELECT_SW:"SELECT SW",
+        RESET:"RESET",
+        EMERGENCY_NO:"Emergency Stop NO",
+        EMERGENCY_NC:"Emergency Stop NC",
+        HORN:"HORN",
+        BEACON:"BEACON",
+        MAP:"MAP",
+      }
+
       const dataPLC = [
 
         { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSSpt01}>PT-1903 </span> ,
+        name: <span style={combineCss.CSSpt01}>{paragraphContentsPLC.PT03} </span> ,
         value: <span style={combineCss.CSSpt01} > {PT01format} BarG</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
@@ -4565,7 +4613,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
      { timeUpdate: <span style={combineCss.CSSgd01} >{timeUpdate}</span>,
-     name: <span style={combineCss.CSSgd01}>GD-1901 </span> ,
+     name: <span style={combineCss.CSSgd01}>{paragraphContentsPLC.GD1} </span> ,
      value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
       high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd01}   placeholder='Low' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
@@ -4579,7 +4627,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      },
 
      { timeUpdate: <span style={combineCss.CSSgd02} >{timeUpdate}</span>,
-     name: <span style={combineCss.CSSgd02}>GD-1902 </span> ,
+     name: <span style={combineCss.CSSgd02}>{paragraphContentsPLC.GD2} </span> ,
      value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
       high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd02}   placeholder='Low' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
@@ -4593,7 +4641,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      },
 
      { timeUpdate: <span style={combineCss.CSSgd03} >{timeUpdate}</span>,
-     name: <span style={combineCss.CSSgd03}>GD-1903 </span> ,
+     name: <span style={combineCss.CSSgd03}>{paragraphContentsPLC.GD3}</span> ,
      value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
       high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd03}   placeholder='Low' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
@@ -4608,7 +4656,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
      
         { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsCharging}>UPS CHARGING </span> ,
+        name: <span style={combineCss.CSS_UpsCharging}>{paragraphContentsPLC.UPS_CHARGING} </span> ,
         value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} {DataCharging}</span> , 
         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsCharging}   placeholder='Low' step="0.1" type='number' value={inputLowUpsCharging} onChange={handleInputChangeLowUpsCharging} inputMode="decimal" />,
@@ -4621,7 +4669,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsBattery}>UPS BATTERY </span> ,
+        name: <span style={combineCss.CSS_UpsBattery}>{paragraphContentsPLC.UPS_BATTERY} </span> ,
         value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} {DataBattery}</span> , 
         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsBattery}   placeholder='Low' step="0.1" type='number' value={inputLowUpsBattery} onChange={handleInputChangeLowUpsBattery} inputMode="decimal" />,
@@ -4633,7 +4681,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_UpsAlarm} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsAlarm}>UPS ALARM </span> ,
+        name: <span style={combineCss.CSS_UpsAlarm}>{paragraphContentsPLC.UPS_ALARM} </span> ,
         value: <span style={combineCss.CSS_UpsAlarm} > {UpsAlarm} {DataAlarm}</span> , 
         high: <InputText style={combineCss.CSS_UpsAlarm}   placeholder='High' step="0.1" type='number' value={inputHighUpsAlarm} onChange={handleInputChangeHighUpsAlarm} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsAlarm}   placeholder='Low' step="0.1" type='number' value={inputLowUpsAlarm} onChange={handleInputChangeLowUpsAlarm} inputMode="decimal" />,
@@ -4646,7 +4694,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsMode} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_UpsMode}>UPS MODE </span> ,
+        name: <span style={combineCss.CSS_UpsMode}>{paragraphContentsPLC.UPS_MODE} </span> ,
         value: <span style={combineCss.CSS_UpsMode} > {UpsMode} {DataMode}</span> , 
         high: <InputText style={combineCss.CSS_UpsMode}   placeholder='High' step="0.1" type='number' value={inputHighUpsMode} onChange={handleInputChangeHighUpsMode} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_UpsMode}   placeholder='Low' step="0.1" type='number' value={inputLowUpsMode} onChange={handleInputChangeLowUpsMode} inputMode="decimal" />,
@@ -4660,7 +4708,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        
     
         { timeUpdate: <span style={combineCss.CSS_SelectSW} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SelectSW}>SELECT SW </span> ,
+        name: <span style={combineCss.CSS_SelectSW}>{paragraphContentsPLC.SELECT_SW} </span> ,
         value: <span style={combineCss.CSS_SelectSW} > {SelectSW} {DataSelectSW}</span> , 
         high: <InputText style={combineCss.CSS_SelectSW}   placeholder='High' step="0.1" type='number' value={inputHighSelectSW} onChange={handleInputChangeHighSelectSW} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_SelectSW}   placeholder='Low' step="0.1" type='number' value={inputLowSelectSW} onChange={handleInputChangeLowSelectSW} inputMode="decimal" />,
@@ -4673,7 +4721,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Reset} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Reset}>RESET </span> ,
+        name: <span style={combineCss.CSS_Reset}>{paragraphContentsPLC.RESET} </span> ,
         value: <span style={combineCss.CSS_Reset} > {DIReset} {DataReset}</span> , 
         high: <InputText style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputHighDIReset} onChange={handleInputChangeHighDIReset} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputLowDIReset} onChange={handleInputChangeLowDIReset} inputMode="decimal" />,
@@ -4686,7 +4734,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
      
         { timeUpdate: <span style={combineCss.CSS_SELENOID} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_SELENOID}>SDV-SOLENOID </span> ,
+        name: <span style={combineCss.CSS_SELENOID}>{paragraphContentsPLC.SOLENOID} </span> ,
         value: <span style={combineCss.CSS_SELENOID} > {DO_SV1} {DataSV_1}</span> , 
         high: <InputText style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputHighDO_SV1} onChange={handleInputChangeHighDO_SV1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputLowDO_SV1} onChange={handleInputChangeLowDO_SV1} inputMode="decimal" />,
@@ -4699,7 +4747,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_EmergencyNC} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_EmergencyNC}>Emergency NC </span> ,
+        name: <span style={combineCss.CSS_EmergencyNC}>{paragraphContentsPLC.EMERGENCY_NC} </span> ,
         value: <span style={combineCss.CSS_EmergencyNC} > {EmergencyNC} {DataEmergencyNC}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNC}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNC} onChange={handleInputChangeHighEmergencyNC} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_EmergencyNC}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNC} onChange={handleInputChangeLowEmergencyNC} inputMode="decimal" />,
@@ -4711,7 +4759,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_EmergencyNO} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_EmergencyNO}>Emergency NO </span> ,
+        name: <span style={combineCss.CSS_EmergencyNO}>{paragraphContentsPLC.EMERGENCY_NO} </span> ,
         value: <span style={combineCss.CSS_EmergencyNO} > {EmergencyNO} {DataEmergencyNO}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNO}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNO} onChange={handleInputChangeHighEmergencyNO} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_EmergencyNO}   placeholder='Low' step="0.1" type='number' value={inputLowEmergencyNO} onChange={handleInputChangeLowEmergencyNO} inputMode="decimal" />,
@@ -4724,7 +4772,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Horn} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Horn}>Horn </span> ,
+        name: <span style={combineCss.CSS_Horn}>{paragraphContentsPLC.HORN} </span> ,
         value: <span style={combineCss.CSS_Horn} > {DOHorn} {DataHorn}</span> , 
         high: <InputText style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputHighDOHorn} onChange={handleInputChangeHighDOHorn} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputLowDOHorn} onChange={handleInputChangeLowDOHorn} inputMode="decimal" />,
@@ -4736,7 +4784,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_ZSC} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_ZSC}>SDV ZSC 1 </span> ,
+        name: <span style={combineCss.CSS_ZSC}>{paragraphContentsPLC.SDV_SZC} </span> ,
         value: <span style={combineCss.CSS_ZSC} > {ZSC_1} {DataZSC_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputHighZSC_1} onChange={handleInputChangeHighZSC_1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputLowZSC_1} onChange={handleInputChangeLowZSC_1} inputMode="decimal" />,
@@ -4749,7 +4797,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_ZSO} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_ZSO}>SDV ZSO </span> ,
+        name: <span style={combineCss.CSS_ZSO}>{paragraphContentsPLC.SDV_SZO} </span> ,
         value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowZSO_1} onChange={handleInputChangeLowZSO_1} inputMode="decimal" />,
@@ -4762,7 +4810,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Map} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Map}>MAP </span> ,
+        name: <span style={combineCss.CSS_Map}>{paragraphContentsPLC.MAP} </span> ,
         value: <span style={combineCss.CSS_Map} > {Map} {DataMap}</span> , 
         high: <InputText style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputHighMap} onChange={handleInputChangeHighMap} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputLowMap} onChange={handleInputChangeLowMap} inputMode="decimal" />,
@@ -4775,7 +4823,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Beacon} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_Beacon}>Beacon </span> ,
+        name: <span style={combineCss.CSS_Beacon}>{paragraphContentsPLC.BEACON} </span> ,
         value: <span style={combineCss.CSS_Beacon} > {Beacon} {DataBeacon}</span> , 
         high: <InputText style={combineCss.CSS_Beacon}   placeholder='High' step="0.1" type='number' value={inputHighBeacon} onChange={handleInputChangeHighBeacon} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Beacon}   placeholder='Low' step="0.1" type='number' value={inputLowBeacon} onChange={handleInputChangeLowBeacon} inputMode="decimal" />,
@@ -4814,7 +4862,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         <div style={{width:'100%' , padding:10, borderRadius:5 }}>
 
             <h4>EVC 01 -  Prameter & configuration  </h4>
-        <DataTable  value={dataEVC01} size={'small'}    >
+        <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
       <Column field="timeUpdate" header="Time Update" />
       {/* <Column field="modbus" header="Modbus" /> */}
 
@@ -4834,7 +4882,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     <div style={{width:'100%' , padding:10, borderRadius:5  }}>
 
 <h4>EVC 02 - Parameter & configuration</h4>
-<DataTable  value={dataEVC02} size={'small'}    >
+<DataTable  value={dataEVC02} size={'small'}  selectionMode="single"   >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
 
@@ -4853,7 +4901,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 <div style={{width:'100%' ,  padding:10,  borderRadius:5 }}>
 
 <h4>PLC - Parameter & configuration</h4>
-<DataTable  value={dataPLC} size={'small'}    >
+<DataTable  value={dataPLC} size={'small'} selectionMode="single"    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
 
