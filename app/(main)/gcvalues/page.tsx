@@ -98,14 +98,14 @@ const Page: React.FC<Props> = () => {
     const handleChangeB1 = (e: any) => {
         setSeletetedData((prevState: any) => ({
             ...prevState,
-            heatingValueB1: e.value, // Directly use e.value
+            heatingValueLine1: e.value, // Directly use e.value
         }));
     };
 
     const handleChangeB2 = (e: any) => {
         setSeletetedData((prevState: any) => ({
             ...prevState,
-            heatingValueB2: e.value, // Directly use e.value
+            heatingValueLine2: e.value, // Directly use e.value
         }));
     };
 
