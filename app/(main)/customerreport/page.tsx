@@ -7,14 +7,15 @@ import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
 import { saveAs } from "file-saver";
+import { Utils } from "@/service/Utils";
 
 const defaultValue = {
     grossVolumeVmB1: 0,
     grossVolumeVmB2: 0,
     standardVolumeVbB1: 0.0,
     standardVolumeVbB2: 0.0,
-    heatingValueB1: 0,
-    heatingValueB2: 0,
+    heatingValueLine1: 0,
+    heatingValueLine2: 0,
     energyQB1: 0,
     energyQB2: 0,
     avgTemperatureB1: 0.0,
@@ -43,7 +44,7 @@ const CustomerReport = () => {
             deviceId: filters.device.id.id,
             date: filters.date.getTime(),
         };
-        console.log(reqParams);
+
         getReport(reqParams)
             .then((resp) => resp.data)
             .then((resp) => {
@@ -86,12 +87,12 @@ const CustomerReport = () => {
                     newReportData.standardVolumeVbB2;
                 setReportData(newReportData);
                 break;
-            case "heatingValueB1":
-                newReportData.heatingValueCon = newReportData.heatingValueB1;
+            case "heatingValueLine1":
+                newReportData.heatingValueCon = newReportData.heatingValueLine1;
                 setReportData(newReportData);
                 break;
-            case "heatingValueB2":
-                newReportData.heatingValueCon = newReportData.heatingValueB2;
+            case "heatingValueLine2":
+                newReportData.heatingValueCon = newReportData.heatingValueLine2;
                 setReportData(newReportData);
                 break;
 
@@ -153,7 +154,7 @@ const CustomerReport = () => {
 
     const handleExportReport = () => {
         exportReport(reportData)
-            .then((response) => {
+            .then((response: any) => {
                 // const contentDisposition = response.headers.get('content-disposition');
                 const contentDisposition =
                     response.headers["content-disposition"];
@@ -188,6 +189,133 @@ const CustomerReport = () => {
             .catch((err) => {
                 console.error("Error exporting report:", err);
             });
+    };
+    const handleDutyClickLine1 = () => {
+        let newReportData = { ...reportData };
+        newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
+        newReportData.standardVolumeVbCon = newReportData.standardVolumeVbB1;
+        newReportData.heatingValueCon = newReportData.heatingValueLine1;
+        newReportData.energyCon = newReportData.energyQB1;
+        newReportData.avgTemperatureCon = newReportData.avgTemperatureB1;
+        newReportData.avgPressureCon = newReportData.avgPressureB1;
+        newReportData.grossVolumeAccumulatedCon =
+            newReportData.grossVolumeAccumulatedB1;
+        newReportData.standardVolumeAccumulatedCon =
+            newReportData.standardVolumeAccumulatedB1;
+        setReportData(newReportData);
+    };
+    const handleDutyClickLine2 = () => {
+        let newReportData = { ...reportData };
+        newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
+        newReportData.standardVolumeVbCon = newReportData.standardVolumeVbB2;
+        newReportData.heatingValueCon = newReportData.heatingValueLine2;
+        newReportData.energyCon = newReportData.energyQB2;
+        newReportData.avgTemperatureCon = newReportData.avgTemperatureB2;
+        newReportData.avgPressureCon = newReportData.avgPressureB2;
+        newReportData.grossVolumeAccumulatedCon =
+            newReportData.grossVolumeAccumulatedB2;
+        newReportData.standardVolumeAccumulatedCon =
+            newReportData.standardVolumeAccumulatedB2;
+        setReportData(newReportData);
+    };
+    const onChangeValue = (value: any, field: string) => {
+        let newReportData = { ...reportData };
+        //  let value = Number(value1);
+        switch (field) {
+            case "grossVolumeVmB1":
+                setReportData({ ...newReportData, grossVolumeVmB1: value });
+                break;
+            case "grossVolumeVmB2":
+                setReportData({ ...newReportData, grossVolumeVmB2: value });
+                break;
+            case "standardVolumeVbB1":
+                setReportData({ ...newReportData, standardVolumeVbB1: value });
+                break;
+            case "standardVolumeVbB2":
+                setReportData({ ...newReportData, standardVolumeVbB2: value });
+                break;
+            case "heatingValueLine1":
+                let energyQB1 = 0;
+                // console.log(Number(newReportData.standardVolumeVbB1));
+                // console.log("value", value);
+                // console.log(reportData);
+                if (value > 0) {
+                    energyQB1 = Utils.round(
+                        Number(newReportData.standardVolumeVbB1) * 0.000947817,
+                        2
+                    );
+                    //console.log("energyQB1", energyQB1);
+                }
+                setReportData({
+                    ...newReportData,
+                    heatingValueLine1: value,
+                    energyQB1,
+                });
+                break;
+            case "heatingValueLine2":
+                let energyQB2 = 0;
+                if (value > 0) {
+                    energyQB2 = Utils.round(
+                        Number(newReportData.standardVolumeVbB2) * 0.000947817,
+                        2
+                    );
+                }
+                setReportData({
+                    ...newReportData,
+                    heatingValueLine2: value,
+                    energyQB2,
+                });
+                break;
+
+            case "energyQB1":
+                // newReportData.energyCon = newReportData.energyQB1;
+                // setReportData(newReportData);
+                break;
+
+            case "energyQB2":
+                // newReportData.energyCon = newReportData.energyQB2;
+                // setReportData(newReportData);
+                break;
+            case "avgTemperatureB1":
+                setReportData({ ...newReportData, avgTemperatureB1: value });
+                break;
+            case "avgTemperatureB2":
+                setReportData({ ...newReportData, avgTemperatureB2: value });
+                break;
+            case "avgPressureB1":
+                setReportData({ ...newReportData, avgPressureB1: value });
+                break;
+            case "avgPressureB2":
+                setReportData({ ...newReportData, avgPressureB2: value });
+                break;
+            case "grossVolumeAccumulatedB1":
+                setReportData({
+                    ...newReportData,
+                    grossVolumeAccumulatedB1: value,
+                });
+
+                break;
+            case "grossVolumeAccumulatedB2":
+                setReportData({
+                    ...reportData,
+                    grossVolumeAccumulatedB2: value,
+                });
+                break;
+            case "standardVolumeAccumulatedB1":
+                setReportData({
+                    ...newReportData,
+                    standardVolumeAccumulatedB1: value,
+                });
+                break;
+            case "standardVolumeAccumulatedB2":
+                setReportData({
+                    ...newReportData,
+                    standardVolumeAccumulatedB2: value,
+                });
+                break;
+            default:
+                break;
+        }
     };
     return (
         <>
@@ -250,37 +378,86 @@ const CustomerReport = () => {
                             EVC 1901
                         </p>
                         <InputText
+                            type="number"
                             value={reportData.grossVolumeVmB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                console.log("value", e);
+                                onChangeValue(
+                                    e.target.value,
+                                    "grossVolumeVmB1"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.standardVolumeVbB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "standardVolumeVbB1"
+                                );
+                            }}
                         />
                         <InputText
-                            value={reportData.heatingValueB1}
+                            type="number"
+                            value={reportData.heatingValueLine1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "heatingValueLine1"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.energyQB1}
                             className="w-full text-center mt-2"
+                            disabled={true}
                         />
                         <InputText
+                            type="number"
                             value={reportData.avgTemperatureB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "avgTemperatureB1"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.avgPressureB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(e.target.value, "avgPressureB1");
+                            }}
                         />
 
                         <InputText
+                            type="number"
                             value={reportData.grossVolumeAccumulatedB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "grossVolumeAccumulatedB1"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.standardVolumeAccumulatedB1}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "standardVolumeAccumulatedB1"
+                                );
+                            }}
                         />
                     </div>
                     <div className={styles.col}>
@@ -293,61 +470,61 @@ const CustomerReport = () => {
                         >
                             Duty
                         </p>
-                        <Button
+                        {/* <Button
                             onClick={() => handleDutyClick("grossVolumeVmB1")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("standardVolumeVbB1")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
-                            onClick={() => handleDutyClick("heatingValueB1")}
+                        </Button> */}
+                        {/* <Button
+                            onClick={() => handleDutyClick("heatingValueLine1")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() => handleDutyClick("energyQB1")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
+                        </Button> */}
                         <Button
-                            onClick={() => handleDutyClick("avgTemperatureB1")}
+                            onClick={() => handleDutyClickLine1()}
                             className="w-full mt-2"
                         >
                             Action
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={() => handleDutyClick("avgPressureB1")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("grossVolumeAccumulatedB1")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
+                        </Button> */}
 
-                        <Button
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("standardVolumeAccumulatedB1")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className={styles.col}>
                         <p
@@ -360,37 +537,85 @@ const CustomerReport = () => {
                             EVC 1902
                         </p>
                         <InputText
+                            type="number"
                             value={reportData.grossVolumeVmB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "grossVolumeVmB2"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.standardVolumeVbB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "standardVolumeVbB2"
+                                );
+                            }}
                         />
                         <InputText
-                            value={reportData.heatingValueB2}
+                            type="number"
+                            value={reportData.heatingValueLine2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "heatingValueLine2"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.energyQB2}
                             className="w-full text-center mt-2"
+                            disabled={true}
                         />
 
                         <InputText
+                            type="number"
                             value={reportData.avgTemperatureB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "avgTemperatureB2"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.avgPressureB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(e.target.value, "avgPressureB2");
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.grossVolumeAccumulatedB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "grossVolumeAccumulatedB2"
+                                );
+                            }}
                         />
                         <InputText
+                            type="number"
                             value={reportData.standardVolumeAccumulatedB2}
                             className="w-full text-center mt-2"
+                            onChange={(e) => {
+                                onChangeValue(
+                                    e.target.value,
+                                    "standardVolumeAccumulatedB2"
+                                );
+                            }}
                         />
                     </div>
                     <div className={styles.col}>
@@ -403,60 +628,60 @@ const CustomerReport = () => {
                         >
                             Duty
                         </p>
-                        <Button
+                        {/* <Button
                             onClick={() => handleDutyClick("grossVolumeVmB2")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("standardVolumeVbB2")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
+                        </Button> */}
+                        {/* <Button
+                            onClick={() => handleDutyClick("heatingValueLine2")}
+                            className="w-full mt-2"
+                        >
+                            Action
+                        </Button> */}
                         <Button
-                            onClick={() => handleDutyClick("heatingValueB2")}
+                            onClick={() => handleDutyClickLine2()}
                             className="w-full mt-2"
                         >
                             Action
                         </Button>
-                        <Button
-                            onClick={() => handleDutyClick("energyQB2")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button>
-                        <Button
+                        {/* <Button
                             onClick={() => handleDutyClick("avgTemperatureB2")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() => handleDutyClick("avgPressureB2")}
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("grossVolumeAccumulatedB2")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                             onClick={() =>
                                 handleDutyClick("standardVolumeAccumulatedB2")
                             }
                             className="w-full mt-2"
                         >
                             Action
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className={styles.col}>
                         <p

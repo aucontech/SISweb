@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import _ from "lodash";
 const showError = ({
     error,
     summary,
@@ -75,6 +76,18 @@ const showWarning = ({
             sticky,
         });
     }
+};
+
+const isNum: (val: any) => boolean = (val: any) => {
+    return _.isNumber(val);
+};
+const round = (num: any, scale?: number): number => {
+    if (!isNum(num)) {
+        num = Number(num) || 0;
+    }
+    scale = scale || 2;
+    // //console.log.*$
+    return _.round(num, scale);
 };
 
 const getUnixTimeMilliseconds = () => new Date().getTime();
@@ -159,5 +172,6 @@ const Utils = {
     getUnixTimeMillisecondsGMT7,
     calculateDurationFromUnixWithWords,
     getType,
+    round,
 };
 export { UIUtils, Utils };

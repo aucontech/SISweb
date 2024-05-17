@@ -14,8 +14,8 @@ import { UIUtils } from "@/service/Utils";
 
 interface Props {}
 const defaultValue = {
-    heatingValueB1: 0,
-    heatingValueB2: 0,
+    heatingValueLine1: 0,
+    heatingValueLine2: 0,
 };
 const Page: React.FC<Props> = () => {
     const [filters, setFilters] = useState<any>({});
@@ -37,7 +37,6 @@ const Page: React.FC<Props> = () => {
                 let gcDatas = resp.filter((dt: any) => dt.key === "gc");
                 if (gcDatas && gcDatas.length > 0) {
                     let gcData = gcDatas[0];
-                    console.log(gcData);
                     setGcData(gcData);
                     let seletedGcDatas = gcData.value.filter(
                         (dt: any) => dt.date === filters.date.getTime()
@@ -52,8 +51,6 @@ const Page: React.FC<Props> = () => {
                         });
                         setIsNewData(true);
                     }
-
-                    //  console.log(seletedGcData);
                 }
             })
             .catch((err) => {
@@ -132,9 +129,9 @@ const Page: React.FC<Props> = () => {
             <div className="card">
                 <div className="col">
                     {" "}
-                    Heating Value B1 :{" "}
+                    Heating Value Line 1 :{" "}
                     <InputNumber
-                        value={seletetedData.heatingValueB1 || 0} // default to 0 if undefined
+                        value={seletetedData.heatingValueLine1 || 0} // default to 0 if undefined
                         onChange={(e) => handleChangeB1(e)}
                         mode="decimal"
                         minFractionDigits={2}
@@ -143,9 +140,9 @@ const Page: React.FC<Props> = () => {
                 </div>
                 <div className="col">
                     {" "}
-                    Heating Value B2 :{" "}
+                    Heating Value Line 2 :{" "}
                     <InputNumber
-                        value={seletetedData.heatingValueB2 || 0} // default to 0 if undefined
+                        value={seletetedData.heatingValueLine2 || 0} // default to 0 if undefined
                         onChange={(e) => handleChangeB2(e)}
                         mode="decimal"
                         minFractionDigits={2}
