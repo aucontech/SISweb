@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
@@ -37,7 +38,7 @@ export default function Alarmbell() {
     console.log("notifications: ", notifications);
     // const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
     const [currentUser, setCurrentUser] = useState<any>(null);
-    //const [alarmCount, setAlarmCount] = useState<number>(0);
+    const [alarmCount, setAlarmCount] = useState<number>(0);
     useEffect(() => {
         const user = readUser();
         if (user) {
@@ -224,6 +225,8 @@ export default function Alarmbell() {
                     audioRef.current?.pause();
                     setNotifications([]);
                 }
+            } else if (dataReceive && dataReceive["cmdId"] === 2) {
+                setAlarmCount(dataReceive.count);
             }
         };
         ws.current.onclose = () => {
@@ -238,13 +241,13 @@ export default function Alarmbell() {
     };
     useEffect(() => {
         let token: string | null = null;
-        if (typeof window !== "undefined") {
-            token = readToken();
-            console.log("Token", token);
-            if (token) {
-                connectWebSocket(token);
-            }
+
+        token = readToken();
+        console.log("Token", token);
+        if (token) {
+            connectWebSocket(token);
         }
+
         return () => {
             if (ws.current) {
                 ws.current.close();
@@ -429,9 +432,7 @@ export default function Alarmbell() {
             <div className="flex">
                 {totalCount && (
                     <div className={styles.totalCount}>
-                        <p className={styles.totalCount_p}>
-                            {totalCount.totalSubjects}
-                        </p>
+                        <p className={styles.totalCount_p}>{alarmCount}</p>
                     </div>
                 )}
 
