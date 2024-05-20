@@ -13,6 +13,8 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import SetAttribute from './SetAttribute';
+import { Calendar } from 'primereact/calendar';
+import SetAttribute1 from '../../OTSUKA/title-OTK';
 
 interface StateMap {
 
@@ -163,6 +165,9 @@ export default function LowHighData() {
             const res = await httpApi.get(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/values/attributes/SERVER_SCOPE`
             );
+
+            const getwayIOT = res.data.find((item: any) => item.key === "IOT_Gateway_Phone");
+            setGetWayPhoneOTSUKA(getwayIOT?.value || null);
 //=====================================================================================
     
             const highEK1PressureItem = res.data.find((item: any) => item.key === "EVC_01_Pressure_High");
@@ -576,7 +581,7 @@ const LowZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_Low");
 setInputLowZSC_1(LowZSC?.value || null);
 
 const MaintainZSC_0 = res.data.find(
-    (item: any) => item.key === "DI_ZSO_1_Maintain"
+    (item: any) => item.key === "DI_ZSC_1_Maintain"
 );
 setMaintainZSC_1(MaintainZSC_0?.value || false);
 //=====================================================================================
@@ -589,7 +594,7 @@ const LowZSO = res.data.find((item: any) => item.key === "DI_ZSO_1_Low");
 setLowZSO_1(LowZSO?.value || null);
 
 const MaintainZSO = res.data.find(
-    (item: any) => item.key === "DI_ZSC_1_Maintain"
+    (item: any) => item.key === "DI_ZSO_1_Maintain"
 );
 setMaintainZSO_1(MaintainZSO?.value || false);
 //=====================================================================================
@@ -3284,7 +3289,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
 
 //===========================================================================================
 
-const [Beacon,setBeacon] =useState<string | null>(null);
+const [Beacon,setBeacon] = useState<string | null>(null);
 const [AudioBeacon, setAudioBeacon] = useState(false);
 const [inputHighBeacon, setInputHighBeacon] = useState<any>();
 const [inputLowBeacon, setInputLowBeacon] = useState<any>();
@@ -3350,8 +3355,52 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
 //===========================================================================================
 
+const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+
+const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue : any = event.target.value;
+    setGetWayPhoneOTSUKA(newValue);
+};
+
+
+const handleButtonClickGetwayPhone = async () => {
+    try {
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { IOT_Gateway_Phone: inputGetwayPhone,}
+        );
+     
+
+        toast.current?.show({
+            severity: "info",
+            detail: "Successfully changed IOT gateway phone number  ",
+            life: 3000,
+        });
+    } catch (error) {
+        console.log("error: ", error);
+        toast.current?.show({
+            severity: "error",
+            summary: "Error",
+            detail: "Message Content",
+            life: 3000,
+        });
+    }
+};
+
+const confirmUpChangeGatewayPhone = () => {
+    confirmDialog({
+        message: "Are you sure update IOT gateway phone?",
+        header: "Confirmation",
+        icon: "pi pi-info-circle",
+        accept: () => handleButtonClickGetwayPhone(),
+    });
+};
+//===========================================================================================
 
     useEffect(() => {
+        setInputGetwayPhone(getWayPhoneOTSUKA)
 
         setInputValue(highEK1PressureValue); 
         setInputValue2(lowEK1PressureValue); 
@@ -3526,6 +3575,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
          HighZSO_1, LowZSO_1 ,
          HighDO_SV1, LowDO_SV1 ,
          HighBeacon, LowBeacon ,
+
+         getWayPhoneOTSUKA
          
         ]);
     
@@ -3591,6 +3642,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
                     DO_SV_01_High:inputHighDO_SV1, DO_SV_01_Low:inputLowDO_SV1,
                     DO_BC_01_High:inputHighBeacon, DO_BC_01_Low:inputLowBeacon,
+
+
+            IOT_Gateway_Phone:inputGetwayPhone
 
                 }
             );
@@ -3723,6 +3777,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
             setHighBeacon(inputHighBeacon);
             setLowBeacon(inputLowBeacon);
 
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
+
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
@@ -3755,7 +3811,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSSpt03 : {
                 color:exceedThreshold2 && !maintainPT_1902
@@ -3765,7 +3821,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""  ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSSpt01 : {
                 color:exceedThreshold3 && !maintainPT_1903
@@ -3775,7 +3831,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""  ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSSgd01 : {
@@ -3786,7 +3842,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""  ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSSgd02 : {
                 color:AlarmGD02 && !maintainGD_1902
@@ -3796,7 +3852,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""   ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSSgd03 : {
                 color:AlarmGD03 && !maintainGD_1903
@@ -3806,7 +3862,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""   ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_GVF1 : {
                 color:AlarmGVF1 && !maintainGVF1
@@ -3816,7 +3872,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""    ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_SVF1 : {
                 color:AlarmSVF1&& !maintainSVF1
@@ -3826,7 +3882,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""    ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
              CSS_SVA1 : {
                 color:AlarmSVA1 && !maintainSVA1
@@ -3836,7 +3892,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""   ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_GVA1 : {
                 color:AlarmGVA1 && !maintainGVA1
@@ -3846,7 +3902,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""   ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_GVF2 : {
                 color:AlarmGVF2 && !maintainGVF2
@@ -3856,7 +3912,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""  ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_SVF2 : {
                 color:AlarmSVF2 && !maintainSVF2
@@ -3866,7 +3922,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : ""  ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
              CSS_SVA2 : {
                 color:AlarmSVA2&& !maintainSVA2
@@ -3876,7 +3932,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_GVA2 : {
                 color:AlarmGVA2 && !maintainGVA2
@@ -3886,7 +3942,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_Temperature : {
@@ -3897,7 +3953,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -3909,7 +3965,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -3921,7 +3977,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_Rebattery02 : {
                 color:AlarmReBattery02 && !maintainReBattery02
@@ -3931,7 +3987,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -3943,7 +3999,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_VmLastDay02 : {
                 color:AlarmVmLastDay02 && !maintainVmLastDay02
@@ -3953,7 +4009,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -3965,7 +4021,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_VbLastDay02 : {
                 color:AlarmVbLastDay02 && !maintainVbLastDay02
@@ -3975,7 +4031,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_VmToDay01 : {
@@ -3986,7 +4042,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_VmToDay02 : {
                 color:AlarmVmToDay02 && !maintainVmToDay02
@@ -3996,7 +4052,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -4008,7 +4064,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_VbToDay02 : {
                 color:AlarmVbToDay02 && !maintainVbToDay02
@@ -4018,7 +4074,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_UpsBattery : {
@@ -4029,7 +4085,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_UpsCharging: {
                 color:AlarmUpsCharging && !maintainUpsCharging
@@ -4039,7 +4095,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_UpsAlarm: {
                 color:AlarmUpsAlarm && !maintainUpsAlarm
@@ -4049,7 +4105,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
             CSS_UpsMode: {
                 color:AlarmUpsMode && !maintainUpsMode
@@ -4059,7 +4115,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             }, 
               CSS_SelectSW: {
                 color:AlarmSelectSW && !maintainSelectSW
@@ -4069,7 +4125,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_EmergencyNO: {
@@ -4080,7 +4136,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_EmergencyNC: {
@@ -4091,7 +4147,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_Reset: {
@@ -4102,7 +4158,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_Horn: {
@@ -4113,7 +4169,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
            
 
@@ -4125,7 +4181,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -4137,7 +4193,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
 
@@ -4149,7 +4205,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
               CSS_SELENOID: {
                 color:AlarmDO_SV1 && !maintainDO_SV1
@@ -4159,7 +4215,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
 
             CSS_Beacon: {
@@ -4170,7 +4226,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
                 : "" ,
                 height:25,
                 fontWeight:400,
-                padding:10
+                
             },
       };
       const SVF1format = SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
@@ -4184,12 +4240,15 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const VMLastdayformat = VmLastDay01 !== null ? parseFloat(VmLastDay01).toFixed(2) : "";
 
       const paragraphContents = {
+
         SVF: "Standard Volume Flow",
         GVF: "Gross Volume Flow",
         SVA: "Standard Volume Accumulated",
         GVA: "Gross Volume Accumulated",
+
         PT: "Output Pressure",
         TT: "Temperature",
+
         PSV: "Pressure Safety Valve",
         PCV1: "Pressure Control Valve 1901",
         PCV2: "Pressure Control Valve 1902",
@@ -4205,10 +4264,70 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
     };
 
+    const modbusEVC1 = {
+
+        
+        SVF: "40858",
+        GVF: "40860",
+        SVA: "40854",
+        GVA: "40856",
+
+        PT: "40852",
+        TT: "40850",
+
+
+        VB_TODAY:"40862",
+        VB_Yesterday:"40866",
+        VM_TODAY:"40864",
+        VM_Yesterday:"40868",
+        ReBattery:"40001"
+
+    }
+
+    const modbusEVC2 = {
+
+        SVF: "40858",
+        GVF: "40860",
+        SVA: "40854",
+        GVA: "40856",
+
+        PT: "40852",
+        TT: "40850",
+
+        VB_TODAY:"40862",
+        VB_Yesterday:"40866",
+        VM_TODAY:"40864",
+        VM_Yesterday:"40868",
+        ReBattery:"40001"
+    }
+
+    const modbusPLC = {
+        PT1:"40006",
+        GD1:"40002",
+        GD2:"40004",
+        GD3:"40030",
+        
+        SDV_ZSO:"40008",
+        SDV_ZSC:"40010",
+        DI_MAP_1:"40013",
+        UPS_BATTERY:"40014",
+        UPS_CHARGING:"40015",
+        UPS_ALARM:"40016",
+        DI_SELECT_SW:"40018",
+        RESET:"40019",
+        Emergency_Stop_NO:"40020",
+        Emergency_Stop_NC:"40021",
+        UPS_MODE:"40021",
+        SDV_SOLENOID:"40028",
+        HORN:"40026",
+        BEACON:"40027"
+    }
+
       const dataEVC01 = [
 
-
         { timeUpdate: <span style={combineCss.CSS_SVF1} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_SVF1}> {modbusEVC1.SVF}</span> ,
+
         name: <span style={combineCss.CSS_SVF1}>{paragraphContents.SVF}	 </span> ,
 
         value: <span style={combineCss.CSS_SVF1} > {SVF1format} sm³/h </span> , 
@@ -4222,7 +4341,10 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      ></Checkbox>
 
         },
+
         { timeUpdate: <span style={combineCss.CSS_GVF1} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_GVF1}>{modbusEVC1.GVF}</span> ,
+
         name: <span style={combineCss.CSS_GVF1}>{paragraphContents.GVF} </span> ,
 
 
@@ -4239,6 +4361,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
        
           { timeUpdate: <span style={combineCss.CSS_SVA1} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_SVA1}>{modbusEVC1.SVA}</span> ,
+
         name: <span  style={combineCss.CSS_SVA1}>{paragraphContents.SVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
 
@@ -4253,7 +4377,10 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      ></Checkbox>
 
         },
+
         { timeUpdate: <span style={combineCss.CSS_GVA1} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_GVA1}>{modbusEVC1.GVA}</span> ,
+
         name: <span style={combineCss.CSS_GVA1}>{paragraphContents.GVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_GVA1}>40872	 </span> ,
 
@@ -4268,7 +4395,10 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      ></Checkbox>
 
         },
+
         { timeUpdate: <span style={combineCss.CSSpt02} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSSpt02}>{modbusEVC1.PT}</span> ,
+
         name: <span style={combineCss.CSSpt02}>{paragraphContents.PT} </span> ,
         value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
@@ -4279,9 +4409,11 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      onChange={ChangeMaintainPT_1901}
      checked={maintainPT_1901}
  ></Checkbox>
-    },
-    { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
+        },
+
+        { timeUpdate: <span style={combineCss.CSS_Temperature} >{timeUpdate}</span>,
     name: <span style={combineCss.CSS_Temperature}>{paragraphContents.TT} </span> ,
+    modbus: <span style={combineCss.CSS_Temperature}>{modbusEVC1.TT}</span> ,
 
     value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
     high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
@@ -4293,10 +4425,11 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     checked={maintainTemperature01}
 ></Checkbox>
 
-   },
-
+        },
 
         { timeUpdate: <span style={combineCss.CSS_VbToDay01} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VbToDay01}>{modbusEVC1.VB_TODAY}</span> ,
+
         name: <span style={combineCss.CSS_VbToDay01}> {paragraphContents.VB_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VbToDay01} > {VBTodayformat} Sm³</span>, 
@@ -4309,11 +4442,12 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         checked={maintainVbToDay01}
     ></Checkbox>
 
-       },
+        },
 
         { timeUpdate: <span style={combineCss.CSS_VmToDay01} >{timeUpdate}</span>,
-        name: <span style={combineCss.CSS_VmToDay01}>{paragraphContents.VM_TODAY}</span> ,
+        modbus: <span style={combineCss.CSS_VmToDay01}>{modbusEVC1.VM_TODAY}</span> ,
 
+        name: <span style={combineCss.CSS_VmToDay01}>{paragraphContents.VM_TODAY}</span> ,
         value: <span style={combineCss.CSS_VmToDay01} > {VMTodayformat} m³</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
@@ -4324,9 +4458,11 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         checked={maintainVmToDay01}
     ></Checkbox>
 
-       },
+        },
 
        { timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{timeUpdate}</span>,
+       modbus: <span style={combineCss.CSS_VbLastDay01}>{modbusEVC1.VB_Yesterday}</span> ,
+
        name: <span style={combineCss.CSS_VbLastDay01}> {paragraphContents.VB_Yesterday}</span> ,
 
        value: <span style={combineCss.CSS_VbLastDay01} > {VBLastdayformat} Sm³</span>, 
@@ -4339,9 +4475,11 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        checked={maintainVbLastDay01}
    ></Checkbox>
 
-      },
+        },
 
         { timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VmLastDay01}>{modbusEVC1.VM_Yesterday}</span> ,
+
         name: <span style={combineCss.CSS_VmLastDay01}> {paragraphContents.VM_Yesterday} </span> ,
 
         value: <span style={combineCss.CSS_VmLastDay01} > {VMLastdayformat} m³</span>, 
@@ -4354,11 +4492,11 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         checked={maintainVmLastDay01}
     ></Checkbox>
 
-       },
-
-  
+        },
 
         { timeUpdate: <span style={combineCss.CSS_Rebattery} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_Rebattery}>{modbusEVC1.ReBattery}</span> ,
+
         name: <span style={combineCss.CSS_Rebattery}>{paragraphContents.ReBattery}</span> ,
 
         value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
@@ -4371,7 +4509,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         checked={maintainReBattery01}
     ></Checkbox>
 
-       },
+         },
 
       ]
 
@@ -4386,14 +4524,12 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
       const VBLastdayformat2 = VbLastDay02 !== null ? parseFloat(VbLastDay02).toFixed(2) : "";
       const c = VmLastDay02 !== null ? parseFloat(VmLastDay02).toFixed(2) : "";
 
-
-
-
       const dataEVC02 = [
 
         { timeUpdate: <span style={combineCss.CSS_SVF2} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_SVF2}>{modbusEVC2.SVF}</span> ,
+
         name: <span style={combineCss.CSS_SVF2}>{paragraphContents.SVF}	 </span> ,
-        // modbus: <span style={combineCss.CSS_SVF2}>  40858 </span> ,
 
         value: <span style={combineCss.CSS_SVF2} > {SVF2format} m³/h </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
@@ -4407,6 +4543,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVF2} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_GVF2}>{modbusEVC2.GVF}</span> ,
+
         name: <span style={combineCss.CSS_GVF2}>{paragraphContents.GVF}	 </span> ,
 
         value: <span style={combineCss.CSS_GVF2} > {GVF2format} m³/h</span> , 
@@ -4422,6 +4560,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
           { timeUpdate: <span style={combineCss.CSS_SVA2} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_SVA2}>{modbusEVC2.SVA}</span> ,
+
         name: <span style={combineCss.CSS_SVA2}>{paragraphContents.SVA}	 </span> ,
 
         value: <span style={combineCss.CSS_SVA2} > {SVA2format} sm³</span> , 
@@ -4436,6 +4576,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSS_GVA2} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_GVA2}>{modbusEVC2.GVA}</span> ,
+
         name: <span style={combineCss.CSS_GVA2}>{paragraphContents.GVA}	 </span> ,
 
         value: <span style={combineCss.CSS_GVA2} > {GVA2format} m³</span> , 
@@ -4450,6 +4592,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
         },
         { timeUpdate: <span style={combineCss.CSSpt03} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSSpt03}>{modbusEVC2.PT}</span> ,
+
         name: <span style={combineCss.CSSpt03}>{paragraphContents.PT} </span> ,
         value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
         high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
@@ -4462,6 +4606,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
  ></Checkbox>
     },
     { timeUpdate: <span style={combineCss.CSS_Temperature02} >{timeUpdate}</span>,
+    modbus: <span style={combineCss.CSS_Temperature02}>{modbusEVC2.TT}</span> ,
+
     name: <span style={combineCss.CSS_Temperature02}>{paragraphContents.TT} </span> ,
 
     value: <span style={combineCss.CSS_Temperature02} > {Temperature02} °C</span>, 
@@ -4478,6 +4624,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
 
         { timeUpdate: <span style={combineCss.CSS_VbToDay02} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VbToDay02}>{modbusEVC2.VB_TODAY}</span> ,
+
         name: <span style={combineCss.CSS_VbToDay02}> {paragraphContents.VB_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VbToDay02} > {VBTodayformat2} Sm³</span>, 
@@ -4493,6 +4641,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_VmToDay02} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VmToDay02}>{modbusEVC2.VM_TODAY}</span> ,
+
         name: <span style={combineCss.CSS_VmToDay02}> {paragraphContents.VM_TODAY}</span> ,
 
         value: <span style={combineCss.CSS_VmToDay02} > {VMTodayformat2} m³</span>, 
@@ -4508,6 +4658,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VbLastDay02}>{modbusEVC2.VB_Yesterday}</span> ,
+
         name: <span style={combineCss.CSS_VbLastDay02}> {paragraphContents.VB_Yesterday}</span> ,
 
         value: <span style={combineCss.CSS_VbLastDay02} > {VBLastdayformat2} Sm³</span>, 
@@ -4522,6 +4674,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
        },
         { timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSS_VmLastDay02}>{modbusEVC2.VM_Yesterday}</span> ,
+
         name: <span style={combineCss.CSS_VmLastDay02}> {paragraphContents.VM_Yesterday} </span> ,
 
         value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} m³</span>, 
@@ -4537,6 +4691,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        },
 
         { timeUpdate: <span style={combineCss.CSS_Rebattery02} >{timeUpdate}</span>,
+
+        modbus: <span style={combineCss.CSS_Rebattery02}>{modbusEVC2.ReBattery}</span> ,
+
         name: <span style={combineCss.CSS_Rebattery02}>{paragraphContents.ReBattery}</span> ,
 
         value: <span style={combineCss.CSS_Rebattery02} > {ReBattery02} Months</span>, 
@@ -4596,9 +4753,14 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         MAP:"MAP",
       }
 
+
+      
+
       const dataPLC = [
 
         { timeUpdate: <span style={combineCss.CSSpt01} >{timeUpdate}</span>,
+        modbus: <span style={combineCss.CSSpt01}>{modbusPLC.PT1}</span> ,
+
         name: <span style={combineCss.CSSpt01}>{paragraphContentsPLC.PT03} </span> ,
         value: <span style={combineCss.CSSpt01} > {PT01format} BarG</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
@@ -4613,6 +4775,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
      { timeUpdate: <span style={combineCss.CSSgd01} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSSgd01}>{modbusPLC.GD1}</span> ,
+
      name: <span style={combineCss.CSSgd01}>{paragraphContentsPLC.GD1} </span> ,
      value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
       high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
@@ -4627,6 +4791,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      },
 
      { timeUpdate: <span style={combineCss.CSSgd02} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSSgd02}>{modbusPLC.GD2}</span> ,
+
      name: <span style={combineCss.CSSgd02}>{paragraphContentsPLC.GD2} </span> ,
      value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
       high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
@@ -4641,6 +4807,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
      },
 
      { timeUpdate: <span style={combineCss.CSSgd03} >{timeUpdate}</span>,
+     modbus: <span  style={combineCss.CSSgd03}>{modbusPLC.GD3}</span> ,
+
      name: <span style={combineCss.CSSgd03}>{paragraphContentsPLC.GD3}</span> ,
      value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
       high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
@@ -4656,6 +4824,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
      
         { timeUpdate: <span style={combineCss.CSS_UpsCharging} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_UpsCharging}>{modbusPLC.UPS_CHARGING}</span> ,
+
         name: <span style={combineCss.CSS_UpsCharging}>{paragraphContentsPLC.UPS_CHARGING} </span> ,
         value: <span style={combineCss.CSS_UpsCharging} > {UpsCharging} {DataCharging}</span> , 
         high: <InputText style={combineCss.CSS_UpsCharging}   placeholder='High' step="0.1" type='number' value={inputHighUpsCharging} onChange={handleInputChangeHighUpsCharging} inputMode="decimal" />, 
@@ -4669,6 +4839,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsBattery} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_UpsBattery} >{modbusPLC.UPS_BATTERY}</span> ,
+
         name: <span style={combineCss.CSS_UpsBattery}>{paragraphContentsPLC.UPS_BATTERY} </span> ,
         value: <span style={combineCss.CSS_UpsBattery} > {UpsBattery} {DataBattery}</span> , 
         high: <InputText style={combineCss.CSS_UpsBattery}   placeholder='High' step="0.1" type='number' value={inputHighUpsBattery} onChange={handleInputChangeHighUpsBattery} inputMode="decimal" />, 
@@ -4681,6 +4853,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_UpsAlarm} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_UpsAlarm}>{modbusPLC.UPS_ALARM}</span> ,
+
         name: <span style={combineCss.CSS_UpsAlarm}>{paragraphContentsPLC.UPS_ALARM} </span> ,
         value: <span style={combineCss.CSS_UpsAlarm} > {UpsAlarm} {DataAlarm}</span> , 
         high: <InputText style={combineCss.CSS_UpsAlarm}   placeholder='High' step="0.1" type='number' value={inputHighUpsAlarm} onChange={handleInputChangeHighUpsAlarm} inputMode="decimal" />, 
@@ -4694,6 +4868,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_UpsMode} >{timeUpdate}</span>,
+     modbus: <span>{modbusPLC.UPS_MODE}</span> ,
+
         name: <span style={combineCss.CSS_UpsMode}>{paragraphContentsPLC.UPS_MODE} </span> ,
         value: <span style={combineCss.CSS_UpsMode} > {UpsMode} {DataMode}</span> , 
         high: <InputText style={combineCss.CSS_UpsMode}   placeholder='High' step="0.1" type='number' value={inputHighUpsMode} onChange={handleInputChangeHighUpsMode} inputMode="decimal" />, 
@@ -4708,6 +4884,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
        
     
         { timeUpdate: <span style={combineCss.CSS_SelectSW} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_SelectSW}>{modbusPLC.DI_SELECT_SW}</span> ,
+
         name: <span style={combineCss.CSS_SelectSW}>{paragraphContentsPLC.SELECT_SW} </span> ,
         value: <span style={combineCss.CSS_SelectSW} > {SelectSW} {DataSelectSW}</span> , 
         high: <InputText style={combineCss.CSS_SelectSW}   placeholder='High' step="0.1" type='number' value={inputHighSelectSW} onChange={handleInputChangeHighSelectSW} inputMode="decimal" />, 
@@ -4721,6 +4899,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Reset} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_Reset}>{modbusPLC.RESET}</span> ,
+
         name: <span style={combineCss.CSS_Reset}>{paragraphContentsPLC.RESET} </span> ,
         value: <span style={combineCss.CSS_Reset} > {DIReset} {DataReset}</span> , 
         high: <InputText style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputHighDIReset} onChange={handleInputChangeHighDIReset} inputMode="decimal" />, 
@@ -4734,6 +4914,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
      
         { timeUpdate: <span style={combineCss.CSS_SELENOID} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_SELENOID}>{modbusPLC.SDV_SOLENOID}</span> ,
+
         name: <span style={combineCss.CSS_SELENOID}>{paragraphContentsPLC.SOLENOID} </span> ,
         value: <span style={combineCss.CSS_SELENOID} > {DO_SV1} {DataSV_1}</span> , 
         high: <InputText style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputHighDO_SV1} onChange={handleInputChangeHighDO_SV1} inputMode="decimal" />, 
@@ -4747,6 +4929,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_EmergencyNC} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_EmergencyNC}>{modbusPLC.Emergency_Stop_NC}</span> ,
+
         name: <span style={combineCss.CSS_EmergencyNC}>{paragraphContentsPLC.EMERGENCY_NC} </span> ,
         value: <span style={combineCss.CSS_EmergencyNC} > {EmergencyNC} {DataEmergencyNC}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNC}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNC} onChange={handleInputChangeHighEmergencyNC} inputMode="decimal" />, 
@@ -4759,6 +4943,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_EmergencyNO} >{timeUpdate}</span>,
+     modbus : <span style={combineCss.CSS_EmergencyNO}>{modbusPLC.Emergency_Stop_NO}</span> ,
+
         name: <span style={combineCss.CSS_EmergencyNO}>{paragraphContentsPLC.EMERGENCY_NO} </span> ,
         value: <span style={combineCss.CSS_EmergencyNO} > {EmergencyNO} {DataEmergencyNO}</span> , 
         high: <InputText style={combineCss.CSS_EmergencyNO}   placeholder='High' step="0.1" type='number' value={inputHighEmergencyNO} onChange={handleInputChangeHighEmergencyNO} inputMode="decimal" />, 
@@ -4772,6 +4958,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Horn} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_Horn}>{modbusPLC.HORN}</span> ,
+
         name: <span style={combineCss.CSS_Horn}>{paragraphContentsPLC.HORN} </span> ,
         value: <span style={combineCss.CSS_Horn} > {DOHorn} {DataHorn}</span> , 
         high: <InputText style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputHighDOHorn} onChange={handleInputChangeHighDOHorn} inputMode="decimal" />, 
@@ -4784,6 +4972,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
     ></Checkbox>
         },
         { timeUpdate: <span style={combineCss.CSS_ZSC} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_ZSC}>{modbusPLC.SDV_ZSC}</span> ,
+
         name: <span style={combineCss.CSS_ZSC}>{paragraphContentsPLC.SDV_SZC} </span> ,
         value: <span style={combineCss.CSS_ZSC} > {ZSC_1} {DataZSC_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputHighZSC_1} onChange={handleInputChangeHighZSC_1} inputMode="decimal" />, 
@@ -4797,6 +4987,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_ZSO} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_ZSO}>{modbusPLC.SDV_ZSO}</span> ,
+
         name: <span style={combineCss.CSS_ZSO}>{paragraphContentsPLC.SDV_SZO} </span> ,
         value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
         high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
@@ -4810,6 +5002,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Map} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_Map}>{modbusPLC.DI_MAP_1}</span> ,
+
         name: <span style={combineCss.CSS_Map}>{paragraphContentsPLC.MAP} </span> ,
         value: <span style={combineCss.CSS_Map} > {Map} {DataMap}</span> , 
         high: <InputText style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputHighMap} onChange={handleInputChangeHighMap} inputMode="decimal" />, 
@@ -4823,6 +5017,8 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         },
 
         { timeUpdate: <span style={combineCss.CSS_Beacon} >{timeUpdate}</span>,
+     modbus: <span style={combineCss.CSS_Beacon}>{modbusPLC.BEACON}</span> ,
+
         name: <span style={combineCss.CSS_Beacon}>{paragraphContentsPLC.BEACON} </span> ,
         value: <span style={combineCss.CSS_Beacon} > {Beacon} {DataBeacon}</span> , 
         high: <InputText style={combineCss.CSS_Beacon}   placeholder='High' step="0.1" type='number' value={inputHighBeacon} onChange={handleInputChangeHighBeacon} inputMode="decimal" />, 
@@ -4865,6 +5061,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
         <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
       <Column field="timeUpdate" header="Time Update" />
       {/* <Column field="modbus" header="Modbus" /> */}
+      <Column field="modbus" header="Modbus" />
 
       <Column field="name" header="Name" />
 
@@ -4885,6 +5082,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 <DataTable  value={dataEVC02} size={'small'}  selectionMode="single"   >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
+<Column field="modbus" header="Modbus" />
 
 <Column field="name" header="Name" />
 
@@ -4904,6 +5102,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 <DataTable  value={dataPLC} size={'small'} selectionMode="single"    >
 <Column field="timeUpdate" header="Time Update" />
 {/* <Column field="modbus" header="Modbus" /> */}
+<Column field="modbus" header="Modbus" />
 
 <Column field="name" header="Name" />
 
@@ -4921,6 +5120,9 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
 
 <SetAttribute/>
 </div>
+
+
+        
     </div>
     
     );

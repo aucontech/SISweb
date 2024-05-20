@@ -9,7 +9,7 @@ const TabOtsuka = () => {
         <div className="grid">
             <div style={{ width: "100%" }}>
                                 
-                <TabView>
+                {/* <TabView>
               
                  
                      <TabPanel header="Graphic">
@@ -20,8 +20,8 @@ const TabOtsuka = () => {
                        <GraphicPRU/>
                     </TabPanel>
              
-                </TabView>
-                {/* <DemoFlowOTS /> */}
+                </TabView> */}
+                <DemoFlowOTS />
             </div>
         </div>
     );

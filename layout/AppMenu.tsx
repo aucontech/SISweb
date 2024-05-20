@@ -57,7 +57,6 @@ const AppMenu = () => {
                     ],
                 },
             ];
-
             setModel(modelData);
         } else {
             const modelData: MenuModel[] = [
@@ -68,23 +67,25 @@ const AppMenu = () => {
                         {
                             label: "Overview",
                             icon: "pi pi-fw pi-home",
-                            to: "/OTSUKA",
-                        },
-                        {
-                            label: "Station Details",
-                            icon: "pi pi-fw pi-home",
-                            to: "/devices",
-                        },
-                        {
-                            label: "Setup Data",
-                            icon: "pi pi-fw pi-home",
-                            to: "/SetupData",
-                        },
-                        {
-                            label: "Score card",
-                            icon: "pi pi-fw pi-home",
                             to: "/scorecard",
                         },
+                       
+                       
+                    ],
+                },
+
+                {
+                    label: "Station Details",
+                    icon: "pi pi-home",
+                    items: [
+                       
+                        {
+                            label: "Graphics",
+                            icon: "pi pi-fw pi-image",
+                            to: "/OTSUKA",
+                        },
+                      
+                       
                     ],
                 },
                 {
@@ -108,20 +109,26 @@ const AppMenu = () => {
                     icon: "pi pi-home",
                     items: [
                         {
+                            label: "Setup Data",
+                            icon: "pi pi-fw pi-sliders-h",
+                            to: "/SetupData",
+                        },
+                        {
                             label: "Device List",
                             icon: "pi pi-fw pi-list",
                             to: "/devices",
                         },
-                        {
-                            label: "Device Profile",
-                            icon: "pi pi-fw pi-table",
-                            to: "/deviceprofiles",
-                        },
+                        // {
+                        //     label: "Device Profile",
+                        //     icon: "pi pi-fw pi-table",
+                        //     to: "/deviceprofiles",
+                        // },
                         {
                             label: "Chart",
                             icon: "pi pi-fw pi-chart-bar",
                             // to: "/devices",
                         },
+                        
                     ],
                 },
                 {

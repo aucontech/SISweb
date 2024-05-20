@@ -10,6 +10,7 @@ import "./LowHighOtsuka.css";
 import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Calendar } from 'primereact/calendar';
 
 export default function SetAttribute() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -19,10 +20,21 @@ export default function SetAttribute() {
     const [upTS, setUpTS] = useState<any>([]);
     const [upData2, setUpData2] = useState<any>([]);
     const [upData3, setUpData3] = useState<any>([]);
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+
+    const [timeEVC_01,setTimeEVC_01] = useState<any>()
+    const [timeEVC_02,setTimeEVC_02] = useState<any>()
+
+
+    const [timeEVC_03,setTimeEVC_03] = useState<any>()
+    const [timeEVC_04,setTimeEVC_04] = useState<any>()
+
 
     const [inputValue, setInputValue] = useState<any>();
     const [inputValue2, setInputValue2] = useState<any>();
     const [inputValue3, setInputValue3] = useState<any>();
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
 
     const token = readToken();
     const op = useRef<OverlayPanel>(null);
@@ -51,6 +63,26 @@ export default function SetAttribute() {
                                 type: "ATTRIBUTE",
                                 key: "PSV_01",
                             },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
                         ],
                     },
                     query: {
@@ -58,7 +90,7 @@ export default function SetAttribute() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                id: id_OTSUKA,
                             },
                         },
                         pageLink: {
@@ -98,6 +130,26 @@ export default function SetAttribute() {
                             {
                                 type: "ATTRIBUTE",
                                 key: "PSV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
                             },
                         ],
                     },
@@ -167,6 +219,47 @@ export default function SetAttribute() {
 
                     setUpData3(updatedData3);
                 }
+
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ballValue3 =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(ballValue3);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData3 =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+
+                        setGetWayPhoneOTSUKA(updatedData3);
+                }
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                }
+
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                }
             };
         }
     }, []);
@@ -175,11 +268,16 @@ export default function SetAttribute() {
         try {
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PCV_01: inputValue, PCV_02: inputValue2, PSV_01: inputValue3 }
+                { PCV_01: inputValue, PCV_02: inputValue2, PSV_01: inputValue3,IOT_Gateway_Phone: inputGetwayPhone, 
+                     EVC_01_Battery_Expiration_Date: timeEVC_01,
+                    EVC_01_Battery_Installation_Date: timeEVC_02,
+                    EVC_02_Battery_Expiration_Date: timeEVC_03,
+                    EVC_02_Battery_Installation_Date: timeEVC_04, }
             );
             setUpData(inputValue);
             setUpData2(inputValue2);
             setUpData3(inputValue3);
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             toast.current?.show({
                 severity: "info",
@@ -201,22 +299,58 @@ export default function SetAttribute() {
         setInputValue(upData);
         setInputValue2(upData2);
         setInputValue3(upData3);
-    }, [upData, upData2, upData3]);
+        setInputGetwayPhone(getWayPhoneOTSUKA)
+
+    }, [upData, upData2, upData3,getWayPhoneOTSUKA,timeEVC_01,timeEVC_02]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value; // Giữ nguyên chuỗi đầu vào
+        const newValue = event.target.value;
         setInputValue(newValue);
     };
 
     const handleInputChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value; // Giữ nguyên chuỗi đầu vào
+        const newValue = event.target.value;
         setInputValue2(newValue);
     };
     const handleInputChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value; // Giữ nguyên chuỗi đầu vào
+        const newValue = event.target.value;
         setInputValue3(newValue);
     };
 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const timeEVC_01Number = parseFloat(timeEVC_01);
+    const date = !isNaN(timeEVC_01Number) ? new Date(timeEVC_01Number) : null;
+
+    const timeEVC_02Number = parseFloat(timeEVC_02);
+    const date2 = !isNaN(timeEVC_02Number) ? new Date(timeEVC_02Number) : null;
+
+    const timeEVC_03Number = parseFloat(timeEVC_03);
+    const date3 = !isNaN(timeEVC_03Number) ? new Date(timeEVC_03Number) : null;
+
+    const timeEVC_04Number = parseFloat(timeEVC_04);
+    const date4 = !isNaN(timeEVC_04Number) ? new Date(timeEVC_04Number) : null;
+
+    const handleDateChange = (e: any) => {
+        const selectedDate = e.value;
+        setTimeEVC_02(selectedDate.getTime());
+
+        const expirationDate = new Date(selectedDate);
+        expirationDate.setMonth(expirationDate.getMonth() + 18);
+        setTimeEVC_01(expirationDate.getTime());
+    };
+
+    const handleDateChange2 = (e: any) => {
+        const selectedDate = e.value;
+        setTimeEVC_03(selectedDate.getTime());
+
+        const expirationDate = new Date(selectedDate);
+        expirationDate.setMonth(expirationDate.getMonth() + 18);
+        setTimeEVC_04(expirationDate.getTime());
+    };
     const confirmUpData = () => {
         confirmDialog({
             message: "Are you sure you updated the data?",
@@ -229,7 +363,6 @@ export default function SetAttribute() {
         PCV: {
             height: 25,
             fontWeight: 400,
-            padding: 10,
         },
     };
 
@@ -237,6 +370,13 @@ export default function SetAttribute() {
         PSV: "Pressure Safety Valve ( PSV-1901)" ,
         PCV1: "Pressure Control Valve (PCV-1901)",
         PCV2: "Pressure Control Valve (PCV-1902)",
+        IOT: "IOT getway phone number",
+        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+
+        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+
     }
 
     const configuration = [
@@ -314,8 +454,168 @@ export default function SetAttribute() {
                 />
             ),
         },
-    ];
 
+        {
+            Name: <span style={combineCss.PCV}>{configurationName.IOT} </span>,
+
+            Value: (
+                <InputText
+                    style={combineCss.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+
+        {
+            Name: (
+                <span style={combineCss.PCV}>
+                    {configurationName.EVC_01_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCss.PCV}
+                    value={date2}
+                    onChange={handleDateChange}
+
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCss.PCV}>
+                    {configurationName.EVC_01_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCss.PCV}
+                    value={date}
+                    disabled
+
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+
+        {
+            Name: (
+                <span style={combineCss.PCV}>
+                    {configurationName.EVC_02_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCss.PCV}
+                    value={date3}
+                    onChange={handleDateChange2}
+
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCss.PCV}>
+                    {configurationName.EVC_02_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCss.PCV}
+                    value={date4}
+                    disabled
+
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+                
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+    ];
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    useEffect(() => {
+        // Chuyển đổi chuỗi "01-03-2024" thành đối tượng Date
+        const dateString = "01-03-2024";
+        const parts = dateString.split('-');
+        const year = parseInt(parts[2], 10);
+        const month = parseInt(parts[1], 10) - 1; // Tháng trong JavaScript bắt đầu từ 0
+        const day = parseInt(parts[0], 10);
+        const dateObject :any = new Date(year, month, day);
+    
+        setSelectedDate(dateObject);
+      }, []);
     return (
         <div>
             <Toast ref={toast} />
@@ -330,6 +630,7 @@ export default function SetAttribute() {
                     <Column field="Update" header="Update" />
                 </DataTable>
             </div>
+
         </div>
     );
 }
