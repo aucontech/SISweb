@@ -6,22 +6,22 @@ import { useSearchParams } from "next/navigation";
 import { getDeviceById } from "@/api/device.api";
 const Alarm = () => {
     const searchParams = useSearchParams();
-    const deviceid = searchParams.get("deviceid");
+    const deviceId = searchParams.get("deviceId");
     const [filters, setFilters] = useState<any>({});
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
     };
 
     useEffect(() => {
-        if (deviceid !== null) {
-            getDeviceById(deviceid)
+        if (deviceId !== null) {
+            getDeviceById(deviceId)
                 .then((resp) => resp.data)
                 .then((res) => {
                     setFilters({ ...filters, device: res });
                 })
                 .catch((err) => console.log(err));
         }
-    }, [deviceid]);
+    }, [deviceId]);
 
     return (
         <>

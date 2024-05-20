@@ -205,6 +205,7 @@ export default function Alarmbell() {
 
         ws.current.onmessage = async (evt: any) => {
             const dataReceive: any = JSON.parse(evt.data);
+            console.log("dataReceive", dataReceive);
 
             if (dataReceive && dataReceive["cmdId"] === 1) {
                 if (
@@ -214,7 +215,12 @@ export default function Alarmbell() {
                 ) {
                     audioRef.current?.play();
                     setNotifications(dataReceive.data.data);
-                } else {
+                } else if (
+                    dataReceive.data &&
+                    dataReceive.data.data &&
+                    dataReceive.data.data.length === 0 &&
+                    dataReceive.update === null
+                ) {
                     audioRef.current?.pause();
                     setNotifications([]);
                 }
@@ -222,11 +228,11 @@ export default function Alarmbell() {
         };
         ws.current.onclose = () => {
             console.log("WebSocket connection closed. Trying to reconnect...");
-            setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+            setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
         };
         ws.current.onerror = (error) => {
             console.error("WebSocket error:", error);
-            setTimeout(() => connectWebSocket(token), 10000); // Thử kết nối lại sau 5 giây
+            setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
             // UIUtils.showError({});
         };
     };
@@ -381,10 +387,14 @@ export default function Alarmbell() {
     const handleClickViewMore = (item: any) => () => {
         if (currentUser.authority === "CUSTOMER_USER") {
             router.push(
-                "/alarmsummarycustomer" + "?" + createQueryString("id", item)
+                "/alarmsummarycustomer" +
+                    "?" +
+                    createQueryString("deviceId", item)
             );
         } else {
-            router.push("/alarmsummary" + "?" + createQueryString("id", item));
+            router.push(
+                "/alarmsummary" + "?" + createQueryString("deviceId", item)
+            );
         }
     };
     const subjectCount = notifications.length;
