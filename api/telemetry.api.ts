@@ -17,7 +17,6 @@ export const saveOrUpdateSeverAttributesByDevice = (
 };
 
 export const getSeverAttributesByAsset = (asseetId: string): Promise<any> => {
-    console.log(asseetId);
     return httpApi.get<any>(
         `/plugins/telemetry/ASSET/${asseetId}/values/attributes/SERVER_SCOPE`
     );
@@ -45,5 +44,27 @@ export const saveOrUpdateSeverAttributesByAsseet = (
     return httpApi.post<any>(
         `/plugins/telemetry/ASSET/${assetId}/SERVER_SCOPE`,
         { ...attribute }
+    );
+};
+
+export const getTimeseriesKeys = (
+    entityType: string,
+    entityId: string
+): Promise<any> => {
+    return httpApi.get<any>(
+        `/plugins/telemetry/${entityType}/${entityId}/keys/timeseries`
+    );
+};
+
+export const getTimesSeriesData = (
+    entityType: string,
+    entityId: string,
+    params: any
+): Promise<any> => {
+    return httpApi.get<any>(
+        `/plugins/telemetry/${entityType}/${entityId}/values/timeseries`,
+        {
+            params,
+        }
     );
 };

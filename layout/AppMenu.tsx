@@ -160,6 +160,11 @@ const AppMenu = () => {
                             // to: "/devices",
                         },
                         {
+                            label: "Data Table Report",
+                            icon: "pi pi-fw pi-comment",
+                            to: "/datatablereport",
+                        },
+                        {
                             label: "File Manager",
                             icon: "pi pi-fw pi-file",
                             to: "/filemanager",

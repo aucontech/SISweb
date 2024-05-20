@@ -207,7 +207,7 @@ export default function Alarmbell() {
 
         ws.current.onmessage = async (evt: any) => {
             const dataReceive: any = JSON.parse(evt.data);
-            console.log("dataReceive", dataReceive);
+            //console.log("dataReceive", dataReceive);
 
             if (dataReceive && dataReceive["cmdId"] === 1) {
                 if (
