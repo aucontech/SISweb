@@ -467,12 +467,10 @@ export default function ScoreCard_Otsuka() {
                                 Status :{" "}
                                 {EVC_STT01 === "0" ? (
                                     <span style={{ color: "red" }}>
-                                        {" "}
                                         Disconnect
                                     </span>
                                 ) : (
                                     <span style={{ color: "#3DE644" }}>
-                                        {" "}
                                         Good
                                     </span>
                                 )}{" "}
@@ -502,7 +500,7 @@ export default function ScoreCard_Otsuka() {
                         </div>
                     </div>
                 </div>
-                <DataTable value={dataEVC} size="small">
+                <DataTable value={dataEVC} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
                         field="evc1901"
@@ -521,7 +519,7 @@ export default function ScoreCard_Otsuka() {
                 </DataTable>
 
                 <div>
-                    <DataTable value={dataPLC} size="small">
+                    <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column field="name" header="PLC Parameter"></Column>
                         <Column
                             field="PLC"
