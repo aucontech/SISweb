@@ -8,7 +8,7 @@ import styles from "./AlarmBell.module.css";
 import { readToken } from "@/service/localStorage";
 import { readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
-
+import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
 import { Utils } from "@/service/Utils";
 
@@ -31,7 +31,8 @@ export default function Alarmbell() {
     const router = useRouter();
     const op = useRef<OverlayPanel>(null);
     const ws = useRef<WebSocket | null>(null);
-    //const [data, setData] = useState<WebSocketMessage[]>([]);
+    const [loading, setLoading] = useState(true); // State để kiểm soát loading
+
     // const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     // const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -56,7 +57,7 @@ export default function Alarmbell() {
         );
         ws.current.onopen = () => {
             console.log("WebSocket connection opened.");
-            //  setLoading(false);
+
             let data = {
                 alarmCountCmds: [
                     {
@@ -216,6 +217,7 @@ export default function Alarmbell() {
                 ) {
                     audioRef.current?.play();
                     setNotifications(dataReceive.data.data);
+                    setLoading(false);
                 } else if (
                     dataReceive.data &&
                     dataReceive.data.data &&
@@ -224,17 +226,21 @@ export default function Alarmbell() {
                 ) {
                     audioRef.current?.pause();
                     setNotifications([]);
+                    setLoading(false);
                 }
             } else if (dataReceive && dataReceive["cmdId"] === 2) {
                 setAlarmCount(dataReceive.count);
+                setLoading(false);
             }
         };
         ws.current.onclose = () => {
             console.log("WebSocket connection closed. Trying to reconnect...");
+            setLoading(true);
             setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
         };
         ws.current.onerror = (error) => {
             console.error("WebSocket error:", error);
+            setLoading(true);
             setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
             // UIUtils.showError({});
         };
@@ -475,56 +481,65 @@ export default function Alarmbell() {
                 )}
             </div>
             <OverlayPanel style={{ marginLeft: 10, minWidth: 450 }} ref={op}>
-                <div>
+                {loading ? ( // Hiển thị loading spinner khi loading = true
                     <div
-                        style={{
-                            padding: "10px 20px ",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
+                        className="flex justify-content-center align-items-center"
+                        style={{ height: "200px" }}
                     >
-                        <div>
-                            <p style={{ fontSize: 20, fontWeight: 600 }}>
-                                Alarms
-                            </p>
-                        </div>
-
-                        {totalCount ? (
-                            <div className="MarkAllBell">
-                                <p
-                                    style={{
-                                        fontWeight: 500,
-                                        marginTop: 4,
-                                        cursor: "pointer",
-                                    }}
-                                    // onClick={handleMarkAllAsRead}
-                                >
-                                    {" "}
-                                    Mark all as read
+                        <ProgressSpinner />
+                    </div>
+                ) : (
+                    <div>
+                        <div
+                            style={{
+                                padding: "10px 20px ",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                        >
+                            <div>
+                                <p style={{ fontSize: 20, fontWeight: 600 }}>
+                                    Alarms
                                 </p>
                             </div>
+
+                            {totalCount ? (
+                                <div className="MarkAllBell">
+                                    <p
+                                        style={{
+                                            fontWeight: 500,
+                                            marginTop: 4,
+                                            cursor: "pointer",
+                                        }}
+                                        // onClick={handleMarkAllAsRead}
+                                    >
+                                        {" "}
+                                        Mark all as read
+                                    </p>
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </div>
+                        <hr />
+
+                        {notifications && notifications.length > 0 ? (
+                            <div style={{ overflowY: "auto", maxHeight: 400 }}>
+                                {_renderAlarmBell()}
+                            </div>
                         ) : (
-                            ""
+                            <div className={styles.alarmEmpty}>
+                                <Image
+                                    src="/demo/images/logoBell/bel.svg"
+                                    width={200}
+                                    height={200}
+                                    alt="Picture of the author"
+                                />
+                            </div>
                         )}
                     </div>
-                    <hr />
-
-                    {notifications && notifications.length > 0 ? (
-                        <div style={{ overflowY: "auto", maxHeight: 400 }}>
-                            {_renderAlarmBell()}
-                        </div>
-                    ) : (
-                        <div className={styles.alarmEmpty}>
-                            <Image
-                                src="/demo/images/logoBell/bel.svg"
-                                width={200}
-                                height={200}
-                                alt="Picture of the author"
-                            />
-                        </div>
-                    )}
-                </div>
+                )}
             </OverlayPanel>
         </div>
     );
