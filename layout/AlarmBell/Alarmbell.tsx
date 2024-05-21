@@ -32,11 +32,11 @@ export default function Alarmbell() {
     const op = useRef<OverlayPanel>(null);
     const ws = useRef<WebSocket | null>(null);
     const [loading, setLoading] = useState(true); // State để kiểm soát loading
-
+    const previousNotificationsLength = useRef(0); // Lưu trữ giá trị trước đó của notifications.length
     // const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
     // const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    console.log("notifications: ", notifications);
+    // console.log("notifications: ", notifications);
     // const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
@@ -215,7 +215,6 @@ export default function Alarmbell() {
                     dataReceive.data.data &&
                     dataReceive.data.data.length > 0
                 ) {
-                    audioRef.current?.play();
                     setNotifications(dataReceive.data.data);
                     setLoading(false);
                 } else if (
@@ -249,7 +248,7 @@ export default function Alarmbell() {
         let token: string | null = null;
 
         token = readToken();
-        console.log("Token", token);
+        // console.log("Token", token);
         if (token) {
             connectWebSocket(token);
         }
@@ -261,26 +260,28 @@ export default function Alarmbell() {
         };
     }, []);
 
-    // useEffect(() => {
-    //     const obj3 = { unsubCmd: { cmdId: 1 } };
-    //     const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-
-    //     if (ws.current) {
-    //         ws.current.onmessage = (evt) => {
-    //             const dataReceive = JSON.parse(evt.data) as WebSocketMessage;
-    //             if (dataReceive.update !== null) {
-    //                 setTotalUnreadCount(dataReceive.totalUnreadCount);
-    //                 setData([...data, dataReceive]);
-    //                 setObj1Processed(true);
-    //                 audioRef.current?.play();
-    //             } else if (
-    //                 dataReceive.cmdUpdateType === "NOTIFICATIONS" &&
-    //                 dataReceive.notifications
-    //             ) {
-    //                 setNotifications(dataReceive.notifications);
-    //             }
-    //         };
-    //     }
+    useEffect(() => {
+        if (
+            notifications.length > 0 &&
+            previousNotificationsLength.current < notifications.length
+        ) {
+            // console.log(
+            //     previousNotificationsLength.current,
+            //     notifications.length
+            // );
+            const promise = audioRef.current?.play();
+            if (promise !== undefined) {
+                promise
+                    .then(() => {
+                        // Autoplay started!
+                    })
+                    .catch((error) => {
+                        console.error("Autoplay was prevented.");
+                    });
+            }
+        }
+        previousNotificationsLength.current = notifications.length; // Cập nhật giá trị trước đó
+    }, [notifications]);
 
     //     if (obj1Processed) {
     //         ws.current?.send(JSON.stringify(obj3));
@@ -416,15 +417,14 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
-    // const handleMarkAllAsRead = () => {
-    //     const ReadAllAlarm = { markAllAsReadCmd: { cmdId: 4 } };
-    //     ws.current?.send(JSON.stringify(ReadAllAlarm));
-
-    //     const obj3 = { unsubCmd: { cmdId: 1 } };
-    //     const obj2 = { unreadSubCmd: { limit: totalUnreadCount, cmdId: 1 } };
-    //     ws.current?.send(JSON.stringify(obj3));
-    //     ws.current?.send(JSON.stringify(obj2));
-    // };
+    const handleStopAudio = () => {
+        // Hàm dừng âm thanh
+        if (audioRef.current && !audioRef.current.paused) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0; // Đưa thời gian về 0 để reset audio
+            console.log("Audio stopped successfully");
+        }
+    };
 
     return (
         <div>
@@ -512,10 +512,10 @@ export default function Alarmbell() {
                                             marginTop: 4,
                                             cursor: "pointer",
                                         }}
-                                        // onClick={handleMarkAllAsRead}
+                                        onClick={handleStopAudio}
                                     >
                                         {" "}
-                                        Mark all as read
+                                        Turn off audio
                                     </p>
                                 </div>
                             ) : (

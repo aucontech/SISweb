@@ -20,7 +20,16 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
 
     const _fetchDataTimeseries = useCallback(({ filters }) => {
         let { device, tags, dates } = filters;
-        if (dates && dates.length === 2 && device && tags && tags.length > 0) {
+        console.log(dates);
+        if (
+            dates &&
+            dates.length === 2 &&
+            dates[0] != null &&
+            dates[1] !== null &&
+            device &&
+            tags &&
+            tags.length > 0
+        ) {
             let reqParams: any = {
                 keys: tags.join(","),
                 startTs: dates[0].getTime(),
