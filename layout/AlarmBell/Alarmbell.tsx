@@ -205,7 +205,7 @@ export default function Alarmbell() {
             sendData(JSON.stringify(data));
         };
 
-        ws.current.onmessage = async (evt: any) => {
+        ws.current.onmessage = (evt: any) => {
             const dataReceive: any = JSON.parse(evt.data);
             //console.log("dataReceive", dataReceive);
 
