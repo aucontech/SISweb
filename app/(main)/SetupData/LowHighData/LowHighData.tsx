@@ -4261,25 +4261,24 @@ const confirmUpChangeGatewayPhone = () => {
         VM_TODAY:"Gross Volume Vm Today",
         VM_Yesterday:"Gross Volume Vm Yesterday",
         ReBattery:"Remainning Battery"
-
     };
 
     const modbusEVC1 = {
 
         
-        SVF: "40858",
-        GVF: "40860",
-        SVA: "40854",
-        GVA: "40856",
+        SVF: "40010",
+        GVF: "40012",
+        SVA: "40006",
+        GVA: "40008",
 
-        PT: "40852",
-        TT: "40850",
+        PT: "40004",
+        TT: "40002",
 
 
-        VB_TODAY:"40862",
-        VB_Yesterday:"40866",
-        VM_TODAY:"40864",
-        VM_Yesterday:"40868",
+        VB_TODAY:"40014",
+        VB_Yesterday:"40018",
+        VM_TODAY:"40016",
+        VM_Yesterday:"40020",
         ReBattery:"40001"
 
     }

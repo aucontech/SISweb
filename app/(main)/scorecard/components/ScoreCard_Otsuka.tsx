@@ -4,6 +4,7 @@ import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./ScoreCard.css";
+import SetAttribute1 from "../../OTSUKA/title-OTK";
 
 interface StateMap {
     [key: string]:
@@ -250,11 +251,11 @@ export default function ScoreCard_Otsuka() {
         UpsMode === "0"
             ? "Error"
             : UpsMode === "1"
-            ? "Using Battery"
+            ? "Using Running"
             : UpsMode === "2"
-            ? "Charging Battery"
+            ? "Charging"
             : UpsMode === "3"
-            ? "Disconnected Battery"
+            ? "No Battery"
             : UpsMode === "4"
             ? "Normal"
             : null;
@@ -417,7 +418,7 @@ export default function ScoreCard_Otsuka() {
     ];
 
     return (
-        <div>
+        <div >
             <div style={{ width: "49%" }}>
                 <div
                     style={{
@@ -536,6 +537,10 @@ export default function ScoreCard_Otsuka() {
                         ></Column>
                     </DataTable>
                 </div>
+            </div>
+
+            <div>
+                <SetAttribute1/>
             </div>
         </div>
     );

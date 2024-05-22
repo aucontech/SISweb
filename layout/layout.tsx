@@ -204,7 +204,7 @@ const Layout = (props: ChildContainerProps) => {
                 >
                     <AppSidebar />
                 </div>
-                <div className="layout-content-wrapper">
+                <div style={{}} className="layout-content-wrapper">
                     <AppTopbar ref={topbarRef} />
 
                     <AppBreadCrumb className="content-breadcrumb"></AppBreadCrumb>

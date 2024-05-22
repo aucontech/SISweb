@@ -1639,7 +1639,8 @@ export default function DemoFlowOTS() {
         BAR: "Bara",
         CC: "°C",
     };
-    const paragraphContents: Record<string, string> = {
+
+  const paragraphContents: Record<string, string> = {
         SVF: "Standard Volume Flow Rate",
         GVF: "Gross Volume Flow Rate",
         SVA: "Standard Volume Accumulated",
@@ -6180,7 +6181,7 @@ export default function DemoFlowOTS() {
     // }, [positions]);
 
     return (
-        <div>
+        < >
             <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
@@ -6214,10 +6215,8 @@ export default function DemoFlowOTS() {
             <div
                 style={{
                     borderRadius: 5,
-                    width: "100%",
-                    height: "100vh",
-                    position: "relative",
-                    overflow: "hidden",
+                    //width: "auto",
+                    height: "100%",
                     alignItems: "center",
                     background: background,
                 }}
@@ -6265,6 +6264,6 @@ export default function DemoFlowOTS() {
                     <Controls />
                 </ReactFlow>
             </div>
-        </div>
+        </>
     );
 }
