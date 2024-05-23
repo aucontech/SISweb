@@ -156,12 +156,12 @@ export default function PCV_02_Otsuka() {
             <div
                 style={{
                     border: "none",
-                    fontSize: 25,
+                    fontSize: 15,
                     color: "white",
                     display: "flex",
                     cursor: "pointer",
                     justifyContent: "space-between",
-                    fontWeight: 500,
+                    fontWeight: 400,
                 }}
                 onClick={handleButtonToggle}
             >

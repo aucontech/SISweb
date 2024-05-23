@@ -82,7 +82,7 @@ const AppMenu = () => {
                         {
                             label: "Graphics",
                             icon: "pi pi-fw pi-image",
-                            to: "/OTSUKA",
+                            to: "/Graphic",
                         },
                       
                        

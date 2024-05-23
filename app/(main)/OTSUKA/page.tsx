@@ -6,8 +6,9 @@ import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import GraphicPRU from "./demoGraphicOtsuka/graphicPRU";
 const TabOtsuka = () => {
     return (
-        <div className="grid">
-            <div style={{ width: "100%" }}>
+        <>
+
+            {/* // <div style={{ width: "100%", height:'100%' }}> */}
                                 
                 {/* <TabView>
               
@@ -21,9 +22,12 @@ const TabOtsuka = () => {
                     </TabPanel>
              
                 </TabView> */}
+
                 <DemoFlowOTS />
-            </div>
-        </div>
+           {/* </div> */}
+
+            </>
+
     );
 };
 

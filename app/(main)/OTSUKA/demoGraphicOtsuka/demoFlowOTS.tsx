@@ -1639,6 +1639,7 @@ export default function DemoFlowOTS() {
         BAR: "Bara",
         CC: "°C",
     };
+
     const paragraphContents: Record<string, string> = {
         SVF: "Standard Volume Flow Rate",
         GVF: "Gross Volume Flow Rate",
@@ -1664,8 +1665,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1725,8 +1726,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1786,8 +1787,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1848,8 +1849,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1911,8 +1912,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1973,8 +1974,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2035,8 +2036,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2097,8 +2098,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2159,10 +2160,10 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    padding: 5,
+                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2220,10 +2221,10 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    padding: 5,
+                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2281,10 +2282,10 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    padding: 5,
+                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 25,
-                                    fontWeight: 500,
+                                    fontSize: 15,
+                                    fontWeight: 400,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2341,7 +2342,7 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -2443,7 +2444,7 @@ export default function DemoFlowOTS() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2453,7 +2454,7 @@ export default function DemoFlowOTS() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2463,7 +2464,7 @@ export default function DemoFlowOTS() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2488,12 +2489,14 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
-                                    padding: 5,
+                                    fontSize: 13,
+                                    fontWeight: 400,
                                     position: "relative",
-                                    bottom: 4,
-                                    borderRadius: 5,
+                                    bottom: 5,
+
+                                    borderRadius: 2,
+                                    width: 65,
+                                    right: 4,
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
                                             ? "#ff5656"
@@ -2504,7 +2507,7 @@ export default function DemoFlowOTS() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p style={{}}>{roundedGD01} LEL</p>
+                                <p>{roundedGD01} LEL</p>
                             </div>
                         ),
                     },
@@ -2521,13 +2524,15 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
-                                    padding: 5,
-
+                                    fontSize: 13,
+                                    fontWeight: 400,
                                     position: "relative",
-                                    bottom: 4,
-                                    borderRadius: 5,
+                                    bottom: 5,
+
+                                    borderRadius: 2,
+                                    width: 65,
+                                    right: 4,
+
                                     backgroundColor:
                                         exceedThresholdGD02 && !maintainGD_1902
                                             ? "#ff5656"
@@ -2539,13 +2544,7 @@ export default function DemoFlowOTS() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p
-                                    style={{
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    {roundedGD02} LEL
-                                </p>
+                                <p>{roundedGD02} LEL</p>
                             </div>
                         ),
                     },
@@ -2562,13 +2561,15 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
-                                    padding: 5,
+                                    fontSize: 13,
+                                    fontWeight: 400,
                                     position: "relative",
+                                    bottom: 5,
 
-                                    bottom: 4,
-                                    borderRadius: 5,
+                                    borderRadius: 2,
+                                    width: 65,
+                                    right: 4,
+
                                     backgroundColor:
                                         exceedThresholdGD03 && !maintainGD_1903
                                             ? "#ff5656"
@@ -2580,13 +2581,7 @@ export default function DemoFlowOTS() {
                                 }}
                                 // onClick={() => confirmGD_1903()}
                             >
-                                <p
-                                    style={{
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    {roundedGD03} LEL
-                                </p>
+                                <p>{roundedGD03} LEL</p>
                             </div>
                         ),
                     },
@@ -2616,8 +2611,11 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 32,
+                                    fontSize: 18,
                                     fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                 }}
                                 onClick={confirmLineDuty}
                             >
@@ -2647,8 +2645,11 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 32,
+                                    fontSize: 18,
                                     fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                 }}
                                 onClick={confirmLineDuty}
                             >
@@ -2681,127 +2682,130 @@ export default function DemoFlowOTS() {
     //     ? JSON.parse(storedPositionString)
     //     : {
               const initialPositions = {
-              AlarmCenter: { x: -491.4880891634929, y: 347.091836124464 },
-              ArrowRight: { x: 768.0423568651795, y: 1013.0512757003828 },
-              ArrowRight1: { x: -1238.8396996628176, y: 1015.1651331139306 },
-              BallValue01: { x: -1149.4000721307239, y: 1191.1980297895232 },
-              BallValue02: { x: -901.8172406747104, y: 1191.399667617022 },
-              BallValue03: { x: -702.8553801271846, y: 811.3274439848915 },
-              BallValue04: { x: -701.8672275157428, y: 1196.0644365920487 },
-              BallValue05: { x: -379.1400970130792, y: 811.3879543154436 },
-              BallValue06: { x: -378.7585718991443, y: 1195.3617019839396 },
-              BallValue07: { x: -148.91185739539094, y: 731.5064751667989 },
-              BallValue08: { x: 511.81515033374035, y: 732.8905369491654 },
-              BallValue09: { x: -148.41120071237717, y: 1276.9108163342823 },
-              BallValue10: { x: 512.076750938122, y: 1276.6662483937687 },
-              BallValueCenter: { x: 216.68461956782312, y: 991.2550857949235 },
+              AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
+              ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
+              ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
+              BallValue01: { x: -1090.3623120428465, y: 1130.8426285378578 },
+              BallValue02: { x: -887.6141478861746, y: 1129.6502447788996 },
+              BallValue03: { x: -758.5075509147275, y: 894.4326848093123 },
+              BallValue04: { x: -757.8322908208111, y: 1127.684549644359 },
+              BallValue05: { x: -573.743025120388, y: 893.7254573680121 },
+              BallValue06: { x: -574.2453934982136, y: 1128.1337792139873 },
+              BallValue07: { x: -391.71326336183927, y: 813.8244470890327 },
+              BallValue08: { x: 45.69338469127294, y: 814.8530502988284 },
+              BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
+              BallValue10: { x: 44.70166109368827, y: 1204.159292175339 },
+              BallValueCenter: {
+                  x: -165.80710887361258,
+                  y: 1006.8595594996316,
+              },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
                   y: 1084.2937921267353,
               },
               BallValueCenter_None: {
-                  x: 235.16919766969937,
-                  y: 1043.6799040315725,
+                  x: -148.86672654059413,
+                  y: 1039.286470841561,
               },
               BallValueCenter_None2: {
-                  x: 236.508540978033,
-                  y: 1043.4269432822834,
+                  x: -133.78263324371193,
+                  y: 1038.6243048935844,
               },
-              BallValueFirst: { x: 843.5423568651795, y: 990.0512757003828 },
-              BallValueLast: { x: -1344.6266866870417, y: 992.1257711570461 },
-              BallValuePSV: { x: 707.9554044991246, y: 924.5866149620667 },
-              BallValuePSVNone: { x: 738.7414507122355, y: 942.2822573892058 },
+              BallValueFirst: { x: 342.15262421132076, y: 1005.5430441067174 },
+              BallValueLast: { x: -1237.9047231598838, y: 1013.6849449585161 },
+              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
+              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: 138.2731367163276, y: 333.440904461505 },
-              FIQ_1902: { x: 128.63597487275513, y: 1396.7039906596735 },
-              FIQ_none: { x: 238.7014619002282, y: 704.3821189824897 },
-              FIQ_none2: { x: 228.83821336902065, y: 1248.373990363984 },
-              FIQ_none11: { x: 287.87057540950383, y: 731.1885101213705 },
-              FIQ_none22: { x: 277.96451545391005, y: 1321.703090896381 },
+              FIQ_1901: { x: -240.7533028867357, y: 550.5684432829023 },
+              FIQ_1902: { x: -231.60088039032206, y: 1289.1255396791125 },
+              FIQ_none: { x: -165.54268721568215, y: 798.0972512607284 },
+              FIQ_none2: { x: -157.1205623176026, y: 1186.5853436430443 },
+              FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
+              FIQ_none22: { x: -127.36875034337497, y: 1231.0392945117674 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              GD1: { x: -593.1247404829055, y: 1021.5484138763804 },
-              GD1_Name1901: { x: -617.0174367324778, y: 922.7999982291198 },
-              GD1_Value1901: { x: -617.2309648261335, y: 962.7951649681137 },
-              GD2: { x: -47.46103028411346, y: 1018.1287267607815 },
-              GD2_Name1902: { x: -72.83116997303412, y: 923.5792056424372 },
-              GD2_Value1902: { x: -72.8747135865242, y: 963.9469975858706 },
-              GD3: { x: 473.0164899350001, y: 1017.3652081335781 },
-              GD3_Name1903: { x: 446.44939138278767, y: 922.3542185615489 },
-              GD3_Value1903: { x: 446.16846035566243, y: 961.7240910379097 },
-              GD_none1: { x: -557.4064666813481, y: 1048.346153521593 },
-              GD_none2: { x: -12.744585451702278, y: 1044.8685851757357 },
-              GD_none3: { x: 506.08483331589105, y: 1037.4593704975985 },
+              GD1: { x: -745.9526824268976, y: 1025.5908034534227 },
+              GD1_Name1901: { x: -750.5717919879045, y: 968.8438653513034 },
+              GD1_Value1901: { x: -750.6929582767964, y: 994.0597991500013 },
+              GD2: { x: -351.4389941850782, y: 1022.7819038201158 },
+              GD2_Name1902: { x: -354.74096631277996, y: 964.7102283049067 },
+              GD2_Value1902: { x: -354.6295300462283, y: 989.9911271099056 },
+              GD3: { x: 19.041341761782917, y: 1021.9968146950976 },
+              GD3_Name1903: { x: 14.064251841848176, y: 962.5434170104967 },
+              GD3_Value1903: { x: 14.283320814722941, y: 988.28449275314 },
+              GD_none1: { x: -720.3956940812873, y: 1045.5612154866174 },
+              GD_none2: { x: -326.8704087949896, y: 1040.14552169912 },
+              GD_none3: { x: 44.43067084862969, y: 1036.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1146.0797880182224, y: 343.9694534020156 },
-              PCV01: { x: -600.44289821967, y: 803.2924339111273 },
-              PCV02: { x: -599.7215945882494, y: 1186.490897441539 },
-              PCV_NUM01: { x: -705.509356814222, y: 647.8453966003194 },
-              PCV_NUM02: { x: -704.9095065313029, y: 1363.8359120884465 },
+              Header: { x: -1151.6225319026826, y: 574.7715183161662 },
+              PCV01: { x: -703.6225805120118, y: 879.1889175310166 },
+              PCV02: { x: -703.7261320869296, y: 1113.240259699294 },
+              PCV_NUM01: { x: -755.074102746647, y: 787.3298251728983 },
+              PCV_NUM02: { x: -753.2670022508862, y: 1219.3276654276463 },
               PCV_ballVavle_Small1: {
-                  x: -463.45750208249893,
-                  y: 796.2045791299236,
+                  x: -617.133632772711,
+                  y: 885.6388490887801,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -566.2385229733152,
-                  y: 817.7575474175768,
+                  x: -679.9410117692291,
+                  y: 895.8737610941586,
               },
               PCV_ballVavle_Small1_none2: {
-                  x: -564.568543995368,
-                  y: 1200.5823936921363,
+                  x: -678.2299433549822,
+                  y: 1129.2909413576103,
               },
               PCV_ballVavle_Small2: {
-                  x: -471.39757167976717,
-                  y: 1178.6960358714698,
+                  x: -615.6989498965552,
+                  y: 1119.4114511310147,
               },
               PCV_ballVavle_Small2_none1: {
-                  x: -450.31021631638924,
-                  y: 869.5519055175876,
+                  x: -610.8824333182524,
+                  y: 932.044876458853,
               },
               PCV_ballVavle_Small2_none2: {
-                  x: -458.105425182069,
-                  y: 1251.7751314040793,
+                  x: -609.4476614967655,
+                  y: 1165.7292372994432,
               },
-              PCV_none1: { x: -561.5028035240778, y: 865.4758644182178 },
-              PCV_none2: { x: -560.7446075974576, y: 1245.861392635763 },
-              PSV01: { x: 545.8473394037572, y: 553.5105157948386 },
-              PSV_01: { x: 706.026929274324, y: 839.5277060688408 },
-              PSV_02: { x: 677.371154154704, y: 804.4314434762641 },
-              PSV_03: { x: 663.4773354313934, y: 704.930638396519 },
-              PSV_None01: { x: 838.8052438210208, y: 1043.0259819068465 },
-              PSV_None02: { x: 740.5334428531365, y: 887.7863120430411 },
-              PSV_None03: { x: 698.7618492817661, y: 839.0390132826677 },
-              PSV_None04: { x: 691.0055856547771, y: 735.8487283773412 },
-              PT1: { x: -1030.7668278678443, y: 923.6792519357384 },
-              PT2: { x: -47.151669453574186, y: 1198.9276507252328 },
-              PT3: { x: -41.04576799613213, y: 650.4591506404283 },
-              PT_col1: { x: -990.7658686613956, y: 998.6460419620203 },
-              PT_col2: { x: -1.3248639452046405, y: 726.7603050401818 },
-              PT_col3: { x: -7.906729671639255, y: 1274.4966728522536 },
-              PT_none1: { x: -994.879694196512, y: 940.6460419620203 },
-              PT_none2: { x: -6.0573098043296625, y: 689.045822203523 },
-              PT_none3: { x: -12.606151546941703, y: 1236.7858497116608 },
+              PCV_none1: { x: -675.8483009440444, y: 925.4958577880325 },
+              PCV_none2: { x: -674.3258973272732, y: 1158.0479877126536 },
+              PSV01: { x: 121.99644634072223, y: 722.5979741364629 },
+              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
+              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
+              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
+              PSV_None01: { x: 264.6066519200614, y: 1036.7984512500655 },
+              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
+              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
+              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
+              PT1: { x: -996.9532738162299, y: 949.6022756172126 },
+              PT2: { x: -350.4391791978867, y: 1138.464910598512 },
+              PT3: { x: -344.2422546040923, y: 750.8313302579564 },
+              PT_col1: { x: -965.0334069238746, y: 1012.8802095314497 },
+              PT_col2: { x: -311.61340748391814, y: 813.5387087224499 },
+              PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
+              PT_none1: { x: -964.3722675067637, y: 978.9303239049175 },
+              PT_none2: { x: -310.54194957541347, y: 782.7500279655704 },
+              PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: {
-                  x: -1145.3119986237837,
-                  y: 741.9475208243597,
+                  x: -1049.2473802202082,
+                  y: 855.3114796471364,
               },
-              Pressure_Trans02: { x: -346.0242267725056, y: 541.0650973992427 },
+              Pressure_Trans02: { x: -562.6962249223983, y: 688.6387678519382 },
               Pressure_Trans03: {
-                  x: -353.0089246774792,
-                  y: 1442.0419756158065,
+                  x: -564.0315214558219,
+                  y: 1323.5258392422122,
               },
-              SDV: { x: -1155.9953335348948, y: 927.1381678494187 },
-              SDV_Ball: { x: -1129.952204883766, y: 1243.8057655958721 },
-              SDV_IMG: { x: -1151.2765188199892, y: 972.5929820963458 },
+              SDV: { x: -1099.8835403835114, y: 956.6494709563746 },
+              SDV_Ball: { x: -1072.658207783444, y: 1161.1738486098288 },
+              SDV_IMG: { x: -1095.7464489538452, y: 994.0752335439693 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1108.7658289321253, y: 1046.0069535924997 },
-              T_juntion_11: { x: 365.1924037601432, y: 761.5664930235843 },
-              T_juntion_14: { x: 32.45090621777757, y: 1269.1954166335288 },
-              Tank: { x: -923.4796899745505, y: 958.6175905097743 },
-              Tank_Ball: { x: -881.0746635080593, y: 1244.2870542191342 },
-              Tank_None: { x: -913.9045068453281, y: 1045.2445985526958 },
+              SDV_None: { x: -1069.034965906526, y: 1045.0156837354775 },
+              T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
+              T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
+              Tank: { x: -903.8348910158862, y: 983.557904759858 },
+              Tank_Ball: { x: -869.8918792522013, y: 1161.3421223886141 },
+              Tank_None: { x: -880.9288889403146, y: 1045.4801484268744 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -2810,52 +2814,64 @@ export default function DemoFlowOTS() {
                   x: -796.1166124474211,
                   y: 1445.5258186779024,
               },
-              VavleWay: { x: 130.10547762418554, y: 1009.7718094592451 },
-              animation_line7: { x: -93.84620293649371, y: 785.9385366383195 },
-              animation_line8: { x: 534.5875681565667, y: 785.9286837518672 },
-              animation_line9: { x: -95.98813080519058, y: 1330.4088031986948 },
-              animation_line10: { x: 534.2944515129055, y: 1329.9134977535994 },
-              animation_line11: { x: 408.14915225646655, y: 785.6291840355361 },
-              animation_line12: { x: 280.9850323278604, y: 1044.4121840565192 },
-              animation_line13: {
-                  x: 166.17450133771734,
-                  y: 1044.2699746503904,
+              VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
+              animation_line7: { x: -359.940697041692, y: 845.650011090059 },
+              animation_line8: { x: 58.61285378247803, y: 845.7339111102631 },
+              animation_line9: {
+                  x: -367.83294526673615,
+                  y: 1235.2489576729074,
               },
-              animation_line14: { x: 74.45070020889887, y: 1330.435716875898 },
-              animation_line15: { x: 534.0396421290242, y: 1330.0605161042722 },
-              borderWhite: { x: -1259.8488098276323, y: 334.804469377478 },
-              data1: { x: 138.48451703477264, y: 596.2740760310676 },
-              data2: { x: 138.54690230832, y: 530.5871687087123 },
-              data3: { x: 138.4853067439139, y: 464.9850519390955 },
-              data4: { x: 138.24176898169497, y: 399.6099182771684 },
-              data5: { x: 128.39018884209577, y: 1462.0516670689742 },
-              data6: { x: 128.39044711407342, y: 1527.510065004808 },
-              data7: { x: 128.50430359604275, y: 1593.2398068137738 },
-              data8: { x: 128.41451145597324, y: 1658.7248430688853 },
-              line1: { x: -1256.32578393197, y: 1045.0932625914143 },
-              line2: { x: -824.7490621134568, y: 1045.059045857194 },
-              line3: { x: -680.3194052337228, y: 864.6856154244473 },
-              line4: { x: -679.8288704580859, y: 1247.5473074652164 },
-              line5: { x: -356.28246901534476, y: 864.5020291308545 },
-              line6: { x: -356.74417743740685, y: 1248.0475386438104 },
-              line7: { x: -223.55677539605932, y: 1052.1632425418165 },
-              line8: { x: -126.53998672902242, y: 784.6446762271928 },
-              line9: { x: -126.44567146482501, y: 1329.544487114958 },
-              line10: { x: 534.6840573888813, y: 784.8089932160253 },
-              line11: { x: 534.738997393544, y: 1329.1045170701034 },
-              line12: { x: 669.453281622097, y: 1042.0651701525298 },
-              line13: { x: 829.8012389553304, y: 1043.0028327994185 },
+              animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
+              animation_line11: { x: -36.25094554550509, y: 845.4101876460927 },
+              animation_line12: {
+                  x: -133.2992075354374,
+                  y: 1038.0566391817506,
+              },
+              animation_line13: {
+                  x: -149.50201219483813,
+                  y: 1038.8111762620706,
+              },
+              animation_line14: {
+                  x: -253.98006830837323,
+                  y: 1235.4034694811062,
+              },
+              animation_line15: {
+                  x: 61.881522019472186,
+                  y: 1235.5350090951665,
+              },
+              borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
+              data1: { x: -241.3789449409768, y: 742.0872704993753 },
+              data2: { x: -241.1892960415438, y: 694.1327393419244 },
+              data3: { x: -241.0146932560861, y: 646.4850519390955 },
+              data4: { x: -240.75823101830503, y: 598.1099182771684 },
+              data5: { x: -231.36808141646952, y: 1336.5701182589364 },
+              data6: { x: -231.73476394811564, y: 1384.208994293254 },
+              data7: { x: -231.77917777528347, y: 1431.9903313994284 },
+              data8: { x: -231.36896991535298, y: 1479.4135435995122 },
+              line1: { x: -1214.9782042334255, y: 1044.7946609746105 },
+              line2: { x: -857.076582460349, y: 1044.8496174211396 },
+              line3: { x: -740.4843786514932, y: 924.7734644855461 },
+              line4: { x: -740.238419040097, y: 1158.8559724650454 },
+              line5: { x: -556.2037786773546, y: 924.6826669400624 },
+              line6: { x: -556.6558035478338, y: 1158.6558163299526 },
+              line7: { x: -460.3340758870887, y: 1039.7355815474468 },
+              line8: { x: -374.1947990352617, y: 845.1255935069244 },
+              line9: { x: -373.5456900377612, y: 1234.7053320346292 },
+              line10: { x: 63.19832835757296, y: 845.1595827580492 },
+              line11: { x: 62.86985056843554, y: 1234.683954724923 },
+              line12: { x: 159.8198310785691, y: 1035.9323508670825 },
+              line13: { x: 359.3312960971492, y: 1036.9713896720348 },
               overlay_SmallVavle1: {
-                  x: -460.2968162301511,
-                  y: 885.6463541552142,
+                  x: -620.7026867284558,
+                  y: 942.6024251546756,
               },
               overlay_SmallVavle2: {
-                  x: -467.9401692198322,
-                  y: 1268.7449655852304,
+                  x: -618.7304687850988,
+                  y: 1176.6189557419923,
               },
-              overlay_line7: { x: -257.28674845081446, y: 1050.8686815721135 },
-              overlay_line13: { x: 628.1970734597824, y: 1042.1470412495723 },
-              timeUpdate3: { x: -1237.2874487196173, y: 450.1676750421451 },
+              overlay_line7: { x: -496.1247334784416, y: 1038.8156819743556 },
+              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
+              timeUpdate3: { x: -1224.1168870724678, y: 634.2416848243695 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -2888,7 +2904,7 @@ export default function DemoFlowOTS() {
             ...edge,
             animated: isAnimated07,
             style: {
-                strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 20,
+                strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
                 stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
             },
         }));
@@ -2897,7 +2913,7 @@ export default function DemoFlowOTS() {
             ...edge,
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
-                strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 20, // Thêm điều kiện ở đây
+                strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
                 stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
             },
         }));
@@ -2906,7 +2922,7 @@ export default function DemoFlowOTS() {
             ...edge,
             animated: isAnimatedCenter,
             style: {
-                strokeWidth: isAnimatedCenter ? 3 : 20,
+                strokeWidth: isAnimatedCenter ? 3 : 10,
                 stroke: isAnimatedCenter ? "white" : lineColor,
             },
         }));
@@ -2992,7 +3008,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: background,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -3059,7 +3075,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
-                background: background,
+                background: "none",
                 width: 1,
                 height: 1,
             },
@@ -3094,7 +3110,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: line,
+                background: background,
                 width: 1,
                 height: 1,
             },
@@ -3111,7 +3127,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: line,
+                background: background,
                 width: 1,
                 height: 1,
             },
@@ -3144,7 +3160,12 @@ export default function DemoFlowOTS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "none",
+                width: 30,
+                height: 10,
+                background: background,
+            },
         },
         {
             id: "line2",
@@ -3171,7 +3192,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3189,7 +3210,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3207,7 +3228,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3225,7 +3246,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3255,7 +3276,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3273,7 +3294,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3291,7 +3312,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3309,7 +3330,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 60,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3326,8 +3347,8 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
-                background: line,
-                width: 20,
+                background: background,
+                width: 10,
                 height: 22,
             },
         },
@@ -3343,9 +3364,9 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 30,
+                width: 10,
                 height: 1,
-                background: line,
+                background: background,
             },
         },
 
@@ -3357,7 +3378,7 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 20,
+                            fontSize: 13,
                             fontWeight: 500,
                         }}
                     >
@@ -3370,8 +3391,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 120,
-                height: 45,
+                width: 90,
+                height: 37,
             },
             targetPosition: Position.Bottom,
         },
@@ -3405,7 +3426,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 65,
+                width: 35,
                 height: 22,
                 opacity: 0.01,
             },
@@ -3447,7 +3468,7 @@ export default function DemoFlowOTS() {
                 border: background,
 
                 background: background,
-                width: 20,
+                width: 10,
                 height: 20,
             },
             zIndex: 99999,
@@ -3470,7 +3491,7 @@ export default function DemoFlowOTS() {
                 border: background,
 
                 background: background,
-                width: 20,
+                width: 10,
                 height: 20,
             },
             zIndex: 99999,
@@ -3722,7 +3743,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#ffaa00",
                 background: "#ffaa00",
-                width: 125,
+                width: 55,
                 height: 1,
             },
         },
@@ -3739,7 +3760,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 65,
+                width: 35,
                 height: 2,
                 opacity: 0.01,
             },
@@ -3756,8 +3777,8 @@ export default function DemoFlowOTS() {
                     <div>
                         <Image
                             src="/layout/imgGraphic/PVC.png"
-                            width={80}
-                            height={80}
+                            width={60}
+                            height={60}
                             alt="Picture of the author"
                         />
                     </div>
@@ -3783,8 +3804,8 @@ export default function DemoFlowOTS() {
                     <div>
                         <Image
                             src="/layout/imgGraphic/PVC.png"
-                            width={80}
-                            height={80}
+                            width={60}
+                            height={60}
                             alt="Picture of the author"
                         />
                     </div>
@@ -3811,8 +3832,8 @@ export default function DemoFlowOTS() {
                     <div>
                         <Image
                             src="/layout/imgGraphic/BallValueRight.png"
-                            width={50}
-                            height={50}
+                            width={30}
+                            height={30}
                             alt="Picture of the author"
                         />
                     </div>
@@ -3838,8 +3859,8 @@ export default function DemoFlowOTS() {
                     <div>
                         <Image
                             src="/layout/imgGraphic/BallValueRight.png"
-                            width={50}
-                            height={50}
+                            width={30}
+                            height={30}
                             alt="Picture of the author"
                         />
                     </div>
@@ -3932,9 +3953,7 @@ export default function DemoFlowOTS() {
             type: "custom",
             data: {
                 label: (
-                    <div
-                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
-                    >
+                    <div style={{ display: "flex", marginTop: 5 }}>
                         <PCV_01_Otsuka />
                     </div>
                 ),
@@ -3944,7 +3963,8 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 310,
+                width: 180,
+                height: 50,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3956,9 +3976,7 @@ export default function DemoFlowOTS() {
             type: "custom",
             data: {
                 label: (
-                    <div
-                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
-                    >
+                    <div style={{ display: "flex", marginTop: 5 }}>
                         <PCV_02_Otsuka />
                     </div>
                 ),
@@ -3968,7 +3986,8 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Top,
             style: {
                 border: background,
-                width: 310,
+                width: 180,
+                height: 50,
 
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
@@ -4027,8 +4046,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Bottom,
         },
@@ -4053,8 +4072,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Top,
         },
@@ -4162,8 +4181,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 65,
-                height: 22,
+                width: 10,
+                height: 10,
                 opacity: 0.01,
             },
         },
@@ -4180,8 +4199,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 65,
-                height: 22,
+                width: 10,
+                height: 10,
                 opacity: 0.01,
             },
         },
@@ -4221,7 +4240,7 @@ export default function DemoFlowOTS() {
                 border: background,
                 background: background,
                 width: 22,
-                height: 75,
+                height: 40,
             },
         },
         {
@@ -4251,8 +4270,8 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
+                            fontSize: 15,
+                            fontWeight: 400,
                         }}
                     >
                         {" "}
@@ -4264,8 +4283,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Bottom,
         },
@@ -4276,8 +4295,8 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
+                            fontSize: 15,
+                            fontWeight: 400,
                         }}
                     >
                         {" "}
@@ -4289,8 +4308,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Bottom,
         },
@@ -4301,7 +4320,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     >
@@ -4315,8 +4334,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Bottom,
         },
@@ -4341,8 +4360,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Bottom,
         },
@@ -4354,7 +4373,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     >
@@ -4368,8 +4387,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Top,
         },
@@ -4380,7 +4399,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     >
@@ -4394,8 +4413,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Left,
         },
@@ -4406,7 +4425,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     >
@@ -4420,8 +4439,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Top,
         },
@@ -4432,7 +4451,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 32,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     >
@@ -4446,8 +4465,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 320,
-                height: 65,
+                width: 230,
+                height: 47,
             },
             targetPosition: Position.Top,
         },
@@ -4522,7 +4541,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: line,
+                background: "none",
                 width: 1,
                 height: 1,
             },
@@ -4539,7 +4558,7 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Bottom,
             style: {
                 border: "#333333",
-                background: colorIMG_none,
+                background: background,
                 width: 1,
                 height: 1,
             },
@@ -4549,14 +4568,14 @@ export default function DemoFlowOTS() {
             position: positions.PSV_None03,
             type: "custom",
             data: {
-                label: <div>3</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Left,
             targetPosition: Position.Bottom,
             style: {
                 border: "#333333",
-                background: colorIMG_none,
+                background: background,
                 width: 1,
                 height: 1,
             },
@@ -4566,14 +4585,14 @@ export default function DemoFlowOTS() {
             position: positions.PSV_None04,
             type: "custom",
             data: {
-                label: <div>4</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
-                background: colorIMG_none,
+                background: background,
                 width: 1,
                 height: 1,
             },
@@ -4585,9 +4604,7 @@ export default function DemoFlowOTS() {
             type: "custom",
             data: {
                 label: (
-                    <div
-                        style={{ fontSize: 25, display: "flex", marginTop: 10 }}
-                    >
+                    <div style={{ display: "flex", marginTop: 5 }}>
                         <PSV01_Otsuka />
                     </div>
                 ),
@@ -4597,7 +4614,8 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 310,
+                width: 180,
+                height: 50,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4624,7 +4642,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 330,
+                width: 190,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4637,7 +4655,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 15,
                             fontWeight: 600,
                         }}
                     ></div>
@@ -4647,7 +4665,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 330,
+                width: 190,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4672,7 +4690,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 330,
+                width: 190,
                 background: borderBox,
                 boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4744,7 +4762,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -4761,7 +4779,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -4778,7 +4796,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 20,
                 height: 1,
             },
         },
@@ -4795,8 +4813,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: line,
                 background: line,
-                width: 10,
-                height: 65,
+                width: 0,
+                height: 40,
 
                 borderRadius: "none",
             },
@@ -4815,7 +4833,7 @@ export default function DemoFlowOTS() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 65,
+                height: 40,
 
                 borderRadius: "none",
             },
@@ -4834,7 +4852,7 @@ export default function DemoFlowOTS() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 65,
+                height: 40,
 
                 borderRadius: "none",
             },
@@ -4859,7 +4877,7 @@ export default function DemoFlowOTS() {
                         <div>
                             <p
                                 style={{
-                                    fontSize: 60,
+                                    fontSize: 45,
                                     fontWeight: 500,
                                     color: "#ffaa00",
                                 }}
@@ -4877,9 +4895,9 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: background,
-                width: 300,
+                width: 10,
 
-                height: 100,
+                height: 10,
             },
             targetPosition: Position.Bottom,
         },
@@ -4956,9 +4974,9 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "none",
-                width: 470,
+                width: 370,
 
-                height: 45,
+                height: 10,
             },
             targetPosition: Position.Bottom,
         },
@@ -5119,8 +5137,10 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 18,
-                            fontWeight: 500,
+                            fontSize: 13,
+                            fontWeight: 400,
+                            position: "relative",
+                            bottom: 5,
                         }}
                     >
                         GD-1901
@@ -5132,8 +5152,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 150,
-                height: 40,
+                width: 80,
+                height: 25,
             },
             targetPosition: Position.Left,
         },
@@ -5143,8 +5163,10 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 18,
-                            fontWeight: 500,
+                            fontSize: 13,
+                            fontWeight: 400,
+                            position: "relative",
+                            bottom: 5,
                         }}
                     >
                         GD-1902
@@ -5156,8 +5178,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 150,
-                height: 40,
+                width: 80,
+                height: 25,
             },
             targetPosition: Position.Left,
         },
@@ -5167,8 +5189,10 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 18,
-                            fontWeight: 500,
+                            fontSize: 13,
+                            fontWeight: 400,
+                            position: "relative",
+                            bottom: 5,
                         }}
                     >
                         GD-1903
@@ -5180,9 +5204,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 150,
-
-                height: 40,
+                width: 80,
+                height: 25,
             },
             targetPosition: Position.Left,
         },
@@ -5190,25 +5213,15 @@ export default function DemoFlowOTS() {
         {
             id: "GD1_Value1901",
             data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 18,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
+                label: <div style={{}}> </div>,
             },
             position: positions.GD1_Value1901,
 
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 150,
-                height: 50,
+                width: 80,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5232,9 +5245,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 150,
-
-                height: 50,
+                width: 80,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5258,9 +5270,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 150,
-
-                height: 50,
+                width: 80,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5278,7 +5289,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -5295,7 +5306,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -5312,7 +5323,7 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: colorIMG_none,
-                width: 30,
+                width: 10,
                 height: 1,
             },
         },
@@ -5338,8 +5349,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 520,
-                height: 270,
+                width: 420,
+                height: 190,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -5410,8 +5421,8 @@ export default function DemoFlowOTS() {
             style: {
                 border: "#333333",
                 background: line,
-                width: 150,
-                height: 22,
+                width: 100,
+                height: 10,
             },
         },
         //============================ T_JUNTION ==========================
@@ -5473,7 +5484,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: backgroundGraphic,
                 border: "none",
-                width: 300,
+                width: 200,
                 borderRadius: 5,
             },
         },
@@ -6180,7 +6191,7 @@ export default function DemoFlowOTS() {
     // }, [positions]);
 
     return (
-        <div>
+        <>
             <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
@@ -6214,10 +6225,8 @@ export default function DemoFlowOTS() {
             <div
                 style={{
                     borderRadius: 5,
-                    width: "100%",
-                    height: "100vh",
-                    position: "relative",
-                    overflow: "hidden",
+                    //width: "auto",
+                    height: "100%",
                     alignItems: "center",
                     background: background,
                 }}
@@ -6265,6 +6274,6 @@ export default function DemoFlowOTS() {
                     <Controls />
                 </ReactFlow>
             </div>
-        </div>
+        </>
     );
 }
