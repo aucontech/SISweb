@@ -264,14 +264,14 @@ export default function GraphicPRU() {
 
  
     return (
-        <div>
+        <>
                 <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button>
             <div
                 style={{
-                    width: "100%",
-                    height: "100vh",
+                    // width: "100%",
+                    height: "100%",
                     position: "relative",
                     overflow: "hidden",
                     alignItems: "center",
@@ -314,7 +314,7 @@ export default function GraphicPRU() {
                     onEdgesChange={onEdgesChange}
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={true} // Cho phép kéo thả các nút
-                    fitView={false}
+                    fitView={true}
                     minZoom={0.5}
                     maxZoom={2}
                 >
@@ -323,6 +323,6 @@ export default function GraphicPRU() {
                     <Controls />
                 </ReactFlow>
             </div>
-        </div>
+        </>
     );
 }

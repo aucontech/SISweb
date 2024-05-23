@@ -6,8 +6,8 @@ import GraphicPRU from '../PRU/GraphicPRU/GraphicPRU';
 
 export default function GraphicSogec() {
 
-  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(null);
-  const [phuMy3Label, setPhuMy3Label] = useState<string>('PHU MY 3');
+  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<DemoFlowOTS />);
+  const [phuMy3Label, setPhuMy3Label] = useState<string>('OTSUKA');
   const [binhDuongLabel, setBinhDuongLabel] = useState<string>('BINH DUONG');
 
   const handleItemClick = (component: React.ReactNode, newLabel?: string) => {

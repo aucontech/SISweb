@@ -171,8 +171,8 @@ export default function BallVavlePSV() {
 
 <Image
                             src="/layout/imgGraphic/BallValueRight.png"
-                            width={90}
-                            height={90}
+                            width={50}
+                            height={50}
                             alt="Picture of the author"
                         />
 

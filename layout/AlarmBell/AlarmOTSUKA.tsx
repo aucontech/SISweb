@@ -107,12 +107,12 @@ export default function AlarmOTSUKA() {
                 {totalCount  ? (
                     <div
                         style={{
-                            fontSize: 50,
+                            fontSize: 30,
                             cursor: "pointer",
                             background: "#DD0000",
                             borderRadius: 10,
-                            width: 260,
-                            height: 100,
+                            width: 200,
+                            height: 80,
                             textAlign: "center",
                             alignItems: "center",
                         }}
@@ -130,12 +130,12 @@ export default function AlarmOTSUKA() {
                 ) : (
                     <div
                         style={{
-                            fontSize: 50,
+                            fontSize: 40,
                             cursor: "pointer",
                             background: "green",
                             borderRadius: 10,
-                            width: 260,
-                            height: 100,
+                            width: 200,
+                            height: 80,
                             textAlign: "center",
                             alignItems: "center",
                         }}
