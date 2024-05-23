@@ -2681,7 +2681,7 @@ export default function DemoFlowOTS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
@@ -2741,7 +2741,7 @@ export default function DemoFlowOTS() {
               PCV01: { x: -703.6225805120118, y: 879.1889175310166 },
               PCV02: { x: -703.7261320869296, y: 1113.240259699294 },
               PCV_NUM01: { x: -755.074102746647, y: 787.3298251728983 },
-              PCV_NUM02: { x: -753.7670022508862, y: 1221.3276654276463 },
+              PCV_NUM02: { x: -753.2670022508862, y: 1219.3276654276463 },
               PCV_ballVavle_Small1: {
                   x: -617.133632772711,
                   y: 885.6388490887801,
