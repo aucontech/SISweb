@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DemoFlowOTS from '../OTSUKA/demoGraphicOtsuka/demoFlowOTS';
 import { MegaMenu } from 'primereact/megamenu';
 import GraphicPRU from '../PRU/GraphicPRU/GraphicPRU';
+import GraphicZOCV from '../ZOVC/GraphicZOVC/graphicZOVC';
 
 export default function GraphicSogec() {
 
@@ -37,7 +38,7 @@ export default function GraphicSogec() {
             items: [
               { label: 'OSTUKA', command: () => handleItemClick(<DemoFlowOTS />, 'OTSUKA') },
               { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU/>, 'PCN PRU') },
-              { label: 'ZOVC EVC', command: () => handleItemClick(null, 'ZOVC EVC') },
+              { label: 'ZOVC EVC', command: () => handleItemClick(<GraphicZOCV/>, 'ZOVC EVC') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
               { label: 'NITORI', command: () => handleItemClick(null, 'NITORI') }
             ]
