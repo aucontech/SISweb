@@ -539,9 +539,9 @@ export default function ScoreCard_Otsuka() {
                 </div>
             </div>
 
-            <div>
+            {/* <div>
                 <SetAttribute1/>
-            </div>
+            </div> */}
         </div>
     );
 }
