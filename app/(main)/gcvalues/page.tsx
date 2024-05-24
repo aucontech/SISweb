@@ -29,8 +29,6 @@ const Page: React.FC<Props> = () => {
     };
 
     const _fetchSeverAttributesByAsset = useCallback((filters: any) => {
-        console.log(filters);
-
         getSeverAttributesByAsset(filters?.asset?.id?.id)
             .then((resp) => resp.data)
             .then((resp) => {
@@ -51,6 +49,8 @@ const Page: React.FC<Props> = () => {
                         });
                         setIsNewData(true);
                     }
+                } else {
+                    setIsNewData(true);
                 }
             })
             .catch((err) => {
@@ -59,10 +59,8 @@ const Page: React.FC<Props> = () => {
     }, []);
 
     const handleSave = () => {
-        console.log(gcData);
-        console.log(seletetedData);
-        let key = gcData.key;
-        let values = gcData.value;
+        let key = gcData.key || "gc";
+        let values = gcData.value || [];
         if (isNewData) {
             values.push(seletetedData);
         } else {
@@ -72,9 +70,8 @@ const Page: React.FC<Props> = () => {
                 }
                 return dt;
             });
-
-            console.log(values);
         }
+        values.sort((a: any, b: any) => a.date - b.date);
         let attribute = {
             [key]: values,
         };
@@ -110,13 +107,11 @@ const Page: React.FC<Props> = () => {
     };
 
     useEffect(() => {
-        console.log(filters);
         if (filters.date && filters.asset) {
             _fetchSeverAttributesByAsset(filters);
         }
     }, [filters, _fetchSeverAttributesByAsset]);
 
-    console.log(filters);
     return (
         <>
             <Toast ref={toast} />
