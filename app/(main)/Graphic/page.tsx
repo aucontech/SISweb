@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DemoFlowOTS from '../OTSUKA/demoGraphicOtsuka/demoFlowOTS';
 import { MegaMenu } from 'primereact/megamenu';
 import GraphicPRU from '../PRU/GraphicPRU/GraphicPRU';
+import GraphicZOCV from '../ZOVC/GraphicZOVC/graphicZOVC';
 
 export default function GraphicSogec() {
 
@@ -36,8 +37,8 @@ export default function GraphicSogec() {
             label: '',
             items: [
               { label: 'OSTUKA', command: () => handleItemClick(<DemoFlowOTS />, 'OTSUKA') },
-              { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU/>, 'PCN PRU') },
-              { label: 'ZOVC EVC', command: () => handleItemClick(null, 'ZOVC EVC') },
+              { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
+              { label: 'ZOVC EVC', command: () => handleItemClick(<GraphicZOCV/>, 'ZOVC EVC') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
               { label: 'NITORI', command: () => handleItemClick(null, 'NITORI') }
             ]
@@ -47,7 +48,7 @@ export default function GraphicSogec() {
           {
             label: '',
             items: [
-              { label: 'YOSHINO', command: () => handleItemClick(<DemoFlowOTS />, 'YOSHINO') },
+              { label: 'YOSHINO', command: () => handleItemClick(null, 'YOSHINO') },
               { label: 'IGUACU', command: () => handleItemClick(null, 'IGUACU') },
               { label: 'SPMCV', command: () => handleItemClick(null, 'SPMCV') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
@@ -57,36 +58,36 @@ export default function GraphicSogec() {
         ],
       ]
     },
-    {
-      label: binhDuongLabel,
-      icon: 'pi pi-mobile',
-      items: [
-        [
-          {
-            label: 'Computer',
-            items: [{ label: '1122', command: () => handleItemClick2(null, '1122') }, { label: 'Mouse' }, { label: 'Notebook' }, { label: 'Keyboard' }, { label: 'Printer' }, { label: 'Storage' }]
-          }
-        ],
-        [
-          {
-            label: 'Home Theater',
-            items: [{ label: 'Projector' }, { label: 'Speakers' }, { label: 'TVs' }]
-          }
-        ],
-        [
-          {
-            label: 'Gaming',
-            items: [{ label: 'Accessories' }, { label: 'Console' }, { label: 'PC' }, { label: 'Video Games' }]
-          }
-        ],
-        [
-          {
-            label: 'Appliances',
-            items: [{ label: 'Coffee Machine' }, { label: 'Fridge' }, { label: 'Oven' }, { label: 'Vacuum Cleaner' }, { label: 'Washing Machine' }]
-          }
-        ]
-      ]
-    },
+    // {
+    //   label: binhDuongLabel,
+    //   icon: 'pi pi-mobile',
+    //   items: [
+    //     [
+    //       {
+    //         label: 'Computer',
+    //         items: [{ label: '1122', command: () => handleItemClick2(null, '1122') }, { label: 'Mouse' }, { label: 'Notebook' }, { label: 'Keyboard' }, { label: 'Printer' }, { label: 'Storage' }]
+    //       }
+    //     ],
+    //     [
+    //       {
+    //         label: 'Home Theater',
+    //         items: [{ label: 'Projector' }, { label: 'Speakers' }, { label: 'TVs' }]
+    //       }
+    //     ],
+    //     [
+    //       {
+    //         label: 'Gaming',
+    //         items: [{ label: 'Accessories' }, { label: 'Console' }, { label: 'PC' }, { label: 'Video Games' }]
+    //       }
+    //     ],
+    //     [
+    //       {
+    //         label: 'Appliances',
+    //         items: [{ label: 'Coffee Machine' }, { label: 'Fridge' }, { label: 'Oven' }, { label: 'Vacuum Cleaner' }, { label: 'Washing Machine' }]
+    //       }
+    //     ]
+    //   ]
+    // },
   ];
 
   return (
