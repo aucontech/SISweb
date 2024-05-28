@@ -156,7 +156,7 @@ export default function Alarmbell() {
                                 pageSize: 10,
                                 textSearch: null,
                                 typeList: [],
-                                severityList: ["CRITICAL"],
+                                severityList: ["CRITICAL", "MAJOR"],
                                 statusList: ["ACTIVE"],
                                 searchPropagatedAlarms: false,
                                 sortOrder: {
@@ -215,8 +215,19 @@ export default function Alarmbell() {
                     dataReceive.data.data &&
                     dataReceive.data.data.length > 0
                 ) {
-                    setNotifications(dataReceive.data.data);
-                    setLoading(false);
+                    // setNotifications(dataReceive.data.data);
+                    //  setLoading(false);
+                    let alarms = dataReceive.data.data;
+                    let criticalAlarm = alarms.filter(
+                        (alarm: any) => alarm.severity === "CRITICAL"
+                    );
+                    let majorAlarm = alarms.filter(
+                        (alarm: any) => alarm.severity === "MAJOR"
+                    );
+                    if (criticalAlarm.length > majorAlarm.length) {
+                        audioRef.current?.play();
+                    }
+                    setNotifications(alarms);
                 } else if (
                     dataReceive.data &&
                     dataReceive.data.data &&
