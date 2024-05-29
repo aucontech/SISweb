@@ -91,6 +91,7 @@ const FilterAlarm: React.FC<Props> = ({
                                 onChange={(e) => {
                                     _processFilterChange("dates", e.value);
                                 }}
+                                dateFormat="dd/mm/yy"
                             />
                             <label>Select Date</label>
                         </span>

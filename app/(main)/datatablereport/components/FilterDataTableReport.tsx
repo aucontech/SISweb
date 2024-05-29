@@ -108,6 +108,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                                 }}
                                 showTime
                                 hourFormat="24"
+                                dateFormat="dd/mm/yy"
                             />
                             <label>Select Date</label>
                         </span>
