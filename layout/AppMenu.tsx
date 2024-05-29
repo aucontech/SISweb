@@ -156,11 +156,11 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-comment",
                             to: "/datatablereport",
                         },
-                        {
-                            label: "Chart",
-                            icon: "pi pi-fw pi-chart-bar",
-                            to: "/datachartreport",
-                        },
+                        // {
+                        //     label: "Chart",
+                        //     icon: "pi pi-fw pi-chart-bar",
+                        //     to: "/datachartreport",
+                        // },
                         {
                             label: "File Manager",
                             icon: "pi pi-fw pi-file",
