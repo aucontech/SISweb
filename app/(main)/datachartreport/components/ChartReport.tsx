@@ -6,6 +6,7 @@ import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
+import Zoom from "chartjs-plugin-zoom";
 import { UIUtils, Utils } from "@/service/Utils";
 import type { ChartDataState, ChartOptionsState } from "@/types";
 import { ChartData, ChartOptions } from "chart.js";
@@ -25,8 +26,36 @@ const colors = [
     "#4fd1c5",
     "#d53f8c",
 ];
+const chartPlugins = [Zoom];
 const ChartReport: React.FC<Props> = ({ filters }) => {
-    const [options, setOptions] = useState<ChartOptionsState>({});
+    const [options, setOptions] = useState({
+        responsive: true,
+        plugins: {
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true, // Enable zooming with mouse wheel
+                    },
+                    pinch: {
+                        enabled: true, // Enable zooming with pinch gesture
+                    },
+                    mode: "xy", // Allow zooming in both x and y directions
+                },
+                pan: {
+                    enabled: true, // Enable panning
+                    mode: "xy", // Allow panning in both x and y directions
+                },
+            },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+            },
+            y: {
+                beginAtZero: true,
+            },
+        },
+    });
     const [data, setChartData] = useState<any>({});
 
     const _fetchDataTimeseries = useCallback(({ filters }) => {
@@ -105,7 +134,8 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             <Chart
                 type="line"
                 data={data}
-                options={options.lineOptions}
+                plugins={chartPlugins}
+                options={options}
             ></Chart>
         </div>
     );
