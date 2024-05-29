@@ -69,8 +69,6 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-home",
                             to: "/scorecard",
                         },
-                       
-                       
                     ],
                 },
 
@@ -78,14 +76,11 @@ const AppMenu = () => {
                     label: "Station Details",
                     icon: "pi pi-home",
                     items: [
-                       
                         {
                             label: "Graphics",
                             icon: "pi pi-fw pi-image",
                             to: "/Graphic",
                         },
-                      
-                       
                     ],
                 },
                 {
@@ -123,12 +118,6 @@ const AppMenu = () => {
                         //     icon: "pi pi-fw pi-table",
                         //     to: "/deviceprofiles",
                         // },
-                        {
-                            label: "Chart",
-                            icon: "pi pi-fw pi-chart-bar",
-                            // to: "/devices",
-                        },
-                        
                     ],
                 },
                 {
@@ -161,15 +150,16 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-table",
                             to: "/gcvalues",
                         },
-                        {
-                            label: "All In One Report",
-                            icon: "pi pi-fw pi-list",
-                            // to: "/devices",
-                        },
+
                         {
                             label: "Data Table Report",
                             icon: "pi pi-fw pi-comment",
                             to: "/datatablereport",
+                        },
+                        {
+                            label: "Chart",
+                            icon: "pi pi-fw pi-chart-bar",
+                            to: "/datachartreport",
                         },
                         {
                             label: "File Manager",

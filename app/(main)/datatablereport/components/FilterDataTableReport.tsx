@@ -106,6 +106,8 @@ const FilterDataTableReport: React.FC<Props> = ({
                                 onChange={(e) => {
                                     _processFilterChange("dates", e.value);
                                 }}
+                                showTime
+                                hourFormat="24"
                             />
                             <label>Select Date</label>
                         </span>

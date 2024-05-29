@@ -43,6 +43,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
         ) => {
             if (filters && filters.device && filters.device.id) {
                 let device = filters.device;
+                console.log(device);
                 let reqParams = {};
                 reqParams = {
                     ...reqParams,
@@ -72,8 +73,6 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         typeList: encodeURIComponent(alarmType.type),
                     };
                 }
-                console.log(filters);
-
                 getAlarms(device.id.entityType, device.id.id, reqParams)
                     .then((resp) => resp.data)
                     .then((res) => {

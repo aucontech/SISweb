@@ -32,10 +32,10 @@ const FilterGcValue: React.FC<Props> = ({
     const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
     const toast = useRef<Toast>(null);
     useEffect(() => {
-        let newFilter = {
+        let newFcilter = {
             ...defFilter,
         };
-        setEditFilter(editFilter);
+        setEditFilter(newFcilter);
     }, []);
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
@@ -86,6 +86,19 @@ const FilterGcValue: React.FC<Props> = ({
         <>
             <Toast ref={toast} />
             <div className="grid p-fluid">
+                {showDate && (
+                    <div className="col-12 lg:col-3">
+                        <span className="p-float-label">
+                            <Calendar
+                                value={editFilter.date}
+                                onChange={(e) => {
+                                    _processFilterChange("date", e.value);
+                                }}
+                            />
+                            <label>Select Date</label>
+                        </span>
+                    </div>
+                )}
                 {showDevice && (
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
@@ -103,19 +116,7 @@ const FilterGcValue: React.FC<Props> = ({
                         </span>
                     </div>
                 )}
-                {showDate && (
-                    <div className="col-12 lg:col-3">
-                        <span className="p-float-label">
-                            <Calendar
-                                value={editFilter.date}
-                                onChange={(e) => {
-                                    _processFilterChange("date", e.value);
-                                }}
-                            />
-                            <label>Select Date</label>
-                        </span>
-                    </div>
-                )}
+
                 {showAsset && (
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
@@ -130,6 +131,24 @@ const FilterGcValue: React.FC<Props> = ({
                                 }
                             />
                             <label>Assets</label>
+                        </span>
+                    </div>
+                )}
+
+                {showAlarmType && (
+                    <div className="col-12 lg:col-3">
+                        <span className="p-float-label">
+                            <AutoComplete
+                                dropdown
+                                field="type"
+                                value={editFilter.alarmType}
+                                onChange={(e) => {
+                                    _processFilterChange("alarmType", e.value);
+                                }}
+                                suggestions={suggAlarmType}
+                                completeMethod={_onSuggAlarmType}
+                            />
+                            <label>Alarm type</label>
                         </span>
                     </div>
                 )}

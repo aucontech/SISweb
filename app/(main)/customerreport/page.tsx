@@ -40,16 +40,19 @@ const CustomerReport = () => {
 
     const _fetchDateReport = useCallback((filters: any) => {
         let reqParams: ReportRequest = {
-            // Example request parameters, adjust as needed
             deviceId: filters.device.id.id,
             date: filters.date.getTime(),
         };
-
         getReport(reqParams)
             .then((resp) => resp.data)
             .then((resp) => {
                 console.log(resp);
-                setReportData({ ...resp, deviceInfo: filters.device });
+                setReportData({
+                    ...resp,
+                    heatingValueLine1: resp.heatValue,
+                    heatingValueLine2: resp.heatValue,
+                    deviceInfo: filters.device,
+                });
             })
             .catch((error) => {
                 console.log(error);
@@ -66,91 +69,91 @@ const CustomerReport = () => {
         }
     }, [filters, _fetchDateReport]);
 
-    const handleDutyClick = (duty: string) => {
-        let newReportData = { ...reportData };
-        switch (duty) {
-            case "grossVolumeVmB1":
-                newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
-                setReportData(newReportData);
-                break;
-            case "grossVolumeVmB2":
-                newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
-                setReportData(newReportData);
-                break;
-            case "standardVolumeVbB1":
-                newReportData.standardVolumeVbCon =
-                    newReportData.standardVolumeVbB1;
-                setReportData(newReportData);
-                break;
-            case "standardVolumeVbB2":
-                newReportData.standardVolumeVbCon =
-                    newReportData.standardVolumeVbB2;
-                setReportData(newReportData);
-                break;
-            case "heatingValueLine1":
-                newReportData.heatingValueCon = newReportData.heatingValueLine1;
-                setReportData(newReportData);
-                break;
-            case "heatingValueLine2":
-                newReportData.heatingValueCon = newReportData.heatingValueLine2;
-                setReportData(newReportData);
-                break;
+    // const handleDutyClick = (duty: string) => {
+    //     let newReportData = { ...reportData };
+    //     switch (duty) {
+    //         case "grossVolumeVmB1":
+    //             newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "grossVolumeVmB2":
+    //             newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "standardVolumeVbB1":
+    //             newReportData.standardVolumeVbCon =
+    //                 newReportData.standardVolumeVbB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "standardVolumeVbB2":
+    //             newReportData.standardVolumeVbCon =
+    //                 newReportData.standardVolumeVbB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "heatingValueLine1":
+    //             newReportData.heatingValueCon = newReportData.heatingValueLine1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "heatingValueLine2":
+    //             newReportData.heatingValueCon = newReportData.heatingValueLine2;
+    //             setReportData(newReportData);
+    //             break;
 
-            case "energyQB1":
-                newReportData.energyCon = newReportData.energyQB1;
-                setReportData(newReportData);
-                break;
+    //         case "energyQB1":
+    //             newReportData.energyCon = newReportData.energyQB1;
+    //             setReportData(newReportData);
+    //             break;
 
-            case "energyQB2":
-                newReportData.energyCon = newReportData.energyQB2;
-                setReportData(newReportData);
-                break;
-            case "avgTemperatureB1":
-                console.log("avgTemperatureB1");
-                newReportData.avgTemperatureCon =
-                    newReportData.avgTemperatureB1;
-                setReportData(newReportData);
-                break;
-            case "avgTemperatureB2":
-                console.log("avgTemperatureB2");
-                newReportData.avgTemperatureCon =
-                    newReportData.avgTemperatureB2;
-                setReportData(newReportData);
-                break;
-            case "avgPressureB1":
-                console.log("avgPressureB1");
-                newReportData.avgPressureCon = newReportData.avgPressureB1;
-                setReportData(newReportData);
-                break;
-            case "avgPressureB2":
-                newReportData.avgPressureCon = newReportData.avgPressureB2;
-                setReportData(newReportData);
-                break;
-            case "grossVolumeAccumulatedB1":
-                newReportData.grossVolumeAccumulatedCon =
-                    newReportData.grossVolumeAccumulatedB1;
-                setReportData(newReportData);
-                break;
-            case "grossVolumeAccumulatedB2":
-                newReportData.grossVolumeAccumulatedCon =
-                    newReportData.grossVolumeAccumulatedB2;
-                setReportData(newReportData);
-                break;
-            case "standardVolumeAccumulatedB1":
-                newReportData.standardVolumeAccumulatedCon =
-                    newReportData.standardVolumeAccumulatedB1;
-                setReportData(newReportData);
-                break;
-            case "standardVolumeAccumulatedB2":
-                newReportData.standardVolumeAccumulatedCon =
-                    newReportData.standardVolumeAccumulatedB2;
-                setReportData(newReportData);
-                break;
-            default:
-                console.log("default");
-                break;
-        }
-    };
+    //         case "energyQB2":
+    //             newReportData.energyCon = newReportData.energyQB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "avgTemperatureB1":
+    //             console.log("avgTemperatureB1");
+    //             newReportData.avgTemperatureCon =
+    //                 newReportData.avgTemperatureB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "avgTemperatureB2":
+    //             console.log("avgTemperatureB2");
+    //             newReportData.avgTemperatureCon =
+    //                 newReportData.avgTemperatureB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "avgPressureB1":
+    //             console.log("avgPressureB1");
+    //             newReportData.avgPressureCon = newReportData.avgPressureB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "avgPressureB2":
+    //             newReportData.avgPressureCon = newReportData.avgPressureB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "grossVolumeAccumulatedB1":
+    //             newReportData.grossVolumeAccumulatedCon =
+    //                 newReportData.grossVolumeAccumulatedB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "grossVolumeAccumulatedB2":
+    //             newReportData.grossVolumeAccumulatedCon =
+    //                 newReportData.grossVolumeAccumulatedB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "standardVolumeAccumulatedB1":
+    //             newReportData.standardVolumeAccumulatedCon =
+    //                 newReportData.standardVolumeAccumulatedB1;
+    //             setReportData(newReportData);
+    //             break;
+    //         case "standardVolumeAccumulatedB2":
+    //             newReportData.standardVolumeAccumulatedCon =
+    //                 newReportData.standardVolumeAccumulatedB2;
+    //             setReportData(newReportData);
+    //             break;
+    //         default:
+    //             console.log("default");
+    //             break;
+    //     }
+    // };
 
     const handleExportReport = () => {
         exportReport(reportData)
@@ -220,7 +223,8 @@ const CustomerReport = () => {
     };
     const onChangeValue = (value: any, field: string) => {
         let newReportData = { ...reportData };
-        //  let value = Number(value1);
+        let energyQB1 = 0;
+        let energyQB2 = 0;
         switch (field) {
             case "grossVolumeVmB1":
                 setReportData({ ...newReportData, grossVolumeVmB1: value });
@@ -229,16 +233,27 @@ const CustomerReport = () => {
                 setReportData({ ...newReportData, grossVolumeVmB2: value });
                 break;
             case "standardVolumeVbB1":
-                setReportData({ ...newReportData, standardVolumeVbB1: value });
+                if (newReportData.heatingValueLine1 > 0) {
+                    energyQB1 = Utils.round(Number(value) * 0.000947817, 2);
+                }
+                setReportData({
+                    ...newReportData,
+                    energyQB1,
+                    standardVolumeVbB1: value,
+                });
                 break;
             case "standardVolumeVbB2":
-                setReportData({ ...newReportData, standardVolumeVbB2: value });
+                if (newReportData.heatingValueLine2 > 0) {
+                    energyQB2 = Utils.round(Number(value) * 0.000947817, 2);
+                }
+                setReportData({
+                    ...newReportData,
+                    energyQB2,
+                    standardVolumeVbB2: value,
+                });
                 break;
             case "heatingValueLine1":
-                let energyQB1 = 0;
-                // console.log(Number(newReportData.standardVolumeVbB1));
-                // console.log("value", value);
-                // console.log(reportData);
+                energyQB1 = 0;
                 if (value > 0) {
                     energyQB1 = Utils.round(
                         Number(newReportData.standardVolumeVbB1) * 0.000947817,
@@ -253,7 +268,6 @@ const CustomerReport = () => {
                 });
                 break;
             case "heatingValueLine2":
-                let energyQB2 = 0;
                 if (value > 0) {
                     energyQB2 = Utils.round(
                         Number(newReportData.standardVolumeVbB2) * 0.000947817,

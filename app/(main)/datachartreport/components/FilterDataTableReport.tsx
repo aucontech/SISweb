@@ -1,36 +1,34 @@
 "use client";
 import { AutoComplete } from "primereact/autocomplete";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { getAlarmTypes } from "@/api/alarm.api";
-import { getAssets } from "@/api/assets.api";
-import { Toast } from "primereact/toast";
+import { getTimeseriesKeys } from "@/api/telemetry.api";
+import { error } from "console";
 interface Props {
-    showDevice?: boolean;
+    showDevice: boolean;
     showDate?: boolean;
-    showAsset?: boolean;
     showAlarmType?: boolean;
+    showTags?: boolean;
+    // showDates?: boolean;
     onAction: (evt: any) => void;
 }
 const defFilter = {
     device: null,
-    date: null,
-    asset: null,
-    alarmType: null,
+    dates: null,
+    tags: [],
 };
-const FilterGcValue: React.FC<Props> = ({
+const FilterDataTableReport: React.FC<Props> = ({
     showDevice,
     onAction,
     showDate,
-    showAsset,
-    showAlarmType,
+    showTags,
 }) => {
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
-    const [suggAssets, setSuggAssets] = useState<any>([]);
-    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
-    const toast = useRef<Toast>(null);
+    const [suggTags, setSuggTags] = useState<any>([]);
+
     useEffect(() => {
         let newFilter = {
             ...defFilter,
@@ -50,19 +48,6 @@ const FilterGcValue: React.FC<Props> = ({
                 setSuggDevices([]);
             });
     };
-    const _onSuggAssets = (evt: any) => {
-        getAssets({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((res) => {
-                res.data.forEach((it: any) => {
-                    it.label = `${it.name}`;
-                });
-                setSuggAssets([...res.data]);
-            })
-            .catch((err) => {
-                setSuggAssets([]);
-            });
-    };
     const _processFilterChange: (field: string, value: any) => any = (
         field: string,
         value: any
@@ -72,19 +57,28 @@ const FilterGcValue: React.FC<Props> = ({
         setEditFilter(newFil);
         onAction(newFil);
     };
-    const _onSuggAlarmType = (evt: any) => {
-        getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((resp) => {
-                setSuggAlarmType([...resp.data]);
-            })
-            .catch((err) => {
-                setSuggAlarmType([]);
-            });
+    const _onSuggTags = (evt: any) => {
+        if (editFilter.device) {
+            console.log(editFilter.device);
+            getTimeseriesKeys("DEVICE", editFilter.device.id.id)
+                .then((resp) => resp.data)
+                .then((res) => {
+                    console.log(res);
+                    setSuggTags([...res]);
+                })
+                .catch((error) => {});
+        }
+        // getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
+        //     .then((resp) => resp.data)
+        //     .then((resp) => {
+        //         setSuggAlarmType([...resp.data]);
+        //     })
+        //     .catch((err) => {
+        //         setSuggAlarmType([]);
+        //     });
     };
     return (
         <>
-            <Toast ref={toast} />
             <div className="grid p-fluid">
                 {showDevice && (
                     <div className="col-12 lg:col-3">
@@ -107,29 +101,33 @@ const FilterGcValue: React.FC<Props> = ({
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
                             <Calendar
-                                value={editFilter.date}
+                                value={editFilter.dates}
+                                selectionMode="range"
+                                showTime
+                                hourFormat="24"
                                 onChange={(e) => {
-                                    _processFilterChange("date", e.value);
+                                    _processFilterChange("dates", e.value);
                                 }}
                             />
                             <label>Select Date</label>
                         </span>
                     </div>
                 )}
-                {showAsset && (
-                    <div className="col-12 lg:col-3">
+                {showTags && (
+                    <div className="col-12 lg:col-6">
                         <span className="p-float-label">
                             <AutoComplete
                                 dropdown
-                                suggestions={suggAssets}
-                                field="label"
-                                value={editFilter.asset}
-                                completeMethod={_onSuggAssets}
-                                onChange={(e) =>
-                                    _processFilterChange("asset", e.value)
-                                }
+                                multiple
+                                //  field="type"
+                                value={editFilter.tags}
+                                onChange={(e) => {
+                                    _processFilterChange("tags", e.value);
+                                }}
+                                suggestions={suggTags}
+                                completeMethod={_onSuggTags}
                             />
-                            <label>Assets</label>
+                            <label>Tags Name</label>
                         </span>
                     </div>
                 )}
@@ -138,4 +136,4 @@ const FilterGcValue: React.FC<Props> = ({
     );
 };
 
-export default FilterGcValue;
+export default FilterDataTableReport;

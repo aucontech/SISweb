@@ -3,16 +3,13 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import FilterGcValue from "./components/FilterGcValue";
 import {
-    getSeverAttributesByAsset,
     getSeverAttributesByDevice,
-    saveOrUpdateSeverAttributesByAsseet,
     saveOrUpdateSeverAttributesByDevice,
 } from "@/api/telemetry.api";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { UIUtils } from "@/service/Utils";
-
 interface Props {}
 const defaultValue = {
     heatValue: 0,
@@ -28,7 +25,7 @@ const Page: React.FC<Props> = () => {
         setFilters({ ...evt });
     };
 
-    const _fetchSeverAttributesByDevice = useCallback((filters: any) => {
+    const _fetchSeverAttributesByAsset = useCallback((filters: any) => {
         getSeverAttributesByDevice(filters?.device?.id?.id)
             .then((resp) => resp.data)
             .then((resp) => {
@@ -62,7 +59,11 @@ const Page: React.FC<Props> = () => {
         let key = gcData.key || "gc";
         let values = gcData.value || [];
         if (isNewData) {
-            values.push(seletetedData);
+            let newSeletetedData = {
+                ...seletetedData,
+                date: filters.date.getTime(),
+            };
+            values.push(newSeletetedData);
         } else {
             values = values.map((dt: any) => {
                 if (dt.date === seletetedData.date) {
@@ -92,7 +93,8 @@ const Page: React.FC<Props> = () => {
                 });
             });
     };
-    const handleChangeB1 = (e: any) => {
+
+    const handleChangeHeatvalue = (e: any) => {
         setSeletetedData((prevState: any) => ({
             ...prevState,
             heatValue: e.value, // Directly use e.value
@@ -100,11 +102,13 @@ const Page: React.FC<Props> = () => {
     };
 
     useEffect(() => {
+        console.log(filters);
         if (filters.date && filters.device) {
-            _fetchSeverAttributesByDevice(filters);
+            _fetchSeverAttributesByAsset(filters);
         }
-    }, [filters, _fetchSeverAttributesByDevice]);
+    }, [filters, _fetchSeverAttributesByAsset]);
 
+    console.log(filters);
     return (
         <>
             <Toast ref={toast} />
@@ -120,7 +124,7 @@ const Page: React.FC<Props> = () => {
                     Heat Value :{" "}
                     <InputNumber
                         value={seletetedData.heatValue || 0} // default to 0 if undefined
-                        onChange={(e) => handleChangeB1(e)}
+                        onChange={(e) => handleChangeHeatvalue(e)}
                         mode="decimal"
                         minFractionDigits={2}
                         maxFractionDigits={5}

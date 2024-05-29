@@ -16,7 +16,7 @@ interface Props {}
 
 const DeviceList: React.FC<Props> = () => {
     const [devices, setDevices] = useState<any>([]);
-    console.log('devices: ', devices);
+    console.log("devices: ", devices);
     const [totalElements, setTotalElements] = useState<number>(0);
     const [textSearch, setTextSearch] = useState<string>("");
     const toast = useRef<Toast>(null);
@@ -171,10 +171,7 @@ const DeviceList: React.FC<Props> = () => {
                         ></Column>
 
                         <Column field="name" header=" Name"></Column>
-                        <Column
-                            field="deviceProfileName"
-                            header="Device profile"
-                        ></Column>
+
                         <Column field="label" header="Label"></Column>
                         <Column
                             field="active"
