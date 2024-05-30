@@ -37,7 +37,9 @@ export default function GraphicSogec() {
             label: '',
             items: [
               { label: 'OSTUKA', command: () => handleItemClick(<DemoFlowOTS />, 'OTSUKA') },
-              { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU/>, 'PCN PRU') },
+              // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU/>, 'PCN PRU') },
+              { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
+
               { label: 'ZOVC EVC', command: () => handleItemClick(<GraphicZOCV/>, 'ZOVC EVC') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
               { label: 'NITORI', command: () => handleItemClick(null, 'NITORI') }
