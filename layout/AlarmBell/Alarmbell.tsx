@@ -555,3 +555,55 @@ export default function Alarmbell() {
         </div>
     );
 }
+
+
+   {/* <div className="flex">
+                {count !== null && <span>{count}</span>}
+                {count !== null && count > 0 ? (
+                    <div
+                        style={{
+                            fontSize: 30,
+                            cursor: "pointer",
+                            background: "#DD0000",
+                            borderRadius: 10,
+                            width: 200,
+                            height: 80,
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                        onClick={() => router.push("/SetupData")}
+                    >
+                        <p
+                            style={{
+                                color: "white",
+                                marginTop: 10,
+                            }}
+                        >
+                            Alarming
+                        </p>
+                    </div>
+                ) : (
+                    <div
+                        style={{
+                            fontSize: 40,
+                            cursor: "pointer",
+                            background: "green",
+                            borderRadius: 10,
+                            width: 200,
+                            height: 80,
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                        onClick={() => router.push("/SetupData")}
+                    >
+                        <p
+                            style={{
+                                color: "white",
+                                marginTop: 10,
+                            }}
+                        >
+                            Normal
+                        </p>
+                    </div>
+                )}
+            </div> */}

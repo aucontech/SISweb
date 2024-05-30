@@ -114,4 +114,181 @@ export const edgePRU = [
         },
         
     },
+
+
+    {
+        id: "PSV_LINE3_TOP_NONE1-PSV_LINE3_TOP_NONE2",
+        source: "PSV_LINE3_TOP_NONE1",
+        target: "PSV_LINE3_TOP_NONE2",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine3,
+        },
+        
+    },
+    {
+        id: "PSV_LINE3_BOTTOM_NONE1-PSV_LINE3_BOTTOM_NONE2",
+        source: "PSV_LINE3_BOTTOM_NONE1",
+        target: "PSV_LINE3_BOTTOM_NONE2",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine3,
+        },
+        
+    },
+
+
+    {
+        id: "PSV_LINE2_TOP_NONE1-PSV_LINE2_TOP_NONE2",
+        source: "PSV_LINE2_TOP_NONE1",
+        target: "PSV_LINE2_TOP_NONE2",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine2,
+        },
+        
+    },
+
+    {
+        id: "PSV_LINE2_BOTTOM_NONE1-PSV_LINE2_BOTTOM_NONE2",
+        source: "PSV_LINE2_BOTTOM_NONE1",
+        target: "PSV_LINE2_BOTTOM_NONE2",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine2,
+        },
+        
+    },
+
+    {
+        id: "PIT_6001A_DATA-PIT_6001A_NONE",
+        source: "PIT_6001A_DATA",
+        target: "PIT_6001A_NONE",
+        type: "smoothstep",
+
+     
+        
+    },
+    {
+        id: "PIT_6001B_DATA-PIT_6001B_NONE",
+        source: "PIT_6001B_DATA",
+        target: "PIT_6001B_NONE",
+        type: "smoothstep",
+
+     
+        
+    },
+     {
+        id: "PIT_6002A_DATA-PIT_6002A_NONE",
+        source: "PIT_6002A_DATA",
+        target: "PIT_6002A_NONE",
+        type: "smoothstep",
+
+     
+        
+    },
+    {
+        id: "PIT_6002B_DATA-PIT_6002B_NONE",
+        source: "PIT_6002B_DATA",
+        target: "PIT_6002B_NONE",
+        type: "smoothstep",
+
+     
+        
+    },
+
+    {
+        id: "PCV_line1_Top_none-PCV_line1_Top_none2",
+        source: "PCV_line1_Top_none",
+        target: "PCV_line1_Top_none2",
+        type: "smoothstep",
+
+     
+        
+    },
+
+
+    {
+        id: "PCV_line2_Top_none-PCV_line2_Top_none2",
+        source: "PCV_line2_Top_none",
+        target: "PCV_line2_Top_none2",
+        type: "smoothstep",
+
+     
+        
+    },
+    {
+        id: "PCV_line1_Bottom_none-PCV_line1_Bottom_none2",
+        source: "PCV_line1_Bottom_none",
+        target: "PCV_line1_Bottom_none2",
+        type: "smoothstep",
+
+     
+        
+    },
+    {
+        id: "PCV_line2_Bottom_none-PCV_line2_Bottom_none2",
+        source: "PCV_line2_Bottom_none",
+        target: "PCV_line2_Bottom_none2",
+        type: "smoothstep",
+    },
+
+    {
+        id: "PIT_6003B_DATA-PIT_6003B_NONE",
+        source: "PIT_6003B_DATA",
+        target: "PIT_6003B_NONE",
+        type: "smoothstep",
+    },
+
+    {
+        id: "PIT_6003A_DATA-PIT_6003A_NONE",
+        source: "PIT_6003A_DATA",
+        target: "PIT_6003A_NONE",
+        type: "smoothstep",
+    },
+
+
+    {
+        id: "TT_LINE3_TOP_DATA-TT_LINE3_TOP_NONE",
+        source: "TT_LINE3_TOP_DATA",
+        target: "TT_LINE3_TOP_NONE",
+        type: "smoothstep",
+    },
+
+    {
+        id: "TT_LINE3_BOTTOM_DATA-TT_LINE3_BOTTOM_NONE",
+        source: "TT_LINE3_BOTTOM_DATA",
+        target: "TT_LINE3_BOTTOM_NONE",
+        type: "smoothstep",
+    },
+    {
+        id: "PCV_line1_Top_none-PCV_line2_Top_DATA",
+        source: "PCV_line1_Top_none",
+        target: "PCV_line2_Top_DATA",
+        type: "smoothstep",
+    },
+    {
+        id: "PCV_line1_Bottom_none-PCV_line2_Bottom_DATA",
+        source: "PCV_line1_Bottom_none",
+        target: "PCV_line2_Bottom_DATA",
+        type: "smoothstep",
+    },
+
+    {
+        id: "PCV_line2_Top_none2-PCV_line3_Bottom_DATA",
+        source: "PCV_line2_Top_none2",
+        target: "PCV_line3_Bottom_DATA",
+        type: "smoothstep",
+    },
+
+    {
+        id: "PCV_line2_Bottom_none-PCV_line3_Top_DATA",
+        source: "PCV_line2_Bottom_none",
+        target: "PCV_line3_Top_DATA",
+        type: "smoothstep",
+    },
 ]
