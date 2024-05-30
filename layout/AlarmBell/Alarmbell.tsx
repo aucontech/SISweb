@@ -62,8 +62,8 @@ export default function Alarmbell() {
                 alarmCountCmds: [
                     {
                         query: {
-                            severityList: ["CRITICAL"],
-                            statusList: ["ACTIVE", "UNACK"],
+                            severityList: ["CRITICAL", "MAJOR"],
+                            statusList: ["ACTIVE"],
                             searchPropagatedAlarms: false,
                             assigneeId: null,
                             entityFilter: {
@@ -556,8 +556,8 @@ export default function Alarmbell() {
     );
 }
 
-
-   {/* <div className="flex">
+{
+    /* <div className="flex">
                 {count !== null && <span>{count}</span>}
                 {count !== null && count > 0 ? (
                     <div
@@ -606,4 +606,5 @@ export default function Alarmbell() {
                         </p>
                     </div>
                 )}
-            </div> */}
+            </div> */
+}
