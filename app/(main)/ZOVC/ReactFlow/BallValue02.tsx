@@ -2,6 +2,8 @@ import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
 import {  BallVavleOff, BallVavleOn } from "../GraphicZOVC/iconSVG";
+import { id_ZOCV } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicZOVC/Api_ZOVC";
 
 // export default function BallValue02({ onDataLine2 }: { onDataLine2: (data: any) => void }) {
 export default function BallValue02() {
@@ -39,7 +41,7 @@ export default function BallValue02() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                id: id_ZOCV,
                             },
                         },
                         pageLink: {
@@ -133,7 +135,7 @@ export default function BallValue02() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
+                PostTelemetry_ZOVC,
                 { BallValue_02: newValue }
             );
             setSensorData(newValue);
@@ -143,7 +145,7 @@ export default function BallValue02() {
         const fetchData = async () => {
             try {
                 const res = await httpApi.get(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                  GetTelemetry_ZOVC
                 );
                 setData(res.data);
                 const ballValue = res.data.find((item: any) => item.key === "BallValue_02")?.value;

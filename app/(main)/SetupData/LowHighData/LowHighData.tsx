@@ -657,7 +657,7 @@ const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
             const PT02Value = parseFloat(PT02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue < PT02Value || PT02Value < lowValue) {
+                if (highValue <= PT02Value || PT02Value <= lowValue) {
                     if (!audioPlaying) {
                         audioRef.current?.play();
                         setAudioPlaying(true);
@@ -727,7 +727,7 @@ const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
             const PT03Value = parseFloat(PT03);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
-                if (highValue < PT03Value || PT03Value < lowValue) {
+                if (highValue <= PT03Value || PT03Value <= lowValue) {
                     if (!audioPlaying2) {
                         audioRef.current?.play();
                         setAudioPlaying2(true);
@@ -793,7 +793,7 @@ const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
             const PT01Value = parseFloat(PT01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue < PT01Value || PT01Value < lowValue) {
+                if (highValue <= PT01Value || PT01Value <= lowValue) {
                     if (!audioPlaying3) {
                         audioRef.current?.play();
                         setAudioPlaying3(true);
@@ -860,7 +860,7 @@ const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
             const GD01Value = parseFloat(GD01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD01Value)) {
-                if (highValue < GD01Value || GD01Value < lowValue) {
+                if (highValue <= GD01Value || GD01Value <= lowValue) {
                     if (!AudioGD01) {
                         audioRef.current?.play();
                         setAudioGD01(true);
@@ -926,7 +926,7 @@ const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
             const GD02Value = parseFloat(GD02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD02Value)) {
-                if (highValue < GD02Value || GD02Value < lowValue) {
+                if (highValue <= GD02Value || GD02Value <= lowValue) {
                     if (!AudioGD02) {
                         audioRef.current?.play();
                         setAudioGD02(true);
@@ -992,7 +992,7 @@ const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
             const GD03Value = parseFloat(GD03);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD03Value)) {
-                if (highValue < GD03Value || GD03Value < lowValue) {
+                if (highValue <= GD03Value || GD03Value <= lowValue) {
                     if (!AudioGD03) {
                         audioRef.current?.play();
                         setAudioGD03(true);
@@ -1059,7 +1059,7 @@ const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
             const GVF1Value = parseFloat(GVF1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GVF1Value)) {
-                if (highValue < GVF1Value || GVF1Value < lowValue) {
+                if (highValue <= GVF1Value || GVF1Value <= lowValue) {
                     if (!AudioGVF1) {
                         audioRef.current?.play();
                         setAudioGVF1(true);
@@ -1125,7 +1125,7 @@ const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
             const SVF1Value = parseFloat(SVF1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SVF1Value)) {
-                if (highValue < SVF1Value || SVF1Value < lowValue) {
+                if (highValue <= SVF1Value || SVF1Value <= lowValue) {
                     if (!AudioSVF1) {
                         audioRef.current?.play();
                         setAudioSVF1(true);
@@ -1194,7 +1194,7 @@ const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
             const SVA1Value = parseFloat(SVA1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SVA1Value)) {
-                if (highValue < SVA1Value || SVA1Value < lowValue) {
+                if (highValue <= SVA1Value || SVA1Value <= lowValue) {
                     if (!AudioSVA1) {
                         audioRef.current?.play();
                         setAudioSVA1(true);
@@ -1261,7 +1261,7 @@ const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
             const GVA1Value = parseFloat(GVA1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GVA1Value)) {
-                if (highValue < GVA1Value || GVA1Value < lowValue) {
+                if (highValue <= GVA1Value || GVA1Value <= lowValue) {
                     if (!AudioGVA1) {
                         audioRef.current?.play();
                         setAudioGVA1(true);
@@ -1329,7 +1329,7 @@ const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
             const GVF2Value = parseFloat(GVF2);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GVF2Value)) {
-                if (highValue < GVF2Value || GVF2Value < lowValue) {
+                if (highValue <= GVF2Value || GVF2Value <= lowValue) {
                     if (!AudioGVF2) {
                         audioRef.current?.play();
                         setAudioGVF2(true);
@@ -1395,7 +1395,7 @@ const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
             const SVF2Value = parseFloat(SVF2);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SVF2Value)) {
-                if (highValue < SVF2Value || SVF2Value < lowValue) {
+                if (highValue <= SVF2Value || SVF2Value <= lowValue) {
                     if (!AudioSVF2) {
                         audioRef.current?.play();
                         setAudioSVF2(true);
@@ -1462,7 +1462,7 @@ const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
             const SVA2Value = parseFloat(SVA2);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SVA2Value)) {
-                if (highValue < SVA2Value || SVA2Value < lowValue) {
+                if (highValue <= SVA2Value || SVA2Value <= lowValue) {
                     if (!AudioSVA2) {
                         audioRef.current?.play();
                         setAudioSVA2(true);
@@ -1528,7 +1528,7 @@ const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
             const GVA2Value = parseFloat(GVA2);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GVA2Value)) {
-                if (highValue < GVA2Value || GVA2Value < lowValue) {
+                if (highValue <= GVA2Value || GVA2Value <= lowValue) {
                     if (!AudioGVA2) {
                         audioRef.current?.play();
                         setAudioGVA2(true);
@@ -1595,7 +1595,7 @@ const [maintainTemperature01, setMaintainTemperature01] = useState<boolean>(fals
             const Temperature01Value = parseFloat(Temperature01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Temperature01Value)) {
-                if (highValue < Temperature01Value || Temperature01Value < lowValue) {
+                if (highValue <= Temperature01Value || Temperature01Value <= lowValue) {
                     if (!AudioTemperature01) {
                         audioRef.current?.play();
                         setAudioTemperature01(true);
@@ -1661,7 +1661,7 @@ const [maintainTemperature02, setMaintainTemperature02] = useState<boolean>(fals
             const Temperature02Value = parseFloat(Temperature02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Temperature02Value)) {
-                if (highValue < Temperature02Value || Temperature02Value < lowValue) {
+                if (highValue <= Temperature02Value || Temperature02Value <= lowValue) {
                     if (!AudioTemperature02) {
                         audioRef.current?.play();
                         setAudioTemperature02(true);
@@ -1730,7 +1730,7 @@ const [maintainReBattery01, setMaintainReBattery01] = useState<boolean>(false);
             const ReBattery01Value = parseFloat(ReBattery01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ReBattery01Value)) {
-                if (highValue < ReBattery01Value || ReBattery01Value < lowValue) {
+                if (highValue <= ReBattery01Value || ReBattery01Value <= lowValue) {
                     if (!AudioReBattery01) {
                         audioRef.current?.play();
                         setAudioReBattery01(true);
@@ -1797,7 +1797,7 @@ const [maintainReBattery02, setMaintainReBattery02] = useState<boolean>(false);
             const ReBattery02Value = parseFloat(ReBattery02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ReBattery02Value)) {
-                if (highValue < ReBattery02Value || ReBattery02Value < lowValue) {
+                if (highValue <= ReBattery02Value || ReBattery02Value <= lowValue) {
                     if (!AudioReBattery02) {
                         audioRef.current?.play();
                         setAudioReBattery02(true);
@@ -1863,7 +1863,7 @@ const [maintainVmLastDay01, setMaintainVmLastDay01] = useState<boolean>(false);
             const VmLastDay01Value = parseFloat(VmLastDay01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmLastDay01Value)) {
-                if (highValue < VmLastDay01Value || VmLastDay01Value < lowValue) {
+                if (highValue <= VmLastDay01Value || VmLastDay01Value <= lowValue) {
                     if (!AudioVmLastDay01) {
                         audioRef.current?.play();
                         setAudioVmLastDay01(true);
@@ -1929,7 +1929,7 @@ const [maintainVmLastDay02, setMaintainVmLastDay02] = useState<boolean>(false);
             const VmLastDay02Value = parseFloat(VmLastDay02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmLastDay02Value)) {
-                if (highValue < VmLastDay02Value || VmLastDay02Value < lowValue) {
+                if (highValue <= VmLastDay02Value || VmLastDay02Value <= lowValue) {
                     if (!AudioVmLastDay02) {
                         audioRef.current?.play();
                         setAudioVmLastDay02(true);
@@ -1997,7 +1997,7 @@ const [maintainVbLastDay01, setMaintainVbLastDay01] = useState<boolean>(false);
             const VbLastDay01Value = parseFloat(VbLastDay01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbLastDay01Value)) {
-                if (highValue < VbLastDay01Value || VbLastDay01Value < lowValue) {
+                if (highValue <= VbLastDay01Value || VbLastDay01Value <= lowValue) {
                     if (!AudioVbLastDay01) {
                         audioRef.current?.play();
                         setAudioVbLastDay01(true);
@@ -2063,7 +2063,7 @@ const [maintainVbLastDay02, setMaintainVbLastDay02] = useState<boolean>(false);
             const VbLastDay02Value = parseFloat(VbLastDay02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbLastDay02Value)) {
-                if (highValue < VbLastDay02Value || VbLastDay02Value < lowValue) {
+                if (highValue <= VbLastDay02Value || VbLastDay02Value <= lowValue) {
                     if (!AudioVbLastDay02) {
                         audioRef.current?.play();
                         setAudioVbLastDay02(true);
@@ -2132,7 +2132,7 @@ const [maintainVmToDay01, setMaintainVmToDay01] = useState<boolean>(false);
             const VmToDay01Value = parseFloat(VmToDay01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmToDay01Value)) {
-                if (highValue < VmToDay01Value || VmToDay01Value < lowValue) {
+                if (highValue <= VmToDay01Value || VmToDay01Value <= lowValue) {
                     if (!AudioVmToDay01) {
                         audioRef.current?.play();
                         setAudioVmToDay01(true);
@@ -2198,7 +2198,7 @@ const [maintainVmToDay02, setMaintainVmToDay02] = useState<boolean>(false);
             const VmToDay02Value = parseFloat(VmToDay02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VmToDay02Value)) {
-                if (highValue < VmToDay02Value || VmToDay02Value < lowValue) {
+                if (highValue <= VmToDay02Value || VmToDay02Value <= lowValue) {
                     if (!AudioVmToDay02) {
                         audioRef.current?.play();
                         setAudioVmToDay02(true);
@@ -2266,7 +2266,7 @@ const [maintainVbToDay01, setMaintainVbToDay01] = useState<boolean>(false);
             const VbToDay01Value = parseFloat(VbToDay01);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbToDay01Value)) {
-                if (highValue < VbToDay01Value || VbToDay01Value < lowValue) {
+                if (highValue <= VbToDay01Value || VbToDay01Value <= lowValue) {
                     if (!AudioVbToDay01) {
                         audioRef.current?.play();
                         setAudioVbToDay01(true);
@@ -2332,7 +2332,7 @@ const [maintainVbToDay02, setMaintainVbToDay02] = useState<boolean>(false);
             const VbToDay02Value = parseFloat(VbToDay02);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VbToDay02Value)) {
-                if (highValue < VbToDay02Value || VbToDay02Value < lowValue) {
+                if (highValue <= VbToDay02Value || VbToDay02Value <= lowValue) {
                     if (!AudioVbToDay02) {
                         audioRef.current?.play();
                         setAudioVbToDay02(true);
@@ -2398,7 +2398,7 @@ const [maintainUpsBattery, setMaintainUpsBattery] = useState<boolean>(false);
             const UpsBatteryValue = parseFloat(UpsBattery);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsBatteryValue)) {
-                if (highValue < UpsBatteryValue || UpsBatteryValue < lowValue) {
+                if (highValue <= UpsBatteryValue || UpsBatteryValue <= lowValue) {
                     if (!AudioUpsBattery) {
                         audioRef.current?.play();
                         setAudioUpsBattery(true);
@@ -2467,7 +2467,7 @@ const [maintainUpsCharging, setMaintainUpsCharging] = useState<boolean>(false);
             const UpsChargingValue = parseFloat(UpsCharging);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsChargingValue)) {
-                if (highValue < UpsChargingValue || UpsChargingValue < lowValue) {
+                if (highValue <= UpsChargingValue || UpsChargingValue <= lowValue) {
                     if (!AudioUpsCharging) {
                         audioRef.current?.play();
                         setAudioUpsCharging(true);
@@ -2536,7 +2536,7 @@ const [maintainUpsAlarm, setMaintainUpsAlarm] = useState<boolean>(false);
             const UpsAlarmValue = parseFloat(UpsAlarm);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsAlarmValue)) {
-                if (highValue < UpsAlarmValue || UpsAlarmValue < lowValue) {
+                if (highValue <= UpsAlarmValue || UpsAlarmValue <= lowValue) {
                     if (!AudioUpsAlarm) {
                         audioRef.current?.play();
                         setAudioUpsAlarm(true);
@@ -2605,7 +2605,7 @@ const [maintainUpsMode, setMaintainUpsMode] = useState<boolean>(false);
             const UpsModeValue = parseFloat(UpsMode);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UpsModeValue)) {
-                if (highValue < UpsModeValue || UpsModeValue < lowValue) {
+                if (highValue <= UpsModeValue || UpsModeValue <= lowValue) {
                     if (!AudioUpsMode) {
                         audioRef.current?.play();
                         setAudioUpsMode(true);
@@ -2675,7 +2675,7 @@ const [maintainSelectSW, setMaintainSelectSW] = useState<boolean>(false);
             const SelectSWValue = parseFloat(SelectSW);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SelectSWValue)) {
-                if (highValue < SelectSWValue || SelectSWValue < lowValue) {
+                if (highValue <= SelectSWValue || SelectSWValue <= lowValue) {
                     if (!AudioSelectSW) {
                         audioRef.current?.play();
                         setAudioSelectSW(true);
@@ -2745,7 +2745,7 @@ const [maintainEmergencyNC, setMaintainEmergencyNC] = useState<boolean>(false);
             const EmergencyNCValue = parseFloat(EmergencyNC);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EmergencyNCValue)) {
-                if (highValue < EmergencyNCValue || EmergencyNCValue < lowValue) {
+                if (highValue <= EmergencyNCValue || EmergencyNCValue <= lowValue) {
                     if (!AudioEmergencyNC) {
                         audioRef.current?.play();
                         setAudioEmergencyNC(true);
@@ -2815,7 +2815,7 @@ const [maintainEmergencyNO, setMaintainEmergencyNO] = useState<boolean>(false);
             const EmergencyNOValue = parseFloat(EmergencyNO);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EmergencyNOValue)) {
-                if (highValue < EmergencyNOValue || EmergencyNOValue < lowValue) {
+                if (highValue <= EmergencyNOValue || EmergencyNOValue <= lowValue) {
                     if (!AudioEmergencyNO) {
                         audioRef.current?.play();
                         setAudioEmergencyNO(true);
@@ -2884,7 +2884,7 @@ const [maintainDIReset, setMaintainDIReset] = useState<boolean>(false);
             const DIResetValue = parseFloat(DIReset);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DIResetValue)) {
-                if (highValue < DIResetValue || DIResetValue < lowValue) {
+                if (highValue <= DIResetValue || DIResetValue <= lowValue) {
                     if (!AudioDIReset) {
                         audioRef.current?.play();
                         setAudioDIReset(true);
@@ -2955,7 +2955,7 @@ const [maintainDOHorn, setMaintainDOHorn] = useState<boolean>(false);
             const DOHornValue = parseFloat(DOHorn);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DOHornValue)) {
-                if (highValue < DOHornValue || DOHornValue < lowValue) {
+                if (highValue <= DOHornValue || DOHornValue <= lowValue) {
                     if (!AudioDOHorn) {
                         audioRef.current?.play();
                         setAudioDOHorn(true);
@@ -3028,7 +3028,7 @@ const [maintainMap, setMaintainMap] = useState<boolean>(false);
             const MapValue = parseFloat(Map);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(MapValue)) {
-                if (highValue < MapValue || MapValue < lowValue) {
+                if (highValue <= MapValue || MapValue <= lowValue) {
                     if (!AudioMap) {
                         audioRef.current?.play();
                         setAudioMap(true);
@@ -3098,7 +3098,7 @@ const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
             const DO_SV1Value = parseFloat(DO_SV1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV1Value)) {
-                if (highValue < DO_SV1Value || DO_SV1Value < lowValue) {
+                if (highValue <= DO_SV1Value || DO_SV1Value <= lowValue) {
                     if (!AudioDO_SV1) {
                         audioRef.current?.play();
                         setAudioDO_SV1(true);
@@ -3167,7 +3167,7 @@ const [maintainZSC_1, setMaintainZSC_1] = useState<boolean>(false);
             const ZSC_1Value = parseFloat(ZSC_1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ZSC_1Value)) {
-                if (highValue < ZSC_1Value || ZSC_1Value < lowValue) {
+                if (highValue <= ZSC_1Value || ZSC_1Value <= lowValue) {
                     if (!AudioZSC_1) {
                         audioRef.current?.play();
                         setAudioZSC_1(true);
@@ -3236,7 +3236,7 @@ const [maintainZSO_1, setMaintainZSO_1] = useState<boolean>(false);
             const ZSO_1Value = parseFloat(ZSO_1);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ZSO_1Value)) {
-                if (highValue < ZSO_1Value || ZSO_1Value < lowValue) {
+                if (highValue <= ZSO_1Value || ZSO_1Value <= lowValue) {
                     if (!AudioZSO_1) {
                         audioRef.current?.play();
                         setAudioZSO_1(true);
@@ -3305,7 +3305,7 @@ const [maintainBeacon, setMaintainBeacon] = useState<boolean>(false);
             const BeaconValue = parseFloat(Beacon);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(BeaconValue)) {
-                if (highValue < BeaconValue || BeaconValue < lowValue) {
+                if (highValue <= BeaconValue || BeaconValue <= lowValue) {
                     if (!AudioBeacon) {
                         audioRef.current?.play();
                         setAudioBeacon(true);

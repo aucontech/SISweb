@@ -1,13 +1,14 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
-import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { BallVavleOff, BallVavleOn } from "../GraphicZOVC/iconSVG";
-import { id_ZOCV } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicZOVC/Api_ZOVC";
+import { id_CNG_PRU, id_ZOCV } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_PRU, PostTelemetry_PRU } from "../GraphicPRU/Api_PRU";
+import { BallVavleOff, BallVavleOn } from "../GraphicPRU/iconSVG";
 
-export default function BallValue03() {
+// export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
+
+export default function BallVavle_Line3_Bottom() {
+
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -15,7 +16,6 @@ export default function BallValue03() {
 
     const [data, setData] = useState([]);
 
-    const [Status, setStatus] = useState<any>([]);
 
     const token = readToken();
 
@@ -33,7 +33,7 @@ export default function BallValue03() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_03",
+                                key: "BallVavle_Line3_Bottom",
                             },
                         ],
                     },
@@ -42,7 +42,7 @@ export default function BallValue03() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_ZOCV,
+                                id: id_CNG_PRU,
                             },
                         },
                         pageLink: {
@@ -73,7 +73,7 @@ export default function BallValue03() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_03",
+                                key: "BallVavle_Line3_Bottom",
                             },
                         ],
                     },
@@ -102,31 +102,33 @@ export default function BallValue03() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_03
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallVavle_Line3_Bottom
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_03
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallVavle_Line3_Bottom
                             .ts;
                     setUpTS(ballTS);
+                    // onDataLine1({ value: ballValue});
+
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_03
+                        dataReceived.update[0].latest.ATTRIBUTE.BallVavle_Line3_Bottom
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_03.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallVavle_Line3_Bottom.ts;
 
                     setUpData(updatedData);
-                    setUpTS(updateTS);
+                    // onDataLine1({ value: updatedData});
+
                 }
         fetchData();
 
             };
-
         }
     }, []);
 
@@ -134,30 +136,37 @@ export default function BallValue03() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-                PostTelemetry_ZOVC,
-                { BallValue_03: newValue }
+               PostTelemetry_PRU,
+                { BallVavle_Line3_Bottom: newValue }
             );
             setSensorData(newValue);
+            
         } catch (error) {}
     };
 
-    const fetchData = async () => {
-        try {
-            const res = await httpApi.get(
-                GetTelemetry_ZOVC
-            );
-            setData(res.data);
-        } catch (error) {}
-    };
+        const fetchData = async () => {
+            try {
+                const res = await httpApi.get(
+                   GetTelemetry_PRU
+                );
+                setData(res.data);
+                const ballValue = res.data.find((item: any) => item.key === "BallVavle_Line3_Bottom")?.value;
+                // onDataLine1(ballValue);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        useEffect(() => {
+            fetchData();
 
-    useEffect(() => {
-        fetchData();
     }, []);
+
+
     return (
         <div>
             {data.map((item: any) => (
                 <div key={item.key}>
-                    {item.key === "BallValue_03" && (
+                    {item.key === "BallVavle_Line3_Bottom" && (
                         <div
                         style={{
                             cursor: "pointer",
@@ -167,20 +176,7 @@ export default function BallValue03() {
                         onClick={handleButtonClick}
 
                          >
-                            
-                                {item.value.toString() === "false" ? (
-                                    <div style={{   }}>
-
-                                            {BallVavleOn}
-
-                                    </div>
-                                ) : (
-                                    <div style={{    }}>
-
-                                               {BallVavleOff}
-
-                                    </div>
-                                )}
+                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
                         </div>
                     )}
                 </div>
