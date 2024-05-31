@@ -16,7 +16,9 @@ const DataChartReport = () => {
                 showTags={true}
                 onAction={(e) => _onFilterChange(e)}
             />
-            <ChartReport filters={filters} />
+            <div>
+                <ChartReport filters={filters} />
+            </div>
         </>
     );
 };
