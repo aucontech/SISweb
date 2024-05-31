@@ -182,27 +182,27 @@ export default function SetAttribute() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01?.value;
                     setUpData(ballValue);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01?.value;
                     setUpData(updatedData);
                 }
 
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue2 =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02?.value;
                     setUpData2(ballValue2);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData2 =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02?.value;
 
                     setUpData2(updatedData2);
                 }
