@@ -2593,7 +2593,13 @@ export default function DemoFlowOTS() {
                         ...node.data,
                         label: (
                             <div>
-                                <div>{NO === "1" ? SVD_NO : (NC === "0" ? SVD_NC : null)}</div>
+                                <div>
+                                    {NO === "1"
+                                        ? SVD_NO
+                                        : NC === "0"
+                                        ? SVD_NC
+                                        : null}
+                                </div>
 
                                 {/* {NO === "1" && <div>{SVD_NO}</div>}
                                 {NC === "0" && <div>{SVD_NC}</div>} */}
@@ -2676,16 +2682,16 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
-              BallValue01: { x: -1090.3623120428465, y: 1130.8426285378578 },
+              BallValue01: { x: -1004.5775079418167, y: 1128.852465259673 },
               BallValue02: { x: -887.6141478861746, y: 1129.6502447788996 },
               BallValue03: { x: -758.5075509147275, y: 894.4326848093123 },
               BallValue04: { x: -757.8322908208111, y: 1127.684549644359 },
@@ -2727,14 +2733,14 @@ export default function DemoFlowOTS() {
               GD1: { x: -745.9526824268976, y: 1025.5908034534227 },
               GD1_Name1901: { x: -750.5717919879045, y: 968.8438653513034 },
               GD1_Value1901: { x: -750.6929582767964, y: 994.0597991500013 },
-              GD2: { x: -351.4389941850782, y: 1022.7819038201158 },
+              GD2: { x: -349.9389941850782, y: 1019.7819038201158 },
               GD2_Name1902: { x: -354.74096631277996, y: 964.7102283049067 },
               GD2_Value1902: { x: -354.6295300462283, y: 989.9911271099056 },
               GD3: { x: 19.041341761782917, y: 1021.9968146950976 },
               GD3_Name1903: { x: 14.064251841848176, y: 962.5434170104967 },
               GD3_Value1903: { x: 14.283320814722941, y: 988.28449275314 },
               GD_none1: { x: -720.3956940812873, y: 1045.5612154866174 },
-              GD_none2: { x: -326.8704087949896, y: 1040.14552169912 },
+              GD_none2: { x: -324.3704087949896, y: 1039.64552169912 },
               GD_none3: { x: 44.43067084862969, y: 1036.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1151.6225319026826, y: 574.7715183161662 },
@@ -2776,31 +2782,28 @@ export default function DemoFlowOTS() {
               PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
               PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -996.9532738162299, y: 949.6022756172126 },
-              PT2: { x: -350.4391791978867, y: 1138.464910598512 },
+              PT1: { x: -1114.171659503826, y: 949.7657148375583 },
+              PT2: { x: -350.9391791978867, y: 1138.964910598512 },
               PT3: { x: -344.2422546040923, y: 750.8313302579564 },
-              PT_col1: { x: -965.0334069238746, y: 1012.8802095314497 },
+              PT_col1: { x: -1081.6718862507378, y: 1012.7653932006001 },
               PT_col2: { x: -311.61340748391814, y: 813.5387087224499 },
               PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
-              PT_none1: { x: -964.3722675067637, y: 978.9303239049175 },
+              PT_none1: { x: -1081.59363157488, y: 971.649579153979 },
               PT_none2: { x: -310.54194957541347, y: 782.7500279655704 },
               PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1049.2473802202082,
-                  y: 855.3114796471364,
-              },
+              Pressure_Trans01: { x: -1166.660688189441, y: 848.9043168081807 },
               Pressure_Trans02: { x: -562.6962249223983, y: 688.6387678519382 },
               Pressure_Trans03: {
                   x: -564.0315214558219,
                   y: 1323.5258392422122,
               },
-              SDV: { x: -1099.8835403835114, y: 956.6494709563746 },
-              SDV_Ball: { x: -1072.658207783444, y: 1161.1738486098288 },
-              SDV_IMG: { x: -1095.7464489538452, y: 994.0752335439693 },
+              SDV: { x: -1014.5755767396676, y: 955.8651163728643 },
+              SDV_Ball: { x: -987.3302143743845, y: 1160.2473446642948 },
+              SDV_IMG: { x: -1011.1148428541994, y: 994.0707354298925 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1069.034965906526, y: 1045.0156837354775 },
+              SDV_None: { x: -984.0967739706131, y: 1045.2324182648902 },
               T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
               T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
               Tank: { x: -903.8348910158862, y: 983.557904759858 },
@@ -5467,27 +5470,27 @@ export default function DemoFlowOTS() {
 
         //===============================  Alarm center ===========================
 
-        // {
-        //     id: "AlarmCenter",
-        //     position: positions.AlarmCenter,
-        //     type: "custom",
-        //     data: {
-        //         label: (
-        //             <div>
-        //                 <AlarmOTSUKA />
-        //             </div>
-        //         ),
-        //     },
+        {
+            id: "AlarmCenter",
+            position: positions.AlarmCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <AlarmOTSUKA />
+                    </div>
+                ),
+            },
 
-        //     sourcePosition: Position.Left,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         background: backgroundGraphic,
-        //         border: "none",
-        //         width: 200,
-        //         borderRadius: 5,
-        //     },
-        // },
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                background: backgroundGraphic,
+                border: "none",
+                width: 300,
+                borderRadius: 5,
+            },
+        },
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
