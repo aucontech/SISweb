@@ -4,7 +4,7 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Column } from "primereact/column";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { getAlarms } from "@/api/alarm.api";
+import { getAlarms, getAllAlarms } from "@/api/alarm.api";
 import { UIUtils, Utils } from "@/service/Utils";
 import { InputText } from "primereact/inputtext";
 interface Props {
@@ -42,8 +42,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
             filters?: any
         ) => {
             if (filters && filters.device && filters.device.id) {
-                let device = filters.device;
-                console.log(device);
+                let { device, severity, status } = filters;
                 let reqParams = {};
                 reqParams = {
                     ...reqParams,
@@ -73,10 +72,22 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         typeList: encodeURIComponent(alarmType.type),
                     };
                 }
+                if (severity && severity.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        severityList: severity.join(),
+                    };
+                }
+                if (status && status.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        statusList: status.join(),
+                    };
+                }
                 getAlarms(device.id.entityType, device.id.id, reqParams)
                     .then((resp) => resp.data)
                     .then((res) => {
-                        console.log(res);
+                        // console.log(res);
                         setAlarms([...res.data]);
                         setTotalElements(res.totalElements);
                     })
@@ -87,6 +98,56 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         });
                     });
             } else {
+                let { dates, severity, status } = filters;
+                let reqParams = {};
+                reqParams = {
+                    ...reqParams,
+                    pageSize,
+                    page,
+                    sortOrder: "DESC",
+                    sortProperty: "createdTime",
+                };
+
+                if (dates && dates[0] && dates[1]) {
+                    reqParams = {
+                        ...reqParams,
+                        startTime: dates[0].getTime(),
+                        endTime: dates[1].getTime(),
+                    };
+                }
+
+                if (textSearch !== "") {
+                    reqParams = {
+                        ...reqParams,
+                        textSearch: encodeURIComponent(textSearch),
+                    };
+                }
+
+                if (severity && severity.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        severityList: severity.join(),
+                    };
+                }
+                if (status && status.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        statusList: status.join(),
+                    };
+                }
+
+                getAllAlarms(reqParams)
+                    .then((resp) => resp.data)
+                    .then((res) => {
+                        setAlarms([...res.data]);
+                        setTotalElements(res.totalElements);
+                    })
+                    .catch((err) => {
+                        UIUtils.showError({
+                            error: err?.message,
+                            toast: toast.current,
+                        });
+                    });
             }
         },
         []

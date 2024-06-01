@@ -58,24 +58,23 @@ const FilterDataChartReport: React.FC<Props> = ({
         onAction(newFil);
     };
     const _onSuggTags = (evt: any) => {
+        let search = evt.query;
         if (editFilter.device) {
             console.log(editFilter.device);
             getTimeseriesKeys("DEVICE", editFilter.device.id.id)
                 .then((resp) => resp.data)
                 .then((res) => {
                     console.log(res);
-                    setSuggTags([...res]);
+                    // Adjust the regex to match only the start of the string
+                    const regex = new RegExp(`^${search}`, "i"); // '^' anchors the regex to start of the string
+
+                    setSuggTags(res.filter((item: any) => regex.test(item)));
                 })
-                .catch((error) => {});
+                .catch((error) => {
+                    console.error("Failed to fetch tags:", error);
+                    setSuggTags([]); // Handle errors by clearing suggestions
+                });
         }
-        // getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
-        //     .then((resp) => resp.data)
-        //     .then((resp) => {
-        //         setSuggAlarmType([...resp.data]);
-        //     })
-        //     .catch((err) => {
-        //         setSuggAlarmType([]);
-        //     });
     };
     return (
         <>

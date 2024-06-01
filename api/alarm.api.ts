@@ -1,7 +1,7 @@
 import { httpApi } from "./http.api";
 import { httpApi as httpApiv2 } from "./http.api.v2";
 export const getAllAlarms = (reqParams: any): Promise<any> => {
-    return httpApi.get<any>("/alarms", {
+    return httpApiv2.get<any>("/alarms", {
         params: { ...reqParams },
     });
 };

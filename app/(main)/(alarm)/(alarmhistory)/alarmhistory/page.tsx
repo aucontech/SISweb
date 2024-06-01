@@ -30,7 +30,8 @@ const Alarm = () => {
                     onAction={_onFilterChange}
                     showDevice={true}
                     showDate={true}
-                    showAlarmType={true}
+                    showStatus={true}
+                    showSeverity={true}
                 />
             </div>
             <AlarmList filters={filters} />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
@@ -244,9 +244,9 @@ export default function Alarmbell() {
             }
         };
         ws.current.onclose = () => {
-            console.log("WebSocket connection closed. Trying to reconnect...");
-            setLoading(true);
-            setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
+            // console.log("WebSocket connection closed. Trying to reconnect...");
+            // setLoading(true);
+            // setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
         };
         ws.current.onerror = (error) => {
             console.error("WebSocket error:", error);
@@ -255,6 +255,88 @@ export default function Alarmbell() {
             // UIUtils.showError({});
         };
     };
+    // const sendData = useCallback((data: any) => {
+    //     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+    //         ws.current.send(data);
+    //     }
+    // }, []);
+
+    // const connectWebSocket = useCallback(
+    //     (token: string) => {
+    //         ws.current = new WebSocket(
+    //             `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
+    //         );
+    //         ws.current.onopen = () => {
+    //             console.log("WebSocket connection opened.");
+    //             const data = {
+    //                 // Your data structure here
+    //             };
+    //             sendData(JSON.stringify(data));
+    //         };
+
+    //         ws.current.onmessage = (evt: any) => {
+    //             const dataReceive = JSON.parse(evt.data);
+    //             // Handle messages
+    //         };
+
+    //         ws.current.onclose = () => {
+    //             console.log(
+    //                 "WebSocket connection closed. Trying to reconnect..."
+    //             );
+    //             setLoading(true);
+    //             setTimeout(connectWebSocket, 3000); // Try reconnecting after 3 seconds
+    //         };
+
+    //         ws.current.onerror = (error) => {
+    //             console.error("WebSocket error:", error);
+    //             setLoading(true);
+    //             setTimeout(connectWebSocket, 3000); // Try reconnecting after 3 seconds
+    //         };
+    //     },
+    //     [sendData, token]
+    // ); // Dependencies include `sendData` and `token`
+    // useEffect(() => {
+    //     if (ws && ws.current) {
+    //         ws.current.onmessage = (evt: any) => {
+    //             const dataReceive: any = JSON.parse(evt.data);
+    //             //console.log("dataReceive", dataReceive);
+
+    //             if (dataReceive && dataReceive["cmdId"] === 1) {
+    //                 if (
+    //                     dataReceive.data &&
+    //                     dataReceive.data.data &&
+    //                     dataReceive.data.data.length > 0
+    //                 ) {
+    //                     // setNotifications(dataReceive.data.data);
+    //                     //  setLoading(false);
+    //                     let alarms = dataReceive.data.data;
+    //                     let criticalAlarm = alarms.filter(
+    //                         (alarm: any) => alarm.severity === "CRITICAL"
+    //                     );
+    //                     let majorAlarm = alarms.filter(
+    //                         (alarm: any) => alarm.severity === "MAJOR"
+    //                     );
+    //                     if (criticalAlarm.length > majorAlarm.length) {
+    //                         audioRef.current?.play();
+    //                     }
+    //                     setNotifications(alarms);
+    //                 } else if (
+    //                     dataReceive.data &&
+    //                     dataReceive.data.data &&
+    //                     dataReceive.data.data.length === 0 &&
+    //                     dataReceive.update === null
+    //                 ) {
+    //                     audioRef.current?.pause();
+    //                     setNotifications([]);
+    //                     setLoading(false);
+    //                 }
+    //             } else if (dataReceive && dataReceive["cmdId"] === 2) {
+    //                 setAlarmCount(dataReceive.count);
+    //                 setLoading(false);
+    //             }
+    //         };
+    //     }
+    // }, [ws]);
     useEffect(() => {
         let token: string | null = null;
 
