@@ -3,9 +3,11 @@ import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
-import { getAlarmTypes } from "@/api/alarm.api";
+import { Dialog } from "primereact/dialog";
 import { getTimeseriesKeys } from "@/api/telemetry.api";
-import { error } from "console";
+
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
 interface Props {
     showDevice: boolean;
     showDate?: boolean;
@@ -17,7 +19,13 @@ interface Props {
 const defFilter = {
     device: null,
     dates: null,
-    tags: [],
+    tags: [
+        {
+            key: "",
+            name: "",
+            unit: null,
+        },
+    ],
 };
 const FilterDataTableReport: React.FC<Props> = ({
     showDevice,
@@ -28,13 +36,22 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggTags, setSuggTags] = useState<any>([]);
+    const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+    const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
 
+    // ... m
     useEffect(() => {
         let newFilter = {
             ...defFilter,
         };
-        setEditFilter(editFilter);
+        console.log(newFilter);
+        setEditFilter({ ...newFilter });
     }, []);
+
+    const _onOkSettingTagForm = () => {
+        onAction(editFilter);
+        setIsFormVisible(false);
+    };
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
             .then((resp) => resp.data)
@@ -48,6 +65,29 @@ const FilterDataTableReport: React.FC<Props> = ({
                 setSuggDevices([]);
             });
     };
+    const footerClearConditionForm = (
+        <div>
+            <Button
+                label="Ok"
+                icon="pi pi-check"
+                onClick={_onOkSettingTagForm}
+                autoFocus
+            />
+            <Button
+                label="Cancel"
+                icon="pi pi-times"
+                //onClick={() => setIsClearConditionFormVisible(false)}
+            />
+        </div>
+    );
+    const _onSuggUnits = () => {
+        setUnitSuggestions([
+            { label: "°C", value: "°C" },
+            { label: "cm³", value: "cm³" },
+            { label: "m³", value: "m³" },
+        ]);
+    };
+    console.log(editFilter);
     const _processFilterChange: (field: string, value: any) => any = (
         field: string,
         value: any
@@ -68,14 +108,94 @@ const FilterDataTableReport: React.FC<Props> = ({
                 })
                 .catch((error) => {});
         }
-        // getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
-        //     .then((resp) => resp.data)
-        //     .then((resp) => {
-        //         setSuggAlarmType([...resp.data]);
-        //     })
-        //     .catch((err) => {
-        //         setSuggAlarmType([]);
-        //     });
+    };
+    const _handleChangeTag = (index: number, field: string, value: any) => {
+        // const newKey = ""; // Get the key value from the input field
+        if (field === "key") {
+            const isKeyDuplicate = editFilter.tags.some(
+                (tag: any) => tag.key === value
+            );
+
+            if (isKeyDuplicate) {
+                // Show an error message to the user, e.g., using a toast notification or alert
+                console.error(
+                    "Error: Duplicate key detected. Please enter a unique key."
+                );
+                return;
+            }
+        }
+        setEditFilter((prevFilter: any) => {
+            const updatedTags = [...prevFilter.tags];
+            updatedTags[index] = { ...updatedTags[index], [field]: value };
+            return { ...prevFilter, tags: updatedTags };
+        });
+    };
+
+    const _renderSettingTagForm = () => {
+        console.log(editFilter);
+        let { tags } = editFilter;
+        if (tags && tags.length > 0) {
+            return tags.map((dt: any, index: number) => {
+                return (
+                    <>
+                        <div key={index} className="formgrid grid">
+                            <div className="field col">
+                                <label>Key</label>
+                                <AutoComplete
+                                    dropdown
+                                    value={dt.key}
+                                    suggestions={suggTags}
+                                    completeMethod={_onSuggTags}
+                                    onChange={(e) => {
+                                        _handleChangeTag(index, "key", e.value);
+                                    }}
+                                />
+                            </div>
+                            <div className="field col">
+                                <label>Name</label>
+                                <InputText
+                                    value={dt.name}
+                                    onChange={(e: any) => {
+                                        _handleChangeTag(
+                                            index,
+                                            "name",
+                                            e.target.value
+                                        );
+                                    }}
+                                    // completeMethod={_onSuggValueTypes}
+                                />
+                            </div>
+                            <div className="field col">
+                                <label>Unit</label>
+                                <AutoComplete
+                                    dropdown
+                                    field="label"
+                                    suggestions={unitSuggestions}
+                                    value={dt.unit}
+                                    onChange={(e) => {
+                                        _handleChangeTag(
+                                            index,
+                                            "unit",
+                                            e.value
+                                        );
+                                    }}
+                                    completeMethod={_onSuggUnits}
+                                />
+                            </div>
+                        </div>
+                    </>
+                );
+            });
+        }
+    };
+    const handleAddTagSetting = () => {
+        setEditFilter((prevFilter: any) => ({
+            ...prevFilter,
+            tags: [
+                ...prevFilter.tags,
+                { key: "", name: "", unit: null }, // Add a new empty tag object
+            ],
+        }));
     };
     return (
         <>
@@ -117,22 +237,32 @@ const FilterDataTableReport: React.FC<Props> = ({
                 {showTags && (
                     <div className="col-12 lg:col-6">
                         <span className="p-float-label">
-                            <AutoComplete
-                                dropdown
-                                multiple
-                                //  field="type"
+                            <Button
+                                // dropdown
+                                // multiple
+                                onClick={() => setIsFormVisible(true)}
                                 value={editFilter.tags}
-                                onChange={(e) => {
-                                    _processFilterChange("tags", e.value);
-                                }}
-                                suggestions={suggTags}
-                                completeMethod={_onSuggTags}
-                            />
-                            <label>Tags Name</label>
+                                // onChange={(e) => {
+                                //     _processFilterChange("tags", e.value);
+                                // }}
+                                // suggestions={suggTags}
+                                // completeMethod={_onSuggTags}
+                            >
+                                add tags
+                            </Button>
                         </span>
                     </div>
                 )}
             </div>
+            <Dialog
+                header="Condition Form"
+                visible={isFormVisible}
+                onHide={() => setIsFormVisible(false)}
+                footer={footerClearConditionForm}
+            >
+                <div className="card p-fluid">{_renderSettingTagForm()}</div>
+                <Button onClick={handleAddTagSetting}>Add</Button>
+            </Dialog>
         </>
     );
 };

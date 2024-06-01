@@ -20,6 +20,10 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
 
     const _fetchDataTimeseries = useCallback(({ filters }) => {
         let { device, tags, dates } = filters;
+        if (!tags || tags.length === 0) {
+            return [];
+        }
+        let tagNames = tags.map((tag: any) => tag.key);
         console.log(dates);
         if (
             dates &&
@@ -27,11 +31,11 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             dates[0] != null &&
             dates[1] !== null &&
             device &&
-            tags &&
-            tags.length > 0
+            tagNames &&
+            tagNames.length > 0
         ) {
             let reqParams: any = {
-                keys: tags.join(","),
+                keys: tagNames.join(","),
                 startTs: dates[0].getTime(),
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
@@ -40,7 +44,13 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             getTimesSeriesData("DEVICE", device.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    // Get all unique timestamps
+                    console.log(res);
+                    console.log(tags);
+                    const tagUnitLookup: { [key: string]: string } = {};
+                    tags.forEach((tag: any) => {
+                        tagUnitLookup[tag.key] = tag.unit ? tag.unit.value : "";
+                    });
+
                     const timestamps = [
                         ...new Set(
                             Object.values(res).flatMap((arr: any) =>
@@ -58,19 +68,25 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                             const dataPoint = res[key].find(
                                 (item: any) => item.ts === ts
                             );
-                            rowData[key] = dataPoint ? dataPoint.value : "";
+
+                            // Add unit to the value
+                            rowData[key] = dataPoint
+                                ? `${dataPoint.value} ${tagUnitLookup[key]}` // Add unit from lookup
+                                : "";
                         });
                         return rowData;
                     });
 
                     // Set table data and columns dynamically
                     setTableData(formattedData);
-                    setColumns(
-                        Object.keys(res).map((key) => ({
-                            field: key,
-                            header: key,
-                        }))
-                    );
+
+                    // Get column names (name from tags)
+                    const columnNames = tags.map((tag: any) => ({
+                        field: tag.key,
+                        header: tag.name ? tag.name : tag.key, // Use tag.name as header
+                    }));
+
+                    setColumns(columnNames);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -81,7 +97,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
-
+    console.log(tableData);
     return (
         <div>
             <DataTable
@@ -101,7 +117,6 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                         key={col.field}
                         field={col.field}
                         header={col.header}
-                        // headerStyle={{ textAlign: "center" }}
                     />
                 ))}
             </DataTable>
