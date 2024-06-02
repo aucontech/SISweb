@@ -98,6 +98,14 @@ const getUnixTimeMillisecondsGMT7 = () => {
     const timeInGMT7 = currentTime + offset;
     return timeInGMT7;
 };
+const formatDateForStorage = (date: Date | null) => {
+    if (!date) return null;
+    return date.toISOString();
+};
+const parseDateFromStorage = (dateString: string | null) => {
+    if (!dateString) return null;
+    return new Date(dateString);
+};
 
 const formatUnixTimeToString = (unixTime: any, fmt?: any) => {
     const date = new Date(unixTime);
@@ -165,13 +173,16 @@ const getType = (value: any): ValueType => {
 
     return "Unknown Type";
 };
+
 const UIUtils = { showError, showInfo, showWarning };
 const Utils = {
+    parseDateFromStorage,
     formatUnixTimeToString,
     getUnixTimeMilliseconds,
     getUnixTimeMillisecondsGMT7,
     calculateDurationFromUnixWithWords,
     getType,
     round,
+    //formatDateForStorage,
 };
 export { UIUtils, Utils };

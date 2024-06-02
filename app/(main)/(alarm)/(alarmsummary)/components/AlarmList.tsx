@@ -4,7 +4,7 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Column } from "primereact/column";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { getAlarms } from "@/api/alarm.api";
+import { getAlarms, getAllAlarms } from "@/api/alarm.api";
 import { UIUtils, Utils } from "@/service/Utils";
 import { InputText } from "primereact/inputtext";
 interface Props {
@@ -42,18 +42,18 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
             filters?: any
         ) => {
             if (filters && filters.device && filters.device.id) {
-                let device = filters.device;
+                let { device, dates, alarmType, severity } = filters;
                 let reqParams = {};
                 reqParams = {
                     ...reqParams,
                     pageSize,
                     page,
                     sortOrder: "DESC",
-                    statusList: "ACTIVE,UNACK",
-                    //  severityList:"CRITICAL,MAJOR,MINOR,WARNING,INDETERMINATE,INFORMATIONAL,NOT_SPECIFIED"
+                    statusList: "ACTIVE",
+
                     sortProperty: "createdTime",
                 };
-                let dates = filters.dates ? [...filters.dates] : [];
+                //  let dates = filters.dates ? [...filters.dates] : [];
                 if (dates && dates[0] && dates[1]) {
                     reqParams = {
                         ...reqParams,
@@ -67,19 +67,23 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         textSearch: encodeURIComponent(textSearch),
                     };
                 }
-                let alarmType = filters?.alarmType;
+                //let alarmType = filters?.alarmType;
                 if (alarmType && alarmType.type) {
                     reqParams = {
                         ...reqParams,
                         typeList: encodeURIComponent(alarmType.type),
                     };
                 }
-                console.log(filters);
+                if (severity && severity.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        severityList: severity.join(","),
+                    };
+                }
 
                 getAlarms(device.id.entityType, device.id.id, reqParams)
                     .then((resp) => resp.data)
                     .then((res) => {
-                        console.log(res);
                         setAlarms([...res.data]);
                         setTotalElements(res.totalElements);
                     })
@@ -90,6 +94,55 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         });
                     });
             } else {
+                let { severity, alarmType, dates } = filters;
+                let reqParams = {};
+                reqParams = {
+                    ...reqParams,
+                    pageSize,
+                    page,
+                    sortOrder: "DESC",
+                    statusList: "ACTIVE",
+                    //  severityList:"CRITICAL,MAJOR,MINOR,WARNING,INDETERMINATE,INFORMATIONAL,NOT_SPECIFIED"
+                    sortProperty: "createdTime",
+                };
+                if (severity && severity.length > 0) {
+                    reqParams = {
+                        ...reqParams,
+                        severityList: severity.join(","),
+                    };
+                }
+                if (dates && dates[0] && dates[1]) {
+                    reqParams = {
+                        ...reqParams,
+                        startTime: dates[0].getTime(),
+                        endTime: dates[1].getTime(),
+                    };
+                }
+                if (textSearch !== "") {
+                    reqParams = {
+                        ...reqParams,
+                        textSearch: encodeURIComponent(textSearch),
+                    };
+                }
+                if (alarmType && alarmType.type) {
+                    reqParams = {
+                        ...reqParams,
+                        typeList: encodeURIComponent(alarmType.type),
+                    };
+                }
+
+                getAllAlarms(reqParams)
+                    .then((resp) => resp.data)
+                    .then((res) => {
+                        setAlarms([...res.data]);
+                        setTotalElements(res.totalElements);
+                    })
+                    .catch((err) => {
+                        UIUtils.showError({
+                            error: err?.message,
+                            toast: toast.current,
+                        });
+                    });
             }
         },
         []
@@ -123,7 +176,6 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
 
     const _renderDurationTime = (row: any) => {
         let clearTs = row.clearTs;
-        console.log(clearTs);
         return clearTs ? Utils.formatUnixTimeToString(clearTs) : "";
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

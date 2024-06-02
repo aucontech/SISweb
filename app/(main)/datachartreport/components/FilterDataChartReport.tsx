@@ -2,10 +2,9 @@
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
+import { Utils } from "@/service/Utils";
 import { Calendar } from "primereact/calendar";
-
 import { getTimeseriesKeys } from "@/api/telemetry.api";
-
 interface Props {
     showDevice: boolean;
     showDate?: boolean;
@@ -14,27 +13,43 @@ interface Props {
     // showDates?: boolean;
     onAction: (evt: any) => void;
 }
+
 const defFilter = {
     device: null,
     dates: null,
     tags: [],
 };
+
 const FilterDataChartReport: React.FC<Props> = ({
     showDevice,
     onAction,
     showDate,
     showTags,
 }) => {
-    const [editFilter, setEditFilter] = useState<any>([]);
+    const [editFilter, setEditFilter] = useState<any>(defFilter);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggTags, setSuggTags] = useState<any>([]);
 
     useEffect(() => {
-        let newFilter = {
-            ...defFilter,
-        };
-        setEditFilter(editFilter);
+        if (typeof window !== "undefined") {
+            const storedFilter = localStorage.getItem("filterDataChartReport");
+            if (storedFilter) {
+                const parsedFilter = JSON.parse(storedFilter);
+                console.log(parsedFilter);
+                // Parse dates from localStorage
+                parsedFilter.dates = parsedFilter.dates
+                    ? parsedFilter.dates.map((dateStr: string) =>
+                          Utils.parseDateFromStorage(dateStr)
+                      )
+                    : null;
+
+                setEditFilter(parsedFilter);
+                onAction(parsedFilter);
+            }
+        }
     }, []);
+
+    // }, []);
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
             .then((resp) => resp.data)
@@ -45,6 +60,7 @@ const FilterDataChartReport: React.FC<Props> = ({
                 setSuggDevices([...res.data]);
             })
             .catch((err) => {
+                console.error("Failed to fetch devices:", err);
                 setSuggDevices([]);
             });
     };
@@ -56,18 +72,16 @@ const FilterDataChartReport: React.FC<Props> = ({
         newFil[field] = value;
         setEditFilter(newFil);
         onAction(newFil);
+        localStorage.setItem("filterDataChartReport", JSON.stringify(newFil));
     };
+
     const _onSuggTags = (evt: any) => {
         let search = evt.query;
         if (editFilter.device) {
-            console.log(editFilter.device);
             getTimeseriesKeys("DEVICE", editFilter.device.id.id)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    console.log(res);
-                    // Adjust the regex to match only the start of the string
-                    const regex = new RegExp(`^${search}`, "i"); // '^' anchors the regex to start of the string
-
+                    const regex = new RegExp(`^${search}`, "i");
                     setSuggTags(res.filter((item: any) => regex.test(item)));
                 })
                 .catch((error) => {
@@ -76,6 +90,23 @@ const FilterDataChartReport: React.FC<Props> = ({
                 });
         }
     };
+    // useEffect(() => {
+    //     if (typeof window !== "undefined") {
+    //         // Format dates before storing
+    //         const filterToStore = {
+    //             ...editFilter,
+    //             dates: editFilter.dates
+    //                 ? editFilter.dates.map((date: Date) =>
+    //                       formatDateForStorage(date)
+    //                   )
+    //                 : null,
+    //         };
+    //         localStorage.setItem(
+    //             "filterDataChartReport",
+    //             JSON.stringify(filterToStore)
+    //         );
+    //     }
+    // }, [editFilter]);
     return (
         <>
             <div className="grid p-fluid">
