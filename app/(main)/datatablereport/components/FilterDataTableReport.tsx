@@ -131,8 +131,17 @@ const FilterDataTableReport: React.FC<Props> = ({
         });
     };
 
+    const handleDeleteTagSetting = (index: number) => {
+        return () => {
+            setEditFilter((prevFilter: any) => {
+                const updatedTags = [...prevFilter.tags];
+                updatedTags.splice(index, 1);
+                return { ...prevFilter, tags: updatedTags };
+            });
+        };
+    };
+
     const _renderSettingTagForm = () => {
-        console.log(editFilter);
         let { tags } = editFilter;
         if (tags && tags.length > 0) {
             return tags.map((dt: any, index: number) => {
@@ -181,6 +190,12 @@ const FilterDataTableReport: React.FC<Props> = ({
                                     }}
                                     completeMethod={_onSuggUnits}
                                 />
+                            </div>
+                            <div className="field col">
+                                <label>Action</label>
+                                <Button onClick={handleDeleteTagSetting(index)}>
+                                    Delete
+                                </Button>
                             </div>
                         </div>
                     </>
@@ -235,7 +250,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                     </div>
                 )}
                 {showTags && (
-                    <div className="col-12 lg:col-6">
+                    <div className="col-12 lg:col-3">
                         <span className="p-float-label">
                             <Button
                                 // dropdown
@@ -248,7 +263,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                                 // suggestions={suggTags}
                                 // completeMethod={_onSuggTags}
                             >
-                                add tags
+                                Add tags
                             </Button>
                         </span>
                     </div>
@@ -259,6 +274,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                 visible={isFormVisible}
                 onHide={() => setIsFormVisible(false)}
                 footer={footerClearConditionForm}
+                style={{ width: "50vw" }}
             >
                 <div className="card p-fluid">{_renderSettingTagForm()}</div>
                 <Button onClick={handleAddTagSetting}>Add</Button>

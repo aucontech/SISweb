@@ -8,7 +8,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import { Utils } from "@/service/Utils";
-import { orderBy } from "lodash";
+import ExportToExcel from "./ExportToExcel";
 
 interface Props {
     filters: any;
@@ -17,7 +17,12 @@ interface Props {
 const DataTableReportList: React.FC<Props> = ({ filters }) => {
     const [tableData, setTableData] = useState<any>([]);
     const [columns, setColumns] = useState<any>([]);
-
+    const [columnExcelHeaders, setColumnExcelHeaders] = useState<any>([
+        {
+            key: "ts",
+            name: "Timestamp",
+        },
+    ]);
     const _fetchDataTimeseries = useCallback(({ filters }) => {
         let { device, tags, dates } = filters;
         if (!tags || tags.length === 0) {
@@ -95,6 +100,16 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     }, []);
 
     useEffect(() => {
+        let { tags } = filters;
+        if (typeof tags !== "undefined" && tags && tags.length > 0) {
+            let newTags = [{ key: "ts", name: "Timestamp" }, ...filters.tags];
+            setColumnExcelHeaders([...newTags]);
+        }
+        console.log(tags);
+    }, [filters]);
+
+    console.log(columnExcelHeaders);
+    useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
     console.log(tableData);
@@ -120,6 +135,8 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                     />
                 ))}
             </DataTable>
+
+            <ExportToExcel data={tableData} columns={columnExcelHeaders} />
         </div>
     );
 };
