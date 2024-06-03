@@ -36,6 +36,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             dates[0] != null &&
             dates[1] !== null &&
             device &&
+            device.id &&
             tagNames &&
             tagNames.length > 0
         ) {
@@ -44,9 +45,9 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                 startTs: dates[0].getTime(),
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
-                limit: 30000,
+                limit: 50000,
             };
-            getTimesSeriesData("DEVICE", device.id.id, reqParams)
+            getTimesSeriesData("DEVICE", device?.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
                     console.log(res);

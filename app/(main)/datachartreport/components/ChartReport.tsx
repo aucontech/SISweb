@@ -100,7 +100,10 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                         )
                     );
                     let datasets = keys.map((key, index) => {
-                        let values = res[key].map((d: any) => d.value);
+                        let values = res[key].map((d: any, index: number) => ({
+                            ...d,
+                            key: index,
+                        })); // Ensure each data point has a unique key if rendered separately
                         return {
                             label: key,
                             data: values,
@@ -149,7 +152,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     }, []);
 
     return (
-        <div>
+        <>
             <div className="col-12 xl:col-8">
                 <div className="card">
                     <div className="text-900 text-xl font-semibold mb-3">
@@ -163,7 +166,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     ></Chart>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

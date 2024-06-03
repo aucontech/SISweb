@@ -5,7 +5,7 @@ import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import { getTimeseriesKeys } from "@/api/telemetry.api";
-
+import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 interface Props {
@@ -33,7 +33,7 @@ const FilterDataTableReport: React.FC<Props> = ({
     showDate,
     showTags,
 }) => {
-    const [editFilter, setEditFilter] = useState<any>([]);
+    const [editFilter, setEditFilter] = useState<any>(defFilter);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggTags, setSuggTags] = useState<any>([]);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
@@ -41,17 +41,44 @@ const FilterDataTableReport: React.FC<Props> = ({
 
     // ... m
     useEffect(() => {
-        let newFilter = {
-            ...defFilter,
-        };
-        console.log(newFilter);
-        setEditFilter({ ...newFilter });
-    }, []);
+        if (typeof window !== "undefined") {
+            const storedFilter = localStorage.getItem("filterDataTableReport");
+            if (storedFilter) {
+                const parsedFilter = JSON.parse(storedFilter);
+                console.log(parsedFilter);
+                // Parse dates from localStorage
+                parsedFilter.dates = parsedFilter.dates
+                    ? parsedFilter.dates.map((dateStr: string) =>
+                          Utils.parseDateFromStorage(dateStr)
+                      )
+                    : null;
 
+                setEditFilter(parsedFilter);
+                onAction(parsedFilter);
+            }
+        }
+    }, []);
+    const _processFilterChange: (field: string, value: any) => any = (
+        field: string,
+        value: any
+    ) => {
+        let newFil = { ...editFilter };
+        newFil[field] = value;
+        setEditFilter(newFil);
+        onAction(newFil);
+        localStorage.setItem("filterDataTableReport", JSON.stringify(newFil));
+    };
     const _onOkSettingTagForm = () => {
-        onAction(editFilter);
+        // onAction(editFilter);
+        _processFilterChange("tags", editFilter.tags);
         setIsFormVisible(false);
     };
+    // useEffect(() => {
+    //     localStorage.setItem(
+    //         "filterDataTableReport",
+    //         JSON.stringify(editFilter)
+    //     );
+    // }, [editFilter]);
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
             .then((resp) => resp.data)
@@ -104,15 +131,6 @@ const FilterDataTableReport: React.FC<Props> = ({
         setUnitSuggestions(filtered);
     };
 
-    const _processFilterChange: (field: string, value: any) => any = (
-        field: string,
-        value: any
-    ) => {
-        let newFil = { ...editFilter };
-        newFil[field] = value;
-        setEditFilter(newFil);
-        onAction(newFil);
-    };
     const _onSuggTags = (evt: any) => {
         if (editFilter.device) {
             console.log(editFilter.device);

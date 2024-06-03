@@ -1,5 +1,6 @@
 import * as XLSX from "xlsx";
 import { Button } from "primereact/button";
+import { co } from "@fullcalendar/core/internal-common";
 interface Props {
     data: any[];
     columns: any[];
@@ -7,6 +8,9 @@ interface Props {
 
 const ExportToExcel: React.FC<Props> = ({ data, columns }) => {
     const handleExport = () => {
+        if (data.length === 0 || columns.length === 0) {
+            return;
+        }
         const wb = XLSX.utils.book_new();
         const ws_data = [];
 
