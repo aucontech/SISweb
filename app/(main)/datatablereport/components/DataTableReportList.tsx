@@ -9,7 +9,7 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import { Utils } from "@/service/Utils";
 import ExportToExcel from "./ExportToExcel";
-
+import { readUser } from "@/service/localStorage";
 interface Props {
     filters: any;
 }
@@ -23,6 +23,14 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             name: "Timestamp",
         },
     ]);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    useEffect(() => {
+        const user = readUser();
+        if (user) {
+            setCurrentUser(user);
+        }
+        console.log("user", user);
+    }, []);
     const _fetchDataTimeseries = useCallback(({ filters }) => {
         let { device, tags, dates } = filters;
         if (!tags || tags.length === 0) {
@@ -77,7 +85,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
 
                             // Add unit to the value
                             rowData[key] = dataPoint
-                                ? `${dataPoint.value} ${tagUnitLookup[key]}` // Add unit from lookup
+                                ? `${dataPoint.value}` // Add unit from lookup
                                 : "";
                         });
                         return rowData;
@@ -87,9 +95,13 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                     setTableData(formattedData);
 
                     // Get column names (name from tags)
+                    console.log(tags);
                     const columnNames = tags.map((tag: any) => ({
+                        //  console.log(tag)
                         field: tag.key,
-                        header: tag.name ? tag.name : tag.key, // Use tag.name as header
+                        header: tag.name
+                            ? tag.name + `(${tag.unit.value})`
+                            : tag.key + `(${tag.unit.value})`, // Use tag.name as header
                     }));
 
                     setColumns(columnNames);
@@ -103,8 +115,12 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     useEffect(() => {
         let { tags } = filters;
         if (typeof tags !== "undefined" && tags && tags.length > 0) {
-            let newTags = [{ key: "ts", name: "Timestamp" }, ...filters.tags];
-            setColumnExcelHeaders([...newTags]);
+            let excelHeader = tags.map((tag: any) => ({
+                key: tag.key,
+                name: tag.name + ` (${tag.unit.value})`,
+            }));
+            excelHeader = [{ key: "ts", name: "Timestamp" }, ...excelHeader];
+            setColumnExcelHeaders([...excelHeader]);
         }
     }, [filters]);
 
@@ -135,7 +151,12 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                 ))}
             </DataTable>
 
-            <ExportToExcel data={tableData} columns={columnExcelHeaders} />
+            <ExportToExcel
+                filters={filters}
+                data={tableData}
+                columns={columnExcelHeaders}
+                user={currentUser}
+            />
         </div>
     );
 };

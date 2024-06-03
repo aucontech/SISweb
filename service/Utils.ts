@@ -106,6 +106,9 @@ const parseDateFromStorage = (dateString: string | null) => {
     if (!dateString) return null;
     return new Date(dateString);
 };
+const formateJsTime = (time: any, formatStr: string) => {
+    return format(time, formatStr);
+};
 
 const formatUnixTimeToString = (unixTime: any, fmt?: any) => {
     const date = new Date(unixTime);
@@ -183,6 +186,6 @@ const Utils = {
     calculateDurationFromUnixWithWords,
     getType,
     round,
-    //formatDateForStorage,
+    formateJsTime,
 };
 export { UIUtils, Utils };

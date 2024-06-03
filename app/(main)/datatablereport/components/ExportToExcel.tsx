@@ -1,13 +1,25 @@
 import * as XLSX from "xlsx";
 import { Button } from "primereact/button";
 import { co } from "@fullcalendar/core/internal-common";
+import { Utils } from "@/service/Utils";
 interface Props {
     data: any[];
     columns: any[];
+    filters: any;
+    user: any;
 }
 
-const ExportToExcel: React.FC<Props> = ({ data, columns }) => {
+const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
     const handleExport = () => {
+        const tagsKeys = filters.tags.map((tag: any) => tag.key).join(", ");
+        const data1 = [
+            [`USER: ${user.email}`],
+            [`STATION: ${filters.device.name}`],
+            [],
+            [`DATA REPORT FOR: ${tagsKeys}`],
+            ["FROM:", `${Utils.formateJsTime(filters.dates[0], "yyyy-MM-dd")}`],
+            ["TO:", `${Utils.formateJsTime(filters.dates[1], "yyyy-MM-dd")}`],
+        ];
         if (data.length === 0 || columns.length === 0) {
             return;
         }
@@ -16,6 +28,10 @@ const ExportToExcel: React.FC<Props> = ({ data, columns }) => {
 
         // Tạo header cho Excel file
         const headers = columns.map((col: any) => col.name);
+
+        data1.forEach((item: any) => {
+            ws_data.push(item);
+        });
         ws_data.push(headers);
 
         // Thêm dữ liệu vào các dòng
@@ -30,7 +46,7 @@ const ExportToExcel: React.FC<Props> = ({ data, columns }) => {
         XLSX.utils.book_append_sheet(wb, ws, "Data");
 
         // Tạo và tải xuống file Excel
-        XLSX.writeFile(wb, "data.xlsx");
+        XLSX.writeFile(wb, `${filters.device.name}.xlsx`);
     };
 
     return <Button onClick={handleExport}>Export to Excel</Button>;
