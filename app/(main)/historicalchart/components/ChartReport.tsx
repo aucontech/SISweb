@@ -117,6 +117,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     };
 
                     setChartData(dataChart);
+                    //xử lý data để render thành chart
                 })
                 .catch((err) => {
                     // UIUtils.showError({error:err.})
@@ -150,19 +151,12 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
 
     return (
         <div>
-            <div className="col-12 xl:col-8">
-                <div className="card">
-                    <div className="text-900 text-xl font-semibold mb-3">
-                        Overview
-                    </div>
-                    <Chart
-                        type="line"
-                        data={data}
-                        plugins={pluginZoom}
-                        options={options}
-                    ></Chart>
-                </div>
-            </div>
+            <Chart
+                type="line"
+                data={data}
+                plugins={pluginZoom}
+                options={options}
+            ></Chart>
         </div>
     );
 };

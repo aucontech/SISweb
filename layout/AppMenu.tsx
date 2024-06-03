@@ -84,7 +84,6 @@ const AppMenu = () => {
                     ],
                 },
 
-          
                 {
                     label: "Alarm",
                     icon: "pi pi-home",
@@ -159,9 +158,9 @@ const AppMenu = () => {
                             to: "/datatablereport",
                         },
                         {
-                            label: "Chart",
+                            label: "Historical Chart",
                             icon: "pi pi-fw pi-chart-bar",
-                            to: "/datachartreport",
+                            to: "/historicalchart",
                         },
                         {
                             label: "File Manager",
