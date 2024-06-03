@@ -132,15 +132,18 @@ const FilterDataTableReport: React.FC<Props> = ({
     };
 
     const _onSuggTags = (evt: any) => {
+        let search = evt.query;
         if (editFilter.device) {
             console.log(editFilter.device);
             getTimeseriesKeys("DEVICE", editFilter.device.id.id)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    console.log(res);
-                    setSuggTags([...res]);
+                    const regex = new RegExp(`^${search}`, "i");
+                    setSuggTags(res.filter((item: any) => regex.test(item)));
                 })
-                .catch((error) => {});
+                .catch((error) => {
+                    console.error(error);
+                });
         }
     };
     const _handleChangeTag = (index: number, field: string, value: any) => {

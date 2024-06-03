@@ -128,16 +128,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
         }
     }, []);
 
-    // useEffect(() => {
-    //     const documentStyle = getComputedStyle(document.documentElement);
-    //     const textColor =
-    //         documentStyle.getPropertyValue("--text-color") || "#1e293b";
-    //     const textColorSecondary =
-    //         documentStyle.getPropertyValue("--text-color-secondary") ||
-    //         "#64748b";
-    //     const surfaceBorder =
-    //         documentStyle.getPropertyValue("--surface-border") || "#dfe7ef";
-    // }, [layoutConfig]);
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
