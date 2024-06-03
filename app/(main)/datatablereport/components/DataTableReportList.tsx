@@ -105,7 +105,6 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             let newTags = [{ key: "ts", name: "Timestamp" }, ...filters.tags];
             setColumnExcelHeaders([...newTags]);
         }
-        console.log(tags);
     }, [filters]);
 
     console.log(columnExcelHeaders);

@@ -87,7 +87,7 @@ const FilterDataTableReport: React.FC<Props> = ({
             { label: "m³", value: "m³" },
         ]);
     };
-    console.log(editFilter);
+
     const _processFilterChange: (field: string, value: any) => any = (
         field: string,
         value: any
@@ -110,14 +110,12 @@ const FilterDataTableReport: React.FC<Props> = ({
         }
     };
     const _handleChangeTag = (index: number, field: string, value: any) => {
-        // const newKey = ""; // Get the key value from the input field
         if (field === "key") {
             const isKeyDuplicate = editFilter.tags.some(
                 (tag: any) => tag.key === value
             );
 
             if (isKeyDuplicate) {
-                // Show an error message to the user, e.g., using a toast notification or alert
                 console.error(
                     "Error: Duplicate key detected. Please enter a unique key."
                 );
