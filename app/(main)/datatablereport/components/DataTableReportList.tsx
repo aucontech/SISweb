@@ -107,7 +107,6 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         }
     }, [filters]);
 
-    console.log(columnExcelHeaders);
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);

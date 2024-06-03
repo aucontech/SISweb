@@ -76,16 +76,32 @@ const FilterDataTableReport: React.FC<Props> = ({
             <Button
                 label="Cancel"
                 icon="pi pi-times"
-                //onClick={() => setIsClearConditionFormVisible(false)}
+                onClick={() => setIsFormVisible(false)}
             />
         </div>
     );
-    const _onSuggUnits = () => {
-        setUnitSuggestions([
-            { label: "°C", value: "°C" },
-            { label: "cm³", value: "cm³" },
-            { label: "m³", value: "m³" },
-        ]);
+    const _onSuggUnits = (e: any) => {
+        let serach = e.query;
+        const units = [
+            { label: "month", value: "month" },
+            { label: "˚C", value: "˚C" },
+            { label: "BARA", value: "BARA" },
+            { label: "SM³", value: "SM³" },
+            { label: "M³", value: "M³" },
+            { label: "SM³/H", value: "SM³/H" },
+            { label: "M³/H", value: "M³/H" },
+            { label: "% LEL", value: "% LEL" },
+            { label: "BARG", value: "BARG" },
+        ];
+        //find and filter
+        let filtered: any[] = [];
+        for (let i = 0; i < units.length; i++) {
+            let unit = units[i];
+            if (unit.label.toLowerCase().includes(serach.toLowerCase())) {
+                filtered.push(unit);
+            }
+        }
+        setUnitSuggestions(filtered);
     };
 
     const _processFilterChange: (field: string, value: any) => any = (
@@ -186,7 +202,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                                             e.value
                                         );
                                     }}
-                                    completeMethod={_onSuggUnits}
+                                    completeMethod={(e) => _onSuggUnits(e)}
                                 />
                             </div>
                             <div className="field col">
@@ -268,7 +284,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                 )}
             </div>
             <Dialog
-                header="Condition Form"
+                header="Setting Tags Form"
                 visible={isFormVisible}
                 onHide={() => setIsFormVisible(false)}
                 footer={footerClearConditionForm}
