@@ -38,6 +38,12 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
         zoomPlugin = [Zoom];
     }
     const [options, setOptions] = useState({
+        maintainAspectRatio: false,
+        aspectRatio: 0.5,
+        interaction: {
+            mode: "index",
+            intersect: false,
+        },
         responsive: true,
         plugins: {
             zoom: {
@@ -58,6 +64,10 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
         },
         scales: {
             x: {
+                ticks: {
+                    maxTicksLimit: 30, // Giới hạn số lượng nhãn hiển thị
+                    autoSkip: true, // Tự động bỏ qua nhãn để tránh chồng chéo
+                },
                 beginAtZero: true,
             },
             y: {
@@ -84,7 +94,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 startTs: dates[0].getTime(),
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
-                limit: 30000,
+                limit: 100000,
                 interval: 3600000,
                 agg: "AVG",
             };
@@ -94,10 +104,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 .then((res) => {
                     let keys = Object.keys(res);
                     let labels = res[keys[0]].map((dt: any) =>
-                        Utils.formatUnixTimeToString(
-                            dt.ts,
-                            "dd-MM-yyyy HH:mm:ss"
-                        )
+                        Utils.formatUnixTimeToString(dt.ts, "dd-MM HH:mm")
                     );
                     let datasets = keys.map((key, index) => {
                         let values = res[key].map((d: any) => d.value);
