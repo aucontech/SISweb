@@ -17,8 +17,20 @@ const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
             [`STATION: ${filters.device.name}`],
             [],
             [`DATA REPORT FOR: ${tagsKeys}`],
-            ["FROM:", `${Utils.formateJsTime(filters.dates[0], "yyyy-MM-dd")}`],
-            ["TO:", `${Utils.formateJsTime(filters.dates[1], "yyyy-MM-dd")}`],
+            [
+                "FROM:",
+                `${Utils.formateJsTime(
+                    filters.dates[0],
+                    "yyyy-MM-dd HH:mm:ss"
+                )}`,
+            ],
+            [
+                "TO:",
+                `${Utils.formateJsTime(
+                    filters.dates[1],
+                    "yyyy-MM-dd HH:mm:ss"
+                )}`,
+            ],
         ];
         if (data.length === 0 || columns.length === 0) {
             return;

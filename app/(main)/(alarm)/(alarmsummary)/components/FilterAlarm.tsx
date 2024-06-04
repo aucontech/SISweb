@@ -6,6 +6,7 @@ import { Calendar } from "primereact/calendar";
 import { getAlarmTypes } from "@/api/alarm.api";
 import { MultiSelect } from "primereact/multiselect";
 import { readUser } from "@/service/localStorage";
+import { getDeviceByCustomer } from "@/api/device.api";
 interface Props {
     showDevice?: boolean;
     showDates?: boolean;
@@ -129,7 +130,7 @@ const FilterAlarm: React.FC<Props> = ({
                     )}
                 {showDevice &&
                     currentUser &&
-                    currentUser.authoriy === "CUSTOMER_USER" && (
+                    currentUser.authority === "CUSTOMER_USER" && (
                         <div className="col-12 lg:col-3">
                             <span className="p-float-label">
                                 <AutoComplete

@@ -38,14 +38,11 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [suggTags, setSuggTags] = useState<any>([]);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
-
-    // ... m
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedFilter = localStorage.getItem("filterDataTableReport");
             if (storedFilter) {
                 const parsedFilter = JSON.parse(storedFilter);
-                console.log(parsedFilter);
                 // Parse dates from localStorage
                 parsedFilter.dates = parsedFilter.dates
                     ? parsedFilter.dates.map((dateStr: string) =>
@@ -69,16 +66,9 @@ const FilterDataTableReport: React.FC<Props> = ({
         localStorage.setItem("filterDataTableReport", JSON.stringify(newFil));
     };
     const _onOkSettingTagForm = () => {
-        // onAction(editFilter);
         _processFilterChange("tags", editFilter.tags);
         setIsFormVisible(false);
     };
-    // useEffect(() => {
-    //     localStorage.setItem(
-    //         "filterDataTableReport",
-    //         JSON.stringify(editFilter)
-    //     );
-    // }, [editFilter]);
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
             .then((resp) => resp.data)
@@ -134,7 +124,6 @@ const FilterDataTableReport: React.FC<Props> = ({
     const _onSuggTags = (evt: any) => {
         let search = evt.query;
         if (editFilter.device) {
-            console.log(editFilter.device);
             getTimeseriesKeys("DEVICE", editFilter.device.id.id)
                 .then((resp) => resp.data)
                 .then((res) => {
@@ -159,6 +148,17 @@ const FilterDataTableReport: React.FC<Props> = ({
                 return;
             }
         }
+        if (field === "unit" && typeof value === "string") {
+            setEditFilter((prevFilter: any) => {
+                const updatedTags = [...prevFilter.tags];
+                updatedTags[index] = {
+                    ...updatedTags[index],
+                    [field]: { label: value, value: value },
+                };
+                return { ...prevFilter, tags: updatedTags };
+            });
+            return;
+        }
         setEditFilter((prevFilter: any) => {
             const updatedTags = [...prevFilter.tags];
             updatedTags[index] = { ...updatedTags[index], [field]: value };
@@ -175,7 +175,6 @@ const FilterDataTableReport: React.FC<Props> = ({
             });
         };
     };
-
     const _renderSettingTagForm = () => {
         let { tags } = editFilter;
         if (tags && tags.length > 0) {
@@ -227,8 +226,11 @@ const FilterDataTableReport: React.FC<Props> = ({
                                 />
                             </div>
                             <div className="field col">
-                                <label>Action</label>
-                                <Button onClick={handleDeleteTagSetting(index)}>
+                                <label className="w-full">Action</label>
+                                <Button
+                                    className="w-6"
+                                    onClick={handleDeleteTagSetting(index)}
+                                >
                                     Delete
                                 </Button>
                             </div>
@@ -289,7 +291,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                         <span className="p-float-label">
                             <Button
                                 // dropdown
-                                // multiple
+                                className="w-6"
                                 onClick={() => setIsFormVisible(true)}
                                 value={editFilter.tags}
                                 // onChange={(e) => {
