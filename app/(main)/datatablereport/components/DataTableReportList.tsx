@@ -53,7 +53,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                 startTs: dates[0].getTime(),
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
-                limit: 50000,
+                limit: 100000,
             };
             getTimesSeriesData("DEVICE", device?.id.id, reqParams)
                 .then((resp) => resp.data)
@@ -107,7 +107,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                     setColumns(columnNames);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                 });
         }
     }, []);
@@ -127,7 +127,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
-    console.log(tableData);
+
     return (
         <div>
             <DataTable
