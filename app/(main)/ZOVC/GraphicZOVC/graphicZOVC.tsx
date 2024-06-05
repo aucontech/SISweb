@@ -104,7 +104,6 @@ export default function GraphicZOCV() {
     const [NO, setNO] = useState<string | null>(null);
 
     const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
-    console.log("EVC_STT01: ", EVC_STT01);
     const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
 
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);

@@ -5,6 +5,9 @@ import { MegaMenu } from 'primereact/megamenu';
 import GraphicPRU from '../PRU/GraphicPRU/GraphicPRU';
 import GraphicZOCV from '../ZOVC/GraphicZOVC/graphicZOVC';
 import AlarmOTSUKA from '@/layout/AlarmBell/AlarmOTSUKA';
+import GraphicARAKAWA from '../ARAKAWA/GraphicArakawa/graphicARAKAWA';
+import GraphicSPMCV from '../SPMCV/GraphicSPMCV/graphicSPMCV';
+import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<DemoFlowOTS />);
@@ -38,6 +41,9 @@ export default function GraphicSogec() {
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
               { label: 'OTSUKA', command: () => handleItemClick(<DemoFlowOTS />, 'OTSUKA') },
+              { label: 'ARAKAWA', command: () => handleItemClick(<GraphicARAKAWA />, 'ARAKAWA') },
+              { label: 'SPMCV', command: () => handleItemClick(<GraphicSPMCV />, 'SPMCV') },
+
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
               { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
 
@@ -48,7 +54,7 @@ export default function GraphicSogec() {
               { label: 'IGUACU', command: () => handleItemClick(null, 'IGUACU') },
               { label: 'SPMCV', command: () => handleItemClick(null, 'SPMCV') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
-              { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
+              // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }
         ],

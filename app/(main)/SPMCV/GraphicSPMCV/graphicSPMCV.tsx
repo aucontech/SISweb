@@ -23,11 +23,9 @@ import BallValue07 from "../ReactFlow/BallValue07";
 import BallValue08 from "../ReactFlow/BallValue08";
 import BallValue09 from "../ReactFlow/BallValue09";
 import BallValue10 from "../ReactFlow/BallValue10";
-import SDV_Otsuka from "../ReactFlow/SDV_Otsuka";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -55,6 +53,8 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
+import AlarmARAKAWA from "@/layout/AlarmBell/AlarmARAKAWA";
+import { id_SPMCV } from "../../data-table-device/ID-DEVICE/IdDevice";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -71,7 +71,7 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function DemoFlowOTS() {
+export default function GraphicSPMCV() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -117,7 +117,7 @@ export default function DemoFlowOTS() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_OTSUKA,
+                    entityId: id_SPMCV,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -154,18 +154,23 @@ export default function DemoFlowOTS() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setSVF1,
-                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
 
                         EVC_01_Volume_at_Base_Condition: setSVA1,
+                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
                         EVC_01_Volume_at_Measurement_Condition: setGVA1,
+
+
+
                         EVC_01_Pressure: setPT01,
 
-                        EVC_02_Flow_at_Base_Condition: setSVF2,
-                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
 
-                        EVC_02_Volume_at_Base_Condition: setSVA2,
-                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
+
+                        // EVC_02_Flow_at_Base_Condition: setSVF2,
+                        // EVC_02_Flow_at_Measurement_Condition: setGVF2,
+
+                        // EVC_02_Volume_at_Base_Condition: setSVA2,
+                        // EVC_02_Vm_Adjustable_Counter: setGVA2,
 
                         EVC_02_Pressure: setPT02,
 
@@ -253,7 +258,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainPT_1901;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { PT_1901_maintain: newValue }
             );
             setMaintainPT_1901(newValue);
@@ -332,7 +337,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainPT_1902;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { PT_1902_maintain: newValue }
             );
             setMaintainPT_1902(newValue);
@@ -409,7 +414,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainPT_1903;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { PT_1903_maintain: newValue }
             );
             setMaintainPT_1903(newValue);
@@ -490,7 +495,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGD_1901;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GD1_Maintain: newValue }
             );
             setMaintainGD_1901(newValue);
@@ -574,7 +579,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGD_1902;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GD2_Maintain: newValue }
             );
             setMaintainGD_1902(newValue);
@@ -658,7 +663,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGD_1903;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GD3_Maintain: newValue }
             );
             setMaintainGD_1903(newValue);
@@ -741,7 +746,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainSVF1;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { SVF1_Maintain: newValue }
             );
             setMaintainSVF1(newValue);
@@ -822,7 +827,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGVF1;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GVF1_Maintain: newValue }
             );
             setMaintainGVF1(newValue);
@@ -903,7 +908,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainSVA1;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { SVA1_Maintain: newValue }
             );
             setMaintainSVA1(newValue);
@@ -984,7 +989,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGVA1;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GVA1_Maintain: newValue }
             );
             setMaintainGVA1(newValue);
@@ -1066,7 +1071,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainSVF2;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { SVF2_Maintain: newValue }
             );
             setMaintainSVF2(newValue);
@@ -1147,7 +1152,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGVF2;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GVF2_Maintain: newValue }
             );
             setMaintainGVF2(newValue);
@@ -1228,7 +1233,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainSVA2;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { SVA2_Maintain: newValue }
             );
             setMaintainSVA2(newValue);
@@ -1309,7 +1314,7 @@ export default function DemoFlowOTS() {
         try {
             const newValue = !maintainGVA2;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { GVA2_Maintain: newValue }
             );
             setMaintainGVA2(newValue);
@@ -1344,7 +1349,7 @@ export default function DemoFlowOTS() {
             const newValue2 = !lineDuty1902;
 
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
                 { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
             );
             setLineduty1901(newValue1);
@@ -1370,7 +1375,7 @@ export default function DemoFlowOTS() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_SPMCV}/values/attributes/SERVER_SCOPE`
             );
 
             const highEVCPressureItem = res.data.find(
@@ -4885,7 +4890,7 @@ export default function DemoFlowOTS() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                OTSUKA
+                                SPMCV
                             </p>
                         </div>
                     </div>
@@ -5477,7 +5482,7 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmARAKAWA />
                     </div>
                 ),
             },

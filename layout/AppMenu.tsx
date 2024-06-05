@@ -29,22 +29,22 @@ const AppMenu = () => {
                         // },
                     ],
                 },
-                {
-                    label: "Alarm",
-                    icon: "pi pi-home",
-                    items: [
-                        {
-                            label: "Alarm Summary",
-                            icon: "pi pi-fw pi-comment",
-                            to: "/alarmsummarycustomer",
-                        },
-                        // {
-                        //     label: "Alarm History",
-                        //     icon: "pi pi-fw pi-calendar",
-                        //     to: "/alarmhistorycustomer",
-                        // },
-                    ],
-                },
+                // {
+                //     label: "Alarm",
+                //     icon: "pi pi-home",
+                //     items: [
+                //         {
+                //             label: "Alarm Summary",
+                //             icon: "pi pi-fw pi-comment",
+                //             to: "/alarmsummarycustomer",
+                //         },
+                //         // {
+                //         //     label: "Alarm History",
+                //         //     icon: "pi pi-fw pi-calendar",
+                //         //     to: "/alarmhistorycustomer",
+                //         // },
+                //     ],
+                // },
                 {
                     label: "Setting",
                     icon: "pi pi-home",
@@ -121,22 +121,22 @@ const AppMenu = () => {
                         // },
                     ],
                 },
-                {
-                    label: "Summary",
-                    icon: "pi pi-home",
-                    items: [
-                        {
-                            label: "Table",
-                            icon: "pi pi-fw pi-table",
-                            // to: "/notifications",
-                        },
-                        {
-                            label: "List",
-                            icon: "pi pi-fw pi-list",
-                            // to: "/devices",
-                        },
-                    ],
-                },
+                // {
+                //     label: "Summary",
+                //     icon: "pi pi-home",
+                //     items: [
+                //         {
+                //             label: "Table",
+                //             icon: "pi pi-fw pi-table",
+                //             // to: "/notifications",
+                //         },
+                //         {
+                //             label: "List",
+                //             icon: "pi pi-fw pi-list",
+                //             // to: "/devices",
+                //         },
+                //     ],
+                // },
                 {
                     label: "Report",
                     icon: "pi pi-home",
