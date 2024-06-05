@@ -9,12 +9,13 @@ import GraphicARAKAWA from '../ARAKAWA/GraphicArakawa/graphicARAKAWA';
 import GraphicSPMCV from '../SPMCV/GraphicSPMCV/graphicSPMCV';
 import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
 import LowHighData from './LowHighData/LowHighData';
+import SetUpdata_ZOVC from './ZOVC/SetUpdata_ZOVC';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
   const [phuMy3Label, setPhuMy3Label] = useState<string>('OTSUKA');
 
-  const [HaNoi, setHaNoi] = useState<string>('Meiko');
+  const [HaNoi, setHaNoi] = useState<string>('Ha Noi');
 
   const [binhDuongLabel, setBinhDuongLabel] = useState<string>('BINH DUONG');
 
@@ -61,7 +62,7 @@ export default function GraphicSogec() {
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
               { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
 
-              { label: 'ZOVC EVC', command: () => handleItemClick(null, 'ZOVC EVC') },
+              { label: 'ZOVC EVC', command: () => handleItemClick(<SetUpdata_ZOVC/>, 'ZOVC EVC') },
               { label: 'NITORI', command: () => handleItemClick(null, 'NITORI') },
               { label: 'YOSHINO', command: () => handleItemClick(null, 'YOSHINO') },
               { label: 'IGUACU', command: () => handleItemClick(null, 'IGUACU') },
