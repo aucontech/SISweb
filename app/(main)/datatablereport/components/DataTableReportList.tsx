@@ -96,13 +96,16 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
 
                     // Get column names (name from tags)
                     console.log(tags);
-                    const columnNames = tags.map((tag: any) => ({
-                        //  console.log(tag)
-                        field: tag.key,
-                        header: tag.name
-                            ? tag.name + `(${tag.unit.value})`
-                            : tag.key + `(${tag.unit.value})`, // Use tag.name as header
-                    }));
+
+                    const columnNames = tags.map((tag: any) => {
+                        let unitStr = tag?.unit?.value
+                            ? `(${tag.unit.value})`
+                            : "";
+                        return {
+                            field: tag.key,
+                            header: (tag.name ? tag.name : tag.key) + unitStr,
+                        };
+                    });
 
                     setColumns(columnNames);
                 })
@@ -117,7 +120,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         if (typeof tags !== "undefined" && tags && tags.length > 0) {
             let excelHeader = tags.map((tag: any) => ({
                 key: tag.key,
-                name: tag.name + ` (${tag.unit.value})`,
+                name: tag.name + ` (${tag.unit?.value})`,
             }));
             excelHeader = [{ key: "ts", name: "Timestamp" }, ...excelHeader];
             setColumnExcelHeaders([...excelHeader]);
