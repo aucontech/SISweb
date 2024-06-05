@@ -5048,7 +5048,6 @@ const confirmUpChangeGatewayPhone = () => {
         <h2>OTSUKA</h2>
 
         </div>
-        <hr />
         </div>
 
 
