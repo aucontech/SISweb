@@ -374,7 +374,11 @@ export default function Alarmbell() {
                     <div key={index} style={{ padding: "0px 10px" }}>
                         <div
                             style={{
-                                border: "2px solid orange",
+                                border:
+                                    item.severity === "CRITICAL"
+                                        ? "2px solid red"
+                                        : "2px solid orange",
+
                                 padding: 20,
                                 borderRadius: 5,
                             }}
