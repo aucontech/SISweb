@@ -66,7 +66,9 @@ const FilterDataTableReport: React.FC<Props> = ({
         localStorage.setItem("filterDataTableReport", JSON.stringify(newFil));
     };
     const _onOkSettingTagForm = () => {
-        _processFilterChange("tags", editFilter.tags);
+        console.log(editFilter.tags);
+        let tags = [...editFilter.tags].filter((tag: any) => tag.key !== "");
+        _processFilterChange("tags", tags);
         setIsFormVisible(false);
     };
     const _onSuggDevices = (evt: any) => {

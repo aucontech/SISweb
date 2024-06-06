@@ -5,11 +5,13 @@ import { getDevices } from "@/api/device.api";
 import { Utils } from "@/service/Utils";
 import { Calendar } from "primereact/calendar";
 import { getTimeseriesKeys } from "@/api/telemetry.api";
+import { set } from "lodash";
 interface Props {
     showDevice: boolean;
     showDate?: boolean;
     showAlarmType?: boolean;
     showTags?: boolean;
+    showAggregations?: boolean;
     // showDates?: boolean;
     onAction: (evt: any) => void;
 }
@@ -17,6 +19,7 @@ interface Props {
 const defFilter = {
     device: null,
     dates: null,
+    avg: null,
     tags: [],
 };
 
@@ -25,11 +28,13 @@ const FilterDataChartReport: React.FC<Props> = ({
     onAction,
     showDate,
     showTags,
+    showAggregations,
 }) => {
     const [editFilter, setEditFilter] = useState<any>(defFilter);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggTags, setSuggTags] = useState<any>([]);
-
+    const [suggAggFuncs, setSuggAggFuncs] = useState<any>([]);
+    const [suggestGroupInterval, setSuggestGroupInterval] = useState<any>([]);
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedFilter = localStorage.getItem("filterDataChartReport");
@@ -49,7 +54,6 @@ const FilterDataChartReport: React.FC<Props> = ({
         }
     }, []);
 
-    // }, []);
     const _onSuggDevices = (evt: any) => {
         getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
             .then((resp) => resp.data)
@@ -90,6 +94,34 @@ const FilterDataChartReport: React.FC<Props> = ({
                 });
         }
     };
+    const _onSuggAggregations = () => {
+        setSuggAggFuncs([
+            { label: "AVG", value: "AVG" },
+            // { label: "MAX", value: "MAX" },
+            // { label: "MIN", value: "MIN" },
+            // { label: "COUNT", value: "COUNT" },
+            // { label: "SUM", value: "SUM" },
+            { label: "NONE", value: "NONE" },
+        ]);
+    };
+
+    const _onGroupInterval = () => {
+        setSuggestGroupInterval([
+            { label: "30 minutes", value: 1800000 },
+            { label: "60 minutes", value: 3600000 },
+            { label: "2 hours", value: 7200000 },
+            { label: "5 hours", value: 18000000 },
+        ]);
+    };
+
+    // const _onGroupInterval = () =>
+    //     setSuggestGroupInterval([
+    //         { label: "30 minutes", value: 1800000 },
+    //         { label: "60 mitues", value: 3600000 },
+    //         { label: "2 hours", value: 7200000 },
+    //         { label: "5 hours", value: 7200000 },
+    //     ]);
+    // }
     // useEffect(() => {
     //     if (typeof window !== "undefined") {
     //         // Format dates before storing
@@ -107,11 +139,12 @@ const FilterDataChartReport: React.FC<Props> = ({
     //         );
     //     }
     // }, [editFilter]);
+    console.log(editFilter);
     return (
         <>
             <div className="grid p-fluid">
                 {showDevice && (
-                    <div className="col-12 lg:col-3">
+                    <div className="col-12 lg:col-2">
                         <span className="p-float-label">
                             <AutoComplete
                                 dropdown
@@ -145,12 +178,18 @@ const FilterDataChartReport: React.FC<Props> = ({
                     </div>
                 )}
                 {showTags && (
-                    <div className="col-12 lg:col-6">
+                    <div className="col-12 lg:col-3">
                         <span className="p-float-label">
                             <AutoComplete
                                 dropdown
                                 multiple
                                 //  field="type"
+                                style={{
+                                    width: "100%",
+                                    maxHeight: "100px",
+                                    overflowY: "hidden",
+                                    overflowX: "auto",
+                                }}
                                 value={editFilter.tags}
                                 onChange={(e) => {
                                     _processFilterChange("tags", e.value);
@@ -162,6 +201,45 @@ const FilterDataChartReport: React.FC<Props> = ({
                         </span>
                     </div>
                 )}
+                {showAggregations && (
+                    <div className="col-12 lg:col-2">
+                        <span className="p-float-label">
+                            <AutoComplete
+                                dropdown
+                                field="label"
+                                value={editFilter.avg}
+                                onChange={(e) => {
+                                    _processFilterChange("avg", e.value);
+                                }}
+                                suggestions={suggAggFuncs}
+                                completeMethod={_onSuggAggregations}
+                            />
+                            <label>Aggregation function</label>
+                        </span>
+                    </div>
+                )}
+                {editFilter &&
+                    editFilter.avg &&
+                    editFilter.avg.label !== "NONE" && (
+                        <div className="col-12 lg:col-2">
+                            <span className="p-float-label">
+                                <AutoComplete
+                                    dropdown
+                                    field="label"
+                                    value={editFilter.interval}
+                                    onChange={(e) => {
+                                        _processFilterChange(
+                                            "interval",
+                                            e.value
+                                        );
+                                    }}
+                                    suggestions={suggestGroupInterval}
+                                    completeMethod={_onGroupInterval}
+                                />
+                                <label>Grouping interval</label>
+                            </span>
+                        </div>
+                    )}
             </div>
         </>
     );

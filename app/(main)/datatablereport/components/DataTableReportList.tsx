@@ -29,7 +29,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         if (user) {
             setCurrentUser(user);
         }
-        console.log("user", user);
+        //console.log("user", user);
     }, []);
     const _fetchDataTimeseries = useCallback(({ filters }) => {
         let { device, tags, dates } = filters;
@@ -37,7 +37,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             return [];
         }
         let tagNames = tags.map((tag: any) => tag.key);
-        console.log(dates);
+        // console.log(dates);
         if (
             dates &&
             dates.length === 2 &&
@@ -58,8 +58,8 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             getTimesSeriesData("DEVICE", device?.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    console.log(res);
-                    console.log(tags);
+                    // console.log(res);
+                    // console.log(tags);
                     const tagUnitLookup: { [key: string]: string } = {};
                     tags.forEach((tag: any) => {
                         tagUnitLookup[tag.key] = tag.unit ? tag.unit.value : "";
@@ -95,7 +95,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                     setTableData(formattedData);
 
                     // Get column names (name from tags)
-                    console.log(tags);
+                    //console.log(tags);
 
                     const columnNames = tags.map((tag: any) => {
                         let unitStr = tag?.unit?.value
@@ -118,10 +118,13 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     useEffect(() => {
         let { tags } = filters;
         if (typeof tags !== "undefined" && tags && tags.length > 0) {
-            let excelHeader = tags.map((tag: any) => ({
-                key: tag.key,
-                name: tag.name + ` (${tag.unit?.value})`,
-            }));
+            let excelHeader = tags.map((tag: any) => {
+                let unitStr = tag?.unit?.value ? `(${tag.unit.value})` : "";
+                return {
+                    key: tag.key,
+                    name: (tag.name ? tag.name : tag.key) + unitStr,
+                };
+            });
             excelHeader = [{ key: "ts", name: "Timestamp" }, ...excelHeader];
             setColumnExcelHeaders([...excelHeader]);
         }

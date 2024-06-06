@@ -69,16 +69,22 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     autoSkip: true, // Tự động bỏ qua nhãn để tránh chồng chéo
                 },
                 beginAtZero: true,
+                grid: {
+                    display: false,
+                },
             },
             y: {
                 beginAtZero: true,
+                grid: {
+                    display: false,
+                },
             },
         },
     });
     const [data, setChartData] = useState<any>({});
 
     const _fetchDataTimeseries = useCallback(({ filters }) => {
-        let { device, tags, dates } = filters;
+        let { device, tags, dates, avg, interval } = filters;
 
         if (
             dates &&
@@ -86,6 +92,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             dates[0] != null &&
             dates[1] !== null &&
             device &&
+            device.id &&
             tags &&
             tags.length > 0
         ) {
@@ -94,10 +101,24 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 startTs: dates[0].getTime(),
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
-                limit: 100000,
-                interval: 3600000,
-                agg: "AVG",
+                limit: 50000,
+                //interval: 3600000,
+                //  agg: "AVG",
             };
+
+            if (avg && avg.value !== "NONE" && interval) {
+                reqParams = {
+                    ...reqParams,
+                    agg: avg.value,
+                    interval: interval.value,
+                };
+            } else {
+                reqParams = {
+                    ...reqParams,
+                    avg: "NONE",
+                    //interval: interval.value,
+                };
+            }
 
             getTimesSeriesData("DEVICE", device.id.id, reqParams)
                 .then((resp) => resp.data)

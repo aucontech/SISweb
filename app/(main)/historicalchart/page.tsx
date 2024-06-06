@@ -14,6 +14,7 @@ const DataChartReport = () => {
                 showDevice={true}
                 showDate={true}
                 showTags={true}
+                showAggregations={true}
                 onAction={(e) => _onFilterChange(e)}
             />
             <div>
