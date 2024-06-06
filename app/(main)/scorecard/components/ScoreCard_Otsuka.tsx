@@ -259,7 +259,7 @@ export default function ScoreCard_Otsuka() {
             : UpsMode === "4"
             ? "Normal"
             : null;
-    const DataZSC_1 = NC === "0" ? "Off" : NC === "1" ? "On" : null;
+    const DataZSC_1 = NC === "0" ? " On" : NC === "1" ? "Off" : null;
     const DataZSO_1 = NO === "0" ? "Off" : NO === "1" ? "On" : null;
     const DataSelectSW =
         SelectSW === "0" ? "Local" : SelectSW === "1" ? "Remote" : null;
