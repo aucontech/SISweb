@@ -19,7 +19,7 @@ interface Props {
 const defFilter = {
     device: null,
     dates: null,
-    avg: null,
+    agg: null,
     tags: [],
 };
 
@@ -207,9 +207,9 @@ const FilterDataChartReport: React.FC<Props> = ({
                             <AutoComplete
                                 dropdown
                                 field="label"
-                                value={editFilter.avg}
+                                value={editFilter.agg}
                                 onChange={(e) => {
-                                    _processFilterChange("avg", e.value);
+                                    _processFilterChange("agg", e.value);
                                 }}
                                 suggestions={suggAggFuncs}
                                 completeMethod={_onSuggAggregations}

@@ -84,7 +84,8 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     const [data, setChartData] = useState<any>({});
 
     const _fetchDataTimeseries = useCallback(({ filters }) => {
-        let { device, tags, dates, avg, interval } = filters;
+        console.log(filters);
+        let { device, tags, dates, agg, interval } = filters;
 
         if (
             dates &&
@@ -106,16 +107,16 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 //  agg: "AVG",
             };
 
-            if (avg && avg.value !== "NONE" && interval) {
+            if (agg && agg.value !== "NONE" && interval) {
                 reqParams = {
                     ...reqParams,
-                    agg: avg.value,
+                    agg: agg.value,
                     interval: interval.value,
                 };
             } else {
                 reqParams = {
                     ...reqParams,
-                    avg: "NONE",
+                    //  avg: "NONE",
                     //interval: interval.value,
                 };
             }
