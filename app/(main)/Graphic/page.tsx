@@ -53,7 +53,6 @@ export default function GraphicSogec() {
               { label: 'YOSHINO', command: () => handleItemClick(null, 'YOSHINO') },
               { label: 'IGUACU', command: () => handleItemClick(null, 'IGUACU') },
               { label: 'SPMCV', command: () => handleItemClick(null, 'SPMCV') },
-              { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }
