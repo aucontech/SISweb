@@ -10,6 +10,7 @@ import GraphicSPMCV from '../SPMCV/GraphicSPMCV/graphicSPMCV';
 import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
 import LowHighData from './LowHighData/LowHighData';
 import SetUpdata_ZOVC from './ZOVC/SetUpdata_ZOVC';
+import SetUpdata_PRU from './PRU/SetUpdata_PRU';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
@@ -60,7 +61,7 @@ export default function GraphicSogec() {
               { label: 'SPMCV', command: () => handleItemClick(null, 'SPMCV') },
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
-              { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
+              { label: 'CNG PRU', command: () => handleItemClick(<SetUpdata_PRU/>, 'CNG PRU') },
 
               { label: 'ZOVC EVC', command: () => handleItemClick(<SetUpdata_ZOVC/>, 'ZOVC EVC') },
               { label: 'NITORI', command: () => handleItemClick(null, 'NITORI') },

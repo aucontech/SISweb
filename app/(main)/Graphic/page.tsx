@@ -45,7 +45,7 @@ export default function GraphicSogec() {
               { label: 'SPMCV', command: () => handleItemClick(<GraphicSPMCV />, 'SPMCV') },
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
-              { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
+              { label: 'CNG PRU', command: () => handleItemClick(null, 'CNG PRU') },
 
               { label: 'ZOVC EVC', command: () => handleItemClick(<GraphicZOCV />, 'ZOVC EVC') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
