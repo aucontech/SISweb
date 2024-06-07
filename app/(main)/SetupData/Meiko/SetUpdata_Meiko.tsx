@@ -119,15 +119,221 @@ export default function SetUpdata_Meiko() {
                 `/plugins/telemetry/DEVICE/${id_THACHTHAT}/values/attributes/SERVER_SCOPE`
             );
     
-            const VP_303_HIGHT = res.data.find((item: any) => item.key === "VP_303_High");
-            setVP_303_HIGHT(VP_303_HIGHT?.value || null);
-            const VP_303_LOW = res.data.find((item: any) => item.key === "VP_302_Low");
-            setVP_303_LOW(VP_303_LOW?.value || null);
+            const VP_303_High = res.data.find((item: any) => item.key === "VP_303_High");
+            setVP_303_High(VP_303_High?.value || null);
+            const VP_303_Low = res.data.find((item: any) => item.key === "VP_302_Low");
+            setVP_303_Low(VP_303_Low?.value || null);
             const MaintainVP_303 = res.data.find(
                 (item: any) => item.key === "VP_303_Maintain"
             );
+
+
+            const VP_302_High = res.data.find((item: any) => item.key === "VP_302_High");
+            setVP_302_High(VP_302_High?.value || null);
+            const VP_302_Low = res.data.find((item: any) => item.key === "VP_302_Low");
+            setVP_302_Low(VP_302_Low?.value || null);
+            const VP_302_Maintain = res.data.find(
+                (item: any) => item.key === "VP_302_Maintain"
+            );
+
+            const VP_301_High = res.data.find((item: any) => item.key === "VP_301_High");
+            setVP_301_High(VP_301_High?.value || null);
+            const VP_301_Low = res.data.find((item: any) => item.key === "VP_301_Low");
+            setVP_301_Low(VP_301_Low?.value || null);
+            const VP_301_Maintain = res.data.find(
+                (item: any) => item.key === "VP_301_Maintain"
+            );
+
+
+            const GD_103_High_High = res.data.find((item: any) => item.key === "GD_103_High_High");
+            setGD_103_High_High(GD_103_High_High?.value || null);
+            const GD_103_High_Low = res.data.find((item: any) => item.key === "GD_103_High_Low");
+            setGD_103_High_Low(GD_103_High_Low?.value || null);
+            const GD_103_High_Maintain = res.data.find(
+                (item: any) => item.key === "GD_103_High_Maintain"
+            );
+
+            const GD_102_High_High = res.data.find((item: any) => item.key === "GD_102_High_High");
+            setGD_102_High_High(GD_102_High_High?.value || null);
+            const GD_102_High_Low = res.data.find((item: any) => item.key === "GD_102_High_Low");
+            setGD_102_High_Low(GD_102_High_Low?.value || null);
+            const GD_102_High_Maintain = res.data.find(
+                (item: any) => item.key === "GD_102_High_Maintain"
+            );
+
+            const GD_101_High_High = res.data.find((item: any) => item.key === "GD_101_High_High");
+            setGD_101_High_High(GD_101_High_High?.value || null);
+            const GD_101_High_Low = res.data.find((item: any) => item.key === "GD_101_High_Low");
+            setGD_101_High_Low(GD_101_High_Low?.value || null);
+            const GD_101_High_Maintain = res.data.find(
+                (item: any) => item.key === "GD_101_High_Maintain"
+            );
+
+            const GD_103_Low_High = res.data.find((item: any) => item.key === "GD_103_Low_High");
+            setGD_103_Low_High(GD_103_Low_High?.value || null);
+            const GD_103_Low_Low = res.data.find((item: any) => item.key === "GD_103_Low_Low");
+            setGD_103_Low_Low(GD_103_Low_Low?.value || null);
+            const GD_103_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_103_Low_Maintain"
+            );
+
+            const GD_102_Low_High = res.data.find((item: any) => item.key === "GD_102_Low_High");
+            setGD_102_Low_High(GD_102_Low_High?.value || null);
+            const GD_102_Low_Low = res.data.find((item: any) => item.key === "GD_102_Low_Low");
+            setGD_102_Low_Low(GD_102_Low_Low?.value || null);
+            const GD_102_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_102_Low_Maintain"
+            );
+
+
+            const GD_101_Low_High = res.data.find((item: any) => item.key === "GD_101_Low_High");
+            setGD_101_Low_High(GD_101_Low_High?.value || null);
+            const GD_101_Low_Low = res.data.find((item: any) => item.key === "GD_101_Low_Low");
+            setGD_101_Low_Low(GD_101_Low_Low?.value || null);
+            const GD_101_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_101_Low_Maintain"
+            );
+
+            const SDV_301_High = res.data.find((item: any) => item.key === "SDV_301_High");
+            setSDV_301_High(SDV_301_High?.value || null);
+            const SDV_301_Low = res.data.find((item: any) => item.key === "SDV_301_Low");
+            setSDV_301_Low(SDV_301_Low?.value || null);
+            const SDV_301_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_301_Maintain"
+            );
+
+            const SDV_302_High = res.data.find((item: any) => item.key === "SDV_302_High");
+            setSDV_302_High(SDV_302_High?.value || null);
+            const SDV_302_Low = res.data.find((item: any) => item.key === "SDV_302_Low");
+            setSDV_302_Low(SDV_302_Low?.value || null);
+            const SDV_302_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_302_Maintain"
+            );
+
+            const V1_Flow_Meter_High = res.data.find((item: any) => item.key === "V1_Flow_Meter_High");
+            setV1_Flow_Meter_High(V1_Flow_Meter_High?.value || null);
+            const V1_Flow_Meter_Low = res.data.find((item: any) => item.key === "V1_Flow_Meter_Low");
+            setV1_Flow_Meter_Low(V1_Flow_Meter_Low?.value || null);
+            const V1_Flow_Meter_Maintain = res.data.find(
+                (item: any) => item.key === "V1_Flow_Meter_Maintain"
+            );
+
+            const V2_Flow_Meter_High = res.data.find((item: any) => item.key === "V2_Flow_Meter_High");
+            setV2_Flow_Meter_High(V2_Flow_Meter_High?.value || null);
+            const V2_Flow_Meter_Low = res.data.find((item: any) => item.key === "V2_Flow_Meter_Low");
+            setV2_Flow_Meter_Low(V2_Flow_Meter_Low?.value || null);
+            const V2_Flow_Meter_Maintain = res.data.find(
+                (item: any) => item.key === "V2_Flow_Meter_Maintain"
+            );
+
+            const Pipe_Temp_High = res.data.find((item: any) => item.key === "Pipe_Temp_High");
+            setPipe_Temp_High(Pipe_Temp_High?.value || null);
+            const Pipe_Temp_Low = res.data.find((item: any) => item.key === "Pipe_Temp_Low");
+            setPipe_Temp_Low(Pipe_Temp_Low?.value || null);
+            const Pipe_Temp_Maintain = res.data.find(
+                (item: any) => item.key === "Pipe_Temp_Maintain"
+            );
+
+            const Pipe_Press_High = res.data.find((item: any) => item.key === "Pipe_Press_High");
+            setPipe_Press_High(Pipe_Press_High?.value || null);
+            const Pipe_Press_Low = res.data.find((item: any) => item.key === "Pipe_Press_Low");
+            setPipe_Press_Low(Pipe_Press_Low?.value || null);
+            const Pipe_Press_Maintain = res.data.find(
+                (item: any) => item.key === "Pipe_Press_Maintain"
+            );
+
+            const Tank_TT_301_High = res.data.find((item: any) => item.key === "Tank_TT_301_High");
+            setTank_TT_301_High(Tank_TT_301_High?.value || null);
+            const Tank_TT_301_Low = res.data.find((item: any) => item.key === "Tank_TT_301_Low");
+            setTank_TT_301_Low(Tank_TT_301_Low?.value || null);
+            const Tank_TT_301_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_TT_301_Maintain"
+            );
+
+            const Tank_PT_301_High = res.data.find((item: any) => item.key === "Tank_PT_301_High");
+            setTank_PT_301_High(Tank_PT_301_High?.value || null);
+            const Tank_PT_301_Low = res.data.find((item: any) => item.key === "Tank_PT_301_Low");
+            setTank_PT_301_Low(Tank_PT_301_Low?.value || null);
+            const Tank_PT_301_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_PT_301_Maintain"
+            );
+
+
+            const Tank_01_Volume_High = res.data.find((item: any) => item.key === "Tank_01_Volume_High");
+            setTank_01_Volume_High(Tank_01_Volume_High?.value || null);
+            const Tank_01_Volume_Low = res.data.find((item: any) => item.key === "Tank_01_Volume_Low");
+            setTank_01_Volume_Low(Tank_01_Volume_Low?.value || null);
+            const Tank_01_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Volume_Maintain"
+            );
+
+            const Tank_01_Mass_High = res.data.find((item: any) => item.key === "Tank_01_Mass_High");
+            setTank_01_Mass_High(Tank_01_Mass_High?.value || null);
+            const Tank_01_Mass_Low = res.data.find((item: any) => item.key === "Tank_01_Mass_Low");
+            setTank_01_Mass_Low(Tank_01_Mass_Low?.value || null);
+            const Tank_01_Mass_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Mass_Maintain"
+            );
+
+            const Tank_01_Level_High = res.data.find((item: any) => item.key === "Tank_01_Level_High");
+            setTank_01_Level_High(Tank_01_Level_High?.value || null);
+            const Tank_01_Level_Low = res.data.find((item: any) => item.key === "Tank_01_Level_Low");
+            setTank_01_Level_Low(Tank_01_Level_Low?.value || null);
+            const Tank_01_Level_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Maintain"
+            );
  // =================================================================================================================== 
             setMaintainVP_303(MaintainVP_303?.value || false);
+
+
+            setMaintainVP_302(VP_302_Maintain?.value || false);
+
+            setMaintainVP_301(VP_301_Maintain?.value || false);
+
+
+            setMaintainGD_103_High(GD_103_High_Maintain?.value || false);
+
+
+            setMaintainGD_102_High(GD_102_High_Maintain?.value || false);
+
+
+            setMaintainGD_101_High(GD_101_High_Maintain?.value || false);
+
+
+            setMaintainTank_01_Level(Tank_01_Level_Maintain?.value || false);
+
+            
+            setMaintainTank_01_Mass(Tank_01_Mass_Maintain?.value || false);
+            
+            setMaintainTank_01_Volume(Tank_01_Volume_Maintain?.value || false);
+
+            
+            setMaintainTank_PT_301(Tank_PT_301_Maintain?.value || false);
+
+            setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
+
+
+            setMaintainPipe_Press(Pipe_Press_Maintain?.value || false);
+
+            setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
+
+            setMaintainV2_Flow_Meter(V2_Flow_Meter_Maintain?.value || false);
+
+
+            setMaintainV1_Flow_Meter(V1_Flow_Meter_Maintain?.value || false);
+
+            setMaintainSDV_302(SDV_302_Maintain?.value || false);
+
+
+            setMaintainSDV_301(SDV_301_Maintain?.value || false);
+
+            setMaintainGD_101_Low(GD_101_Low_Maintain?.value || false);
+
+
+            setMaintainGD_102_Low(GD_102_Low_Maintain?.value || false);
+
+
+            setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
 
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -140,18 +346,18 @@ export default function SetUpdata_Meiko() {
 const [audioPlayingVP_303, setAudioPlayingVP_303] = useState(false);
 const [inputValueVP_303, setInputValueVP_303] = useState<any>();
 const [inputValue2VP_303, setInputValue2VP_303] = useState<any>();
-const [VP_303_HIGHT, setVP_303_HIGHT] = useState<number | null>(null);
-const [VP_303_LOW, setVP_303_LOW] = useState<number | null>(null);
+const [VP_303_High, setVP_303_High] = useState<number | null>(null);
+const [VP_303_Low, setVP_303_Low] = useState<number | null>(null);
 const [exceedThresholdVP_303, setExceedThresholdVP_303] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
 const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
 
 
     useEffect(() => {
-        if (typeof VP_303_HIGHT === 'string' && typeof VP_303_LOW === 'string' && VP_303 !== null && maintainVP_303 === false
+        if (typeof VP_303_High === 'string' && typeof VP_303_Low === 'string' && VP_303 !== null && maintainVP_303 === false
         ) {
-            const highValue = parseFloat(VP_303_HIGHT);
-            const lowValue = parseFloat(VP_303_LOW);
+            const highValue = parseFloat(VP_303_High);
+            const lowValue = parseFloat(VP_303_Low);
             const VP_303Value = parseFloat(VP_303);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_303Value)) {
@@ -167,7 +373,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                 }
             } 
         } 
-    }, [VP_303_HIGHT, VP_303, audioPlayingVP_303, VP_303_LOW,maintainVP_303]);
+    }, [VP_303_High, VP_303, audioPlayingVP_303, VP_303_Low,maintainVP_303]);
 
     useEffect(() => {
         if (audioPlayingVP_303) {
@@ -209,18 +415,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      const [audioPlayingVP_302, setAudioPlayingVP_302] = useState(false);
      const [inputValueVP_302, setInputValueVP_302] = useState<any>();
      const [inputValue2VP_302, setInputValue2VP_302] = useState<any>();
-     const [VP_302_HIGHT, setVP_302_HIGHT] = useState<number | null>(null);
-     const [VP_302_LOW, setVP_302_LOW] = useState<number | null>(null);
+     const [VP_302_High, setVP_302_High] = useState<number | null>(null);
+     const [VP_302_Low, setVP_302_Low] = useState<number | null>(null);
      const [exceedThreshold302, setExceedThreshold302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainVP_302, setMaintainVP_302] = useState<boolean>(false);
      
      
          useEffect(() => {
-             if (typeof VP_302_HIGHT === 'string' && typeof VP_302_LOW === 'string' && VP_302 !== null && maintainVP_302 === false
+             if (typeof VP_302_High === 'string' && typeof VP_302_Low === 'string' && VP_302 !== null && maintainVP_302 === false
              ) {
-                 const highValue = parseFloat(VP_302_HIGHT);
-                 const lowValue = parseFloat(VP_302_LOW);
+                 const highValue = parseFloat(VP_302_High);
+                 const lowValue = parseFloat(VP_302_Low);
                  const VP_302Value = parseFloat(VP_302);
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_302Value)) {
@@ -236,7 +442,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                      }
                  } 
              } 
-         }, [VP_302_HIGHT, VP_302, setAudioPlayingVP_302, VP_302_LOW,maintainVP_302]);
+         }, [VP_302_High, VP_302, audioPlayingVP_302, VP_302_Low,maintainVP_302]);
      
          useEffect(() => {
              if (audioPlayingVP_302) {
@@ -252,12 +458,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      
          const handleInputChangeVP_302 = (event: any) => {
              const newValue = event.target.value;
-             inputValueVP_302(newValue);
+             setInputValueVP_302(newValue);
          };
      
          const handleInputChange2VP_302 = (event: any) => {
              const newValue2 = event.target.value;
-             inputValue2VP_302(newValue2);
+             setInputValue2VP_302(newValue2);
          };
          const ChangeMaintainVP_302 = async () => {
              try {
@@ -279,18 +485,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      const [audioPlayingVP_301, setAudioPlayingVP_301] = useState(false);
      const [inputValueVP_301, setInputValueVP_301] = useState<any>();
      const [inputValue2VP_301, setInputValue2VP_301] = useState<any>();
-     const [VP_301_HIGHT, setVP_301_HIGHT] = useState<number | null>(null);
-     const [VP_301_LOW, setVP_301_LOW] = useState<number | null>(null);
+     const [VP_301_High, setVP_301_High] = useState<number | null>(null);
+     const [VP_301_Low, setVP_301_Low] = useState<number | null>(null);
      const [exceedThresholdVP_301, setExceedThresholdVP_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainVP_301, setMaintainVP_301] = useState<boolean>(false);
      
      
          useEffect(() => {
-             if (typeof VP_301_HIGHT === 'string' && typeof VP_301_LOW === 'string' && VP_301 !== null && maintainVP_301 === false
+             if (typeof VP_301_High === 'string' && typeof VP_301_Low === 'string' && VP_301 !== null && maintainVP_301 === false
              ) {
-                 const highValue = parseFloat(VP_301_HIGHT);
-                 const lowValue = parseFloat(VP_301_LOW);
+                 const highValue = parseFloat(VP_301_High);
+                 const lowValue = parseFloat(VP_301_Low);
                  const VP_301Value = parseFloat(VP_301);
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_301Value)) {
@@ -306,7 +512,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                      }
                  } 
              } 
-         }, [VP_301_HIGHT, VP_301, setAudioPlayingVP_301, VP_301_LOW,maintainVP_301]);
+         }, [VP_301_High, VP_301, audioPlayingVP_301, VP_301_Low,maintainVP_301]);
      
          useEffect(() => {
              if (audioPlayingVP_301) {
@@ -322,12 +528,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      
          const handleInputChangeVP_301 = (event: any) => {
              const newValue = event.target.value;
-             inputValueVP_301(newValue);
+             setInputValueVP_301(newValue);
          };
      
          const handleInputChange2VP_301 = (event: any) => {
              const newValue2 = event.target.value;
-             inputValue2VP_301(newValue2);
+             setInputValue2VP_301(newValue2);
          };
          const ChangeMaintainVP_301 = async () => {
              try {
@@ -350,18 +556,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_103_High, setAudioPlayingGD_103_High] = useState(false);
           const [inputValueGD_103_High, setInputValueGD_103_High] = useState<any>();
           const [inputValue2GD_103_High, setInputValue2GD_103_High] = useState<any>();
-          const [GD_103_High_HIGHT, setGD_103_High_HIGHT] = useState<number | null>(null);
-          const [GD_103_High_LOW, setGD_103_High_LOW] = useState<number | null>(null);
+          const [GD_103_High_High, setGD_103_High_High] = useState<number | null>(null);
+          const [GD_103_High_Low, setGD_103_High_Low] = useState<number | null>(null);
           const [exceedThresholdGD_103_High, setExceedThresholdGD_103_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_103_High, setMaintainGD_103_High] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_103_High_HIGHT === 'string' && typeof GD_103_High_LOW === 'string' && GD_103_High !== null && maintainGD_103_High === false
+                  if (typeof GD_103_High_High === 'string' && typeof GD_103_High_Low === 'string' && GD_103_High !== null && maintainGD_103_High === false
                   ) {
-                      const highValue = parseFloat(GD_103_High_HIGHT);
-                      const lowValue = parseFloat(GD_103_High_LOW);
+                      const highValue = parseFloat(GD_103_High_High);
+                      const lowValue = parseFloat(GD_103_High_Low);
                       const GD_103_HighValue = parseFloat(GD_103_High);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_HighValue)) {
@@ -377,7 +583,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_103_High_HIGHT, GD_103_High, setAudioPlayingGD_103_High, GD_103_High_LOW,maintainGD_103_High]);
+              }, [GD_103_High_High, GD_103_High, audioPlayingGD_103_High, GD_103_High_Low,maintainGD_103_High]);
           
               useEffect(() => {
                   if (audioPlayingGD_103_High) {
@@ -393,12 +599,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_103_High = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_103_High(newValue);
+                  setInputValueGD_103_High(newValue);
               };
           
               const handleInputChange2GD_103_High = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_103_High(newValue2);
+                  setInputValue2GD_103_High(newValue2);
               };
               const ChangeMaintainGD_103_High = async () => {
                   try {
@@ -420,18 +626,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_102_High, setAudioPlayingGD_102_High] = useState(false);
           const [inputValueGD_102_High, setInputValueGD_102_High] = useState<any>();
           const [inputValue2GD_102_High, setInputValue2GD_102_High] = useState<any>();
-          const [GD_102_High_HIGHT, setGD_102_High_HIGHT] = useState<number | null>(null);
-          const [GD_102_High_LOW, setGD_102_High_LOW] = useState<number | null>(null);
+          const [GD_102_High_High, setGD_102_High_High] = useState<number | null>(null);
+          const [GD_102_High_Low, setGD_102_High_Low] = useState<number | null>(null);
           const [exceedThresholdGD_102_High, setExceedThresholdGD_102_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_102_High, setMaintainGD_102_High] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_102_High_HIGHT === 'string' && typeof GD_102_High_LOW === 'string' && GD_102_High !== null && maintainGD_102_High === false
+                  if (typeof GD_102_High_High === 'string' && typeof GD_102_High_Low === 'string' && GD_102_High !== null && maintainGD_102_High === false
                   ) {
-                      const highValue = parseFloat(GD_102_High_HIGHT);
-                      const lowValue = parseFloat(GD_102_High_LOW);
+                      const highValue = parseFloat(GD_102_High_High);
+                      const lowValue = parseFloat(GD_102_High_Low);
                       const GD_102_HighValue = parseFloat(GD_102_High);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_HighValue)) {
@@ -447,7 +653,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_102_High_HIGHT, GD_102_High, audioPlayingGD_102_High , GD_102_High_LOW,maintainGD_102_High]);
+              }, [GD_102_High_High, GD_102_High, audioPlayingGD_102_High , GD_102_High_Low,maintainGD_102_High]);
           
               useEffect(() => {
                   if (audioPlayingGD_102_High) {
@@ -463,12 +669,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_102_High = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_102_High(newValue);
+                  setInputValueGD_102_High(newValue);
               };
           
               const handleInputChange2GD_102_High = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_102_High(newValue2);
+                  setInputValue2GD_102_High(newValue2);
               };
               const ChangeMaintainGD_102_High = async () => {
                   try {
@@ -489,18 +695,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_101_High, setAudioPlayingGD_101_High] = useState(false);
           const [inputValueGD_101_High, setInputValueGD_101_High] = useState<any>();
           const [inputValue2GD_101_High, setInputValue2GD_101_High] = useState<any>();
-          const [GD_101_High_HIGHT, setGD_101_High_HIGHT] = useState<number | null>(null);
-          const [GD_101_High_LOW, setGD_101_High_LOW] = useState<number | null>(null);
+          const [GD_101_High_High, setGD_101_High_High] = useState<number | null>(null);
+          const [GD_101_High_Low, setGD_101_High_Low] = useState<number | null>(null);
           const [exceedThresholdGD_101_High, setExceedThresholdGD_101_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_101_High, setMaintainGD_101_High] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_101_High_HIGHT === 'string' && typeof GD_101_High_LOW === 'string' && GD_101_High !== null && maintainGD_101_High === false
+                  if (typeof GD_101_High_High === 'string' && typeof GD_101_High_Low === 'string' && GD_101_High !== null && maintainGD_101_High === false
                   ) {
-                      const highValue = parseFloat(GD_101_High_HIGHT);
-                      const lowValue = parseFloat(GD_101_High_LOW);
+                      const highValue = parseFloat(GD_101_High_High);
+                      const lowValue = parseFloat(GD_101_High_Low);
                       const GD_101_HighValue = parseFloat(GD_101_High);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_HighValue)) {
@@ -516,7 +722,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_101_High_HIGHT, GD_101_High, setAudioPlayingGD_101_High, GD_101_High_LOW,maintainGD_101_High]);
+              }, [GD_101_High_High, GD_101_High, audioPlayingGD_101_High, GD_101_High_Low,maintainGD_101_High]);
           
               useEffect(() => {
                   if (audioPlayingGD_101_High) {
@@ -532,12 +738,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_101_High = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_101_High(newValue);
+                  setInputValueGD_101_High(newValue);
               };
           
               const handleInputChange2GD_101_High = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_101_High(newValue2);
+                  setInputValue2GD_101_High(newValue2);
               };
               const ChangeMaintainGD_101_High = async () => {
                   try {
@@ -559,18 +765,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_101_Low, setAudioPlayingGD_101_Low] = useState(false);
           const [inputValueGD_101_Low, setInputValueGD_101_Low] = useState<any>();
           const [inputValue2GD_101_Low, setInputValue2GD_101_Low] = useState<any>();
-          const [GD_101_Low_HIGHT, setGD_101_Low_HIGHT] = useState<number | null>(null);
-          const [GD_101_Low_LOW, setGD_101_Low_LOW] = useState<number | null>(null);
+          const [GD_101_Low_High, setGD_101_Low_High] = useState<number | null>(null);
+          const [GD_101_Low_Low, setGD_101_Low_Low] = useState<number | null>(null);
           const [exceedThresholdGD_101_Low, setExceedThresholdGD_101_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_101_Low_HIGHT === 'string' && typeof GD_101_Low_LOW === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
+                  if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
                   ) {
-                      const highValue = parseFloat(GD_101_Low_HIGHT);
-                      const lowValue = parseFloat(GD_101_Low_LOW);
+                      const highValue = parseFloat(GD_101_Low_High);
+                      const lowValue = parseFloat(GD_101_Low_Low);
                       const GD_101_LowValue = parseFloat(GD_101_Low);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
@@ -586,7 +792,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_101_Low_HIGHT, GD_101_Low, audioPlayingGD_101_Low, GD_101_Low_LOW,maintainGD_101_Low]);
+              }, [GD_101_Low_High, GD_101_Low, audioPlayingGD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
           
               useEffect(() => {
                   if (audioPlayingGD_101_Low) {
@@ -602,12 +808,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_101_Low = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_101_Low(newValue);
+                  setInputValueGD_101_Low(newValue);
               };
           
               const handleInputChange2GD_101_Low = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_101_Low(newValue2);
+                  setInputValue2GD_101_Low(newValue2);
               };
               const ChangeMaintainGD_101_Low = async () => {
                   try {
@@ -628,18 +834,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_102_Low, setAudioPlayingGD_102_Low] = useState(false);
           const [inputValueGD_102_Low, setInputValueGD_102_Low] = useState<any>();
           const [inputValue2GD_102_Low, setInputValue2GD_102_Low] = useState<any>();
-          const [GD_102_Low_HIGHT, setGD_102_Low_HIGHT] = useState<number | null>(null);
-          const [GD_102_Low_LOW, setGD_102_Low_LOW] = useState<number | null>(null);
+          const [GD_102_Low_High, setGD_102_Low_High] = useState<number | null>(null);
+          const [GD_102_Low_Low, setGD_102_Low_Low] = useState<number | null>(null);
           const [exceedThresholdGD_102_Low, setExceedThresholdGD_102_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_102_Low, setMaintainGD_102_Low] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_102_Low_HIGHT === 'string' && typeof GD_102_Low_LOW === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
+                  if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
                   ) {
-                      const highValue = parseFloat(GD_102_Low_HIGHT);
-                      const lowValue = parseFloat(GD_102_Low_LOW);
+                      const highValue = parseFloat(GD_102_Low_High);
+                      const lowValue = parseFloat(GD_102_Low_Low);
                       const GD_102_LowValue = parseFloat(GD_102_Low);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
@@ -655,7 +861,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_102_Low_HIGHT, GD_102_Low, audioPlayingGD_102_Low, GD_102_Low_LOW,maintainGD_102_Low]);
+              }, [GD_102_Low_High, GD_102_Low, audioPlayingGD_102_Low, GD_102_Low_Low,maintainGD_102_Low]);
           
               useEffect(() => {
                   if (audioPlayingGD_102_Low) {
@@ -671,12 +877,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_102_Low = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_102_Low(newValue);
+                  setInputValueGD_102_Low(newValue);
               };
           
               const handleInputChange2GD_102_Low = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_102_Low(newValue2);
+                  setInputValue2GD_102_Low(newValue2);
               };
               const ChangeMaintainGD_102_Low = async () => {
                   try {
@@ -697,18 +903,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingGD_103_Low, setAudioPlayingGD_103_Low] = useState(false);
           const [inputValueGD_103_Low, setInputValueGD_103_Low] = useState<any>();
           const [inputValue2GD_103_Low, setInputValue2GD_103_Low] = useState<any>();
-          const [GD_103_Low_HIGHT, setGD_103_Low_HIGHT] = useState<number | null>(null);
-          const [GD_103_Low_LOW, setGD_103_Low_LOW] = useState<number | null>(null);
+          const [GD_103_Low_High, setGD_103_Low_High] = useState<number | null>(null);
+          const [GD_103_Low_Low, setGD_103_Low_Low] = useState<number | null>(null);
           const [exceedThresholdGD_103_Low, setExceedThresholdGD_103_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof GD_103_Low_HIGHT === 'string' && typeof GD_103_Low_LOW === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
+                  if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
                   ) {
-                      const highValue = parseFloat(GD_103_Low_HIGHT);
-                      const lowValue = parseFloat(GD_103_Low_LOW);
+                      const highValue = parseFloat(GD_103_Low_High);
+                      const lowValue = parseFloat(GD_103_Low_Low);
                       const GD_103_LowValue = parseFloat(GD_103_Low);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
@@ -724,7 +930,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [GD_103_Low_HIGHT, GD_103_Low, audioPlayingGD_103_Low, GD_103_Low_LOW,maintainGD_103_Low]);
+              }, [GD_103_Low_High, GD_103_Low, audioPlayingGD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
           
               useEffect(() => {
                   if (audioPlayingGD_103_Low) {
@@ -740,12 +946,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeGD_103_Low = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueGD_103_Low(newValue);
+                  setInputValueGD_103_Low(newValue);
               };
           
               const handleInputChange2GD_103_Low = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2GD_103_Low(newValue2);
+                  setInputValue2GD_103_Low(newValue2);
               };
               const ChangeMaintainGD_103_Low = async () => {
                   try {
@@ -766,18 +972,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [audioPlayingSDV_301, setAudioPlayingSDV_301] = useState(false);
           const [inputValueSDV_301, setInputValueSDV_301] = useState<any>();
           const [inputValue2SDV_301, setInputValue2SDV_301] = useState<any>();
-          const [SDV_301_HIGHT, setSDV_301_HIGHT] = useState<number | null>(null);
-          const [SDV_301_LOW, setSDV_301_LOW] = useState<number | null>(null);
+          const [SDV_301_High, setSDV_301_High] = useState<number | null>(null);
+          const [SDV_301_Low, setSDV_301_Low] = useState<number | null>(null);
           const [exceedThresholdSDV_301, setExceedThresholdSDV_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainSDV_301, setMaintainSDV_301] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof SDV_301_HIGHT === 'string' && typeof SDV_301_LOW === 'string' && SDV_301 !== null && maintainSDV_301 === false
+                  if (typeof SDV_301_High === 'string' && typeof SDV_301_Low === 'string' && SDV_301 !== null && maintainSDV_301 === false
                   ) {
-                      const highValue = parseFloat(SDV_301_HIGHT);
-                      const lowValue = parseFloat(SDV_301_LOW);
+                      const highValue = parseFloat(SDV_301_High);
+                      const lowValue = parseFloat(SDV_301_Low);
                       const SDV_301Value = parseFloat(SDV_301);
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_301Value)) {
@@ -793,7 +999,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                           }
                       } 
                   } 
-              }, [SDV_301_HIGHT, SDV_301, audioPlayingSDV_301, SDV_301_LOW,maintainSDV_301]);
+              }, [SDV_301_High, SDV_301, audioPlayingSDV_301, SDV_301_Low,maintainSDV_301]);
           
               useEffect(() => {
                   if (audioPlayingSDV_301) {
@@ -809,12 +1015,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           
               const handleInputChangeSDV_301 = (event: any) => {
                   const newValue = event.target.value;
-                  inputValueSDV_301(newValue);
+                  setInputValueSDV_301(newValue);
               };
           
               const handleInputChange2SDV_301 = (event: any) => {
                   const newValue2 = event.target.value;
-                  inputValue2SDV_301(newValue2);
+                  setInputValue2SDV_301(newValue2);
               };
               const ChangeMaintainSDV_301 = async () => {
                   try {
@@ -837,18 +1043,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [audioPlayingSDV_302, setAudioPlayingSDV_302] = useState(false);
     const [inputValueSDV_302, setInputValueSDV_302] = useState<any>();
     const [inputValue2SDV_302, setInputValue2SDV_302] = useState<any>();
-    const [SDV_302_HIGHT, setSDV_302_HIGHT] = useState<number | null>(null);
-    const [SDV_302_LOW, setSDV_302_LOW] = useState<number | null>(null);
+    const [SDV_302_High, setSDV_302_High] = useState<number | null>(null);
+    const [SDV_302_Low, setSDV_302_Low] = useState<number | null>(null);
     const [exceedThresholdSDV_302, setExceedThresholdSDV_302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     
     const [maintainSDV_302, setMaintainSDV_302] = useState<boolean>(false);
     
     
         useEffect(() => {
-            if (typeof SDV_302_HIGHT === 'string' && typeof SDV_302_LOW === 'string' && SDV_302 !== null && maintainSDV_302 === false
+            if (typeof SDV_302_High === 'string' && typeof SDV_302_Low === 'string' && SDV_302 !== null && maintainSDV_302 === false
             ) {
-                const highValue = parseFloat(SDV_302_HIGHT);
-                const lowValue = parseFloat(SDV_302_LOW);
+                const highValue = parseFloat(SDV_302_High);
+                const lowValue = parseFloat(SDV_302_Low);
                 const SDV_302Value = parseFloat(SDV_302);
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_302Value)) {
@@ -864,7 +1070,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                     }
                 } 
             } 
-        }, [SDV_302_HIGHT, SDV_302, audioPlayingSDV_302, SDV_302_LOW,maintainSDV_302]);
+        }, [SDV_302_High, SDV_302, audioPlayingSDV_302, SDV_302_Low,maintainSDV_302]);
     
         useEffect(() => {
             if (audioPlayingSDV_302) {
@@ -880,12 +1086,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     
         const handleInputChangeSDV_302 = (event: any) => {
             const newValue = event.target.value;
-            inputValueSDV_302(newValue);
+            setInputValueSDV_302(newValue);
         };
     
         const handleInputChange2SDV_302 = (event: any) => {
             const newValue2 = event.target.value;
-            inputValue2SDV_302(newValue2);
+            setInputValue2SDV_302(newValue2);
         };
         const ChangeMaintainSDV_302 = async () => {
             try {
@@ -908,18 +1114,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
         const [audioPlayingV1_Flow_Meter, setAudioPlayingV1_Flow_Meter] = useState(false);
         const [inputValueV1_Flow_Meter, setInputValueV1_Flow_Meter] = useState<any>();
         const [inputValue2V1_Flow_Meter, setInputValue2V1_Flow_Meter] = useState<any>();
-        const [V1_Flow_Meter_HIGHT, setV1_Flow_Meter_HIGHT] = useState<number | null>(null);
-        const [V1_Flow_Meter_LOW, setV1_Flow_Meter_LOW] = useState<number | null>(null);
+        const [V1_Flow_Meter_High, setV1_Flow_Meter_High] = useState<number | null>(null);
+        const [V1_Flow_Meter_Low, setV1_Flow_Meter_Low] = useState<number | null>(null);
         const [exceedThresholdV1_Flow_Meter, setExceedThresholdV1_Flow_Meter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
         const [maintainV1_Flow_Meter, setMaintainV1_Flow_Meter] = useState<boolean>(false);
         
         
             useEffect(() => {
-                if (typeof V1_Flow_Meter_HIGHT === 'string' && typeof V1_Flow_Meter_LOW === 'string' && V1_Flow_Meter !== null && maintainV1_Flow_Meter === false
+                if (typeof V1_Flow_Meter_High === 'string' && typeof V1_Flow_Meter_Low === 'string' && V1_Flow_Meter !== null && maintainV1_Flow_Meter === false
                 ) {
-                    const highValue = parseFloat(V1_Flow_Meter_HIGHT);
-                    const lowValue = parseFloat(V1_Flow_Meter_LOW);
+                    const highValue = parseFloat(V1_Flow_Meter_High);
+                    const lowValue = parseFloat(V1_Flow_Meter_Low);
                     const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter);
             
                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V1_Flow_MeterValue)) {
@@ -935,7 +1141,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                         }
                     } 
                 } 
-            }, [V1_Flow_Meter_HIGHT, V1_Flow_Meter, audioPlayingV1_Flow_Meter, V1_Flow_Meter_LOW,maintainV1_Flow_Meter]);
+            }, [V1_Flow_Meter_High, V1_Flow_Meter, audioPlayingV1_Flow_Meter, V1_Flow_Meter_Low,maintainV1_Flow_Meter]);
         
             useEffect(() => {
                 if (audioPlayingV1_Flow_Meter) {
@@ -951,12 +1157,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
         
             const handleInputChangeV1_Flow_Meter = (event: any) => {
                 const newValue = event.target.value;
-                inputValueV1_Flow_Meter(newValue);
+                setInputValueV1_Flow_Meter(newValue);
             };
         
             const handleInputChange2V1_Flow_Meter = (event: any) => {
                 const newValue2 = event.target.value;
-                inputValue2V1_Flow_Meter(newValue2);
+                setInputValue2V1_Flow_Meter(newValue2);
             };
             const ChangeMaintainV1_Flow_Meter = async () => {
                 try {
@@ -979,18 +1185,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [audioPlayingV2_Flow_Meter, setAudioPlayingV2_Flow_Meter] = useState(false);
     const [inputValueV2_Flow_Meter, setInputValueV2_Flow_Meter] = useState<any>();
     const [inputValue2V2_Flow_Meter, setInputValue2V2_Flow_Meter] = useState<any>();
-    const [V2_Flow_Meter_HIGHT, setV2_Flow_Meter_HIGHT] = useState<number | null>(null);
-    const [V2_Flow_Meter_LOW, setV2_Flow_Meter_LOW] = useState<number | null>(null);
+    const [V2_Flow_Meter_High, setV2_Flow_Meter_High] = useState<number | null>(null);
+    const [V2_Flow_Meter_Low, setV2_Flow_Meter_Low] = useState<number | null>(null);
     const [exceedThresholdV2_Flow_Meter, setExceedThresholdV2_Flow_Meter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     
     const [maintainV2_Flow_Meter, setMaintainV2_Flow_Meter] = useState<boolean>(false);
     
     
         useEffect(() => {
-            if (typeof V2_Flow_Meter_HIGHT === 'string' && typeof V2_Flow_Meter_LOW === 'string' && V2_Flow_Meter !== null && maintainV2_Flow_Meter === false
+            if (typeof V2_Flow_Meter_High === 'string' && typeof V2_Flow_Meter_Low === 'string' && V2_Flow_Meter !== null && maintainV2_Flow_Meter === false
             ) {
-                const highValue = parseFloat(V2_Flow_Meter_HIGHT);
-                const lowValue = parseFloat(V2_Flow_Meter_LOW);
+                const highValue = parseFloat(V2_Flow_Meter_High);
+                const lowValue = parseFloat(V2_Flow_Meter_Low);
                 const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter);
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V2_Flow_MeterValue)) {
@@ -1006,7 +1212,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                     }
                 } 
             } 
-        }, [V2_Flow_Meter_HIGHT, V2_Flow_Meter, audioPlayingV2_Flow_Meter, V2_Flow_Meter_LOW,maintainV2_Flow_Meter]);
+        }, [V2_Flow_Meter_High, V2_Flow_Meter, audioPlayingV2_Flow_Meter, V2_Flow_Meter_Low,maintainV2_Flow_Meter]);
     
         useEffect(() => {
             if (audioPlayingV2_Flow_Meter) {
@@ -1022,12 +1228,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     
         const handleInputChangeV2_Flow_Meter = (event: any) => {
             const newValue = event.target.value;
-            inputValueV2_Flow_Meter(newValue);
+            setInputValueV2_Flow_Meter(newValue);
         };
     
         const handleInputChange2V2_Flow_Meter = (event: any) => {
             const newValue2 = event.target.value;
-            inputValue2V2_Flow_Meter(newValue2);
+            setInputValue2V2_Flow_Meter(newValue2);
         };
         const ChangeMaintainV2_Flow_Meter = async () => {
             try {
@@ -1049,18 +1255,18 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [audioPlayingPipe_Temp, setAudioPlayingPipe_Temp] = useState(false);
     const [inputValuePipe_Temp, setInputValuePipe_Temp] = useState<any>();
     const [inputValue2Pipe_Temp, setInputValue2Pipe_Temp] = useState<any>();
-    const [Pipe_Temp_HIGHT, setPipe_Temp_HIGHT] = useState<number | null>(null);
-    const [Pipe_Temp_LOW, setPipe_Temp_LOW] = useState<number | null>(null);
+    const [Pipe_Temp_High, setPipe_Temp_High] = useState<number | null>(null);
+    const [Pipe_Temp_Low, setPipe_Temp_Low] = useState<number | null>(null);
     const [exceedThresholdPipe_Temp, setExceedThresholdPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     
     const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
     
     
         useEffect(() => {
-            if (typeof Pipe_Temp_HIGHT === 'string' && typeof Pipe_Temp_LOW === 'string' && Pipe_Temp !== null && maintainPipe_Temp === false
+            if (typeof Pipe_Temp_High === 'string' && typeof Pipe_Temp_Low === 'string' && Pipe_Temp !== null && maintainPipe_Temp === false
             ) {
-                const highValue = parseFloat(Pipe_Temp_HIGHT);
-                const lowValue = parseFloat(Pipe_Temp_LOW);
+                const highValue = parseFloat(Pipe_Temp_High);
+                const lowValue = parseFloat(Pipe_Temp_Low);
                 const Pipe_TempValue = parseFloat(Pipe_Temp);
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_TempValue)) {
@@ -1076,7 +1282,7 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
                     }
                 } 
             } 
-        }, [Pipe_Temp_HIGHT, Pipe_Temp, audioPlayingPipe_Temp, Pipe_Temp_LOW,maintainPipe_Temp]);
+        }, [Pipe_Temp_High, Pipe_Temp, audioPlayingPipe_Temp, Pipe_Temp_Low,maintainPipe_Temp]);
     
         useEffect(() => {
             if (audioPlayingPipe_Temp) {
@@ -1092,12 +1298,12 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     
         const handleInputChangePipe_Temp = (event: any) => {
             const newValue = event.target.value;
-            inputValuePipe_Temp(newValue);
+            setInputValuePipe_Temp(newValue);
         };
     
         const handleInputChange2Pipe_Temp = (event: any) => {
             const newValue2 = event.target.value;
-            inputValue2Pipe_Temp(newValue2);
+            setInputValue2Pipe_Temp(newValue2);
         };
         const ChangeMaintainPipe_Temp = async () => {
             try {
@@ -1120,18 +1326,18 @@ const [Pipe_Press, setPipe_Press] = useState<string | null>(null);
 const [audioPlayingPipe_Press, setAudioPlayingPipe_Press] = useState(false);
 const [inputValuePipe_Press, setInputValuePipe_Press] = useState<any>();
 const [inputValue2Pipe_Press, setInputValue2Pipe_Press] = useState<any>();
-const [Pipe_Press_HIGHT, setPipe_Press_HIGHT] = useState<number | null>(null);
-const [Pipe_Press_LOW, setPipe_Press_LOW] = useState<number | null>(null);
+const [Pipe_Press_High, setPipe_Press_High] = useState<number | null>(null);
+const [Pipe_Press_Low, setPipe_Press_Low] = useState<number | null>(null);
 const [exceedThresholdPipe_Press, setExceedThresholdPipe_Press] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
 const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
 
 
     useEffect(() => {
-        if (typeof Pipe_Press_HIGHT === 'string' && typeof Pipe_Press_LOW === 'string' && Pipe_Press !== null && maintainPipe_Press === false
+        if (typeof Pipe_Press_High === 'string' && typeof Pipe_Press_Low === 'string' && Pipe_Press !== null && maintainPipe_Press === false
         ) {
-            const highValue = parseFloat(Pipe_Press_HIGHT);
-            const lowValue = parseFloat(Pipe_Press_LOW);
+            const highValue = parseFloat(Pipe_Press_High);
+            const lowValue = parseFloat(Pipe_Press_Low);
             const Pipe_PressValue = parseFloat(Pipe_Press);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_PressValue)) {
@@ -1147,7 +1353,7 @@ const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
                 }
             } 
         } 
-    }, [Pipe_Press_HIGHT, Pipe_Press, audioPlayingPipe_Press, Pipe_Press_LOW,maintainPipe_Press]);
+    }, [Pipe_Press_High, Pipe_Press, audioPlayingPipe_Press, Pipe_Press_Low,maintainPipe_Press]);
 
     useEffect(() => {
         if (audioPlayingPipe_Press) {
@@ -1163,12 +1369,12 @@ const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
 
     const handleInputChangePipe_Press = (event: any) => {
         const newValue = event.target.value;
-        inputValuePipe_Press(newValue);
+        setInputValuePipe_Press(newValue);
     };
 
     const handleInputChange2Pipe_Press = (event: any) => {
         const newValue2 = event.target.value;
-        inputValue2Pipe_Press(newValue2);
+        setInputValue2Pipe_Press(newValue2);
     };
     const ChangeMaintainPipe_Press = async () => {
         try {
@@ -1190,18 +1396,18 @@ const [Tank_TT_301, setTank_TT_301] = useState<string | null>(null);
 const [audioPlayingTank_TT_301, setAudioPlayingTank_TT_301] = useState(false);
 const [inputValueTank_TT_301, setInputValueTank_TT_301] = useState<any>();
 const [inputValue2Tank_TT_301, setInputValue2Tank_TT_301] = useState<any>();
-const [Tank_TT_301_HIGHT, setTank_TT_301_HIGHT] = useState<number | null>(null);
-const [Tank_TT_301_LOW, setTank_TT_301_LOW] = useState<number | null>(null);
+const [Tank_TT_301_High, setTank_TT_301_High] = useState<number | null>(null);
+const [Tank_TT_301_Low, setTank_TT_301_Low] = useState<number | null>(null);
 const [exceedThresholdTank_TT_301, setExceedThresholdTank_TT_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
 const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
 
 
     useEffect(() => {
-        if (typeof Tank_TT_301_HIGHT === 'string' && typeof Tank_TT_301_LOW === 'string' && Tank_TT_301 !== null && maintainTank_TT_301 === false
+        if (typeof Tank_TT_301_High === 'string' && typeof Tank_TT_301_Low === 'string' && Tank_TT_301 !== null && maintainTank_TT_301 === false
         ) {
-            const highValue = parseFloat(Tank_TT_301_HIGHT);
-            const lowValue = parseFloat(Tank_TT_301_LOW);
+            const highValue = parseFloat(Tank_TT_301_High);
+            const lowValue = parseFloat(Tank_TT_301_Low);
             const Tank_TT_301Value = parseFloat(Tank_TT_301);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_TT_301Value)) {
@@ -1217,7 +1423,7 @@ const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
                 }
             } 
         } 
-    }, [Tank_TT_301_HIGHT, Tank_TT_301, audioPlayingTank_TT_301, Tank_TT_301_LOW,maintainTank_TT_301]);
+    }, [Tank_TT_301_High, Tank_TT_301, audioPlayingTank_TT_301, Tank_TT_301_Low,maintainTank_TT_301]);
 
     useEffect(() => {
         if (audioPlayingTank_TT_301) {
@@ -1233,12 +1439,12 @@ const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
 
     const handleInputChangeTank_TT_301 = (event: any) => {
         const newValue = event.target.value;
-        inputValueTank_TT_301(newValue);
+        setInputValueTank_TT_301(newValue);
     };
 
     const handleInputChange2Tank_TT_301 = (event: any) => {
         const newValue2 = event.target.value;
-        inputValue2Tank_TT_301(newValue2);
+        setInputValue2Tank_TT_301(newValue2);
     };
     const ChangeMaintainTank_TT_301 = async () => {
         try {
@@ -1261,18 +1467,18 @@ const [Tank_PT_301, setTank_PT_301] = useState<string | null>(null);
 const [audioPlayingTank_PT_301, setAudioPlayingTank_PT_301] = useState(false);
 const [inputValueTank_PT_301, setInputValueTank_PT_301] = useState<any>();
 const [inputValue2Tank_PT_301, setInputValue2Tank_PT_301] = useState<any>();
-const [Tank_PT_301_HIGHT, setTank_PT_301_HIGHT] = useState<number | null>(null);
-const [Tank_PT_301_LOW, setTank_PT_301_LOW] = useState<number | null>(null);
+const [Tank_PT_301_High, setTank_PT_301_High] = useState<number | null>(null);
+const [Tank_PT_301_Low, setTank_PT_301_Low] = useState<number | null>(null);
 const [exceedThresholdTank_PT_301, setExceedThresholdTank_PT_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
 const [maintainTank_PT_301, setMaintainTank_PT_301] = useState<boolean>(false);
 
 
 useEffect(() => {
-    if (typeof Tank_PT_301_HIGHT === 'string' && typeof Tank_PT_301_LOW === 'string' && Tank_PT_301 !== null && maintainTank_PT_301 === false
+    if (typeof Tank_PT_301_High === 'string' && typeof Tank_PT_301_Low === 'string' && Tank_PT_301 !== null && maintainTank_PT_301 === false
     ) {
-        const highValue = parseFloat(Tank_PT_301_HIGHT);
-        const lowValue = parseFloat(Tank_PT_301_LOW);
+        const highValue = parseFloat(Tank_PT_301_High);
+        const lowValue = parseFloat(Tank_PT_301_Low);
         const Tank_PT_301Value = parseFloat(Tank_PT_301);
 
         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_PT_301Value)) {
@@ -1288,7 +1494,7 @@ useEffect(() => {
             }
         } 
     } 
-}, [Tank_PT_301_HIGHT, Tank_PT_301, audioPlayingTank_PT_301, Tank_PT_301_LOW,maintainTank_PT_301]);
+}, [Tank_PT_301_High, Tank_PT_301, audioPlayingTank_PT_301, Tank_PT_301_Low,maintainTank_PT_301]);
 
 useEffect(() => {
     if (audioPlayingTank_PT_301) {
@@ -1304,12 +1510,12 @@ useEffect(() => {
 
 const handleInputChangeTank_PT_301 = (event: any) => {
     const newValue = event.target.value;
-    inputValueTank_PT_301(newValue);
+    setInputValueTank_PT_301(newValue);
 };
 
 const handleInputChange2Tank_PT_301 = (event: any) => {
     const newValue2 = event.target.value;
-    inputValue2Tank_PT_301(newValue2);
+    setInputValue2Tank_PT_301(newValue2);
 };
 const ChangeMaintainTank_PT_301 = async () => {
     try {
@@ -1333,18 +1539,18 @@ const ChangeMaintainTank_PT_301 = async () => {
         const [audioPlayingTank_01_Volume, setAudioPlayingTank_01_Volume] = useState(false);
         const [inputValueTank_01_Volume, setInputValueTank_01_Volume] = useState<any>();
         const [inputValue2Tank_01_Volume, setInputValue2Tank_01_Volume] = useState<any>();
-        const [Tank_01_Volume_HIGHT, setTank_01_Volume_HIGHT] = useState<number | null>(null);
-        const [Tank_01_Volume_LOW, setTank_01_Volume_LOW] = useState<number | null>(null);
+        const [Tank_01_Volume_High, setTank_01_Volume_High] = useState<number | null>(null);
+        const [Tank_01_Volume_Low, setTank_01_Volume_Low] = useState<number | null>(null);
         const [exceedThresholdTank_01_Volume, setExceedThresholdTank_01_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
         const [maintainTank_01_Volume, setMaintainTank_01_Volume] = useState<boolean>(false);
         
         
             useEffect(() => {
-                if (typeof Tank_01_Volume_HIGHT === 'string' && typeof Tank_01_Volume_LOW === 'string' && Tank_01_Volume !== null && maintainTank_01_Volume === false
+                if (typeof Tank_01_Volume_High === 'string' && typeof Tank_01_Volume_Low === 'string' && Tank_01_Volume !== null && maintainTank_01_Volume === false
                 ) {
-                    const highValue = parseFloat(Tank_01_Volume_HIGHT);
-                    const lowValue = parseFloat(Tank_01_Volume_LOW);
+                    const highValue = parseFloat(Tank_01_Volume_High);
+                    const lowValue = parseFloat(Tank_01_Volume_Low);
                     const Tank_01_VolumeValue = parseFloat(Tank_01_Volume);
             
                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_VolumeValue)) {
@@ -1360,7 +1566,7 @@ const ChangeMaintainTank_PT_301 = async () => {
                         }
                     } 
                 } 
-            }, [Tank_01_Volume_HIGHT, Tank_01_Volume, audioPlayingTank_01_Volume, Tank_01_Volume_LOW,maintainTank_01_Volume]);
+            }, [Tank_01_Volume_High, Tank_01_Volume, audioPlayingTank_01_Volume, Tank_01_Volume_Low,maintainTank_01_Volume]);
         
             useEffect(() => {
                 if (audioPlayingTank_01_Volume) {
@@ -1376,12 +1582,12 @@ const ChangeMaintainTank_PT_301 = async () => {
         
             const handleInputChangeTank_01_Volume = (event: any) => {
                 const newValue = event.target.value;
-                inputValueTank_01_Volume(newValue);
+                setInputValueTank_01_Volume(newValue);
             };
         
             const handleInputChange2Tank_01_Volume = (event: any) => {
                 const newValue2 = event.target.value;
-                inputValue2Tank_01_Volume(newValue2);
+                setInputValue2Tank_01_Volume(newValue2);
             };
             const ChangeMaintainTank_01_Volume = async () => {
                 try {
@@ -1403,18 +1609,18 @@ const ChangeMaintainTank_PT_301 = async () => {
         const [audioPlayingTank_01_Mass, setAudioPlayingTank_01_Mass] = useState(false);
         const [inputValueTank_01_Mass, setInputValueTank_01_Mass] = useState<any>();
         const [inputValue2Tank_01_Mass, setInputValue2Tank_01_Mass] = useState<any>();
-        const [Tank_01_Mass_HIGHT, setTank_01_Mass_HIGHT] = useState<number | null>(null);
-        const [Tank_01_Mass_LOW, setTank_01_Mass_LOW] = useState<number | null>(null);
+        const [Tank_01_Mass_High, setTank_01_Mass_High] = useState<number | null>(null);
+        const [Tank_01_Mass_Low, setTank_01_Mass_Low] = useState<number | null>(null);
         const [exceedThresholdTank_01_Mass, setExceedThresholdTank_01_Mass] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
         const [maintainTank_01_Mass, setMaintainTank_01_Mass] = useState<boolean>(false);
         
         
             useEffect(() => {
-                if (typeof Tank_01_Mass_HIGHT === 'string' && typeof Tank_01_Mass_LOW === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
+                if (typeof Tank_01_Mass_High === 'string' && typeof Tank_01_Mass_Low === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
                 ) {
-                    const highValue = parseFloat(Tank_01_Mass_HIGHT);
-                    const lowValue = parseFloat(Tank_01_Mass_LOW);
+                    const highValue = parseFloat(Tank_01_Mass_High);
+                    const lowValue = parseFloat(Tank_01_Mass_Low);
                     const Tank_01_MassValue = parseFloat(Tank_01_Mass);
             
                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_MassValue)) {
@@ -1430,7 +1636,7 @@ const ChangeMaintainTank_PT_301 = async () => {
                         }
                     } 
                 } 
-            }, [Tank_01_Mass_HIGHT, Tank_01_Mass, audioPlayingTank_01_Mass, Tank_01_Mass_LOW,maintainTank_01_Mass]);
+            }, [Tank_01_Mass_High, Tank_01_Mass, audioPlayingTank_01_Mass, Tank_01_Mass_Low,maintainTank_01_Mass]);
         
             useEffect(() => {
                 if (audioPlayingTank_01_Mass) {
@@ -1446,12 +1652,12 @@ const ChangeMaintainTank_PT_301 = async () => {
         
             const handleInputChangeTank_01_Mass = (event: any) => {
                 const newValue = event.target.value;
-                inputValueTank_01_Mass(newValue);
+                setInputValueTank_01_Mass(newValue);
             };
         
             const handleInputChange2Tank_01_Mass = (event: any) => {
                 const newValue2 = event.target.value;
-                inputValue2Tank_01_Mass(newValue2);
+                setInputValue2Tank_01_Mass(newValue2);
             };
             const ChangeMaintainTank_01_Mass = async () => {
                 try {
@@ -1474,18 +1680,18 @@ const ChangeMaintainTank_PT_301 = async () => {
         const [audioPlayingTank_01_Level, setAudioPlayingTank_01_Level] = useState(false);
         const [inputValueTank_01_Level, setInputValueTank_01_Level] = useState<any>();
         const [inputValue2Tank_01_Level, setInputValue2Tank_01_Level] = useState<any>();
-        const [Tank_01_Level_HIGHT, setTank_01_Level_HIGHT] = useState<number | null>(null);
-        const [Tank_01_Level_LOW, setTank_01_Level_LOW] = useState<number | null>(null);
+        const [Tank_01_Level_High, setTank_01_Level_High] = useState<number | null>(null);
+        const [Tank_01_Level_Low, setTank_01_Level_Low] = useState<number | null>(null);
         const [exceedThresholdTank_01_Level, setExceedThresholdTank_01_Level] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
         const [maintainTank_01_Level, setMaintainTank_01_Level] = useState<boolean>(false);
         
         
         useEffect(() => {
-            if (typeof Tank_01_Level_HIGHT === 'string' && typeof Tank_01_Level_LOW === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
+            if (typeof Tank_01_Level_High === 'string' && typeof Tank_01_Level_Low === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
             ) {
-                const highValue = parseFloat(Tank_01_Level_HIGHT);
-                const lowValue = parseFloat(Tank_01_Level_LOW);
+                const highValue = parseFloat(Tank_01_Level_High);
+                const lowValue = parseFloat(Tank_01_Level_Low);
                 const Tank_01_LevelValue = parseFloat(Tank_01_Level);
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_LevelValue)) {
@@ -1501,7 +1707,7 @@ const ChangeMaintainTank_PT_301 = async () => {
                     }
                 } 
             } 
-        }, [Tank_01_Level_HIGHT, Tank_01_Level, audioPlayingTank_01_Level, Tank_01_Level_LOW,maintainTank_01_Level]);
+        }, [Tank_01_Level_High, Tank_01_Level, audioPlayingTank_01_Level, Tank_01_Level_Low,maintainTank_01_Level]);
         
         useEffect(() => {
             if (audioPlayingTank_01_Level) {
@@ -1517,12 +1723,12 @@ const ChangeMaintainTank_PT_301 = async () => {
         
         const handleInputChangeTank_01_Level = (event: any) => {
             const newValue = event.target.value;
-            inputValueTank_01_Level(newValue);
+            setInputValueTank_01_Level(newValue);
         };
         
         const handleInputChange2Tank_01_Level = (event: any) => {
             const newValue2 = event.target.value;
-            inputValue2Tank_01_Level(newValue2);
+            setInputValue2Tank_01_Level(newValue2);
         };
         const ChangeMaintainTank_01_Level = async () => {
             try {
@@ -1559,83 +1765,83 @@ const ChangeMaintainTank_PT_301 = async () => {
                     GD_101_Low_High: inputValueGD_101_Low,GD_101_Low_Low:inputValue2GD_101_Low,
 
 
-                    SDV_302_HIGHT: inputValueSDV_302,SDV_302_LOW:inputValue2SDV_302,
-                    SDV_301_HIGHT: inputValueSDV_301,SDV_301_LOW:inputValue2SDV_301,
+                    SDV_302_High: inputValueSDV_302,SDV_302_Low:inputValue2SDV_302,
+                    SDV_301_High: inputValueSDV_301,SDV_301_Low:inputValue2SDV_301,
 
 
-                    V1_Flow_Meter_HIGHT: inputValueV1_Flow_Meter,V1_Flow_Meter_LOW:inputValue2V1_Flow_Meter,
-                    V2_Flow_Meter_HIGHT: inputValueV2_Flow_Meter,V2_Flow_Meter_LOW:inputValue2V2_Flow_Meter,
+                    V1_Flow_Meter_High: inputValueV1_Flow_Meter,V1_Flow_Meter_Low:inputValue2V1_Flow_Meter,
+                    V2_Flow_Meter_High: inputValueV2_Flow_Meter,V2_Flow_Meter_Low:inputValue2V2_Flow_Meter,
 
-                    Pipe_Temp_HIGHT: inputValuePipe_Temp,Pipe_Temp_LOW:inputValue2Pipe_Temp,
-                    Pipe_Press_HIGHT: inputValuePipe_Press,Pipe_Press_LOW:inputValue2Pipe_Press,
+                    Pipe_Temp_High: inputValuePipe_Temp,Pipe_Temp_Low:inputValue2Pipe_Temp,
+                    Pipe_Press_High: inputValuePipe_Press,Pipe_Press_Low:inputValue2Pipe_Press,
 
-                    Tank_TT_301_HIGHT: inputValueTank_TT_301,Tank_TT_301_LOW:inputValue2Tank_TT_301,
-                    Tank_PT_301_HIGHT: inputValueTank_PT_301,Tank_PT_301_LOW:inputValue2Tank_PT_301,
+                    Tank_TT_301_High: inputValueTank_TT_301,Tank_TT_301_Low:inputValue2Tank_TT_301,
+                    Tank_PT_301_High: inputValueTank_PT_301,Tank_PT_301_Low:inputValue2Tank_PT_301,
 
 
-                    Tank_01_Volume_HIGHT: inputValueTank_01_Volume,Tank_01_Volume_LOW:inputValue2Tank_01_Volume,
-                    Tank_01_Mass_HIGHT: inputValueTank_01_Mass,Tank_01_Mass_LOW:inputValue2Tank_01_Mass,
-                    Tank_01_Level_HIGHT: inputValueTank_01_Level,Tank_01_Level_LOW:inputValue2Tank_01_Level,
+                    Tank_01_Volume_High: inputValueTank_01_Volume,Tank_01_Volume_Low:inputValue2Tank_01_Volume,
+                    Tank_01_Mass_High: inputValueTank_01_Mass,Tank_01_Mass_Low:inputValue2Tank_01_Mass,
+                    Tank_01_Level_High: inputValueTank_01_Level,Tank_01_Level_Low:inputValue2Tank_01_Level,
 
                 }
             );
-            setVP_302_HIGHT(inputValueVP_302);
-            setVP_302_LOW(inputValue2VP_302);
+            setVP_302_High(inputValueVP_302);
+            setVP_302_Low(inputValue2VP_302);
 
-            setVP_301_HIGHT(inputValueVP_301);
-            setVP_301_LOW(inputValue2VP_301);
+            setVP_301_High(inputValueVP_301);
+            setVP_301_Low(inputValue2VP_301);
 
-            setVP_301_HIGHT(inputValueVP_301);
-            setVP_301_LOW(inputValue2VP_301);
+            setVP_301_High(inputValueVP_301);
+            setVP_301_Low(inputValue2VP_301);
 
-            setGD_103_High_HIGHT(inputValueGD_103_High);
-            setGD_103_High_LOW(inputValue2GD_103_High);
+            setGD_103_High_High(inputValueGD_103_High);
+            setGD_103_High_Low(inputValue2GD_103_High);
 
-            setGD_102_High_HIGHT(inputValueGD_102_High);
-            setGD_102_High_LOW(inputValue2GD_102_High);
+            setGD_102_High_High(inputValueGD_102_High);
+            setGD_102_High_Low(inputValue2GD_102_High);
 
-            setGD_101_High_HIGHT(inputValueGD_101_High);
-            setGD_101_High_LOW(inputValue2GD_101_High);
-
-
-            setGD_103_Low_HIGHT(inputValueGD_103_Low);
-            setGD_103_Low_LOW(inputValue2GD_103_Low);
-
-            setGD_102_Low_HIGHT(inputValueGD_102_Low);
-            setGD_102_Low_LOW(inputValue2GD_102_Low);
-
-            setGD_101_Low_HIGHT(inputValueGD_101_Low);
-            setGD_101_Low_LOW(inputValue2GD_101_Low);
-
-            setSDV_302_HIGHT(inputValueSDV_302);
-            setSDV_302_LOW(inputValue2SDV_302);
-
-            setSDV_301_HIGHT(inputValueSDV_301);
-            setSDV_301_LOW(inputValue2SDV_301);
+            setGD_101_High_High(inputValueGD_101_High);
+            setGD_101_High_Low(inputValue2GD_101_High);
 
 
-            setV2_Flow_Meter_HIGHT(inputValueV2_Flow_Meter);
-            setV2_Flow_Meter_LOW(inputValue2V2_Flow_Meter);
+            setGD_103_Low_High(inputValueGD_103_Low);
+            setGD_103_Low_Low(inputValue2GD_103_Low);
 
-            setV1_Flow_Meter_HIGHT(inputValueV1_Flow_Meter);
-            setV1_Flow_Meter_LOW(inputValue2V1_Flow_Meter);
+            setGD_102_Low_High(inputValueGD_102_Low);
+            setGD_102_Low_Low(inputValue2GD_102_Low);
 
-            setPipe_Temp_HIGHT(inputValuePipe_Temp);
-            setPipe_Temp_LOW(inputValue2Pipe_Temp);
+            setGD_101_Low_High(inputValueGD_101_Low);
+            setGD_101_Low_Low(inputValue2GD_101_Low);
 
-            setPipe_Press_HIGHT(inputValuePipe_Press);
-            setPipe_Press_LOW(inputValue2Pipe_Press);
+            setSDV_302_High(inputValueSDV_302);
+            setSDV_302_Low(inputValue2SDV_302);
+
+            setSDV_301_High(inputValueSDV_301);
+            setSDV_301_Low(inputValue2SDV_301);
+
+
+            setV2_Flow_Meter_High(inputValueV2_Flow_Meter);
+            setV2_Flow_Meter_Low(inputValue2V2_Flow_Meter);
+
+            setV1_Flow_Meter_High(inputValueV1_Flow_Meter);
+            setV1_Flow_Meter_Low(inputValue2V1_Flow_Meter);
+
+            setPipe_Temp_High(inputValuePipe_Temp);
+            setPipe_Temp_Low(inputValue2Pipe_Temp);
+
+            setPipe_Press_High(inputValuePipe_Press);
+            setPipe_Press_Low(inputValue2Pipe_Press);
 
 
 
-            setTank_01_Volume_HIGHT(inputValueTank_01_Volume);
-            setTank_01_Volume_LOW(inputValue2Tank_01_Volume);
+            setTank_01_Volume_High(inputValueTank_01_Volume);
+            setTank_01_Volume_Low(inputValue2Tank_01_Volume);
 
-            setTank_01_Mass_HIGHT(inputValueTank_01_Mass);
-            setTank_01_Mass_LOW(inputValue2Tank_01_Mass);
+            setTank_01_Mass_High(inputValueTank_01_Mass);
+            setTank_01_Mass_Low(inputValue2Tank_01_Mass);
 
-            setTank_01_Level_HIGHT(inputValueTank_01_Level);
-            setTank_01_Level_LOW(inputValue2Tank_01_Level);
+            setTank_01_Level_High(inputValueTank_01_Level);
+            setTank_01_Level_Low(inputValue2Tank_01_Level);
 
 
             toast.current?.show({
@@ -1659,101 +1865,101 @@ const ChangeMaintainTank_PT_301 = async () => {
 
     useEffect(() => {
 
-        setInputValueVP_303(VP_303_HIGHT); 
-        setInputValue2VP_303(VP_303_LOW); 
+        setInputValueVP_303(VP_303_High); 
+        setInputValue2VP_303(VP_303_Low); 
 
-        setInputValueVP_302(VP_302_HIGHT); 
-        setInputValue2VP_302(VP_302_LOW); 
+        setInputValueVP_302(VP_302_High); 
+        setInputValue2VP_302(VP_302_Low); 
 
-        setInputValueVP_301(VP_301_HIGHT); 
-        setInputValue2VP_301(VP_301_LOW); 
+        setInputValueVP_301(VP_301_High); 
+        setInputValue2VP_301(VP_301_Low); 
 
 
 
-        setInputValueGD_102_High(GD_102_High_HIGHT); 
-        setInputValue2GD_102_High(GD_102_High_LOW); 
+        setInputValueGD_102_High(GD_102_High_High); 
+        setInputValue2GD_102_High(GD_102_High_Low); 
 
-        setInputValueGD_101_High(GD_101_High_HIGHT); 
-        setInputValue2GD_101_High(GD_101_High_LOW); 
+        setInputValueGD_101_High(GD_101_High_High); 
+        setInputValue2GD_101_High(GD_101_High_Low); 
 
-        setInputValueGD_103_High(GD_103_High_HIGHT); 
-        setInputValue2GD_103_High(GD_103_High_LOW); 
+        setInputValueGD_103_High(GD_103_High_High); 
+        setInputValue2GD_103_High(GD_103_High_Low); 
         
 
-        setInputValueGD_102_Low(GD_102_Low_HIGHT); 
-        setInputValue2GD_102_Low(GD_102_Low_LOW); 
+        setInputValueGD_102_Low(GD_102_Low_High); 
+        setInputValue2GD_102_Low(GD_102_Low_Low); 
 
-        setInputValueGD_101_Low(GD_101_Low_HIGHT); 
-        setInputValue2GD_101_Low(GD_101_Low_LOW); 
+        setInputValueGD_101_Low(GD_101_Low_High); 
+        setInputValue2GD_101_Low(GD_101_Low_Low); 
 
-        setInputValueGD_103_Low(GD_103_Low_HIGHT); 
-        setInputValue2GD_103_Low(GD_103_Low_LOW); 
+        setInputValueGD_103_Low(GD_103_Low_High); 
+        setInputValue2GD_103_Low(GD_103_Low_Low); 
 
-        setInputValueSDV_301(SDV_301_HIGHT); 
-        setInputValue2SDV_301(SDV_301_LOW); 
+        setInputValueSDV_301(SDV_301_High); 
+        setInputValue2SDV_301(SDV_301_Low); 
 
-        setInputValueSDV_302(SDV_302_HIGHT); 
-        setInputValue2SDV_302(SDV_302_LOW); 
+        setInputValueSDV_302(SDV_302_High); 
+        setInputValue2SDV_302(SDV_302_Low); 
 
-        setInputValueV1_Flow_Meter(V1_Flow_Meter_HIGHT); 
-        setInputValue2V1_Flow_Meter(V1_Flow_Meter_LOW); 
+        setInputValueV1_Flow_Meter(V1_Flow_Meter_High); 
+        setInputValue2V1_Flow_Meter(V1_Flow_Meter_Low); 
 
-        setInputValueV2_Flow_Meter(V2_Flow_Meter_HIGHT); 
-        setInputValue2V2_Flow_Meter(V2_Flow_Meter_LOW); 
+        setInputValueV2_Flow_Meter(V2_Flow_Meter_High); 
+        setInputValue2V2_Flow_Meter(V2_Flow_Meter_Low); 
 
-        setInputValuePipe_Temp(Pipe_Temp_HIGHT); 
-        setInputValue2Pipe_Temp(Pipe_Temp_LOW); 
+        setInputValuePipe_Temp(Pipe_Temp_High); 
+        setInputValue2Pipe_Temp(Pipe_Temp_Low); 
 
-        setInputValuePipe_Press(Pipe_Press_HIGHT); 
-        setInputValue2Pipe_Press(Pipe_Press_LOW); 
-
-
-        setInputValueTank_TT_301(Tank_TT_301_HIGHT); 
-        setInputValue2Tank_TT_301(Tank_TT_301_LOW); 
-
-        setInputValueTank_PT_301(Tank_PT_301_HIGHT); 
-        setInputValue2Tank_PT_301(Tank_PT_301_LOW); 
+        setInputValuePipe_Press(Pipe_Press_High); 
+        setInputValue2Pipe_Press(Pipe_Press_Low); 
 
 
-        setInputValueTank_01_Volume(Tank_01_Volume_HIGHT); 
-        setInputValue2Tank_01_Volume(Tank_01_Volume_LOW); 
+        setInputValueTank_TT_301(Tank_TT_301_High); 
+        setInputValue2Tank_TT_301(Tank_TT_301_Low); 
+
+        setInputValueTank_PT_301(Tank_PT_301_High); 
+        setInputValue2Tank_PT_301(Tank_PT_301_Low); 
 
 
-        setInputValueTank_01_Mass(Tank_01_Mass_HIGHT); 
-        setInputValue2Tank_01_Mass(Tank_01_Mass_LOW); 
-
-        setInputValueTank_01_Level(Tank_01_Level_HIGHT); 
-        setInputValue2Tank_01_Level(Tank_01_Level_LOW); 
-
-    }, [VP_303_HIGHT, VP_303_LOW ,
-        VP_302_HIGHT, VP_302_LOW 
-        ,VP_301_HIGHT, VP_301_LOW ,
+        setInputValueTank_01_Volume(Tank_01_Volume_High); 
+        setInputValue2Tank_01_Volume(Tank_01_Volume_Low); 
 
 
-        GD_102_High_HIGHT,GD_102_High_LOW,
-         GD_101_High_HIGHT,GD_101_High_LOW ,
-          GD_103_High_HIGHT,GD_103_High_LOW,
+        setInputValueTank_01_Mass(Tank_01_Mass_High); 
+        setInputValue2Tank_01_Mass(Tank_01_Mass_Low); 
 
-          GD_102_Low_HIGHT,GD_102_Low_LOW,
-          GD_101_Low_HIGHT,GD_101_Low_LOW ,
-           GD_103_Low_HIGHT,GD_103_Low_LOW,
+        setInputValueTank_01_Level(Tank_01_Level_High); 
+        setInputValue2Tank_01_Level(Tank_01_Level_Low); 
+
+    }, [VP_303_High, VP_303_Low ,
+        VP_302_High, VP_302_Low 
+        ,VP_301_High, VP_301_Low ,
+
+
+        GD_102_High_High,GD_102_High_Low,
+         GD_101_High_High,GD_101_High_Low ,
+          GD_103_High_High,GD_103_High_Low,
+
+          GD_102_Low_High,GD_102_Low_Low,
+          GD_101_Low_High,GD_101_Low_Low ,
+           GD_103_Low_High,GD_103_Low_Low,
         
-           SDV_301_HIGHT,SDV_301_LOW,
-           SDV_302_HIGHT,SDV_302_LOW,
+           SDV_301_High,SDV_301_Low,
+           SDV_302_High,SDV_302_Low,
 
-           V1_Flow_Meter_HIGHT,V1_Flow_Meter_LOW,
-           V2_Flow_Meter_HIGHT,V2_Flow_Meter_LOW,
+           V1_Flow_Meter_High,V1_Flow_Meter_Low,
+           V2_Flow_Meter_High,V2_Flow_Meter_Low,
 
-           Pipe_Temp_HIGHT,Pipe_Temp_LOW,
-           Pipe_Press_HIGHT,Pipe_Press_LOW,
+           Pipe_Temp_High,Pipe_Temp_Low,
+           Pipe_Press_High,Pipe_Press_Low,
 
-           Tank_PT_301_HIGHT,Tank_PT_301_LOW,
-           Tank_TT_301_HIGHT,Tank_TT_301_LOW,
+           Tank_PT_301_High,Tank_PT_301_Low,
+           Tank_TT_301_High,Tank_TT_301_Low,
 
 
-           Tank_01_Volume_HIGHT,Tank_01_Volume_LOW,
-           Tank_01_Mass_HIGHT,Tank_01_Mass_LOW,
-           Tank_01_Level_HIGHT,Tank_01_Level_LOW,
+           Tank_01_Volume_High,Tank_01_Volume_Low,
+           Tank_01_Mass_High,Tank_01_Mass_Low,
+           Tank_01_Level_High,Tank_01_Level_Low,
 
         ]);
 
@@ -2335,7 +2541,12 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
+    <audio ref={audioRef}>
+            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
+        </audio>
+        <Toast ref={toast} />
 
+        <ConfirmDialog />
 <div style={{display:'flex' }}>
 <h2>MEIKO</h2>
 

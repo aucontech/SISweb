@@ -45,7 +45,7 @@ export default function GraphicSogec() {
               { label: 'SPMCV', command: () => handleItemClick(<GraphicSPMCV />, 'SPMCV') },
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
-              { label: 'CNG PRU', command: () => handleItemClick(null, 'PCN PRU') },
+              { label: 'CNG PRU', command: () => handleItemClick(null, 'CNG PRU') },
 
               { label: 'ZOVC EVC', command: () => handleItemClick(<GraphicZOCV />, 'ZOVC EVC') },
               { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
@@ -53,7 +53,6 @@ export default function GraphicSogec() {
               { label: 'YOSHINO', command: () => handleItemClick(null, 'YOSHINO') },
               { label: 'IGUACU', command: () => handleItemClick(null, 'IGUACU') },
               { label: 'SPMCV', command: () => handleItemClick(null, 'SPMCV') },
-              { label: 'KOA', command: () => handleItemClick(null, 'KOA') },
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }
