@@ -100,13 +100,11 @@ export default function SetUpdata_ZOVC() {
                         EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
                         EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
                         EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+
+
+
                         EVC_02_Vb_of_Last_Day:setEVC_02_Vb_of_Last_Day,
-
                         FC_01_Current_Values_Uncorrected_Flow_Rate:setFC_01_Current_Values_Uncorrected_Flow_Rate,
-
-
-
-
                         FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
                         FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
                         FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
@@ -2415,7 +2413,8 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         setInputValueFC_01_System_Voltage(FC_01_System_Voltage_High); 
         setInputValue2FC_01_System_Voltage(FC_01_System_Voltage_Low); 
 
-
+        setInputValueFC_01_Charger_Voltage(FC_01_Charger_Voltage_High); 
+        setInputValue2FC_01_Charger_Voltage(FC_01_Charger_Voltage_Low); 
 
         setInputValueFC_01_Conn_STT(FC_01_Conn_STT_High); 
         setInputValue2FC_01_Conn_STT(FC_01_Conn_STT_Low); 
@@ -2423,8 +2422,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         setInputValueFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_Volume_High); 
         setInputValue2FC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_Volume_Low); 
 
-        setInputValueFC_01_Charger_Voltage(FC_01_Charger_Voltage_High); 
-        setInputValue2FC_01_Charger_Voltage(FC_01_Charger_Voltage_Low); 
+      
         
 
         setInputValueFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_Pressure_High); 
@@ -2905,6 +2903,23 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
  
          },
 
+         { timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{timeUpdate}</span>,
+         name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}> Gross Volume Accumulated</span> ,
+
+         modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
+
+        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume}</span> , 
+         high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainFC_01_Accumulated_Values_Uncorrected_Volume}
+         checked={maintainFC_01_Accumulated_Values_Uncorrected_Volume}
+     ></Checkbox>
+
+        },
+
 
         { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{timeUpdate}</span>,
         name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>Temperature</span> ,
@@ -2924,11 +2939,6 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        },
 
 
-
-
-
-
-
          { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{timeUpdate}</span>,
          name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>Input Pressure</span> ,
 
@@ -2946,23 +2956,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
         },
 
-
-           { timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{timeUpdate}</span>,
-           name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}> Gross Volume Accumulated</span> ,
-  
-           modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
-  
-          value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume}</span> , 
-           high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-           Maintain:   <Checkbox
-           style={{ marginRight: 20, }}
-           onChange={ChangeMaintainFC_01_Accumulated_Values_Uncorrected_Volume}
-           checked={maintainFC_01_Accumulated_Values_Uncorrected_Volume}
-       ></Checkbox>
-  
-          },
+       
 
     
           { timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{timeUpdate}</span>,

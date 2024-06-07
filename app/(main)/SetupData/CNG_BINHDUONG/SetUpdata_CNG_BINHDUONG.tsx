@@ -5789,7 +5789,7 @@ checked={maintainSD_2002}
 
         
 
-        <h4>FC-01 -  Prameter & configuration  </h4>
+        <h4>EVC-01 -  Prameter & configuration  </h4>
     <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
   {/* <Column field="modbus" header="Modbus" /> */}
   <Column field="modbus" header="Modbus" />
