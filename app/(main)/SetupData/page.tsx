@@ -21,30 +21,41 @@ export default function GraphicSogec() {
   const [binhDuongLabel, setBinhDuongLabel] = useState<string>('BINH DUONG');
 
   const handleItemClick = (component: React.ReactNode, newLabel?: string) => {
-    setActiveComponent(component);
+    if (component === null && newLabel) {
+      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+    } else {
+      setActiveComponent(component);
+    }
     if (newLabel) {
       setPhuMy3Label(newLabel);
     }
     setBinhDuongLabel('BINH DUONG');
     setHaNoi('Ha Noi');
-
   };
 
   const handleItemClick2 = (component: React.ReactNode, newLabel?: string) => {
-    setActiveComponent(component);
+    if (component === null && newLabel) {
+      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+    } else {
+      setActiveComponent(component);
+    }
     if (newLabel) {
       setBinhDuongLabel(newLabel);
     }
     setPhuMy3Label('PHU MY 3');
   };
+
   const handleItemClick3 = (component: React.ReactNode, newLabel?: string) => {
-    setActiveComponent(component);
+    if (component === null && newLabel) {
+      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+    } else {
+      setActiveComponent(component);
+    }
     if (newLabel) {
       setHaNoi(newLabel);
     }
     setPhuMy3Label('PHU MY 3');
     setBinhDuongLabel('BINH DUONG');
-
   };
   const items = [
     {
