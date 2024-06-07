@@ -219,8 +219,8 @@ const FilterDataChartReport: React.FC<Props> = ({
                     </div>
                 )}
                 {editFilter &&
-                    editFilter.avg &&
-                    editFilter.avg.label !== "NONE" && (
+                    editFilter.agg &&
+                    editFilter.agg.label !== "NONE" && (
                         <div className="col-12 lg:col-2">
                             <span className="p-float-label">
                                 <AutoComplete
