@@ -1,0 +1,5218 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { id_SNG_HungYen } from '../../data-table-device/ID-DEVICE/IdDevice';
+import { Toast } from 'primereact/toast';
+import { readToken } from '@/service/localStorage';
+import { httpApi } from '@/api/http.api';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { InputText } from 'primereact/inputtext';
+import { Checkbox } from 'primereact/checkbox';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import "./LowHighOtsuka.css"
+
+interface StateMap {
+
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+
+}
+export default function SetUpdata_HUNGYEN_SNG() {
+
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const token = readToken();
+    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
+
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    const [data, setData] = useState<any[]>([]);
+
+    const toast = useRef<Toast>(null);
+
+    useEffect(() => {
+
+        ws.current = new WebSocket(url);
+        const obj1 = {
+            attrSubCmds: [],
+            tsSubCmds: [
+                {
+                    entityType: "DEVICE",
+                    entityId: id_SNG_HungYen,
+                    scope: "LATEST_TELEMETRY",
+                    cmdId: 1,
+                },
+            ],
+        };
+        if (ws.current) {
+            ws.current.onopen = () => {
+                console.log("WebSocket connected");
+                setTimeout(() => {
+                    ws.current?.send(JSON.stringify(obj1));
+                });
+            };
+            ws.current.onclose = () => {
+                console.log("WebSocket connection closed.");
+            };
+            return () => {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current?.close();
+            };
+        }
+    }, []);
+
+
+    useEffect(() => {
+        if (ws.current) {
+            ws.current.onmessage = (evt) => {
+                let dataReceived = JSON.parse(evt.data);
+                if (dataReceived.update !== null) {
+                    setData([...data, dataReceived]);
+
+                    const keys = Object.keys(dataReceived.data);
+                    const stateMap: StateMap = {
+                        PT_3005: setPT_3005,
+
+                        PT_3006: setPT_3006,
+                        TT_3003: setTT_3003,
+                        TT_3004: setTT_3004,
+                        TG_3005: setTG_3005,
+                        WB_3001: setWB_3001,
+                        GD_3002: setGD_3002,
+
+                        GD_3003: setGD_3003,
+                        GD_3004: setGD_3004,
+                        GD_3005: setGD_3005,
+                        GD_3006: setGD_3006,
+
+                        TM_3002_SNG: setTM_3002_SNG,
+                        TM_3003_SNG: setTM_3003_SNG,
+
+
+                        TOTAL_SNG: setTOTAL_SNG,
+
+                        SDV_3004: setSDV_3004,
+                        
+                        SDV_3003: setSDV_3003,
+                        GD1_STATUS: setGD1_STATUS,
+
+                        GD2_STATUS: setGD2_STATUS,
+                        GD3_STATUS: setGD3_STATUS,
+                        GD4_STATUS: setGD4_STATUS,
+                        GD5_STATUS:setGD5_STATUS,
+                        EVC_02_Vm_of_Last_Day:setEVC_02_Vm_of_Last_Day,
+
+
+                        ESD: setESD,
+                        HR_BC: setHR_BC,
+                        SD: setSD,
+
+                        VAPORIZER_1: setVAPORIZER_1,
+                        VAPORIZER_2: setVAPORIZER_2,
+                        VAPORIZER_3: setVAPORIZER_3,
+                        VAPORIZER_4: setVAPORIZER_4,
+                        COOLING_V: setCOOLING_V,
+
+                        FCV_3001: setFCV_3001,
+                        PERCENT_LPG: setPERCENT_LPG,
+
+                        PERCENT_AIR: setPERCENT_AIR,
+                        HV_3001: setHV_3001,
+                        RATIO_MODE: setRATIO_MODE,
+
+                        FCV_MODE: setFCV_MODE,
+                        TOTAL_CNG: setTOTAL_CNG,
+                        TM3002_CNG: setTM3002_CNG,
+                        TM3003_CNG: setTM3003_CNG,
+                        
+                        WB_Setpoint: setWB_Setpoint,
+
+
+
+
+                  
+                        ESD_3001: setESD_3001,
+                   
+
+
+                  
+                    };
+
+                    keys.forEach((key) => {
+                        if (stateMap[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            const slicedValue = value;
+                            stateMap[key]?.(slicedValue);
+                        }
+                    });
+                }
+                fetchData()
+            };
+        }
+    }, [data]);
+
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/values/attributes/SERVER_SCOPE`
+            );
+
+
+         
+
+            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
+            setHR_BC_High(HR_BC_High?.value || null);
+            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
+            setHR_BC_Low(HR_BC_Low?.value || null);
+            const HR_BC_Maintain = res.data.find(
+                (item: any) => item.key === "HR_BC_Maintain"
+            );
+
+            const SD_High = res.data.find((item: any) => item.key === "SD_High");
+            setSD_High(SD_High?.value || null);
+            const SD_Low = res.data.find((item: any) => item.key === "SD_Low");
+            setSD_Low(SD_Low?.value || null);
+            const SD_Maintain = res.data.find(
+                (item: any) => item.key === "SD_Maintain"
+            );
+
+
+            const ESD_3001_High = res.data.find((item: any) => item.key === "ESD_3001_High");
+            setESD_3001_High(ESD_3001_High?.value || null);
+            const ESD_3001_Low = res.data.find((item: any) => item.key === "ESD_3001_Low");
+            setESD_3001_Low(ESD_3001_Low?.value || null);
+            const ESD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_3001_Maintain"
+            );
+
+     
+
+
+    
+            const PT_3005_High = res.data.find((item: any) => item.key === "PT_3005_High");
+            setPT_3005_High(PT_3005_High?.value || null);
+            const PT_3005_Low = res.data.find((item: any) => item.key === "PT_3005_Low");
+            setPT_3005_Low(PT_3005_Low?.value || null);
+            const MaintainPT_3005 = res.data.find(
+                (item: any) => item.key === "PT_3005_Maintain"
+            );
+
+            const PT_3006_High = res.data.find((item: any) => item.key === "PT_3006_High");
+            setPT_3006_High(PT_3006_High?.value || null);
+            const PT_3006_Low = res.data.find((item: any) => item.key === "PT_3006_Low");
+            setPT_3006_Low(PT_3006_Low?.value || null);
+            const PT_3006_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3006_Maintain"
+            );
+
+            const TT_3003_High = res.data.find((item: any) => item.key === "TT_3003_High");
+            setTT_3003_High(TT_3003_High?.value || null);
+            const TT_3003_Low = res.data.find((item: any) => item.key === "TT_3003_Low");
+            setTT_3003_Low(TT_3003_Low?.value || null);
+            const TT_3003_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3003_Maintain"
+            );
+
+
+            const TT_3004_High = res.data.find((item: any) => item.key === "TT_3004_High");
+            setTT_3004_High(TT_3004_High?.value || null);
+            const TT_3004_Low = res.data.find((item: any) => item.key === "TT_3004_Low");
+            setTT_3004_Low(TT_3004_Low?.value || null);
+            const TT_3004_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3004_Maintain"
+            );
+
+            const TG_3005_High = res.data.find((item: any) => item.key === "TG_3005_High");
+            setTG_3005_High(TG_3005_High?.value || null);
+            const TG_3005_Low = res.data.find((item: any) => item.key === "TG_3005_Low");
+            setTG_3005_Low(TG_3005_Low?.value || null);
+            const TG_3005_Maintain = res.data.find(
+                (item: any) => item.key === "TG_3005_Maintain"
+            );
+
+            const WB_3001_High = res.data.find((item: any) => item.key === "WB_3001_High");
+            setWB_3001_High(WB_3001_High?.value || null);
+            const WB_3001_Low = res.data.find((item: any) => item.key === "WB_3001_Low");
+            setWB_3001_Low(WB_3001_Low?.value || null);
+            const WB_3001_Maintain = res.data.find(
+                (item: any) => item.key === "WB_3001_Maintain"
+            );
+
+            const GD_3002_High = res.data.find((item: any) => item.key === "GD_3002_High");
+            setGD_3002_High(GD_3002_High?.value || null);
+            const GD_3002_Low = res.data.find((item: any) => item.key === "GD_3002_Low");
+            setGD_3002_Low(GD_3002_Low?.value || null);
+            const GD_3002_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3002_Maintain"
+            );
+
+            const GD_3003_High = res.data.find((item: any) => item.key === "GD_3003_High");
+            setGD_3003_High(GD_3003_High?.value || null);
+            const GD_3003_Low = res.data.find((item: any) => item.key === "GD_3003_Low");
+            setGD_3003_Low(GD_3003_Low?.value || null);
+            const GD_3003_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3003_Maintain"
+            );
+
+
+            const GD_3004_High = res.data.find((item: any) => item.key === "GD_3004_High");
+            setGD_3004_High(GD_3004_High?.value || null);
+            const GD_3004_Low = res.data.find((item: any) => item.key === "GD_3004_Low");
+            setGD_3004_Low(GD_3004_Low?.value || null);
+            const GD_3004_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3004_Maintain"
+            );
+
+            const GD_3005_High = res.data.find((item: any) => item.key === "GD_3005_High");
+            setGD_3005_High(GD_3005_High?.value || null);
+            const GD_3005_Low = res.data.find((item: any) => item.key === "GD_3005_Low");
+            setGD_3005_Low(GD_3005_Low?.value || null);
+            const GD_3005_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3005_Maintain"
+            );
+
+            const EVC_02_Vm_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_High");
+            setEVC_02_Vm_of_Last_Day_High(EVC_02_Vm_of_Last_Day_High?.value || null);
+            const EVC_02_Vm_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_Low");
+            setEVC_02_Vm_of_Last_Day_Low(EVC_02_Vm_of_Last_Day_Low?.value || null);
+            const EVC_02_Vm_of_Last_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
+            );
+
+         
+
+       
+
+          
+
+     
+
+            const GD_3006_High = res.data.find((item: any) => item.key === "GD_3006_High");
+            setGD_3006_High(GD_3006_High?.value || null);
+            const GD_3006_Low = res.data.find((item: any) => item.key === "GD_3006_Low");
+            setGD_3006_Low(GD_3006_Low?.value || null);
+            const GD_3006_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3006_Maintain"
+            );
+
+            const TM_3002_SNG_High = res.data.find((item: any) => item.key === "TM_3002_SNG_High");
+            setTM_3002_SNG_High(TM_3002_SNG_High?.value || null);
+            const TM_3002_SNG_Low = res.data.find((item: any) => item.key === "TM_3002_SNG_Low");
+            setTM_3002_SNG_Low(TM_3002_SNG_Low?.value || null);
+            const TM_3002_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_3002_SNG_Maintain"
+            );
+
+            const TM_3003_SNG_High = res.data.find((item: any) => item.key === "TM_3003_SNG_High");
+            setTM_3003_SNG_High(TM_3003_SNG_High?.value || null);
+            const TM_3003_SNG_Low = res.data.find((item: any) => item.key === "TM_3003_SNG_Low");
+            setTM_3003_SNG_Low(TM_3003_SNG_Low?.value || null);
+            const TM_3003_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_3003_SNG_Maintain"
+            );
+
+            const TOTAL_SNG_High = res.data.find((item: any) => item.key === "TOTAL_SNG_High");
+            setTOTAL_SNG_High(TOTAL_SNG_High?.value || null);
+            const TOTAL_SNG_Low = res.data.find((item: any) => item.key === "TOTAL_SNG_Low");
+            setTOTAL_SNG_Low(TOTAL_SNG_Low?.value || null);
+            const TOTAL_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TOTAL_SNG_Maintain"
+            );
+
+            const SDV_3003_High = res.data.find((item: any) => item.key === "SDV_3003_High");
+            setSDV_3003_High(SDV_3003_High?.value || null);
+            const SDV_3003_Low = res.data.find((item: any) => item.key === "SDV_3003_Low");
+            setSDV_3003_Low(SDV_3003_Low?.value || null);
+            const SDV_3003_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3003_Maintain"
+            );
+
+
+            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
+            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
+            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
+            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
+            const GD1_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD1_STATUS_Maintain"
+            );
+
+            const GD2_STATUS_High = res.data.find((item: any) => item.key === "GD2_STATUS_High");
+            setGD2_STATUS_High(GD2_STATUS_High?.value || null);
+            const GD2_STATUS_Low = res.data.find((item: any) => item.key === "GD2_STATUS_Low");
+            setGD2_STATUS_Low(GD2_STATUS_Low?.value || null);
+            const GD2_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD2_STATUS_Maintain"
+            );
+
+            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
+            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
+            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
+            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
+            const GD3_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD3_STATUS_Maintain"
+            );
+
+
+            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
+            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
+            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
+            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
+            const GD4_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD4_STATUS_Maintain"
+            );
+
+            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
+            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
+            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
+            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
+            const GD5_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD5_STATUS_Maintain"
+            );
+
+
+            const SDV_3004_High = res.data.find((item: any) => item.key === "SDV_3004_High");
+            setSDV_3004_High(SDV_3004_High?.value || null);
+            const SDV_3004_Low = res.data.find((item: any) => item.key === "SDV_3004_Low");
+            setSDV_3004_Low(SDV_3004_Low?.value || null);
+            const SDV_3004_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3004_Maintain"
+            );
+            const ESD_High = res.data.find((item: any) => item.key === "ESD_High");
+            setESD_High(ESD_High?.value || null);
+            const ESD_Low = res.data.find((item: any) => item.key === "VAPORIZER_1_Low");
+            setESD_Low(ESD_Low?.value || null);
+            const MaintainESD = res.data.find(
+                (item: any) => item.key === "ESD_Maintain"
+            );
+
+
+            const VAPORIZER_1_High = res.data.find((item: any) => item.key === "VAPORIZER_1_High");
+            setVAPORIZER_1_High(VAPORIZER_1_High?.value || null);
+            const VAPORIZER_1_Low = res.data.find((item: any) => item.key === "VAPORIZER_1_Low");
+            setVAPORIZER_1_Low(VAPORIZER_1_Low?.value || null);
+            const VAPORIZER_1_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_1_Maintain"
+            );
+
+            const VAPORIZER_2_High = res.data.find((item: any) => item.key === "VAPORIZER_2_High");
+            setVAPORIZER_2_High(VAPORIZER_2_High?.value || null);
+            const VAPORIZER_2_Low = res.data.find((item: any) => item.key === "VAPORIZER_2_Low");
+            setVAPORIZER_2_Low(VAPORIZER_2_Low?.value || null);
+            const VAPORIZER_2_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_2_Maintain"
+            );
+
+
+            const VAPORIZER_3_High = res.data.find((item: any) => item.key === "VAPORIZER_3_High");
+            setVAPORIZER_3_High(VAPORIZER_3_High?.value || null);
+            const VAPORIZER_3_Low = res.data.find((item: any) => item.key === "VAPORIZER_3_Low");
+            setVAPORIZER_3_Low(VAPORIZER_3_Low?.value || null);
+            const VAPORIZER_3_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_3_Maintain"
+            );
+
+            const VAPORIZER_4_High = res.data.find((item: any) => item.key === "VAPORIZER_4_High");
+            setVAPORIZER_4_High(VAPORIZER_4_High?.value || null);
+            const VAPORIZER_4_Low = res.data.find((item: any) => item.key === "VAPORIZER_4_Low");
+            setVAPORIZER_4_Low(VAPORIZER_4_Low?.value || null);
+            const VAPORIZER_4_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_4_Maintain"
+            );
+
+            const COOLING_V_High = res.data.find((item: any) => item.key === "COOLING_V_High");
+            setCOOLING_V_High(COOLING_V_High?.value || null);
+            const COOLING_V_Low = res.data.find((item: any) => item.key === "COOLING_V_Low");
+            setCOOLING_V_Low(COOLING_V_Low?.value || null);
+            const COOLING_V_Maintain = res.data.find(
+                (item: any) => item.key === "COOLING_V_Maintain"
+            );
+
+
+            const FCV_3001_High = res.data.find((item: any) => item.key === "FCV_3001_High");
+            setFCV_3001_High(FCV_3001_High?.value || null);
+            const FCV_3001_Low = res.data.find((item: any) => item.key === "FCV_3001_Low");
+            setFCV_3001_Low(FCV_3001_Low?.value || null);
+            const FCV_3001_Maintain = res.data.find(
+                (item: any) => item.key === "FCV_3001_Maintain"
+            );
+
+
+            const PERCENT_LPG_High = res.data.find((item: any) => item.key === "PERCENT_LPG_High");
+            setPERCENT_LPG_High(PERCENT_LPG_High?.value || null);
+            const PERCENT_LPG_Low = res.data.find((item: any) => item.key === "PERCENT_LPG_Low");
+            setPERCENT_LPG_Low(PERCENT_LPG_Low?.value || null);
+            const PERCENT_LPG_Maintain = res.data.find(
+                (item: any) => item.key === "PERCENT_LPG_Maintain"
+            );
+
+            const PERCENT_AIR_High = res.data.find((item: any) => item.key === "PERCENT_AIR_High");
+            setPERCENT_AIR_High(PERCENT_AIR_High?.value || null);
+            const PERCENT_AIR_Low = res.data.find((item: any) => item.key === "PERCENT_AIR_Low");
+            setPERCENT_AIR_Low(PERCENT_AIR_Low?.value || null);
+            const PERCENT_AIR_Maintain = res.data.find(
+                (item: any) => item.key === "PERCENT_AIR_Maintain"
+            );
+
+            const HV_3001_High = res.data.find((item: any) => item.key === "HV_3001_High");
+            setHV_3001_High(HV_3001_High?.value || null);
+            const HV_3001_Low = res.data.find((item: any) => item.key === "HV_3001_Low");
+            setHV_3001_Low(HV_3001_Low?.value || null);
+            const HV_3001_Maintain = res.data.find(
+                (item: any) => item.key === "HV_3001_Maintain"
+            );
+
+            const FCV_MODE_High = res.data.find((item: any) => item.key === "FCV_MODE_High");
+            setFCV_MODE_High(FCV_MODE_High?.value || null);
+            const FCV_MODE_Low = res.data.find((item: any) => item.key === "FCV_MODE_Low");
+            setFCV_MODE_Low(FCV_MODE_Low?.value || null);
+            const FCV_MODE_Maintain = res.data.find(
+                (item: any) => item.key === "FCV_MODE_Maintain"
+            );
+
+            const TOTAL_CNG_High = res.data.find((item: any) => item.key === "TOTAL_CNG_High");
+            setTOTAL_CNG_High(TOTAL_CNG_High?.value || null);
+            const TOTAL_CNG_Low = res.data.find((item: any) => item.key === "TOTAL_CNG_Low");
+            setTOTAL_CNG_Low(TOTAL_CNG_Low?.value || null);
+            const TOTAL_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TOTAL_CNG_Maintain"
+            );
+
+            const TM3002_CNG_High = res.data.find((item: any) => item.key === "TM3002_CNG_High");
+            setTM3002_CNG_High(TM3002_CNG_High?.value || null);
+            const TM3002_CNG_Low = res.data.find((item: any) => item.key === "TM3002_CNG_Low");
+            setTM3002_CNG_Low(TM3002_CNG_Low?.value || null);
+            const TM3002_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM3002_CNG_Maintain"
+            );
+
+            const TM3003_CNG_High = res.data.find((item: any) => item.key === "TM3003_CNG_High");
+            setTM3003_CNG_High(TM3003_CNG_High?.value || null);
+            const TM3003_CNG_Low = res.data.find((item: any) => item.key === "TM3003_CNG_Low");
+            setTM3003_CNG_Low(TM3003_CNG_Low?.value || null);
+            const TM3003_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM3003_CNG_Maintain"
+            );
+
+            const WB_Setpoint_High = res.data.find((item: any) => item.key === "WB_Setpoint_High");
+            setWB_Setpoint_High(WB_Setpoint_High?.value || null);
+            const WB_Setpoint_Low = res.data.find((item: any) => item.key === "WB_Setpoint_Low");
+            setWB_Setpoint_Low(WB_Setpoint_Low?.value || null);
+            const WB_Setpoint_Maintain = res.data.find(
+                (item: any) => item.key === "WB_Setpoint_Maintain"
+            );
+
+         
+
+            const RATIO_MODE_High = res.data.find((item: any) => item.key === "RATIO_MODE_High");
+            setRATIO_MODE_High(RATIO_MODE_High?.value || null);
+            const RATIO_MODE_Low = res.data.find((item: any) => item.key === "RATIO_MODE_Low");
+            setRATIO_MODE_Low(RATIO_MODE_Low?.value || null);
+            const RATIO_MODE_Maintain = res.data.find(
+                (item: any) => item.key === "RATIO_MODE_Maintain"
+            );
+
+      
+
+         
+ // =================================================================================================================== 
+
+
+
+            setMaintainHR_BC(HR_BC_Maintain?.value || false);
+
+            setMaintainSD(SD_Maintain?.value || false);
+
+            setMaintainESD_3001(ESD_3001_Maintain?.value || false);
+
+
+      
+
+
+            setMaintainSDV_3004(SDV_3004_Maintain?.value || false);
+
+            setMaintainGD5_STATUS(GD5_STATUS_Maintain?.value || false);
+
+            setMaintainGD4_STATUS(GD4_STATUS_Maintain?.value || false);
+
+
+            setMaintainGD3_STATUS(GD3_STATUS_Maintain?.value || false);
+
+
+            setMaintainGD2_STATUS(GD2_STATUS_Maintain?.value || false);
+
+
+            setMaintainGD1_STATUS(GD1_STATUS_Maintain?.value || false);
+
+
+            setMaintainSDV_3003(SDV_3003_Maintain?.value || false);
+
+            
+            setMaintainTOTAL_SNG(TOTAL_SNG_Maintain?.value || false);
+            
+            setMaintainTM_3003_SNG(TM_3003_SNG_Maintain?.value || false);
+
+            
+            setMaintainTM_3002_SNG(TM_3002_SNG_Maintain?.value || false);
+
+            setMaintainGD_3006(GD_3006_Maintain?.value || false);
+
+
+
+
+
+
+         
+
+            setMaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
+
+
+            setMaintainGD_3005(GD_3005_Maintain?.value || false);
+
+            setMaintainGD_3004(GD_3004_Maintain?.value || false);
+
+
+            setMaintainGD_3003(GD_3003_Maintain?.value || false);
+
+
+            setMaintainGD_3002(GD_3002_Maintain?.value || false);
+
+            setMaintainWB_3001(WB_3001_Maintain?.value || false);
+
+
+            setMaintainTG_3005(TG_3005_Maintain?.value || false);
+
+            setMaintainTT_3004(TT_3004_Maintain?.value || false);
+
+            setMaintainTT_3003(TT_3003_Maintain?.value || false);
+
+            setMaintainPT_3006(PT_3006_Maintain?.value || false);
+
+            setMaintainPT_3005(MaintainPT_3005?.value || false);
+
+
+            setMaintainESD(MaintainESD?.value || false);
+
+
+            setMaintainVAPORIZER_1(VAPORIZER_1_Maintain?.value || false);
+
+            setMaintainVAPORIZER_2(VAPORIZER_2_Maintain?.value || false);
+
+
+            setMaintainVAPORIZER_3(VAPORIZER_3_Maintain?.value || false);
+
+
+            setMaintainVAPORIZER_4(VAPORIZER_4_Maintain?.value || false);
+
+
+            setMaintainCOOLING_V(COOLING_V_Maintain?.value || false);
+
+
+
+            
+            
+            setMaintainRATIO_MODE(RATIO_MODE_Maintain?.value || false);
+
+  
+
+            setMaintainWB_Setpoint(WB_Setpoint_Maintain?.value || false);
+
+
+            setMaintainTM3003_CNG(TM3003_CNG_Maintain?.value || false);
+
+            setMaintainTM3002_CNG(TM3002_CNG_Maintain?.value || false);
+
+            setMaintainTOTAL_CNG(TOTAL_CNG_Maintain?.value || false);
+
+
+            setMaintainFCV_MODE(FCV_MODE_Maintain?.value || false);
+
+            setMaintainHV_3001(HV_3001_Maintain?.value || false);
+
+
+            setMaintainPERCENT_AIR(PERCENT_AIR_Maintain?.value || false);
+
+            setMaintainPERCENT_LPG(PERCENT_LPG_Maintain?.value || false);
+
+
+            setMaintainFCV_3001(FCV_3001_Maintain?.value || false);
+
+
+
+
+            } catch (error) {
+            console.error("Error fetching data:", error);
+            }
+        };
+
+ // =================================================================================================================== 
+
+    const [PT_3005, setPT_3005] = useState<string | null>(null);
+const [audioPlayingPT_3005, setAudioPlayingPT_3005] = useState(false);
+const [inputValuePT_3005, setInputValuePT_3005] = useState<any>();
+const [inputValue2PT_3005, setInputValue2PT_3005] = useState<any>();
+const [PT_3005_High, setPT_3005_High] = useState<number | null>(null);
+const [PT_3005_Low, setPT_3005_Low] = useState<number | null>(null);
+const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainPT_3005, setMaintainPT_3005] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (typeof PT_3005_High === 'string' && typeof PT_3005_Low === 'string' && PT_3005 !== null && maintainPT_3005 === false
+        ) {
+            const highValue = parseFloat(PT_3005_High);
+            const lowValue = parseFloat(PT_3005_Low);
+            const PT_3005Value = parseFloat(PT_3005);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_3005Value)) {
+                if (highValue <= PT_3005Value || PT_3005Value <= lowValue) {
+                    if (!audioPlayingPT_3005) {
+                        audioRef.current?.play();
+                        setAudioPlayingPT_3005(true);
+                        setExceedThresholdPT_3005(true);
+                    }
+                } else {
+                    setAudioPlayingPT_3005(false);
+                    setExceedThresholdPT_3005(false);
+                }
+            } 
+        } 
+    }, [PT_3005_High, PT_3005, audioPlayingPT_3005, PT_3005_Low,maintainPT_3005]);
+
+    useEffect(() => {
+        if (audioPlayingPT_3005) {
+            const audioEnded = () => {
+                setAudioPlayingPT_3005(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [audioPlayingPT_3005]);
+
+    const handleInputChangePT_3005 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValuePT_3005(newValue);
+    };
+
+    const handleInputChange2PT_3005 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputValue2PT_3005(newValue2);
+    };
+    const ChangeMaintainPT_3005 = async () => {
+        try {
+            const newValue = !maintainPT_3005;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { PT_3005_Maintain: newValue }
+            );
+            setMaintainPT_3005(newValue);
+            
+        } catch (error) {}
+    };
+
+
+     // =================================================================================================================== 
+
+     const [PT_3006, setPT_3006] = useState<string | null>(null);
+     const [audioPlayingPT_3006, setAudioPlayingPT_3006] = useState(false);
+     const [inputValuePT_3006, setInputValuePT_3006] = useState<any>();
+     const [inputValue2PT_3006, setInputValue2PT_3006] = useState<any>();
+     const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
+     const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
+     const [exceedThresholdTemperature, setExceedThresholdTemperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof PT_3006_High === 'string' && typeof PT_3006_Low === 'string' && PT_3006 !== null && maintainPT_3006 === false
+             ) {
+                 const highValue = parseFloat(PT_3006_High);
+                 const lowValue = parseFloat(PT_3006_Low);
+                 const PT_3006Value = parseFloat(PT_3006);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_3006Value)) {
+                     if (highValue <= PT_3006Value || PT_3006Value <= lowValue) {
+                         if (!audioPlayingPT_3006) {
+                             audioRef.current?.play();
+                             setAudioPlayingPT_3006(true);
+                             setExceedThresholdTemperature(true);
+                         }
+                     } else {
+                        setAudioPlayingPT_3006(false);
+                         setExceedThresholdTemperature(false);
+                     }
+                 } 
+             } 
+         }, [PT_3006_High, PT_3006, audioPlayingPT_3006, PT_3006_Low,maintainPT_3006]);
+     
+         useEffect(() => {
+             if (audioPlayingPT_3006) {
+                 const audioEnded = () => {
+                    setAudioPlayingPT_3006(false);
+                 };
+                 audioRef.current?.addEventListener('ended', audioEnded);
+                 return () => {
+                     audioRef.current?.removeEventListener('ended', audioEnded);
+                 };
+             }
+         }, [audioPlayingPT_3006]);
+     
+         const handleInputChangePT_3006 = (event: any) => {
+             const newValue = event.target.value;
+             setInputValuePT_3006(newValue);
+         };
+     
+         const handleInputChange2PT_3006 = (event: any) => {
+             const newValue2 = event.target.value;
+             setInputValue2PT_3006(newValue2);
+         };
+         const ChangeMaintainPT_3006 = async () => {
+             try {
+                 const newValue = !maintainPT_3006;
+                 await httpApi.post(
+                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                     { PT_3006_Maintain: newValue }
+                 );
+                 setMaintainPT_3006(newValue);
+                 
+             } catch (error) {}
+         };
+
+
+     // =================================================================================================================== 
+
+
+     const [TT_3003, setTT_3003] = useState<string | null>(null);
+     const [audioPlayingTT_3003, setAudioPlayingTT_3003] = useState(false);
+     const [inputValueTT_3003, setInputValueTT_3003] = useState<any>();
+     const [inputValue2TT_3003, setInputValue2TT_3003] = useState<any>();
+     const [TT_3003_High, setTT_3003_High] = useState<number | null>(null);
+     const [TT_3003_Low, setTT_3003_Low] = useState<number | null>(null);
+     const [exceedThresholdTT_3003, setExceedThresholdTT_3003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainTT_3003, setMaintainTT_3003] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof TT_3003_High === 'string' && typeof TT_3003_Low === 'string' && TT_3003 !== null && maintainTT_3003 === false
+             ) {
+                 const highValue = parseFloat(TT_3003_High);
+                 const lowValue = parseFloat(TT_3003_Low);
+                 const TT_3003Value = parseFloat(TT_3003);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_3003Value)) {
+                     if (highValue <= TT_3003Value || TT_3003Value <= lowValue) {
+                         if (!audioPlayingTT_3003) {
+                             audioRef.current?.play();
+                             setAudioPlayingTT_3003(true);
+                             setExceedThresholdTT_3003(true);
+                         }
+                     } else {
+                        setAudioPlayingTT_3003(false);
+                        setExceedThresholdTT_3003(false);
+                     }
+                 } 
+             } 
+         }, [TT_3003_High, TT_3003, audioPlayingTT_3003, TT_3003_Low,maintainTT_3003]);
+     
+         useEffect(() => {
+             if (audioPlayingTT_3003) {
+                 const audioEnded = () => {
+                    setAudioPlayingTT_3003(false);
+                 };
+                 audioRef.current?.addEventListener('ended', audioEnded);
+                 return () => {
+                     audioRef.current?.removeEventListener('ended', audioEnded);
+                 };
+             }
+         }, [audioPlayingTT_3003]);
+     
+         const handleInputChangeTT_3003 = (event: any) => {
+             const newValue = event.target.value;
+             setInputValueTT_3003(newValue);
+         };
+     
+         const handleInputChange2TT_3003 = (event: any) => {
+             const newValue2 = event.target.value;
+             setInputValue2TT_3003(newValue2);
+         };
+         const ChangeMaintainTT_3003 = async () => {
+             try {
+                 const newValue = !maintainTT_3003;
+                 await httpApi.post(
+                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                     { TT_3003_Maintain: newValue }
+                 );
+                 setMaintainTT_3003(newValue);
+                 
+             } catch (error) {}
+         };
+
+
+     // =================================================================================================================== 
+
+
+
+          const [TT_3004, setTT_3004] = useState<string | null>(null);
+          const [audioPlayingTT_3004, setAudioPlayingTT_3004] = useState(false);
+          const [inputValueTT_3004, setInputValueTT_3004] = useState<any>();
+          const [inputValue2TT_3004, setInputValue2TT_3004] = useState<any>();
+          const [TT_3004_High, setTT_3004_High] = useState<number | null>(null);
+          const [TT_3004_Low, setTT_3004_Low] = useState<number | null>(null);
+          const [exceedThresholdTT_3004, setExceedThresholdTT_3004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainTT_3004, setMaintainTT_3004] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof TT_3004_High === 'string' && typeof TT_3004_Low === 'string' && TT_3004 !== null && maintainTT_3004 === false
+                  ) {
+                      const highValue = parseFloat(TT_3004_High);
+                      const lowValue = parseFloat(TT_3004_Low);
+                      const TT_3004Value = parseFloat(TT_3004);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_3004Value)) {
+                          if (highValue <= TT_3004Value || TT_3004Value <= lowValue) {
+                              if (!audioPlayingTT_3004) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingTT_3004(true);
+                                  setExceedThresholdTT_3004(true);
+                              }
+                          } else {
+                             setAudioPlayingTT_3004(false);
+                             setExceedThresholdTT_3004(false);
+                          }
+                      } 
+                  } 
+              }, [TT_3004_High, TT_3004, audioPlayingTT_3004, TT_3004_Low,maintainTT_3004]);
+          
+              useEffect(() => {
+                  if (audioPlayingTT_3004) {
+                      const audioEnded = () => {
+                         setAudioPlayingTT_3004(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingTT_3004]);
+          
+              const handleInputChangeTT_3004 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueTT_3004(newValue);
+              };
+          
+              const handleInputChange2TT_3004 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2TT_3004(newValue2);
+              };
+              const ChangeMaintainTT_3004 = async () => {
+                  try {
+                      const newValue = !maintainTT_3004;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { TT_3004_Maintain: newValue }
+                      );
+                      setMaintainTT_3004(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+
+          const [TG_3005, setTG_3005] = useState<string | null>(null);
+          const [audioPlayingTG_3005, setAudioPlayingTG_3005] = useState(false);
+          const [inputValueTG_3005, setInputValueTG_3005] = useState<any>();
+          const [inputValue2TG_3005, setInputValue2TG_3005] = useState<any>();
+          const [TG_3005_High, setTG_3005_High] = useState<number | null>(null);
+          const [TG_3005_Low, setTG_3005_Low] = useState<number | null>(null);
+          const [exceedThresholdTG_3005, setExceedThresholdTG_3005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainTG_3005, setMaintainTG_3005] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof TG_3005_High === 'string' && typeof TG_3005_Low === 'string' && TG_3005 !== null && maintainTG_3005 === false
+                  ) {
+                      const highValue = parseFloat(TG_3005_High);
+                      const lowValue = parseFloat(TG_3005_Low);
+                      const TG_3005Value = parseFloat(TG_3005);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TG_3005Value)) {
+                          if (highValue <= TG_3005Value || TG_3005Value <= lowValue) {
+                              if (!audioPlayingTG_3005) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingTG_3005(true);
+                                  setExceedThresholdTG_3005(true);
+                              }
+                          } else {
+                             setAudioPlayingTG_3005(false);
+                             setExceedThresholdTG_3005(false);
+                          }
+                      } 
+                  } 
+              }, [TG_3005_High, TG_3005, audioPlayingTG_3005 , TG_3005_Low,maintainTG_3005]);
+          
+              useEffect(() => {
+                  if (audioPlayingTG_3005) {
+                      const audioEnded = () => {
+                         setAudioPlayingTG_3005(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingTG_3005]);
+          
+              const handleInputChangeTG_3005 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueTG_3005(newValue);
+              };
+          
+              const handleInputChange2TG_3005 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2TG_3005(newValue2);
+              };
+              const ChangeMaintainTG_3005 = async () => {
+                  try {
+                      const newValue = !maintainTG_3005;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { TG_3005_Maintain: newValue }
+                      );
+                      setMaintainTG_3005(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+          const [WB_3001, setWB_3001] = useState<string | null>(null);
+          const [audioPlayingWB_3001, setAudioPlayingWB_3001] = useState(false);
+          const [inputValueWB_3001, setInputValueWB_3001] = useState<any>();
+          const [inputValue2WB_3001, setInputValue2WB_3001] = useState<any>();
+          const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
+          const [WB_3001_Low, setWB_3001_Low] = useState<number | null>(null);
+          const [exceedThresholdWB_3001, setExceedThresholdWB_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainWB_3001, setMaintainWB_3001] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof WB_3001_High === 'string' && typeof WB_3001_Low === 'string' && WB_3001 !== null && maintainWB_3001 === false
+                  ) {
+                      const highValue = parseFloat(WB_3001_High);
+                      const lowValue = parseFloat(WB_3001_Low);
+                      const WB_3001Value = parseFloat(WB_3001);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WB_3001Value)) {
+                          if (highValue <= WB_3001Value || WB_3001Value <= lowValue) {
+                              if (!audioPlayingWB_3001) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingWB_3001(true);
+                                  setExceedThresholdWB_3001(true);
+                              }
+                          } else {
+                             setAudioPlayingWB_3001(false);
+                             setExceedThresholdWB_3001(false);
+                          }
+                      } 
+                  } 
+              }, [WB_3001_High, WB_3001, audioPlayingWB_3001, WB_3001_Low,maintainWB_3001]);
+          
+              useEffect(() => {
+                  if (audioPlayingWB_3001) {
+                      const audioEnded = () => {
+                         setAudioPlayingWB_3001(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingWB_3001]);
+          
+              const handleInputChangeWB_3001 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueWB_3001(newValue);
+              };
+          
+              const handleInputChange2WB_3001 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2WB_3001(newValue2);
+              };
+              const ChangeMaintainWB_3001 = async () => {
+                  try {
+                      const newValue = !maintainWB_3001;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { WB_3001_Maintain: newValue }
+                      );
+                      setMaintainWB_3001(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+
+          const [GD_3004, setGD_3004] = useState<string | null>(null);
+          const [audioPlayingGD_3004, setAudioPlayingGD_3004] = useState(false);
+          const [inputValueGD_3004, setInputValueGD_3004] = useState<any>();
+          const [inputValue2GD_3004, setInputValue2GD_3004] = useState<any>();
+          const [GD_3004_High, setGD_3004_High] = useState<number | null>(null);
+          const [GD_3004_Low, setGD_3004_Low] = useState<number | null>(null);
+          const [exceedThresholdGD_3004, setExceedThresholdGD_3004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainGD_3004, setMaintainGD_3004] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof GD_3004_High === 'string' && typeof GD_3004_Low === 'string' && GD_3004 !== null && maintainGD_3004 === false
+                  ) {
+                      const highValue = parseFloat(GD_3004_High);
+                      const lowValue = parseFloat(GD_3004_Low);
+                      const GD_3004Value = parseFloat(GD_3004);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3004Value)) {
+                          if (highValue <= GD_3004Value || GD_3004Value <= lowValue) {
+                              if (!audioPlayingGD_3004) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingGD_3004(true);
+                                  setExceedThresholdGD_3004(true);
+                              }
+                          } else {
+                             setAudioPlayingGD_3004(false);
+                             setExceedThresholdGD_3004(false);
+                          }
+                      } 
+                  } 
+              }, [GD_3004_High, GD_3004, audioPlayingGD_3004, GD_3004_Low,maintainGD_3004]);
+          
+              useEffect(() => {
+                  if (audioPlayingGD_3004) {
+                      const audioEnded = () => {
+                         setAudioPlayingGD_3004(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingGD_3004]);
+          
+              const handleInputChangeGD_3004 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueGD_3004(newValue);
+              };
+          
+              const handleInputChange2GD_3004 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2GD_3004(newValue2);
+              };
+              const ChangeMaintainGD_3004 = async () => {
+                  try {
+                      const newValue = !maintainGD_3004;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { GD_3004_Maintain: newValue }
+                      );
+                      setMaintainGD_3004(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+          const [GD_3003, setGD_3003] = useState<string | null>(null);
+          const [audioPlayingGD_3003, setAudioPlayingGD_3003] = useState(false);
+          const [inputValueGD_3003, setInputValueGD_3003] = useState<any>();
+          const [inputValue2GD_3003, setInputValue2GD_3003] = useState<any>();
+          const [GD_3003_High, setGD_3003_High] = useState<number | null>(null);
+          const [GD_3003_Low, setGD_3003_Low] = useState<number | null>(null);
+          const [exceedThresholdGD_3003, setExceedThresholdGD_3003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainGD_3003, setMaintainGD_3003] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof GD_3003_High === 'string' && typeof GD_3003_Low === 'string' && GD_3003 !== null && maintainGD_3003 === false
+                  ) {
+                      const highValue = parseFloat(GD_3003_High);
+                      const lowValue = parseFloat(GD_3003_Low);
+                      const GD_3003Value = parseFloat(GD_3003);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3003Value)) {
+                          if (highValue <= GD_3003Value || GD_3003Value <= lowValue) {
+                              if (!audioPlayingGD_3003) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingGD_3003(true);
+                                  setExceedThresholdGD_3003(true);
+                              }
+                          } else {
+                             setAudioPlayingGD_3003(false);
+                             setExceedThresholdGD_3003(false);
+                          }
+                      } 
+                  } 
+              }, [GD_3003_High, GD_3003, audioPlayingGD_3003, GD_3003_Low,maintainGD_3003]);
+          
+              useEffect(() => {
+                  if (audioPlayingGD_3003) {
+                      const audioEnded = () => {
+                         setAudioPlayingGD_3003(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingGD_3003]);
+          
+              const handleInputChangeGD_3003 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueGD_3003(newValue);
+              };
+          
+              const handleInputChange2GD_3003 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2GD_3003(newValue2);
+              };
+              const ChangeMaintainGD_3003 = async () => {
+                  try {
+                      const newValue = !maintainGD_3003;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { GD_3003_Maintain: newValue }
+                      );
+                      setMaintainGD_3003(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+          const [GD_3002, setGD_3002] = useState<string | null>(null);
+          const [audioPlayingGD_3002, setAudioPlayingGD_3002] = useState(false);
+          const [inputValueGD_3002, setInputValueGD_3002] = useState<any>();
+          const [inputValue2GD_3002, setInputValue2GD_3002] = useState<any>();
+          const [GD_3002_High, setGD_3002_High] = useState<number | null>(null);
+          const [GD_3002_Low, setGD_3002_Low] = useState<number | null>(null);
+          const [exceedThresholdGD_3002, setExceedThresholdGD_3002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainGD_3002, setMaintainGD_3002] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof GD_3002_High === 'string' && typeof GD_3002_Low === 'string' && GD_3002 !== null && maintainGD_3002 === false
+                  ) {
+                      const highValue = parseFloat(GD_3002_High);
+                      const lowValue = parseFloat(GD_3002_Low);
+                      const GD_3002Value = parseFloat(GD_3002);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3002Value)) {
+                          if (highValue <= GD_3002Value || GD_3002Value <= lowValue) {
+                              if (!audioPlayingGD_3002) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingGD_3002(true);
+                                  setExceedThresholdGD_3002(true);
+                              }
+                          } else {
+                             setAudioPlayingGD_3002(false);
+                             setExceedThresholdGD_3002(false);
+                          }
+                      } 
+                  } 
+              }, [GD_3002_High, GD_3002, audioPlayingGD_3002, GD_3002_Low,maintainGD_3002]);
+          
+              useEffect(() => {
+                  if (audioPlayingGD_3002) {
+                      const audioEnded = () => {
+                         setAudioPlayingGD_3002(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingGD_3002]);
+          
+              const handleInputChangeGD_3002 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueGD_3002(newValue);
+              };
+          
+              const handleInputChange2GD_3002 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2GD_3002(newValue2);
+              };
+              const ChangeMaintainGD_3002 = async () => {
+                  try {
+                      const newValue = !maintainGD_3002;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { GD_3002_Maintain: newValue }
+                      );
+                      setMaintainGD_3002(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+          const [GD_3005, setGD_3005] = useState<string | null>(null);
+          const [audioPlayingGD_3005, setAudioPlayingGD_3005] = useState(false);
+          const [inputValueGD_3005, setInputValueGD_3005] = useState<any>();
+          const [inputValue2GD_3005, setInputValue2GD_3005] = useState<any>();
+          const [GD_3005_High, setGD_3005_High] = useState<number | null>(null);
+          const [GD_3005_Low, setGD_3005_Low] = useState<number | null>(null);
+          const [exceedThresholdGD_3005, setExceedThresholdGD_3005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainGD_3005, setMaintainGD_3005] = useState<boolean>(false);
+          
+          
+              useEffect(() => {
+                  if (typeof GD_3005_High === 'string' && typeof GD_3005_Low === 'string' && GD_3005 !== null && maintainGD_3005 === false
+                  ) {
+                      const highValue = parseFloat(GD_3005_High);
+                      const lowValue = parseFloat(GD_3005_Low);
+                      const GD_3005Value = parseFloat(GD_3005);
+              
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3005Value)) {
+                          if (highValue <= GD_3005Value || GD_3005Value <= lowValue) {
+                              if (!audioPlayingGD_3005) {
+                                  audioRef.current?.play();
+                                  setAudioPlayingGD_3005(true);
+                                  setExceedThresholdGD_3005(true);
+                              }
+                          } else {
+                             setAudioPlayingGD_3005(false);
+                             setExceedThresholdGD_3005(false);
+                          }
+                      } 
+                  } 
+              }, [GD_3005_High, GD_3005, audioPlayingGD_3005, GD_3005_Low,maintainGD_3005]);
+          
+              useEffect(() => {
+                  if (audioPlayingGD_3005) {
+                      const audioEnded = () => {
+                         setAudioPlayingGD_3005(false);
+                      };
+                      audioRef.current?.addEventListener('ended', audioEnded);
+                      return () => {
+                          audioRef.current?.removeEventListener('ended', audioEnded);
+                      };
+                  }
+              }, [audioPlayingGD_3005]);
+          
+              const handleInputChangeGD_3005 = (event: any) => {
+                  const newValue = event.target.value;
+                  setInputValueGD_3005(newValue);
+              };
+          
+              const handleInputChange2GD_3005 = (event: any) => {
+                  const newValue2 = event.target.value;
+                  setInputValue2GD_3005(newValue2);
+              };
+              const ChangeMaintainGD_3005 = async () => {
+                  try {
+                      const newValue = !maintainGD_3005;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                          { GD_3005_Maintain: newValue }
+                      );
+                      setMaintainGD_3005(newValue);
+                      
+                  } catch (error) {}
+              };
+     
+     
+          // =================================================================================================================== 
+
+    // =================================================================================================================== 
+
+    const [GD_3006, setGD_3006] = useState<string | null>(null);
+    const [audioPlayingGD_3006, setAudioPlayingGD_3006] = useState(false);
+    const [inputValueGD_3006, setInputValueGD_3006] = useState<any>();
+    const [inputValue2GD_3006, setInputValue2GD_3006] = useState<any>();
+    const [GD_3006_High, setGD_3006_High] = useState<number | null>(null);
+    const [GD_3006_Low, setGD_3006_Low] = useState<number | null>(null);
+    const [exceedThresholdGD_3006, setExceedThresholdGD_3006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    
+    const [maintainGD_3006, setMaintainGD_3006] = useState<boolean>(false);
+    
+    
+        useEffect(() => {
+            if (typeof GD_3006_High === 'string' && typeof GD_3006_Low === 'string' && GD_3006 !== null && maintainGD_3006 === false
+            ) {
+                const highValue = parseFloat(GD_3006_High);
+                const lowValue = parseFloat(GD_3006_Low);
+                const GD_3006Value = parseFloat(GD_3006);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3006Value)) {
+                    if (highValue <= GD_3006Value || GD_3006Value <= lowValue) {
+                        if (!audioPlayingGD_3006) {
+                            audioRef.current?.play();
+                            setAudioPlayingGD_3006(true);
+                            setExceedThresholdGD_3006(true);
+                        }
+                    } else {
+                       setAudioPlayingGD_3006(false);
+                       setExceedThresholdGD_3006(false);
+                    }
+                } 
+            } 
+        }, [GD_3006_High, GD_3006, audioPlayingGD_3006, GD_3006_Low,maintainGD_3006]);
+    
+        useEffect(() => {
+            if (audioPlayingGD_3006) {
+                const audioEnded = () => {
+                   setAudioPlayingGD_3006(false);
+                };
+                audioRef.current?.addEventListener('ended', audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener('ended', audioEnded);
+                };
+            }
+        }, [audioPlayingGD_3006]);
+    
+        const handleInputChangeGD_3006 = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueGD_3006(newValue);
+        };
+    
+        const handleInputChange2GD_3006 = (event: any) => {
+            const newValue2 = event.target.value;
+            setInputValue2GD_3006(newValue2);
+        };
+        const ChangeMaintainGD_3006 = async () => {
+            try {
+                const newValue = !maintainGD_3006;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                    { GD_3006_Maintain: newValue }
+                );
+                setMaintainGD_3006(newValue);
+                
+            } catch (error) {}
+        };
+
+
+    // =================================================================================================================== 
+
+        // =================================================================================================================== 
+
+        const [TM_3002_SNG, setTM_3002_SNG] = useState<string | null>(null);
+        const [audioPlayingTM_3002_SNG, setAudioPlayingTM_3002_SNG] = useState(false);
+        const [inputValueTM_3002_SNG, setInputValueTM_3002_SNG] = useState<any>();
+        const [inputValue2TM_3002_SNG, setInputValue2TM_3002_SNG] = useState<any>();
+        const [TM_3002_SNG_High, setTM_3002_SNG_High] = useState<number | null>(null);
+        const [TM_3002_SNG_Low, setTM_3002_SNG_Low] = useState<number | null>(null);
+        const [exceedThresholdTM_3002_SNG, setExceedThresholdTM_3002_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainTM_3002_SNG, setMaintainTM_3002_SNG] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof TM_3002_SNG_High === 'string' && typeof TM_3002_SNG_Low === 'string' && TM_3002_SNG !== null && maintainTM_3002_SNG === false
+                ) {
+                    const highValue = parseFloat(TM_3002_SNG_High);
+                    const lowValue = parseFloat(TM_3002_SNG_Low);
+                    const TM_3002_SNGValue = parseFloat(TM_3002_SNG);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM_3002_SNGValue)) {
+                        if (highValue <= TM_3002_SNGValue || TM_3002_SNGValue <= lowValue) {
+                            if (!audioPlayingTM_3002_SNG) {
+                                audioRef.current?.play();
+                                setAudioPlayingTM_3002_SNG(true);
+                                setExceedThresholdTM_3002_SNG(true);
+                            }
+                        } else {
+                           setAudioPlayingTM_3002_SNG(false);
+                           setExceedThresholdTM_3002_SNG(false);
+                        }
+                    } 
+                } 
+            }, [TM_3002_SNG_High, TM_3002_SNG, audioPlayingTM_3002_SNG, TM_3002_SNG_Low,maintainTM_3002_SNG]);
+        
+            useEffect(() => {
+                if (audioPlayingTM_3002_SNG) {
+                    const audioEnded = () => {
+                       setAudioPlayingTM_3002_SNG(false);
+                    };
+                    audioRef.current?.addEventListener('ended', audioEnded);
+                    return () => {
+                        audioRef.current?.removeEventListener('ended', audioEnded);
+                    };
+                }
+            }, [audioPlayingTM_3002_SNG]);
+        
+            const handleInputChangeTM_3002_SNG = (event: any) => {
+                const newValue = event.target.value;
+                setInputValueTM_3002_SNG(newValue);
+            };
+        
+            const handleInputChange2TM_3002_SNG = (event: any) => {
+                const newValue2 = event.target.value;
+                setInputValue2TM_3002_SNG(newValue2);
+            };
+            const ChangeMaintainTM_3002_SNG = async () => {
+                try {
+                    const newValue = !maintainTM_3002_SNG;
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                        { TM_3002_SNG_Maintain: newValue }
+                    );
+                    setMaintainTM_3002_SNG(newValue);
+                    
+                } catch (error) {}
+            };
+    
+    
+        // =================================================================================================================== 
+
+            // =================================================================================================================== 
+
+    const [TM_3003_SNG, setTM_3003_SNG] = useState<string | null>(null);
+    const [audioPlayingTM_3003_SNG, setAudioPlayingTM_3003_SNG] = useState(false);
+    const [inputValueTM_3003_SNG, setInputValueTM_3003_SNG] = useState<any>();
+    const [inputValue2TM_3003_SNG, setInputValue2TM_3003_SNG] = useState<any>();
+    const [TM_3003_SNG_High, setTM_3003_SNG_High] = useState<number | null>(null);
+    const [TM_3003_SNG_Low, setTM_3003_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_3003_SNG, setExceedThresholdTM_3003_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    
+    const [maintainTM_3003_SNG, setMaintainTM_3003_SNG] = useState<boolean>(false);
+    
+    
+        useEffect(() => {
+            if (typeof TM_3003_SNG_High === 'string' && typeof TM_3003_SNG_Low === 'string' && TM_3003_SNG !== null && maintainTM_3003_SNG === false
+            ) {
+                const highValue = parseFloat(TM_3003_SNG_High);
+                const lowValue = parseFloat(TM_3003_SNG_Low);
+                const TM_3003_SNGValue = parseFloat(TM_3003_SNG);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM_3003_SNGValue)) {
+                    if (highValue <= TM_3003_SNGValue || TM_3003_SNGValue <= lowValue) {
+                        if (!audioPlayingTM_3003_SNG) {
+                            audioRef.current?.play();
+                            setAudioPlayingTM_3003_SNG(true);
+                            setExceedThresholdTM_3003_SNG(true);
+                        }
+                    } else {
+                       setAudioPlayingTM_3003_SNG(false);
+                       setExceedThresholdTM_3003_SNG(false);
+                    }
+                } 
+            } 
+        }, [TM_3003_SNG_High, TM_3003_SNG, audioPlayingTM_3003_SNG, TM_3003_SNG_Low,maintainTM_3003_SNG]);
+    
+        useEffect(() => {
+            if (audioPlayingTM_3003_SNG) {
+                const audioEnded = () => {
+                   setAudioPlayingTM_3003_SNG(false);
+                };
+                audioRef.current?.addEventListener('ended', audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener('ended', audioEnded);
+                };
+            }
+        }, [audioPlayingTM_3003_SNG]);
+    
+        const handleInputChangeTM_3003_SNG = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueTM_3003_SNG(newValue);
+        };
+    
+        const handleInputChange2TM_3003_SNG = (event: any) => {
+            const newValue2 = event.target.value;
+            setInputValue2TM_3003_SNG(newValue2);
+        };
+        const ChangeMaintainTM_3003_SNG = async () => {
+            try {
+                const newValue = !maintainTM_3003_SNG;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                    { TM_3003_SNG_Maintain: newValue }
+                );
+                setMaintainTM_3003_SNG(newValue);
+                
+            } catch (error) {}
+        };
+
+
+    // =================================================================================================================== 
+
+
+    const [TOTAL_SNG, setTOTAL_SNG] = useState<string | null>(null);
+    const [audioPlayingTOTAL_SNG, setAudioPlayingTOTAL_SNG] = useState(false);
+    const [inputValueTOTAL_SNG, setInputValueTOTAL_SNG] = useState<any>();
+    const [inputValue2TOTAL_SNG, setInputValue2TOTAL_SNG] = useState<any>();
+    const [TOTAL_SNG_High, setTOTAL_SNG_High] = useState<number | null>(null);
+    const [TOTAL_SNG_Low, setTOTAL_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTOTAL_SNG, setExceedThresholdTOTAL_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    
+    const [maintainTOTAL_SNG, setMaintainTOTAL_SNG] = useState<boolean>(false);
+    
+    
+        useEffect(() => {
+            if (typeof TOTAL_SNG_High === 'string' && typeof TOTAL_SNG_Low === 'string' && TOTAL_SNG !== null && maintainTOTAL_SNG === false
+            ) {
+                const highValue = parseFloat(TOTAL_SNG_High);
+                const lowValue = parseFloat(TOTAL_SNG_Low);
+                const TOTAL_SNGValue = parseFloat(TOTAL_SNG);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TOTAL_SNGValue)) {
+                    if (highValue <= TOTAL_SNGValue || TOTAL_SNGValue <= lowValue) {
+                        if (!audioPlayingTOTAL_SNG) {
+                            audioRef.current?.play();
+                            setAudioPlayingTOTAL_SNG(true);
+                            setExceedThresholdTOTAL_SNG(true);
+                        }
+                    } else {
+                       setAudioPlayingTOTAL_SNG(false);
+                       setExceedThresholdTOTAL_SNG(false);
+                    }
+                } 
+            } 
+        }, [TOTAL_SNG_High, TOTAL_SNG, audioPlayingTOTAL_SNG, TOTAL_SNG_Low,maintainTOTAL_SNG]);
+    
+        useEffect(() => {
+            if (audioPlayingTOTAL_SNG) {
+                const audioEnded = () => {
+                   setAudioPlayingTOTAL_SNG(false);
+                };
+                audioRef.current?.addEventListener('ended', audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener('ended', audioEnded);
+                };
+            }
+        }, [audioPlayingTOTAL_SNG]);
+    
+        const handleInputChangeTOTAL_SNG = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueTOTAL_SNG(newValue);
+        };
+    
+        const handleInputChange2TOTAL_SNG = (event: any) => {
+            const newValue2 = event.target.value;
+            setInputValue2TOTAL_SNG(newValue2);
+        };
+        const ChangeMaintainTOTAL_SNG = async () => {
+            try {
+                const newValue = !maintainTOTAL_SNG;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                    { TOTAL_SNG_Maintain: newValue }
+                );
+                setMaintainTOTAL_SNG(newValue);
+                
+            } catch (error) {}
+        };
+
+
+    // =================================================================================================================== 
+
+        // =================================================================================================================== 
+
+const [SDV_3004, setSDV_3004] = useState<string | null>(null);
+const [audioPlayingSDV_3004, setAudioPlayingSDV_3004] = useState(false);
+const [inputValueSDV_3004, setInputValueSDV_3004] = useState<any>();
+const [inputValue2SDV_3004, setInputValue2SDV_3004] = useState<any>();
+const [SDV_3004_High, setSDV_3004_High] = useState<number | null>(null);
+const [SDV_3004_Low, setSDV_3004_Low] = useState<number | null>(null);
+const [exceedThresholdSDV_3004, setExceedThresholdSDV_3004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainSDV_3004, setMaintainSDV_3004] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (typeof SDV_3004_High === 'string' && typeof SDV_3004_Low === 'string' && SDV_3004 !== null && maintainSDV_3004 === false
+        ) {
+            const highValue = parseFloat(SDV_3004_High);
+            const lowValue = parseFloat(SDV_3004_Low);
+            const SDV_3004Value = parseFloat(SDV_3004);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_3004Value)) {
+                if (highValue <= SDV_3004Value || SDV_3004Value <= lowValue) {
+                    if (!audioPlayingSDV_3004) {
+                        audioRef.current?.play();
+                        setAudioPlayingSDV_3004(true);
+                        setExceedThresholdSDV_3004(true);
+                    }
+                } else {
+                   setAudioPlayingSDV_3004(false);
+                   setExceedThresholdSDV_3004(false);
+                }
+            } 
+        } 
+    }, [SDV_3004_High, SDV_3004, audioPlayingSDV_3004, SDV_3004_Low,maintainSDV_3004]);
+
+    useEffect(() => {
+        if (audioPlayingSDV_3004) {
+            const audioEnded = () => {
+               setAudioPlayingSDV_3004(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [audioPlayingSDV_3004]);
+
+    const handleInputChangeSDV_3004 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueSDV_3004(newValue);
+    };
+
+    const handleInputChange2SDV_3004 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputValue2SDV_3004(newValue2);
+    };
+    const ChangeMaintainSDV_3004 = async () => {
+        try {
+            const newValue = !maintainSDV_3004;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { SDV_3004_Maintain: newValue }
+            );
+            setMaintainSDV_3004(newValue);
+            
+        } catch (error) {}
+    };
+
+
+// =================================================================================================================== 
+
+
+const [SDV_3003, setSDV_3003] = useState<string | null>(null);
+const [audioPlayingSDV_3003, setAudioPlayingSDV_3003] = useState(false);
+const [inputValueSDV_3003, setInputValueSDV_3003] = useState<any>();
+const [inputValue2SDV_3003, setInputValue2SDV_3003] = useState<any>();
+const [SDV_3003_High, setSDV_3003_High] = useState<number | null>(null);
+const [SDV_3003_Low, setSDV_3003_Low] = useState<number | null>(null);
+const [exceedThresholdSDV_3003, setExceedThresholdSDV_3003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainSDV_3003, setMaintainSDV_3003] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (typeof SDV_3003_High === 'string' && typeof SDV_3003_Low === 'string' && SDV_3003 !== null && maintainSDV_3003 === false
+        ) {
+            const highValue = parseFloat(SDV_3003_High);
+            const lowValue = parseFloat(SDV_3003_Low);
+            const SDV_3003Value = parseFloat(SDV_3003);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_3003Value)) {
+                if (highValue <= SDV_3003Value || SDV_3003Value <= lowValue) {
+                    if (!audioPlayingSDV_3003) {
+                        audioRef.current?.play();
+                        setAudioPlayingSDV_3003(true);
+                        setExceedThresholdSDV_3003(true);
+                    }
+                } else {
+                   setAudioPlayingSDV_3003(false);
+                   setExceedThresholdSDV_3003(false);
+                }
+            } 
+        } 
+    }, [SDV_3003_High, SDV_3003, audioPlayingSDV_3003, SDV_3003_Low,maintainSDV_3003]);
+
+    useEffect(() => {
+        if (audioPlayingSDV_3003) {
+            const audioEnded = () => {
+               setAudioPlayingSDV_3003(false);
+            };
+            audioRef.current?.addEventListener('ended', audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener('ended', audioEnded);
+            };
+        }
+    }, [audioPlayingSDV_3003]);
+
+    const handleInputChangeSDV_3003 = (event: any) => {
+        const newValue = event.target.value;
+        setInputValueSDV_3003(newValue);
+    };
+
+    const handleInputChange2SDV_3003 = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputValue2SDV_3003(newValue2);
+    };
+    const ChangeMaintainSDV_3003 = async () => {
+        try {
+            const newValue = !maintainSDV_3003;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { SDV_3003_Maintain: newValue }
+            );
+            setMaintainSDV_3003(newValue);
+            
+        } catch (error) {}
+    };
+
+
+// =================================================================================================================== 
+
+    // =================================================================================================================== 
+
+const [GD1_STATUS, setGD1_STATUS] = useState<string | null>(null);
+const [audioPlayingGD1_STATUS, setAudioPlayingGD1_STATUS] = useState(false);
+const [inputValueGD1_STATUS, setInputValueGD1_STATUS] = useState<any>();
+const [inputValue2GD1_STATUS, setInputValue2GD1_STATUS] = useState<any>();
+const [GD1_STATUS_High, setGD1_STATUS_High] = useState<number | null>(null);
+const [GD1_STATUS_Low, setGD1_STATUS_Low] = useState<number | null>(null);
+const [exceedThresholdGD1_STATUS, setExceedThresholdGD1_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainGD1_STATUS, setMaintainGD1_STATUS] = useState<boolean>(false);
+
+
+useEffect(() => {
+    if (typeof GD1_STATUS_High === 'string' && typeof GD1_STATUS_Low === 'string' && GD1_STATUS !== null && maintainGD1_STATUS === false
+    ) {
+        const highValue = parseFloat(GD1_STATUS_High);
+        const lowValue = parseFloat(GD1_STATUS_Low);
+        const GD1_STATUSValue = parseFloat(GD1_STATUS);
+
+        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1_STATUSValue)) {
+            if (highValue <= GD1_STATUSValue || GD1_STATUSValue <= lowValue) {
+                if (!audioPlayingGD1_STATUS) {
+                    audioRef.current?.play();
+                    setAudioPlayingGD1_STATUS(true);
+                    setExceedThresholdGD1_STATUS(true);
+                }
+            } else {
+               setAudioPlayingGD1_STATUS(false);
+               setExceedThresholdGD1_STATUS(false);
+            }
+        } 
+    } 
+}, [GD1_STATUS_High, GD1_STATUS, audioPlayingGD1_STATUS, GD1_STATUS_Low,maintainGD1_STATUS]);
+
+useEffect(() => {
+    if (audioPlayingGD1_STATUS) {
+        const audioEnded = () => {
+           setAudioPlayingGD1_STATUS(false);
+        };
+        audioRef.current?.addEventListener('ended', audioEnded);
+        return () => {
+            audioRef.current?.removeEventListener('ended', audioEnded);
+        };
+    }
+}, [audioPlayingGD1_STATUS]);
+
+const handleInputChangeGD1_STATUS = (event: any) => {
+    const newValue = event.target.value;
+    setInputValueGD1_STATUS(newValue);
+};
+
+const handleInputChange2GD1_STATUS = (event: any) => {
+    const newValue2 = event.target.value;
+    setInputValue2GD1_STATUS(newValue2);
+};
+const ChangeMaintainGD1_STATUS = async () => {
+    try {
+        const newValue = !maintainGD1_STATUS;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { GD1_STATUS_Maintain: newValue }
+        );
+        setMaintainGD1_STATUS(newValue);
+        
+    } catch (error) {}
+};
+
+
+// =================================================================================================================== 
+
+
+        // =================================================================================================================== 
+
+        const [GD2_STATUS, setGD2_STATUS] = useState<string | null>(null);
+        const [audioPlayingGD2_STATUS, setAudioPlayingGD2_STATUS] = useState(false);
+        const [inputValueGD2_STATUS, setInputValueGD2_STATUS] = useState<any>();
+        const [inputValue2GD2_STATUS, setInputValue2GD2_STATUS] = useState<any>();
+        const [GD2_STATUS_High, setGD2_STATUS_High] = useState<number | null>(null);
+        const [GD2_STATUS_Low, setGD2_STATUS_Low] = useState<number | null>(null);
+        const [exceedThresholdGD2_STATUS, setExceedThresholdGD2_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainGD2_STATUS, setMaintainGD2_STATUS] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof GD2_STATUS_High === 'string' && typeof GD2_STATUS_Low === 'string' && GD2_STATUS !== null && maintainGD2_STATUS === false
+                ) {
+                    const highValue = parseFloat(GD2_STATUS_High);
+                    const lowValue = parseFloat(GD2_STATUS_Low);
+                    const GD2_STATUSValue = parseFloat(GD2_STATUS);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2_STATUSValue)) {
+                        if (highValue <= GD2_STATUSValue || GD2_STATUSValue <= lowValue) {
+                            if (!audioPlayingGD2_STATUS) {
+                                audioRef.current?.play();
+                                setAudioPlayingGD2_STATUS(true);
+                                setExceedThresholdGD2_STATUS(true);
+                            }
+                        } else {
+                           setAudioPlayingGD2_STATUS(false);
+                           setExceedThresholdGD2_STATUS(false);
+                        }
+                    } 
+                } 
+            }, [GD2_STATUS_High, GD2_STATUS, audioPlayingGD2_STATUS, GD2_STATUS_Low,maintainGD2_STATUS]);
+        
+            useEffect(() => {
+                if (audioPlayingGD2_STATUS) {
+                    const audioEnded = () => {
+                       setAudioPlayingGD2_STATUS(false);
+                    };
+                    audioRef.current?.addEventListener('ended', audioEnded);
+                    return () => {
+                        audioRef.current?.removeEventListener('ended', audioEnded);
+                    };
+                }
+            }, [audioPlayingGD2_STATUS]);
+        
+            const handleInputChangeGD2_STATUS = (event: any) => {
+                const newValue = event.target.value;
+                setInputValueGD2_STATUS(newValue);
+            };
+        
+            const handleInputChange2GD2_STATUS = (event: any) => {
+                const newValue2 = event.target.value;
+                setInputValue2GD2_STATUS(newValue2);
+            };
+            const ChangeMaintainGD2_STATUS = async () => {
+                try {
+                    const newValue = !maintainGD2_STATUS;
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                        { GD2_STATUS_Maintain: newValue }
+                    );
+                    setMaintainGD2_STATUS(newValue);
+                    
+                } catch (error) {}
+            };
+        
+        
+        // =================================================================================================================== 
+        
+        
+        const [GD3_STATUS, setGD3_STATUS] = useState<string | null>(null);
+        const [audioPlayingGD3_STATUS, setAudioPlayingGD3_STATUS] = useState(false);
+        const [inputValueGD3_STATUS, setInputValueGD3_STATUS] = useState<any>();
+        const [inputValue2GD3_STATUS, setInputValue2GD3_STATUS] = useState<any>();
+        const [GD3_STATUS_High, setGD3_STATUS_High] = useState<number | null>(null);
+        const [GD3_STATUS_Low, setGD3_STATUS_Low] = useState<number | null>(null);
+        const [exceedThresholdGD3_STATUS, setExceedThresholdGD3_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainGD3_STATUS, setMaintainGD3_STATUS] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof GD3_STATUS_High === 'string' && typeof GD3_STATUS_Low === 'string' && GD3_STATUS !== null && maintainGD3_STATUS === false
+                ) {
+                    const highValue = parseFloat(GD3_STATUS_High);
+                    const lowValue = parseFloat(GD3_STATUS_Low);
+                    const GD3_STATUSValue = parseFloat(GD3_STATUS);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD3_STATUSValue)) {
+                        if (highValue <= GD3_STATUSValue || GD3_STATUSValue <= lowValue) {
+                            if (!audioPlayingGD3_STATUS) {
+                                audioRef.current?.play();
+                                setAudioPlayingGD3_STATUS(true);
+                                setExceedThresholdGD3_STATUS(true);
+                            }
+                        } else {
+                           setAudioPlayingGD3_STATUS(false);
+                           setExceedThresholdGD3_STATUS(false);
+                        }
+                    } 
+                } 
+            }, [GD3_STATUS_High, GD3_STATUS, audioPlayingGD3_STATUS, GD3_STATUS_Low,maintainGD3_STATUS]);
+        
+            useEffect(() => {
+                if (audioPlayingGD3_STATUS) {
+                    const audioEnded = () => {
+                       setAudioPlayingGD3_STATUS(false);
+                    };
+                    audioRef.current?.addEventListener('ended', audioEnded);
+                    return () => {
+                        audioRef.current?.removeEventListener('ended', audioEnded);
+                    };
+                }
+            }, [audioPlayingGD3_STATUS]);
+        
+            const handleInputChangeGD3_STATUS = (event: any) => {
+                const newValue = event.target.value;
+                setInputValueGD3_STATUS(newValue);
+            };
+        
+            const handleInputChange2GD3_STATUS = (event: any) => {
+                const newValue2 = event.target.value;
+                setInputValue2GD3_STATUS(newValue2);
+            };
+            const ChangeMaintainGD3_STATUS = async () => {
+                try {
+                    const newValue = !maintainGD3_STATUS;
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                        { GD3_STATUS_Maintain: newValue }
+                    );
+                    setMaintainGD3_STATUS(newValue);
+                    
+                } catch (error) {}
+            };
+        
+        
+        // =================================================================================================================== 
+        
+            // =================================================================================================================== 
+        
+        const [GD4_STATUS, setGD4_STATUS] = useState<string | null>(null);
+        const [audioPlayingGD4_STATUS, setAudioPlayingGD4_STATUS] = useState(false);
+        const [inputValueGD4_STATUS, setInputValueGD4_STATUS] = useState<any>();
+        const [inputValue2GD4_STATUS, setInputValue2GD4_STATUS] = useState<any>();
+        const [GD4_STATUS_High, setGD4_STATUS_High] = useState<number | null>(null);
+        const [GD4_STATUS_Low, setGD4_STATUS_Low] = useState<number | null>(null);
+        const [exceedThresholdGD4_STATUS, setExceedThresholdGD4_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainGD4_STATUS, setMaintainGD4_STATUS] = useState<boolean>(false);
+        
+        
+        useEffect(() => {
+            if (typeof GD4_STATUS_High === 'string' && typeof GD4_STATUS_Low === 'string' && GD4_STATUS !== null && maintainGD4_STATUS === false
+            ) {
+                const highValue = parseFloat(GD4_STATUS_High);
+                const lowValue = parseFloat(GD4_STATUS_Low);
+                const GD4_STATUSValue = parseFloat(GD4_STATUS);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD4_STATUSValue)) {
+                    if (highValue <= GD4_STATUSValue || GD4_STATUSValue <= lowValue) {
+                        if (!audioPlayingGD4_STATUS) {
+                            audioRef.current?.play();
+                            setAudioPlayingGD4_STATUS(true);
+                            setExceedThresholdGD4_STATUS(true);
+                        }
+                    } else {
+                       setAudioPlayingGD4_STATUS(false);
+                       setExceedThresholdGD4_STATUS(false);
+                    }
+                } 
+            } 
+        }, [GD4_STATUS_High, GD4_STATUS, audioPlayingGD4_STATUS, GD4_STATUS_Low,maintainGD4_STATUS]);
+        
+        useEffect(() => {
+            if (audioPlayingGD4_STATUS) {
+                const audioEnded = () => {
+                   setAudioPlayingGD4_STATUS(false);
+                };
+                audioRef.current?.addEventListener('ended', audioEnded);
+                return () => {
+                    audioRef.current?.removeEventListener('ended', audioEnded);
+                };
+            }
+        }, [audioPlayingGD4_STATUS]);
+        
+        const handleInputChangeGD4_STATUS = (event: any) => {
+            const newValue = event.target.value;
+            setInputValueGD4_STATUS(newValue);
+        };
+        
+        const handleInputChange2GD4_STATUS = (event: any) => {
+            const newValue2 = event.target.value;
+            setInputValue2GD4_STATUS(newValue2);
+        };
+        const ChangeMaintainGD4_STATUS = async () => {
+            try {
+                const newValue = !maintainGD4_STATUS;
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                    { GD4_STATUS_Maintain: newValue }
+                );
+                setMaintainGD4_STATUS(newValue);
+                
+            } catch (error) {}
+        };
+        
+        
+        // =================================================================================================================== 
+        
+
+            // =================================================================================================================== 
+        
+            const [GD5_STATUS, setGD5_STATUS] = useState<string | null>(null);
+            const [audioPlayingGD5_STATUS, setAudioPlayingGD5_STATUS] = useState(false);
+            const [inputValueGD5_STATUS, setInputValueGD5_STATUS] = useState<any>();
+            const [inputValue2GD5_STATUS, setInputValue2GD5_STATUS] = useState<any>();
+            const [GD5_STATUS_High, setGD5_STATUS_High] = useState<number | null>(null);
+            const [GD5_STATUS_Low, setGD5_STATUS_Low] = useState<number | null>(null);
+            const [exceedThresholdGD5_STATUS, setExceedThresholdGD5_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+            
+            const [maintainGD5_STATUS, setMaintainGD5_STATUS] = useState<boolean>(false);
+            
+            
+            useEffect(() => {
+                if (typeof GD5_STATUS_High === 'string' && typeof GD5_STATUS_Low === 'string' && GD5_STATUS !== null && maintainGD5_STATUS === false
+                ) {
+                    const highValue = parseFloat(GD5_STATUS_High);
+                    const lowValue = parseFloat(GD5_STATUS_Low);
+                    const GD5_STATUSValue = parseFloat(GD5_STATUS);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD5_STATUSValue)) {
+                        if (highValue <= GD5_STATUSValue || GD5_STATUSValue <= lowValue) {
+                            if (!audioPlayingGD5_STATUS) {
+                                audioRef.current?.play();
+                                setAudioPlayingGD5_STATUS(true);
+                                setExceedThresholdGD5_STATUS(true);
+                            }
+                        } else {
+                           setAudioPlayingGD5_STATUS(false);
+                           setExceedThresholdGD5_STATUS(false);
+                        }
+                    } 
+                } 
+            }, [GD5_STATUS_High, GD5_STATUS, audioPlayingGD5_STATUS, GD5_STATUS_Low,maintainGD5_STATUS]);
+            
+            useEffect(() => {
+                if (audioPlayingGD5_STATUS) {
+                    const audioEnded = () => {
+                       setAudioPlayingGD5_STATUS(false);
+                    };
+                    audioRef.current?.addEventListener('ended', audioEnded);
+                    return () => {
+                        audioRef.current?.removeEventListener('ended', audioEnded);
+                    };
+                }
+            }, [audioPlayingGD5_STATUS]);
+            
+            const handleInputChangeGD5_STATUS = (event: any) => {
+                const newValue = event.target.value;
+                setInputValueGD5_STATUS(newValue);
+            };
+            
+            const handleInputChange2GD5_STATUS = (event: any) => {
+                const newValue2 = event.target.value;
+                setInputValue2GD5_STATUS(newValue2);
+            };
+            const ChangeMaintainGD5_STATUS = async () => {
+                try {
+                    const newValue = !maintainGD5_STATUS;
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                        { GD5_STATUS_Maintain: newValue }
+                    );
+                    setMaintainGD5_STATUS(newValue);
+                    
+                } catch (error) {}
+            };
+            
+            
+            // =================================================================================================================== 
+
+
+
+            // =================================================================================================================== 
+        
+            const [EVC_02_Vm_of_Last_Day, setEVC_02_Vm_of_Last_Day] = useState<string | null>(null);
+            const [audioPlayingEVC_02_Vm_of_Last_Day, setAudioPlayingEVC_02_Vm_of_Last_Day] = useState(false);
+            const [inputValueEVC_02_Vm_of_Last_Day, setInputValueEVC_02_Vm_of_Last_Day] = useState<any>();
+            const [inputValue2EVC_02_Vm_of_Last_Day, setInputValue2EVC_02_Vm_of_Last_Day] = useState<any>();
+            const [EVC_02_Vm_of_Last_Day_High, setEVC_02_Vm_of_Last_Day_High] = useState<number | null>(null);
+            const [EVC_02_Vm_of_Last_Day_Low, setEVC_02_Vm_of_Last_Day_Low] = useState<number | null>(null);
+            const [exceedThresholdEVC_02_Vm_of_Last_Day, setExceedThresholdEVC_02_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+            
+            const [maintainEVC_02_Vm_of_Last_Day, setMaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
+            
+            
+            useEffect(() => {
+                if (typeof EVC_02_Vm_of_Last_Day_High === 'string' && typeof EVC_02_Vm_of_Last_Day_Low === 'string' && EVC_02_Vm_of_Last_Day !== null && maintainEVC_02_Vm_of_Last_Day === false
+                ) {
+                    const highValue = parseFloat(EVC_02_Vm_of_Last_Day_High);
+                    const lowValue = parseFloat(EVC_02_Vm_of_Last_Day_Low);
+                    const EVC_02_Vm_of_Last_DayValue = parseFloat(EVC_02_Vm_of_Last_Day);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Last_DayValue)) {
+                        if (highValue <= EVC_02_Vm_of_Last_DayValue || EVC_02_Vm_of_Last_DayValue <= lowValue) {
+                            if (!audioPlayingEVC_02_Vm_of_Last_Day) {
+                                audioRef.current?.play();
+                                setAudioPlayingEVC_02_Vm_of_Last_Day(true);
+                                setExceedThresholdEVC_02_Vm_of_Last_Day(true);
+                            }
+                        } else {
+                           setAudioPlayingEVC_02_Vm_of_Last_Day(false);
+                           setExceedThresholdEVC_02_Vm_of_Last_Day(false);
+                        }
+                    } 
+                } 
+            }, [EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day, audioPlayingEVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_Low,maintainEVC_02_Vm_of_Last_Day]);
+            
+            useEffect(() => {
+                if (audioPlayingEVC_02_Vm_of_Last_Day) {
+                    const audioEnded = () => {
+                       setAudioPlayingEVC_02_Vm_of_Last_Day(false);
+                    };
+                    audioRef.current?.addEventListener('ended', audioEnded);
+                    return () => {
+                        audioRef.current?.removeEventListener('ended', audioEnded);
+                    };
+                }
+            }, [audioPlayingEVC_02_Vm_of_Last_Day]);
+            
+            const handleInputChangeEVC_02_Vm_of_Last_Day = (event: any) => {
+                const newValue = event.target.value;
+                setInputValueEVC_02_Vm_of_Last_Day(newValue);
+            };
+            
+            const handleInputChange2EVC_02_Vm_of_Last_Day = (event: any) => {
+                const newValue2 = event.target.value;
+                setInputValue2EVC_02_Vm_of_Last_Day(newValue2);
+            };
+            const ChangeMaintainEVC_02_Vm_of_Last_Day = async () => {
+                try {
+                    const newValue = !maintainEVC_02_Vm_of_Last_Day;
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                        { EVC_02_Vm_of_Last_Day_Maintain: newValue }
+                    );
+                    setMaintainEVC_02_Vm_of_Last_Day(newValue);
+                    
+                } catch (error) {}
+            };
+            
+            
+            // =================================================================================================================== 
+
+ // =================================================================================================================== 
+
+ const [ESD, setESD] = useState<string | null>(null);
+ const [audioPlayingESD, setAudioPlayingESD] = useState(false);
+ const [inputValueESD, setInputValueESD] = useState<any>();
+ const [inputValue2ESD, setInputValue2ESD] = useState<any>();
+ const [ESD_High, setESD_High] = useState<number | null>(null);
+ const [ESD_Low, setESD_Low] = useState<number | null>(null);
+ const [exceedThresholdESD, setExceedThresholdESD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ 
+ const [maintainESD, setMaintainESD] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof ESD_High === 'string' && typeof ESD_Low === 'string' && ESD !== null && maintainESD === false
+         ) {
+             const highValue = parseFloat(ESD_High);
+             const lowValue = parseFloat(ESD_Low);
+             const ESDValue = parseFloat(ESD);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ESDValue)) {
+                 if (highValue <= ESDValue || ESDValue <= lowValue) {
+                     if (!audioPlayingESD) {
+                         audioRef.current?.play();
+                         setAudioPlayingESD(true);
+                         setExceedThresholdESD(true);
+                     }
+                 } else {
+                     setAudioPlayingESD(false);
+                     setExceedThresholdESD(false);
+                 }
+             } 
+         } 
+     }, [ESD_High, ESD, audioPlayingESD, ESD_Low,maintainESD]);
+ 
+     useEffect(() => {
+         if (audioPlayingESD) {
+             const audioEnded = () => {
+                 setAudioPlayingESD(false);
+             };
+             audioRef.current?.addEventListener('ended', audioEnded);
+             return () => {
+                 audioRef.current?.removeEventListener('ended', audioEnded);
+             };
+         }
+     }, [audioPlayingESD]);
+ 
+     const handleInputChangeESD = (event: any) => {
+         const newValue = event.target.value;
+         setInputValueESD(newValue);
+     };
+ 
+     const handleInputChange2VP303 = (event: any) => {
+         const newValue2 = event.target.value;
+         setInputValue2ESD(newValue2);
+     };
+     const ChangeMaintainESD = async () => {
+         try {
+             const newValue = !maintainESD;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                 { ESD_Maintain: newValue }
+             );
+             setMaintainESD(newValue);
+             
+         } catch (error) {}
+     };
+ 
+ 
+      // =================================================================================================================== 
+ 
+      const [VAPORIZER_1, setVAPORIZER_1] = useState<string | null>(null);
+      const [audioPlayingVAPORIZER_1, setAudioPlayingVAPORIZER_1] = useState(false);
+      const [inputValueVAPORIZER_1, setInputValueVAPORIZER_1] = useState<any>();
+      const [inputValue2VAPORIZER_1, setInputValue2VAPORIZER_1] = useState<any>();
+      const [VAPORIZER_1_High, setVAPORIZER_1_High] = useState<number | null>(null);
+      const [VAPORIZER_1_Low, setVAPORIZER_1_Low] = useState<number | null>(null);
+      const [exceedThreshold302, setExceedThreshold302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      
+      const [maintainVAPORIZER_1, setMaintainVAPORIZER_1] = useState<boolean>(false);
+      
+      
+          useEffect(() => {
+              if (typeof VAPORIZER_1_High === 'string' && typeof VAPORIZER_1_Low === 'string' && VAPORIZER_1 !== null && maintainVAPORIZER_1 === false
+              ) {
+                  const highValue = parseFloat(VAPORIZER_1_High);
+                  const lowValue = parseFloat(VAPORIZER_1_Low);
+                  const VAPORIZER_1Value = parseFloat(VAPORIZER_1);
+          
+                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_1Value)) {
+                      if (highValue <= VAPORIZER_1Value || VAPORIZER_1Value <= lowValue) {
+                          if (!audioPlayingVAPORIZER_1) {
+                              audioRef.current?.play();
+                              setAudioPlayingVAPORIZER_1(true);
+                              setExceedThreshold302(true);
+                          }
+                      } else {
+                         setAudioPlayingVAPORIZER_1(false);
+                          setExceedThreshold302(false);
+                      }
+                  } 
+              } 
+          }, [VAPORIZER_1_High, VAPORIZER_1, audioPlayingVAPORIZER_1, VAPORIZER_1_Low,maintainVAPORIZER_1]);
+      
+          useEffect(() => {
+              if (audioPlayingVAPORIZER_1) {
+                  const audioEnded = () => {
+                     setAudioPlayingVAPORIZER_1(false);
+                  };
+                  audioRef.current?.addEventListener('ended', audioEnded);
+                  return () => {
+                      audioRef.current?.removeEventListener('ended', audioEnded);
+                  };
+              }
+          }, [audioPlayingVAPORIZER_1]);
+      
+          const handleInputChangeVAPORIZER_1 = (event: any) => {
+              const newValue = event.target.value;
+              setInputValueVAPORIZER_1(newValue);
+          };
+      
+          const handleInputChange2VAPORIZER_1 = (event: any) => {
+              const newValue2 = event.target.value;
+              setInputValue2VAPORIZER_1(newValue2);
+          };
+          const ChangeMaintainVAPORIZER_1 = async () => {
+              try {
+                  const newValue = !maintainVAPORIZER_1;
+                  await httpApi.post(
+                      `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                      { VAPORIZER_1_Maintain: newValue }
+                  );
+                  setMaintainVAPORIZER_1(newValue);
+                  
+              } catch (error) {}
+          };
+ 
+ 
+      // =================================================================================================================== 
+ 
+ 
+      const [VAPORIZER_2, setVAPORIZER_2] = useState<string | null>(null);
+      const [audioPlayingVAPORIZER_2, setAudioPlayingVAPORIZER_2] = useState(false);
+      const [inputValueVAPORIZER_2, setInputValueVAPORIZER_2] = useState<any>();
+      const [inputValue2VAPORIZER_2, setInputValue2VAPORIZER_2] = useState<any>();
+      const [VAPORIZER_2_High, setVAPORIZER_2_High] = useState<number | null>(null);
+      const [VAPORIZER_2_Low, setVAPORIZER_2_Low] = useState<number | null>(null);
+      const [exceedThresholdVAPORIZER_2, setExceedThresholdVAPORIZER_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      
+      const [maintainVAPORIZER_2, setMaintainVAPORIZER_2] = useState<boolean>(false);
+      
+      
+          useEffect(() => {
+              if (typeof VAPORIZER_2_High === 'string' && typeof VAPORIZER_2_Low === 'string' && VAPORIZER_2 !== null && maintainVAPORIZER_2 === false
+              ) {
+                  const highValue = parseFloat(VAPORIZER_2_High);
+                  const lowValue = parseFloat(VAPORIZER_2_Low);
+                  const VAPORIZER_2Value = parseFloat(VAPORIZER_2);
+          
+                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_2Value)) {
+                      if (highValue <= VAPORIZER_2Value || VAPORIZER_2Value <= lowValue) {
+                          if (!audioPlayingVAPORIZER_2) {
+                              audioRef.current?.play();
+                              setAudioPlayingVAPORIZER_2(true);
+                              setExceedThresholdVAPORIZER_2(true);
+                          }
+                      } else {
+                         setAudioPlayingVAPORIZER_2(false);
+                         setExceedThresholdVAPORIZER_2(false);
+                      }
+                  } 
+              } 
+          }, [VAPORIZER_2_High, VAPORIZER_2, audioPlayingVAPORIZER_2, VAPORIZER_2_Low,maintainVAPORIZER_2]);
+      
+          useEffect(() => {
+              if (audioPlayingVAPORIZER_2) {
+                  const audioEnded = () => {
+                     setAudioPlayingVAPORIZER_2(false);
+                  };
+                  audioRef.current?.addEventListener('ended', audioEnded);
+                  return () => {
+                      audioRef.current?.removeEventListener('ended', audioEnded);
+                  };
+              }
+          }, [audioPlayingVAPORIZER_2]);
+      
+          const handleInputChangeVAPORIZER_2 = (event: any) => {
+              const newValue = event.target.value;
+              setInputValueVAPORIZER_2(newValue);
+          };
+      
+          const handleInputChange2VAPORIZER_2 = (event: any) => {
+              const newValue2 = event.target.value;
+              setInputValue2VAPORIZER_2(newValue2);
+          };
+          const ChangeMaintainVAPORIZER_2 = async () => {
+              try {
+                  const newValue = !maintainVAPORIZER_2;
+                  await httpApi.post(
+                      `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                      { VAPORIZER_2_Maintain: newValue }
+                  );
+                  setMaintainVAPORIZER_2(newValue);
+                  
+              } catch (error) {}
+          };
+ 
+ 
+      // =================================================================================================================== 
+ 
+ 
+ 
+           const [VAPORIZER_3, setVAPORIZER_3] = useState<string | null>(null);
+           const [audioPlayingVAPORIZER_3, setAudioPlayingVAPORIZER_3] = useState(false);
+           const [inputValueVAPORIZER_3, setInputValueVAPORIZER_3] = useState<any>();
+           const [inputValue2VAPORIZER_3, setInputValue2VAPORIZER_3] = useState<any>();
+           const [VAPORIZER_3_High, setVAPORIZER_3_High] = useState<number | null>(null);
+           const [VAPORIZER_3_Low, setVAPORIZER_3_Low] = useState<number | null>(null);
+           const [exceedThresholdVAPORIZER_3, setExceedThresholdVAPORIZER_3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainVAPORIZER_3, setMaintainVAPORIZER_3] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof VAPORIZER_3_High === 'string' && typeof VAPORIZER_3_Low === 'string' && VAPORIZER_3 !== null && maintainVAPORIZER_3 === false
+                   ) {
+                       const highValue = parseFloat(VAPORIZER_3_High);
+                       const lowValue = parseFloat(VAPORIZER_3_Low);
+                       const VAPORIZER_3Value = parseFloat(VAPORIZER_3);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_3Value)) {
+                           if (highValue <= VAPORIZER_3Value || VAPORIZER_3Value <= lowValue) {
+                               if (!audioPlayingVAPORIZER_3) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingVAPORIZER_3(true);
+                                   setExceedThresholdVAPORIZER_3(true);
+                               }
+                           } else {
+                              setAudioPlayingVAPORIZER_3(false);
+                              setExceedThresholdVAPORIZER_3(false);
+                           }
+                       } 
+                   } 
+               }, [VAPORIZER_3_High, VAPORIZER_3, audioPlayingVAPORIZER_3, VAPORIZER_3_Low,maintainVAPORIZER_3]);
+           
+               useEffect(() => {
+                   if (audioPlayingVAPORIZER_3) {
+                       const audioEnded = () => {
+                          setAudioPlayingVAPORIZER_3(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingVAPORIZER_3]);
+           
+               const handleInputChangeVAPORIZER_3 = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValueVAPORIZER_3(newValue);
+               };
+           
+               const handleInputChange2VAPORIZER_3 = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2VAPORIZER_3(newValue2);
+               };
+               const ChangeMaintainVAPORIZER_3 = async () => {
+                   try {
+                       const newValue = !maintainVAPORIZER_3;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { VAPORIZER_3_Maintain: newValue }
+                       );
+                       setMaintainVAPORIZER_3(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+ 
+           const [VAPORIZER_4, setVAPORIZER_4] = useState<string | null>(null);
+           const [audioPlayingVAPORIZER_4, setAudioPlayingVAPORIZER_4] = useState(false);
+           const [inputValueVAPORIZER_4, setInputValueVAPORIZER_4] = useState<any>();
+           const [inputValue2VAPORIZER_4, setInputValue2VAPORIZER_4] = useState<any>();
+           const [VAPORIZER_4_High, setVAPORIZER_4_High] = useState<number | null>(null);
+           const [VAPORIZER_4_Low, setVAPORIZER_4_Low] = useState<number | null>(null);
+           const [exceedThresholdVAPORIZER_4, setExceedThresholdVAPORIZER_4] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainVAPORIZER_4, setMaintainVAPORIZER_4] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof VAPORIZER_4_High === 'string' && typeof VAPORIZER_4_Low === 'string' && VAPORIZER_4 !== null && maintainVAPORIZER_4 === false
+                   ) {
+                       const highValue = parseFloat(VAPORIZER_4_High);
+                       const lowValue = parseFloat(VAPORIZER_4_Low);
+                       const VAPORIZER_4Value = parseFloat(VAPORIZER_4);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_4Value)) {
+                           if (highValue <= VAPORIZER_4Value || VAPORIZER_4Value <= lowValue) {
+                               if (!audioPlayingVAPORIZER_4) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingVAPORIZER_4(true);
+                                   setExceedThresholdVAPORIZER_4(true);
+                               }
+                           } else {
+                              setAudioPlayingVAPORIZER_4(false);
+                              setExceedThresholdVAPORIZER_4(false);
+                           }
+                       } 
+                   } 
+               }, [VAPORIZER_4_High, VAPORIZER_4, audioPlayingVAPORIZER_4 , VAPORIZER_4_Low,maintainVAPORIZER_4]);
+           
+               useEffect(() => {
+                   if (audioPlayingVAPORIZER_4) {
+                       const audioEnded = () => {
+                          setAudioPlayingVAPORIZER_4(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingVAPORIZER_4]);
+           
+               const handleInputChangeVAPORIZER_4 = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValueVAPORIZER_4(newValue);
+               };
+           
+               const handleInputChange2VAPORIZER_4 = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2VAPORIZER_4(newValue2);
+               };
+               const ChangeMaintainVAPORIZER_4 = async () => {
+                   try {
+                       const newValue = !maintainVAPORIZER_4;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { VAPORIZER_4_Maintain: newValue }
+                       );
+                       setMaintainVAPORIZER_4(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+           const [COOLING_V, setCOOLING_V] = useState<string | null>(null);
+           const [audioPlayingCOOLING_V, setAudioPlayingCOOLING_V] = useState(false);
+           const [inputValueCOOLING_V, setInputValueCOOLING_V] = useState<any>();
+           const [inputValue2COOLING_V, setInputValue2COOLING_V] = useState<any>();
+           const [COOLING_V_High, setCOOLING_V_High] = useState<number | null>(null);
+           const [COOLING_V_Low, setCOOLING_V_Low] = useState<number | null>(null);
+           const [exceedThresholdCOOLING_V, setExceedThresholdCOOLING_V] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainCOOLING_V, setMaintainCOOLING_V] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof COOLING_V_High === 'string' && typeof COOLING_V_Low === 'string' && COOLING_V !== null && maintainCOOLING_V === false
+                   ) {
+                       const highValue = parseFloat(COOLING_V_High);
+                       const lowValue = parseFloat(COOLING_V_Low);
+                       const COOLING_VValue = parseFloat(COOLING_V);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(COOLING_VValue)) {
+                           if (highValue <= COOLING_VValue || COOLING_VValue <= lowValue) {
+                               if (!audioPlayingCOOLING_V) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingCOOLING_V(true);
+                                   setExceedThresholdCOOLING_V(true);
+                               }
+                           } else {
+                              setAudioPlayingCOOLING_V(false);
+                              setExceedThresholdCOOLING_V(false);
+                           }
+                       } 
+                   } 
+               }, [COOLING_V_High, COOLING_V, audioPlayingCOOLING_V, COOLING_V_Low,maintainCOOLING_V]);
+           
+               useEffect(() => {
+                   if (audioPlayingCOOLING_V) {
+                       const audioEnded = () => {
+                          setAudioPlayingCOOLING_V(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingCOOLING_V]);
+           
+               const handleInputChangeCOOLING_V = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValueCOOLING_V(newValue);
+               };
+           
+               const handleInputChange2COOLING_V = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2COOLING_V(newValue2);
+               };
+               const ChangeMaintainCOOLING_V = async () => {
+                   try {
+                       const newValue = !maintainCOOLING_V;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { COOLING_V_Maintain: newValue }
+                       );
+                       setMaintainCOOLING_V(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+ 
+           const [PERCENT_LPG, setPERCENT_LPG] = useState<string | null>(null);
+           const [audioPlayingPERCENT_LPG, setAudioPlayingPERCENT_LPG] = useState(false);
+           const [inputValuePERCENT_LPG, setInputValuePERCENT_LPG] = useState<any>();
+           const [inputValue2PERCENT_LPG, setInputValue2PERCENT_LPG] = useState<any>();
+           const [PERCENT_LPG_High, setPERCENT_LPG_High] = useState<number | null>(null);
+           const [PERCENT_LPG_Low, setPERCENT_LPG_Low] = useState<number | null>(null);
+           const [exceedThresholdPERCENT_LPG, setExceedThresholdPERCENT_LPG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainPERCENT_LPG, setMaintainPERCENT_LPG] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof PERCENT_LPG_High === 'string' && typeof PERCENT_LPG_Low === 'string' && PERCENT_LPG !== null && maintainPERCENT_LPG === false
+                   ) {
+                       const highValue = parseFloat(PERCENT_LPG_High);
+                       const lowValue = parseFloat(PERCENT_LPG_Low);
+                       const PERCENT_LPGValue = parseFloat(PERCENT_LPG);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PERCENT_LPGValue)) {
+                           if (highValue <= PERCENT_LPGValue || PERCENT_LPGValue <= lowValue) {
+                               if (!audioPlayingPERCENT_LPG) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingPERCENT_LPG(true);
+                                   setExceedThresholdPERCENT_LPG(true);
+                               }
+                           } else {
+                              setAudioPlayingPERCENT_LPG(false);
+                              setExceedThresholdPERCENT_LPG(false);
+                           }
+                       } 
+                   } 
+               }, [PERCENT_LPG_High, PERCENT_LPG, audioPlayingPERCENT_LPG, PERCENT_LPG_Low,maintainPERCENT_LPG]);
+           
+               useEffect(() => {
+                   if (audioPlayingPERCENT_LPG) {
+                       const audioEnded = () => {
+                          setAudioPlayingPERCENT_LPG(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingPERCENT_LPG]);
+           
+               const handleInputChangePERCENT_LPG = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValuePERCENT_LPG(newValue);
+               };
+           
+               const handleInputChange2PERCENT_LPG = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2PERCENT_LPG(newValue2);
+               };
+               const ChangeMaintainPERCENT_LPG = async () => {
+                   try {
+                       const newValue = !maintainPERCENT_LPG;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { PERCENT_LPG_Maintain: newValue }
+                       );
+                       setMaintainPERCENT_LPG(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+           const [FCV_3001, setFCV_3001] = useState<string | null>(null);
+           const [audioPlayingFCV_3001, setAudioPlayingFCV_3001] = useState(false);
+           const [inputValueFCV_3001, setInputValueFCV_3001] = useState<any>();
+           const [inputValue2FCV_3001, setInputValue2FCV_3001] = useState<any>();
+           const [FCV_3001_High, setFCV_3001_High] = useState<number | null>(null);
+           const [FCV_3001_Low, setFCV_3001_Low] = useState<number | null>(null);
+           const [exceedThresholdFCV_3001, setExceedThresholdFCV_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainFCV_3001, setMaintainFCV_3001] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof FCV_3001_High === 'string' && typeof FCV_3001_Low === 'string' && FCV_3001 !== null && maintainFCV_3001 === false
+                   ) {
+                       const highValue = parseFloat(FCV_3001_High);
+                       const lowValue = parseFloat(FCV_3001_Low);
+                       const FCV_3001Value = parseFloat(FCV_3001);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FCV_3001Value)) {
+                           if (highValue <= FCV_3001Value || FCV_3001Value <= lowValue) {
+                               if (!audioPlayingFCV_3001) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingFCV_3001(true);
+                                   setExceedThresholdFCV_3001(true);
+                               }
+                           } else {
+                              setAudioPlayingFCV_3001(false);
+                              setExceedThresholdFCV_3001(false);
+                           }
+                       } 
+                   } 
+               }, [FCV_3001_High, FCV_3001, audioPlayingFCV_3001, FCV_3001_Low,maintainFCV_3001]);
+           
+               useEffect(() => {
+                   if (audioPlayingFCV_3001) {
+                       const audioEnded = () => {
+                          setAudioPlayingFCV_3001(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingFCV_3001]);
+           
+               const handleInputChangeFCV_3001 = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValueFCV_3001(newValue);
+               };
+           
+               const handleInputChange2FCV_3001 = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2FCV_3001(newValue2);
+               };
+               const ChangeMaintainFCV_3001 = async () => {
+                   try {
+                       const newValue = !maintainFCV_3001;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { FCV_3001_Maintain: newValue }
+                       );
+                       setMaintainFCV_3001(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+ 
+           const [PERCENT_AIR, setPERCENT_AIR] = useState<string | null>(null);
+           const [audioPlayingPERCENT_AIR, setAudioPlayingPERCENT_AIR] = useState(false);
+           const [inputValuePERCENT_AIR, setInputValuePERCENT_AIR] = useState<any>();
+           const [inputValue2PERCENT_AIR, setInputValue2PERCENT_AIR] = useState<any>();
+           const [PERCENT_AIR_High, setPERCENT_AIR_High] = useState<number | null>(null);
+           const [PERCENT_AIR_Low, setPERCENT_AIR_Low] = useState<number | null>(null);
+           const [exceedThresholdPERCENT_AIR, setExceedThresholdPERCENT_AIR] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainPERCENT_AIR, setMaintainPERCENT_AIR] = useState<boolean>(false);
+           
+           
+               useEffect(() => {
+                   if (typeof PERCENT_AIR_High === 'string' && typeof PERCENT_AIR_Low === 'string' && PERCENT_AIR !== null && maintainPERCENT_AIR === false
+                   ) {
+                       const highValue = parseFloat(PERCENT_AIR_High);
+                       const lowValue = parseFloat(PERCENT_AIR_Low);
+                       const PERCENT_AIRValue = parseFloat(PERCENT_AIR);
+               
+                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PERCENT_AIRValue)) {
+                           if (highValue <= PERCENT_AIRValue || PERCENT_AIRValue <= lowValue) {
+                               if (!audioPlayingPERCENT_AIR) {
+                                   audioRef.current?.play();
+                                   setAudioPlayingPERCENT_AIR(true);
+                                   setExceedThresholdPERCENT_AIR(true);
+                               }
+                           } else {
+                              setAudioPlayingPERCENT_AIR(false);
+                              setExceedThresholdPERCENT_AIR(false);
+                           }
+                       } 
+                   } 
+               }, [PERCENT_AIR_High, PERCENT_AIR, audioPlayingPERCENT_AIR, PERCENT_AIR_Low,maintainPERCENT_AIR]);
+           
+               useEffect(() => {
+                   if (audioPlayingPERCENT_AIR) {
+                       const audioEnded = () => {
+                          setAudioPlayingPERCENT_AIR(false);
+                       };
+                       audioRef.current?.addEventListener('ended', audioEnded);
+                       return () => {
+                           audioRef.current?.removeEventListener('ended', audioEnded);
+                       };
+                   }
+               }, [audioPlayingPERCENT_AIR]);
+           
+               const handleInputChangePERCENT_AIR = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValuePERCENT_AIR(newValue);
+               };
+           
+               const handleInputChange2PERCENT_AIR = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2PERCENT_AIR(newValue2);
+               };
+               const ChangeMaintainPERCENT_AIR = async () => {
+                   try {
+                       const newValue = !maintainPERCENT_AIR;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                           { PERCENT_AIR_Maintain: newValue }
+                       );
+                       setMaintainPERCENT_AIR(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
+ 
+     // =================================================================================================================== 
+ 
+     const [HV_3001, setHV_3001] = useState<string | null>(null);
+     const [audioPlayingHV_3001, setAudioPlayingHV_3001] = useState(false);
+     const [inputValueHV_3001, setInputValueHV_3001] = useState<any>();
+     const [inputValue2HV_3001, setInputValue2HV_3001] = useState<any>();
+     const [HV_3001_High, setHV_3001_High] = useState<number | null>(null);
+     const [HV_3001_Low, setHV_3001_Low] = useState<number | null>(null);
+     const [exceedThresholdHV_3001, setExceedThresholdHV_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainHV_3001, setMaintainHV_3001] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof HV_3001_High === 'string' && typeof HV_3001_Low === 'string' && HV_3001 !== null && maintainHV_3001 === false
+             ) {
+                 const highValue = parseFloat(HV_3001_High);
+                 const lowValue = parseFloat(HV_3001_Low);
+                 const HV_3001Value = parseFloat(HV_3001);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HV_3001Value)) {
+                     if (highValue <= HV_3001Value || HV_3001Value <= lowValue) {
+                         if (!audioPlayingHV_3001) {
+                             audioRef.current?.play();
+                             setAudioPlayingHV_3001(true);
+                             setExceedThresholdHV_3001(true);
+                         }
+                     } else {
+                        setAudioPlayingHV_3001(false);
+                        setExceedThresholdHV_3001(false);
+                     }
+                 } 
+             } 
+         }, [HV_3001_High, HV_3001, audioPlayingHV_3001, HV_3001_Low,maintainHV_3001]);
+     
+         useEffect(() => {
+             if (audioPlayingHV_3001) {
+                 const audioEnded = () => {
+                    setAudioPlayingHV_3001(false);
+                 };
+                 audioRef.current?.addEventListener('ended', audioEnded);
+                 return () => {
+                     audioRef.current?.removeEventListener('ended', audioEnded);
+                 };
+             }
+         }, [audioPlayingHV_3001]);
+     
+         const handleInputChangeHV_3001 = (event: any) => {
+             const newValue = event.target.value;
+             setInputValueHV_3001(newValue);
+         };
+     
+         const handleInputChange2HV_3001 = (event: any) => {
+             const newValue2 = event.target.value;
+             setInputValue2HV_3001(newValue2);
+         };
+         const ChangeMaintainHV_3001 = async () => {
+             try {
+                 const newValue = !maintainHV_3001;
+                 await httpApi.post(
+                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                     { HV_3001_Maintain: newValue }
+                 );
+                 setMaintainHV_3001(newValue);
+                 
+             } catch (error) {}
+         };
+ 
+ 
+     // =================================================================================================================== 
+ 
+         // =================================================================================================================== 
+ 
+         const [FCV_MODE, setFCV_MODE] = useState<string | null>(null);
+         const [audioPlayingFCV_MODE, setAudioPlayingFCV_MODE] = useState(false);
+         const [inputValueFCV_MODE, setInputValueFCV_MODE] = useState<any>();
+         const [inputValue2FCV_MODE, setInputValue2FCV_MODE] = useState<any>();
+         const [FCV_MODE_High, setFCV_MODE_High] = useState<number | null>(null);
+         const [FCV_MODE_Low, setFCV_MODE_Low] = useState<number | null>(null);
+         const [exceedThresholdFCV_MODE, setExceedThresholdFCV_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         
+         const [maintainFCV_MODE, setMaintainFCV_MODE] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof FCV_MODE_High === 'string' && typeof FCV_MODE_Low === 'string' && FCV_MODE !== null && maintainFCV_MODE === false
+                 ) {
+                     const highValue = parseFloat(FCV_MODE_High);
+                     const lowValue = parseFloat(FCV_MODE_Low);
+                     const FCV_MODEValue = parseFloat(FCV_MODE);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FCV_MODEValue)) {
+                         if (highValue <= FCV_MODEValue || FCV_MODEValue <= lowValue) {
+                             if (!audioPlayingFCV_MODE) {
+                                 audioRef.current?.play();
+                                 setAudioPlayingFCV_MODE(true);
+                                 setExceedThresholdFCV_MODE(true);
+                             }
+                         } else {
+                            setAudioPlayingFCV_MODE(false);
+                            setExceedThresholdFCV_MODE(false);
+                         }
+                     } 
+                 } 
+             }, [FCV_MODE_High, FCV_MODE, audioPlayingFCV_MODE, FCV_MODE_Low,maintainFCV_MODE]);
+         
+             useEffect(() => {
+                 if (audioPlayingFCV_MODE) {
+                     const audioEnded = () => {
+                        setAudioPlayingFCV_MODE(false);
+                     };
+                     audioRef.current?.addEventListener('ended', audioEnded);
+                     return () => {
+                         audioRef.current?.removeEventListener('ended', audioEnded);
+                     };
+                 }
+             }, [audioPlayingFCV_MODE]);
+         
+             const handleInputChangeFCV_MODE = (event: any) => {
+                 const newValue = event.target.value;
+                 setInputValueFCV_MODE(newValue);
+             };
+         
+             const handleInputChange2FCV_MODE = (event: any) => {
+                 const newValue2 = event.target.value;
+                 setInputValue2FCV_MODE(newValue2);
+             };
+             const ChangeMaintainFCV_MODE = async () => {
+                 try {
+                     const newValue = !maintainFCV_MODE;
+                     await httpApi.post(
+                         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                         { FCV_MODE_Maintain: newValue }
+                     );
+                     setMaintainFCV_MODE(newValue);
+                     
+                 } catch (error) {}
+             };
+     
+     
+         // =================================================================================================================== 
+ 
+             // =================================================================================================================== 
+ 
+     const [TOTAL_CNG, setTOTAL_CNG] = useState<string | null>(null);
+     const [audioPlayingTOTAL_CNG, setAudioPlayingTOTAL_CNG] = useState(false);
+     const [inputValueTOTAL_CNG, setInputValueTOTAL_CNG] = useState<any>();
+     const [inputValue2TOTAL_CNG, setInputValue2TOTAL_CNG] = useState<any>();
+     const [TOTAL_CNG_High, setTOTAL_CNG_High] = useState<number | null>(null);
+     const [TOTAL_CNG_Low, setTOTAL_CNG_Low] = useState<number | null>(null);
+     const [exceedThresholdTOTAL_CNG, setExceedThresholdTOTAL_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainTOTAL_CNG, setMaintainTOTAL_CNG] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof TOTAL_CNG_High === 'string' && typeof TOTAL_CNG_Low === 'string' && TOTAL_CNG !== null && maintainTOTAL_CNG === false
+             ) {
+                 const highValue = parseFloat(TOTAL_CNG_High);
+                 const lowValue = parseFloat(TOTAL_CNG_Low);
+                 const TOTAL_CNGValue = parseFloat(TOTAL_CNG);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TOTAL_CNGValue)) {
+                     if (highValue <= TOTAL_CNGValue || TOTAL_CNGValue <= lowValue) {
+                         if (!audioPlayingTOTAL_CNG) {
+                             audioRef.current?.play();
+                             setAudioPlayingTOTAL_CNG(true);
+                             setExceedThresholdTOTAL_CNG(true);
+                         }
+                     } else {
+                        setAudioPlayingTOTAL_CNG(false);
+                        setExceedThresholdTOTAL_CNG(false);
+                     }
+                 } 
+             } 
+         }, [TOTAL_CNG_High, TOTAL_CNG, audioPlayingTOTAL_CNG, TOTAL_CNG_Low,maintainTOTAL_CNG]);
+     
+         useEffect(() => {
+             if (audioPlayingTOTAL_CNG) {
+                 const audioEnded = () => {
+                    setAudioPlayingTOTAL_CNG(false);
+                 };
+                 audioRef.current?.addEventListener('ended', audioEnded);
+                 return () => {
+                     audioRef.current?.removeEventListener('ended', audioEnded);
+                 };
+             }
+         }, [audioPlayingTOTAL_CNG]);
+     
+         const handleInputChangeTOTAL_CNG = (event: any) => {
+             const newValue = event.target.value;
+             setInputValueTOTAL_CNG(newValue);
+         };
+     
+         const handleInputChange2TOTAL_CNG = (event: any) => {
+             const newValue2 = event.target.value;
+             setInputValue2TOTAL_CNG(newValue2);
+         };
+         const ChangeMaintainTOTAL_CNG = async () => {
+             try {
+                 const newValue = !maintainTOTAL_CNG;
+                 await httpApi.post(
+                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                     { TOTAL_CNG_Maintain: newValue }
+                 );
+                 setMaintainTOTAL_CNG(newValue);
+                 
+             } catch (error) {}
+         };
+ 
+ 
+     // =================================================================================================================== 
+ 
+ 
+     const [TM3002_CNG, setTM3002_CNG] = useState<string | null>(null);
+     const [audioPlayingTM3002_CNG, setAudioPlayingTM3002_CNG] = useState(false);
+     const [inputValueTM3002_CNG, setInputValueTM3002_CNG] = useState<any>();
+     const [inputValue2TM3002_CNG, setInputValue2TM3002_CNG] = useState<any>();
+     const [TM3002_CNG_High, setTM3002_CNG_High] = useState<number | null>(null);
+     const [TM3002_CNG_Low, setTM3002_CNG_Low] = useState<number | null>(null);
+     const [exceedThresholdTM3002_CNG, setExceedThresholdTM3002_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainTM3002_CNG, setMaintainTM3002_CNG] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof TM3002_CNG_High === 'string' && typeof TM3002_CNG_Low === 'string' && TM3002_CNG !== null && maintainTM3002_CNG === false
+             ) {
+                 const highValue = parseFloat(TM3002_CNG_High);
+                 const lowValue = parseFloat(TM3002_CNG_Low);
+                 const TM3002_CNGValue = parseFloat(TM3002_CNG);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM3002_CNGValue)) {
+                     if (highValue <= TM3002_CNGValue || TM3002_CNGValue <= lowValue) {
+                         if (!audioPlayingTM3002_CNG) {
+                             audioRef.current?.play();
+                             setAudioPlayingTM3002_CNG(true);
+                             setExceedThresholdTM3002_CNG(true);
+                         }
+                     } else {
+                        setAudioPlayingTM3002_CNG(false);
+                        setExceedThresholdTM3002_CNG(false);
+                     }
+                 } 
+             } 
+         }, [TM3002_CNG_High, TM3002_CNG, audioPlayingTM3002_CNG, TM3002_CNG_Low,maintainTM3002_CNG]);
+     
+         useEffect(() => {
+             if (audioPlayingTM3002_CNG) {
+                 const audioEnded = () => {
+                    setAudioPlayingTM3002_CNG(false);
+                 };
+                 audioRef.current?.addEventListener('ended', audioEnded);
+                 return () => {
+                     audioRef.current?.removeEventListener('ended', audioEnded);
+                 };
+             }
+         }, [audioPlayingTM3002_CNG]);
+     
+         const handleInputChangeTM3002_CNG = (event: any) => {
+             const newValue = event.target.value;
+             setInputValueTM3002_CNG(newValue);
+         };
+     
+         const handleInputChange2TM3002_CNG = (event: any) => {
+             const newValue2 = event.target.value;
+             setInputValue2TM3002_CNG(newValue2);
+         };
+         const ChangeMaintainTM3002_CNG = async () => {
+             try {
+                 const newValue = !maintainTM3002_CNG;
+                 await httpApi.post(
+                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                     { TM3002_CNG_Maintain: newValue }
+                 );
+                 setMaintainTM3002_CNG(newValue);
+                 
+             } catch (error) {}
+         };
+ 
+ 
+     // =================================================================================================================== 
+ 
+         // =================================================================================================================== 
+ 
+ const [TM3003_CNG, setTM3003_CNG] = useState<string | null>(null);
+ const [audioPlayingTM3003_CNG, setAudioPlayingTM3003_CNG] = useState(false);
+ const [inputValueTM3003_CNG, setInputValueTM3003_CNG] = useState<any>();
+ const [inputValue2TM3003_CNG, setInputValue2TM3003_CNG] = useState<any>();
+ const [TM3003_CNG_High, setTM3003_CNG_High] = useState<number | null>(null);
+ const [TM3003_CNG_Low, setTM3003_CNG_Low] = useState<number | null>(null);
+ const [exceedThresholdTM3003_CNG, setExceedThresholdTM3003_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ 
+ const [maintainTM3003_CNG, setMaintainTM3003_CNG] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof TM3003_CNG_High === 'string' && typeof TM3003_CNG_Low === 'string' && TM3003_CNG !== null && maintainTM3003_CNG === false
+         ) {
+             const highValue = parseFloat(TM3003_CNG_High);
+             const lowValue = parseFloat(TM3003_CNG_Low);
+             const TM3003_CNGValue = parseFloat(TM3003_CNG);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM3003_CNGValue)) {
+                 if (highValue <= TM3003_CNGValue || TM3003_CNGValue <= lowValue) {
+                     if (!audioPlayingTM3003_CNG) {
+                         audioRef.current?.play();
+                         setAudioPlayingTM3003_CNG(true);
+                         setExceedThresholdTM3003_CNG(true);
+                     }
+                 } else {
+                    setAudioPlayingTM3003_CNG(false);
+                    setExceedThresholdTM3003_CNG(false);
+                 }
+             } 
+         } 
+     }, [TM3003_CNG_High, TM3003_CNG, audioPlayingTM3003_CNG, TM3003_CNG_Low,maintainTM3003_CNG]);
+ 
+     useEffect(() => {
+         if (audioPlayingTM3003_CNG) {
+             const audioEnded = () => {
+                setAudioPlayingTM3003_CNG(false);
+             };
+             audioRef.current?.addEventListener('ended', audioEnded);
+             return () => {
+                 audioRef.current?.removeEventListener('ended', audioEnded);
+             };
+         }
+     }, [audioPlayingTM3003_CNG]);
+ 
+     const handleInputChangeTM3003_CNG = (event: any) => {
+         const newValue = event.target.value;
+         setInputValueTM3003_CNG(newValue);
+     };
+ 
+     const handleInputChange2TM3003_CNG = (event: any) => {
+         const newValue2 = event.target.value;
+         setInputValue2TM3003_CNG(newValue2);
+     };
+     const ChangeMaintainTM3003_CNG = async () => {
+         try {
+             const newValue = !maintainTM3003_CNG;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                 { TM3003_CNG_Maintain: newValue }
+             );
+             setMaintainTM3003_CNG(newValue);
+             
+         } catch (error) {}
+     };
+ 
+ 
+ // =================================================================================================================== 
+ 
+ 
+ const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
+ const [audioPlayingWB_Setpoint, setAudioPlayingWB_Setpoint] = useState(false);
+ const [inputValueWB_Setpoint, setInputValueWB_Setpoint] = useState<any>();
+ const [inputValue2WB_Setpoint, setInputValue2WB_Setpoint] = useState<any>();
+ const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(null);
+ const [WB_Setpoint_Low, setWB_Setpoint_Low] = useState<number | null>(null);
+ const [exceedThresholdWB_Setpoint, setExceedThresholdWB_Setpoint] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ 
+ const [maintainWB_Setpoint, setMaintainWB_Setpoint] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof WB_Setpoint_High === 'string' && typeof WB_Setpoint_Low === 'string' && WB_Setpoint !== null && maintainWB_Setpoint === false
+         ) {
+             const highValue = parseFloat(WB_Setpoint_High);
+             const lowValue = parseFloat(WB_Setpoint_Low);
+             const WB_SetpointValue = parseFloat(WB_Setpoint);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WB_SetpointValue)) {
+                 if (highValue <= WB_SetpointValue || WB_SetpointValue <= lowValue) {
+                     if (!audioPlayingWB_Setpoint) {
+                         audioRef.current?.play();
+                         setAudioPlayingWB_Setpoint(true);
+                         setExceedThresholdWB_Setpoint(true);
+                     }
+                 } else {
+                    setAudioPlayingWB_Setpoint(false);
+                    setExceedThresholdWB_Setpoint(false);
+                 }
+             } 
+         } 
+     }, [WB_Setpoint_High, WB_Setpoint, audioPlayingWB_Setpoint, WB_Setpoint_Low,maintainWB_Setpoint]);
+ 
+     useEffect(() => {
+         if (audioPlayingWB_Setpoint) {
+             const audioEnded = () => {
+                setAudioPlayingWB_Setpoint(false);
+             };
+             audioRef.current?.addEventListener('ended', audioEnded);
+             return () => {
+                 audioRef.current?.removeEventListener('ended', audioEnded);
+             };
+         }
+     }, [audioPlayingWB_Setpoint]);
+ 
+     const handleInputChangeWB_Setpoint = (event: any) => {
+         const newValue = event.target.value;
+         setInputValueWB_Setpoint(newValue);
+     };
+ 
+     const handleInputChange2WB_Setpoint = (event: any) => {
+         const newValue2 = event.target.value;
+         setInputValue2WB_Setpoint(newValue2);
+     };
+     const ChangeMaintainWB_Setpoint = async () => {
+         try {
+             const newValue = !maintainWB_Setpoint;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                 { WB_Setpoint_Maintain: newValue }
+             );
+             setMaintainWB_Setpoint(newValue);
+             
+         } catch (error) {}
+     };
+ 
+ 
+ // =================================================================================================================== 
+ 
+ 
+ 
+         // =================================================================================================================== 
+ 
+         const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
+         const [audioPlayingRATIO_MODE, setAudioPlayingRATIO_MODE] = useState(false);
+         const [inputValueRATIO_MODE, setInputValueRATIO_MODE] = useState<any>();
+         const [inputValue2RATIO_MODE, setInputValue2RATIO_MODE] = useState<any>();
+         const [RATIO_MODE_High, setRATIO_MODE_High] = useState<number | null>(null);
+         const [RATIO_MODE_Low, setRATIO_MODE_Low] = useState<number | null>(null);
+         const [exceedThresholdRATIO_MODE, setExceedThresholdRATIO_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         
+         const [maintainRATIO_MODE, setMaintainRATIO_MODE] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof RATIO_MODE_High === 'string' && typeof RATIO_MODE_Low === 'string' && RATIO_MODE !== null && maintainRATIO_MODE === false
+                 ) {
+                     const highValue = parseFloat(RATIO_MODE_High);
+                     const lowValue = parseFloat(RATIO_MODE_Low);
+                     const RATIO_MODEValue = parseFloat(RATIO_MODE);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(RATIO_MODEValue)) {
+                         if (highValue <= RATIO_MODEValue || RATIO_MODEValue <= lowValue) {
+                             if (!audioPlayingRATIO_MODE) {
+                                 audioRef.current?.play();
+                                 setAudioPlayingRATIO_MODE(true);
+                                 setExceedThresholdRATIO_MODE(true);
+                             }
+                         } else {
+                            setAudioPlayingRATIO_MODE(false);
+                            setExceedThresholdRATIO_MODE(false);
+                         }
+                     } 
+                 } 
+             }, [RATIO_MODE_High, RATIO_MODE, audioPlayingRATIO_MODE, RATIO_MODE_Low,maintainRATIO_MODE]);
+         
+             useEffect(() => {
+                 if (audioPlayingRATIO_MODE) {
+                     const audioEnded = () => {
+                        setAudioPlayingRATIO_MODE(false);
+                     };
+                     audioRef.current?.addEventListener('ended', audioEnded);
+                     return () => {
+                         audioRef.current?.removeEventListener('ended', audioEnded);
+                     };
+                 }
+             }, [audioPlayingRATIO_MODE]);
+         
+             const handleInputChangeRATIO_MODE = (event: any) => {
+                 const newValue = event.target.value;
+                 setInputValueRATIO_MODE(newValue);
+             };
+         
+             const handleInputChange2RATIO_MODE = (event: any) => {
+                 const newValue2 = event.target.value;
+                 setInputValue2RATIO_MODE(newValue2);
+             };
+             const ChangeMaintainRATIO_MODE = async () => {
+                 try {
+                     const newValue = !maintainRATIO_MODE;
+                     await httpApi.post(
+                         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                         { RATIO_MODE_Maintain: newValue }
+                     );
+                     setMaintainRATIO_MODE(newValue);
+                     
+                 } catch (error) {}
+             };
+         
+         
+         // =================================================================================================================== 
+         
+    
+         
+        
+          // =================================================================================================================== 
+
+    
+         const [HR_BC, setHR_BC] = useState<string | null>(null);
+         const [audioPlayingHR_BC, setAudioPlayingHR_BC] = useState(false);
+         const [inputValueHR_BC, setInputValueHR_BC] = useState<any>();
+         const [inputValue2HR_BC, setInputValue2HR_BC] = useState<any>();
+         const [HR_BC_High, setHR_BC_High] = useState<number | null>(null);
+         const [HR_BC_Low, setHR_BC_Low] = useState<number | null>(null);
+         const [exceedThresholdHR_BC, setExceedThresholdHR_BC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         
+         const [maintainHR_BC, setMaintainHR_BC] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof HR_BC_High === 'string' && typeof HR_BC_Low === 'string' && HR_BC !== null && maintainHR_BC === false
+                 ) {
+                     const highValue = parseFloat(HR_BC_High);
+                     const lowValue = parseFloat(HR_BC_Low);
+                     const HR_BCValue = parseFloat(HR_BC);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HR_BCValue)) {
+                         if (highValue <= HR_BCValue || HR_BCValue <= lowValue) {
+                             if (!audioPlayingHR_BC) {
+                                 audioRef.current?.play();
+                                 setAudioPlayingHR_BC(true);
+                                 setExceedThresholdHR_BC(true);
+                             }
+                         } else {
+                            setAudioPlayingHR_BC(false);
+                             setExceedThresholdHR_BC(false);
+                         }
+                     } 
+                 } 
+             }, [HR_BC_High, HR_BC, audioPlayingHR_BC, HR_BC_Low,maintainHR_BC]);
+         
+             useEffect(() => {
+                 if (audioPlayingHR_BC) {
+                     const audioEnded = () => {
+                        setAudioPlayingHR_BC(false);
+                     };
+                     audioRef.current?.addEventListener('ended', audioEnded);
+                     return () => {
+                         audioRef.current?.removeEventListener('ended', audioEnded);
+                     };
+                 }
+             }, [audioPlayingHR_BC]);
+         
+             const handleInputChangeHR_BC = (event: any) => {
+                 const newValue = event.target.value;
+                 setInputValueHR_BC(newValue);
+             };
+         
+             const handleInputChange2HR_BC = (event: any) => {
+                 const newValue2 = event.target.value;
+                 setInputValue2HR_BC(newValue2);
+             };
+             const ChangeMaintainHR_BC = async () => {
+                 try {
+                     const newValue = !maintainHR_BC;
+                     await httpApi.post(
+                         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                         { HR_BC_Maintain: newValue }
+                     );
+                     setMaintainHR_BC(newValue);
+                     
+                 } catch (error) {}
+             };
+    
+    
+         // =================================================================================================================== 
+    
+    
+         const [SD, setSD] = useState<string | null>(null);
+         const [audioPlayingSD, setAudioPlayingSD] = useState(false);
+         const [inputValueSD, setInputValueSD] = useState<any>();
+         const [inputValue2SD, setInputValue2SD] = useState<any>();
+         const [SD_High, setSD_High] = useState<number | null>(null);
+         const [SD_Low, setSD_Low] = useState<number | null>(null);
+         const [exceedThresholdSD, setExceedThresholdSD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         
+         const [maintainSD, setMaintainSD] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof SD_High === 'string' && typeof SD_Low === 'string' && SD !== null && maintainSD === false
+                 ) {
+                     const highValue = parseFloat(SD_High);
+                     const lowValue = parseFloat(SD_Low);
+                     const SDValue = parseFloat(SD);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDValue)) {
+                         if (highValue <= SDValue || SDValue <= lowValue) {
+                             if (!audioPlayingSD) {
+                                 audioRef.current?.play();
+                                 setAudioPlayingSD(true);
+                                 setExceedThresholdSD(true);
+                             }
+                         } else {
+                            setAudioPlayingSD(false);
+                            setExceedThresholdSD(false);
+                         }
+                     } 
+                 } 
+             }, [SD_High, SD, audioPlayingSD, SD_Low,maintainSD]);
+         
+             useEffect(() => {
+                 if (audioPlayingSD) {
+                     const audioEnded = () => {
+                        setAudioPlayingSD(false);
+                     };
+                     audioRef.current?.addEventListener('ended', audioEnded);
+                     return () => {
+                         audioRef.current?.removeEventListener('ended', audioEnded);
+                     };
+                 }
+             }, [audioPlayingSD]);
+         
+             const handleInputChangeSD = (event: any) => {
+                 const newValue = event.target.value;
+                 setInputValueSD(newValue);
+             };
+         
+             const handleInputChange2SD = (event: any) => {
+                 const newValue2 = event.target.value;
+                 setInputValue2SD(newValue2);
+             };
+             const ChangeMaintainSD = async () => {
+                 try {
+                     const newValue = !maintainSD;
+                     await httpApi.post(
+                         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                         { SD_Maintain: newValue }
+                     );
+                     setMaintainSD(newValue);
+                     
+                 } catch (error) {}
+             };
+    
+    
+         // =================================================================================================================== 
+    
+    
+    
+              const [ESD_3001, setESD_3001] = useState<string | null>(null);
+              const [audioPlayingESD_3001, setAudioPlayingESD_3001] = useState(false);
+              const [inputValueESD_3001, setInputValueESD_3001] = useState<any>();
+              const [inputValue2ESD_3001, setInputValue2ESD_3001] = useState<any>();
+              const [ESD_3001_High, setESD_3001_High] = useState<number | null>(null);
+              const [ESD_3001_Low, setESD_3001_Low] = useState<number | null>(null);
+              const [exceedThresholdESD_3001, setExceedThresholdESD_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              
+              const [maintainESD_3001, setMaintainESD_3001] = useState<boolean>(false);
+              
+              
+                  useEffect(() => {
+                      if (typeof ESD_3001_High === 'string' && typeof ESD_3001_Low === 'string' && ESD_3001 !== null && maintainESD_3001 === false
+                      ) {
+                          const highValue = parseFloat(ESD_3001_High);
+                          const lowValue = parseFloat(ESD_3001_Low);
+                          const ESD_3001Value = parseFloat(ESD_3001);
+                  
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ESD_3001Value)) {
+                              if (highValue <= ESD_3001Value || ESD_3001Value <= lowValue) {
+                                  if (!audioPlayingESD_3001) {
+                                      audioRef.current?.play();
+                                      setAudioPlayingESD_3001(true);
+                                      setExceedThresholdESD_3001(true);
+                                  }
+                              } else {
+                                 setAudioPlayingESD_3001(false);
+                                 setExceedThresholdESD_3001(false);
+                              }
+                          } 
+                      } 
+                  }, [ESD_3001_High, ESD_3001, audioPlayingESD_3001, ESD_3001_Low,maintainESD_3001]);
+              
+                  useEffect(() => {
+                      if (audioPlayingESD_3001) {
+                          const audioEnded = () => {
+                             setAudioPlayingESD_3001(false);
+                          };
+                          audioRef.current?.addEventListener('ended', audioEnded);
+                          return () => {
+                              audioRef.current?.removeEventListener('ended', audioEnded);
+                          };
+                      }
+                  }, [audioPlayingESD_3001]);
+              
+                  const handleInputChangeESD_3001 = (event: any) => {
+                      const newValue = event.target.value;
+                      setInputValueESD_3001(newValue);
+                  };
+              
+                  const handleInputChange2ESD_3001 = (event: any) => {
+                      const newValue2 = event.target.value;
+                      setInputValue2ESD_3001(newValue2);
+                  };
+                  const ChangeMaintainESD_3001 = async () => {
+                      try {
+                          const newValue = !maintainESD_3001;
+                          await httpApi.post(
+                              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                              { ESD_3001_Maintain: newValue }
+                          );
+                          setMaintainESD_3001(newValue);
+                          
+                      } catch (error) {}
+                  };
+         
+         
+              // =================================================================================================================== 
+    
+    
+         
+         
+         // =================================================================================================================== 
+         
+
+
+
+
+    const handleButtonClick = async () => {
+        try {
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+
+
+
+                {
+                    
+                    HR_BC_High: inputValueHR_BC,HR_BC_Low:inputValue2HR_BC,
+                    SD_High: inputValueSD,SD_Low:inputValue2SD,
+
+
+                    ESD_3001_High: inputValueESD_3001,ESD_3001_Low:inputValue2ESD_3001,
+              
+                    PT_3006_High: inputValuePT_3006,PT_3006_Low:inputValue2PT_3006,
+                    TT_3003_High: inputValueTT_3003,TT_3003_Low:inputValue2TT_3003,
+                    PT_3005_High: inputValuePT_3005,PT_3005_Low:inputValue2PT_3005,
+
+
+                    TT_3004_High: inputValueTT_3004,TT_3004_Low:inputValue2TT_3004,
+                    TG_3005_High: inputValueTG_3005,TG_3005_Low:inputValue2TG_3005,
+                    WB_3001_High: inputValueWB_3001,WB_3001_Low:inputValue2WB_3001,
+
+                    GD_3002_High: inputValueGD_3002,GD_3002_Low:inputValue2GD_3002,
+                    GD_3003_High: inputValueGD_3003,GD_3003_Low:inputValue2GD_3003,
+                    GD_3004_High: inputValueGD_3004,GD_3004_Low:inputValue2GD_3004,
+
+
+                    GD_3006_High: inputValueGD_3006,GD_3006_Low:inputValue2GD_3006,
+                    GD_3005_High: inputValueGD_3005,GD_3005_Low:inputValue2GD_3005,
+
+
+                    TM_3002_SNG_High: inputValueTM_3002_SNG,TM_3002_SNG_Low:inputValue2TM_3002_SNG,
+                    TM_3003_SNG_High: inputValueTM_3003_SNG,TM_3003_SNG_Low:inputValue2TM_3003_SNG,
+
+                    TOTAL_SNG_High: inputValueTOTAL_SNG,TOTAL_SNG_Low:inputValue2TOTAL_SNG,
+                    SDV_3004_High: inputValueSDV_3004,SDV_3004_Low:inputValue2SDV_3004,
+
+                    SDV_3003_High: inputValueSDV_3003,SDV_3003_Low:inputValue2SDV_3003,
+                    GD1_STATUS_High: inputValueGD1_STATUS,GD1_STATUS_Low:inputValue2GD1_STATUS,
+
+
+                    GD2_STATUS_High: inputValueGD2_STATUS,GD2_STATUS_Low:inputValue2GD2_STATUS,
+                    GD3_STATUS_High: inputValueGD3_STATUS,GD3_STATUS_Low:inputValue2GD3_STATUS,
+                    GD4_STATUS_High: inputValueGD4_STATUS,GD4_STATUS_Low:inputValue2GD4_STATUS,
+
+                    GD5_STATUS_High: inputValueGD5_STATUS,GD5_STATUS_Low:inputValue2GD5_STATUS,
+
+                    EVC_02_Vm_of_Last_Day_High: inputValueEVC_02_Vm_of_Last_Day,EVC_02_Vm_of_Last_Day_Low:inputValue2EVC_02_Vm_of_Last_Day,
+
+
+
+
+
+
+
+                    VAPORIZER_1_High: inputValueVAPORIZER_1,VAPORIZER_1_Low:inputValue2VAPORIZER_1,
+                    VAPORIZER_2_High: inputValueVAPORIZER_2,VAPORIZER_2_Low:inputValue2VAPORIZER_2,
+                    ESD_High: inputValueESD,ESD_Low:inputValue2ESD,
+
+
+                    VAPORIZER_3_High: inputValueVAPORIZER_3,VAPORIZER_3_Low:inputValue2VAPORIZER_3,
+                    VAPORIZER_4_High: inputValueVAPORIZER_4,VAPORIZER_4_Low:inputValue2VAPORIZER_4,
+                    COOLING_V_High: inputValueCOOLING_V,COOLING_V_Low:inputValue2COOLING_V,
+
+                    FCV_3001_High: inputValueFCV_3001,FCV_3001_Low:inputValue2FCV_3001,
+                    PERCENT_LPG_High: inputValuePERCENT_LPG,PERCENT_LPG_Low:inputValue2PERCENT_LPG,
+
+
+                    HV_3001_High: inputValueHV_3001,HV_3001_Low:inputValue2HV_3001,
+                    PERCENT_AIR_High: inputValuePERCENT_AIR,PERCENT_AIR_Low:inputValue2PERCENT_AIR,
+
+
+                    FCV_MODE_High: inputValueFCV_MODE,FCV_MODE_Low:inputValue2FCV_MODE,
+                    TOTAL_CNG_High: inputValueTOTAL_CNG,TOTAL_CNG_Low:inputValue2TOTAL_CNG,
+
+                    TM3002_CNG_High: inputValueTM3002_CNG,TM3002_CNG_Low:inputValue2TM3002_CNG,
+                    TM3003_CNG_High: inputValueTM3003_CNG,TM3003_CNG_Low:inputValue2TM3003_CNG,
+
+                    WB_Setpoint_High: inputValueWB_Setpoint,WB_Setpoint_Low:inputValue2WB_Setpoint,
+
+
+                    RATIO_MODE_High: inputValueRATIO_MODE,RATIO_MODE_Low:inputValue2RATIO_MODE,
+
+                }
+            );
+     
+
+            setHR_BC_High(inputValueHR_BC);
+            setHR_BC_Low(inputValue2HR_BC);
+
+            setSD_High(inputValueSD);
+            setSD_Low(inputValue2SD);
+
+            setSD_High(inputValueSD);
+            setSD_Low(inputValue2SD);
+
+            setESD_3001_High(inputValueESD_3001);
+            setESD_3001_Low(inputValue2ESD_3001);
+
+        
+
+            setPT_3005_High(inputValuePT_3005);
+            setPT_3005_Low(inputValue2PT_3005);
+
+            setPT_3006_High(inputValuePT_3006);
+            setPT_3006_Low(inputValue2PT_3006);
+
+            setTT_3003_High(inputValueTT_3003);
+            setTT_3003_Low(inputValue2TT_3003);
+
+            setTT_3003_High(inputValueTT_3003);
+            setTT_3003_Low(inputValue2TT_3003);
+
+            setTT_3004_High(inputValueTT_3004);
+            setTT_3004_Low(inputValue2TT_3004);
+
+            setTG_3005_High(inputValueTG_3005);
+            setTG_3005_Low(inputValue2TG_3005);
+
+            setWB_3001_High(inputValueWB_3001);
+            setWB_3001_Low(inputValue2WB_3001);
+
+
+            setGD_3002_High(inputValueGD_3002);
+            setGD_3002_Low(inputValue2GD_3002);
+
+            setGD_3003_High(inputValueGD_3003);
+            setGD_3003_Low(inputValue2GD_3003);
+
+            setGD_3004_High(inputValueGD_3004);
+            setGD_3004_Low(inputValue2GD_3004);
+
+            setGD_3006_High(inputValueGD_3006);
+            setGD_3006_Low(inputValue2GD_3006);
+
+            setGD_3005_High(inputValueGD_3005);
+            setGD_3005_Low(inputValue2GD_3005);
+
+
+            setTM_3003_SNG_High(inputValueTM_3003_SNG);
+            setTM_3003_SNG_Low(inputValue2TM_3003_SNG);
+
+            setTM_3002_SNG_High(inputValueTM_3002_SNG);
+            setTM_3002_SNG_Low(inputValue2TM_3002_SNG);
+
+            setTOTAL_SNG_High(inputValueTOTAL_SNG);
+            setTOTAL_SNG_Low(inputValue2TOTAL_SNG);
+
+            setSDV_3004_High(inputValueSDV_3004);
+            setSDV_3004_Low(inputValue2SDV_3004);
+
+
+
+            setGD2_STATUS_High(inputValueGD2_STATUS);
+            setGD2_STATUS_Low(inputValue2GD2_STATUS);
+
+            setGD3_STATUS_High(inputValueGD3_STATUS);
+            setGD3_STATUS_Low(inputValue2GD3_STATUS);
+
+            setGD4_STATUS_High(inputValueGD4_STATUS);
+            setGD4_STATUS_Low(inputValue2GD4_STATUS);
+
+            setGD5_STATUS_High(inputValueGD5_STATUS);
+            setGD5_STATUS_Low(inputValue2GD5_STATUS);
+
+            setEVC_02_Vm_of_Last_Day_High(inputValueEVC_02_Vm_of_Last_Day);
+            setEVC_02_Vm_of_Last_Day_Low(inputValue2EVC_02_Vm_of_Last_Day);
+
+
+          
+
+    
+
+    
+
+
+            setVAPORIZER_1_High(inputValueVAPORIZER_1);
+            setVAPORIZER_1_Low(inputValue2VAPORIZER_1);
+
+            setVAPORIZER_2_High(inputValueVAPORIZER_2);
+            setVAPORIZER_2_Low(inputValue2VAPORIZER_2);
+
+            setVAPORIZER_2_High(inputValueVAPORIZER_2);
+            setVAPORIZER_2_Low(inputValue2VAPORIZER_2);
+
+            setVAPORIZER_3_High(inputValueVAPORIZER_3);
+            setVAPORIZER_3_Low(inputValue2VAPORIZER_3);
+
+            setVAPORIZER_4_High(inputValueVAPORIZER_4);
+            setVAPORIZER_4_Low(inputValue2VAPORIZER_4);
+
+            setCOOLING_V_High(inputValueCOOLING_V);
+            setCOOLING_V_Low(inputValue2COOLING_V);
+
+
+
+
+            setFCV_3001_High(inputValueFCV_3001);
+            setFCV_3001_Low(inputValue2FCV_3001);
+
+            setPERCENT_LPG_High(inputValuePERCENT_LPG);
+            setPERCENT_LPG_Low(inputValue2PERCENT_LPG);
+
+            setHV_3001_High(inputValueHV_3001);
+            setHV_3001_Low(inputValue2HV_3001);
+
+            setPERCENT_AIR_High(inputValuePERCENT_AIR);
+            setPERCENT_AIR_Low(inputValue2PERCENT_AIR);
+
+
+            setTOTAL_CNG_High(inputValueTOTAL_CNG);
+            setTOTAL_CNG_Low(inputValue2TOTAL_CNG);
+
+            setFCV_MODE_High(inputValueFCV_MODE);
+            setFCV_MODE_Low(inputValue2FCV_MODE);
+
+            setTM3002_CNG_High(inputValueTM3002_CNG);
+            setTM3002_CNG_Low(inputValue2TM3002_CNG);
+
+            setTM3003_CNG_High(inputValueTM3003_CNG);
+            setTM3003_CNG_Low(inputValue2TM3003_CNG);
+
+
+
+            setRATIO_MODE_High(inputValueRATIO_MODE);
+            setRATIO_MODE_Low(inputValue2RATIO_MODE);
+
+        
+
+            toast.current?.show({
+                severity: "info",
+                detail: "Success ",
+                life: 3000,
+            });
+        } catch (error) {
+            console.log("error: ", error);
+            toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
+        }
+    };
+    const confirmUpData = () => {
+        confirmDialog({
+            message: "Are you sure you updated the data?",
+            header: "Confirmation",
+            icon: "pi pi-info-circle",
+            accept: () => handleButtonClick(),
+        });
+    }
+
+    useEffect(() => {
+
+   
+        setInputValueHR_BC(HR_BC_High); 
+        setInputValue2HR_BC(HR_BC_Low); 
+
+        setInputValueSD(SD_High); 
+        setInputValue2SD(SD_Low); 
+
+        setInputValueESD_3001(ESD_3001_High); 
+        setInputValue2ESD_3001(ESD_3001_Low); 
+
+
+
+
+        setInputValuePT_3005(PT_3005_High); 
+        setInputValue2PT_3005(PT_3005_Low); 
+
+        setInputValuePT_3006(PT_3006_High); 
+        setInputValue2PT_3006(PT_3006_Low); 
+
+        setInputValueTT_3003(TT_3003_High); 
+        setInputValue2TT_3003(TT_3003_Low); 
+
+
+
+        setInputValueTG_3005(TG_3005_High); 
+        setInputValue2TG_3005(TG_3005_Low); 
+
+        setInputValueWB_3001(WB_3001_High); 
+        setInputValue2WB_3001(WB_3001_Low); 
+
+        setInputValueTT_3004(TT_3004_High); 
+        setInputValue2TT_3004(TT_3004_Low); 
+        
+
+        setInputValueGD_3003(GD_3003_High); 
+        setInputValue2GD_3003(GD_3003_Low); 
+
+        setInputValueGD_3004(GD_3004_High); 
+        setInputValue2GD_3004(GD_3004_Low); 
+
+        setInputValueGD_3002(GD_3002_High); 
+        setInputValue2GD_3002(GD_3002_Low); 
+
+        setInputValueGD_3005(GD_3005_High); 
+        setInputValue2GD_3005(GD_3005_Low); 
+
+        setInputValueGD_3006(GD_3006_High); 
+        setInputValue2GD_3006(GD_3006_Low); 
+
+        setInputValueTM_3002_SNG(TM_3002_SNG_High); 
+        setInputValue2TM_3002_SNG(TM_3002_SNG_Low); 
+
+        setInputValueTM_3003_SNG(TM_3003_SNG_High); 
+        setInputValue2TM_3003_SNG(TM_3003_SNG_Low); 
+
+        setInputValueTOTAL_SNG(TOTAL_SNG_High); 
+        setInputValue2TOTAL_SNG(TOTAL_SNG_Low); 
+
+        setInputValueSDV_3004(SDV_3004_High); 
+        setInputValue2SDV_3004(SDV_3004_Low); 
+
+
+        setInputValueSDV_3003(SDV_3003_High); 
+        setInputValue2SDV_3003(SDV_3003_Low); 
+
+        setInputValueGD1_STATUS(GD1_STATUS_High); 
+        setInputValue2GD1_STATUS(GD1_STATUS_Low); 
+
+
+        setInputValueGD2_STATUS(GD2_STATUS_High); 
+        setInputValue2GD2_STATUS(GD2_STATUS_Low); 
+
+
+        setInputValueGD3_STATUS(GD3_STATUS_High); 
+        setInputValue2GD3_STATUS(GD3_STATUS_Low); 
+
+        setInputValueGD4_STATUS(GD4_STATUS_High); 
+        setInputValue2GD4_STATUS(GD4_STATUS_Low); 
+
+
+        setInputValueGD5_STATUS(GD5_STATUS_High); 
+        setInputValue2GD5_STATUS(GD5_STATUS_Low); 
+
+        setInputValueEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_High); 
+        setInputValue2EVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Low); 
+
+
+
+
+     
+
+
+
+
+
+
+        setInputValueESD(ESD_High); 
+        setInputValue2ESD(ESD_Low); 
+
+        setInputValueVAPORIZER_1(VAPORIZER_1_High); 
+        setInputValue2VAPORIZER_1(VAPORIZER_1_Low); 
+
+        setInputValueVAPORIZER_2(VAPORIZER_2_High); 
+        setInputValue2VAPORIZER_2(VAPORIZER_2_Low); 
+
+
+
+        setInputValueVAPORIZER_4(VAPORIZER_4_High); 
+        setInputValue2VAPORIZER_4(VAPORIZER_4_Low); 
+
+        setInputValueCOOLING_V(COOLING_V_High); 
+        setInputValue2COOLING_V(COOLING_V_Low); 
+
+        setInputValueVAPORIZER_3(VAPORIZER_3_High); 
+        setInputValue2VAPORIZER_3(VAPORIZER_3_Low); 
+        
+
+        setInputValueFCV_3001(FCV_3001_High); 
+        setInputValue2FCV_3001(FCV_3001_Low); 
+
+        setInputValuePERCENT_LPG(PERCENT_LPG_High); 
+        setInputValue2PERCENT_LPG(PERCENT_LPG_Low); 
+
+
+
+        setInputValuePERCENT_AIR(PERCENT_AIR_High); 
+        setInputValue2PERCENT_AIR(PERCENT_AIR_Low); 
+
+        setInputValueHV_3001(HV_3001_High); 
+        setInputValue2HV_3001(HV_3001_Low); 
+
+        setInputValueFCV_MODE(FCV_MODE_High); 
+        setInputValue2FCV_MODE(FCV_MODE_Low); 
+
+        setInputValueTOTAL_CNG(TOTAL_CNG_High); 
+        setInputValue2TOTAL_CNG(TOTAL_CNG_Low); 
+
+        setInputValueTM3002_CNG(TM3002_CNG_High); 
+        setInputValue2TM3002_CNG(TM3002_CNG_Low); 
+
+        setInputValueTM3003_CNG(TM3003_CNG_High); 
+        setInputValue2TM3003_CNG(TM3003_CNG_Low); 
+
+
+        setInputValueWB_Setpoint(WB_Setpoint_High); 
+        setInputValue2WB_Setpoint(WB_Setpoint_Low); 
+
+
+
+        setInputValueRATIO_MODE(RATIO_MODE_High); 
+        setInputValue2RATIO_MODE(RATIO_MODE_Low); 
+
+
+
+
+   
+
+    }, [
+        
+        HR_BC_High, HR_BC_Low 
+        ,SD_High, SD_Low ,
+
+
+  
+          ESD_3001_High,ESD_3001_Low,
+        
+        PT_3005_High, PT_3005_Low ,
+        PT_3006_High, PT_3006_Low 
+        ,TT_3003_High, TT_3003_Low ,
+
+
+        TG_3005_High,TG_3005_Low,
+         WB_3001_High,WB_3001_Low ,
+          TT_3004_High,TT_3004_Low,
+
+          GD_3003_High,GD_3003_Low,
+          GD_3004_High,GD_3004_Low ,
+           GD_3002_High,GD_3002_Low,
+        
+           GD_3005_High,GD_3005_Low,
+           GD_3006_High,GD_3006_Low,
+
+           TM_3002_SNG_High,TM_3002_SNG_Low,
+           TM_3003_SNG_High,TM_3003_SNG_Low,
+
+           TOTAL_SNG_High,TOTAL_SNG_Low,
+           SDV_3004_High,SDV_3004_Low,
+
+           GD1_STATUS_High,GD1_STATUS_Low,
+           SDV_3003_High,SDV_3003_Low,
+
+
+           GD2_STATUS_High,GD2_STATUS_Low,
+           GD3_STATUS_High,GD3_STATUS_Low,
+           GD4_STATUS_High,GD4_STATUS_Low,
+
+           GD5_STATUS_High,GD5_STATUS_Low,
+
+           EVC_02_Vm_of_Last_Day_High,EVC_02_Vm_of_Last_Day_Low,
+
+
+
+
+
+           ESD_High, ESD_Low ,
+        VAPORIZER_1_High, VAPORIZER_1_Low 
+        ,VAPORIZER_2_High, VAPORIZER_2_Low ,
+
+
+        VAPORIZER_4_High,VAPORIZER_4_Low,
+         COOLING_V_High,COOLING_V_Low ,
+          VAPORIZER_3_High,VAPORIZER_3_Low,
+
+          FCV_3001_High,FCV_3001_Low,
+          PERCENT_LPG_High,PERCENT_LPG_Low ,
+        
+           PERCENT_AIR_High,PERCENT_AIR_Low,
+           HV_3001_High,HV_3001_Low,
+
+           FCV_MODE_High,FCV_MODE_Low,
+           TOTAL_CNG_High,TOTAL_CNG_Low,
+
+           TM3002_CNG_High,TM3002_CNG_Low,
+           TM3003_CNG_High,TM3003_CNG_Low,
+
+           WB_Setpoint_High,WB_Setpoint_Low,
+
+
+           RATIO_MODE_High,RATIO_MODE_Low,
+
+        ]);
+
+
+        
+    const combineCss = {
+
+
+
+        CSSHR_BC : {
+            color:exceedThresholdHR_BC && !maintainHR_BC
+            ? "#ff5656"
+            : maintainHR_BC
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSSD : {
+            color:exceedThresholdSD && !maintainSD
+            ? "#ff5656"
+            : maintainSD
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSESD_3001 : {
+            color:exceedThresholdESD_3001 && !maintainESD_3001
+            ? "#ff5656"
+            : maintainESD_3001
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+  
+
+        CSSPT_3005 : {
+            color:exceedThresholdPT_3005 && !maintainPT_3005
+            ? "#ff5656"
+            : maintainPT_3005
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSPT_3006 : {
+            color:exceedThresholdTemperature && !maintainPT_3006
+            ? "#ff5656"
+            : maintainPT_3006
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSTT_3003 : {
+            color:exceedThresholdTT_3003 && !maintainTT_3003
+            ? "#ff5656"
+            : maintainTT_3003
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSTT_3004 : {
+            color:exceedThresholdTT_3004 && !maintainTT_3004
+            ? "#ff5656"
+            : maintainTT_3004
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSTG_3005 : {
+            color:exceedThresholdTG_3005 && !maintainTG_3005
+            ? "#ff5656"
+            : maintainTG_3005
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSWB_3001 : {
+            color:exceedThresholdWB_3001 && !maintainWB_3001
+            ? "#ff5656"
+            : maintainWB_3001
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSGD_3002 : {
+            color:exceedThresholdGD_3002 && !maintainGD_3002
+            ? "#ff5656"
+            : maintainGD_3002
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSGD_3003 : {
+            color:exceedThresholdGD_3003 && !maintainGD_3003
+            ? "#ff5656"
+            : maintainGD_3003
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSGD_3004 : {
+            color:exceedThresholdGD_3004 && !maintainGD_3004
+            ? "#ff5656"
+            : maintainGD_3004
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+  
+        CSSGD_3005 : {
+            color:exceedThresholdGD_3005 && !maintainGD_3005
+            ? "#ff5656"
+            : maintainGD_3005
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSGD_3006 : {
+            color:exceedThresholdGD_3006 && !maintainGD_3006
+            ? "#ff5656"
+            : maintainGD_3006
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTM_3002_SNG : {
+            color:exceedThresholdTM_3002_SNG && !maintainTM_3002_SNG
+            ? "#ff5656"
+            : maintainTM_3002_SNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTM_3003_SNG : {
+            color:exceedThresholdTM_3003_SNG && !maintainTM_3003_SNG
+            ? "#ff5656"
+            : maintainTM_3003_SNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSSDV_3004 : {
+            color:exceedThresholdSDV_3004 && !maintainSDV_3004
+            ? "#ff5656"
+            : maintainSDV_3004
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTOTAL_SNG : {
+            color:exceedThresholdTOTAL_SNG && !maintainTOTAL_SNG
+            ? "#ff5656"
+            : maintainTOTAL_SNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSSDV_3003 : {
+            color:exceedThresholdSDV_3003 && !maintainSDV_3003
+            ? "#ff5656"
+            : maintainSDV_3003
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSGD1_STATUS : {
+            color:exceedThresholdGD1_STATUS && !maintainGD1_STATUS
+            ? "#ff5656"
+            : maintainGD1_STATUS
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+
+
+        CSSGD2_STATUS : {
+            color:exceedThresholdGD2_STATUS && !maintainGD2_STATUS
+            ? "#ff5656"
+            : maintainGD2_STATUS
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSGD3_STATUS : {
+            color:exceedThresholdGD3_STATUS && !maintainGD3_STATUS
+            ? "#ff5656"
+            : maintainGD3_STATUS
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSGD4_STATUS : {
+            color:exceedThresholdGD4_STATUS && !maintainGD4_STATUS
+            ? "#ff5656"
+            : maintainGD4_STATUS
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSGD5_STATUS : {
+            color:exceedThresholdGD5_STATUS && !maintainGD5_STATUS
+            ? "#ff5656"
+            : maintainGD5_STATUS
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSEVC_02_Vm_of_Last_Day : {
+            color:exceedThresholdEVC_02_Vm_of_Last_Day && !maintainEVC_02_Vm_of_Last_Day
+            ? "#ff5656"
+            : maintainEVC_02_Vm_of_Last_Day
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+
+
+
+     
+      
+
+  
+       
+        CSSESD : {
+            color:exceedThresholdESD && !maintainESD
+            ? "#ff5656"
+            : maintainESD
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSVAPORIZER_1 : {
+            color:exceedThreshold302 && !maintainVAPORIZER_1
+            ? "#ff5656"
+            : maintainVAPORIZER_1
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSVAPORIZER_2 : {
+            color:exceedThresholdVAPORIZER_2 && !maintainVAPORIZER_2
+            ? "#ff5656"
+            : maintainVAPORIZER_2
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSVAPORIZER_3 : {
+            color:exceedThresholdVAPORIZER_3 && !maintainVAPORIZER_3
+            ? "#ff5656"
+            : maintainVAPORIZER_3
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSVAPORIZER_4 : {
+            color:exceedThresholdVAPORIZER_4 && !maintainVAPORIZER_4
+            ? "#ff5656"
+            : maintainVAPORIZER_4
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSCOOLING_V : {
+            color:exceedThresholdCOOLING_V && !maintainCOOLING_V
+            ? "#ff5656"
+            : maintainCOOLING_V
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+     
+
+
+        CSSFCV_3001 : {
+            color:exceedThresholdFCV_3001 && !maintainFCV_3001
+            ? "#ff5656"
+            : maintainFCV_3001
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+        CSSPERCENT_LPG : {
+            color:exceedThresholdPERCENT_LPG && !maintainPERCENT_LPG
+            ? "#ff5656"
+            : maintainPERCENT_LPG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+  
+        CSSPERCENT_AIR : {
+            color:exceedThresholdPERCENT_AIR && !maintainPERCENT_AIR
+            ? "#ff5656"
+            : maintainPERCENT_AIR
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSHV_3001 : {
+            color:exceedThresholdHV_3001 && !maintainHV_3001
+            ? "#ff5656"
+            : maintainHV_3001
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSFCV_MODE : {
+            color:exceedThresholdFCV_MODE && !maintainFCV_MODE
+            ? "#ff5656"
+            : maintainFCV_MODE
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTOTAL_CNG : {
+            color:exceedThresholdTOTAL_CNG && !maintainTOTAL_CNG
+            ? "#ff5656"
+            : maintainTOTAL_CNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTM3003_CNG : {
+            color:exceedThresholdTM3003_CNG && !maintainTM3003_CNG
+            ? "#ff5656"
+            : maintainTM3003_CNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSTM3002_CNG : {
+            color:exceedThresholdTM3002_CNG && !maintainTM3002_CNG
+            ? "#ff5656"
+            : maintainTM3002_CNG
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSWB_Setpoint : {
+            color:exceedThresholdWB_Setpoint && !maintainWB_Setpoint
+            ? "#ff5656"
+            : maintainWB_Setpoint
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+      
+
+
+
+
+        CSSRATIO_MODE : {
+            color:exceedThresholdRATIO_MODE && !maintainRATIO_MODE
+            ? "#ff5656"
+            : maintainRATIO_MODE
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+
+  
+  };
+         
+
+          const PLC01 = [
+
+
+            { timeUpdate: <span style={combineCss.CSSPT_3005} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSPT_3005}>Pressure Transmitter PT-3005</span> ,
+    
+             modbus: <span style={combineCss.CSSPT_3005}>40001	 </span> ,
+    
+            value: <span style={combineCss.CSSPT_3005} > {PT_3005}</span> , 
+             high: <InputText style={combineCss.CSSPT_3005}   placeholder='High' step="0.1" type='number' value={inputValuePT_3005} onChange={handleInputChangePT_3005} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSPT_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3005} onChange={handleInputChange2PT_3005} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainPT_3005}
+             checked={maintainPT_3005}
+         ></Checkbox>
+    
+            },
+    
+         
+            { timeUpdate: <span style={combineCss.CSSPT_3006} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSPT_3006}>Pressure Transmitter PT-3006</span> ,
+    
+             modbus: <span style={combineCss.CSSPT_3006}>40003	 </span> ,
+    
+            value: <span style={combineCss.CSSPT_3006} > {PT_3006}</span> , 
+             high: <InputText style={combineCss.CSSPT_3006}   placeholder='High' step="0.1" type='number' value={inputValuePT_3006} onChange={handleInputChangePT_3006} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSPT_3006}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3006} onChange={handleInputChange2PT_3006} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainPT_3006}
+             checked={maintainPT_3006}
+         ></Checkbox>
+    
+            },
+
+            { timeUpdate: <span style={combineCss.CSSTT_3003} >{timeUpdate}</span>,
+            name: <span style={combineCss.CSSTT_3003}>Temperature Transmitter TT-3003</span> ,
+   
+            modbus: <span style={combineCss.CSSTT_3003}>40005	 </span> ,
+   
+           value: <span style={combineCss.CSSTT_3003} > {TT_3003}</span> , 
+            high: <InputText style={combineCss.CSSTT_3003}   placeholder='High' step="0.1" type='number' value={inputValueTT_3003} onChange={handleInputChangeTT_3003} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSTT_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3003} onChange={handleInputChange2TT_3003} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainTT_3003}
+            checked={maintainTT_3003}
+        ></Checkbox>
+   
+           },
+
+           { timeUpdate: <span style={combineCss.CSSTT_3004} >{timeUpdate}</span>,
+           name: <span style={combineCss.CSSTT_3004}>Temperature Transmitter TT-3004</span> ,
+  
+           modbus: <span style={combineCss.CSSTT_3004}>40007	 </span> ,
+  
+          value: <span style={combineCss.CSSTT_3004} > {TT_3004}</span> , 
+           high: <InputText style={combineCss.CSSTT_3004}   placeholder='High' step="0.1" type='number' value={inputValueTT_3004} onChange={handleInputChangeTT_3004} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSTT_3004}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3004} onChange={handleInputChange2TT_3004} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainTT_3004}
+           checked={maintainTT_3004}
+       ></Checkbox>
+  
+          },
+
+          { timeUpdate: <span style={combineCss.CSSTG_3005} >{timeUpdate}</span>,
+          name: <span style={combineCss.CSSTG_3005}>TG_3005</span> ,
+ 
+          modbus: <span style={combineCss.CSSTG_3005}>40009	 </span> ,
+ 
+         value: <span style={combineCss.CSSTG_3005} > {TG_3005}</span> , 
+          high: <InputText style={combineCss.CSSTG_3005}   placeholder='High' step="0.1" type='number' value={inputValueTG_3005} onChange={handleInputChangeTG_3005} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSTG_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2TG_3005} onChange={handleInputChange2TG_3005} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainTG_3005}
+          checked={maintainTG_3005}
+      ></Checkbox>
+ 
+         },
+         { timeUpdate: <span style={combineCss.CSSWB_3001} >{timeUpdate}</span>,
+         name: <span style={combineCss.CSSWB_3001}>Wobbe Index</span> ,
+
+         modbus: <span style={combineCss.CSSWB_3001}>40011	 </span> ,
+
+        value: <span style={combineCss.CSSWB_3001} > {WB_3001}</span> , 
+         high: <InputText style={combineCss.CSSWB_3001}   placeholder='High' step="0.1" type='number' value={inputValueWB_3001} onChange={handleInputChangeWB_3001} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSWB_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_3001} onChange={handleInputChange2WB_3001} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainWB_3001}
+         checked={maintainWB_3001}
+     ></Checkbox>
+
+        },
+
+  
+        { timeUpdate: <span style={combineCss.CSSGD_3002} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSGD_3002}>Gas Detector GD-3002</span> ,
+
+        modbus: <span style={combineCss.CSSGD_3002}>40013	 </span> ,
+
+       value: <span style={combineCss.CSSGD_3002} > {GD_3002}</span> , 
+        high: <InputText style={combineCss.CSSGD_3002}   placeholder='High' step="0.1" type='number' value={inputValueGD_3002} onChange={handleInputChangeGD_3002} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSGD_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3002} onChange={handleInputChange2GD_3002} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainGD_3002}
+        checked={maintainGD_3002}
+    ></Checkbox>
+
+       },
+       { timeUpdate: <span style={combineCss.CSSGD_3003} >{timeUpdate}</span>,
+       name: <span style={combineCss.CSSGD_3003}>Gas Detector GD-3003</span> ,
+
+       modbus: <span style={combineCss.CSSGD_3003}>40015	 </span> ,
+
+      value: <span style={combineCss.CSSGD_3003} > {GD_3003}</span> , 
+       high: <InputText style={combineCss.CSSGD_3003}   placeholder='High' step="0.1" type='number' value={inputValueGD_3003} onChange={handleInputChangeGD_3003} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSSGD_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3003} onChange={handleInputChange2GD_3003} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainGD_3003}
+       checked={maintainGD_3003}
+   ></Checkbox>
+
+      },
+
+        { timeUpdate: <span style={combineCss.CSSGD_3004} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSGD_3004}>Gas Detector GD-3004</span> ,
+
+        modbus: <span style={combineCss.CSSGD_3004}>40017	 </span> ,
+
+       value: <span style={combineCss.CSSGD_3004} > {GD_3004}</span> , 
+        high: <InputText style={combineCss.CSSGD_3004}   placeholder='High' step="0.1" type='number' value={inputValueGD_3004} onChange={handleInputChangeGD_3004} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSGD_3004}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3004} onChange={handleInputChange2GD_3004} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainGD_3004}
+        checked={maintainGD_3004}
+    ></Checkbox>
+
+       },
+
+
+       { timeUpdate: <span style={combineCss.CSSGD_3005} >{timeUpdate}</span>,
+       name: <span style={combineCss.CSSGD_3005}>Gas Detector GD-3005</span> ,
+
+       modbus: <span style={combineCss.CSSGD_3005}>40019	 </span> ,
+
+      value: <span style={combineCss.CSSGD_3005} > {GD_3005}</span> , 
+       high: <InputText style={combineCss.CSSGD_3005}   placeholder='High' step="0.1" type='number' value={inputValueGD_3005} onChange={handleInputChangeGD_3005} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSSGD_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3005} onChange={handleInputChange2GD_3005} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainGD_3005}
+       checked={maintainGD_3005}
+   ></Checkbox>
+
+      },
+
+              
+      { timeUpdate: <span style={combineCss.CSSGD_3006} >{timeUpdate}</span>,
+      name: <span style={combineCss.CSSGD_3006}>Gas Detector GD-3006</span> ,
+
+      modbus: <span style={combineCss.CSSGD_3006}>40021	 </span> ,
+
+     value: <span style={combineCss.CSSGD_3006} > {GD_3006}</span> , 
+      high: <InputText style={combineCss.CSSGD_3006}   placeholder='High' step="0.1" type='number' value={inputValueGD_3006} onChange={handleInputChangeGD_3006} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSGD_3006}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3006} onChange={handleInputChange2GD_3006} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainGD_3006}
+      checked={maintainGD_3006}
+  ></Checkbox>
+
+     },
+
+
+            { timeUpdate: <span style={combineCss.CSSTM_3002_SNG} >{timeUpdate}</span>,
+            name: <span style={combineCss.CSSTM_3002_SNG}>Tubine Meter TM3002-SNG</span> ,
+       
+            modbus: <span style={combineCss.CSSTM_3002_SNG}>40023	 </span> ,
+       
+           value: <span style={combineCss.CSSTM_3002_SNG} > {TM_3002_SNG}</span> , 
+            high: <InputText style={combineCss.CSSTM_3002_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_3002_SNG} onChange={handleInputChangeTM_3002_SNG} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSTM_3002_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_3002_SNG} onChange={handleInputChange2TM_3002_SNG} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainTM_3002_SNG}
+            checked={maintainTM_3002_SNG}
+        ></Checkbox>
+       
+           },
+    
+        
+
+
+
+
+    { timeUpdate: <span style={combineCss.CSSTM_3003_SNG} >{timeUpdate}</span>,
+    name: <span style={combineCss.CSSTM_3003_SNG}>Tubine Meter TM3003-SNG</span> ,
+
+    modbus: <span style={combineCss.CSSTM_3003_SNG}>40025	 </span> ,
+
+   value: <span style={combineCss.CSSTM_3003_SNG} > {TM_3003_SNG}</span> , 
+    high: <InputText style={combineCss.CSSTM_3003_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_3003_SNG} onChange={handleInputChangeTM_3003_SNG} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSTM_3003_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_3003_SNG} onChange={handleInputChange2TM_3003_SNG} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainTM_3003_SNG}
+    checked={maintainTM_3003_SNG}
+></Checkbox>
+
+   },
+
+
+   { timeUpdate: <span style={combineCss.CSSTOTAL_SNG} >{timeUpdate}</span>,
+   name: <span style={combineCss.CSSTOTAL_SNG}>Total SNG</span> ,
+
+   modbus: <span style={combineCss.CSSTOTAL_SNG}>40027	 </span> ,
+
+  value: <span style={combineCss.CSSTOTAL_SNG} > {TOTAL_SNG}</span> , 
+   high: <InputText style={combineCss.CSSTOTAL_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTOTAL_SNG} onChange={handleInputChangeTOTAL_SNG} inputMode="decimal" />, 
+   low:  <InputText style={combineCss.CSSTOTAL_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_SNG} onChange={handleInputChange2TOTAL_SNG} inputMode="decimal" />,
+   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   Maintain:   <Checkbox
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainTOTAL_SNG}
+   checked={maintainTOTAL_SNG}
+></Checkbox>
+
+  },
+
+
+  { timeUpdate: <span style={combineCss.CSSSDV_3004} >{timeUpdate}</span>,
+  name: <span style={combineCss.CSSSDV_3004}>Shutdown Valve SDV-3004</span> ,
+
+  modbus: <span style={combineCss.CSSSDV_3004}>40029	 </span> ,
+
+ value: <span style={combineCss.CSSSDV_3004} > {SDV_3004}</span> , 
+  high: <InputText style={combineCss.CSSSDV_3004}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3004} onChange={handleInputChangeSDV_3004} inputMode="decimal" />, 
+  low:  <InputText style={combineCss.CSSSDV_3004}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3004} onChange={handleInputChange2SDV_3004} inputMode="decimal" />,
+  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  Maintain:   <Checkbox
+  style={{ marginRight: 20, }}
+  onChange={ChangeMaintainSDV_3004}
+  checked={maintainSDV_3004}
+></Checkbox>
+
+ },
+
+ { timeUpdate: <span style={combineCss.CSSSDV_3003} >{timeUpdate}</span>,
+   name: <span style={combineCss.CSSSDV_3003}>Shutdown Valve SDV-3003</span> ,
+
+   modbus: <span style={combineCss.CSSSDV_3003}>40031	 </span> ,
+
+  value: <span style={combineCss.CSSSDV_3003} > {SDV_3003}</span> , 
+   high: <InputText style={combineCss.CSSSDV_3003}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3003} onChange={handleInputChangeSDV_3003} inputMode="decimal" />, 
+   low:  <InputText style={combineCss.CSSSDV_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3003} onChange={handleInputChange2SDV_3003} inputMode="decimal" />,
+   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   Maintain:   <Checkbox
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainSDV_3003}
+   checked={maintainSDV_3003}
+></Checkbox>
+
+  },
+
+
+  { timeUpdate: <span style={combineCss.CSSGD1_STATUS} >{timeUpdate}</span>,
+  name: <span style={combineCss.CSSGD1_STATUS}>Status Gas Detector-3002</span> ,
+
+  modbus: <span style={combineCss.CSSGD1_STATUS}>40033	 </span> ,
+
+ value: <span style={combineCss.CSSGD1_STATUS} > {GD1_STATUS}</span> , 
+  high: <InputText style={combineCss.CSSGD1_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD1_STATUS} onChange={handleInputChangeGD1_STATUS} inputMode="decimal" />, 
+  low:  <InputText style={combineCss.CSSGD1_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1_STATUS} onChange={handleInputChange2GD1_STATUS} inputMode="decimal" />,
+  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  Maintain:   <Checkbox
+  style={{ marginRight: 20, }}
+  onChange={ChangeMaintainGD1_STATUS}
+  checked={maintainGD1_STATUS}
+></Checkbox>
+
+ },
+
+
+
+
+ { timeUpdate: <span style={combineCss.CSSGD2_STATUS} >{timeUpdate}</span>,
+ name: <span style={combineCss.CSSGD2_STATUS}>Status Gas Detector-3003</span> ,
+
+ modbus: <span style={combineCss.CSSGD2_STATUS}>40035	 </span> ,
+
+value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> , 
+ high: <InputText style={combineCss.CSSGD2_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD2_STATUS} onChange={handleInputChangeGD2_STATUS} inputMode="decimal" />, 
+ low:  <InputText style={combineCss.CSSGD2_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2_STATUS} onChange={handleInputChange2GD2_STATUS} inputMode="decimal" />,
+ update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+ Maintain:   <Checkbox
+ style={{ marginRight: 20, }}
+ onChange={ChangeMaintainGD2_STATUS}
+ checked={maintainGD2_STATUS}
+></Checkbox>
+
+},
+
+{ timeUpdate: <span style={combineCss.CSSGD3_STATUS} >{timeUpdate}</span>,
+  name: <span style={combineCss.CSSGD3_STATUS}>Status Gas Detector-3004</span> ,
+
+  modbus: <span style={combineCss.CSSGD3_STATUS}>40037	 </span> ,
+
+ value: <span style={combineCss.CSSGD3_STATUS} > {GD3_STATUS}</span> , 
+  high: <InputText style={combineCss.CSSGD3_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD3_STATUS} onChange={handleInputChangeGD3_STATUS} inputMode="decimal" />, 
+  low:  <InputText style={combineCss.CSSGD3_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD3_STATUS} onChange={handleInputChange2GD3_STATUS} inputMode="decimal" />,
+  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  Maintain:   <Checkbox
+  style={{ marginRight: 20, }}
+  onChange={ChangeMaintainGD3_STATUS}
+  checked={maintainGD3_STATUS}
+></Checkbox>
+
+ },
+
+
+ { timeUpdate: <span style={combineCss.CSSGD4_STATUS} >{timeUpdate}</span>,
+ name: <span style={combineCss.CSSGD4_STATUS}>Status Gas Detector-3005</span> ,
+
+ modbus: <span style={combineCss.CSSGD4_STATUS}>40039	 </span> ,
+
+value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS}</span> , 
+ high: <InputText style={combineCss.CSSGD4_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD4_STATUS} onChange={handleInputChangeGD4_STATUS} inputMode="decimal" />, 
+ low:  <InputText style={combineCss.CSSGD4_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD4_STATUS} onChange={handleInputChange2GD4_STATUS} inputMode="decimal" />,
+ update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+ Maintain:   <Checkbox
+ style={{ marginRight: 20, }}
+ onChange={ChangeMaintainGD4_STATUS}
+ checked={maintainGD4_STATUS}
+></Checkbox>
+
+},
+
+
+{ timeUpdate: <span style={combineCss.CSSGD5_STATUS} >{timeUpdate}</span>,
+name: <span style={combineCss.CSSGD5_STATUS}>Status Gas Detector-3006</span> ,
+
+modbus: <span style={combineCss.CSSGD5_STATUS}>40041	 </span> ,
+
+value: <span style={combineCss.CSSGD5_STATUS} > {GD5_STATUS}</span> , 
+high: <InputText style={combineCss.CSSGD5_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD5_STATUS} onChange={handleInputChangeGD5_STATUS} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSGD5_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD5_STATUS} onChange={handleInputChange2GD5_STATUS} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainGD5_STATUS}
+checked={maintainGD5_STATUS}
+></Checkbox>
+
+},
+
+        
+
+            { timeUpdate: <span style={combineCss.CSSESD} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSESD}>Emergency Shutdown</span> ,
+    
+             modbus: <span style={combineCss.CSSESD}>40043	 </span> ,
+    
+            value: <span style={combineCss.CSSESD} > {ESD}</span> , 
+             high: <InputText style={combineCss.CSSESD}   placeholder='High' step="0.1" type='number' value={inputValueESD} onChange={handleInputChangeESD} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSESD}   placeholder='Low' step="0.1" type='number' value={inputValue2ESD} onChange={handleInputChange2VP303} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainESD}
+             checked={maintainESD}
+         ></Checkbox>
+    
+            },
+            { timeUpdate: <span style={combineCss.CSSHR_BC} >{timeUpdate}</span>,
+            name: <span style={combineCss.CSSHR_BC}>Horn And Beacon</span> ,
+            
+            modbus: <span style={combineCss.CSSHR_BC}>40045	 </span> ,
+            
+            value: <span style={combineCss.CSSHR_BC} > {HR_BC}</span> , 
+            high: <InputText style={combineCss.CSSHR_BC}   placeholder='High' step="0.1" type='number' value={inputValueHR_BC} onChange={handleInputChangeHR_BC} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSHR_BC}   placeholder='Low' step="0.1" type='number' value={inputValue2HR_BC} onChange={handleInputChange2HR_BC} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainHR_BC}
+            checked={maintainHR_BC}
+            ></Checkbox>
+            
+            },
+         
+{ timeUpdate: <span style={combineCss.CSSSD} >{timeUpdate}</span>,
+name: <span style={combineCss.CSSSD}> Smoker Detector</span> ,
+
+modbus: <span style={combineCss.CSSSD}>40047	 </span> ,
+
+value: <span style={combineCss.CSSSD} > {SD}</span> , 
+high: <InputText style={combineCss.CSSSD}   placeholder='High' step="0.1" type='number' value={inputValueSD} onChange={handleInputChangeSD} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSSD}   placeholder='Low' step="0.1" type='number' value={inputValue2SD} onChange={handleInputChange2SD} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainSD}
+checked={maintainSD}
+></Checkbox>
+
+},
+
+            { timeUpdate: <span style={combineCss.CSSVAPORIZER_1} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSVAPORIZER_1}>Vaporizer 1</span> ,
+    
+             modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	 </span> ,
+    
+            value: <span style={combineCss.CSSVAPORIZER_1} > {VAPORIZER_1}</span> , 
+             high: <InputText style={combineCss.CSSVAPORIZER_1}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_1} onChange={handleInputChangeVAPORIZER_1} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSVAPORIZER_1}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_1} onChange={handleInputChange2VAPORIZER_1} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainVAPORIZER_1}
+             checked={maintainVAPORIZER_1}
+         ></Checkbox>
+    
+            },
+    
+            { timeUpdate: <span style={combineCss.CSSVAPORIZER_2} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSVAPORIZER_2}>Vaporizer 2</span> ,
+    
+             modbus: <span style={combineCss.CSSVAPORIZER_2}>40051</span> ,
+    
+            value: <span style={combineCss.CSSVAPORIZER_2} > {VAPORIZER_2}</span> , 
+             high: <InputText style={combineCss.CSSVAPORIZER_2}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_2} onChange={handleInputChangeVAPORIZER_2} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSVAPORIZER_2}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_2} onChange={handleInputChange2VAPORIZER_2} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainVAPORIZER_2}
+             checked={maintainVAPORIZER_2}
+         ></Checkbox>
+    
+            },
+
+
+            { timeUpdate: <span style={combineCss.CSSVAPORIZER_3} >{timeUpdate}</span>,
+             name: <span style={combineCss.CSSVAPORIZER_3}>Vaporizer 3</span> ,
+    
+             modbus: <span style={combineCss.CSSVAPORIZER_3}>40053	 </span> ,
+    
+            value: <span style={combineCss.CSSVAPORIZER_3} > {VAPORIZER_3}</span> , 
+             high: <InputText style={combineCss.CSSVAPORIZER_3}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_3} onChange={handleInputChangeVAPORIZER_3} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSVAPORIZER_3}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_3} onChange={handleInputChange2VAPORIZER_3} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainVAPORIZER_3}
+             checked={maintainVAPORIZER_3}
+         ></Checkbox>
+    
+            },
+
+            { timeUpdate: <span style={combineCss.CSSVAPORIZER_4} >{timeUpdate}</span>,
+            name: <span style={combineCss.CSSVAPORIZER_4}>Vaporizer 4</span> ,
+   
+            modbus: <span style={combineCss.CSSVAPORIZER_4}>40055	 </span> ,
+   
+           value: <span style={combineCss.CSSVAPORIZER_4} > {VAPORIZER_4}</span> , 
+            high: <InputText style={combineCss.CSSVAPORIZER_4}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_4} onChange={handleInputChangeVAPORIZER_4} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSVAPORIZER_4}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_4} onChange={handleInputChange2VAPORIZER_4} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainVAPORIZER_4}
+            checked={maintainVAPORIZER_4}
+        ></Checkbox>
+   
+           },
+
+
+           { timeUpdate: <span style={combineCss.CSSCOOLING_V} >{timeUpdate}</span>,
+           name: <span style={combineCss.CSSCOOLING_V}>Cooling V</span> ,
+  
+           modbus: <span style={combineCss.CSSCOOLING_V}>40057	 </span> ,
+  
+          value: <span style={combineCss.CSSCOOLING_V} > {COOLING_V}</span> , 
+           high: <InputText style={combineCss.CSSCOOLING_V}   placeholder='High' step="0.1" type='number' value={inputValueCOOLING_V} onChange={handleInputChangeCOOLING_V} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSCOOLING_V}   placeholder='Low' step="0.1" type='number' value={inputValue2COOLING_V} onChange={handleInputChange2COOLING_V} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainCOOLING_V}
+           checked={maintainCOOLING_V}
+       ></Checkbox>
+  
+          },
+
+
+
+
+
+         { timeUpdate: <span style={combineCss.CSSFCV_3001} >{timeUpdate}</span>,
+         name: <span style={combineCss.CSSFCV_3001}>FCV-3001</span> ,
+
+         modbus: <span style={combineCss.CSSFCV_3001}>40059	 </span> ,
+
+        value: <span style={combineCss.CSSFCV_3001} > {FCV_3001}</span> , 
+         high: <InputText style={combineCss.CSSFCV_3001}   placeholder='High' step="0.1" type='number' value={inputValueFCV_3001} onChange={handleInputChangeFCV_3001} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSFCV_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_3001} onChange={handleInputChange2FCV_3001} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainFCV_3001}
+         checked={maintainFCV_3001}
+     ></Checkbox>
+
+        },
+
+
+        { timeUpdate: <span style={combineCss.CSSPERCENT_LPG} >{timeUpdate}</span>,
+        name: <span style={combineCss.CSSPERCENT_LPG}>% LPG</span> ,
+
+        modbus: <span style={combineCss.CSSPERCENT_LPG}>40061	 </span> ,
+
+       value: <span style={combineCss.CSSPERCENT_LPG} > {PERCENT_LPG}</span> , 
+        high: <InputText style={combineCss.CSSPERCENT_LPG}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_LPG} onChange={handleInputChangePERCENT_LPG} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSPERCENT_LPG}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_LPG} onChange={handleInputChange2PERCENT_LPG} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainPERCENT_LPG}
+        checked={maintainPERCENT_LPG}
+    ></Checkbox>
+
+       },
+
+
+
+       { timeUpdate: <span style={combineCss.CSSPERCENT_AIR} >{timeUpdate}</span>,
+       name: <span style={combineCss.CSSPERCENT_AIR}>% Air</span> ,
+
+       modbus: <span style={combineCss.CSSPERCENT_AIR}>40063	 </span> ,
+
+      value: <span style={combineCss.CSSPERCENT_AIR} > {PERCENT_AIR}</span> , 
+       high: <InputText style={combineCss.CSSPERCENT_AIR}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_AIR} onChange={handleInputChangePERCENT_AIR} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSSPERCENT_AIR}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_AIR} onChange={handleInputChange2PERCENT_AIR} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainPERCENT_AIR}
+       checked={maintainPERCENT_AIR}
+   ></Checkbox>
+
+      },
+
+
+      { timeUpdate: <span style={combineCss.CSSHV_3001} >{timeUpdate}</span>,
+      name: <span style={combineCss.CSSHV_3001}>Heat Value HV-3001</span> ,
+
+      modbus: <span style={combineCss.CSSHV_3001}>40065	 </span> ,
+
+     value: <span style={combineCss.CSSHV_3001} > {HV_3001}</span> , 
+      high: <InputText style={combineCss.CSSHV_3001}   placeholder='High' step="0.1" type='number' value={inputValueHV_3001} onChange={handleInputChangeHV_3001} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSHV_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2HV_3001} onChange={handleInputChange2HV_3001} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainHV_3001}
+      checked={maintainHV_3001}
+  ></Checkbox>
+
+     },
+     { timeUpdate: <span style={combineCss.CSSRATIO_MODE} >{timeUpdate}</span>,
+     name: <span style={combineCss.CSSRATIO_MODE}>Ratio Mode</span> ,
+    
+     modbus: <span style={combineCss.CSSRATIO_MODE}>40067	 </span> ,
+    
+    value: <span style={combineCss.CSSRATIO_MODE} > {RATIO_MODE}</span> , 
+     high: <InputText style={combineCss.CSSRATIO_MODE}   placeholder='High' step="0.1" type='number' value={inputValueRATIO_MODE} onChange={handleInputChangeRATIO_MODE} inputMode="decimal" />, 
+     low:  <InputText style={combineCss.CSSRATIO_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2RATIO_MODE} onChange={handleInputChange2RATIO_MODE} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainRATIO_MODE}
+     checked={maintainRATIO_MODE}
+    ></Checkbox>
+    
+    },
+
+
+     { timeUpdate: <span style={combineCss.CSSFCV_MODE} >{timeUpdate}</span>,
+     name: <span style={combineCss.CSSFCV_MODE}>FCV Mode</span> ,
+
+     modbus: <span style={combineCss.CSSFCV_MODE}>40069	 </span> ,
+
+    value: <span style={combineCss.CSSFCV_MODE} > {FCV_MODE}</span> , 
+     high: <InputText style={combineCss.CSSFCV_MODE}   placeholder='High' step="0.1" type='number' value={inputValueFCV_MODE} onChange={handleInputChangeFCV_MODE} inputMode="decimal" />, 
+     low:  <InputText style={combineCss.CSSFCV_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_MODE} onChange={handleInputChange2FCV_MODE} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainFCV_MODE}
+     checked={maintainFCV_MODE}
+ ></Checkbox>
+
+    },
+
+
+    { timeUpdate: <span style={combineCss.CSSTOTAL_CNG} >{timeUpdate}</span>,
+    name: <span style={combineCss.CSSTOTAL_CNG}>Total CNG</span> ,
+
+    modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
+
+   value: <span style={combineCss.CSSTOTAL_CNG} > {TOTAL_CNG}</span> , 
+    high: <InputText style={combineCss.CSSTOTAL_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTOTAL_CNG} onChange={handleInputChangeTOTAL_CNG} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSTOTAL_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_CNG} onChange={handleInputChange2TOTAL_CNG} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainTOTAL_CNG}
+    checked={maintainTOTAL_CNG}
+></Checkbox>
+
+   },
+
+
+   { timeUpdate: <span style={combineCss.CSSTM3002_CNG} >{timeUpdate}</span>,
+   name: <span style={combineCss.CSSTM3002_CNG}>Tubine Meter TM3002-CNG</span> ,
+
+   modbus: <span style={combineCss.CSSTM3002_CNG}>40073	 </span> ,
+
+  value: <span style={combineCss.CSSTM3002_CNG} > {TM3002_CNG}</span> , 
+   high: <InputText style={combineCss.CSSTM3002_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM3002_CNG} onChange={handleInputChangeTM3002_CNG} inputMode="decimal" />, 
+   low:  <InputText style={combineCss.CSSTM3002_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM3002_CNG} onChange={handleInputChange2TM3002_CNG} inputMode="decimal" />,
+   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   Maintain:   <Checkbox
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainTM3002_CNG}
+   checked={maintainTM3002_CNG}
+></Checkbox>
+
+  },
+
+
+  { timeUpdate: <span style={combineCss.CSSTM3003_CNG} >{timeUpdate}</span>,
+  name: <span style={combineCss.CSSTM3003_CNG}>Tubine Meter TM3003-CNG</span> ,
+
+  modbus: <span style={combineCss.CSSTM3003_CNG}>40075	 </span> ,
+
+ value: <span style={combineCss.CSSTM3003_CNG} > {TM3003_CNG}</span> , 
+  high: <InputText style={combineCss.CSSTM3003_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM3003_CNG} onChange={handleInputChangeTM3003_CNG} inputMode="decimal" />, 
+  low:  <InputText style={combineCss.CSSTM3003_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM3003_CNG} onChange={handleInputChange2TM3003_CNG} inputMode="decimal" />,
+  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  Maintain:   <Checkbox
+  style={{ marginRight: 20, }}
+  onChange={ChangeMaintainTM3003_CNG}
+  checked={maintainTM3003_CNG}
+></Checkbox>
+
+ },
+
+ { timeUpdate: <span style={combineCss.CSSWB_Setpoint} >{timeUpdate}</span>,
+   name: <span style={combineCss.CSSWB_Setpoint}>Wobbe Index Setpoint</span> ,
+
+   modbus: <span style={combineCss.CSSWB_Setpoint}>40077	 </span> ,
+
+  value: <span style={combineCss.CSSWB_Setpoint} > {WB_Setpoint}</span> , 
+   high: <InputText style={combineCss.CSSWB_Setpoint}   placeholder='High' step="0.1" type='number' value={inputValueWB_Setpoint} onChange={handleInputChangeWB_Setpoint} inputMode="decimal" />, 
+   low:  <InputText style={combineCss.CSSWB_Setpoint}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_Setpoint} onChange={handleInputChange2WB_Setpoint} inputMode="decimal" />,
+   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   Maintain:   <Checkbox
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainWB_Setpoint}
+   checked={maintainWB_Setpoint}
+></Checkbox>
+
+  },
+
+          ]
+
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
+        <audio ref={audioRef}>
+            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
+        </audio>
+        <Toast ref={toast} />
+
+        <ConfirmDialog />
+
+<div style={{display:'flex' }}>
+<h2>SNG HUNG YEN</h2>
+
+</div>
+ 
+
+<div style={{width:'100%' , padding:10, borderRadius:5 }}>
+
+        
+
+<h4>PLC -  Prameter & configuration  </h4>
+<DataTable  value={PLC01} size={'small'} selectionMode="single"    >
+{/* <Column field="modbus" header="Modbus" /> */}
+<Column field="modbus" header="Modbus" />
+
+<Column field="name" header="Name" />
+
+<Column field="value" header="Value" />
+<Column  field="high" header="High" />
+<Column field="low" header="Low" />
+<Column field="Maintain" header="Maintain" />
+<Column field="update" header="Update" />
+
+</DataTable>
+
+</div>
+
+</div>
+  )
+}

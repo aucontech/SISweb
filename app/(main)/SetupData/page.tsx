@@ -9,6 +9,8 @@ import SetUpdata_ZOVC from './ZOVC/SetUpdata_ZOVC';
 import SetUpdata_PRU from './PRU/SetUpdata_PRU';
 import SetUpdata_CNG_BINHDUONG from './CNG_BINHDUONG/SetUpdata_CNG_BINHDUONG';
 import SetUpdata_HUNGYEN from './CNG_HUNGYEN/SetUpdata_HUNGYEN';
+import SetUpdata_HUNGYEN_SNG from './SNG_HUNGYEN/SetUpdata_HUNGYEN_SNG';
+import SetUpdata_SNG_BINHDUONG from './SNG_BINHDUONG/SetUpdata_SNG_BINHDUONG';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
@@ -21,7 +23,7 @@ export default function GraphicSogec() {
 
   const PhuMyClick = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
-      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
     } else {
       setActiveComponent(component);
     }
@@ -35,7 +37,7 @@ export default function GraphicSogec() {
 
   const BinhDuongClick = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
-      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
     } else {
       setActiveComponent(component);
     }
@@ -51,7 +53,7 @@ export default function GraphicSogec() {
 
   const HaNoiClick = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
-      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
     } else {
       setActiveComponent(component);
     }
@@ -67,7 +69,7 @@ export default function GraphicSogec() {
 
   const HungYenClick = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
-      setActiveComponent(<span style={{textAlign:'center', fontWeight:500, fontSize:40}}> {newLabel} Updating...</span>);
+      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
     } else {
       setActiveComponent(component);
     }
@@ -118,6 +120,7 @@ export default function GraphicSogec() {
             items: [
          
               { label: ' CNG HUNG YEN', command: () => HungYenClick(<SetUpdata_HUNGYEN/> , ' CNG HUNG YEN') },
+              { label: ' SNG HUNG YEN', command: () => HungYenClick(<SetUpdata_HUNGYEN_SNG/> , ' SNG HUNG YEN') },
 
             
             ]
@@ -137,6 +140,7 @@ export default function GraphicSogec() {
             items: [
          
               { label: 'CNG BINH DUONG', command: () => BinhDuongClick(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG ') },
+              { label: 'SNG BINH DUONG', command: () => BinhDuongClick(<SetUpdata_SNG_BINHDUONG/> , 'SNG BINH DUONG ') },
 
             
             ]

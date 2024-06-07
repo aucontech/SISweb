@@ -82,6 +82,7 @@ export default function DemoFlowOTS() {
     const [data, setData] = useState<any[]>([]);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
+    console.log('GVF1: ', GVF1);
     const [SVF1, setSVF1] = useState<string | null>(null);
     const [SVA1, setSVA1] = useState<string | null>(null);
     const [GVA1, setGVA1] = useState<string | null>(null);
@@ -183,6 +184,7 @@ export default function DemoFlowOTS() {
                         PLC_Conn_STT: setPLC_STT,
 
                         time: setTimeUpdate,
+
                     };
 
                     keys.forEach((key) => {
