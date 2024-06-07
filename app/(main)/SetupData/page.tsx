@@ -2,15 +2,12 @@
 import React, { useState } from 'react';
 import DemoFlowOTS from '../OTSUKA/demoGraphicOtsuka/demoFlowOTS';
 import { MegaMenu } from 'primereact/megamenu';
-import GraphicPRU from '../PRU/GraphicPRU/GraphicPRU';
-import GraphicZOCV from '../ZOVC/GraphicZOVC/graphicZOVC';
-import AlarmOTSUKA from '@/layout/AlarmBell/AlarmOTSUKA';
-import GraphicARAKAWA from '../ARAKAWA/GraphicArakawa/graphicARAKAWA';
-import GraphicSPMCV from '../SPMCV/GraphicSPMCV/graphicSPMCV';
+
 import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
 import LowHighData from './LowHighData/LowHighData';
 import SetUpdata_ZOVC from './ZOVC/SetUpdata_ZOVC';
 import SetUpdata_PRU from './PRU/SetUpdata_PRU';
+import SetUpdata_CNG_BINHDUONG from './CNG_BINHDUONG/SetUpdata_CNG_BINHDUONG';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
@@ -43,6 +40,9 @@ export default function GraphicSogec() {
       setBinhDuongLabel(newLabel);
     }
     setPhuMy3Label('PHU MY 3');
+    setHaNoi('Ha Noi');
+
+
   };
 
   const handleItemClick3 = (component: React.ReactNode, newLabel?: string) => {
@@ -97,6 +97,25 @@ export default function GraphicSogec() {
             items: [
          
               { label: 'Meiko', command: () => handleItemClick3(<SetUpdata_Meiko/> , 'Meiko') },
+
+            
+            ]
+          }
+        ],
+       
+      ]
+    },
+
+    {
+      label: binhDuongLabel,
+      icon: 'pi pi-box',
+      items: [
+        [
+          {
+            label: '',
+            items: [
+         
+              { label: 'CNG BINH DUONG', command: () => handleItemClick2(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG ') },
 
             
             ]
