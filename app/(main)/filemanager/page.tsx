@@ -1,5 +1,4 @@
 "use client"; // This file is client-side code
-import React, { useEffect, useRef } from "react";
 
 const FileManager = () => {
     return (

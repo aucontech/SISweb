@@ -161,6 +161,18 @@ const FilterDataTableReport: React.FC<Props> = ({
             });
             return;
         }
+        if (field === "key") {
+            setEditFilter((prevFilter: any) => {
+                const updatedTags = [...prevFilter.tags];
+                updatedTags[index] = {
+                    ...updatedTags[index],
+                    [field]: value,
+                    name: value,
+                };
+                return { ...prevFilter, tags: updatedTags };
+            });
+            return;
+        }
         setEditFilter((prevFilter: any) => {
             const updatedTags = [...prevFilter.tags];
             updatedTags[index] = { ...updatedTags[index], [field]: value };

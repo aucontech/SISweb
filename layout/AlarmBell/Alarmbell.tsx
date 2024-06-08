@@ -46,231 +46,234 @@ export default function Alarmbell() {
             setCurrentUser(user);
         }
     }, []);
-    const sendData = (data: any) => {
+    const sendData = useCallback((data: any) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             ws.current.send(data);
         }
-    };
-    const connectWebSocket = (token: string) => {
-        ws.current = new WebSocket(
-            `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
-        );
-        ws.current.onopen = () => {
-            console.log("WebSocket connection opened.");
+    }, []);
+    const connectWebSocket = useCallback(
+        (token: string) => {
+            ws.current = new WebSocket(
+                `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
+            );
+            ws.current.onopen = () => {
+                console.log("WebSocket connection opened.");
 
-            let data = {
-                alarmCountCmds: [
-                    {
-                        query: {
-                            severityList: ["CRITICAL", "MAJOR"],
-                            statusList: ["ACTIVE"],
-                            searchPropagatedAlarms: false,
-                            assigneeId: null,
-                            entityFilter: {
-                                type: "entityList",
-                                resolveMultiple: true,
-                                entityType: "DEVICE",
-                                entityList: [
-                                    //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                                    "b92cda00-07c9-11ef-973a-dde5fe61203a",
-                                    // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                ],
-                            },
-                        },
-                        // query: {
-                        //     entityFilter: {
-                        //         type: "entityList",
-                        //         resolveMultiple: true,
-                        //         entityType: "DEVICE",
-                        //         entityList: [
-                        //             //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                        //             "b92cda00-07c9-11ef-973a-dde5fe61203a",
-                        //             "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                        //         ],
-                        //     },
-                        //     pageLink: {
-                        //         page: 0,
-                        //         pageSize: 10,
-                        //         textSearch: null,
-                        //         typeList: [],
-                        //         severityList: ["CRITICAL"],
-                        //         statusList: ["ACTIVE", "UNACK"],
-                        //         searchPropagatedAlarms: false,
-                        //         sortOrder: {
-                        //             key: {
-                        //                 key: "createdTime",
-                        //                 type: "ALARM_FIELD",
-                        //             },
-                        //             direction: "DESC",
-                        //         },
-                        //         timeWindow: 2592000,
-                        //     },
-                        //     alarmFields: [
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "createdTime",
-                        //         },
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "originator",
-                        //         },
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "type",
-                        //         },
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "severity",
-                        //         },
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "status",
-                        //         },
-                        //         {
-                        //             type: "ALARM_FIELD",
-                        //             key: "assignee",
-                        //         },
-                        //     ],
-                        //     entityFields: [],
-                        //     latestValues: [],
-                        // },
-                        cmdId: 2,
-                    },
-                ],
-                alarmDataCmds: [
-                    {
-                        query: {
-                            entityFilter: {
-                                type: "entityList",
-                                resolveMultiple: true,
-                                entityType: "DEVICE",
-                                entityList: [
-                                    "6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                                    "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                    // "b92cda00-07c9-11ef-973a-dde5fe61203a",
-                                    // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                ],
-                            },
-                            pageLink: {
-                                page: 0,
-                                pageSize: 10,
-                                textSearch: null,
-                                typeList: [],
+                let data = {
+                    alarmCountCmds: [
+                        {
+                            query: {
                                 severityList: ["CRITICAL", "MAJOR"],
                                 statusList: ["ACTIVE"],
                                 searchPropagatedAlarms: false,
-                                sortOrder: {
-                                    key: {
-                                        key: "createdTime",
-                                        type: "ALARM_FIELD",
-                                    },
-                                    direction: "DESC",
+                                assigneeId: null,
+                                entityFilter: {
+                                    type: "entityList",
+                                    resolveMultiple: true,
+                                    entityType: "DEVICE",
+                                    entityList: [
+                                        //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                        "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                    ],
                                 },
-                                timeWindow: 604800000,
                             },
-                            alarmFields: [
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "createdTime",
-                                },
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "originator",
-                                },
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "type",
-                                },
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "severity",
-                                },
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "status",
-                                },
-                                {
-                                    type: "ALARM_FIELD",
-                                    key: "assignee",
-                                },
-                            ],
-                            entityFields: [],
-                            latestValues: [],
+                            // query: {
+                            //     entityFilter: {
+                            //         type: "entityList",
+                            //         resolveMultiple: true,
+                            //         entityType: "DEVICE",
+                            //         entityList: [
+                            //             //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                            //             "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                            //             "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                            //         ],
+                            //     },
+                            //     pageLink: {
+                            //         page: 0,
+                            //         pageSize: 10,
+                            //         textSearch: null,
+                            //         typeList: [],
+                            //         severityList: ["CRITICAL"],
+                            //         statusList: ["ACTIVE", "UNACK"],
+                            //         searchPropagatedAlarms: false,
+                            //         sortOrder: {
+                            //             key: {
+                            //                 key: "createdTime",
+                            //                 type: "ALARM_FIELD",
+                            //             },
+                            //             direction: "DESC",
+                            //         },
+                            //         timeWindow: 2592000,
+                            //     },
+                            //     alarmFields: [
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "createdTime",
+                            //         },
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "originator",
+                            //         },
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "type",
+                            //         },
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "severity",
+                            //         },
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "status",
+                            //         },
+                            //         {
+                            //             type: "ALARM_FIELD",
+                            //             key: "assignee",
+                            //         },
+                            //     ],
+                            //     entityFields: [],
+                            //     latestValues: [],
+                            // },
+                            cmdId: 2,
                         },
-                        cmdId: 1,
-                    },
-                ],
+                    ],
+                    alarmDataCmds: [
+                        {
+                            query: {
+                                entityFilter: {
+                                    type: "entityList",
+                                    resolveMultiple: true,
+                                    entityType: "DEVICE",
+                                    entityList: [
+                                        "6996ea90-ece8-11ee-b18f-f142b946d0bb",
+                                        "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                        // "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                    ],
+                                },
+                                pageLink: {
+                                    page: 0,
+                                    pageSize: 10,
+                                    textSearch: null,
+                                    typeList: [],
+                                    severityList: ["CRITICAL", "MAJOR"],
+                                    statusList: ["ACTIVE"],
+                                    searchPropagatedAlarms: false,
+                                    sortOrder: {
+                                        key: {
+                                            key: "createdTime",
+                                            type: "ALARM_FIELD",
+                                        },
+                                        direction: "DESC",
+                                    },
+                                    timeWindow: 604800000,
+                                },
+                                alarmFields: [
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "createdTime",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "originator",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "type",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "severity",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "status",
+                                    },
+                                    {
+                                        type: "ALARM_FIELD",
+                                        key: "assignee",
+                                    },
+                                ],
+                                entityFields: [],
+                                latestValues: [],
+                            },
+                            cmdId: 1,
+                        },
+                    ],
+                };
+
+                sendData(JSON.stringify(data));
             };
 
-            sendData(JSON.stringify(data));
-        };
+            ws.current.onmessage = (evt: any) => {
+                const dataReceive: any = JSON.parse(evt.data);
+                //console.log("dataReceive", dataReceive);
 
-        ws.current.onmessage = (evt: any) => {
-            const dataReceive: any = JSON.parse(evt.data);
-            //console.log("dataReceive", dataReceive);
-
-            if (dataReceive && dataReceive["cmdId"] === 1) {
-                if (
-                    dataReceive.data &&
-                    dataReceive.data.data &&
-                    dataReceive.data.data.length > 0
-                ) {
-                    // setNotifications(dataReceive.data.data);
-                    //  setLoading(false);
-                    let alarms = dataReceive.data.data;
-                    let criticalAlarm = alarms.filter(
-                        (alarm: any) => alarm.severity === "CRITICAL"
-                    );
-                    let majorAlarm = alarms.filter(
-                        (alarm: any) => alarm.severity === "MAJOR"
-                    );
-                    console.log(criticalAlarm);
-                    console.log(majorAlarm);
-                    if (criticalAlarm.length > majorAlarm.length) {
-                        console.log("Play audio");
-                        const promise = audioRef.current?.play();
-                        if (promise !== undefined) {
-                            promise
-                                .then(() => {
-                                    // Autoplay started!
-                                })
-                                .catch((error) => {
-                                    console.error(
-                                        "Autoplay was prevented.",
-                                        error
-                                    );
-                                });
+                if (dataReceive && dataReceive["cmdId"] === 1) {
+                    if (
+                        dataReceive.data &&
+                        dataReceive.data.data &&
+                        dataReceive.data.data.length > 0
+                    ) {
+                        // setNotifications(dataReceive.data.data);
+                        //  setLoading(false);
+                        let alarms = dataReceive.data.data;
+                        let criticalAlarm = alarms.filter(
+                            (alarm: any) => alarm.severity === "CRITICAL"
+                        );
+                        let majorAlarm = alarms.filter(
+                            (alarm: any) => alarm.severity === "MAJOR"
+                        );
+                        console.log(criticalAlarm);
+                        console.log(majorAlarm);
+                        if (criticalAlarm.length > majorAlarm.length) {
+                            console.log("Play audio");
+                            const promise = audioRef.current?.play();
+                            if (promise !== undefined) {
+                                promise
+                                    .then(() => {
+                                        // Autoplay started!
+                                    })
+                                    .catch((error) => {
+                                        console.error(
+                                            "Autoplay was prevented.",
+                                            error
+                                        );
+                                    });
+                            }
                         }
+                        setNotifications(alarms);
+                    } else if (
+                        dataReceive.data &&
+                        dataReceive.data.data &&
+                        dataReceive.data.data.length === 0 &&
+                        dataReceive.update === null
+                    ) {
+                        // handleStopAudio();
+                        audioRef.current?.pause();
+                        setNotifications([]);
+                        setLoading(false);
                     }
-                    setNotifications(alarms);
-                } else if (
-                    dataReceive.data &&
-                    dataReceive.data.data &&
-                    dataReceive.data.data.length === 0 &&
-                    dataReceive.update === null
-                ) {
-                    // handleStopAudio();
-                    audioRef.current?.pause();
-                    setNotifications([]);
+                } else if (dataReceive && dataReceive["cmdId"] === 2) {
+                    setAlarmCount(dataReceive.count);
                     setLoading(false);
                 }
-            } else if (dataReceive && dataReceive["cmdId"] === 2) {
-                setAlarmCount(dataReceive.count);
-                setLoading(false);
-            }
-        };
-        ws.current.onclose = () => {
-            // console.log("WebSocket connection closed. Trying to reconnect...");
-            // setLoading(true);
-            //setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
-        };
-        ws.current.onerror = (error) => {
-            console.error("WebSocket error:", error);
-            setLoading(true);
-            setTimeout(() => connectWebSocket(token), 3000); // Thử kết nối lại sau 5 giây
-            // UIUtils.showError({});
-        };
-    };
+            };
+            ws.current.onclose = () => {
+                // console.log("WebSocket connection closed. Trying to reconnect...");
+                // setLoading(true);
+                setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
+            };
+            ws.current.onerror = (error) => {
+                console.error("WebSocket error:", error);
+                setLoading(true);
+                setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
+                // UIUtils.showError({});
+            };
+        },
+        [sendData]
+    );
 
     useEffect(() => {
         let token: string | null = null;
@@ -284,7 +287,7 @@ export default function Alarmbell() {
                 ws.current.close();
             }
         };
-    }, []);
+    }, [connectWebSocket]);
 
     // useEffect(() => {
     //     if (
