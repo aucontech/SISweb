@@ -60,6 +60,8 @@ const AppMenu = () => {
             setModel(modelData);
         } else {
             const modelData: MenuModel[] = [
+
+
                 {
                     label: "Dashboards",
                     icon: "pi pi-home",

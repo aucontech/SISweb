@@ -60,7 +60,9 @@ interface StateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-
+interface ValueStateMap {
+    [key: string]: React.Dispatch<React.SetStateAction<string | null>> | undefined;
+  }
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "#aad4ff";
@@ -82,7 +84,6 @@ export default function DemoFlowOTS() {
     const [data, setData] = useState<any[]>([]);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
-    console.log('GVF1: ', GVF1);
     const [SVF1, setSVF1] = useState<string | null>(null);
     const [SVA1, setSVA1] = useState<string | null>(null);
     const [GVA1, setGVA1] = useState<string | null>(null);
@@ -103,11 +104,13 @@ export default function DemoFlowOTS() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
+    
     const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
+    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
     const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
-
+    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
-
+    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
 
     useEffect(() => {
@@ -183,15 +186,25 @@ export default function DemoFlowOTS() {
                         EVC_02_Conn_STT: setEVC_STT02,
                         PLC_Conn_STT: setPLC_STT,
 
-                        time: setTimeUpdate,
-
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_STT01Value,
+                        EVC_02_Conn_STT: setEVC_STT02Value,
+                        PLC_Conn_STT: setPLC_STTValue,
+                      };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
+                        }
+
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+                             
+              const date = new Date(value);
+              const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                              valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -2449,7 +2462,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {EVC_STT01Value}
                                     </p>
                                     <p
                                         style={{
@@ -2459,7 +2472,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {EVC_STT02Value}
                                     </p>
                                     <p
                                         style={{
@@ -2469,7 +2482,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {PLC_STTValue}
                                     </p>
                                 </div>
                             </div>
