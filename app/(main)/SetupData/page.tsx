@@ -11,6 +11,12 @@ import SetUpdata_CNG_BINHDUONG from './CNG_BINHDUONG/SetUpdata_CNG_BINHDUONG';
 import SetUpdata_HUNGYEN from './CNG_HUNGYEN/SetUpdata_HUNGYEN';
 import SetUpdata_HUNGYEN_SNG from './SNG_HUNGYEN/SetUpdata_HUNGYEN_SNG';
 import SetUpdata_SNG_BINHDUONG from './SNG_BINHDUONG/SetUpdata_SNG_BINHDUONG';
+import SetUpdata_IGUACU from './IGUACU/SetUpdata_IGUACU';
+import SetUpdata_KOA from './KOA/SetUpdata_KOA';
+import SetUpdata_YOSHINO from './YOSHINO/SetUpdata_YOSHINO';
+import SetUpdata_NITORI from './NITORI/SetUpdata_NITORI';
+import SetUpdata_ARAKAWA from './ARAKAWA/SetUpdata_ARAKAWA';
+import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
@@ -91,18 +97,17 @@ export default function GraphicSogec() {
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
               { label: 'OTSUKA', command: () => PhuMyClick(<LowHighData />, 'OTSUKA') },
-              { label: 'ARAKAWA', command: () => PhuMyClick(null, 'ARAKAWA') },
-              { label: 'SPMCV', command: () => PhuMyClick(null, 'SPMCV') },
+              { label: 'ARAKAWA', command: () => PhuMyClick(<SetUpdata_ARAKAWA/>, 'ARAKAWA') },
+              { label: 'SPMCV', command: () => PhuMyClick(<SetUpdata_SPMCV/>, 'SPMCV') },
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
               { label: 'CNG PRU', command: () => PhuMyClick(<SetUpdata_PRU/>, 'CNG PRU') },
 
-              { label: 'ZOVC EVC', command: () => PhuMyClick(<SetUpdata_ZOVC/>, 'ZOVC EVC') },
-              { label: 'NITORI', command: () => PhuMyClick(null, 'NITORI') },
-              { label: 'YOSHINO', command: () => PhuMyClick(null, 'YOSHINO') },
-              { label: 'IGUACU', command: () => PhuMyClick(null, 'IGUACU') },
-              { label: 'SPMCV', command: () => PhuMyClick(null, 'SPMCV') },
-              { label: 'KOA', command: () => PhuMyClick(null, 'KOA') },
+              { label: 'ZOCV', command: () => PhuMyClick(<SetUpdata_ZOVC/>, 'ZOCV') },
+              { label: 'NITORI', command: () => PhuMyClick(<SetUpdata_NITORI/>, 'NITORI') },
+              { label: 'YOSHINO', command: () => PhuMyClick(<SetUpdata_YOSHINO/>, 'YOSHINO') },
+              { label: 'IGUACU', command: () => PhuMyClick(<SetUpdata_IGUACU/>, 'IGUACU') },
+              { label: 'KOA', command: () => PhuMyClick(<SetUpdata_KOA/>, 'KOA') },
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }

@@ -61,7 +61,7 @@ const AppMenu = () => {
         } else {
             const modelData: MenuModel[] = [
 
-
+               
                 {
                     label: "Dashboards",
                     icon: "pi pi-home",
@@ -112,7 +112,7 @@ const AppMenu = () => {
                             to: "/SetupData",
                         },
                         {
-                            label: "Device List",
+                            label: "Station List",
                             icon: "pi pi-fw pi-list",
                             to: "/devices",
                         },

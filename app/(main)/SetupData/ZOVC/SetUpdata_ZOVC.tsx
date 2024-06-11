@@ -17,6 +17,11 @@ interface StateMap {
         | undefined;
 
 }
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function SetUpdata_ZOVC() {
 
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +33,9 @@ export default function SetUpdata_ZOVC() {
     const [data, setData] = useState<any[]>([]);
 
     const toast = useRef<Toast>(null);
-
+    const [FC01_Conn_STT, setFC01_Conn_STT] = useState<string | null>(null);
+    const [EVC02_Conn_STT, setEVC02_Conn_STT] = useState<string | null>(null);
+    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -112,12 +119,37 @@ export default function SetUpdata_ZOVC() {
 
 
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        FC_01_Conn_STT: setFC01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC02_Conn_STT,
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
+                        }
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -2813,11 +2845,19 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         },
   };
          
-    
+  const mainCategoryFC = {
+    EVC01: 'FC-01 -  Prameter & configuration',
+    EVC02: 'EVC-02 -  Prameter & configuration',
+    PLC: 'PLC -  Prameter & configuration'
+};
+
 
         const dataEVC01 = [
 
-            { timeUpdate: <span style={combineCss.CSSFC_01_Lithium_Batery_Status} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSFC_01_Lithium_Batery_Status} >{FC01_Conn_STT}</span>,
              name: <span style={combineCss.CSSFC_01_Lithium_Batery_Status}> Lithinum Battery Status </span> ,
     
              modbus: <span style={combineCss.CSSFC_01_Lithium_Batery_Status}>5615	 </span> ,
@@ -2835,7 +2875,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             },
     
          
-            { timeUpdate: <span style={combineCss.CSSFC_01_Battery_Voltage} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSFC_01_Battery_Voltage} >{FC01_Conn_STT}</span>,
              name: <span style={combineCss.CSSFC_01_Battery_Voltage}> Battery Voltage</span> ,
     
              modbus: <span style={combineCss.CSSFC_01_Battery_Voltage}>6615	 </span> ,
@@ -2852,7 +2895,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSFC_01_System_Voltage} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSFC_01_System_Voltage} >{FC01_Conn_STT}</span>,
             name: <span style={combineCss.CSSFC_01_System_Voltage}>System Voltage</span> ,
    
             modbus: <span style={combineCss.CSSFC_01_System_Voltage}>6617	 </span> ,
@@ -2869,7 +2915,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    
            },
 
-           { timeUpdate: <span style={combineCss.CSSFC_01_Charger_Voltage} >{timeUpdate}</span>,
+           {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Charger_Voltage} >{FC01_Conn_STT}</span>,
            name: <span style={combineCss.CSSFC_01_Charger_Voltage}> Charger Voltage </span> ,
   
            modbus: <span style={combineCss.CSSFC_01_Charger_Voltage}>6619	 </span> ,
@@ -2886,7 +2935,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   
           },
 
-          { timeUpdate: <span style={combineCss.CSSFC_01_Conn_STT} >{timeUpdate}</span>,
+          {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Conn_STT} >{FC01_Conn_STT}</span>,
           name: <span style={combineCss.CSSFC_01_Conn_STT}>Conn STT</span> ,
  
           modbus: <span style={combineCss.CSSFC_01_Conn_STT}>Status	 </span> ,
@@ -2903,7 +2955,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
  
          },
 
-         { timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{timeUpdate}</span>,
+         {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{FC01_Conn_STT}</span>,
          name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}> Gross Volume Accumulated</span> ,
 
          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
@@ -2921,7 +2976,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         },
 
 
-        { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{timeUpdate}</span>,
+        {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{FC01_Conn_STT}</span>,
         name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>Temperature</span> ,
 
         modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
@@ -2939,7 +2997,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        },
 
 
-         { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{timeUpdate}</span>,
+         {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{FC01_Conn_STT}</span>,
          name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>Input Pressure</span> ,
 
          modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
@@ -2959,7 +3020,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        
 
     
-          { timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{timeUpdate}</span>,
+          {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{FC01_Conn_STT}</span>,
           name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
  
           modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
@@ -2980,7 +3044,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
 
-       { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{timeUpdate}</span>,
+       {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{FC01_Conn_STT}</span>,
        name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
@@ -2997,7 +3064,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
       },
 
-      { timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{timeUpdate}</span>,
+      {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{FC01_Conn_STT}</span>,
       name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
 
       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
@@ -3016,7 +3086,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
 
-     { timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{timeUpdate}</span>,
+     {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{FC01_Conn_STT}</span>,
      name: <span style={combineCss.CSSFC_01_Today_Values_Volume}> Standard Volume Vb Today</span> ,
 
      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
@@ -3034,7 +3107,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     },
 
 
-    { timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} >{timeUpdate}</span>,
+    {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} >{FC01_Conn_STT}</span>,
     name: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
 
     modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
@@ -3052,7 +3128,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    },
   
 
- { timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC01,
+    
+    timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} >{FC01_Conn_STT}</span>,
  name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
 
  modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
@@ -3069,7 +3148,10 @@ value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yester
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC01,
+    
+    timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} >{FC01_Conn_STT}</span>,
 name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
 
 modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
@@ -3093,7 +3175,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
 
 
             
-      { timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{timeUpdate}</span>,
+      {
+                mainCategory: mainCategoryFC.EVC02,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{EVC02_Conn_STT}</span>,
       name: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>Remain Battery</span> ,
 
       modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40001	 </span> ,
@@ -3112,7 +3197,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
 
 
 
-     { timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{timeUpdate}</span>,
+     {
+                mainCategory: mainCategoryFC.EVC02,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{EVC02_Conn_STT}</span>,
      name: <span style={combineCss.CSSEVC_02_Temperature}>Temperature</span> ,
 
      modbus: <span style={combineCss.CSSEVC_02_Temperature}>40850	 </span> ,
@@ -3130,7 +3218,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
     },
 
 
-    { timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{timeUpdate}</span>,
+    {
+                mainCategory: mainCategoryFC.EVC02,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC02_Conn_STT}</span>,
     name: <span style={combineCss.CSSEVC_02_Pressure}>Input Pressure</span> ,
 
     modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
@@ -3148,7 +3239,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{timeUpdate}</span>,
+   {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{EVC02_Conn_STT}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>SVA</span> ,
 
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40854	 </span> ,
@@ -3166,7 +3260,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{EVC02_Conn_STT}</span>,
   name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>GVA</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40856	 </span> ,
@@ -3183,7 +3280,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
 
  },
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{EVC02_Conn_STT}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>SVF</span> ,
 
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40858	 </span> ,
@@ -3201,7 +3301,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{EVC02_Conn_STT}</span>,
   name: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>GVF</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40860	 </span> ,
@@ -3221,7 +3324,10 @@ checked={maintainFC_01_Yesterday_Values_Uncorrected_Volume}
 
 
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{EVC02_Conn_STT}</span>,
  name: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>Vb Today</span> ,
 
  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40862	 </span> ,
@@ -3238,7 +3344,10 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{EVC02_Conn_STT}</span>,
   name: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>Vm Today</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40864	 </span> ,
@@ -3256,7 +3365,10 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
  },
 
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{EVC02_Conn_STT}</span>,
  name: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>Vb Yesterday</span> ,
 
  modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40866	 </span> ,
@@ -3274,7 +3386,10 @@ value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Curr
 },
 
 
-{ timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{EVC02_Conn_STT}</span>,
 name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vm Yesterday</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40868	 </span> ,
@@ -3291,7 +3406,16 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 },
           ]
+          const combinedData = [...dataEVC01, ...dataEVC02, ];
 
+          const mainCategoryTemplate = (data: any) => {
+              return (
+                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
+                      <span >{data.mainCategory}</span>
+                  </div>
+              );
+          };
+          
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
@@ -3302,17 +3426,16 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
         <ConfirmDialog />
 
-<div style={{display:'flex' }}>
-<h2>ZOVC EVC</h2>
+<h2>ZOCV</h2>
 
-</div>
     <div style={{width:'100%' , padding:10, borderRadius:5 }}>
 
-        
 
-        <h4>FC-01 -  Prameter & configuration  </h4>
-    <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
+    <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
+                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}     >
   {/* <Column field="modbus" header="Modbus" /> */}
+  <Column field="timeUpdate" header="Time Update" />
+
   <Column field="modbus" header="Modbus" />
 
   <Column field="name" header="Name" />
@@ -3327,26 +3450,8 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 </div>
 
-<div style={{width:'100%' , padding:10, borderRadius:5 }}>
-
-        
-
-<h4>EVC-02 -  Prameter & configuration  </h4>
-<DataTable  value={dataEVC02} size={'small'} selectionMode="single"    >
-{/* <Column field="modbus" header="Modbus" /> */}
-<Column field="modbus" header="Modbus" />
-
-<Column field="name" header="Name" />
-
-<Column field="value" header="Value" />
-<Column  field="high" header="High" />
-<Column field="low" header="Low" />
-<Column field="Maintain" header="Maintain" />
-<Column field="update" header="Update" />
-
-</DataTable>
-
-</div>
+<br />
+<br />
 
 </div>
   )

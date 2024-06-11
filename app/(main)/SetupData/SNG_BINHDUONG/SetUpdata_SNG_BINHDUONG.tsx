@@ -17,6 +17,11 @@ interface StateMap {
         | undefined;
 
 }
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function SetUpdata_SNG_BINHDUONG() {
 
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +33,9 @@ export default function SetUpdata_SNG_BINHDUONG() {
     const [data, setData] = useState<any[]>([]);
 
     const toast = useRef<Toast>(null);
-
+    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
+    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
+    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -127,21 +134,43 @@ export default function SetUpdata_SNG_BINHDUONG() {
                         WB_Setpoint: setWB_Setpoint,
 
 
-
-
-                  
                         ESD_2001: setESD_2001,
                    
 
 
                   
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_STT01Value,
+                        EVC_02_Conn_STT: setEVC_STT02Value,
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
+                        }
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -4478,11 +4507,19 @@ const ChangeMaintainGD1_STATUS = async () => {
   };
          
     
+  const mainCategoryFC = {
+    EVC01: 'EVC01 -  Prameter & configuration',
+    EVC02: 'EVC02 -  Prameter & configuration',
+    PLC: 'PLC -  Prameter & configuration'
+};
 
           const PLC01 = [
       
 
-            { timeUpdate: <span style={combineCss.CSSPT_2004} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPT_2004} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_2004}>Pressure Transmitter PT-2005</span> ,
     
              modbus: <span style={combineCss.CSSPT_2004}>40001	 </span> ,
@@ -4500,7 +4537,10 @@ const ChangeMaintainGD1_STATUS = async () => {
             },
     
          
-            { timeUpdate: <span style={combineCss.CSSPT_2005} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPT_2005} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_2005}>Pressure Transmitter PT-2006</span> ,
     
              modbus: <span style={combineCss.CSSPT_2005}>40003	 </span> ,
@@ -4517,7 +4557,10 @@ const ChangeMaintainGD1_STATUS = async () => {
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSTT_2003} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSTT_2003} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSTT_2003}>Temperature Transmitter TT-2003</span> ,
    
             modbus: <span style={combineCss.CSSTT_2003}>40005	 </span> ,
@@ -4534,7 +4577,11 @@ const ChangeMaintainGD1_STATUS = async () => {
    
            },
 
-           { timeUpdate: <span style={combineCss.CSSTT_2004} >{timeUpdate}</span>,
+           {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSTT_2004} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSTT_2004}>Temperature Transmitter TT-2004</span> ,
   
            modbus: <span style={combineCss.CSSTT_2004}>40007	 </span> ,
@@ -4551,7 +4598,11 @@ const ChangeMaintainGD1_STATUS = async () => {
   
           },
 
-          { timeUpdate: <span style={combineCss.CSSTG_2005} >{timeUpdate}</span>,
+          {
+           mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSTG_2005} >{PLC_STTValue}</span>,
           name: <span style={combineCss.CSSTG_2005}>TG_2005</span> ,
  
           modbus: <span style={combineCss.CSSTG_2005}>40009	 </span> ,
@@ -4567,7 +4618,11 @@ const ChangeMaintainGD1_STATUS = async () => {
       ></Checkbox>
  
          },
-         { timeUpdate: <span style={combineCss.CSSWB_1001} >{timeUpdate}</span>,
+         {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSWB_1001} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSWB_1001}>Wobbe Index</span> ,
 
          modbus: <span style={combineCss.CSSWB_1001}>40011	 </span> ,
@@ -4585,7 +4640,11 @@ const ChangeMaintainGD1_STATUS = async () => {
         },
 
   
-        { timeUpdate: <span style={combineCss.CSSGD_2002} >{timeUpdate}</span>,
+        {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSGD_2002} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSGD_2002}>Gas Detector GD-2002</span> ,
 
         modbus: <span style={combineCss.CSSGD_2002}>40013	 </span> ,
@@ -4601,7 +4660,11 @@ const ChangeMaintainGD1_STATUS = async () => {
     ></Checkbox>
 
        },
-       { timeUpdate: <span style={combineCss.CSSGD_2003} >{timeUpdate}</span>,
+       {
+          mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSGD_2003} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSGD_2003}>Gas Detector GD-2003</span> ,
 
        modbus: <span style={combineCss.CSSGD_2003}>40015	 </span> ,
@@ -4618,7 +4681,11 @@ const ChangeMaintainGD1_STATUS = async () => {
 
       },
 
-        { timeUpdate: <span style={combineCss.CSSGD_2004} >{timeUpdate}</span>,
+        {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSGD_2004} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSGD_2004}>Gas Detector GD-2004</span> ,
 
         modbus: <span style={combineCss.CSSGD_2004}>40017	 </span> ,
@@ -4636,7 +4703,11 @@ const ChangeMaintainGD1_STATUS = async () => {
        },
 
 
-       { timeUpdate: <span style={combineCss.CSSGD_2005} >{timeUpdate}</span>,
+       {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSGD_2005} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSGD_2005}>Gas Detector GD-2005</span> ,
 
        modbus: <span style={combineCss.CSSGD_2005}>40019	 </span> ,
@@ -4654,7 +4725,11 @@ const ChangeMaintainGD1_STATUS = async () => {
       },
 
               
-      { timeUpdate: <span style={combineCss.CSSGD_2006} >{timeUpdate}</span>,
+      {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSGD_2006} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSGD_2006}>Gas Detector GD-2006</span> ,
 
       modbus: <span style={combineCss.CSSGD_2006}>40021	 </span> ,
@@ -4672,7 +4747,10 @@ const ChangeMaintainGD1_STATUS = async () => {
      },
 
 
-            { timeUpdate: <span style={combineCss.CSSTM_2002_SNG} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSTM_2002_SNG} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSTM_2002_SNG}>Tubine Meter TM2002-SNG</span> ,
        
             modbus: <span style={combineCss.CSSTM_2002_SNG}>40023	 </span> ,
@@ -4694,7 +4772,11 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
 
-    { timeUpdate: <span style={combineCss.CSSTM_2003_SNG} >{timeUpdate}</span>,
+    {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSTM_2003_SNG} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSTM_2003_SNG}>Tubine Meter TM2003-SNG</span> ,
 
     modbus: <span style={combineCss.CSSTM_2003_SNG}>40025	 </span> ,
@@ -4712,7 +4794,10 @@ const ChangeMaintainGD1_STATUS = async () => {
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSTOTAL_SNG} >{timeUpdate}</span>,
+   {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSTOTAL_SNG} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSTOTAL_SNG}>Total SNG</span> ,
 
    modbus: <span style={combineCss.CSSTOTAL_SNG}>40027	 </span> ,
@@ -4730,7 +4815,10 @@ const ChangeMaintainGD1_STATUS = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSSDV_2004} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSSDV_2004} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSSDV_2004}>Shutdown Valve SDV-2004</span> ,
 
   modbus: <span style={combineCss.CSSSDV_2004}>40029	 </span> ,
@@ -4747,7 +4835,10 @@ const ChangeMaintainGD1_STATUS = async () => {
 
  },
 
- { timeUpdate: <span style={combineCss.CSSSDV_2003} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSSDV_2003} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSSDV_2003}>Shutdown Valve SDV-2003</span> ,
 
    modbus: <span style={combineCss.CSSSDV_2003}>40031	 </span> ,
@@ -4765,7 +4856,10 @@ const ChangeMaintainGD1_STATUS = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSGD1_STATUS} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD1_STATUS} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSGD1_STATUS}>Status Gas Detector-2002</span> ,
 
   modbus: <span style={combineCss.CSSGD1_STATUS}>40033	 </span> ,
@@ -4785,7 +4879,10 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
 
- { timeUpdate: <span style={combineCss.CSSGD2_STATUS} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD2_STATUS} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSGD2_STATUS}>Status Gas Detector-2003</span> ,
 
  modbus: <span style={combineCss.CSSGD2_STATUS}>40035	 </span> ,
@@ -4802,7 +4899,10 @@ value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> ,
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSGD3_STATUS} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD3_STATUS} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSGD3_STATUS}>Status Gas Detector-2004</span> ,
 
   modbus: <span style={combineCss.CSSGD3_STATUS}>40037	 </span> ,
@@ -4820,7 +4920,10 @@ value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> ,
  },
 
 
- { timeUpdate: <span style={combineCss.CSSGD4_STATUS} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD4_STATUS} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSGD4_STATUS}>Status Gas Detector-2005</span> ,
 
  modbus: <span style={combineCss.CSSGD4_STATUS}>40039	 </span> ,
@@ -4838,7 +4941,10 @@ value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS}</span> ,
 },
 
 
-{ timeUpdate: <span style={combineCss.CSSGD5_STATUS} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD5_STATUS} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSGD5_STATUS}>Status Gas Detector-2006</span> ,
 
 modbus: <span style={combineCss.CSSGD5_STATUS}>40041	 </span> ,
@@ -4855,7 +4961,10 @@ checked={maintainGD5_STATUS}
 
 },
 
-            { timeUpdate: <span style={combineCss.CSSESD} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSESD} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSESD}>Emergency Shutdown</span> ,
     
              modbus: <span style={combineCss.CSSESD}>40043	 </span> ,
@@ -4871,7 +4980,10 @@ checked={maintainGD5_STATUS}
          ></Checkbox>
     
             },
-            { timeUpdate: <span style={combineCss.CSSHR_BC} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSHR_BC} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSHR_BC}>Horn And Beacon</span> ,
             
             modbus: <span style={combineCss.CSSHR_BC}>40045	 </span> ,
@@ -4888,7 +5000,10 @@ checked={maintainGD5_STATUS}
             
             },
          
-{ timeUpdate: <span style={combineCss.CSSSD} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSSD} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSSD}> Smoker Detector</span> ,
 
 modbus: <span style={combineCss.CSSSD}>40047	 </span> ,
@@ -4905,7 +5020,10 @@ checked={maintainSD}
 
 },
 
-            { timeUpdate: <span style={combineCss.CSSVAPORIZER_1} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSVAPORIZER_1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVAPORIZER_1}>Vaporizer 1</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	 </span> ,
@@ -4922,7 +5040,10 @@ checked={maintainSD}
     
             },
     
-            { timeUpdate: <span style={combineCss.CSSVAPORIZER_2} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSVAPORIZER_2} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVAPORIZER_2}>Vaporizer 2</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_2}>40051</span> ,
@@ -4940,7 +5061,10 @@ checked={maintainSD}
             },
 
 
-            { timeUpdate: <span style={combineCss.CSSVAPORIZER_3} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSVAPORIZER_3} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVAPORIZER_3}>Vaporizer 3</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_3}>40053	 </span> ,
@@ -4957,7 +5081,10 @@ checked={maintainSD}
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSVAPORIZER_4} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSVAPORIZER_4} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSVAPORIZER_4}>Vaporizer 4</span> ,
    
             modbus: <span style={combineCss.CSSVAPORIZER_4}>40055	 </span> ,
@@ -4975,7 +5102,11 @@ checked={maintainSD}
            },
 
 
-           { timeUpdate: <span style={combineCss.CSSCOOLING_V} >{timeUpdate}</span>,
+           {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSCOOLING_V} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSCOOLING_V}>Cooling V</span> ,
   
            modbus: <span style={combineCss.CSSCOOLING_V}>40057	 </span> ,
@@ -4996,7 +5127,11 @@ checked={maintainSD}
 
 
 
-         { timeUpdate: <span style={combineCss.CSSFCV_2001} >{timeUpdate}</span>,
+         {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSFCV_2001} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSFCV_2001}>FCV-2001</span> ,
 
          modbus: <span style={combineCss.CSSFCV_2001}>40059	 </span> ,
@@ -5014,7 +5149,11 @@ checked={maintainSD}
         },
 
 
-        { timeUpdate: <span style={combineCss.CSSPERCENT_LPG} >{timeUpdate}</span>,
+        {
+                               mainCategory: mainCategoryFC.PLC,
+
+            
+            timeUpdate: <span style={combineCss.CSSPERCENT_LPG} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSPERCENT_LPG}>% LPG</span> ,
 
         modbus: <span style={combineCss.CSSPERCENT_LPG}>40061	 </span> ,
@@ -5033,7 +5172,11 @@ checked={maintainSD}
 
 
 
-       { timeUpdate: <span style={combineCss.CSSPERCENT_AIR} >{timeUpdate}</span>,
+       {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSPERCENT_AIR} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSPERCENT_AIR}>% Air</span> ,
 
        modbus: <span style={combineCss.CSSPERCENT_AIR}>40063	 </span> ,
@@ -5051,7 +5194,11 @@ checked={maintainSD}
       },
 
 
-      { timeUpdate: <span style={combineCss.CSSHV_1001} >{timeUpdate}</span>,
+      {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSHV_1001} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSHV_1001}>Heat Value HV-2001</span> ,
 
       modbus: <span style={combineCss.CSSHV_1001}>40065	 </span> ,
@@ -5067,7 +5214,11 @@ checked={maintainSD}
   ></Checkbox>
 
      },
-     { timeUpdate: <span style={combineCss.CSSRATIO_MODE} >{timeUpdate}</span>,
+     {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSRATIO_MODE} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSRATIO_MODE}>Ratio Mode</span> ,
     
      modbus: <span style={combineCss.CSSRATIO_MODE}>40067	 </span> ,
@@ -5085,7 +5236,11 @@ checked={maintainSD}
     },
 
 
-     { timeUpdate: <span style={combineCss.CSSFCV_MODE} >{timeUpdate}</span>,
+     {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSFCV_MODE} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSFCV_MODE}>FCV Mode</span> ,
 
      modbus: <span style={combineCss.CSSFCV_MODE}>40069	 </span> ,
@@ -5103,7 +5258,11 @@ checked={maintainSD}
     },
 
 
-    { timeUpdate: <span style={combineCss.CSSTOTAL_CNG} >{timeUpdate}</span>,
+    {
+                                              mainCategory: mainCategoryFC.PLC,
+
+        
+        timeUpdate: <span style={combineCss.CSSTOTAL_CNG} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSTOTAL_CNG}>Total CNG</span> ,
 
     modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
@@ -5121,7 +5280,10 @@ checked={maintainSD}
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSTM2002_CNG} >{timeUpdate}</span>,
+   {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSTM2002_CNG} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSTM2002_CNG}>Tubine Meter TM2002-CNG</span> ,
 
    modbus: <span style={combineCss.CSSTM2002_CNG}>40073	 </span> ,
@@ -5139,7 +5301,10 @@ checked={maintainSD}
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSTM2003_CNG} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSTM2003_CNG} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSTM2003_CNG}>Tubine Meter TM2003-CNG</span> ,
 
   modbus: <span style={combineCss.CSSTM2003_CNG}>40075	 </span> ,
@@ -5156,7 +5321,10 @@ checked={maintainSD}
 
  },
 
- { timeUpdate: <span style={combineCss.CSSWB_Setpoint} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSWB_Setpoint} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSWB_Setpoint}>Wobbe Index Setpoint</span> ,
 
    modbus: <span style={combineCss.CSSWB_Setpoint}>40077	 </span> ,
@@ -5175,9 +5343,18 @@ checked={maintainSD}
 
           ]
 
+          const combinedData = [ ...PLC01];
 
+          const mainCategoryTemplate = (data: any) => {
+              return (
+                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
+                      <span >{data.mainCategory}</span>
+                  </div>
+              );
+          };
+          
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10,marginTop:10 }}>
         <audio ref={audioRef}>
             <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
         </audio>
@@ -5191,13 +5368,15 @@ checked={maintainSD}
 </div>
    
 
-<div style={{width:'100%' , padding:10, borderRadius:5 }}>
+<div style={{width:'100%' , borderRadius:5 }}>
 
         
 
-<h4>PLC -  Prameter & configuration  </h4>
-<DataTable  value={PLC01} size={'small'} selectionMode="single"    >
+<DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
+                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
 {/* <Column field="modbus" header="Modbus" /> */}
+<Column field="timeUpdate" header="Time Update" />
+
 <Column field="modbus" header="Modbus" />
 
 <Column field="name" header="Name" />
@@ -5211,6 +5390,8 @@ checked={maintainSD}
 </DataTable>
 
 </div>
+<br />
+<br />
 
 </div>
   )

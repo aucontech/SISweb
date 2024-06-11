@@ -17,6 +17,11 @@ interface StateMap {
         | undefined;
 
 }
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function SetUpdata_CNG_BINHDUONG() {
 
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +33,9 @@ export default function SetUpdata_CNG_BINHDUONG() {
     const [data, setData] = useState<any[]>([]);
 
     const toast = useRef<Toast>(null);
-
+    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
+    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
+    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -137,12 +144,37 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
                   
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_STT01Value,
+                        EVC_02_Conn_STT: setEVC_STT02Value,
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
+                        }
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -4931,14 +4963,21 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   };
          
     
-
+  const mainCategoryFC = {
+    EVC01: 'EVC-01 -  Prameter & configuration',
+    EVC02: 'EVC-02 -  Prameter & configuration',
+    PLC: 'PLC -  Prameter & configuration'
+};
         const dataEVC01 = [
 
 
 
             
 
-            { timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
@@ -4956,7 +4995,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             },
     
          
-            { timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Temperature}>Temperature</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
@@ -4973,7 +5015,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC01,
+                
+                timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSEVC_01_Pressure}>Pressure</span> ,
    
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
@@ -4990,7 +5035,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    
            },
 
-           { timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{timeUpdate}</span>,
+           {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}> Volume at Base Condition</span> ,
   
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
@@ -5007,7 +5055,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   
           },
 
-          { timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{timeUpdate}</span>,
+          {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
  
           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
@@ -5023,7 +5074,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
       ></Checkbox>
  
          },
-         { timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{timeUpdate}</span>,
+         {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
 
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
@@ -5041,7 +5095,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         },
 
   
-        { timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{timeUpdate}</span>,
+        {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
 
         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
@@ -5057,7 +5114,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     ></Checkbox>
 
        },
-       { timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{timeUpdate}</span>,
+       {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
@@ -5074,7 +5134,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
       },
 
-        { timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{timeUpdate}</span>,
+        {
+                mainCategory: mainCategoryFC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
 
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
@@ -5092,7 +5155,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        },
 
 
-       { timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{timeUpdate}</span>,
+       {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
@@ -5110,7 +5176,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
       },
 
               
-      { timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{timeUpdate}</span>,
+      {
+                mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
       modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
@@ -5137,7 +5206,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
           const dataEVC02 = [
 
-            { timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{timeUpdate}</span>,
+            {
+                mainCategory: mainCategoryFC.EVC02,
+                
+                timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{EVC_STT02Value}</span>,
             name: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
        
             modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40001	 </span> ,
@@ -5159,7 +5231,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
 
-    { timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{timeUpdate}</span>,
+    {
+                mainCategory: mainCategoryFC.EVC02,
+        
+        timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{EVC_STT02Value}</span>,
     name: <span style={combineCss.CSSEVC_02_Temperature}>Temperature</span> ,
 
     modbus: <span style={combineCss.CSSEVC_02_Temperature}>40850	 </span> ,
@@ -5177,7 +5252,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{timeUpdate}</span>,
+   {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure</span> ,
 
    modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
@@ -5195,7 +5273,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>Volume at Base Condition</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40854	 </span> ,
@@ -5212,7 +5293,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  },
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
 
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40856	 </span> ,
@@ -5230,7 +5314,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{timeUpdate}</span>,
+  {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40858	 </span> ,
@@ -5250,7 +5337,10 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
 
  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40860	 </span> ,
@@ -5267,7 +5357,10 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>Vb of Current Day</span> ,
 
   modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40862	 </span> ,
@@ -5285,7 +5378,10 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
  },
 
 
- { timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{timeUpdate}</span>,
+ {
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>Vm of Current Day</span> ,
 
  modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40864	 </span> ,
@@ -5303,7 +5399,10 @@ value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Curr
 },
 
 
-{ timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40866	 </span> ,
@@ -5321,7 +5420,10 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 },
 
 
-{ timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{timeUpdate}</span>,
+{
+                mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40868	 </span> ,
@@ -5348,7 +5450,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
         
 
-            { timeUpdate: <span style={combineCss.CSSPIT_2006} >{timeUpdate}</span>,
+            {
+    mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPIT_2006} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPIT_2006}>Pressure Indicator Transmitter PIT-2006</span> ,
     
              modbus: <span style={combineCss.CSSPIT_2006}>40001	 </span> ,
@@ -5366,7 +5471,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
     
          
-            { timeUpdate: <span style={combineCss.CSSPIT_2007} >{timeUpdate}</span>,
+            {
+    mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPIT_2007} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPIT_2007}>Pressure Indicator Transmitter PIT-2007</span> ,
     
              modbus: <span style={combineCss.CSSPIT_2007}>40003	 </span> ,
@@ -5383,7 +5491,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
             },
     
-            { timeUpdate: <span style={combineCss.CSSPT_2001} >{timeUpdate}</span>,
+            {
+    mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPT_2001} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_2001}>Pressure Transmitter PT-2001</span> ,
     
              modbus: <span style={combineCss.CSSPT_2001}>40005</span> ,
@@ -5401,7 +5512,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
 
 
-            { timeUpdate: <span style={combineCss.CSSPT_2002} >{timeUpdate}</span>,
+            {
+    mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPT_2002} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_2002}>Pressure Transmitter PT-2002</span> ,
     
              modbus: <span style={combineCss.CSSPT_2002}>40007	 </span> ,
@@ -5418,7 +5532,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSPT_2003} >{timeUpdate}</span>,
+            {
+    mainCategory: mainCategoryFC.PLC,
+                
+                timeUpdate: <span style={combineCss.CSSPT_2003} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSPT_2003}>Pressure Transmitter PT-2003</span> ,
    
             modbus: <span style={combineCss.CSSPT_2003}>40009	 </span> ,
@@ -5436,7 +5553,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
            },
 
 
-           { timeUpdate: <span style={combineCss.CSSTT_2001} >{timeUpdate}</span>,
+           {
+    mainCategory: mainCategoryFC.PLC,
+            
+            timeUpdate: <span style={combineCss.CSSTT_2001} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSTT_2001}>Temperature Transmitter TT-2001</span> ,
   
            modbus: <span style={combineCss.CSSTT_2001}>40011	 </span> ,
@@ -5457,7 +5577,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
 
-         { timeUpdate: <span style={combineCss.CSSTT_2002} >{timeUpdate}</span>,
+         {
+    mainCategory: mainCategoryFC.PLC,
+            
+            timeUpdate: <span style={combineCss.CSSTT_2002} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSTT_2002}>Temperature Transmitter TT-2002</span> ,
 
          modbus: <span style={combineCss.CSSTT_2002}>40013	 </span> ,
@@ -5475,7 +5598,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
         },
 
 
-        { timeUpdate: <span style={combineCss.CSSGD_2001} >{timeUpdate}</span>,
+        {
+    mainCategory: mainCategoryFC.PLC,
+            
+            timeUpdate: <span style={combineCss.CSSGD_2001} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSGD_2001}>Gas Detector GD-2001</span> ,
 
         modbus: <span style={combineCss.CSSGD_2001}>40015	 </span> ,
@@ -5494,7 +5620,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
 
-       { timeUpdate: <span style={combineCss.CSSSDV_2001A} >{timeUpdate}</span>,
+       {
+    mainCategory: mainCategoryFC.PLC,
+        
+        timeUpdate: <span style={combineCss.CSSSDV_2001A} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSSDV_2001A}>Shutdown Valve SDV-2001A</span> ,
 
        modbus: <span style={combineCss.CSSSDV_2001A}>40017	 </span> ,
@@ -5512,7 +5641,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
       },
 
 
-      { timeUpdate: <span style={combineCss.CSSSDV_2001B} >{timeUpdate}</span>,
+      {
+    mainCategory: mainCategoryFC.PLC,
+        
+        timeUpdate: <span style={combineCss.CSSSDV_2001B} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSSDV_2001B}>Shutdown Valve SDV-2001B</span> ,
 
       modbus: <span style={combineCss.CSSSDV_2001B}>40019	 </span> ,
@@ -5528,7 +5660,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
   ></Checkbox>
 
      },
-     { timeUpdate: <span style={combineCss.CSSSDV_2002} >{timeUpdate}</span>,
+     {
+    mainCategory: mainCategoryFC.PLC,
+        
+        timeUpdate: <span style={combineCss.CSSSDV_2002} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSSDV_2002}>Shutdown Valve SDV-2002</span> ,
     
      modbus: <span style={combineCss.CSSSDV_2002}>40021	 </span> ,
@@ -5546,7 +5681,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     },
 
 
-     { timeUpdate: <span style={combineCss.CSSWater_PG} >{timeUpdate}</span>,
+     {
+    mainCategory: mainCategoryFC.PLC,
+        
+        timeUpdate: <span style={combineCss.CSSWater_PG} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSWater_PG}>Water Pressure</span> ,
 
      modbus: <span style={combineCss.CSSWater_PG}>40023	 </span> ,
@@ -5564,7 +5702,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     },
 
 
-    { timeUpdate: <span style={combineCss.CSSWater_LSW} >{timeUpdate}</span>,
+    {
+    mainCategory: mainCategoryFC.PLC,
+        
+        timeUpdate: <span style={combineCss.CSSWater_LSW} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSWater_LSW}>Water Level</span> ,
 
     modbus: <span style={combineCss.CSSWater_LSW}>40025	 </span> ,
@@ -5582,7 +5723,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSPUMP_1} >{timeUpdate}</span>,
+   {
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSPUMP_1} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSPUMP_1}>Pump 1</span> ,
 
    modbus: <span style={combineCss.CSSPUMP_1}>40027	 </span> ,
@@ -5600,7 +5744,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSPUMP_2} >{timeUpdate}</span>,
+  {
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSPUMP_2} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSPUMP_2}>Pump 2</span> ,
 
   modbus: <span style={combineCss.CSSPUMP_2}>40029	 </span> ,
@@ -5617,7 +5764,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
  },
 
- { timeUpdate: <span style={combineCss.CSSHEATER_1} >{timeUpdate}</span>,
+ {
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSHEATER_1} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSHEATER_1}>Heater 1</span> ,
 
    modbus: <span style={combineCss.CSSHEATER_1}>40031	 </span> ,
@@ -5635,7 +5785,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSHEATER_2} >{timeUpdate}</span>,
+  {
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSHEATER_2} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSHEATER_2}>HEATER_2</span> ,
 
   modbus: <span style={combineCss.CSSHEATER_2}>400011	 </span> ,
@@ -5657,7 +5810,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
 
-{ timeUpdate: <span style={combineCss.CSSBOILER} >{timeUpdate}</span>,
+{
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSBOILER} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSBOILER}>Boiler</span> ,
 
   modbus: <span style={combineCss.CSSBOILER}>40035	 </span> ,
@@ -5675,7 +5831,10 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  },
 
 
- { timeUpdate: <span style={combineCss.CSSGD_STATUS} >{timeUpdate}</span>,
+ {
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSGD_STATUS} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSGD_STATUS}>Gas Detector ST</span> ,
 
  modbus: <span style={combineCss.CSSGD_STATUS}>40037	 </span> ,
@@ -5692,7 +5851,10 @@ value: <span style={combineCss.CSSGD_STATUS} > {GD_STATUS}</span> ,
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSESD_2001} >{timeUpdate}</span>,
+{
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSESD_2001} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSESD_2001}> Emergency Shut ESD-2001</span> ,
 
 modbus: <span style={combineCss.CSSESD_2001}>40039	 </span> ,
@@ -5712,7 +5874,10 @@ checked={maintainESD_2001}
 
 
 
-{ timeUpdate: <span style={combineCss.CSSHR_BC} >{timeUpdate}</span>,
+{
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSHR_BC} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSHR_BC}>Horn And Beacon</span> ,
 
 modbus: <span style={combineCss.CSSHR_BC}>40041	 </span> ,
@@ -5733,7 +5898,10 @@ checked={maintainHR_BC}
 
 
 
-{ timeUpdate: <span style={combineCss.CSSSD_2001} >{timeUpdate}</span>,
+{
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSSD_2001} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSSD_2001}>Smoker Detector SD-2001</span> ,
 
 modbus: <span style={combineCss.CSSSD_2001}>40043	 </span> ,
@@ -5750,7 +5918,10 @@ checked={maintainSD_2001}
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSSD_2002} >{timeUpdate}</span>,
+{
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSSSD_2002} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSSD_2002}> Smoker Detector SD-2002</span> ,
 
 modbus: <span style={combineCss.CSSSD_2002}>40045	 </span> ,
@@ -5770,10 +5941,20 @@ checked={maintainSD_2002}
           ]
 
           
+          const combinedData = [...dataEVC01, ...dataEVC02, ...PLC01];
+
+          const mainCategoryTemplate = (data: any) => {
+              return (
+                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
+                      <span >{data.mainCategory}</span>
+                  </div>
+              );
+          };
+          
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, marginTop:10 }}>
         <audio ref={audioRef}>
             <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
         </audio>
@@ -5781,17 +5962,16 @@ checked={maintainSD_2002}
 
         <ConfirmDialog />
 
-<div style={{display:'flex' }}>
 <h2>CNG BINH DUONG</h2>
 
-</div>
-    <div style={{width:'100%' , padding:10, borderRadius:5 }}>
+    <div style={{width:'100%' , borderRadius:5 }}>
 
         
-
-        <h4>EVC-01 -  Prameter & configuration  </h4>
-    <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
+    <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
+                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}    >
   {/* <Column field="modbus" header="Modbus" /> */}
+  <Column field="timeUpdate" header="Time Update" />
+
   <Column field="modbus" header="Modbus" />
 
   <Column field="name" header="Name" />
@@ -5806,47 +5986,8 @@ checked={maintainSD_2002}
 
 </div>
 
-<div style={{width:'100%' , padding:10, borderRadius:5 }}>
-
-        
-
-<h4>EVC-02 -  Prameter & configuration  </h4>
-<DataTable  value={dataEVC02} size={'small'} selectionMode="single"    >
-{/* <Column field="modbus" header="Modbus" /> */}
-<Column field="modbus" header="Modbus" />
-
-<Column field="name" header="Name" />
-
-<Column field="value" header="Value" />
-<Column  field="high" header="High" />
-<Column field="low" header="Low" />
-<Column field="Maintain" header="Maintain" />
-<Column field="update" header="Update" />
-
-</DataTable>
-
-</div>
-
-<div style={{width:'100%' , padding:10, borderRadius:5 }}>
-
-        
-
-<h4>PLC -  Prameter & configuration  </h4>
-<DataTable  value={PLC01} size={'small'} selectionMode="single"    >
-{/* <Column field="modbus" header="Modbus" /> */}
-<Column field="modbus" header="Modbus" />
-
-<Column field="name" header="Name" />
-
-<Column field="value" header="Value" />
-<Column  field="high" header="High" />
-<Column field="low" header="Low" />
-<Column field="Maintain" header="Maintain" />
-<Column field="update" header="Update" />
-
-</DataTable>
-
-</div>
+<br />
+<br />
 
 </div>
   )
