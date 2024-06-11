@@ -1,34 +1,20 @@
 import { readToken } from '@/service/localStorage';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { id_OTSUKA } from '../../data-table-device/ID-DEVICE/IdDevice';
+
 interface StateMap {
-    [key: string]:
-        | React.Dispatch<React.SetStateAction<string | null>>
-        | undefined;
+    [key: string]: React.Dispatch<React.SetStateAction<string | null>> | undefined;
 }
 
-
-interface ValueStateMap {
-    [key: string]: React.Dispatch<React.SetStateAction<string | null>> | undefined;
-  }
 export default function TestData() {
-
-
-    const [visible, setVisible] = useState(false);
-    const audioRef = useRef<HTMLAudioElement>(null);
-    const [editingEnabled, setEditingEnabled] = useState(false);
-
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
+    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
-
-    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
-    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
-    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
-    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
-    const [PLC_STT, setPLC_STT] = useState<string | null>(null);
-    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
-
+    const [GVF1, setGVF1] = useState<string | null>(null);
+    const [SVF1, setSVF1] = useState<string | null>(null);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -75,45 +61,69 @@ export default function TestData() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                
-
-                        EVC_01_Conn_STT: setEVC_STT01,
-                        EVC_02_Conn_STT: setEVC_STT02,
-                        PLC_Conn_STT: setPLC_STT,
-
-
+                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
                     };
 
-
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_STT01Value,
-                        EVC_02_Conn_STT: setEVC_STT02Value,
-                        PLC_Conn_STT: setPLC_STTValue,
-                      };
-
-                  
-          keys.forEach((key) => {
-            if (stateMap[key] && valueStateMap[key]) {
-              const timestamp = dataReceived.data[key][0][0]; // Get the timestamp
-              const value = dataReceived.data[key][0][1]; // Get the value
-              stateMap[key]?.(new Date(timestamp).toLocaleString()); // Convert timestamp to locale string
-              valueStateMap[key]?.(value); // Set the value
-            }
-          });
+                    keys.forEach((key) => {
+                        if (stateMap[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            const slicedValue = value;
+                            stateMap[key]?.(slicedValue);
+                        }
+                    });
                 }
             };
         }
     }, [data]);
+
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-  return (
-    <div>
 
-        {EVC_STT01}
+    const dataEVC01 = [
+        {
+            mainCategory: 'EVC01',
+            category: 'Flow at Base Condition',
+            value: <span>{SVF1} sm³/h</span>,
+        },
+        {
+            mainCategory: 'EVC01',
+            category: 'Flow at Measurement Condition',
+            value: <span>{GVF1} m³/h</span>,
+        },
+    ];
 
-        <div>
-        <strong>EVC_01_Conn_STT Value:</strong> {EVC_STT01Value}
-      </div>
-    </div>
-  )
+    const dataEVC02 = [
+        {
+            mainCategory: 'EVC02',
+
+            category: 'Flow at Base Condition',
+            value: <span>{SVF1} sm³/h</span>,
+        },
+        {
+            mainCategory: 'EVC02',
+            category: 'Flow at Measurement Condition',
+            value: <span>{GVF1} m³/h</span>,
+        },
+    ];
+
+    const combinedData = [...dataEVC01, ...dataEVC02];
+
+    const mainCategoryTemplate = (data: any) => {
+        return (
+            <div style={{fontWeight:500, fontSize:23, }}>
+                <span >{data.mainCategory}</span>
+            </div>
+        );
+    };
+
+    return (
+        <div className="card">
+            <DataTable value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory" size={'small'} selectionMode="single" 
+                    sortOrder={1} scrollable scrollHeight="400px" rowGroupHeaderTemplate={mainCategoryTemplate} tableStyle={{ minWidth: '50rem' }}>
+                <Column field="category" header="Category" />
+                <Column field="value" header="Value" style={{ minWidth: '200px' }}></Column>
+            </DataTable>
+        </div>
+    );
 }

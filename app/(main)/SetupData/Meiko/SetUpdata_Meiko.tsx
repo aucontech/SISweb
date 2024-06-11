@@ -2540,7 +2540,7 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
           ]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10,marginTop:10 }}>
     <audio ref={audioRef}>
             <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
         </audio>
@@ -2551,7 +2551,7 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 <h2>MEIKO</h2>
 
 </div>
-    <div style={{width:'100%' , padding:10, borderRadius:5 }}>
+    <div style={{width:'100%' ,borderRadius:5 }}>
 
         
 

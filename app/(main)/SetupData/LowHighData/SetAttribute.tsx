@@ -620,7 +620,7 @@ export default function SetAttribute() {
         <div>
             <Toast ref={toast} />
 
-            <div style={{ width: "100%", padding: 5, borderRadius: 5 }}>
+            <div style={{ width: "100%",  borderRadius: 5 }}>
                 <h4>Station - configuration </h4>
                 <DataTable value={configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
