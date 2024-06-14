@@ -11,7 +11,7 @@ import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
 import { Utils } from "@/service/Utils";
-
+import { useToken } from "@/hook/useToken";
 interface Notification {
     subject: string;
     text: string;
@@ -23,21 +23,13 @@ interface WebSocketMessage {
     totalUnreadCount: string;
 }
 export default function Alarmbell() {
-    let token: string | null = "";
-    if (typeof window !== "undefined") {
-        token = readToken();
-    }
+    const token = useToken();
     const audioRef = useRef<HTMLAudioElement>(null);
     const router = useRouter();
     const op = useRef<OverlayPanel>(null);
     const ws = useRef<WebSocket | null>(null);
     const [loading, setLoading] = useState(true); // State để kiểm soát loading
-    const previousNotificationsLength = useRef(0); // Lưu trữ giá trị trước đó của notifications.length
-    // const [totalUnreadCount, setTotalUnreadCount] = useState<string>("");
-    // const [obj1Processed, setObj1Processed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    // console.log("notifications: ", notifications);
-    // const [firstRender, setFirstRender] = useState<boolean>(true); // State để kiểm soát việc gọi audio trong lần render đầu tiên
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
     useEffect(() => {
@@ -148,7 +140,7 @@ export default function Alarmbell() {
                                     entityList: [
                                         "6996ea90-ece8-11ee-b18f-f142b946d0bb",
                                         "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                        // "b92cda00-07c9-11ef-973a-dde5fe61203a",
+                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
                                         // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
                                     ],
                                 },
@@ -167,7 +159,7 @@ export default function Alarmbell() {
                                         },
                                         direction: "DESC",
                                     },
-                                    timeWindow: 604800000,
+                                    timeWindow: 60480000 * 2 * 2 * 2,
                                 },
                                 alarmFields: [
                                     {
@@ -216,9 +208,11 @@ export default function Alarmbell() {
                         dataReceive.data.data &&
                         dataReceive.data.data.length > 0
                     ) {
+                        console.log(dataReceive);
                         // setNotifications(dataReceive.data.data);
                         //  setLoading(false);
                         let alarms = dataReceive.data.data;
+                        console.log(alarms);
                         let criticalAlarm = alarms.filter(
                             (alarm: any) => alarm.severity === "CRITICAL"
                         );
@@ -244,6 +238,8 @@ export default function Alarmbell() {
                             }
                         }
                         setNotifications(alarms);
+                        setAlarmCount(dataReceive.data?.totalElements);
+                        setLoading(false);
                     } else if (
                         dataReceive.data &&
                         dataReceive.data.data &&
@@ -256,8 +252,9 @@ export default function Alarmbell() {
                         setLoading(false);
                     }
                 } else if (dataReceive && dataReceive["cmdId"] === 2) {
-                    setAlarmCount(dataReceive.count);
-                    setLoading(false);
+                    //console.log(dataReceive.count);
+                    //  setAlarmCount(dataReceive.count);
+                    // setLoading(false);
                 }
             };
             ws.current.onclose = () => {
@@ -276,9 +273,6 @@ export default function Alarmbell() {
     );
 
     useEffect(() => {
-        let token: string | null = null;
-        token = readToken();
-        // console.log("Token", token);
         if (token) {
             connectWebSocket(token);
         }
@@ -287,7 +281,7 @@ export default function Alarmbell() {
                 ws.current.close();
             }
         };
-    }, [connectWebSocket]);
+    }, [connectWebSocket, token]);
 
     // useEffect(() => {
     //     if (
@@ -371,7 +365,6 @@ export default function Alarmbell() {
 
     const _renderAlarmBell = () => {
         return notifications.map((item: any, index: any) => {
-            console.log("item", item);
             return (
                 <>
                     <div key={index} style={{ padding: "0px 10px" }}>
@@ -451,11 +444,9 @@ export default function Alarmbell() {
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
     const handleStopAudio = () => {
-        // Hàm dừng âm thanh
         if (audioRef.current && !audioRef.current.paused) {
             audioRef.current.pause();
             audioRef.current.currentTime = 0; // Đưa thời gian về 0 để reset audio
-            console.log("Audio stopped successfully");
         }
     };
 
@@ -469,13 +460,13 @@ export default function Alarmbell() {
             </audio>
 
             <div className="flex">
-                {totalCount && (
+                {alarmCount > 0 && (
                     <div className={styles.totalCount}>
                         <p className={styles.totalCount_p}>{alarmCount}</p>
                     </div>
                 )}
 
-                {totalCount ? (
+                {alarmCount > 0 ? (
                     <div
                         className="BackgroundRed"
                         style={{
