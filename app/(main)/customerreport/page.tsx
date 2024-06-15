@@ -34,7 +34,8 @@ const defaultValue = {
 const CustomerReport = () => {
     const [filters, setFilters] = useState<any>({});
     const [reportData, setReportData] = useState<any>({});
-
+    const [isLine1Selected, setIsLine1Selected] = useState<boolean>(false);
+    const [isLine2Selected, setIsLine2Selected] = useState<boolean>(false);
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
     };
@@ -332,11 +333,52 @@ const CustomerReport = () => {
                 break;
         }
     };
+
+    const _onSelectLine = (value: any, field: string) => {
+        if (field === "line1") {
+            let newReportData = { ...reportData };
+            newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
+            newReportData.standardVolumeVbCon =
+                newReportData.standardVolumeVbB1;
+            newReportData.heatingValueCon = newReportData.heatingValueLine1;
+            newReportData.energyCon = newReportData.energyQB1;
+            newReportData.avgTemperatureCon = newReportData.avgTemperatureB1;
+            newReportData.avgPressureCon = newReportData.avgPressureB1;
+            newReportData.grossVolumeAccumulatedCon =
+                newReportData.grossVolumeAccumulatedB1;
+            newReportData.standardVolumeAccumulatedCon =
+                newReportData.standardVolumeAccumulatedB1;
+            setReportData(newReportData);
+            setIsLine1Selected(true);
+            setIsLine2Selected(false);
+        }
+        if (field === "line2") {
+            let newReportData = { ...reportData };
+            newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
+            newReportData.standardVolumeVbCon =
+                newReportData.standardVolumeVbB2;
+            newReportData.heatingValueCon = newReportData.heatingValueLine2;
+            newReportData.energyCon = newReportData.energyQB2;
+            newReportData.avgTemperatureCon = newReportData.avgTemperatureB2;
+            newReportData.avgPressureCon = newReportData.avgPressureB2;
+            newReportData.grossVolumeAccumulatedCon =
+                newReportData.grossVolumeAccumulatedB2;
+            newReportData.standardVolumeAccumulatedCon =
+                newReportData.standardVolumeAccumulatedB2;
+            setReportData(newReportData);
+            setIsLine1Selected(false);
+            setIsLine2Selected(true);
+        }
+    };
+
     return (
         <>
             <div>
                 <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}
                 >
                     <div style={{ width: "80%" }}>
                         <FilterReport
@@ -354,408 +396,27 @@ const CustomerReport = () => {
                 </div>
             </div>
             {reportData.device && <h2>{reportData.device.name} CUSTOMER</h2>}
-            <div style={{ background: "white", borderRadius: 5 }}>
-                <div className={styles.grid}>
-                    <div>
-                        <p
-                            style={{
-                                fontSize: 23,
-                                fontWeight: 500,
-                                marginBottom: 33,
-                                marginTop: 10,
-                            }}
-                        >
-                            Daily Report
-                        </p>
-                        <p className={styles.label}>Gross Volume Vm (m³)</p>
-                        <p className={styles.label}>Standard Volume Vb (Sm³)</p>
-                        <p className={styles.label}>
-                            Gross Heating Value (MJ/Sm³)
-                        </p>
-                        <p className={styles.label}>Energy Q (MMBTU)</p>
-                        <p className={styles.label}>Average Temperature (℃)</p>
-                        <p className={styles.label}>Average Pressure (Bara)</p>
-                        <p className={styles.label}>
-                            Gross Volume Accumulated (m³)
-                        </p>
-                        <p className={styles.label}>
-                            Standard Volume Accumulated (Sm³)
-                        </p>
-                    </div>
-                    <div className={styles.col}>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 500,
-                                textAlign: "center",
-                            }}
-                        >
-                            EVC 1901
-                        </p>
-                        <InputText
-                            type="number"
-                            value={reportData.grossVolumeVmB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                console.log("value", e);
-                                onChangeValue(
-                                    e.target.value,
-                                    "grossVolumeVmB1"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.standardVolumeVbB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "standardVolumeVbB1"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.heatingValueLine1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "heatingValueLine1"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.energyQB1}
-                            className="w-full text-center mt-2"
-                            disabled={true}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.avgTemperatureB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "avgTemperatureB1"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.avgPressureB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(e.target.value, "avgPressureB1");
-                            }}
-                        />
-
-                        <InputText
-                            type="number"
-                            value={reportData.grossVolumeAccumulatedB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "grossVolumeAccumulatedB1"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.standardVolumeAccumulatedB1}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "standardVolumeAccumulatedB1"
-                                );
-                            }}
-                        />
-                    </div>
-                    <div className={styles.col}>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 500,
-                                textAlign: "center",
-                            }}
-                        >
-                            Duty
-                        </p>
-                        {/* <Button
-                            onClick={() => handleDutyClick("grossVolumeVmB1")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("standardVolumeVbB1")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() => handleDutyClick("heatingValueLine1")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() => handleDutyClick("energyQB1")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        <Button
-                            onClick={() => handleDutyClickLine1()}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button>
-                        {/* <Button
-                            onClick={() => handleDutyClick("avgPressureB1")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("grossVolumeAccumulatedB1")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("standardVolumeAccumulatedB1")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                    </div>
-                    <div className={styles.col}>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 500,
-                                textAlign: "center",
-                            }}
-                        >
-                            EVC 1902
-                        </p>
-                        <InputText
-                            type="number"
-                            value={reportData.grossVolumeVmB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "grossVolumeVmB2"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.standardVolumeVbB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "standardVolumeVbB2"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.heatingValueLine2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "heatingValueLine2"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.energyQB2}
-                            className="w-full text-center mt-2"
-                            disabled={true}
-                        />
-
-                        <InputText
-                            type="number"
-                            value={reportData.avgTemperatureB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "avgTemperatureB2"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.avgPressureB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(e.target.value, "avgPressureB2");
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.grossVolumeAccumulatedB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "grossVolumeAccumulatedB2"
-                                );
-                            }}
-                        />
-                        <InputText
-                            type="number"
-                            value={reportData.standardVolumeAccumulatedB2}
-                            className="w-full text-center mt-2"
-                            onChange={(e) => {
-                                onChangeValue(
-                                    e.target.value,
-                                    "standardVolumeAccumulatedB2"
-                                );
-                            }}
-                        />
-                    </div>
-                    <div className={styles.col}>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 500,
-                                textAlign: "center",
-                            }}
-                        >
-                            Duty
-                        </p>
-                        {/* <Button
-                            onClick={() => handleDutyClick("grossVolumeVmB2")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("standardVolumeVbB2")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() => handleDutyClick("heatingValueLine2")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        <Button
-                            onClick={() => handleDutyClickLine2()}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button>
-                        {/* <Button
-                            onClick={() => handleDutyClick("avgTemperatureB2")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() => handleDutyClick("avgPressureB2")}
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("grossVolumeAccumulatedB2")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                        {/* <Button
-                            onClick={() =>
-                                handleDutyClick("standardVolumeAccumulatedB2")
-                            }
-                            className="w-full mt-2"
-                        >
-                            Action
-                        </Button> */}
-                    </div>
-                    <div className={styles.col}>
-                        <p
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 500,
-                                textAlign: "center",
-                            }}
-                        >
-                            Consumption
-                        </p>
-                        <InputText
-                            value={reportData?.grossVolumeVmCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.standardVolumeVbCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.heatingValueCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.energyCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.avgTemperatureCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.avgPressureCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={reportData?.grossVolumeAccumulatedCon ?? ""}
-                            className="w-full text-center mt-2"
-                        />
-                        <InputText
-                            value={
-                                reportData?.standardVolumeAccumulatedCon ?? ""
-                            }
-                            className="w-full text-center mt-2"
-                        />
-                    </div>
-                </div>
-            </div>
 
             <table>
                 <tr>
                     <th>Daily report</th>
                     <th>
                         EVC 1901 <br />
-                        <Checkbox />
+                        <Checkbox
+                            checked={isLine1Selected}
+                            onChange={(e: any) =>
+                                _onSelectLine(e.checked, "line1")
+                            }
+                        />
                     </th>
                     <th>
                         EVC 1902 <br />
-                        <Checkbox />
+                        <Checkbox
+                            checked={isLine2Selected}
+                            onChange={(e: any) =>
+                                _onSelectLine(e.checked, "line2")
+                            }
+                        />
                     </th>
                     <th>Consumption</th>
                 </tr>
