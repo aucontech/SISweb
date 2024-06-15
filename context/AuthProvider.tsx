@@ -50,9 +50,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 // setUser(resp.data.user);
             }
         } catch (error: any) {
-            console.log(error);
+            //console.log(error);
             if (error?.response?.data?.errorCode !== 11) {
                 setIsAuthenticated(() => false);
+            } else {
+                await handleRefreshToken();
             }
         } finally {
             setIsLoading(() => false);
