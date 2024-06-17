@@ -1,15 +1,15 @@
 "use client";
 import { Button } from "primereact/button";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { InputText } from "primereact/inputtext";
-import styles from "./CustomerReport.module.css";
+
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
 import { saveAs } from "file-saver";
-import { Utils } from "@/service/Utils";
+import { UIUtils, Utils } from "@/service/Utils";
 import { Checkbox } from "antd";
-
+import { Toast } from "primereact/toast";
 const defaultValue = {
     grossVolumeVmB1: 0,
     grossVolumeVmB2: 0,
@@ -37,6 +37,7 @@ const CustomerReport = () => {
     const [reportData, setReportData] = useState<any>({});
     const [isLine1Selected, setIsLine1Selected] = useState<boolean>(false);
     const [isLine2Selected, setIsLine2Selected] = useState<boolean>(false);
+    const toast = useRef<Toast>(null);
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
     };
@@ -196,6 +197,10 @@ const CustomerReport = () => {
             })
             .catch((err) => {
                 console.error("Error exporting report:", err);
+                UIUtils.showError({
+                    toast: toast.current,
+                    error: err?.message,
+                });
             });
     };
     const handleDutyClickLine1 = () => {
@@ -351,6 +356,8 @@ const CustomerReport = () => {
                 newReportData.grossVolumeAccumulatedB1;
             newReportData.standardVolumeAccumulatedCon =
                 newReportData.standardVolumeAccumulatedB1;
+            newReportData.isLine1Selected = true;
+            newReportData.isLine2Selected = false;
             setReportData(newReportData);
             setIsLine1Selected(true);
             setIsLine2Selected(false);
@@ -368,6 +375,8 @@ const CustomerReport = () => {
                 newReportData.grossVolumeAccumulatedB2;
             newReportData.standardVolumeAccumulatedCon =
                 newReportData.standardVolumeAccumulatedB2;
+            newReportData.isLine1Selected = false;
+            newReportData.isLine2Selected = true;
             setReportData(newReportData);
             setIsLine1Selected(false);
             setIsLine2Selected(true);
@@ -377,6 +386,7 @@ const CustomerReport = () => {
     return (
         <>
             <div>
+                <Toast ref={toast} />
                 <div
                     style={{
                         display: "flex",
