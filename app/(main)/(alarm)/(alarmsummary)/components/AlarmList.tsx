@@ -211,7 +211,7 @@ const AlarmList: React.FC<Props> = ({ filters }) => {
                         paginator
                         lazy={true}
                         className="datatable-responsive"
-                        emptyMessage="No products found."
+                        emptyMessage="No results found."
                         paginatorTemplate="CurrentPageReport RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks  NextPageLink LastPageLink"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                         totalRecords={totalElements}
