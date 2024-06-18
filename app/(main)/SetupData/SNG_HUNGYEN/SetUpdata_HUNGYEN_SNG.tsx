@@ -9,6 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
+import { Button } from 'primereact/button';
 
 interface StateMap {
 
@@ -36,6 +37,8 @@ export default function SetUpdata_HUNGYEN_SNG() {
     const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
     const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -50,11 +53,70 @@ export default function SetUpdata_HUNGYEN_SNG() {
                 },
             ],
         };
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_SNG_HungYen,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                },
+            ],
+        };
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
                 });
             };
             ws.current.onclose = () => {
@@ -177,6 +239,19 @@ export default function SetUpdata_HUNGYEN_SNG() {
                             valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
+                }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                            setGetWayPhoneOTSUKA(ballValue);
+                   
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(updatedData);
                 }
                 fetchData()
             };
@@ -3661,9 +3736,11 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
                     RATIO_MODE_High: inputValueRATIO_MODE,RATIO_MODE_Low:inputValue2RATIO_MODE,
+                    IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
      
 
             setHR_BC_High(inputValueHR_BC);
@@ -3829,6 +3906,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
     useEffect(() => {
 
+        setInputGetwayPhone(getWayPhoneOTSUKA)
    
         setInputValueHR_BC(HR_BC_High); 
         setInputValue2HR_BC(HR_BC_Low); 
@@ -4058,6 +4136,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
            RATIO_MODE_High,RATIO_MODE_Low,
+           getWayPhoneOTSUKA,
 
         ]);
 
@@ -5342,6 +5421,54 @@ checked={maintainSD}
               );
           };
           
+          //=========================================================================
+
+
+       const combineCssAttribute = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+  
+
+  
+ 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const configuration = [
+       
+        {
+            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+    ];
+
+       //=========================================================================
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop:10  }}>
@@ -5377,7 +5504,16 @@ checked={maintainSD}
 <Column field="update" header="Update" />
 
 </DataTable>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                    <Column field="Name" header="Name" />
 
+                    <Column field="Value" header="Value" />
+
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
 </div>
 
 <br />

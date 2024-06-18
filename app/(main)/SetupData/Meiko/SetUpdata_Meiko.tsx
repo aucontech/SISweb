@@ -9,6 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
+import { Button } from 'primereact/button';
 
 interface StateMap {
 
@@ -16,6 +17,12 @@ interface StateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 
+}
+
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
 }
 export default function SetUpdata_Meiko() {
 
@@ -26,9 +33,14 @@ export default function SetUpdata_Meiko() {
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [data, setData] = useState<any[]>([]);
-
     const toast = useRef<Toast>(null);
 
+    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
+    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
+    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -43,11 +55,71 @@ export default function SetUpdata_Meiko() {
                 },
             ],
         };
+
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_THACHTHAT,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                },
+            ],
+        };
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
                 });
             };
             ws.current.onclose = () => {
@@ -99,14 +171,53 @@ export default function SetUpdata_Meiko() {
                         Tank_01_Level: setTank_01_Level,
 
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_STT01Value,
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
+
+
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                        }
                     });
+                }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                            setGetWayPhoneOTSUKA(ballValue);
+                   
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(updatedData);
                 }
                 fetchData()
             };
@@ -1782,9 +1893,12 @@ const ChangeMaintainTank_PT_301 = async () => {
                     Tank_01_Volume_High: inputValueTank_01_Volume,Tank_01_Volume_Low:inputValue2Tank_01_Volume,
                     Tank_01_Mass_High: inputValueTank_01_Mass,Tank_01_Mass_Low:inputValue2Tank_01_Mass,
                     Tank_01_Level_High: inputValueTank_01_Level,Tank_01_Level_Low:inputValue2Tank_01_Level,
+                    IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
+
             setVP_302_High(inputValueVP_302);
             setVP_302_Low(inputValue2VP_302);
 
@@ -1864,6 +1978,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     }
 
     useEffect(() => {
+        setInputGetwayPhone(getWayPhoneOTSUKA)
 
         setInputValueVP_303(VP_303_High); 
         setInputValue2VP_303(VP_303_Low); 
@@ -1960,6 +2075,7 @@ const ChangeMaintainTank_PT_301 = async () => {
            Tank_01_Volume_High,Tank_01_Volume_Low,
            Tank_01_Mass_High,Tank_01_Mass_Low,
            Tank_01_Level_High,Tank_01_Level_Low,
+           getWayPhoneOTSUKA,
 
         ]);
 
@@ -2174,10 +2290,19 @@ const ChangeMaintainTank_PT_301 = async () => {
   };
          
     
+         
+  const mainCategoryFC = {
+    EVC: 'EVC01 -  Prameter & configuration',
+ 
+    PLC: 'PLC -  Prameter & configuration'
+};
 
         const dataEVC01 = [
 
-            { timeUpdate: <span style={combineCss.CSSVP_303} >{timeUpdate}</span>,
+            {
+ mainCategory: mainCategoryFC.PLC ,
+                
+                timeUpdate: <span style={combineCss.CSSVP_303} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_303}> VP 303</span> ,
     
              modbus: <span style={combineCss.CSSVP_303}>000009	 </span> ,
@@ -2195,7 +2320,10 @@ const ChangeMaintainTank_PT_301 = async () => {
             },
     
          
-            { timeUpdate: <span style={combineCss.CSSVP_302} >{timeUpdate}</span>,
+            {
+ mainCategory: mainCategoryFC.PLC ,
+                
+                timeUpdate: <span style={combineCss.CSSVP_302} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_302}> VP 302</span> ,
     
              modbus: <span style={combineCss.CSSVP_302}>000011	 </span> ,
@@ -2212,7 +2340,10 @@ const ChangeMaintainTank_PT_301 = async () => {
     
             },
     
-            { timeUpdate: <span style={combineCss.CSSVP_301} >{timeUpdate}</span>,
+            {
+ mainCategory: mainCategoryFC.PLC ,
+                
+                timeUpdate: <span style={combineCss.CSSVP_301} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_301}> VP 301</span> ,
     
              modbus: <span style={combineCss.CSSVP_301}>000013	 </span> ,
@@ -2230,7 +2361,10 @@ const ChangeMaintainTank_PT_301 = async () => {
             },
 
 
-            { timeUpdate: <span style={combineCss.CSSGD_103_High} >{timeUpdate}</span>,
+            {
+ mainCategory: mainCategoryFC.PLC ,
+                
+                timeUpdate: <span style={combineCss.CSSGD_103_High} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD_103_High}>GD-103 High </span> ,
     
              modbus: <span style={combineCss.CSSGD_103_High}>000015	 </span> ,
@@ -2247,7 +2381,10 @@ const ChangeMaintainTank_PT_301 = async () => {
     
             },
 
-            { timeUpdate: <span style={combineCss.CSSGD_102_High} >{timeUpdate}</span>,
+            {
+ mainCategory: mainCategoryFC.PLC ,
+                
+                timeUpdate: <span style={combineCss.CSSGD_102_High} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSGD_102_High}>GD-102 High </span> ,
    
             modbus: <span style={combineCss.CSSGD_102_High}>000017	 </span> ,
@@ -2265,7 +2402,10 @@ const ChangeMaintainTank_PT_301 = async () => {
            },
 
 
-           { timeUpdate: <span style={combineCss.CSSGD_101_High} >{timeUpdate}</span>,
+           {
+ mainCategory: mainCategoryFC.PLC ,
+            
+            timeUpdate: <span style={combineCss.CSSGD_101_High} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSGD_101_High}>GD-101 High </span> ,
   
            modbus: <span style={combineCss.CSSGD_101_High}>000019	 </span> ,
@@ -2285,7 +2425,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
 
 
-          { timeUpdate: <span style={combineCss.CSSGD_103_Low} >{timeUpdate}</span>,
+          {
+ mainCategory: mainCategoryFC.PLC ,
+            
+            timeUpdate: <span style={combineCss.CSSGD_103_Low} >{PLC_STTValue}</span>,
           name: <span style={combineCss.CSSGD_103_Low}>GD-103 Low </span> ,
  
           modbus: <span style={combineCss.CSSGD_103_Low}>000021	 </span> ,
@@ -2302,7 +2445,10 @@ const ChangeMaintainTank_PT_301 = async () => {
  
          },
 
-         { timeUpdate: <span style={combineCss.CSSGD_102_Low} >{timeUpdate}</span>,
+         {
+ mainCategory: mainCategoryFC.PLC ,
+            
+            timeUpdate: <span style={combineCss.CSSGD_102_Low} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSGD_102_Low}>GD-102 Low </span> ,
 
          modbus: <span style={combineCss.CSSGD_102_Low}>000023	 </span> ,
@@ -2320,7 +2466,10 @@ const ChangeMaintainTank_PT_301 = async () => {
         },
 
 
-        { timeUpdate: <span style={combineCss.CSSGD_101_Low} >{timeUpdate}</span>,
+        {
+ mainCategory: mainCategoryFC.PLC ,
+            
+            timeUpdate: <span style={combineCss.CSSGD_101_Low} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSGD_101_Low}>GD-101 Low </span> ,
 
         modbus: <span style={combineCss.CSSGD_101_Low}>000025	 </span> ,
@@ -2339,7 +2488,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
 
 
-       { timeUpdate: <span style={combineCss.CSSSDV_301} >{timeUpdate}</span>,
+       {
+ mainCategory: mainCategoryFC.PLC ,
+        
+        timeUpdate: <span style={combineCss.CSSSDV_301} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSSDV_301}> SDV 301  </span> ,
 
        modbus: <span style={combineCss.CSSSDV_301}>000001	 </span> ,
@@ -2357,7 +2509,10 @@ const ChangeMaintainTank_PT_301 = async () => {
       },
 
 
-      { timeUpdate: <span style={combineCss.CSSSDV_302} >{timeUpdate}</span>,
+      {
+ mainCategory: mainCategoryFC.PLC ,
+        
+        timeUpdate: <span style={combineCss.CSSSDV_302} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSSDV_302}>SDV 302</span> ,
 
       modbus: <span style={combineCss.CSSSDV_302}>000003	 </span> ,
@@ -2376,7 +2531,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
 
 
-     { timeUpdate: <span style={combineCss.CSSV1_Flow_Meter} >{timeUpdate}</span>,
+     {
+ mainCategory: mainCategoryFC.PLC ,
+        
+        timeUpdate: <span style={combineCss.CSSV1_Flow_Meter} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSV1_Flow_Meter}> V1 Flow Meter </span> ,
 
      modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
@@ -2394,7 +2552,10 @@ const ChangeMaintainTank_PT_301 = async () => {
     },
 
 
-    { timeUpdate: <span style={combineCss.CSSV2_Flow_Meter} >{timeUpdate}</span>,
+    {
+ mainCategory: mainCategoryFC.PLC ,
+        
+        timeUpdate: <span style={combineCss.CSSV2_Flow_Meter} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSV2_Flow_Meter}>V2 Flow Meter</span> ,
 
     modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
@@ -2412,7 +2573,10 @@ const ChangeMaintainTank_PT_301 = async () => {
    },
 
 
-   { timeUpdate: <span style={combineCss.CSSPipe_Temp} >{timeUpdate}</span>,
+   {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSPipe_Temp} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSPipe_Temp}>Pipe Temp</span> ,
 
    modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
@@ -2430,7 +2594,10 @@ const ChangeMaintainTank_PT_301 = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSPipe_Press} >{timeUpdate}</span>,
+  {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSPipe_Press} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSPipe_Press}>Pipe Press</span> ,
 
   modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
@@ -2447,7 +2614,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
  },
 
- { timeUpdate: <span style={combineCss.CSSTank_TT_301} >{timeUpdate}</span>,
+ {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSTank_TT_301} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSTank_TT_301}>Tank TT-301</span> ,
 
    modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
@@ -2465,7 +2635,10 @@ const ChangeMaintainTank_PT_301 = async () => {
   },
 
 
-  { timeUpdate: <span style={combineCss.CSSTank_PT_301} >{timeUpdate}</span>,
+  {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSTank_PT_301} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSTank_PT_301}>Tank PT-301</span> ,
 
   modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
@@ -2485,7 +2658,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
 
 
- { timeUpdate: <span style={combineCss.CSSTank_01_Volume} >{timeUpdate}</span>,
+ {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSTank_01_Volume} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSTank_01_Volume}>Tank-01 Volume</span> ,
 
  modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
@@ -2502,7 +2678,10 @@ value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume}</span> ,
 
 },
 
-{ timeUpdate: <span style={combineCss.CSSTank_01_Mass} >{timeUpdate}</span>,
+{
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSTank_01_Mass} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSTank_01_Mass}>Tank-01 Mass</span> ,
 
   modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
@@ -2520,7 +2699,10 @@ value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume}</span> ,
  },
 
 
- { timeUpdate: <span style={combineCss.CSSTank_01_Level} >{timeUpdate}</span>,
+ {
+ mainCategory: mainCategoryFC.PLC ,
+    
+    timeUpdate: <span style={combineCss.CSSTank_01_Level} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSTank_01_Level}>Tank-01 Level</span> ,
 
  modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
@@ -2539,6 +2721,65 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 
           ]
 
+          const combinedData = [ ...dataEVC01 ];
+
+          const mainCategoryTemplate = (data: any) => {
+              return (
+                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc', marginTop:10}}>
+                      <span >{data.mainCategory}</span>
+                  </div>
+              );
+          };
+    
+                //=========================================================================
+
+
+       const combineCssAttribute = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+  
+
+  
+ 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const configuration = [
+       
+        {
+            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+    ];
+
+       //=========================================================================
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10,marginTop:10 }}>
     <audio ref={audioRef}>
@@ -2551,13 +2792,12 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 <h2>MEIKO</h2>
 
 </div>
-    <div style={{width:'100%' ,borderRadius:5 }}>
-
-        
-
-        <h4>PLC -  Prameter & configuration  </h4>
-    <DataTable  value={dataEVC01} size={'small'} selectionMode="single"    >
+<div style={{width:'100%' ,  borderRadius:5 }}>
+    <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
+                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
   {/* <Column field="modbus" header="Modbus" /> */}
+  <Column field="timeUpdate" header="Time Update" />
+
   <Column field="modbus" header="Modbus" />
 
   <Column field="name" header="Name" />
@@ -2569,7 +2809,19 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
   <Column field="update" header="Update" />
 
 </DataTable>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                    <Column field="Name" header="Name" />
 
-</div></div>
+                    <Column field="Value" header="Value" />
+
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
+</div>
+<br />
+<br />
+</div>
   )
 }

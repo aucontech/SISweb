@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { id_CNG_HungYen, id_IGUECU } from '../../data-table-device/ID-DEVICE/IdDevice';
 import { Toast } from 'primereact/toast';
 import { readToken } from '@/service/localStorage';
 import { httpApi } from '@/api/http.api';
@@ -9,6 +8,8 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
+import { id_IGUECU } from '../../data-table-device/ID-DEVICE/IdDevice';
+import { Button } from 'primereact/button';
 
 interface StateMap {
 
@@ -37,6 +38,8 @@ export default function SetUpdata_IGUACU() {
     const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
     const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -53,11 +56,70 @@ export default function SetUpdata_IGUACU() {
                 },
             ],
         };
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_IGUECU,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                },
+            ],
+        };
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
                 });
             };
             ws.current.onclose = () => {
@@ -166,6 +228,20 @@ export default function SetUpdata_IGUACU() {
                         
                     });
                 }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                            setGetWayPhoneOTSUKA(ballValue);
+                   
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(updatedData);
+                }
+
                 fetchData()
             };
         }
@@ -759,7 +835,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
         try {
             const newValue = !maintainEVC_01_Remain_Battery_Service_Life;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                 { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
             );
             setMaintainEVC_01_Remain_Battery_Service_Life(newValue);
@@ -828,7 +904,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
              try {
                  const newValue = !maintainEVC_01_Temperature;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                      { EVC_01_Temperature_Maintain: newValue }
                  );
                  setMaintainEVC_01_Temperature(newValue);
@@ -898,7 +974,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
              try {
                  const newValue = !maintainEVC_01_Pressure;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                      { EVC_01_Pressure_Maintain: newValue }
                  );
                  setMaintainEVC_01_Pressure(newValue);
@@ -969,7 +1045,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Volume_at_Base_Condition;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
                       );
                       setMaintainEVC_01_Volume_at_Base_Condition(newValue);
@@ -1039,7 +1115,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
                       );
                       setMaintainEVC_01_Volume_at_Measurement_Condition(newValue);
@@ -1108,7 +1184,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Flow_at_Base_Condition;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
                       );
                       setMaintainEVC_01_Flow_at_Base_Condition(newValue);
@@ -1178,7 +1254,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Vm_of_Current_Day;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Vm_of_Current_Day_Maintain: newValue }
                       );
                       setMaintainEVC_01_Vm_of_Current_Day(newValue);
@@ -1247,7 +1323,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Vb_of_Current_Day;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Vb_of_Current_Day_Maintain: newValue }
                       );
                       setMaintainEVC_01_Vb_of_Current_Day(newValue);
@@ -1316,7 +1392,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Flow_at_Measurement_Condition;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Flow_at_Measurement_Condition_Maintain: newValue }
                       );
                       setMaintainEVC_01_Flow_at_Measurement_Condition(newValue);
@@ -1385,7 +1461,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                   try {
                       const newValue = !maintainEVC_01_Vb_of_Last_Day;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                           { EVC_01_Vb_of_Last_Day_Maintain: newValue }
                       );
                       setMaintainEVC_01_Vb_of_Last_Day(newValue);
@@ -1456,7 +1532,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
             try {
                 const newValue = !maintainEVC_01_Vm_of_Last_Day;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                     { EVC_01_Vm_of_Last_Day_Maintain: newValue }
                 );
                 setMaintainEVC_01_Vm_of_Last_Day(newValue);
@@ -1527,7 +1603,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                 try {
                     const newValue = !maintainEVC_02_Remain_Battery_Service_Life;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                         { EVC_02_Remain_Battery_Service_Life_Maintain: newValue }
                     );
                     setMaintainEVC_02_Remain_Battery_Service_Life(newValue);
@@ -1598,7 +1674,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
             try {
                 const newValue = !maintainEVC_02_Temperature;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                     { EVC_02_Temperature_Maintain: newValue }
                 );
                 setMaintainEVC_02_Temperature(newValue);
@@ -1668,7 +1744,7 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
             try {
                 const newValue = !maintainEVC_02_Pressure;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                     { EVC_02_Pressure_Maintain: newValue }
                 );
                 setMaintainEVC_02_Pressure(newValue);
@@ -1739,7 +1815,7 @@ const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base
         try {
             const newValue = !maintainEVC_02_Volume_at_Base_Condition;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                 { EVC_02_Volume_at_Base_Condition_Maintain: newValue }
             );
             setMaintainEVC_02_Volume_at_Base_Condition(newValue);
@@ -1809,7 +1885,7 @@ const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_
         try {
             const newValue = !maintainEVC_02_Volume_at_Measurement_Condition;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                 { EVC_02_Volume_at_Measurement_Condition_Maintain: newValue }
             );
             setMaintainEVC_02_Volume_at_Measurement_Condition(newValue);
@@ -1880,7 +1956,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     try {
         const newValue = !maintainEVC_02_Flow_at_Base_Condition;
         await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+            `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
             { EVC_02_Flow_at_Base_Condition_Maintain: newValue }
         );
         setMaintainEVC_02_Flow_at_Base_Condition(newValue);
@@ -1952,7 +2028,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 try {
                     const newValue = !maintainEVC_02_Flow_at_Measurement_Condition;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                         { EVC_02_Flow_at_Measurement_Condition_Maintain: newValue }
                     );
                     setMaintainEVC_02_Flow_at_Measurement_Condition(newValue);
@@ -2022,7 +2098,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 try {
                     const newValue = !maintainEVC_02_Vb_of_Current_Day;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                         { EVC_02_Vb_of_Current_Day_Maintain: newValue }
                     );
                     setMaintainEVC_02_Vb_of_Current_Day(newValue);
@@ -2093,7 +2169,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             try {
                 const newValue = !maintainEVC_02_Vm_of_Current_Day;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                     { EVC_02_Vm_of_Current_Day_Maintain: newValue }
                 );
                 setMaintainEVC_02_Vm_of_Current_Day(newValue);
@@ -2165,7 +2241,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 try {
                     const newValue = !maintainEVC_02_Vb_of_Last_Day;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                         { EVC_02_Vb_of_Last_Day_Maintain: newValue }
                     );
                     setMaintainEVC_02_Vb_of_Last_Day(newValue);
@@ -2238,7 +2314,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 try {
                     const newValue = !maintainEVC_02_Vm_of_Last_Day;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                         { EVC_02_Vm_of_Last_Day_Maintain: newValue }
                     );
                     setMaintainEVC_02_Vm_of_Last_Day(newValue);
@@ -2309,7 +2385,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
          try {
              const newValue = !maintainGD1;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                  { GD1_Maintain: newValue }
              );
              setMaintainGD1(newValue);
@@ -2378,7 +2454,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
               try {
                   const newValue = !maintainGD2;
                   await httpApi.post(
-                      `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                      `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                       { GD2_Maintain: newValue }
                   );
                   setMaintainGD2(newValue);
@@ -2448,7 +2524,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
               try {
                   const newValue = !maintainPT1;
                   await httpApi.post(
-                      `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                      `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                       { PT1_Maintain: newValue }
                   );
                   setMaintainPT1(newValue);
@@ -2519,7 +2595,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_ZSO_1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_ZSO_1_Maintain: newValue }
                        );
                        setMaintainDI_ZSO_1(newValue);
@@ -2589,7 +2665,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_ZSC_1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_ZSC_1_Maintain: newValue }
                        );
                        setMaintainDI_ZSC_1(newValue);
@@ -2658,7 +2734,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_MAP_1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_MAP_1_Maintain: newValue }
                        );
                        setMaintainDI_MAP_1(newValue);
@@ -2728,7 +2804,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_UPS_CHARGING;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_UPS_CHARGING_Maintain: newValue }
                        );
                        setMaintainDI_UPS_CHARGING(newValue);
@@ -2797,7 +2873,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_UPS_BATTERY;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_UPS_BATTERY_Maintain: newValue }
                        );
                        setMaintainDI_UPS_BATTERY(newValue);
@@ -2867,7 +2943,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                    try {
                        const newValue = !maintainDI_UPS_ALARM;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                            { DI_UPS_ALARM_Maintain: newValue }
                        );
                        setMaintainDI_UPS_ALARM(newValue);
@@ -2938,7 +3014,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
              try {
                  const newValue = !maintainDI_SD_1;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                      { DI_SD_1_Maintain: newValue }
                  );
                  setMaintainDI_SD_1(newValue);
@@ -3009,7 +3085,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                  try {
                      const newValue = !maintainDI_RESET;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                          { DI_RESET_Maintain: newValue }
                      );
                      setMaintainDI_RESET(newValue);
@@ -3080,7 +3156,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
              try {
                  const newValue = !maintainEmergency_NO;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                      { Emergency_NO_Maintain: newValue }
                  );
                  setMaintainEmergency_NO(newValue);
@@ -3150,7 +3226,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
              try {
                  const newValue = !maintainEmergency_NC;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                      { Emergency_NC_Maintain: newValue }
                  );
                  setMaintainEmergency_NC(newValue);
@@ -3221,7 +3297,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
          try {
              const newValue = !maintainUPS_Mode;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                  { UPS_Mode_Maintain: newValue }
              );
              setMaintainUPS_Mode(newValue);
@@ -3291,7 +3367,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
          try {
              const newValue = !maintainDO_HR_01;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                  { DO_HR_01_Maintain: newValue }
              );
              setMaintainDO_HR_01(newValue);
@@ -3362,7 +3438,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
      try {
          const newValue = !maintainDO_BC_01;
          await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+             `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
              { DO_BC_01_Maintain: newValue }
          );
          setMaintainDO_BC_01(newValue);
@@ -3434,7 +3510,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                  try {
                      const newValue = !maintainDI_SELECT_SW;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                          { DI_SELECT_SW_Maintain: newValue }
                      );
                      setMaintainDI_SELECT_SW(newValue);
@@ -3504,7 +3580,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                  try {
                      const newValue = !maintainDO_SV_01;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                          { DO_SV_01_Maintain: newValue }
                      );
                      setMaintainDO_SV_01(newValue);
@@ -3578,7 +3654,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                  try {
                      const newValue = !maintainHR_BC;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                          { HR_BC_Maintain: newValue }
                      );
                      setMaintainHR_BC(newValue);
@@ -3648,7 +3724,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                  try {
                      const newValue = !maintainSD;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                          { SD_Maintain: newValue }
                      );
                      setMaintainSD(newValue);
@@ -3719,7 +3795,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                       try {
                           const newValue = !maintainESD_3001;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                               { ESD_3001_Maintain: newValue }
                           );
                           setMaintainESD_3001(newValue);
@@ -3789,7 +3865,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                       try {
                           const newValue = !maintainSD_3001;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                               { SD_3001_Maintain: newValue }
                           );
                           setMaintainSD_3001(newValue);
@@ -3858,7 +3934,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                       try {
                           const newValue = !maintainSD_3002;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
                               { SD_3002_Maintain: newValue }
                           );
                           setMaintainSD_3002(newValue);
@@ -3879,7 +3955,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
 
 
 
@@ -3964,10 +4040,12 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
                     DI_SELECT_SW_High: inputValueDI_SELECT_SW,DI_SELECT_SW_Low:inputValue2DI_SELECT_SW,
                     DO_SV_01_High: inputValueDO_SV_01,DO_SV_01_Low:inputValue2DO_SV_01,
+                    IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
      
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             setHR_BC_High(inputValueHR_BC);
             setHR_BC_Low(inputValue2HR_BC);
@@ -4140,6 +4218,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     useEffect(() => {
 
+        setInputGetwayPhone(getWayPhoneOTSUKA)
    
         setInputValueHR_BC(HR_BC_High); 
         setInputValue2HR_BC(HR_BC_Low); 
@@ -4380,6 +4459,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
            DI_SELECT_SW_High,DI_SELECT_SW_Low,
            DO_SV_01_High,DO_SV_01_Low,
+           getWayPhoneOTSUKA,
 
         ]);
 
@@ -5755,6 +5835,54 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
             );
         };
         
+       //=========================================================================
+
+
+       const combineCssAttribute = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+  
+
+  
+ 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const configuration = [
+       
+        {
+            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+    ];
+
+       //=========================================================================
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, marginTop:10 }}>
@@ -5787,7 +5915,16 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
   <Column field="update" header="Update" />
 
 </DataTable>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                    <Column field="Name" header="Name" />
 
+                    <Column field="Value" header="Value" />
+
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
 </div>
 
 <br />

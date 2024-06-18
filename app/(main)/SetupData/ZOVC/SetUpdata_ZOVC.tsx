@@ -36,6 +36,9 @@ export default function SetUpdata_ZOVC() {
     const [FC01_Conn_STT, setFC01_Conn_STT] = useState<string | null>(null);
     const [EVC02_Conn_STT, setEVC02_Conn_STT] = useState<string | null>(null);
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -50,11 +53,71 @@ export default function SetUpdata_ZOVC() {
                 },
             ],
         };
+
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_ZOCV,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                },
+            ],
+        };
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
                 });
             };
             ws.current.onclose = () => {
@@ -152,6 +215,19 @@ export default function SetUpdata_ZOVC() {
                             valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
+                }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                            setGetWayPhoneOTSUKA(ballValue);
+                   
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(updatedData);
                 }
                 fetchData()
             };
@@ -2331,9 +2407,11 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                     FC_01_Yesterday_Values_Volume_High: inputValueFC_01_Yesterday_Values_Volume,FC_01_Yesterday_Values_Volume_Low:inputValue2FC_01_Yesterday_Values_Volume,
 
                     FC_01_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_01_Yesterday_Values_Uncorrected_Volume,FC_01_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_01_Yesterday_Values_Uncorrected_Volume,
+                    IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             setFC_01_Lithium_Batery_Status_High(inputValueFC_01_Lithium_Batery_Status);
             setFC_01_Lithium_Batery_Status_Low(inputValue2FC_01_Lithium_Batery_Status);
@@ -2435,6 +2513,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     }
 
     useEffect(() => {
+        setInputGetwayPhone(getWayPhoneOTSUKA)
 
         setInputValueFC_01_Lithium_Batery_Status(FC_01_Lithium_Batery_Status_High); 
         setInputValue2FC_01_Lithium_Batery_Status(FC_01_Lithium_Batery_Status_Low); 
@@ -2566,6 +2645,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            FC_01_Yesterday_Values_Volume_High,FC_01_Yesterday_Values_Volume_Low,
 
            FC_01_Yesterday_Values_Uncorrected_Volume_High,FC_01_Yesterday_Values_Uncorrected_Volume_Low,
+           getWayPhoneOTSUKA,
 
         ]);
 
@@ -3416,7 +3496,43 @@ checked={maintainEVC_02_Vb_of_Last_Day}
               );
           };
           
+       //=========================================================================
 
+
+       const combineCssAttribute = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+ 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const configuration = [
+       
+        { Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        },
+
+    ];
+
+       //=========================================================================
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding:10, borderRadius:10 }}>
         <audio ref={audioRef}>
@@ -3447,7 +3563,16 @@ checked={maintainEVC_02_Vb_of_Last_Day}
   <Column field="update" header="Update" />
 
 </DataTable>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                    <Column field="Name" header="Name" />
 
+                    <Column field="Value" header="Value" />
+
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
 </div>
 
 <br />
