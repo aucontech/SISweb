@@ -9,6 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
+import { Button } from 'primereact/button';
 
 interface StateMap {
 
@@ -36,6 +37,8 @@ export default function SetUpdata_SPMCV() {
     const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
     const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+    const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
+    const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -50,11 +53,70 @@ export default function SetUpdata_SPMCV() {
                 },
             ],
         };
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_SPMCV,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                           
+                        ],
+                    },
+                },
+            ],
+        };
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
                 });
             };
             ws.current.onclose = () => {
@@ -151,6 +213,19 @@ export default function SetUpdata_SPMCV() {
                             valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
+                }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                            setGetWayPhoneOTSUKA(ballValue);
+                   
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(updatedData);
                 }
                 fetchData()
             };
@@ -2759,11 +2834,13 @@ const ChangeMaintainEmergency_NO = async () => {
                     DI_UPS_BATTERY_High: inputValueDI_UPS_BATTERY,DI_UPS_BATTERY_Low:inputValue2DI_UPS_BATTERY,
                     Emergency_NC_High: inputValueEmergency_NC,Emergency_NC_Low:inputValue2Emergency_NC,
                     UPS_Mode_High: inputValueUPS_Mode,UPS_Mode_Low:inputValue2UPS_Mode,
+                    IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
      
 
+            setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             setEVC_01_Remain_Battery_Service_Life_High(inputValueEVC_01_Remain_Battery_Service_Life);
             setEVC_01_Remain_Battery_Service_Life_Low(inputValue2EVC_01_Remain_Battery_Service_Life);
@@ -2886,6 +2963,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
     useEffect(() => {
 
+        setInputGetwayPhone(getWayPhoneOTSUKA)
    
          setInputValueDO_HR_01(DO_HR_01_High); 
         setInputValue2DO_HR_01(DO_HR_01_Low); 
@@ -3045,6 +3123,7 @@ const ChangeMaintainEmergency_NO = async () => {
               DO_HR_01_High, DO_HR_01_Low ,
               DO_BC_01_High,DO_BC_01_Low,
               DO_SV_01_High,DO_SV_01_Low,
+              getWayPhoneOTSUKA,
 
         ]);
 
@@ -3990,6 +4069,48 @@ checked={maintainDO_SV_01}
 
        
 
+       //=========================================================================
+
+
+       const combineCssAttribute = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+  
+
+  
+ 
+    const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputGetwayPhone(newValue);
+    };
+
+    const configuration = [
+       
+        {
+            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update:
+                <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        },
+
+    ];
+
+       //=========================================================================
 
           
 
@@ -4022,7 +4143,16 @@ checked={maintainDO_SV_01}
   <Column field="update" header="Update" />
 
 </DataTable>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+                <h4>Station - configuration </h4>
+                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                    <Column field="Name" header="Name" />
 
+                    <Column field="Value" header="Value" />
+
+                    <Column field="Update" header="Update" />
+                </DataTable>
+            </div>
 </div>
 
 <br />

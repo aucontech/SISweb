@@ -10,11 +10,6 @@ export default function AlarmOTSUKA() {
     }
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
-    interface Notification {
-        subject: string;
-        text: string;
-    }
-
     const ws = useRef<WebSocket | null>(null);
     const [alarmCount, setAlarmCount] = useState<number | undefined>(undefined);
 
@@ -121,18 +116,28 @@ export default function AlarmOTSUKA() {
         };
 
         connectWebSocket();
+
         const interval = setInterval(() => {
-            if (ws.current) {
-                ws.current.close();
+            if (ws.current?.readyState === WebSocket.OPEN) {
+                ws.current.send(JSON.stringify({
+                    alarmCountCmds: [
+                        {
+                            query: {
+                                severityList: ["CRITICAL"],
+                                statusList: ["ACTIVE", "UNACK"],
+                                searchPropagatedAlarms: false,
+                                assigneeId: null,
+                            },
+                            cmdId: 3,
+                        },
+                    ],
+                }));
             }
-            connectWebSocket();
-        }, 5000);
+        }, 10000); // 10 seconds interval
 
         return () => {
             clearInterval(interval);
-            if (ws.current) {
-                ws.current.close();
-            }
+            ws.current?.close();
         };
     }, [url]);
 
