@@ -8,7 +8,8 @@ import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
 import { saveAs } from "file-saver";
 import { UIUtils, Utils } from "@/service/Utils";
-import { Checkbox } from "antd";
+import { Checkbox } from "primereact/checkbox";
+import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 const defaultValue = {
     grossVolumeVmB1: 0,
@@ -203,34 +204,69 @@ const CustomerReport = () => {
                 });
             });
     };
-    const handleDutyClickLine1 = () => {
-        let newReportData = { ...reportData };
-        newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
-        newReportData.standardVolumeVbCon = newReportData.standardVolumeVbB1;
-        newReportData.heatingValueCon = newReportData.heatingValueLine1;
-        newReportData.energyCon = newReportData.energyQB1;
-        newReportData.avgTemperatureCon = newReportData.avgTemperatureB1;
-        newReportData.avgPressureCon = newReportData.avgPressureB1;
-        newReportData.grossVolumeAccumulatedCon =
-            newReportData.grossVolumeAccumulatedB1;
-        newReportData.standardVolumeAccumulatedCon =
-            newReportData.standardVolumeAccumulatedB1;
-        setReportData(newReportData);
+    const _renderLineName = (line: number) => {
+        if (filters.device && filters.device.id) {
+            let deviceId = filters.device.id.id;
+            if (line === 1) {
+                switch (deviceId) {
+                    case OTSUKA_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1901 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+
+                    default:
+                        return (
+                            <>
+                                Line 1 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                }
+            } else {
+                switch (deviceId) {
+                    case OTSUKA_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1902 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+
+                    default:
+                        return (
+                            <>
+                                Line 2<br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                }
+            }
+        }
     };
-    const handleDutyClickLine2 = () => {
-        let newReportData = { ...reportData };
-        newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
-        newReportData.standardVolumeVbCon = newReportData.standardVolumeVbB2;
-        newReportData.heatingValueCon = newReportData.heatingValueLine2;
-        newReportData.energyCon = newReportData.energyQB2;
-        newReportData.avgTemperatureCon = newReportData.avgTemperatureB2;
-        newReportData.avgPressureCon = newReportData.avgPressureB2;
-        newReportData.grossVolumeAccumulatedCon =
-            newReportData.grossVolumeAccumulatedB2;
-        newReportData.standardVolumeAccumulatedCon =
-            newReportData.standardVolumeAccumulatedB2;
-        setReportData(newReportData);
-    };
+
     const onChangeValue = (value: any, field: string) => {
         let newReportData = { ...reportData };
         let energyQB1 = 0;
@@ -415,22 +451,10 @@ const CustomerReport = () => {
                     <tr>
                         <th>Daily report</th>
                         <th>
-                            EVC 1901 <br />
-                            <Checkbox
-                                checked={isLine1Selected}
-                                onChange={(e: any) =>
-                                    _onSelectLine(e.checked, "line1")
-                                }
-                            />
+                            {_renderLineName(1)} <br />
                         </th>
                         <th>
-                            EVC 1902 <br />
-                            <Checkbox
-                                checked={isLine2Selected}
-                                onChange={(e: any) =>
-                                    _onSelectLine(e.checked, "line2")
-                                }
-                            />
+                            {_renderLineName(2)} <br />
                         </th>
                         <th>Consumption</th>
                     </tr>

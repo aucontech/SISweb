@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
-import { getTimeseriesKeys } from "@/api/telemetry.api";
+import {
+    getSeverAttributesByDeviceandKeys,
+    getTimeseriesKeys,
+} from "@/api/telemetry.api";
 import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+
+import { MultiSelect } from "primereact/multiselect";
+
 interface Props {
     showDevice: boolean;
     showDate?: boolean;
@@ -38,6 +44,7 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [suggTags, setSuggTags] = useState<any>([]);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
+    const [unitAttribute, setUnitAttribute] = useState<any>({});
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedFilter = localStorage.getItem("filterDataTableReport");
@@ -200,7 +207,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                                 <label>Key</label>
                                 <AutoComplete
                                     dropdown
-                                    value={dt.key}
+                                    value={dt?.key}
                                     suggestions={suggTags}
                                     completeMethod={_onSuggTags}
                                     onChange={(e) => {
@@ -263,6 +270,46 @@ const FilterDataTableReport: React.FC<Props> = ({
             ],
         }));
     };
+    const _handleAddMultiTagSetting = (values: any) => {
+        console.log(unitSuggestions);
+        let newTags = values.map((key: string) => ({
+            key,
+            name: key,
+            unit: unitAttribute[key] ? unitAttribute[key] : "",
+        }));
+        setEditFilter((prevFilter: any) => ({
+            ...prevFilter,
+            tags: [...newTags],
+        }));
+    };
+
+    console.log(editFilter);
+    useEffect(() => {
+        if (editFilter.device && editFilter.device.id) {
+            let pm1 = getTimeseriesKeys("DEVICE", editFilter.device.id.id);
+            let pm2 = getSeverAttributesByDeviceandKeys(
+                editFilter.device.id.id,
+                "Units"
+            );
+            Promise.all([pm1, pm2])
+                .then((resp) => {
+                    let keys = resp[0].data;
+                    let units = resp[1].data;
+                    if (units && units.length > 0) {
+                        let unitObj = units[0]["value"];
+                        console.log(unitObj);
+
+                        setUnitAttribute(unitObj);
+                    }
+
+                    setSuggTags(keys);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, [editFilter.device]);
+    console.log(unitSuggestions);
     return (
         <>
             <div className="grid p-fluid">
@@ -327,7 +374,17 @@ const FilterDataTableReport: React.FC<Props> = ({
                 footer={footerClearConditionForm}
                 style={{ width: "50vw" }}
             >
-                <div className="card p-fluid">{_renderSettingTagForm()}</div>
+                <div className="card p-fluid">
+                    <MultiSelect
+                        value={editFilter?.tags?.map((tag: any) => tag.key)}
+                        options={suggTags}
+                        onChange={(e) => {
+                            _handleAddMultiTagSetting(e.value);
+                        }}
+                    />
+                    <br />
+                    {_renderSettingTagForm()}
+                </div>
                 <Button onClick={handleAddTagSetting}>Add</Button>
             </Dialog>
         </>
