@@ -115,7 +115,7 @@ export default function GraphicSogec() {
             label: '',
             items: [
          
-              { label: ' CNG BINH DUONG', command: () => SNG_Click(null , ' CNG BINH DUONG') },
+              { label: ' SNG BINH DUONG', command: () => SNG_Click(null , ' SNG BINH DUONG') },
               { label: ' SNG HUNG YEN', command: () => SNG_Click(null , ' SNG HUNG YEN') },
 
             
@@ -136,8 +136,8 @@ export default function GraphicSogec() {
             items: [
          
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(null , 'CNG BINH DUONG ') },
-              { label: 'SNG HUNG YEN', command: () => CNG_CLICK(null , 'SNG HUNG YEN ') },
-              { label: 'SNG PHU MY 3', command: () => CNG_CLICK(null , 'SNG PHU MY 3 ') },
+              { label: 'CNG HUNG YEN', command: () => CNG_CLICK(null , 'CNG HUNG YEN ') },
+              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(null , 'CNG PHU MY 3 ') },
 
 
             
