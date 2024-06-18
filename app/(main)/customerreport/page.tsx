@@ -9,8 +9,13 @@ import { exportReport } from "@/api/report.api";
 import { saveAs } from "file-saver";
 import { UIUtils, Utils } from "@/service/Utils";
 import { Checkbox } from "primereact/checkbox";
-import { OTSUKA_DEVICE_ID } from "@/constants/constans";
+import {
+    OTSUKA_DEVICE_ID,
+    CNGHY_DEVICE_ID,
+    CNGBD_DEVICE_ID,
+} from "@/constants/constans";
 import { Toast } from "primereact/toast";
+
 const defaultValue = {
     grossVolumeVmB1: 0,
     grossVolumeVmB2: 0,
@@ -47,8 +52,8 @@ const CustomerReport = () => {
     }, []);
     const _fetchDateReport = useCallback((filters: any) => {
         let reqParams: ReportRequest = {
-            deviceId: filters.device.id.id,
-            date: filters.date.getTime(),
+            deviceId: filters?.device?.id?.id,
+            date: filters?.date.getTime(),
         };
         getReport(reqParams)
             .then((resp) => resp.data)
@@ -221,7 +226,30 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
-
+                    case CNGHY_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 3001 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                    case CNGBD_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 2001 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -249,7 +277,30 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
-
+                    case CNGHY_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 3002 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case CNGBD_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 2002 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
