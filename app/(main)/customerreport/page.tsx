@@ -13,6 +13,7 @@ import {
     OTSUKA_DEVICE_ID,
     CNGHY_DEVICE_ID,
     CNGBD_DEVICE_ID,
+    NITORI_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -58,7 +59,6 @@ const CustomerReport = () => {
         getReport(reqParams)
             .then((resp) => resp.data)
             .then((resp) => {
-                console.log(resp);
                 setReportData({
                     ...resp,
                     heatingValueLine1: resp.heatValue,
@@ -250,6 +250,18 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case NITORI_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1301 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -293,6 +305,18 @@ const CustomerReport = () => {
                         return (
                             <>
                                 EVC 2002 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case NITORI_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1302 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>
