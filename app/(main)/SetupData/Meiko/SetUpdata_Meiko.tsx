@@ -41,6 +41,8 @@ export default function SetUpdata_Meiko() {
 
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -169,6 +171,8 @@ export default function SetUpdata_Meiko() {
                         Tank_01_Volume: setTank_01_Volume,
                         Tank_01_Mass: setTank_01_Mass,
                         Tank_01_Level: setTank_01_Level,
+                        Flow_Meter_Total: setFlow_Meter_Total,
+
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -393,6 +397,15 @@ export default function SetUpdata_Meiko() {
             const Tank_01_Level_Maintain = res.data.find(
                 (item: any) => item.key === "Tank_01_Level_Maintain"
             );
+
+            const Flow_Meter_Total_High = res.data.find((item: any) => item.key === "Flow_Meter_Total_High");
+            setFlow_Meter_Total_High(Flow_Meter_Total_High?.value || null);
+            const Flow_Meter_Total_Low = res.data.find((item: any) => item.key === "Flow_Meter_Total_Low");
+            setFlow_Meter_Total_Low(Flow_Meter_Total_Low?.value || null);
+            const Flow_Meter_Total_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Maintain"
+            );
+
  // =================================================================================================================== 
             setMaintainVP_303(MaintainVP_303?.value || false);
 
@@ -445,6 +458,9 @@ export default function SetUpdata_Meiko() {
 
 
             setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
+
+            setMaintainFlow_Meter_Total(Flow_Meter_Total_Maintain?.value || false);
+
 
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -1856,7 +1872,76 @@ const ChangeMaintainTank_PT_301 = async () => {
         
         // =================================================================================================================== 
         
-
+          // =================================================================================================================== 
+        
+          const [Flow_Meter_Total, setFlow_Meter_Total] = useState<string | null>(null);
+          const [audioPlayingFlow_Meter_Total, setAudioPlayingFlow_Meter_Total] = useState(false);
+          const [inputValueFlow_Meter_Total, setInputValueFlow_Meter_Total] = useState<any>();
+          const [inputValue2Flow_Meter_Total, setInputValue2Flow_Meter_Total] = useState<any>();
+          const [Flow_Meter_Total_High, setFlow_Meter_Total_High] = useState<number | null>(null);
+          const [Flow_Meter_Total_Low, setFlow_Meter_Total_Low] = useState<number | null>(null);
+          const [exceedThresholdFlow_Meter_Total, setExceedThresholdFlow_Meter_Total] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainFlow_Meter_Total, setMaintainFlow_Meter_Total] = useState<boolean>(false);
+          
+          
+          useEffect(() => {
+              if (typeof Flow_Meter_Total_High === 'string' && typeof Flow_Meter_Total_Low === 'string' && Flow_Meter_Total !== null && maintainFlow_Meter_Total === false
+              ) {
+                  const highValue = parseFloat(Flow_Meter_Total_High);
+                  const lowValue = parseFloat(Flow_Meter_Total_Low);
+                  const Flow_Meter_TotalValue = parseFloat(Flow_Meter_Total);
+          
+                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_Meter_TotalValue)) {
+                      if (highValue <= Flow_Meter_TotalValue || Flow_Meter_TotalValue <= lowValue) {
+                          if (!audioPlayingFlow_Meter_Total) {
+                              audioRef.current?.play();
+                              setAudioPlayingFlow_Meter_Total(true);
+                              setExceedThresholdFlow_Meter_Total(true);
+                          }
+                      } else {
+                         setAudioPlayingFlow_Meter_Total(false);
+                         setExceedThresholdFlow_Meter_Total(false);
+                      }
+                  } 
+              } 
+          }, [Flow_Meter_Total_High, Flow_Meter_Total, audioPlayingFlow_Meter_Total, Flow_Meter_Total_Low,maintainFlow_Meter_Total]);
+          
+          useEffect(() => {
+              if (audioPlayingFlow_Meter_Total) {
+                  const audioEnded = () => {
+                     setAudioPlayingFlow_Meter_Total(false);
+                  };
+                  audioRef.current?.addEventListener('ended', audioEnded);
+                  return () => {
+                      audioRef.current?.removeEventListener('ended', audioEnded);
+                  };
+              }
+          }, [audioPlayingFlow_Meter_Total]);
+          
+          const handleInputChangeFlow_Meter_Total = (event: any) => {
+              const newValue = event.target.value;
+              setInputValueFlow_Meter_Total(newValue);
+          };
+          
+          const handleInputChange2Flow_Meter_Total = (event: any) => {
+              const newValue2 = event.target.value;
+              setInputValue2Flow_Meter_Total(newValue2);
+          };
+          const ChangeMaintainFlow_Meter_Total = async () => {
+              try {
+                  const newValue = !maintainFlow_Meter_Total;
+                  await httpApi.post(
+                      `/plugins/telemetry/DEVICE/${id_THACHTHAT}/SERVER_SCOPE`,
+                      { Flow_Meter_Total_Maintain: newValue }
+                  );
+                  setMaintainFlow_Meter_Total(newValue);
+                  
+              } catch (error) {}
+          };
+          
+          
+          // =================================================================================================================== 
 
     const handleButtonClick = async () => {
         try {
@@ -1893,11 +1978,16 @@ const ChangeMaintainTank_PT_301 = async () => {
                     Tank_01_Volume_High: inputValueTank_01_Volume,Tank_01_Volume_Low:inputValue2Tank_01_Volume,
                     Tank_01_Mass_High: inputValueTank_01_Mass,Tank_01_Mass_Low:inputValue2Tank_01_Mass,
                     Tank_01_Level_High: inputValueTank_01_Level,Tank_01_Level_Low:inputValue2Tank_01_Level,
+                    Flow_Meter_Total_High: inputValueFlow_Meter_Total,Flow_Meter_Total_Low:inputValue2Flow_Meter_Total,
+
                     IOT_Gateway_Phone: inputGetwayPhone,
 
                 }
             );
             setGetWayPhoneOTSUKA(inputGetwayPhone);
+
+            setFlow_Meter_Total_High(inputValueFlow_Meter_Total);
+            setFlow_Meter_Total_Low(inputValue2Flow_Meter_Total);
 
             setVP_302_High(inputValueVP_302);
             setVP_302_Low(inputValue2VP_302);
@@ -1980,6 +2070,10 @@ const ChangeMaintainTank_PT_301 = async () => {
     useEffect(() => {
         setInputGetwayPhone(getWayPhoneOTSUKA)
 
+
+        setInputValueFlow_Meter_Total(Flow_Meter_Total_High); 
+        setInputValue2Flow_Meter_Total(Flow_Meter_Total_Low); 
+
         setInputValueVP_303(VP_303_High); 
         setInputValue2VP_303(VP_303_Low); 
 
@@ -2049,6 +2143,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     }, [VP_303_High, VP_303_Low ,
         VP_302_High, VP_302_Low 
         ,VP_301_High, VP_301_Low ,
+        ,Flow_Meter_Total_High, Flow_Meter_Total_Low ,
 
 
         GD_102_High_High,GD_102_High_Low,
@@ -2082,6 +2177,16 @@ const ChangeMaintainTank_PT_301 = async () => {
 
         
     const combineCss = {
+
+        CSSFlow_Meter_Total : {
+            color:exceedThresholdFlow_Meter_Total && !maintainFlow_Meter_Total
+            ? "#ff5656"
+            : maintainFlow_Meter_Total
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
         CSSVP_303 : {
             color:exceedThresholdVP_303 && !maintainVP_303
             ? "#ff5656"
@@ -2718,6 +2823,26 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 ></Checkbox>
 
 },
+
+{
+    mainCategory: mainCategoryFC.PLC ,
+       
+       timeUpdate: <span style={combineCss.CSSFlow_Meter_Total} >{PLC_STTValue}</span>,
+    name: <span style={combineCss.CSSFlow_Meter_Total}>Flow Meter Total</span> ,
+   
+    modbus: <span style={combineCss.CSSFlow_Meter_Total}>not available	 </span> ,
+   
+   value: <span style={combineCss.CSSFlow_Meter_Total} > {Flow_Meter_Total}</span> , 
+    high: <InputText style={combineCss.CSSFlow_Meter_Total}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Meter_Total} onChange={handleInputChangeFlow_Meter_Total} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSFlow_Meter_Total}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Meter_Total} onChange={handleInputChange2Flow_Meter_Total} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainFlow_Meter_Total}
+    checked={maintainFlow_Meter_Total}
+   ></Checkbox>
+   
+   },
 
           ]
 

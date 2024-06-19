@@ -74,6 +74,7 @@ export default function Graphic_MEIKO() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const toast = useRef<Toast>(null);
+    const [VP_301, setVP_301] = useState<string | null>(null);
 
     const [Tank_01_Level, setTank_01_Level] = useState<string | null>(null);
     const [Tank_01_Volume, setTank_01_Volume] = useState<string | null>(null);
@@ -81,12 +82,8 @@ export default function Graphic_MEIKO() {
     const [Tank_PT_301, setTank_PT_301] = useState<string | null>(null);
     const [Tank_TT_301, setTank_TT_301] = useState<string | null>(null);
 
-    const [EVC01_TEMPERATURE, setEVC01_TEMPERATURE] = useState<string | null>(
-        null
-    );
-    const [EVC02_TEMPERATURE, setEVC02_TEMPERATURE] = useState<string | null>(
-        null
-    );
+    const [Pipe_Press, setPipe_Press] = useState<string | null>(null);
+    const [Pipe_Temp, setPipe_Temp] = useState<any>();
 
     const [PCV_6001A, setPCV_6001A] = useState();
     const [PCV_6001B, setPCV_6001B] = useState();
@@ -103,8 +100,6 @@ export default function Graphic_MEIKO() {
     const [GD_103_High, setGD_103_High] = useState<string | null>(null);
     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
 
-    const [TT_302, setTT_302] = useState<any>();
-    const [PT_302, setPT_302] = useState<any>();
 
     const [V2_Flow_Meter, setV2_Flow_Meter] = useState<any>();
     const [V1_Flow_Meter, setV1_Flow_Meter] = useState<any>();
@@ -167,8 +162,8 @@ export default function Graphic_MEIKO() {
 
                         SDV_301: setSDV_301,
                         SDV_302: setSDV_302,
-                        Pipe_Temp: setTT_302,
-                        Pipe_Press: setPT_302,
+                        Pipe_Temp: setPipe_Temp,
+                        Pipe_Press: setPipe_Press,
                         GD_101_High: setGD_101_High,
                         GD_101_Low: setGD_101_Low,
                         GD_102_High: setGD_102_High,
@@ -213,6 +208,7 @@ export default function Graphic_MEIKO() {
                         }
                     });
                 }
+                fetchData();
             };
         }
     }, [data]);
@@ -244,6 +240,145 @@ export default function Graphic_MEIKO() {
         BARG: "%",
     };
     //================================ Tank_01_Level================================
+
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                `/plugins/telemetry/DEVICE/${id_THACHTHAT}/values/attributes/SERVER_SCOPE`
+            );
+
+            const HighTank_01_Level = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_High"
+            );
+            setHighTank_01_Level(HighTank_01_Level?.value || null);
+            const LowTank_01_Level = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Low"
+            );
+            setLowTank_01_Level(LowTank_01_Level?.value || null);
+
+            const MaintainTank_01_Level = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Maintain"
+            );
+            setMaintainTank_01_Level(MaintainTank_01_Level?.value || false);
+            //===========================================================================================
+
+            const HighTank_01_Volume = res.data.find(
+                (item: any) => item.key === "Tank_01_Volume_High"
+            );
+            setHighTank_01_Volume(HighTank_01_Volume?.value || null);
+            const LowTank_01_Volume = res.data.find(
+                (item: any) => item.key === "Tank_01_Volume_Low"
+            );
+            setLowTank_01_Volume(LowTank_01_Volume?.value || null);
+
+            const MaintainTank_01_Volume = res.data.find(
+                (item: any) => item.key === "Tank_01_Volume_Maintain"
+            );
+            setMaintainTank_01_Volume(MaintainTank_01_Volume?.value || false);
+            //===========================================================================================
+
+            const HighTank_01_Mass = res.data.find(
+                (item: any) => item.key === "Tank_01_Mass_High"
+            );
+            setHighTank_01_Mass(HighTank_01_Mass?.value || null);
+            const LowTank_01_Mass = res.data.find(
+                (item: any) => item.key === "Tank_01_Mass_Low"
+            );
+            setLowTank_01_Mass(LowTank_01_Mass?.value || null);
+
+            const Tank_01_Mass_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Mass_Maintain"
+            );
+            setMaintainTank_01_Mass(Tank_01_Mass_Maintain?.value || false);
+
+            //===========================================================================================
+
+            const HighTank_PT_301 = res.data.find(
+                (item: any) => item.key === "Tank_PT_301_High"
+            );
+            setHighTank_PT_301(HighTank_PT_301?.value || null);
+
+            const LowTank_PT_301 = res.data.find(
+                (item: any) => item.key === "Tank_PT_301_Low"
+            );
+            setLowTank_PT_301(LowTank_PT_301?.value || null);
+
+            const Tank_PT_301_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_PT_301_Maintain"
+            );
+            setMaintainTank_PT_301(Tank_PT_301_Maintain?.value || false);
+            //===========================================================================================
+
+            const HighTank_TT_301 = res.data.find(
+                (item: any) => item.key === "Tank_TT_301_High"
+            );
+            setHighTank_TT_301(HighTank_TT_301?.value || null);
+
+            const LowTank_TT_301 = res.data.find(
+                (item: any) => item.key === "Tank_TT_301_Low"
+            );
+            setLowTank_TT_301(LowTank_TT_301?.value || null);
+
+            const Tank_TT_301_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_TT_301_Maintain"
+            );
+            setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
+
+            //===========================================================================================
+
+            const HighPipe_Temp = res.data.find(
+                (item: any) => item.key === "Pipe_Temp_High"
+            );
+            setHighPipe_Temp(HighPipe_Temp?.value || null);
+
+            const LowPipe_Temp = res.data.find(
+                (item: any) => item.key === "Pipe_Temp_Low"
+            );
+            setLowPipe_Temp(LowPipe_Temp?.value || null);
+            const Pipe_Temp_Maintain = res.data.find(
+                (item: any) => item.key === "Pipe_Temp_Maintain"
+            );
+            setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
+
+            //===========================================================================================
+
+            const HighPipe_Press = res.data.find(
+                (item: any) => item.key === "Pipe_Press_High"
+            );
+            setHighPipe_Press(HighPipe_Press?.value || null);
+
+            const LowPipe_Press = res.data.find(
+                (item: any) => item.key === "Pipe_Press_Low"
+            );
+            setLowPipe_Press(LowPipe_Press?.value || null);
+            const Pipe_Press_Maintain = res.data.find(
+                (item: any) => item.key === "Pipe_Press_Maintain"
+            );
+            setMaintainPipe_Press(Pipe_Press_Maintain?.value || false);
+
+            //===========================================================================================
+
+            const HighFlow_Meter_Total = res.data.find(
+                (item: any) => item.key === "Flow_Meter_Total_High"
+            );
+            setHighFlow_Meter_Total(HighFlow_Meter_Total?.value || null);
+
+            const LowFlow_Meter_Total = res.data.find(
+                (item: any) => item.key === "Flow_Meter_Total_Low"
+            );
+            setLowFlow_Meter_Total(LowFlow_Meter_Total?.value || null);
+
+            const Flow_Meter_Total_Maintain = res.data.find(
+                (item: any) => item.key === "Flow_Meter_Total_Maintain"
+            );
+            setMaintainFlow_Meter_Total(
+                Flow_Meter_Total_Maintain?.value || false
+            );
+            //===========================================================================================
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     const [audioTank_01_Level, setaudioTank_01_Level] = useState(false);
     const [HighTank_01_Level, setHighTank_01_Level] = useState<number | null>(
@@ -508,52 +643,6 @@ export default function Graphic_MEIKO() {
     //================================ Tank_PT_301 ======================================================
 
     //================================ VP_301================================
-    const [VP_301, setVP_301] = useState<string | null>(null);
-
-    const [audioVP_301, setaudioVP_301] = useState(false);
-    const [HighVP_301, setHighVP_301] = useState<number | null>(null);
-    const [LowVP_301, setLowVP_301] = useState<number | null>(null);
-    const [audioColorVP_301, setaudioColorVP_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainVP_301, setMaintainVP_301] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighVP_301 === "string" &&
-            typeof LowVP_301 === "string" &&
-            VP_301 !== null &&
-            maintainVP_301 === false
-        ) {
-            const highValue = parseFloat(HighVP_301);
-            const lowValue = parseFloat(LowVP_301);
-            const VP_301Value = parseFloat(VP_301);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_301Value)) {
-                if (highValue < VP_301Value || VP_301Value < lowValue) {
-                    if (!audioVP_301) {
-                        audioRef.current?.play();
-                        setaudioVP_301(true);
-                        setaudioColorVP_301(true);
-                    }
-                } else {
-                    setaudioVP_301(false);
-                    setaudioColorVP_301(false);
-                }
-            }
-        }
-    }, [HighVP_301, VP_301, audioVP_301, LowVP_301, maintainVP_301]);
-
-    useEffect(() => {
-        if (audioVP_301) {
-            const audioEnded = () => {
-                setaudioVP_301(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioVP_301]);
 
     //================================ VP_301 ======================================================
 
@@ -620,140 +709,192 @@ export default function Graphic_MEIKO() {
 
     //================================ Tank_TT_301 ======================================================
 
-    //================================ EVC01_TEMPERATURE================================
+    //================================ Pipe_Temp================================
 
-    const [audioEVC01_TEMPERATURE, setaudioEVC01_TEMPERATURE] = useState(false);
-    const [HighEVC01_TEMPERATURE, setHighEVC01_TEMPERATURE] = useState<
-        number | null
-    >(null);
-    const [LowEVC01_TEMPERATURE, setLowEVC01_TEMPERATURE] = useState<
-        number | null
-    >(null);
-    const [audioColorEVC01_TEMPERATURE, setaudioColorEVC01_TEMPERATURE] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPipe_Temp, setaudioPipe_Temp] = useState(false);
+    const [HighPipe_Temp, setHighPipe_Temp] = useState<number | null>(null);
+    const [LowPipe_Temp, setLowPipe_Temp] = useState<number | null>(null);
+    const [audioColorPipe_Temp, setaudioColorPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainEVC01_TEMPERATURE, setMaintainEVC01_TEMPERATURE] =
-        useState<boolean>(false);
+    const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighEVC01_TEMPERATURE === "string" &&
-            typeof LowEVC01_TEMPERATURE === "string" &&
-            EVC01_TEMPERATURE !== null &&
-            maintainEVC01_TEMPERATURE === false
+            typeof HighPipe_Temp === "string" &&
+            typeof LowPipe_Temp === "string" &&
+            Pipe_Temp !== null &&
+            maintainPipe_Temp === false
         ) {
-            const highValue = parseFloat(HighEVC01_TEMPERATURE);
-            const lowValue = parseFloat(LowEVC01_TEMPERATURE);
-            const EVC01_TEMPERATUREValue = parseFloat(EVC01_TEMPERATURE);
+            const highValue = parseFloat(HighPipe_Temp);
+            const lowValue = parseFloat(LowPipe_Temp);
+            const Pipe_TempValue = parseFloat(Pipe_Temp);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(EVC01_TEMPERATUREValue)
+                !isNaN(Pipe_TempValue)
             ) {
-                if (
-                    highValue < EVC01_TEMPERATUREValue ||
-                    EVC01_TEMPERATUREValue < lowValue
-                ) {
-                    if (!audioEVC01_TEMPERATURE) {
+                if (highValue < Pipe_TempValue || Pipe_TempValue < lowValue) {
+                    if (!audioPipe_Temp) {
                         audioRef.current?.play();
-                        setaudioEVC01_TEMPERATURE(true);
-                        setaudioColorEVC01_TEMPERATURE(true);
+                        setaudioPipe_Temp(true);
+                        setaudioColorPipe_Temp(true);
                     }
                 } else {
-                    setaudioEVC01_TEMPERATURE(false);
-                    setaudioColorEVC01_TEMPERATURE(false);
+                    setaudioPipe_Temp(false);
+                    setaudioColorPipe_Temp(false);
                 }
             }
         }
     }, [
-        HighEVC01_TEMPERATURE,
-        EVC01_TEMPERATURE,
-        audioEVC01_TEMPERATURE,
-        LowEVC01_TEMPERATURE,
-        maintainEVC01_TEMPERATURE,
+        HighPipe_Temp,
+        Pipe_Temp,
+        audioPipe_Temp,
+        LowPipe_Temp,
+        maintainPipe_Temp,
     ]);
 
     useEffect(() => {
-        if (audioEVC01_TEMPERATURE) {
+        if (audioPipe_Temp) {
             const audioEnded = () => {
-                setaudioEVC01_TEMPERATURE(false);
+                setaudioPipe_Temp(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioEVC01_TEMPERATURE]);
+    }, [audioPipe_Temp]);
 
-    //================================ EVC01_TEMPERATURE ======================================================
-    //================================ EVC02_TEMPERATURE================================
+    //================================ Pipe_Temp ======================================================
+    //================================ Pipe_Press================================
 
-    const [audioEVC02_TEMPERATURE, setaudioEVC02_TEMPERATURE] = useState(false);
-    const [HighEVC02_TEMPERATURE, setHighEVC02_TEMPERATURE] = useState<
-        number | null
-    >(null);
-    const [LowEVC02_TEMPERATURE, setLowEVC02_TEMPERATURE] = useState<
-        number | null
-    >(null);
-    const [audioColorEVC02_TEMPERATURE, setaudioColorEVC02_TEMPERATURE] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPipe_Press, setaudioPipe_Press] = useState(false);
+    const [HighPipe_Press, setHighPipe_Press] = useState<number | null>(null);
+    const [LowPipe_Press, setLowPipe_Press] = useState<number | null>(null);
+    const [audioColorPipe_Press, setaudioColorPipe_Press] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainEVC02_TEMPERATURE, setMaintainEVC02_TEMPERATURE] =
+    const [maintainPipe_Press, setMaintainPipe_Press] =
         useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighEVC02_TEMPERATURE === "string" &&
-            typeof LowEVC02_TEMPERATURE === "string" &&
-            EVC02_TEMPERATURE !== null &&
-            maintainEVC02_TEMPERATURE === false
+            typeof HighPipe_Press === "string" &&
+            typeof LowPipe_Press === "string" &&
+            Pipe_Press !== null &&
+            maintainPipe_Press === false
         ) {
-            const highValue = parseFloat(HighEVC02_TEMPERATURE);
-            const lowValue = parseFloat(LowEVC02_TEMPERATURE);
-            const EVC02_TEMPERATUREValue = parseFloat(EVC02_TEMPERATURE);
+            const highValue = parseFloat(HighPipe_Press);
+            const lowValue = parseFloat(LowPipe_Press);
+            const Pipe_PressValue = parseFloat(Pipe_Press);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(EVC02_TEMPERATUREValue)
+                !isNaN(Pipe_PressValue)
             ) {
-                if (
-                    highValue < EVC02_TEMPERATUREValue ||
-                    EVC02_TEMPERATUREValue < lowValue
-                ) {
-                    if (!audioEVC02_TEMPERATURE) {
+                if (highValue < Pipe_PressValue || Pipe_PressValue < lowValue) {
+                    if (!audioPipe_Press) {
                         audioRef.current?.play();
-                        setaudioEVC02_TEMPERATURE(true);
-                        setaudioColorEVC02_TEMPERATURE(true);
+                        setaudioPipe_Press(true);
+                        setaudioColorPipe_Press(true);
                     }
                 } else {
-                    setaudioEVC02_TEMPERATURE(false);
-                    setaudioColorEVC02_TEMPERATURE(false);
+                    setaudioPipe_Press(false);
+                    setaudioColorPipe_Press(false);
                 }
             }
         }
     }, [
-        HighEVC02_TEMPERATURE,
-        EVC02_TEMPERATURE,
-        audioEVC02_TEMPERATURE,
-        LowEVC02_TEMPERATURE,
-        maintainEVC02_TEMPERATURE,
+        HighPipe_Press,
+        Pipe_Press,
+        audioPipe_Press,
+        LowPipe_Press,
+        maintainPipe_Press,
     ]);
 
     useEffect(() => {
-        if (audioEVC02_TEMPERATURE) {
+        if (audioPipe_Press) {
             const audioEnded = () => {
-                setaudioEVC02_TEMPERATURE(false);
+                setaudioPipe_Press(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioEVC02_TEMPERATURE]);
+    }, [audioPipe_Press]);
 
-    //================================ EVC02_TEMPERATURE ======================================================
+    //================================ Pipe_Press ======================================================
+
+    //================================ Pipe_Press================================
+
+    const [audioFlow_Meter_Total, setaudioFlow_Meter_Total] = useState(false);
+    const [HighFlow_Meter_Total, setHighFlow_Meter_Total] = useState<
+        number | null
+    >(null);
+    const [LowFlow_Meter_Total, setLowFlow_Meter_Total] = useState<
+        number | null
+    >(null);
+    const [audioColorFlow_Meter_Total, setaudioColorFlow_Meter_Total] =
+        useState(false);
+
+    const [maintainFlow_Meter_Total, setMaintainFlow_Meter_Total] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighFlow_Meter_Total === "string" &&
+            typeof LowFlow_Meter_Total === "string" &&
+            Flow_Meter_Total !== null &&
+            maintainFlow_Meter_Total === false
+        ) {
+            const highValue = parseFloat(HighFlow_Meter_Total);
+            const lowValue = parseFloat(LowFlow_Meter_Total);
+            const Flow_Meter_TotalValue = parseFloat(Flow_Meter_Total);
+
+            if (
+                !isNaN(highValue) &&
+                !isNaN(lowValue) &&
+                !isNaN(Flow_Meter_TotalValue)
+            ) {
+                if (
+                    highValue < Flow_Meter_TotalValue ||
+                    Flow_Meter_TotalValue < lowValue
+                ) {
+                    if (!audioFlow_Meter_Total) {
+                        audioRef.current?.play();
+                        setaudioFlow_Meter_Total(true);
+                        setaudioColorFlow_Meter_Total(true);
+                    }
+                } else {
+                    setaudioFlow_Meter_Total(false);
+                    setaudioColorFlow_Meter_Total(false);
+                }
+            }
+        }
+    }, [
+        HighFlow_Meter_Total,
+        Flow_Meter_Total,
+        audioFlow_Meter_Total,
+        LowFlow_Meter_Total,
+        maintainFlow_Meter_Total,
+    ]);
+
+    useEffect(() => {
+        if (audioFlow_Meter_Total) {
+            const audioEnded = () => {
+                setaudioFlow_Meter_Total(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioFlow_Meter_Total]);
+
+    //================================ Flow_Meter_Total ======================================================
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "Tank_01_Level") {
@@ -1086,9 +1227,7 @@ export default function Graphic_MEIKO() {
 
             if (node.id === "TT_LINE3_TOP_DATA") {
                 const roundedPT02 =
-                    EVC01_TEMPERATURE !== null
-                        ? parseFloat(EVC01_TEMPERATURE).toFixed(2)
-                        : "";
+                    Pipe_Temp !== null ? parseFloat(Pipe_Temp).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1105,10 +1244,10 @@ export default function Graphic_MEIKO() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC01_TEMPERATURE &&
-                                        !maintainEVC01_TEMPERATURE
+                                        audioColorPipe_Temp &&
+                                        !maintainPipe_Temp
                                             ? "#ff5656"
-                                            : maintainEVC01_TEMPERATURE
+                                            : maintainPipe_Temp
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1151,8 +1290,8 @@ export default function Graphic_MEIKO() {
             }
             if (node.id === "TT_LINE3_BOTTOM_DATA") {
                 const roundedPT02 =
-                    EVC02_TEMPERATURE !== null
-                        ? parseFloat(EVC02_TEMPERATURE).toFixed(2)
+                    Pipe_Press !== null
+                        ? parseFloat(Pipe_Press).toFixed(2)
                         : "";
 
                 return {
@@ -1170,10 +1309,10 @@ export default function Graphic_MEIKO() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC02_TEMPERATURE &&
-                                        !maintainEVC02_TEMPERATURE
+                                        audioColorPipe_Press &&
+                                        !maintainPipe_Press
                                             ? "#ff5656"
-                                            : maintainEVC02_TEMPERATURE
+                                            : maintainPipe_Press
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1338,16 +1477,26 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                                style={{
-                                    fontSize: 20,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 500,
-                                }}
+                            style={{
+                                padding: 2,
+                                borderRadius: 5,
+                                fontSize: 20,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                position: "relative",
+                                backgroundColor:
+                                audioColorPipe_Temp &&
+                                    !maintainPipe_Temp
+                                        ? "#ff5656"
+                                        : audioColorPipe_Temp
+                                        ? "orange"
+                                        : "transparent",
+                                cursor: "pointer",
+                            }}
                             >
                                 <p style={{ color: colorNameValue }}>TT-302</p>
-                                <p style={{ color: colorData }}> {TT_302}</p>
+                                <p style={{ color: colorData }}> {Pipe_Temp}</p>
                                 <p style={{ color: colorNameValue }}>°C</p>
                             </div>
                         ),
@@ -1362,16 +1511,26 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                                style={{
-                                    fontSize: 20,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 500,
-                                }}
+                            style={{
+                                padding: 2,
+                                borderRadius: 5,
+                                fontSize: 20,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                position: "relative",
+                                backgroundColor:
+                                    audioColorPipe_Press &&
+                                    !maintainPipe_Press
+                                        ? "#ff5656"
+                                        : maintainPipe_Press
+                                        ? "orange"
+                                        : "transparent",
+                                cursor: "pointer",
+                            }}
                             >
                                 <p style={{ color: colorNameValue }}>PT-302</p>
-                                <p style={{ color: colorData }}>{PT_302}</p>
+                                <p style={{ color: colorData }}>{Pipe_Press}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
@@ -1702,11 +1861,21 @@ export default function Graphic_MEIKO() {
                         label: (
                             <div
                                 style={{
+                                    padding: 2,
+                                    borderRadius: 5,
                                     fontSize: 20,
-                                    color: "white",
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorFlow_Meter_Total &&
+                                        !maintainFlow_Meter_Total
+                                            ? "#ff5656"
+                                            : maintainTank_01_Level
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>Total</p>
@@ -1714,7 +1883,7 @@ export default function Graphic_MEIKO() {
                                     {" "}
                                     {Flow_Meter_Total}
                                 </p>
-                                <p style={{ color: colorNameValue }}>m³/h</p>
+                                <p style={{ color: colorNameValue }}>m³</p>
                             </div>
                         ),
                     },
@@ -1790,13 +1959,12 @@ export default function Graphic_MEIKO() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionMEIKO");
+    const storedPositionString = localStorage.getItem("positionMEIKO");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-
-            const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+              // const initialPositions = {
               AlarmCenter: { x: -2039.8350060092037, y: 976.922382090622 },
               Arrow1: { x: -1803.0251199711197, y: 1299.9325476252639 },
               Arrow2: { x: -1804.0487088215177, y: 1498.5264015128178 },
@@ -2776,300 +2944,300 @@ export default function Graphic_MEIKO() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
 
-    // const onNodeDragStop = useCallback(
-    //     (event: any, node: any) => {
-    //         if (editingEnabled) {
-    //             const { id, position } = node;
-    //             setNodes((prevNodes) =>
-    //                 prevNodes.map((n) =>
-    //                     n.id === id ? { ...n, position: position } : n
-    //                 )
-    //             );
-    //             if (id === "Tank_01_Level") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_01_Level: position,
-    //                 }));
-    //             } else if (id === "Tank_01_Volume_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_01_Volume_DATA: position,
-    //                 }));
-    //             } else if (id === "Tank_01_Mass_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_01_Mass_DATA: position,
-    //                 }));
-    //             } else if (id === "Tank_PT_301_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_PT_301_DATA: position,
-    //                 }));
-    //             } else if (id === "Tank_TT_301_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_TT_301_DATA: position,
-    //                 }));
-    //             } else if (id === "line1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line1: position,
-    //                 }));
-    //             } else if (id === "line2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line2: position,
-    //                 }));
-    //             } else if (id === "line3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3: position,
-    //                 }));
-    //             } else if (id === "line4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4: position,
-    //                 }));
-    //             } else if (id === "line5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "TankMEIKO") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TankMEIKO: position,
-    //                 }));
-    //             } else if (id === "TankLine") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TankLine: position,
-    //                 }));
-    //             } else if (id === "Arrow1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow1: position,
-    //                 }));
-    //             } else if (id === "Arrow2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow2: position,
-    //                 }));
-    //             } else if (id === "Arrow3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow3: position,
-    //                 }));
-    //             } else if (id === "Arrow4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow4: position,
-    //                 }));
-    //             } else if (id === "Arrow5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow5: position,
-    //                 }));
-    //             } else if (id === "Arrow6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow6: position,
-    //                 }));
-    //             } else if (id === "line5_1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5_1: position,
-    //                 }));
-    //             } else if (id === "line3_1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3_1: position,
-    //                 }));
-    //             } else if (id === "line4_1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4_1: position,
-    //                 }));
-    //             } else if (id === "line_Top_6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line_Top_6: position,
-    //                 }));
-    //             } else if (id === "VP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP: position,
-    //                 }));
-    //             } else if (id === "VP2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP2: position,
-    //                 }));
-    //             } else if (id === "VP3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP3: position,
-    //                 }));
-    //             } else if (id === "VP_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP_Name: position,
-    //                 }));
-    //             } else if (id === "VP2_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP2_Name: position,
-    //                 }));
-    //             } else if (id === "VP3_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VP3_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_301_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_301_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_302_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_302_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_301") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_301: position,
-    //                 }));
-    //             } else if (id === "SDV_302") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_302: position,
-    //                 }));
-    //             } else if (id === "GAUGE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE1: position,
-    //                 }));
-    //             } else if (id === "GAUGE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE2: position,
-    //                 }));
-    //             } else if (id === "GAUGE1_line") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE1_line: position,
-    //                 }));
-    //             } else if (id === "GAUGE2_line") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE2_line: position,
-    //                 }));
-    //             } else if (id === "GAUGE1_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE1_none: position,
-    //                 }));
-    //             } else if (id === "GAUGE2_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE2_none: position,
-    //                 }));
-    //             } else if (id === "GAUGE1_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE1_DATA: position,
-    //                 }));
-    //             } else if (id === "GAUGE2_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GAUGE2_DATA: position,
-    //                 }));
-    //             } else if (id === "GD_101") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_101: position,
-    //                 }));
-    //             } else if (id === "GD_101_image") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_101_image: position,
-    //                 }));
-    //             } else if (id === "GD_102") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_102: position,
-    //                 }));
-    //             } else if (id === "GD_102_image") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_102_image: position,
-    //                 }));
-    //             } else if (id === "GD_103") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_103: position,
-    //                 }));
-    //             } else if (id === "GD_103_image") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_103_image: position,
-    //                 }));
-    //             } else if (id === "V_V1_V2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     V_V1_V2: position,
-    //                 }));
-    //             } else if (id === "Flow_Meter_Total") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Flow_Meter_Total: position,
-    //                 }));
-    //             } else if (id === "borderWhite") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     borderWhite: position,
-    //                 }));
-    //             } else if (id === "timeUpdate3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate3: position,
-    //                 }));
-    //             } else if (id === "AlarmCenter") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     AlarmCenter: position,
-    //                 }));
-    //             }
+    const onNodeDragStop = useCallback(
+        (event: any, node: any) => {
+            if (editingEnabled) {
+                const { id, position } = node;
+                setNodes((prevNodes) =>
+                    prevNodes.map((n) =>
+                        n.id === id ? { ...n, position: position } : n
+                    )
+                );
+                if (id === "Tank_01_Level") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_01_Level: position,
+                    }));
+                } else if (id === "Tank_01_Volume_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_01_Volume_DATA: position,
+                    }));
+                } else if (id === "Tank_01_Mass_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_01_Mass_DATA: position,
+                    }));
+                } else if (id === "Tank_PT_301_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_PT_301_DATA: position,
+                    }));
+                } else if (id === "Tank_TT_301_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_TT_301_DATA: position,
+                    }));
+                } else if (id === "line1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line1: position,
+                    }));
+                } else if (id === "line2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line2: position,
+                    }));
+                } else if (id === "line3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3: position,
+                    }));
+                } else if (id === "line4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4: position,
+                    }));
+                } else if (id === "line5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "TankMEIKO") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TankMEIKO: position,
+                    }));
+                } else if (id === "TankLine") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TankLine: position,
+                    }));
+                } else if (id === "Arrow1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow1: position,
+                    }));
+                } else if (id === "Arrow2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow2: position,
+                    }));
+                } else if (id === "Arrow3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow3: position,
+                    }));
+                } else if (id === "Arrow4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow4: position,
+                    }));
+                } else if (id === "Arrow5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow5: position,
+                    }));
+                } else if (id === "Arrow6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow6: position,
+                    }));
+                } else if (id === "line5_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5_1: position,
+                    }));
+                } else if (id === "line3_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3_1: position,
+                    }));
+                } else if (id === "line4_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4_1: position,
+                    }));
+                } else if (id === "line_Top_6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line_Top_6: position,
+                    }));
+                } else if (id === "VP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP: position,
+                    }));
+                } else if (id === "VP2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP2: position,
+                    }));
+                } else if (id === "VP3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP3: position,
+                    }));
+                } else if (id === "VP_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP_Name: position,
+                    }));
+                } else if (id === "VP2_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP2_Name: position,
+                    }));
+                } else if (id === "VP3_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VP3_Name: position,
+                    }));
+                } else if (id === "SDV_301_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_301_Name: position,
+                    }));
+                } else if (id === "SDV_302_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_302_Name: position,
+                    }));
+                } else if (id === "SDV_301") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_301: position,
+                    }));
+                } else if (id === "SDV_302") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_302: position,
+                    }));
+                } else if (id === "GAUGE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE1: position,
+                    }));
+                } else if (id === "GAUGE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE2: position,
+                    }));
+                } else if (id === "GAUGE1_line") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE1_line: position,
+                    }));
+                } else if (id === "GAUGE2_line") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE2_line: position,
+                    }));
+                } else if (id === "GAUGE1_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE1_none: position,
+                    }));
+                } else if (id === "GAUGE2_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE2_none: position,
+                    }));
+                } else if (id === "GAUGE1_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE1_DATA: position,
+                    }));
+                } else if (id === "GAUGE2_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GAUGE2_DATA: position,
+                    }));
+                } else if (id === "GD_101") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_101: position,
+                    }));
+                } else if (id === "GD_101_image") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_101_image: position,
+                    }));
+                } else if (id === "GD_102") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_102: position,
+                    }));
+                } else if (id === "GD_102_image") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_102_image: position,
+                    }));
+                } else if (id === "GD_103") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_103: position,
+                    }));
+                } else if (id === "GD_103_image") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_103_image: position,
+                    }));
+                } else if (id === "V_V1_V2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        V_V1_V2: position,
+                    }));
+                } else if (id === "Flow_Meter_Total") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Flow_Meter_Total: position,
+                    }));
+                } else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
+                } else if (id === "AlarmCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        AlarmCenter: position,
+                    }));
+                }
 
-    //             //========================== pit line 1 =========================
-    //         }
-    //     },
-    //     [setNodes, setPositions, editingEnabled]
-    // );
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
+                //========================== pit line 1 =========================
+            }
+        },
+        [setNodes, setPositions, editingEnabled]
+    );
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
 
-    // useEffect(() => {
-    //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));
-    // }, [positions]);
+    useEffect(() => {
+        localStorage.setItem("positionMEIKO", JSON.stringify(positions));
+    }, [positions]);
 
     return (
         <>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
+            </Button>
             <div
                 style={{
                     // width: "100%",
@@ -3080,7 +3248,7 @@ export default function Graphic_MEIKO() {
                     background: background,
                 }}
             >
-                {/* {!editingEnabled && (
+                {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -3106,15 +3274,15 @@ export default function Graphic_MEIKO() {
                             height: "100%",
                         }}
                     ></div>
-                )} */}
+                )}
 
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={true} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={true} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
