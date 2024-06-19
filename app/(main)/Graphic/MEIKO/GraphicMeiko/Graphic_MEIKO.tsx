@@ -100,7 +100,6 @@ export default function Graphic_MEIKO() {
     const [GD_103_High, setGD_103_High] = useState<string | null>(null);
     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
 
-
     const [V2_Flow_Meter, setV2_Flow_Meter] = useState<any>();
     const [V1_Flow_Meter, setV1_Flow_Meter] = useState<any>();
     const [Flow_Meter_Total, setFlow_Meter_Total] = useState<any>();
@@ -1477,23 +1476,23 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                            style={{
-                                padding: 2,
-                                borderRadius: 5,
-                                fontSize: 20,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                position: "relative",
-                                backgroundColor:
-                                audioColorPipe_Temp &&
-                                    !maintainPipe_Temp
-                                        ? "#ff5656"
-                                        : audioColorPipe_Temp
-                                        ? "orange"
-                                        : "transparent",
-                                cursor: "pointer",
-                            }}
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorPipe_Temp &&
+                                        !maintainPipe_Temp
+                                            ? "#ff5656"
+                                            : audioColorPipe_Temp
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
                             >
                                 <p style={{ color: colorNameValue }}>TT-302</p>
                                 <p style={{ color: colorData }}> {Pipe_Temp}</p>
@@ -1511,23 +1510,23 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                            style={{
-                                padding: 2,
-                                borderRadius: 5,
-                                fontSize: 20,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                position: "relative",
-                                backgroundColor:
-                                    audioColorPipe_Press &&
-                                    !maintainPipe_Press
-                                        ? "#ff5656"
-                                        : maintainPipe_Press
-                                        ? "orange"
-                                        : "transparent",
-                                cursor: "pointer",
-                            }}
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorPipe_Press &&
+                                        !maintainPipe_Press
+                                            ? "#ff5656"
+                                            : maintainPipe_Press
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
                             >
                                 <p style={{ color: colorNameValue }}>PT-302</p>
                                 <p style={{ color: colorData }}>{Pipe_Press}</p>
@@ -1964,7 +1963,7 @@ export default function Graphic_MEIKO() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -2039.8350060092037, y: 976.922382090622 },
               Arrow1: { x: -1803.0251199711197, y: 1299.9325476252639 },
               Arrow2: { x: -1804.0487088215177, y: 1498.5264015128178 },
@@ -1988,8 +1987,8 @@ export default function Graphic_MEIKO() {
               GD_101_image: { x: -2518.1612713207987, y: 1609.1354282458306 },
               GD_102: { x: -1518.6760705824797, y: 1252.8074770572675 },
               GD_102_image: { x: -1528.160129493159, y: 1288.614752608005 },
-              GD_103: { x: -1520.7961500241138, y: 1054.9577099686774 },
-              GD_103_image: { x: -1528.0559047461445, y: 1091.1749601166705 },
+              GD_103: { x: -1260.4490226579046, y: 1394.3115684808267 },
+              GD_103_image: { x: -1267.1148397996528, y: 1429.6405489627332 },
               SDV_301: { x: -2172.4330946134314, y: 1610.7500139733424 },
               SDV_301_Name: { x: -2204.089717462407, y: 1573.8590004894997 },
               SDV_302: { x: -1602.7491259859116, y: 1828.297501126015 },
@@ -2012,7 +2011,7 @@ export default function Graphic_MEIKO() {
               Tank_TT_301_DATA: { x: -2550.246082836534, y: 1331.882184005529 },
               V1_Flow_Meter: { x: -1126.4637630930329, y: 1023.2343195212084 },
               V2_Flow_Meter: { x: -1126.4637630930329, y: 1023.2343195212084 },
-              VP: { x: -1691.9764344694665, y: 1095.8721991338164 },
+              VP: { x: -1693.3297731655844, y: 1095.1001920950932 },
               VP2: { x: -1692.2501123147658, y: 1294.3830465559004 },
               VP2_Name: { x: -1694.6711247866426, y: 1257.994735590387 },
               VP3: { x: -1690.3631227903286, y: 1495.7357257492458 },
