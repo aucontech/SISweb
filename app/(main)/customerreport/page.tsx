@@ -14,6 +14,7 @@ import {
     CNGHY_DEVICE_ID,
     CNGBD_DEVICE_ID,
     NITORI_DEVICE_ID,
+    ARAKAWA_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -262,6 +263,18 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case ARAKAWA_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1601 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -317,6 +330,18 @@ const CustomerReport = () => {
                         return (
                             <>
                                 EVC 1302 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case ARAKAWA_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1602 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>
