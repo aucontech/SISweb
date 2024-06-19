@@ -100,7 +100,6 @@ export default function Graphic_MEIKO() {
     const [GD_103_High, setGD_103_High] = useState<string | null>(null);
     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
 
-
     const [V2_Flow_Meter, setV2_Flow_Meter] = useState<any>();
     const [V1_Flow_Meter, setV1_Flow_Meter] = useState<any>();
     const [Flow_Meter_Total, setFlow_Meter_Total] = useState<any>();
@@ -1477,23 +1476,23 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                            style={{
-                                padding: 2,
-                                borderRadius: 5,
-                                fontSize: 20,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                position: "relative",
-                                backgroundColor:
-                                audioColorPipe_Temp &&
-                                    !maintainPipe_Temp
-                                        ? "#ff5656"
-                                        : audioColorPipe_Temp
-                                        ? "orange"
-                                        : "transparent",
-                                cursor: "pointer",
-                            }}
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorPipe_Temp &&
+                                        !maintainPipe_Temp
+                                            ? "#ff5656"
+                                            : audioColorPipe_Temp
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
                             >
                                 <p style={{ color: colorNameValue }}>TT-302</p>
                                 <p style={{ color: colorData }}> {Pipe_Temp}</p>
@@ -1511,23 +1510,23 @@ export default function Graphic_MEIKO() {
                         ...node.data,
                         label: (
                             <div
-                            style={{
-                                padding: 2,
-                                borderRadius: 5,
-                                fontSize: 20,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                position: "relative",
-                                backgroundColor:
-                                    audioColorPipe_Press &&
-                                    !maintainPipe_Press
-                                        ? "#ff5656"
-                                        : maintainPipe_Press
-                                        ? "orange"
-                                        : "transparent",
-                                cursor: "pointer",
-                            }}
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorPipe_Press &&
+                                        !maintainPipe_Press
+                                            ? "#ff5656"
+                                            : maintainPipe_Press
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
                             >
                                 <p style={{ color: colorNameValue }}>PT-302</p>
                                 <p style={{ color: colorData }}>{Pipe_Press}</p>
@@ -1959,12 +1958,12 @@ export default function Graphic_MEIKO() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionMEIKO");
+    // const storedPositionString = localStorage.getItem("positionMEIKO");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+                const initialPositions = {
               AlarmCenter: { x: -2039.8350060092037, y: 976.922382090622 },
               Arrow1: { x: -1803.0251199711197, y: 1299.9325476252639 },
               Arrow2: { x: -1804.0487088215177, y: 1498.5264015128178 },
@@ -1988,8 +1987,8 @@ export default function Graphic_MEIKO() {
               GD_101_image: { x: -2518.1612713207987, y: 1609.1354282458306 },
               GD_102: { x: -1518.6760705824797, y: 1252.8074770572675 },
               GD_102_image: { x: -1528.160129493159, y: 1288.614752608005 },
-              GD_103: { x: -1520.7961500241138, y: 1054.9577099686774 },
-              GD_103_image: { x: -1528.0559047461445, y: 1091.1749601166705 },
+              GD_103: { x: -1260.4490226579046, y: 1394.3115684808267 },
+              GD_103_image: { x: -1267.1148397996528, y: 1429.6405489627332 },
               SDV_301: { x: -2172.4330946134314, y: 1610.7500139733424 },
               SDV_301_Name: { x: -2204.089717462407, y: 1573.8590004894997 },
               SDV_302: { x: -1602.7491259859116, y: 1828.297501126015 },
@@ -2012,7 +2011,7 @@ export default function Graphic_MEIKO() {
               Tank_TT_301_DATA: { x: -2550.246082836534, y: 1331.882184005529 },
               V1_Flow_Meter: { x: -1126.4637630930329, y: 1023.2343195212084 },
               V2_Flow_Meter: { x: -1126.4637630930329, y: 1023.2343195212084 },
-              VP: { x: -1691.9764344694665, y: 1095.8721991338164 },
+              VP: { x: -1693.3297731655844, y: 1095.1001920950932 },
               VP2: { x: -1692.2501123147658, y: 1294.3830465559004 },
               VP2_Name: { x: -1694.6711247866426, y: 1257.994735590387 },
               VP3: { x: -1690.3631227903286, y: 1495.7357257492458 },
@@ -2944,300 +2943,300 @@ export default function Graphic_MEIKO() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
 
-    const onNodeDragStop = useCallback(
-        (event: any, node: any) => {
-            if (editingEnabled) {
-                const { id, position } = node;
-                setNodes((prevNodes) =>
-                    prevNodes.map((n) =>
-                        n.id === id ? { ...n, position: position } : n
-                    )
-                );
-                if (id === "Tank_01_Level") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Tank_01_Level: position,
-                    }));
-                } else if (id === "Tank_01_Volume_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Tank_01_Volume_DATA: position,
-                    }));
-                } else if (id === "Tank_01_Mass_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Tank_01_Mass_DATA: position,
-                    }));
-                } else if (id === "Tank_PT_301_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Tank_PT_301_DATA: position,
-                    }));
-                } else if (id === "Tank_TT_301_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Tank_TT_301_DATA: position,
-                    }));
-                } else if (id === "line1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line1: position,
-                    }));
-                } else if (id === "line2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line2: position,
-                    }));
-                } else if (id === "line3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line3: position,
-                    }));
-                } else if (id === "line4") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line4: position,
-                    }));
-                } else if (id === "line5") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line5: position,
-                    }));
-                } else if (id === "line6") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line6: position,
-                    }));
-                } else if (id === "line6") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line6: position,
-                    }));
-                } else if (id === "TankMEIKO") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        TankMEIKO: position,
-                    }));
-                } else if (id === "TankLine") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        TankLine: position,
-                    }));
-                } else if (id === "Arrow1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow1: position,
-                    }));
-                } else if (id === "Arrow2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow2: position,
-                    }));
-                } else if (id === "Arrow3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow3: position,
-                    }));
-                } else if (id === "Arrow4") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow4: position,
-                    }));
-                } else if (id === "Arrow5") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow5: position,
-                    }));
-                } else if (id === "Arrow6") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Arrow6: position,
-                    }));
-                } else if (id === "line5_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line5_1: position,
-                    }));
-                } else if (id === "line3_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line3_1: position,
-                    }));
-                } else if (id === "line4_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line4_1: position,
-                    }));
-                } else if (id === "line_Top_6") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        line_Top_6: position,
-                    }));
-                } else if (id === "VP") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP: position,
-                    }));
-                } else if (id === "VP2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP2: position,
-                    }));
-                } else if (id === "VP3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP3: position,
-                    }));
-                } else if (id === "VP_Name") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP_Name: position,
-                    }));
-                } else if (id === "VP2_Name") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP2_Name: position,
-                    }));
-                } else if (id === "VP3_Name") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VP3_Name: position,
-                    }));
-                } else if (id === "SDV_301_Name") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_301_Name: position,
-                    }));
-                } else if (id === "SDV_302_Name") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_302_Name: position,
-                    }));
-                } else if (id === "SDV_301") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_301: position,
-                    }));
-                } else if (id === "SDV_302") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_302: position,
-                    }));
-                } else if (id === "GAUGE1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE1: position,
-                    }));
-                } else if (id === "GAUGE2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE2: position,
-                    }));
-                } else if (id === "GAUGE1_line") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE1_line: position,
-                    }));
-                } else if (id === "GAUGE2_line") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE2_line: position,
-                    }));
-                } else if (id === "GAUGE1_none") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE1_none: position,
-                    }));
-                } else if (id === "GAUGE2_none") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE2_none: position,
-                    }));
-                } else if (id === "GAUGE1_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE1_DATA: position,
-                    }));
-                } else if (id === "GAUGE2_DATA") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GAUGE2_DATA: position,
-                    }));
-                } else if (id === "GD_101") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_101: position,
-                    }));
-                } else if (id === "GD_101_image") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_101_image: position,
-                    }));
-                } else if (id === "GD_102") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_102: position,
-                    }));
-                } else if (id === "GD_102_image") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_102_image: position,
-                    }));
-                } else if (id === "GD_103") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_103: position,
-                    }));
-                } else if (id === "GD_103_image") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_103_image: position,
-                    }));
-                } else if (id === "V_V1_V2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        V_V1_V2: position,
-                    }));
-                } else if (id === "Flow_Meter_Total") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Flow_Meter_Total: position,
-                    }));
-                } else if (id === "borderWhite") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        borderWhite: position,
-                    }));
-                } else if (id === "timeUpdate3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        timeUpdate3: position,
-                    }));
-                } else if (id === "AlarmCenter") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        AlarmCenter: position,
-                    }));
-                }
+    // const onNodeDragStop = useCallback(
+    //     (event: any, node: any) => {
+    //         if (editingEnabled) {
+    //             const { id, position } = node;
+    //             setNodes((prevNodes) =>
+    //                 prevNodes.map((n) =>
+    //                     n.id === id ? { ...n, position: position } : n
+    //                 )
+    //             );
+    //             if (id === "Tank_01_Level") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Tank_01_Level: position,
+    //                 }));
+    //             } else if (id === "Tank_01_Volume_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Tank_01_Volume_DATA: position,
+    //                 }));
+    //             } else if (id === "Tank_01_Mass_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Tank_01_Mass_DATA: position,
+    //                 }));
+    //             } else if (id === "Tank_PT_301_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Tank_PT_301_DATA: position,
+    //                 }));
+    //             } else if (id === "Tank_TT_301_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Tank_TT_301_DATA: position,
+    //                 }));
+    //             } else if (id === "line1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line1: position,
+    //                 }));
+    //             } else if (id === "line2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line2: position,
+    //                 }));
+    //             } else if (id === "line3") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line3: position,
+    //                 }));
+    //             } else if (id === "line4") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line4: position,
+    //                 }));
+    //             } else if (id === "line5") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line5: position,
+    //                 }));
+    //             } else if (id === "line6") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line6: position,
+    //                 }));
+    //             } else if (id === "line6") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line6: position,
+    //                 }));
+    //             } else if (id === "TankMEIKO") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     TankMEIKO: position,
+    //                 }));
+    //             } else if (id === "TankLine") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     TankLine: position,
+    //                 }));
+    //             } else if (id === "Arrow1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow1: position,
+    //                 }));
+    //             } else if (id === "Arrow2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow2: position,
+    //                 }));
+    //             } else if (id === "Arrow3") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow3: position,
+    //                 }));
+    //             } else if (id === "Arrow4") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow4: position,
+    //                 }));
+    //             } else if (id === "Arrow5") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow5: position,
+    //                 }));
+    //             } else if (id === "Arrow6") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Arrow6: position,
+    //                 }));
+    //             } else if (id === "line5_1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line5_1: position,
+    //                 }));
+    //             } else if (id === "line3_1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line3_1: position,
+    //                 }));
+    //             } else if (id === "line4_1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line4_1: position,
+    //                 }));
+    //             } else if (id === "line_Top_6") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     line_Top_6: position,
+    //                 }));
+    //             } else if (id === "VP") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP: position,
+    //                 }));
+    //             } else if (id === "VP2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP2: position,
+    //                 }));
+    //             } else if (id === "VP3") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP3: position,
+    //                 }));
+    //             } else if (id === "VP_Name") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP_Name: position,
+    //                 }));
+    //             } else if (id === "VP2_Name") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP2_Name: position,
+    //                 }));
+    //             } else if (id === "VP3_Name") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     VP3_Name: position,
+    //                 }));
+    //             } else if (id === "SDV_301_Name") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     SDV_301_Name: position,
+    //                 }));
+    //             } else if (id === "SDV_302_Name") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     SDV_302_Name: position,
+    //                 }));
+    //             } else if (id === "SDV_301") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     SDV_301: position,
+    //                 }));
+    //             } else if (id === "SDV_302") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     SDV_302: position,
+    //                 }));
+    //             } else if (id === "GAUGE1") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE1: position,
+    //                 }));
+    //             } else if (id === "GAUGE2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE2: position,
+    //                 }));
+    //             } else if (id === "GAUGE1_line") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE1_line: position,
+    //                 }));
+    //             } else if (id === "GAUGE2_line") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE2_line: position,
+    //                 }));
+    //             } else if (id === "GAUGE1_none") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE1_none: position,
+    //                 }));
+    //             } else if (id === "GAUGE2_none") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE2_none: position,
+    //                 }));
+    //             } else if (id === "GAUGE1_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE1_DATA: position,
+    //                 }));
+    //             } else if (id === "GAUGE2_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GAUGE2_DATA: position,
+    //                 }));
+    //             } else if (id === "GD_101") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_101: position,
+    //                 }));
+    //             } else if (id === "GD_101_image") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_101_image: position,
+    //                 }));
+    //             } else if (id === "GD_102") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_102: position,
+    //                 }));
+    //             } else if (id === "GD_102_image") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_102_image: position,
+    //                 }));
+    //             } else if (id === "GD_103") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_103: position,
+    //                 }));
+    //             } else if (id === "GD_103_image") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     GD_103_image: position,
+    //                 }));
+    //             } else if (id === "V_V1_V2") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     V_V1_V2: position,
+    //                 }));
+    //             } else if (id === "Flow_Meter_Total") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Flow_Meter_Total: position,
+    //                 }));
+    //             } else if (id === "borderWhite") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     borderWhite: position,
+    //                 }));
+    //             } else if (id === "timeUpdate3") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     timeUpdate3: position,
+    //                 }));
+    //             } else if (id === "AlarmCenter") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     AlarmCenter: position,
+    //                 }));
+    //             }
 
-                //========================== pit line 1 =========================
-            }
-        },
-        [setNodes, setPositions, editingEnabled]
-    );
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    //             //========================== pit line 1 =========================
+    //         }
+    //     },
+    //     [setNodes, setPositions, editingEnabled]
+    // );
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
 
-    useEffect(() => {
-        localStorage.setItem("positionMEIKO", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     // width: "100%",
@@ -3248,7 +3247,7 @@ export default function Graphic_MEIKO() {
                     background: background,
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -3274,15 +3273,15 @@ export default function Graphic_MEIKO() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={true} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
