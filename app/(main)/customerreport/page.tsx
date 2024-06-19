@@ -15,6 +15,7 @@ import {
     CNGBD_DEVICE_ID,
     NITORI_DEVICE_ID,
     ARAKAWA_DEVICE_ID,
+    VREC_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -275,6 +276,18 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case VREC_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1801 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -342,6 +355,18 @@ const CustomerReport = () => {
                         return (
                             <>
                                 EVC 1602 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case VREC_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1802 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>
