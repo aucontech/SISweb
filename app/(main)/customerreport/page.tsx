@@ -16,6 +16,10 @@ import {
     NITORI_DEVICE_ID,
     ARAKAWA_DEVICE_ID,
     VREC_DEVICE_ID,
+    KOA_DEVICE_ID,
+    YOSHINO_DEVICE_ID,
+    SPMCV_DEVICE_ID,
+    IGUACU_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -288,6 +292,54 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case KOA_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1201 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                    case YOSHINO_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1401 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                    case SPMCV_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1701 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                    case IGUACU_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1501 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -367,6 +419,54 @@ const CustomerReport = () => {
                         return (
                             <>
                                 FC 1802 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case KOA_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1202 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case YOSHINO_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1402 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case SPMCV_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1702 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case IGUACU_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1502 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>
