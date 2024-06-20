@@ -13,6 +13,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
 import { MultiSelect } from "primereact/multiselect";
+import { co } from "@fullcalendar/core/internal-common";
 
 interface Props {
     showDevice: boolean;
@@ -268,15 +269,19 @@ const FilterDataTableReport: React.FC<Props> = ({
         let newTags = values.map((key: string) => ({
             key,
             name: key,
-            unit: unitAttribute[key] ? unitAttribute[key] : "",
+            unit: {
+                label: unitAttribute[key] ? unitAttribute[key] : "",
+                value: unitAttribute[key] ? unitAttribute[key] : "",
+            },
         }));
+        console.log(newTags);
         setEditFilter((prevFilter: any) => ({
             ...prevFilter,
             tags: [...newTags],
         }));
+        onAction(editFilter);
     };
 
-    console.log(editFilter);
     useEffect(() => {
         if (editFilter.device && editFilter.device.id) {
             let pm1 = getTimeseriesKeys("DEVICE", editFilter.device.id.id);
@@ -290,7 +295,6 @@ const FilterDataTableReport: React.FC<Props> = ({
                     let units = resp[1].data;
                     if (units && units.length > 0) {
                         let unitObj = units[0]["value"];
-                        console.log(unitObj);
 
                         setUnitAttribute(unitObj);
                     }
