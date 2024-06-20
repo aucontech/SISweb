@@ -201,62 +201,55 @@ const FilterDataTableReport: React.FC<Props> = ({
         if (tags && tags.length > 0) {
             return tags.map((dt: any, index: number) => {
                 return (
-                    <>
-                        <div key={index} className="formgrid grid">
-                            <div className="field col">
-                                <label>Key</label>
-                                <AutoComplete
-                                    dropdown
-                                    value={dt?.key}
-                                    suggestions={suggTags}
-                                    completeMethod={_onSuggTags}
-                                    onChange={(e) => {
-                                        _handleChangeTag(index, "key", e.value);
-                                    }}
-                                />
-                            </div>
-                            <div className="field col">
-                                <label>Name</label>
-                                <InputText
-                                    value={dt.name}
-                                    onChange={(e: any) => {
-                                        _handleChangeTag(
-                                            index,
-                                            "name",
-                                            e.target.value
-                                        );
-                                    }}
-                                    // completeMethod={_onSuggValueTypes}
-                                />
-                            </div>
-                            <div className="field col">
-                                <label>Unit</label>
-                                <AutoComplete
-                                    dropdown
-                                    field="label"
-                                    suggestions={unitSuggestions}
-                                    value={dt.unit}
-                                    onChange={(e) => {
-                                        _handleChangeTag(
-                                            index,
-                                            "unit",
-                                            e.value
-                                        );
-                                    }}
-                                    completeMethod={(e) => _onSuggUnits(e)}
-                                />
-                            </div>
-                            <div className="field col">
-                                <label className="w-full">Action</label>
-                                <Button
-                                    className="w-6"
-                                    onClick={handleDeleteTagSetting(index)}
-                                >
-                                    Delete
-                                </Button>
-                            </div>
+                    <div key={dt.key || index} className="formgrid grid">
+                        <div className="field col">
+                            <label>Key</label>
+                            <AutoComplete
+                                dropdown
+                                value={dt?.key}
+                                suggestions={suggTags}
+                                completeMethod={_onSuggTags}
+                                onChange={(e) => {
+                                    _handleChangeTag(index, "key", e.value);
+                                }}
+                            />
                         </div>
-                    </>
+                        <div className="field col">
+                            <label>Name</label>
+                            <InputText
+                                value={dt.name}
+                                onChange={(e: any) => {
+                                    _handleChangeTag(
+                                        index,
+                                        "name",
+                                        e.target.value
+                                    );
+                                }}
+                            />
+                        </div>
+                        <div className="field col">
+                            <label>Unit</label>
+                            <AutoComplete
+                                dropdown
+                                field="label"
+                                suggestions={unitSuggestions}
+                                value={dt.unit}
+                                onChange={(e) => {
+                                    _handleChangeTag(index, "unit", e.value);
+                                }}
+                                completeMethod={(e) => _onSuggUnits(e)}
+                            />
+                        </div>
+                        <div className="field col">
+                            <label className="w-full">Action</label>
+                            <Button
+                                className="w-6"
+                                onClick={handleDeleteTagSetting(index)}
+                            >
+                                Delete
+                            </Button>
+                        </div>
+                    </div>
                 );
             });
         }

@@ -20,6 +20,8 @@ import {
     YOSHINO_DEVICE_ID,
     SPMCV_DEVICE_ID,
     IGUACU_DEVICE_ID,
+    ZOCV_DEVICE_ID,
+    LGDS_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -340,6 +342,30 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case ZOCV_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1101 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+                    case LGDS_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1001 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
                     default:
                         return (
                             <>
@@ -467,6 +493,30 @@ const CustomerReport = () => {
                         return (
                             <>
                                 EVC 1502 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case ZOCV_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 1102 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case LGDS_DEVICE_ID:
+                        return (
+                            <>
+                                FC 1002 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>
