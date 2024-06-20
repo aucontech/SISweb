@@ -8,7 +8,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 //import Zoom from "chartjs-plugin-zoom";
-import { UIUtils, Utils } from "@/service/Utils";
+import { Utils } from "@/service/Utils";
 import { Chart } from "primereact/chart";
 import dynamic from "next/dynamic";
 interface Props {
@@ -73,12 +73,12 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     display: false,
                 },
             },
-            y: {
-                beginAtZero: true,
-                grid: {
-                    display: false,
-                },
-            },
+            // y: {
+            //     beginAtZero: true,
+            //     grid: {
+            //         display: false,
+            //     },
+            // },
         },
     });
     const [data, setChartData] = useState<any>({});

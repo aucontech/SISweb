@@ -265,7 +265,6 @@ const FilterDataTableReport: React.FC<Props> = ({
         }));
     };
     const _handleAddMultiTagSetting = (values: any) => {
-        console.log(unitSuggestions);
         let newTags = values.map((key: string) => ({
             key,
             name: key,
@@ -274,12 +273,11 @@ const FilterDataTableReport: React.FC<Props> = ({
                 value: unitAttribute[key] ? unitAttribute[key] : "",
             },
         }));
-        console.log(newTags);
+
         setEditFilter((prevFilter: any) => ({
             ...prevFilter,
             tags: [...newTags],
         }));
-        onAction(editFilter);
     };
 
     useEffect(() => {
