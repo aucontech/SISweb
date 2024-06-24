@@ -11,9 +11,7 @@ import {
 import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-
 import { MultiSelect } from "primereact/multiselect";
-import { co } from "@fullcalendar/core/internal-common";
 
 interface Props {
     showDevice: boolean;
@@ -74,7 +72,6 @@ const FilterDataTableReport: React.FC<Props> = ({
         localStorage.setItem("filterDataTableReport", JSON.stringify(newFil));
     };
     const _onOkSettingTagForm = () => {
-        console.log(editFilter.tags);
         let tags = [...editFilter.tags].filter((tag: any) => tag.key !== "");
         _processFilterChange("tags", tags);
         setIsFormVisible(false);
@@ -147,7 +144,7 @@ const FilterDataTableReport: React.FC<Props> = ({
     };
     const _handleChangeTag = (index: number, field: string, value: any) => {
         if (field === "key") {
-            const isKeyDuplicate = editFilter.tags.some(
+            const isKeyDuplicate = [...editFilter.tags].some(
                 (tag: any) => tag.key === value
             );
 
@@ -202,7 +199,7 @@ const FilterDataTableReport: React.FC<Props> = ({
         if (tags && tags.length > 0) {
             return tags.map((dt: any, index: number) => {
                 return (
-                    <div key={dt.key || index} className="formgrid grid">
+                    <div key={index} className="formgrid grid">
                         <div className="field col">
                             <label>Key</label>
                             <AutoComplete
@@ -304,7 +301,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                 });
         }
     }, [editFilter.device]);
-    console.log(unitSuggestions);
+
     return (
         <>
             <div className="grid p-fluid">
