@@ -22,12 +22,16 @@ export const getSeverAttributesByAsset = (asseetId: string): Promise<any> => {
     );
 };
 
-// export const getSeverAttributesByDevice = (deviceId: string): Promise<any> => {
-//     console.log(deviceId);
-//     return httpApi.get<any>(
-//         `/plugins/telemetry/ASSET/${deviceId}/values/attributes/SERVER_SCOPE`
-//     );
-// };
+export const saveOrUpdateTimeseriesData = (
+    deviceId: string,
+    params: any
+): Promise<any> => {
+    const requestBody = JSON.stringify(params);
+    return httpApi.post<any>(
+        `/plugins/telemetry/DEVICE/${deviceId}/timeseries/scope=ANY`,
+        requestBody
+    );
+};
 export const getSeverAttributesByDeviceandKeys = (
     deviceId: string,
     keys: string

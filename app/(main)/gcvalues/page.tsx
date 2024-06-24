@@ -5,8 +5,10 @@ import FilterGcValue from "./components/FilterGcValue";
 import {
     getSeverAttributesByAsset,
     getSeverAttributesByDevice,
+    getTimesSeriesData,
     saveOrUpdateSeverAttributesByAsseet,
     saveOrUpdateSeverAttributesByDevice,
+    saveOrUpdateTimeseriesData,
 } from "@/api/telemetry.api";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
@@ -29,53 +31,62 @@ const Page: React.FC<Props> = () => {
     };
 
     const _fetchSeverAttributesByDevice = useCallback((filters: any) => {
-        getSeverAttributesByDevice(filters?.device?.id?.id)
-            .then((resp) => resp.data)
-            .then((resp) => {
-                let gcDatas = resp.filter((dt: any) => dt.key === "gc");
-                if (gcDatas && gcDatas.length > 0) {
-                    let gcData = gcDatas[0];
-                    setGcData(gcData);
-                    let seletedGcDatas = gcData.value.filter(
-                        (dt: any) => dt.date === filters.date.getTime()
-                    );
-                    if (seletedGcDatas && seletedGcDatas.length > 0) {
-                        setSeletetedData(seletedGcDatas[0]);
-                        setIsNewData(false);
-                    } else {
-                        setSeletetedData({
-                            date: filters.date.getTime(),
-                            ...defaultValue,
-                        });
-                        setIsNewData(true);
-                    }
-                } else {
-                    setIsNewData(true);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        console.log(filters);
+        let { device, date } = filters;
+        if (device && device.id && date) {
+            let params = {
+                keys: "heat_value",
+                startTs: date.getTime(),
+                endTs: date.getTime() + 86400000,
+            };
+            getTimesSeriesData("DEVICE", device.id.id, params)
+                .then((resp) => resp.data)
+                .then((resp) => {
+                    console.log(resp);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+        // getTimesSeriesData("DEVICE", <F></F>ilters?.device?.id?.id)
+        //     .then((resp) => resp.data)
+        //     .then((resp) => {
+        //         let gcDatas = resp.filter((dt: any) => dt.key === "gc");
+        //         if (gcDatas && gcDatas.length > 0) {
+        //             let gcData = gcDatas[0];
+        //             setGcData(gcData);
+        //             let seletedGcDatas = gcData.value.filter(
+        //                 (dt: any) => dt.date === filters.date.getTime()
+        //             );
+        //             if (seletedGcDatas && seletedGcDatas.length > 0) {
+        //                 setSeletetedData(seletedGcDatas[0]);
+        //                 setIsNewData(false);
+        //             } else {
+        //                 setSeletetedData({
+        //                     date: filters.date.getTime(),
+        //                     ...defaultValue,
+        //                 });
+        //                 setIsNewData(true);
+        //             }
+        //         } else {
+        //             setIsNewData(true);
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
     }, []);
 
-    const handleSave = () => {
-        let key = gcData.key || "gc";
-        let values = gcData.value || [];
-        if (isNewData) {
-            values.push(seletetedData);
-        } else {
-            values = values.map((dt: any) => {
-                if (dt.date === seletetedData.date) {
-                    return seletetedData;
-                }
-                return dt;
-            });
-        }
-        values.sort((a: any, b: any) => a.date - b.date);
-        let attribute = {
-            [key]: values,
+    const _handleSave = () => {
+        let { device, date } = filters;
+        let params = {
+            ts: date.getTime(),
+            values: {
+                heat_value: seletetedData.heatValue,
+            },
         };
-        saveOrUpdateSeverAttributesByDevice(filters.device.id.id, attribute)
+        console.log(params);
+        saveOrUpdateTimeseriesData(device.id.id, params)
             .then((resp) => {
                 if (resp.status === 200) {
                     UIUtils.showInfo({
@@ -86,6 +97,7 @@ const Page: React.FC<Props> = () => {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 UIUtils.showError({
                     error: err?.response?.message,
                     toast: toast.current,
@@ -116,7 +128,6 @@ const Page: React.FC<Props> = () => {
 
             <div className="card">
                 <div className="col">
-                    {" "}
                     Heat Value :{" "}
                     <InputNumber
                         value={seletetedData.heatValue || 0} // default to 0 if undefined
@@ -129,9 +140,13 @@ const Page: React.FC<Props> = () => {
 
                 <div className="col">
                     <Button
-                        onClick={handleSave}
+                        onClick={_handleSave}
                         label="Save"
-                        disabled={!filters.date || !filters.device}
+                        disabled={
+                            !filters.date ||
+                            !filters.device ||
+                            !filters.device.id
+                        }
                     />
                 </div>
             </div>
