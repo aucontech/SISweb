@@ -115,7 +115,17 @@ export const edgePRU = [
         
     },
 
+    {
+        id: "line9-line10",
+        source: "line9",
+        target: "line10",
+        type: "smoothstep",
 
+        style: {
+            ...styleLine3,
+        },
+        
+    },
     {
         id: "PSV_LINE3_TOP_NONE1-PSV_LINE3_TOP_NONE2",
         source: "PSV_LINE3_TOP_NONE1",
@@ -231,38 +241,45 @@ export const edgePRU = [
         
     },
     {
-        id: "PCV_line2_Bottom_none-PCV_line2_Bottom_none2",
-        source: "PCV_line2_Bottom_none",
-        target: "PCV_line2_Bottom_none2",
+        id: "PCV_6001A_none2-PCV_6001A_none",
+        source: "PCV_6001A_none2",
+        target: "PCV_6001A_none",
         type: "smoothstep",
     },
 
     {
-        id: "PIT_6003B_DATA-PIT_6003B_NONE",
-        source: "PIT_6003B_DATA",
-        target: "PIT_6003B_NONE",
+        id: "PCV_6001B_none-PCV_6001B_none2",
+        source: "PCV_6001B_none",
+        target: "PCV_6001B_none2",
         type: "smoothstep",
     },
 
     {
-        id: "PIT_6003A_DATA-PIT_6003A_NONE",
-        source: "PIT_6003A_DATA",
-        target: "PIT_6003A_NONE",
+        id: "EVC_01_Pressure_DATA-EVC_01_Pressure_NONE",
+        source: "EVC_01_Pressure_DATA",
+        target: "EVC_01_Pressure_NONE",
+        type: "smoothstep",
+    },
+
+    {
+        id: "EVC_02_Pressure_DATA-EVC_02_Pressure_NONE",
+        source: "EVC_02_Pressure_NONE" ,
+        target: "EVC_02_Pressure_DATA",
         type: "smoothstep",
     },
 
 
     {
-        id: "TT_LINE3_TOP_DATA-TT_LINE3_TOP_NONE",
-        source: "TT_LINE3_TOP_DATA",
-        target: "TT_LINE3_TOP_NONE",
+        id: "EVC_01_Temperature_NONE-EVC_01_Temperature_DATA",
+        source: "EVC_01_Temperature_DATA" ,
+        target: "EVC_01_Temperature_NONE",
         type: "smoothstep",
     },
 
     {
-        id: "TT_LINE3_BOTTOM_DATA-TT_LINE3_BOTTOM_NONE",
-        source: "TT_LINE3_BOTTOM_DATA",
-        target: "TT_LINE3_BOTTOM_NONE",
+        id: "EVC_02_Temperature_NONE-EVC_02_Temperature_DATA",
+        source: "EVC_02_Temperature_DATA",
+        target: "EVC_02_Temperature_NONE",
         type: "smoothstep",
     },
     {
@@ -289,6 +306,35 @@ export const edgePRU = [
         id: "PCV_line2_Bottom_none-PCV_line3_Top_DATA",
         source: "PCV_line2_Bottom_none",
         target: "PCV_line3_Top_DATA",
+        type: "smoothstep",
+    },
+
+    {
+        id: "TIT_6001A_NONE-TIT_6001A_DATA",
+        source: "TIT_6001A_NONE",
+        target: "TIT_6001A_DATA",
+        type: "smoothstep",
+    },
+
+    {
+        id: "PIT_6003A_NONE-PIT_6003A_DATA",
+        source: "PIT_6003A_NONE",
+        target: "PIT_6003A_DATA",
+        type: "smoothstep",
+    },
+
+    {
+        id: "FIQ_6001A-EVC_01_Flow_at_Base_Condition",
+        source: "FIQ_6001A",
+        target: "EVC_01_Flow_at_Base_Condition",
+        type: "smoothstep",
+    },
+
+
+    {
+        id: "FIQ_6001B-EVC_02_Flow_at_Base_Condition",
+        source: "FIQ_6001B",
+        target: "EVC_02_Flow_at_Base_Condition",
         type: "smoothstep",
     },
 ]

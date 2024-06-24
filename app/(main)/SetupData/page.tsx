@@ -21,12 +21,10 @@ import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
   const [NG, setNG] = useState<string>('OTSUKA');
-
   const [SNG, setSNG] = useState<string>('SNG');
 
   const [CNG, setCNG] = useState<string>('CNG');
   const [LPG, setLPG] = useState<string>('LPG');
-
   const NG_Click = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
       setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
@@ -50,7 +48,7 @@ export default function GraphicSogec() {
     if (newLabel) {
       setCNG(newLabel);
     }
-    setNG('PHU MY 3');
+    setNG('NG');
     setSNG('SNG');
     setLPG('LPG')
 
@@ -66,7 +64,7 @@ export default function GraphicSogec() {
     if (newLabel) {
       setSNG(newLabel);
     }
-    setNG('PHU MY 3');
+    setNG('NG');
     setCNG('CNG');
     setLPG('LPG')
 
@@ -82,10 +80,11 @@ export default function GraphicSogec() {
     if (newLabel) {
       setLPG(newLabel);
     }
-    setNG('PHU MY 3');
+    setNG('NG');
     setCNG('CNG');
     setSNG('SNG')
   };
+
   const items = [
     {
       label: NG,
@@ -123,9 +122,8 @@ export default function GraphicSogec() {
           {
             label: '',
             items: [
-         
+              { label:  'SNG BINH DUONG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
               { label: 'SNG HUNG YEN', command: () => SNG_Click(<SetUpdata_HUNGYEN_SNG/>, 'SNG HUNG YEN') },
-              { label: 'SNG CNG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , 'SNG CNG ') },
 
             
             ]
@@ -144,8 +142,8 @@ export default function GraphicSogec() {
             label: '',
             items: [
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
-              { label: 'CNG CNG', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG CNG ') },
-              { label: 'CNG PRU', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PRU') },
+              { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
+              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
 
             
             ]

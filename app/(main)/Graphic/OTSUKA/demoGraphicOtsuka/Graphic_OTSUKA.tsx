@@ -1676,8 +1676,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1737,8 +1737,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1798,8 +1798,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1860,8 +1860,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1923,8 +1923,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1985,8 +1985,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2047,8 +2047,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2109,8 +2109,8 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2173,8 +2173,8 @@ export default function Graphic_OTSUKA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2234,8 +2234,8 @@ export default function Graphic_OTSUKA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2295,8 +2295,8 @@ export default function Graphic_OTSUKA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 18,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2353,7 +2353,7 @@ export default function Graphic_OTSUKA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 18,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -2455,7 +2455,7 @@ export default function Graphic_OTSUKA() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2465,7 +2465,7 @@ export default function Graphic_OTSUKA() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2475,7 +2475,7 @@ export default function Graphic_OTSUKA() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             marginLeft: 15,
                                         }}
                                     >
@@ -2501,7 +2501,7 @@ export default function Graphic_OTSUKA() {
                             <div
                                 style={{
                                     fontSize: 13,
-                                    fontWeight: 400,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
@@ -2536,7 +2536,7 @@ export default function Graphic_OTSUKA() {
                             <div
                                 style={{
                                     fontSize: 13,
-                                    fontWeight: 400,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
@@ -2573,7 +2573,7 @@ export default function Graphic_OTSUKA() {
                             <div
                                 style={{
                                     fontSize: 13,
-                                    fontWeight: 400,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
@@ -4005,7 +4005,7 @@ export default function Graphic_OTSUKA() {
                 height: 50,
 
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
         {
@@ -4285,8 +4285,8 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 18,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
@@ -4310,8 +4310,8 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 18,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
@@ -4335,7 +4335,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     >
@@ -4388,7 +4388,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     >
@@ -4414,7 +4414,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     >
@@ -4440,7 +4440,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     >
@@ -4466,7 +4466,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     >
@@ -4632,7 +4632,7 @@ export default function Graphic_OTSUKA() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4659,7 +4659,7 @@ export default function Graphic_OTSUKA() {
                 border: background,
                 width: 190,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                 // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -4670,7 +4670,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: 600,
                         }}
                     ></div>
@@ -4682,7 +4682,7 @@ export default function Graphic_OTSUKA() {
                 border: background,
                 width: 190,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                 // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4707,7 +4707,7 @@ export default function Graphic_OTSUKA() {
                 border: background,
                 width: 190,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                 // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -5153,7 +5153,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             fontSize: 13,
-                            fontWeight: 400,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
@@ -5179,7 +5179,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             fontSize: 13,
-                            fontWeight: 400,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
@@ -5205,7 +5205,7 @@ export default function Graphic_OTSUKA() {
                     <div
                         style={{
                             fontSize: 13,
-                            fontWeight: 400,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}

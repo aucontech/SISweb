@@ -9,6 +9,8 @@ import GraphicARAKAWA from '../ARAKAWA/GraphicArakawa/graphicARAKAWA';
 import GraphicSPMCV from '../SPMCV/GraphicSPMCV/graphicSPMCV';
 import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
 import Graphic_MEIKO from './MEIKO/GraphicMeiko/Graphic_MEIKO';
+import GraphicOTSUKA from '@/app/listGraphic/OTSUKA/Graphic-OTSUKA';
+import Graphic_OTSUKA from './OTSUKA/demoGraphicOtsuka/Graphic_OTSUKA';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<DemoFlowOTS />);
@@ -137,7 +139,7 @@ export default function GraphicSogec() {
          
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(null , 'CNG BINH DUONG ') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK(null , 'CNG HUNG YEN ') },
-              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(null , 'CNG PHU MY 3 ') },
+              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<GraphicPRU/> , 'CNG PHU MY 3 ') },
 
 
             

@@ -159,7 +159,7 @@ export default function PCV_01_Otsuka() {
                     display: "flex",
                     cursor: "pointer",
                     justifyContent: "space-between",
-                    fontWeight: 400,
+                    fontWeight: 500,
                 }}
             >
                 <p style={{ color: colorNameValue }}>PCV-1901</p>

@@ -46,7 +46,7 @@ const Login: Page = () => {
                 getCurrentUser()
                     .then((resp) => {
                         persistUser(resp.data);
-                        router.push("/");
+                        router.push("/Graphic");
                     })
                     .catch((err) => {
                         console.log(err);
