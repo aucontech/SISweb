@@ -13,7 +13,8 @@ import {
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import { UIUtils } from "@/service/Utils";
+import { UIUtils, Utils } from "@/service/Utils";
+import { co } from "@fullcalendar/core/internal-common";
 
 interface Props {}
 const defaultValue = {
@@ -43,6 +44,16 @@ const Page: React.FC<Props> = () => {
                 .then((resp) => resp.data)
                 .then((resp) => {
                     console.log(resp);
+                    let data = resp["heat_value"] || [];
+                    if (data.length > 0) {
+                        setSeletetedData({
+                            heatValue: data[data.length - 1].value,
+                        });
+                    } else {
+                        setSeletetedData({
+                            heatValue: 0,
+                        });
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -82,7 +93,7 @@ const Page: React.FC<Props> = () => {
         let params = {
             ts: date.getTime(),
             values: {
-                heat_value: seletetedData.heatValue,
+                heat_value: Number(seletetedData.heatValue).toFixed(2),
             },
         };
         console.log(params);

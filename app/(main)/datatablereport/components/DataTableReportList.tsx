@@ -10,6 +10,8 @@ import "primeflex/primeflex.css";
 import { Utils } from "@/service/Utils";
 import ExportToExcel from "./ExportToExcel";
 import { readUser } from "@/service/localStorage";
+import { ProgressSpinner } from "primereact/progressspinner";
+
 interface Props {
     filters: any;
 }
@@ -17,6 +19,8 @@ interface Props {
 const DataTableReportList: React.FC<Props> = ({ filters }) => {
     const [tableData, setTableData] = useState<any>([]);
     const [columns, setColumns] = useState<any>([]);
+    const [loading, setLoading] = useState(false);
+
     const [columnExcelHeaders, setColumnExcelHeaders] = useState<any>([
         {
             key: "ts",
@@ -32,8 +36,10 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         //console.log("user", user);
     }, []);
     const _fetchDataTimeseries = useCallback(({ filters }) => {
+        setLoading(true);
         let { device, tags, dates } = filters;
         if (!tags || tags.length === 0) {
+            setLoading(false);
             return [];
         }
         let tagNames = tags.map((tag: any) => tag.key);
@@ -99,19 +105,24 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
 
                     const columnNames = tags.map((tag: any) => {
                         let unitStr = tag?.unit?.value
-                            ? `(${tag.unit.value})`
+                            ? ` (${tag.unit.value})`
                             : "";
                         return {
                             field: tag.key,
-                            header: (tag.name ? tag.name : tag.key) + unitStr,
+                            header:
+                                (tag.name ? tag.name : tag.key) + " " + unitStr,
                         };
                     });
 
                     setColumns(columnNames);
+                    setLoading(false);
                 })
                 .catch((err) => {
                     console.error(err);
+                    setLoading(false);
                 });
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -129,40 +140,48 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             setColumnExcelHeaders([...excelHeader]);
         }
     }, [filters]);
-    console.log("filters", filters);
+
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
 
     return (
         <div>
-            <DataTable
-                paginator
-                rows={10}
-                first={0}
-                // onPage={onCustomPageChange} // Add this line
-                value={tableData}
-            >
-                <Column
-                    field="ts"
-                    header="Time"
-                    //headerStyle={{ textAlign: "center" }}
-                />
-                {columns.map((col: any) => (
-                    <Column
-                        key={col.field}
-                        field={col.field}
-                        header={col.header}
-                    />
-                ))}
-            </DataTable>
+            {loading ? (
+                <div className="spinner-container">
+                    <ProgressSpinner />
+                </div>
+            ) : (
+                <>
+                    <DataTable
+                        paginator
+                        rows={10}
+                        first={0}
+                        rowsPerPageOptions={[100, 200, 500, 1000]}
+                        value={tableData}
+                    >
+                        <Column
+                            field="ts"
+                            header="Time"
+                            //headerStyle={{ textAlign: "center" }}
+                        />
+                        {columns.map((col: any) => (
+                            <Column
+                                key={col.field}
+                                field={col.field}
+                                header={col.header}
+                            />
+                        ))}
+                    </DataTable>
 
-            <ExportToExcel
-                filters={filters}
-                data={tableData}
-                columns={columnExcelHeaders}
-                user={currentUser}
-            />
+                    <ExportToExcel
+                        filters={filters}
+                        data={tableData}
+                        columns={columnExcelHeaders}
+                        user={currentUser}
+                    />
+                </>
+            )}
         </div>
     );
 };

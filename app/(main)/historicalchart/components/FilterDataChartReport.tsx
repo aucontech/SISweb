@@ -111,6 +111,8 @@ const FilterDataChartReport: React.FC<Props> = ({
             { label: "60 minutes", value: 3600000 },
             { label: "2 hours", value: 7200000 },
             { label: "5 hours", value: 18000000 },
+            { label: "12 hours", value: 43200000 },
+            { label: "24 hours", value: 86400000 },
         ]);
     };
 
