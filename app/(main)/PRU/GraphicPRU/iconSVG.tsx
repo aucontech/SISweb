@@ -762,8 +762,8 @@ const connect = (
 
 const ArrowRight = (
     <svg
-        height="35px"
-        width="35px"
+        height="50"
+        width="50"
         version="1.1"
         id="_x32_"
         xmlns="http://www.w3.org/2000/svg"
@@ -2019,6 +2019,582 @@ IC0gUHJlc3N1cmUgR2F1Z2UghM4+igAAAABJRU5ErkJggg==" />
 </svg>
 
 )
+
+const SDV_OFF = (
+    <svg
+        version="1.1"
+        width="100"
+        height="100"
+        viewBox="0 0 83.89 112.5"
+        enable-background="new 0 0 83.89 112.5"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <defs>
+            <linearGradient id="gradient-7">
+                <stop offset="0" stop-color=" rgb(252, 0, 0)" />
+                <stop offset="0.456" stop-color=" rgb(255, 136, 136)" />
+                <stop offset="1" stop-color=" rgb(252, 0, 0)" />
+            </linearGradient>
+            <linearGradient
+                id="gradient-7-0"
+                gradientUnits="userSpaceOnUse"
+                x1="73.647"
+                y1="9.299"
+                x2="73.647"
+                y2="29.822"
+                href="#gradient-7"
+            />
+            <linearGradient
+                id="gradient-7-1"
+                gradientUnits="userSpaceOnUse"
+                x1="64.033"
+                y1="7.096"
+                x2="64.033"
+                y2="32.096"
+                href="#gradient-7"
+            />
+            <linearGradient
+                id="gradient-7-2"
+                gradientUnits="userSpaceOnUse"
+                x1="20.133"
+                y1="7.287"
+                x2="20.133"
+                y2="32.287"
+                href="#gradient-7"
+            />
+            <linearGradient
+                id="gradient-7-3"
+                gradientUnits="userSpaceOnUse"
+                x1="10.264"
+                y1="9.299"
+                x2="10.264"
+                y2="29.822"
+                href="#gradient-7"
+            />
+            <linearGradient
+                id="gradient-7-4"
+                gradientUnits="userSpaceOnUse"
+                x1="41.89"
+                y1="3.492"
+                x2="41.89"
+                y2="46.284"
+                href="#gradient-7"
+            />
+        </defs>
+        <g id="Group_BodyAndPort">
+            <radialGradient
+                id="SVGID_1_"
+                cx="41.8906"
+                cy="88.4004"
+                r="28.3787"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop offset="0" stop-color="#ECECEC" />
+                <stop offset="0.14" stop-color="#DDDDDD" />
+                <stop offset="0.4" stop-color="#B8B8B8" />
+                <stop offset="0.75" stop-color="#7C7C7C" />
+                <stop offset="1" stop-color="#4D4D4D" />
+            </radialGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 29.391 64.302 C 29.391 64.302 29.947 70.063 28.49 72.748 C 27.678 74.244 25.447 76.312 22.86 76.576 C 19.601 76.908 9.797 77.59 9.797 77.59 L 9.779 104.794 C 11.257 106.215 16.295 105.413 18.82 106.986 C 22.071 109.011 21.684 109.305 26.966 110.845 C 36.662 113.672 54.732 112.622 61.263 108.823 C 63.598 107.465 65.396 106.962 67.09 106.585 C 69.205 106.114 72.686 105.846 74.012 104.809 L 73.985 77.59 C 73.985 77.59 65.197 77.034 62.386 76.801 C 58.76 76.5 56.75 74.531 56.193 73.873 C 53.76 71 54.391 64.302 54.391 64.302 L 29.391 64.302 Z"
+            />
+        </g>
+        <g id="Group_Port2">
+            <linearGradient
+                id="#e5e5e5"
+                gradientUnits="userSpaceOnUse"
+                x1="78.0391"
+                y1="108.8945"
+                x2="78.0391"
+                y2="66.1035"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 82.093 112.895 L 73.985 112.895 L 73.985 70.104 L 82.093 70.104 L 82.093 112.895 Z"
+            />
+            <linearGradient
+                id="SVGID_3_"
+                gradientUnits="userSpaceOnUse"
+                x1="82.9941"
+                y1="100.7871"
+                x2="82.9941"
+                y2="73.9863"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.01" stop-color="#3B3B3B" />
+                <stop offset="0.25" stop-color="#757575" />
+                <stop offset="0.42" stop-color="#989898" />
+                <stop offset="0.51" stop-color="#A6A6A6" />
+                <stop offset="0.69" stop-color="#818181" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 82.093 77.986 L 83.895 77.986 L 83.895 104.787 L 82.093 104.787 L 82.093 77.986 Z"
+            />
+        </g>
+        <g id="Group_Port1">
+            <linearGradient
+                id="SVGID_4_"
+                gradientUnits="userSpaceOnUse"
+                x1="5.7427"
+                y1="108.8945"
+                x2="5.7427"
+                y2="66.1035"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 9.797 112.895 L 1.689 112.895 L 1.689 70.104 L 9.797 70.104 L 9.797 112.895 Z"
+            />
+            <linearGradient
+                id="SVGID_5_"
+                gradientUnits="userSpaceOnUse"
+                x1="0.8442"
+                y1="100.7871"
+                x2="0.8442"
+                y2="73.9863"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.01" stop-color="#3B3B3B" />
+                <stop offset="0.25" stop-color="#757575" />
+                <stop offset="0.42" stop-color="#989898" />
+                <stop offset="0.51" stop-color="#A6A6A6" />
+                <stop offset="0.69" stop-color="#818181" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 0 77.986 L 1.689 77.986 L 1.689 104.787 L 0 104.787 L 0 77.986 Z"
+            />
+        </g>
+        <g id="Group_Port3" transform="matrix(1, 0, 0, 1, 0, 22)">
+            <path
+                d="M 65.201 9.299 L 82.093 10.474 L 82.093 28.492 L 65.201 29.822 L 65.201 9.299 Z"
+                fill="url('#gradient-7-0')"
+            />
+            <path
+                d="M62.865,7.096h2.336v25h-2.336V7.096z"
+                fill="url('#gradient-7-1')"
+            />
+            <path
+                d="M 18.965 7.287 L 21.301 7.287 L 21.301 32.287 L 18.965 32.287 L 18.965 7.287 Z"
+                fill="url('#gradient-7-2')"
+            />
+            <path
+                d="M 1.563 10.183 L 18.965 9.299 L 18.965 29.822 L 1.563 28.201 L 1.563 10.183 Z"
+                fill="url('#gradient-7-3')"
+            />
+        </g>
+        <g id="Group_Midlayer">
+            <path
+                fill="#4D4D4D"
+                d="M 26.155 21.641 L 58.362 21.641 L 58.362 25.344 L 26.155 25.344 L 26.155 21.641 Z"
+            />
+            <linearGradient
+                id="SVGID_10_"
+                gradientUnits="userSpaceOnUse"
+                x1="21.2832"
+                y1="56.6445"
+                x2="27.5894"
+                y2="56.6445"
+                gradientTransform="matrix(1, 0, 0, 0.514668, 0, 32.082401)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="url(#SVGID_10_)"
+                d="M 21.283 66.104 L 27.589 66.104 L 27.589 56.367 L 21.283 56.367 L 21.283 66.104 Z"
+            />
+            <linearGradient
+                id="SVGID_11_"
+                gradientUnits="userSpaceOnUse"
+                x1="32.9946"
+                y1="56.6445"
+                x2="39.3008"
+                y2="56.6445"
+                gradientTransform="matrix(1, 0, 0, 0.514668, 0, 32.082401)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="url(#SVGID_11_)"
+                d="M 32.995 66.104 L 39.301 66.104 L 39.301 56.367 L 32.995 56.367 L 32.995 66.104 Z"
+            />
+            <linearGradient
+                id="SVGID_12_"
+                gradientUnits="userSpaceOnUse"
+                x1="44.4805"
+                y1="56.6445"
+                x2="50.7871"
+                y2="56.6445"
+                gradientTransform="matrix(1, 0, 0, 0.514668, 0, 32.082401)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="url(#SVGID_12_)"
+                d="M 44.48 66.104 L 50.787 66.104 L 50.787 56.367 L 44.48 56.367 L 44.48 66.104 Z"
+            />
+            <linearGradient
+                id="SVGID_13_"
+                gradientUnits="userSpaceOnUse"
+                x1="56.1924"
+                y1="56.6445"
+                x2="62.498"
+                y2="56.6445"
+                gradientTransform="matrix(1, 0, 0, 0.514668, 0, 32.082401)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="url(#SVGID_13_)"
+                d="M 56.192 66.104 L 62.498 66.104 L 62.498 56.367 L 56.192 56.367 L 56.192 66.104 Z"
+            />
+            <linearGradient
+                id="SVGID_14_"
+                gradientUnits="userSpaceOnUse"
+                x1="18.5806"
+                y1="56.6445"
+                x2="65.2012"
+                y2="56.6445"
+                gradientTransform="matrix(1, 0, 0, 0.518152, 0, 30.983795)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <rect
+                x="18.581"
+                y="56.367"
+                fill="url(#SVGID_14_)"
+                width="46.621"
+                height="7.935"
+            />
+            <rect
+                x="18.581"
+                y="59.246"
+                fill="#4C4C4C"
+                width="46.621"
+                height="0.878"
+            />
+        </g>
+        <g
+            id="Group_MotorBox"
+            transform="matrix(1, 0, 0, 0.721589, 0, 22.97221)"
+        >
+            <path
+                d="M20.382,3.492h43.017v42.792H20.382V3.492z"
+                fill="url('#gradient-7-4')"
+            />
+        </g>
+        <g id="Group_Bolt" transform="matrix(1, 0, 0, 1, 0, 10)">
+            <radialGradient
+                id="SVGID_15_"
+                cx="23.7876"
+                cy="6.6855"
+                r="1.4077"
+                gradientUnits="userSpaceOnUse"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 12)"
+            >
+                <stop offset="0" stop-color="#E0E0E0" />
+                <stop offset="0.5" stop-color="#BFBFBF" />
+                <stop offset="1" stop-color="#404040" />
+            </radialGradient>
+            <path
+                fill="url(#SVGID_15_)"
+                d="M 23.799 20.093 L 22.785 19.688 L 22.38 18.697 L 22.785 17.684 L 23.799 17.278 L 24.79 17.684 L 25.196 18.697 L 24.79 19.688 L 23.799 20.093"
+            />
+            <radialGradient
+                id="SVGID_16_"
+                cx="59.7871"
+                cy="43.6855"
+                r="1.4082"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop offset="0" stop-color="#E0E0E0" />
+                <stop offset="0.5" stop-color="#BFBFBF" />
+                <stop offset="1" stop-color="#404040" />
+            </radialGradient>
+            <path
+                fill="url(#SVGID_16_)"
+                d="M59.799,45.094l-1.014-0.406l-0.405-0.991l0.405-1.013l1.014-0.406l0.99,0.406l0.406,1.013   l-0.406,0.991L59.799,45.094"
+            />
+        </g>
+        <g id="Group_Label2" transform="matrix(1, 0, 0, 1, -12.387001, 22)">
+            <path fill="#CCCCCC" d="M48.985,7.096h10.811v5.18H48.985V7.096z" />
+        </g>
+        <g id="Group_Label1">
+            <path
+                fill="#777777"
+                d="M36.598,57.095h10.585V62.5H36.598V57.095z"
+            />
+        </g>
+    </svg>
+);
+
+const SDV_ON = (
+    <svg
+        version="1.1"
+        width="100"
+        height="100"
+        viewBox="0 0 83.89 112.5"
+        enable-background="new 0 0 83.89 112.5"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <defs>
+            <linearGradient id="gradient-7">
+                <title>OFF-Close</title>
+                <stop offset="0" stop-color="rgb(252, 0, 0)" />
+                <stop offset="0.456" stop-color="rgb(255, 136, 136)" />
+                <stop offset="1" stop-color="rgb(252, 0, 0)" />
+            </linearGradient>
+            <linearGradient id="gradient-0">
+                <title>ON-Open</title>
+                <stop offset="0" stop-color="rgb(8, 252, 0);" />
+                <stop offset="0.456" stop-color="rgb(178, 255, 136);" />
+                <stop offset="1" stop-color="rgb(16, 252, 0);" />
+            </linearGradient>
+            <linearGradient
+                id="gradient-0-0"
+                gradientUnits="userSpaceOnUse"
+                x1="73.647"
+                y1="9.299"
+                x2="73.647"
+                y2="29.822"
+                href="#gradient-0"
+            />
+            <linearGradient
+                id="gradient-0-1"
+                gradientUnits="userSpaceOnUse"
+                x1="64.033"
+                y1="7.096"
+                x2="64.033"
+                y2="32.096"
+                href="#gradient-0"
+            />
+            <linearGradient
+                id="gradient-0-2"
+                gradientUnits="userSpaceOnUse"
+                x1="20.133"
+                y1="7.287"
+                x2="20.133"
+                y2="32.287"
+                href="#gradient-0"
+            />
+            <linearGradient
+                id="gradient-0-3"
+                gradientUnits="userSpaceOnUse"
+                x1="10.264"
+                y1="9.299"
+                x2="10.264"
+                y2="29.822"
+                href="#gradient-0"
+            />
+            <linearGradient
+                id="gradient-0-4"
+                gradientUnits="userSpaceOnUse"
+                x1="41.89"
+                y1="3.492"
+                x2="41.89"
+                y2="46.284"
+                href="#gradient-0"
+            />
+        </defs>
+        <g id="Group_BodyAndPort">
+            <radialGradient
+                id="SVGID_1_"
+                cx="41.8906"
+                cy="88.4004"
+                r="28.3787"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop offset="0" stop-color="#ECECEC" />
+                <stop offset="0.14" stop-color="#DDDDDD" />
+                <stop offset="0.4" stop-color="#B8B8B8" />
+                <stop offset="0.75" stop-color="#7C7C7C" />
+                <stop offset="1" stop-color="#4D4D4D" />
+            </radialGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 29.391 64.302 C 29.391 64.302 29.947 70.063 28.49 72.748 C 27.678 74.244 25.447 76.312 22.86 76.576 C 19.601 76.908 9.797 77.59 9.797 77.59 L 9.779 104.794 C 11.257 106.215 16.295 105.413 18.82 106.986 C 22.071 109.011 21.684 109.305 26.966 110.845 C 36.662 113.672 54.732 112.622 61.263 108.823 C 63.598 107.465 65.396 106.962 67.09 106.585 C 69.205 106.114 72.686 105.846 74.012 104.809 L 73.985 77.59 C 73.985 77.59 65.197 77.034 62.386 76.801 C 58.76 76.5 56.75 74.531 56.193 73.873 C 53.76 71 54.391 64.302 54.391 64.302 L 29.391 64.302 Z"
+            />
+        </g>
+        <g id="Group_Port2">
+            <linearGradient
+                id="gray"
+                gradientUnits="userSpaceOnUse"
+                x1="78.0391"
+                y1="108.8945"
+                x2="78.0391"
+                y2="66.1035"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 82.093 112.895 L 73.985 112.895 L 73.985 70.104 L 82.093 70.104 L 82.093 112.895 Z"
+            />
+            <linearGradient
+                id="SVGID_3_"
+                gradientUnits="userSpaceOnUse"
+                x1="82.9941"
+                y1="100.7871"
+                x2="82.9941"
+                y2="73.9863"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.01" stop-color="#3B3B3B" />
+                <stop offset="0.25" stop-color="#757575" />
+                <stop offset="0.42" stop-color="#989898" />
+                <stop offset="0.51" stop-color="#A6A6A6" />
+                <stop offset="0.69" stop-color="#818181" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 82.093 77.986 L 83.895 77.986 L 83.895 104.787 L 82.093 104.787 L 82.093 77.986 Z"
+            />
+        </g>
+        <g id="Group_Port1">
+            <linearGradient
+                id="SVGID_4_"
+                gradientUnits="userSpaceOnUse"
+                x1="5.7427"
+                y1="108.8945"
+                x2="5.7427"
+                y2="66.1035"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.5" stop-color="#ECECEC" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 9.797 112.895 L 1.689 112.895 L 1.689 70.104 L 9.797 70.104 L 9.797 112.895 Z"
+            />
+            <linearGradient
+                id="SVGID_5_"
+                gradientUnits="userSpaceOnUse"
+                x1="0.8442"
+                y1="100.7871"
+                x2="0.8442"
+                y2="73.9863"
+                gradientTransform="matrix(1, 0, 0, 1, 0, 4)"
+            >
+                <stop offset="0" stop-color="#383838" />
+                <stop offset="0.01" stop-color="#3B3B3B" />
+                <stop offset="0.25" stop-color="#757575" />
+                <stop offset="0.42" stop-color="#989898" />
+                <stop offset="0.51" stop-color="#A6A6A6" />
+                <stop offset="0.69" stop-color="#818181" />
+                <stop offset="1" stop-color="#383838" />
+            </linearGradient>
+            <path
+                fill="#e5e5e5"
+                d="M 0 77.986 L 1.689 77.986 L 1.689 104.787 L 0 104.787 L 0 77.986 Z"
+            />
+        </g>
+        <g id="Group_Port3" transform="matrix(1, 0, 0, 1, 0, 22)">
+            <path
+                d="M 65.201 9.299 L 82.093 10.474 L 82.093 28.492 L 65.201 29.822 L 65.201 9.299 Z"
+                fill="url('#gradient-0-0')"
+            />
+            <path
+                d="M 65.201 9.299 L 82.093 10.474 L 82.093 28.492 L 65.201 29.822 L 65.201 9.299 Z"
+                stroke="rgb(0, 0, 0)"
+                stroke-width="1"
+                stroke-opacity="0"
+            />
+        </g>
+        <g id="Group_Port4" transform="matrix(1, 0, 0, 1, 0, 22)">
+            <path
+                d="M 1.797 10.474 L 18.689 9.299 L 18.689 29.822 L 1.797 28.492 L 1.797 10.474 Z"
+                fill="url('#gradient-0-3')"
+            />
+            <path
+                d="M 1.797 10.474 L 18.689 9.299 L 18.689 29.822 L 1.797 28.492 L 1.797 10.474 Z"
+                stroke="rgb(0, 0, 0)"
+                stroke-width="1"
+                stroke-opacity="0"
+            />
+        </g>
+        <g id="Group_Cap_Top">
+            <path
+                fill="url(#gradient-0-4)"
+                d="M 83.89 2.5 C 83.89 2.5 64.522 0 41.945 0 C 19.368 0 0 2.5 0 2.5 L 0 19.5 C 0 19.5 19.368 22 41.945 22 C 64.522 22 83.89 19.5 83.89 19.5 L 83.89 2.5 Z"
+            />
+        </g>
+        <g id="Group_Port3" transform="matrix(1, 0, 0, 1, 0, 0)">
+            <path
+                d="M 61.461 7.096 L 66.605 7.096 L 66.605 32.096 L 61.461 32.096 L 61.461 7.096 Z"
+                fill="url('#gradient-0-1')"
+            />
+            <path
+                d="M 61.461 7.096 L 66.605 7.096 L 66.605 32.096 L 61.461 32.096 L 61.461 7.096 Z"
+                stroke="rgb(0, 0, 0)"
+                stroke-width="1"
+                stroke-opacity="0"
+            />
+        </g>
+        <g id="Group_Port4" transform="matrix(1, 0, 0, 1, 0, 0)">
+            <path
+                d="M 17.461 7.287 L 22.605 7.287 L 22.605 32.287 L 17.461 32.287 L 17.461 7.287 Z"
+                fill="url('#gradient-0-2')"
+            />
+            <path
+                d="M 17.461 7.287 L 22.605 7.287 L 22.605 32.287 L 17.461 32.287 L 17.461 7.287 Z"
+                stroke="rgb(0, 0, 0)"
+                stroke-width="1"
+                stroke-opacity="0"
+            />
+        </g>
+        <rect x="0" y="56" width="83.89" height="56.5" fill="gray" />
+    </svg>
+);
+
+
+const DownArrow = (
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64" height="64" viewBox="0 0 32 32" enable-background="new 0 0 32 32" >  <image id="image0" width="32" height="32" x="0" y="0"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo
+AAB1MAAA6mAAADqYAAAXcJy6UTwAAAA8UExURQAAAP/////5+f/4+P/5+f/5+f/09P/5+f/4+P/4
++P/7+//6+v/////////////5+f/5+f/////5+f///1DMTHAAAAASdFJOUwAVysPS1xjWxMI5MRIK
+A9PMAeOpEYIAAAABYktHRAH/Ai3eAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH6AYYBi4g
+GMrsyQAAAGFJREFUOMvt0MkBgDAIBVFAjbtR+i/Wg0tAgQb0HzPvQgDUkCqEYFgzNynukTi6L67u
+idJtIbsldGduU9yf4t21sLoUdheC2BmdoPNArw4ZZBqNn5wkmH/wdbDk0tftft4BGuwebuo+EBcA
+AAAldEVYdGRhdGU6Y3JlYXRlADIwMjQtMDYtMjRUMDY6NDY6MzIrMDA6MDDJ3uhzAAAAJXRFWHRk
+YXRlOm1vZGlmeQAyMDI0LTA2LTI0VDA2OjQ2OjMyKzAwOjAwuINQzwAAACh0RVh0ZGF0ZTp0aW1l
+c3RhbXAAMjAyNC0wNi0yNFQwNjo0NjozMiswMDowMO+WcRAAAAAZdEVYdFNvZnR3YXJlAHd3dy5p
+bmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC" />
+</svg>
+
+)
 export {
     gasIn,
     SDV,
@@ -2042,5 +2618,8 @@ export {
     VavleWay,
     juntionBottom,
     juntionTop,
-    GaugeTemperature
+    GaugeTemperature,
+    SDV_OFF,
+    SDV_ON,
+    DownArrow
 };

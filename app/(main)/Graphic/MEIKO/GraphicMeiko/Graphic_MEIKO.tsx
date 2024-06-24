@@ -1727,46 +1727,46 @@ export default function Graphic_MEIKO() {
                                   GD_102_Low === "1" ? (
                                     <span
                                         style={{
-                                            fontSize: 18,
+                                            fontSize: 20,
                                             fontWeight: 500,
-                                            color: "green",
+                                            color: "red",
                                             padding: 5,
                                             background: "white",
                                             borderRadius: 5,
                                         }}
                                     >
                                         {" "}
-                                        GD-102: {icon20}
+                                        GD-102: 20%
                                     </span>
                                 ) : GD_102_High === "1" &&
                                   GD_102_Low === "0" ? (
                                     <span
                                         style={{
-                                            fontSize: 18,
+                                            fontSize: 20,
                                             fontWeight: 500,
-                                            color: "green",
+                                            color: "red",
                                             padding: 5,
                                             background: "white",
                                             borderRadius: 5,
                                         }}
                                     >
                                         {" "}
-                                        GD-102: {icon40}
+                                        GD-102: 40%
                                     </span>
                                 ) : GD_102_High === "1" &&
                                   GD_102_Low === "1" ? (
                                     <span
                                         style={{
-                                            fontSize: 18,
+                                            fontSize: 20,
                                             fontWeight: 500,
-                                            color: "green",
+                                            color: "red",
                                             padding: 5,
                                             background: "white",
                                             borderRadius: 5,
                                         }}
                                     >
                                         {" "}
-                                        GD-102: {icon40}
+                                        GD-102: 40%
                                     </span>
                                 ) : (
                                     ""

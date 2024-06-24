@@ -61,8 +61,10 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
-    [key: string]: React.Dispatch<React.SetStateAction<string | null>> | undefined;
-  }
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "#aad4ff";
@@ -104,13 +106,12 @@ export default function DemoFlowOTS() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-    
-    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
-    const [EVC_STT01Value, setEVC_STT01Value] = useState<string | null>(null);
-    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
-    const [EVC_STT02Value, setEVC_STT02Value] = useState<string | null>(null);
+    const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+    const [EVC_01_Conn_STTValue, setEVC_01_Conn_STTValue] = useState<string | null>(null);
+    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+    const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<string | null>(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
-    const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
+    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
 
     useEffect(() => {
@@ -182,16 +183,15 @@ export default function DemoFlowOTS() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        EVC_01_Conn_STT: setEVC_STT01,
-                        EVC_02_Conn_STT: setEVC_STT02,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
                         PLC_Conn_STT: setPLC_STT,
-
                     };
                     const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_STT01Value,
-                        EVC_02_Conn_STT: setEVC_STT02Value,
-                        PLC_Conn_STT: setPLC_STTValue,
-                      };
+                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
@@ -201,10 +201,24 @@ export default function DemoFlowOTS() {
 
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-                             
-              const date = new Date(value);
-              const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-                              valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -1679,8 +1693,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1740,8 +1754,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1801,8 +1815,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1863,8 +1877,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1926,8 +1940,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1988,8 +2002,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2050,8 +2064,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2112,8 +2126,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2176,8 +2190,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2237,8 +2251,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2298,8 +2312,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2414,7 +2428,7 @@ export default function DemoFlowOTS() {
                                         )}
                                     </p>
                                     <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT01 === "1" ? (
+                                        {EVC_01_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2433,7 +2447,7 @@ export default function DemoFlowOTS() {
                                         )}
                                     </p>
                                     <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT02 === "1" ? (
+                                        {EVC_02_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2462,7 +2476,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {EVC_STT01Value}
+                                        {EVC_01_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -2472,7 +2486,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {EVC_STT02Value}
+                                        {EVC_02_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -2482,7 +2496,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PLC_STTValue}
+                                        {PLC_Conn_STT}
                                     </p>
                                 </div>
                             </div>
@@ -2503,13 +2517,13 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
@@ -2538,13 +2552,13 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
 
                                     backgroundColor:
@@ -2575,13 +2589,13 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
 
                                     backgroundColor:
@@ -2632,8 +2646,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
+                                    fontSize: 22,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -2666,8 +2680,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
+                                    fontSize: 22,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -2697,12 +2711,12 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
@@ -2737,26 +2751,26 @@ export default function DemoFlowOTS() {
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -240.7533028867357, y: 550.5684432829023 },
-              FIQ_1902: { x: -231.60088039032206, y: 1289.1255396791125 },
+              FIQ_1901: { x: -275.39498197292176, y: 542.9840164170233 },
+              FIQ_1902: { x: -266.8066364957003, y: 1289.1255396791125 },
               FIQ_none: { x: -165.54268721568215, y: 798.0972512607284 },
               FIQ_none2: { x: -157.1205623176026, y: 1186.5853436430443 },
               FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
               FIQ_none22: { x: -127.36875034337497, y: 1231.0392945117674 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              GD1: { x: -745.9526824268976, y: 1025.5908034534227 },
-              GD1_Name1901: { x: -750.5717919879045, y: 968.8438653513034 },
-              GD1_Value1901: { x: -750.6929582767964, y: 994.0597991500013 },
-              GD2: { x: -349.9389941850782, y: 1019.7819038201158 },
-              GD2_Name1902: { x: -354.74096631277996, y: 964.7102283049067 },
-              GD2_Value1902: { x: -354.6295300462283, y: 989.9911271099056 },
-              GD3: { x: 19.041341761782917, y: 1021.9968146950976 },
-              GD3_Name1903: { x: 14.064251841848176, y: 962.5434170104967 },
-              GD3_Value1903: { x: 14.283320814722941, y: 988.28449275314 },
-              GD_none1: { x: -720.3956940812873, y: 1045.5612154866174 },
-              GD_none2: { x: -324.3704087949896, y: 1039.64552169912 },
-              GD_none3: { x: 44.43067084862969, y: 1036.1027102105159 },
+              GD1: { x: -705.7661591224912, y: 1036.7997699966938 },
+              GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
+              GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
+              GD2: { x: -340.2800293943576, y: 1036.2021439643406 },
+              GD2_Name1902: { x: -369.7973952262454, y: 962.8403828448106 },
+              GD2_Value1902: { x: -369.7416469139345, y: 997.1904549653616 },
+              GD3: { x: 16.04134176178286, y: 1035.243511740587 },
+              GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
+              GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
+              GD_none1: { x: -680.5819920896047, y: 1051.2193132430468 },
+              GD_none2: { x: -314.7114440042691, y: 1057.0316583224167 },
+              GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1151.6225319026826, y: 574.7715183161662 },
               PCV01: { x: -703.6225805120118, y: 879.1889175310166 },
@@ -2799,22 +2813,19 @@ export default function DemoFlowOTS() {
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
               PT1: { x: -1114.171659503826, y: 949.7657148375583 },
               PT2: { x: -350.9391791978867, y: 1138.964910598512 },
-              PT3: { x: -344.2422546040923, y: 750.8313302579564 },
+              PT3: { x: -354.39235881679406, y: 750.8313302579563 },
               PT_col1: { x: -1081.6718862507378, y: 1012.7653932006001 },
-              PT_col2: { x: -311.61340748391814, y: 813.5387087224499 },
+              PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
               PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
               PT_none1: { x: -1081.59363157488, y: 971.649579153979 },
-              PT_none2: { x: -310.54194957541347, y: 782.7500279655704 },
+              PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
               PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: -1166.660688189441, y: 848.9043168081807 },
-              Pressure_Trans02: { x: -562.6962249223983, y: 688.6387678519382 },
-              Pressure_Trans03: {
-                  x: -564.0315214558219,
-                  y: 1323.5258392422122,
-              },
-              SDV: { x: -1014.5755767396676, y: 955.8651163728643 },
+              Pressure_Trans01: { x: -1201.660688189441, y: 847.4043168081807 },
+              Pressure_Trans02: { x: -621.9858891160426, y: 688.780946415521 },
+              Pressure_Trans03: { x: -604.0462699276177, y: 1303.749484067353 },
+              SDV: { x: -1033.7922368748887, y: 948.0837312492845 },
               SDV_Ball: { x: -987.3302143743845, y: 1160.2473446642948 },
               SDV_IMG: { x: -1011.1148428541994, y: 994.0707354298925 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
@@ -2858,14 +2869,14 @@ export default function DemoFlowOTS() {
                   y: 1235.5350090951665,
               },
               borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data1: { x: -241.3789449409768, y: 742.0872704993753 },
-              data2: { x: -241.1892960415438, y: 694.1327393419244 },
-              data3: { x: -241.0146932560861, y: 646.4850519390955 },
-              data4: { x: -240.75823101830503, y: 598.1099182771684 },
-              data5: { x: -231.36808141646952, y: 1336.5701182589364 },
-              data6: { x: -231.73476394811564, y: 1384.208994293254 },
-              data7: { x: -231.77917777528347, y: 1431.9903313994284 },
-              data8: { x: -231.36896991535298, y: 1479.4135435995122 },
+              data1: { x: -274.9305105252121, y: 746.5043895523191 },
+              data2: { x: -275.37496874581336, y: 695.5497653944917 },
+              data3: { x: -275.5788897046258, y: 645.0064507552753 },
+              data4: { x: -275.258231018305, y: 594.1099182771684 },
+              data5: { x: -266.9131945555665, y: 1339.4972181078178 },
+              data6: { x: -266.91104003332725, y: 1390.208994293254 },
+              data7: { x: -266.87005369020784, y: 1441.1285917462176 },
+              data8: { x: -267.38561112765143, y: 1492.1205588818639 },
               line1: { x: -1214.9782042334255, y: 1044.7946609746105 },
               line2: { x: -857.076582460349, y: 1044.8496174211396 },
               line3: { x: -740.4843786514932, y: 924.7734644855461 },
@@ -3396,8 +3407,8 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 500,
+                            fontSize: 20,
+                            fontWeight: 600,
                         }}
                     >
                         SDV-1901
@@ -3409,8 +3420,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 90,
-                height: 37,
+                width: 130,
+                height: 45,
             },
             targetPosition: Position.Bottom,
         },
@@ -3984,7 +3995,7 @@ export default function DemoFlowOTS() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4008,7 +4019,7 @@ export default function DemoFlowOTS() {
                 height: 50,
 
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
         {
@@ -4050,7 +4061,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             fontSize: 32,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                         onClick={confirmLineDuty}
                     >
@@ -4064,8 +4075,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4076,7 +4087,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             fontSize: 32,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                         onClick={confirmLineDuty}
                     >
@@ -4090,8 +4101,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4288,8 +4299,8 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 22,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
@@ -4301,8 +4312,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4313,8 +4324,8 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 22,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
@@ -4326,8 +4337,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4338,7 +4349,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4352,8 +4363,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4378,8 +4389,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4391,7 +4402,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4405,8 +4416,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4417,7 +4428,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4431,8 +4442,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Left,
         },
@@ -4443,7 +4454,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4457,8 +4468,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4469,7 +4480,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4483,8 +4494,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4635,7 +4646,7 @@ export default function DemoFlowOTS() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4660,9 +4671,9 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 260,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -4673,7 +4684,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     ></div>
@@ -4683,9 +4694,9 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 260,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4708,9 +4719,9 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 260,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4896,7 +4907,7 @@ export default function DemoFlowOTS() {
                             <p
                                 style={{
                                     fontSize: 45,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
                             >
@@ -4977,7 +4988,7 @@ export default function DemoFlowOTS() {
                             <p
                                 style={{
                                     fontSize: 60,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
                             ></p>
@@ -5155,8 +5166,8 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 400,
+                            fontSize: 20,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
@@ -5170,8 +5181,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 80,
-                height: 25,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Left,
         },
@@ -5181,8 +5192,8 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 400,
+                            fontSize: 20,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
@@ -5196,8 +5207,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 80,
-                height: 25,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Left,
         },
@@ -5207,8 +5218,8 @@ export default function DemoFlowOTS() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 400,
+                            fontSize: 20,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
@@ -5222,8 +5233,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 80,
-                height: 25,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Left,
         },
@@ -5238,8 +5249,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 80,
-                height: 30,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Bottom,
         },
@@ -5250,12 +5261,10 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 18,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.GD2_Value1902,
@@ -5263,8 +5272,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 80,
-                height: 30,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Bottom,
         },
@@ -5275,7 +5284,7 @@ export default function DemoFlowOTS() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 18,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -5288,8 +5297,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 80,
-                height: 30,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Bottom,
         },
@@ -6228,7 +6237,7 @@ export default function DemoFlowOTS() {
                 onHide={() => setVisible(false)}
                 style={{
                     width: 500,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     fontSize: 17,
                 }}
             >
