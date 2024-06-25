@@ -82,6 +82,13 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             //     },
             // },
         },
+        // datasets: [
+        //     {
+        //         // ... dữ liệu của bạn ...
+        //         pointRadius: 0, // Ẩn mặc định
+        //         hoverRadius: 5, // Hiển thị khi di chuột với bán kính 5px
+        //     },
+        // ],
     });
     const [loading, setLoading] = useState(false);
     const [data, setChartData] = useState<any>({});
@@ -155,6 +162,8 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                             label: key,
                             data: values,
                             fill: false,
+                            pointRadius: 0,
+                            hoverRadius: 5,
                             backgroundColor: colors[index],
                             borderColor: colors[index],
                             tension: 0.4,
