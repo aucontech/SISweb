@@ -203,7 +203,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     return (
         <div>
             {loading ? (
-                <div className="spinner-container">
+                <div className="flex align-items-center justify-content-center">
                     <ProgressSpinner />
                 </div>
             ) : (
