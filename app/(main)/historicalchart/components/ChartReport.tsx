@@ -1,8 +1,10 @@
 "use client";
-import { getTimesSeriesData } from "@/api/telemetry.api";
-import { useEffect, useState, useCallback, useContext } from "react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import {
+    getSeverAttributesByDeviceandKeys,
+    getTimesSeriesData,
+} from "@/api/telemetry.api";
+import { useEffect, useState, useCallback } from "react";
+import { ProgressSpinner } from "primereact/progressspinner";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -80,10 +82,34 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             //     },
             // },
         },
+        // datasets: [
+        //     {
+        //         // ... dữ liệu của bạn ...
+        //         pointRadius: 0, // Ẩn mặc định
+        //         hoverRadius: 5, // Hiển thị khi di chuột với bán kính 5px
+        //     },
+        // ],
     });
+    const [loading, setLoading] = useState(false);
     const [data, setChartData] = useState<any>({});
 
-    const _fetchDataTimeseries = useCallback(({ filters }) => {
+    const _fetchUnitsData = useCallback(async ({ deviceId }) => {
+        return await getSeverAttributesByDeviceandKeys(deviceId, "Units")
+            .then((resp) => resp.data)
+            .then((res) => {
+                if (res && res.length > 0) {
+                    return res[0].value;
+                } else {
+                    return {};
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                return {};
+            });
+    }, []);
+    const _fetchDataTimeseries = useCallback(async ({ filters }) => {
+        setLoading(true);
         console.log(filters);
         let { device, tags, dates, agg, interval } = filters;
 
@@ -103,8 +129,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 endTs: dates[1].getTime(),
                 orderBy: "ASC",
                 limit: 50000,
-                //interval: 3600000,
-                //  agg: "AVG",
             };
 
             if (agg && agg.value !== "NONE" && interval) {
@@ -116,10 +140,9 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             } else {
                 reqParams = {
                     ...reqParams,
-                    //  avg: "NONE",
-                    //interval: interval.value,
                 };
             }
+            let units = await _fetchUnitsData({ deviceId: device.id.id });
 
             getTimesSeriesData("DEVICE", device.id.id, reqParams)
                 .then((resp) => resp.data)
@@ -128,12 +151,19 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     let labels = res[keys[0]].map((dt: any) =>
                         Utils.formatUnixTimeToString(dt.ts, "dd-MM HH:mm")
                     );
+
+                    console.log(units);
                     let datasets = keys.map((key, index) => {
                         let values = res[key].map((d: any) => d.value);
+                        if (units[key]) {
+                            key = `${key} (${units[key]})`;
+                        }
                         return {
                             label: key,
                             data: values,
                             fill: false,
+                            pointRadius: 0,
+                            hoverRadius: 5,
                             backgroundColor: colors[index],
                             borderColor: colors[index],
                             tension: 0.4,
@@ -146,25 +176,17 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     };
 
                     setChartData(dataChart);
-                    //xử lý data để render thành chart
+                    setLoading(false);
                 })
                 .catch((err) => {
-                    // UIUtils.showError({error:err.})
                     console.log(err);
+                    setLoading(false);
                 });
+        } else {
+            setLoading(false);
         }
     }, []);
 
-    // useEffect(() => {
-    //     const documentStyle = getComputedStyle(document.documentElement);
-    //     const textColor =
-    //         documentStyle.getPropertyValue("--text-color") || "#1e293b";
-    //     const textColorSecondary =
-    //         documentStyle.getPropertyValue("--text-color-secondary") ||
-    //         "#64748b";
-    //     const surfaceBorder =
-    //         documentStyle.getPropertyValue("--surface-border") || "#dfe7ef";
-    // }, [layoutConfig]);
     useEffect(() => {
         _fetchDataTimeseries({ filters });
     }, [filters, _fetchDataTimeseries]);
@@ -180,12 +202,18 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
 
     return (
         <div>
-            <Chart
-                type="line"
-                data={data}
-                plugins={pluginZoom}
-                options={options}
-            ></Chart>
+            {loading ? (
+                <div className="spinner-container">
+                    <ProgressSpinner />
+                </div>
+            ) : (
+                <Chart
+                    type="line"
+                    data={data}
+                    plugins={pluginZoom}
+                    options={options}
+                ></Chart>
+            )}
         </div>
     );
 };

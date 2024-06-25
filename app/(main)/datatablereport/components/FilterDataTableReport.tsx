@@ -173,6 +173,10 @@ const FilterDataTableReport: React.FC<Props> = ({
                     ...updatedTags[index],
                     [field]: value,
                     name: value,
+                    unit: {
+                        label: unitAttribute[value] ? unitAttribute[value] : "",
+                        value: unitAttribute[value] ? unitAttribute[value] : "",
+                    },
                 };
                 return { ...prevFilter, tags: updatedTags };
             });

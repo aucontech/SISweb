@@ -58,7 +58,14 @@ const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
         XLSX.utils.book_append_sheet(wb, ws, "Data");
 
         // Tạo và tải xuống file Excel
-        XLSX.writeFile(wb, `${filters.device.name}.xlsx`);
+        const fromDate = Utils.formateJsTime(filters.dates[0], "yyyy-MM-dd");
+        const toDate = Utils.formateJsTime(filters.dates[1], "yyyy-MM-dd");
+
+        // Tạo và tải xuống file Excel
+        XLSX.writeFile(
+            wb,
+            `${filters.device.name}_from_${fromDate}_to_${toDate}.xlsx`
+        );
     };
 
     return <Button onClick={handleExport}>Export to Excel</Button>;
