@@ -2,7 +2,6 @@
 import { Button } from "primereact/button";
 import { useCallback, useEffect, useState, useRef } from "react";
 import { InputText } from "primereact/inputtext";
-
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
@@ -75,7 +74,10 @@ const CustomerReport = () => {
                 });
             })
             .catch((error) => {
-                console.log(error);
+                UIUtils.showError({
+                    toast: toast.current,
+                    error: error?.response?.data?.message,
+                });
             });
         //console.log(filters);
     }, []);

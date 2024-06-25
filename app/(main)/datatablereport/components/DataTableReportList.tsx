@@ -148,7 +148,7 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
     return (
         <div>
             {loading ? (
-                <div className="flex align-items-center justify-content-center">
+                <div className="flex align-items-center justify-content-center h-screen">
                     <ProgressSpinner />
                 </div>
             ) : (

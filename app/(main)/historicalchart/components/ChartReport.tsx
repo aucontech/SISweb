@@ -13,6 +13,8 @@ import "primeflex/primeflex.css";
 import { Utils } from "@/service/Utils";
 import { Chart } from "primereact/chart";
 import dynamic from "next/dynamic";
+import { Card } from "primereact/card";
+
 interface Props {
     filters: any;
 }
@@ -152,7 +154,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                         Utils.formatUnixTimeToString(dt.ts, "dd-MM HH:mm")
                     );
 
-                    console.log(units);
                     let datasets = keys.map((key, index) => {
                         let values = res[key].map((d: any) => d.value);
                         if (units[key]) {
@@ -203,16 +204,18 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     return (
         <div>
             {loading ? (
-                <div className="flex align-items-center justify-content-center">
+                <div className="flex align-items-center justify-content-center h-screen">
                     <ProgressSpinner />
                 </div>
             ) : (
-                <Chart
-                    type="line"
-                    data={data}
-                    plugins={pluginZoom}
-                    options={options}
-                ></Chart>
+                <Card>
+                    <Chart
+                        type="line"
+                        data={data}
+                        plugins={pluginZoom}
+                        options={options}
+                    ></Chart>
+                </Card>
             )}
         </div>
     );
