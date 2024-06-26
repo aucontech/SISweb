@@ -78,11 +78,17 @@ export const line = "#ffaa00";
 export default function DemoFlowOTS() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const [editingEnabled, setEditingEnabled] = useState(false);
+    const [fitViewEnabled, setFitViewEnabled] = useState(true);
 
+    const handleFitView = () => {
+        setFitViewEnabled(true);
+    };
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
+
+
     const [data, setData] = useState<any[]>([]);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
@@ -229,6 +235,7 @@ export default function DemoFlowOTS() {
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
+
 
     //================================ PT 1901================================
 
@@ -2711,12 +2718,12 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-              const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+            //   const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
@@ -2890,6 +2897,9 @@ export default function DemoFlowOTS() {
               line11: { x: 62.86985056843554, y: 1234.683954724923 },
               line12: { x: 159.8198310785691, y: 1035.9323508670825 },
               line13: { x: 359.3312960971492, y: 1036.9713896720348 },
+
+              FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
+
               overlay_SmallVavle1: {
                   x: -620.7026867284558,
                   y: 942.6024251546756,
@@ -5515,6 +5525,7 @@ export default function DemoFlowOTS() {
                 borderRadius: 5,
             },
         },
+
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -6205,6 +6216,13 @@ export default function DemoFlowOTS() {
     //                     AlarmCenter: position,
     //                 }));
     //             }
+
+    //             else if (id === "FullScreen") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     FullScreen: position,
+    //                 }));
+    //             }
     //         }
     //     },
     //     [setNodes, setPositions, editingEnabled]
@@ -6219,6 +6237,8 @@ export default function DemoFlowOTS() {
 
     return (
         <>
+
+        
             <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
@@ -6227,8 +6247,8 @@ export default function DemoFlowOTS() {
             </audio>
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
-
+            </Button>
+           */}
             <Toast ref={toast} />
             <ConfirmDialog />
 
@@ -6293,14 +6313,15 @@ export default function DemoFlowOTS() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
+                    <Controls  style={{ position: "absolute", top: 0 }} />
 
-                    <Controls />
+                    <Controls  />
+
+  
                 </ReactFlow>
             </div>
+
         </>
     );
 }
