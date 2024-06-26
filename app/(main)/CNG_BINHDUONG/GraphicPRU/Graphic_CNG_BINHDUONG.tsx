@@ -25,7 +25,7 @@ import {
 import { BlackTriangleRight } from "../../ZOVC/GraphicZOVC/iconSVG";
 import BallVavle_Line3_Top from "../BallVavlePRU/BallVavle_Line3_Top";
 import BallVavle_Line3_Bottom from "../BallVavlePRU/BallVavle_Line3_Bottom";
-import { id_CNG_HungYen } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_CNG_BinhDuong } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
@@ -52,7 +52,7 @@ export const line = "#ff7f00";
 export const line2 = "#ffaa00";
 export const line3 = "#ffe900";
 
-export default function Graphic_CNG_HUNGYEN() {
+export default function Graphic_CNG_BINHDUONG() {
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const token = readToken();
@@ -63,10 +63,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
     const toast = useRef<Toast>(null);
 
-    const [PIT_3001A, setPIT_3001A] = useState<string | null>(null);
-    const [PIT_3001B, setPIT_3001B] = useState<string | null>(null);
-    const [PT_3001, setPT_3001] = useState<string | null>(null);
-    const [PT_3002, setPT_3002] = useState<string | null>(null);
+    const [PIT_2006, setPIT_2006] = useState<string | null>(null);
+    const [PIT_2007, setPIT_2007] = useState<string | null>(null);
+    const [PT_2001, setPT_2001] = useState<string | null>(null);
+    const [PT_2002, setPT_2002] = useState<string | null>(null);
     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
     const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
 
@@ -105,19 +105,19 @@ export default function Graphic_CNG_HUNGYEN() {
         EVC_02_Volume_at_Measurement_Condition,
         setEVC_02_Volume_at_Measurement_Condition,
     ] = useState<string | null>(null);
-    const [PCV_3001A, setPCV_3001A] = useState();
-    const [PCV_3001B, setPCV_3001B] = useState();
-    const [PCV_3002A, setPCV_3002A] = useState();
-    const [PCV_3002B, setPCV_3002B] = useState();
+    const [PCV_2001A, setPCV_2001A] = useState();
+    const [PCV_2001B, setPCV_2001B] = useState();
+    const [PCV_2002A, setPCV_2002A] = useState();
+    const [PCV_2002B, setPCV_2002B] = useState();
 
-    const [PSV_3001A, setPSV_3001A] = useState();
-    const [PSV_3001B, setPSV_3001B] = useState();
-    const [PSV_3002A, setPSV_3002A] = useState();
-    const [PSV_3002B, setPSV_3002B] = useState();
+    const [PSV_2001A, setPSV_2001A] = useState();
+    const [PSV_2001B, setPSV_2001B] = useState();
+    const [PSV_2002A, setPSV_2002A] = useState();
+    const [PSV_2002B, setPSV_2002B] = useState();
 
-    const [SDV_3001A, setSDV_3001A] = useState<any>();
-    const [SDV_3001B, setSDV_3001B] = useState<string | null>(null);
-    const [SDV_3002, setSDV_3002] = useState<string | null>(null);
+    const [SDV_2001A, setSDV_2001A] = useState<any>();
+    const [SDV_2001B, setSDV_2001B] = useState<string | null>(null);
+    const [SDV_2002, setSDV_2002] = useState<string | null>(null);
 
     const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
     const [EVC_01_Conn_STTValue, setEVC_01_Conn_STTValue] = useState<
@@ -137,7 +137,7 @@ export default function Graphic_CNG_HUNGYEN() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_CNG_HungYen,
+                    entityId: id_CNG_BinhDuong,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -152,36 +152,36 @@ export default function Graphic_CNG_HUNGYEN() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3001A",
+                                key: "PCV_2001A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3001B",
+                                key: "PCV_2001B",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3002A",
+                                key: "PCV_2002A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3002B",
+                                key: "PCV_2002B",
                             },
 
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3001A",
+                                key: "PSV_2001A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3001B",
+                                key: "PSV_2001B",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3002A",
+                                key: "PSV_2002A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3002B",
+                                key: "PSV_2002B",
                             },
                         ],
                     },
@@ -190,7 +190,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_CNG_HungYen,
+                                id: id_CNG_BinhDuong,
                             },
                         },
                         pageLink: {
@@ -221,36 +221,36 @@ export default function Graphic_CNG_HUNGYEN() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3001A",
+                                key: "PCV_2001A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3001B",
+                                key: "PCV_2001B",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3002A",
+                                key: "PCV_2002A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_3002B",
+                                key: "PCV_2002B",
                             },
 
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3001A",
+                                key: "PSV_2001A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3001B",
+                                key: "PSV_2001B",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3002A",
+                                key: "PSV_2002A",
                             },
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_3002B",
+                                key: "PSV_2002B",
                             },
                         ],
                     },
@@ -287,22 +287,22 @@ export default function Graphic_CNG_HUNGYEN() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        PIT_3001A: setPIT_3001A,
-                        PIT_3001B: setPIT_3001B,
-                        PT_3001: setPT_3001,
-                        PT_3002: setPT_3002,
+                        PIT_2006: setPIT_2006,
+                        PIT_2007: setPIT_2007,
+                        PT_2001: setPT_2001,
+                        PT_2002: setPT_2002,
 
                         EVC_01_Pressure: setEVC_01_Pressure,
                         EVC_02_Pressure: setEVC_02_Pressure,
                         EVC_01_Temperature: setEVC_01_Temperature,
                         EVC_02_Temperature: setEVC_02_Temperature,
 
-                        SDV_3001A: setSDV_3001A,
-                        SDV_3001B: setSDV_3001B,
-                        SDV_3002: setSDV_3002,
-                        TT_3001: setTT_3001,
-                        PT_3003: setPT_3003,
-                        GD_3001: setGD_3001,
+                        SDV_2001A: setSDV_2001A,
+                        SDV_2001B: setSDV_2001B,
+                        SDV_2002: setSDV_2002,
+                        TT_2001: setTT_2001,
+                        PT_2003: setPT_2003,
+                        GD_2001: setGD_2001,
 
                         EVC_01_Flow_at_Base_Condition:
                             setEVC_01_Flow_at_Base_Condition,
@@ -364,69 +364,69 @@ export default function Graphic_CNG_HUNGYEN() {
 
                 if (dataReceived.data && dataReceived.data.data?.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001A
                             .value;
-                    setPCV_3001A(ballValue);
+                    setPCV_2001A(ballValue);
                     const ballValueB =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001B
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001B
                             .value;
-                    setPCV_3001B(ballValueB);
+                    setPCV_2001B(ballValueB);
                     const ballValue2B =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002B
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2002B
                             .value;
-                    setPCV_3002B(ballValue2B);
+                    setPCV_2002B(ballValue2B);
                     const ballValue2A =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2002A
                             .value;
-                    setPCV_3002A(ballValue2A);
+                    setPCV_2002A(ballValue2A);
 
                     const ballValueS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001A
                             .value;
-                    setPSV_3001A(ballValueS);
+                    setPSV_2001A(ballValueS);
                     const ballValueSB =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001B
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2001B
                             .value;
-                    setPSV_3001B(ballValueSB);
+                    setPSV_2001B(ballValueSB);
                     const ballValueS2B =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002B
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2002B
                             .value;
-                    setPSV_3002B(ballValueS2B);
+                    setPSV_2002B(ballValueS2B);
                     const ballValueS2A =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2002A
                             .value;
-                    setPSV_3002A(ballValueS2A);
+                    setPSV_2002A(ballValueS2A);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update?.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
-                    setPCV_3001A(updatedData);
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001A.value;
+                    setPCV_2001A(updatedData);
                     const updatedDataB =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001B.value;
-                    setPCV_3001B(updatedDataB);
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001B.value;
+                    setPCV_2001B(updatedDataB);
 
                     const ballValue2B =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002A.value;
-                    setPCV_3002A(ballValue2B);
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2002A.value;
+                    setPCV_2002A(ballValue2B);
                     const updatedEVC_01_Volume_at_Base_ConditionA =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002B.value;
-                    setPCV_3002B(updatedEVC_01_Volume_at_Base_ConditionA);
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2002B.value;
+                    setPCV_2002B(updatedEVC_01_Volume_at_Base_ConditionA);
 
                     const updatedDataS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
-                    setPSV_3001A(updatedDataS);
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001A.value;
+                    setPSV_2001A(updatedDataS);
                     const updatedDataSB =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3001B.value;
-                    setPSV_3001B(updatedDataSB);
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2001B.value;
+                    setPSV_2001B(updatedDataSB);
 
                     const ballValueS2B =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002A.value;
-                    setPSV_3002A(ballValueS2B);
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2002A.value;
+                    setPSV_2002A(ballValueS2B);
                     const updatedDataS2A =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002B.value;
-                    setPSV_3002B(updatedDataS2A);
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2002B.value;
+                    setPSV_2002B(updatedDataS2A);
                 }
 
                 fetchData();
@@ -437,69 +437,69 @@ export default function Graphic_CNG_HUNGYEN() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/values/attributes/SERVER_SCOPE`
             );
 
-            const HighPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_High"
+            const HighPIT_2006 = res.data.find(
+                (item: any) => item.key === "PIT_2006_High"
             );
-            setHighPIT_3001A(HighPIT_3001A?.value || null);
-            const LowPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_Low"
+            setHighPIT_2006(HighPIT_2006?.value || null);
+            const LowPIT_2006 = res.data.find(
+                (item: any) => item.key === "PIT_2006_Low"
             );
-            setLowPIT_3001A(LowPIT_3001A?.value || null);
+            setLowPIT_2006(LowPIT_2006?.value || null);
 
-            const MaintainPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_Maintain"
+            const MaintainPIT_2006 = res.data.find(
+                (item: any) => item.key === "PIT_2006_Maintain"
             );
-            setMaintainPIT_3001A(MaintainPIT_3001A?.value || false);
+            setMaintainPIT_2006(MaintainPIT_2006?.value || false);
             //===========================================================================================
 
-            const HighPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_High"
+            const HighPIT_2007 = res.data.find(
+                (item: any) => item.key === "PIT_2007_High"
             );
-            setHighPIT_3001B(HighPIT_3001B?.value || null);
-            const LowPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_Low"
+            setHighPIT_2007(HighPIT_2007?.value || null);
+            const LowPIT_2007 = res.data.find(
+                (item: any) => item.key === "PIT_2007_Low"
             );
-            setLowPIT_3001B(LowPIT_3001B?.value || null);
+            setLowPIT_2007(LowPIT_2007?.value || null);
 
-            const MaintainPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_Maintain"
+            const MaintainPIT_2007 = res.data.find(
+                (item: any) => item.key === "PIT_2007_Maintain"
             );
-            setMaintainPIT_3001B(MaintainPIT_3001B?.value || false);
+            setMaintainPIT_2007(MaintainPIT_2007?.value || false);
             //===========================================================================================
 
-            const HighPT_3001 = res.data.find(
-                (item: any) => item.key === "PT_3001_High"
+            const HighPT_2001 = res.data.find(
+                (item: any) => item.key === "PT_2001_High"
             );
-            setHighPT_3001(HighPT_3001?.value || null);
-            const LowPT_3001 = res.data.find(
-                (item: any) => item.key === "PT_3001_Low"
+            setHighPT_2001(HighPT_2001?.value || null);
+            const LowPT_2001 = res.data.find(
+                (item: any) => item.key === "PT_2001_Low"
             );
-            setLowPT_3001(LowPT_3001?.value || null);
+            setLowPT_2001(LowPT_2001?.value || null);
 
-            const PT_3001_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3001_Maintain"
+            const PT_2001_Maintain = res.data.find(
+                (item: any) => item.key === "PT_2001_Maintain"
             );
-            setMaintainPT_3001(PT_3001_Maintain?.value || false);
+            setMaintainPT_2001(PT_2001_Maintain?.value || false);
 
             //===========================================================================================
 
-            const HighPT_3002 = res.data.find(
-                (item: any) => item.key === "PT_3002_High"
+            const HighPT_2002 = res.data.find(
+                (item: any) => item.key === "PT_2002_High"
             );
-            setHighPT_3002(HighPT_3002?.value || null);
+            setHighPT_2002(HighPT_2002?.value || null);
 
-            const LowPT_3002 = res.data.find(
-                (item: any) => item.key === "PT_3002_Low"
+            const LowPT_2002 = res.data.find(
+                (item: any) => item.key === "PT_2002_Low"
             );
-            setLowPT_3002(LowPT_3002?.value || null);
+            setLowPT_2002(LowPT_2002?.value || null);
 
-            const PT_3002_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3002_Maintain"
+            const PT_2002_Maintain = res.data.find(
+                (item: any) => item.key === "PT_2002_Maintain"
             );
-            setMaintainPT_3002(PT_3002_Maintain?.value || false);
+            setMaintainPT_2002(PT_2002_Maintain?.value || false);
             //===========================================================================================
 
             const HighEVC_01_Pressure = res.data.find(
@@ -575,88 +575,88 @@ export default function Graphic_CNG_HUNGYEN() {
             );
             //===========================================================================================
 
-            const HighSDV_3001A = res.data.find(
-                (item: any) => item.key === "SDV_3001A_High"
+            const HighSDV_2001A = res.data.find(
+                (item: any) => item.key === "SDV_2001A_High"
             );
-            setHighSDV_3001A(HighSDV_3001A?.value || null);
+            setHighSDV_2001A(HighSDV_2001A?.value || null);
 
-            const LowSDV_3001A = res.data.find(
-                (item: any) => item.key === "SDV_3001A_Low"
+            const LowSDV_2001A = res.data.find(
+                (item: any) => item.key === "SDV_2001A_Low"
             );
-            setLowSDV_3001A(LowSDV_3001A?.value || null);
+            setLowSDV_2001A(LowSDV_2001A?.value || null);
 
-            const SDV_3001A_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_3001A_Maintain"
+            const SDV_2001A_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_2001A_Maintain"
             );
-            setMaintainSDV_3001A(SDV_3001A_Maintain?.value || false);
+            setMaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
             //===========================================================================================
 
-            const HighSDV_3002 = res.data.find(
-                (item: any) => item.key === "SDV_3002_High"
+            const HighSDV_2002 = res.data.find(
+                (item: any) => item.key === "SDV_2002_High"
             );
-            setHighSDV_3002(HighSDV_3002?.value || null);
+            setHighSDV_2002(HighSDV_2002?.value || null);
 
-            const LowSDV_3002 = res.data.find(
-                (item: any) => item.key === "SDV_3002_Low"
+            const LowSDV_2002 = res.data.find(
+                (item: any) => item.key === "SDV_2002_Low"
             );
-            setLowSDV_3002(LowSDV_3002?.value || null);
+            setLowSDV_2002(LowSDV_2002?.value || null);
 
-            const SDV_3002_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_3002_Maintain"
+            const SDV_2002_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_2002_Maintain"
             );
-            setMaintainSDV_3002(SDV_3002_Maintain?.value || false);
+            setMaintainSDV_2002(SDV_2002_Maintain?.value || false);
 
-            //===========================================================================================
-            //===========================================================================================
-
-            const HighTT_3001 = res.data.find(
-                (item: any) => item.key === "TT_3001_High"
-            );
-            setHighTT_3001(HighTT_3001?.value || null);
-
-            const LowTT_3001 = res.data.find(
-                (item: any) => item.key === "TT_3001_Low"
-            );
-            setLowTT_3001(LowTT_3001?.value || null);
-
-            const TT_3001_Maintain = res.data.find(
-                (item: any) => item.key === "TT_3001_Maintain"
-            );
-            setMaintainTT_3001(TT_3001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
-            const HighPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_High"
+            const HighTT_2001 = res.data.find(
+                (item: any) => item.key === "TT_2001_High"
             );
-            setHighPT_3003(HighPT_3003?.value || null);
+            setHighTT_2001(HighTT_2001?.value || null);
 
-            const LowPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_Low"
+            const LowTT_2001 = res.data.find(
+                (item: any) => item.key === "TT_2001_Low"
             );
-            setLowPT_3003(LowPT_3003?.value || null);
+            setLowTT_2001(LowTT_2001?.value || null);
 
-            const PT_3003_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3003_Maintain"
+            const TT_2001_Maintain = res.data.find(
+                (item: any) => item.key === "TT_2001_Maintain"
             );
-            setMaintainPT_3003(PT_3003_Maintain?.value || false);
+            setMaintainTT_2001(TT_2001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
-            const HighGD_3001 = res.data.find(
-                (item: any) => item.key === "GD_3001_High"
+            const HighPT_2003 = res.data.find(
+                (item: any) => item.key === "PT_2003_High"
             );
-            setHighGD_3001(HighGD_3001?.value || null);
+            setHighPT_2003(HighPT_2003?.value || null);
 
-            const LowGD_3001 = res.data.find(
-                (item: any) => item.key === "GD_3001_Low"
+            const LowPT_2003 = res.data.find(
+                (item: any) => item.key === "PT_2003_Low"
             );
-            setLowGD_3001(LowGD_3001?.value || null);
+            setLowPT_2003(LowPT_2003?.value || null);
 
-            const GD_3001_Maintain = res.data.find(
-                (item: any) => item.key === "GD_3001_Maintain"
+            const PT_2003_Maintain = res.data.find(
+                (item: any) => item.key === "PT_2003_Maintain"
             );
-            setMaintainGD_3001(GD_3001_Maintain?.value || false);
+            setMaintainPT_2003(PT_2003_Maintain?.value || false);
+            //===========================================================================================
+            //===========================================================================================
+
+            const HighGD_2001 = res.data.find(
+                (item: any) => item.key === "GD_2001_High"
+            );
+            setHighGD_2001(HighGD_2001?.value || null);
+
+            const LowGD_2001 = res.data.find(
+                (item: any) => item.key === "GD_2001_Low"
+            );
+            setLowGD_2001(LowGD_2001?.value || null);
+
+            const GD_2001_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2001_Maintain"
+            );
+            setMaintainGD_2001(GD_2001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
@@ -882,10 +882,10 @@ export default function Graphic_CNG_HUNGYEN() {
         SVA: "SVA",
         GVA: "GVA",
         PT: "PT",
-        PIT_3001A: "PIT_3001A",
-        PIT_3001B: "PIT_3001B",
-        PT_3001: "PT_3001",
-        PT_3002: "PT_3002",
+        PIT_2006: "PIT_2006",
+        PIT_2007: "PIT_2007",
+        PT_2001: "PT_2001",
+        PT_2002: "PT_2002",
         EVC_01_Pressure: "EVC 01 Pressure",
         EVC_02_Pressure: "EVC 02 Pressure",
 
@@ -902,221 +902,209 @@ export default function Graphic_CNG_HUNGYEN() {
         CC: "°C",
         BARG: "BARG",
     };
-    //================================ PIT_3001A================================
+    //================================ PIT_2006================================
 
-    const [audioPIT_3001A, setaudioPIT_3001A] = useState(false);
-    const [HighPIT_3001A, setHighPIT_3001A] = useState<number | null>(null);
-    const [LowPIT_3001A, setLowPIT_3001A] = useState<number | null>(null);
-    const [audioColorPIT_3001A, setaudioColorPIT_3001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPIT_2006, setaudioPIT_2006] = useState(false);
+    const [HighPIT_2006, setHighPIT_2006] = useState<number | null>(null);
+    const [LowPIT_2006, setLowPIT_2006] = useState<number | null>(null);
+    const [audioColorPIT_2006, setaudioColorPIT_2006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPIT_3001A, setMaintainPIT_3001A] = useState<boolean>(false);
+    const [maintainPIT_2006, setMaintainPIT_2006] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPIT_3001A === "string" &&
-            typeof LowPIT_3001A === "string" &&
-            PIT_3001A !== null &&
-            maintainPIT_3001A === false
+            typeof HighPIT_2006 === "string" &&
+            typeof LowPIT_2006 === "string" &&
+            PIT_2006 !== null &&
+            maintainPIT_2006 === false
         ) {
-            const highValue = parseFloat(HighPIT_3001A);
-            const lowValue = parseFloat(LowPIT_3001A);
-            const PIT_3001AValue = parseFloat(PIT_3001A);
+            const highValue = parseFloat(HighPIT_2006);
+            const lowValue = parseFloat(LowPIT_2006);
+            const PIT_2006Value = parseFloat(PIT_2006);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(PIT_3001AValue)
+                !isNaN(PIT_2006Value)
             ) {
-                if (highValue < PIT_3001AValue || PIT_3001AValue < lowValue) {
-                    if (!audioPIT_3001A) {
+                if (highValue < PIT_2006Value || PIT_2006Value < lowValue) {
+                    if (!audioPIT_2006) {
                         audioRef.current?.play();
-                        setaudioPIT_3001A(true);
-                        setaudioColorPIT_3001A(true);
+                        setaudioPIT_2006(true);
+                        setaudioColorPIT_2006(true);
                     }
                 } else {
-                    setaudioPIT_3001A(false);
-                    setaudioColorPIT_3001A(false);
+                    setaudioPIT_2006(false);
+                    setaudioColorPIT_2006(false);
                 }
             }
         }
-    }, [
-        HighPIT_3001A,
-        PIT_3001A,
-        audioPIT_3001A,
-        LowPIT_3001A,
-        maintainPIT_3001A,
-    ]);
+    }, [HighPIT_2006, PIT_2006, audioPIT_2006, LowPIT_2006, maintainPIT_2006]);
 
     useEffect(() => {
-        if (audioPIT_3001A) {
+        if (audioPIT_2006) {
             const audioEnded = () => {
-                setaudioPIT_3001A(false);
+                setaudioPIT_2006(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPIT_3001A]);
+    }, [audioPIT_2006]);
 
-    //================================ PIT_3001A======================================================
+    //================================ PIT_2006======================================================
 
-    //================================ PIT_3001B================================
+    //================================ PIT_2007================================
 
-    const [audioPIT_3001B, setaudioPIT_3001B] = useState(false);
-    const [HighPIT_3001B, setHighPIT_3001B] = useState<number | null>(null);
-    const [LowPIT_3001B, setLowPIT_3001B] = useState<number | null>(null);
-    const [audioColorPIT_3001B, setaudioColorPIT_3001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPIT_2007, setaudioPIT_2007] = useState(false);
+    const [HighPIT_2007, setHighPIT_2007] = useState<number | null>(null);
+    const [LowPIT_2007, setLowPIT_2007] = useState<number | null>(null);
+    const [audioColorPIT_2007, setaudioColorPIT_2007] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPIT_3001B, setMaintainPIT_3001B] = useState<boolean>(false);
+    const [maintainPIT_2007, setMaintainPIT_2007] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPIT_3001B === "string" &&
-            typeof LowPIT_3001B === "string" &&
-            PIT_3001B !== null &&
-            maintainPIT_3001B === false
+            typeof HighPIT_2007 === "string" &&
+            typeof LowPIT_2007 === "string" &&
+            PIT_2007 !== null &&
+            maintainPIT_2007 === false
         ) {
-            const highValue = parseFloat(HighPIT_3001B);
-            const lowValue = parseFloat(LowPIT_3001B);
-            const PIT_3001BValue = parseFloat(PIT_3001B);
+            const highValue = parseFloat(HighPIT_2007);
+            const lowValue = parseFloat(LowPIT_2007);
+            const PIT_2007Value = parseFloat(PIT_2007);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(PIT_3001BValue)
+                !isNaN(PIT_2007Value)
             ) {
-                if (highValue < PIT_3001BValue || PIT_3001BValue < lowValue) {
-                    if (!audioPIT_3001B) {
+                if (highValue < PIT_2007Value || PIT_2007Value < lowValue) {
+                    if (!audioPIT_2007) {
                         audioRef.current?.play();
-                        setaudioPIT_3001B(true);
-                        setaudioColorPIT_3001B(true);
+                        setaudioPIT_2007(true);
+                        setaudioColorPIT_2007(true);
                     }
                 } else {
-                    setaudioPIT_3001B(false);
-                    setaudioColorPIT_3001B(false);
+                    setaudioPIT_2007(false);
+                    setaudioColorPIT_2007(false);
                 }
             }
         }
-    }, [
-        HighPIT_3001B,
-        PIT_3001B,
-        audioPIT_3001B,
-        LowPIT_3001B,
-        maintainPIT_3001B,
-    ]);
+    }, [HighPIT_2007, PIT_2007, audioPIT_2007, LowPIT_2007, maintainPIT_2007]);
 
     useEffect(() => {
-        if (audioPIT_3001B) {
+        if (audioPIT_2007) {
             const audioEnded = () => {
-                setaudioPIT_3001B(false);
+                setaudioPIT_2007(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPIT_3001B]);
+    }, [audioPIT_2007]);
 
-    //================================ PIT_3001B ======================================================
+    //================================ PIT_2007 ======================================================
 
-    //================================ PT_3001================================
+    //================================ PT_2001================================
 
-    const [audioPT_3001, setaudioPT_3001] = useState(false);
-    const [HighPT_3001, setHighPT_3001] = useState<number | null>(null);
-    const [LowPT_3001, setLowPT_3001] = useState<number | null>(null);
-    const [audioColorPT_3001, setaudioColorPT_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPT_2001, setaudioPT_2001] = useState(false);
+    const [HighPT_2001, setHighPT_2001] = useState<number | null>(null);
+    const [LowPT_2001, setLowPT_2001] = useState<number | null>(null);
+    const [audioColorPT_2001, setaudioColorPT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPT_3001, setMaintainPT_3001] = useState<boolean>(false);
+    const [maintainPT_2001, setMaintainPT_2001] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT_3001 === "string" &&
-            typeof LowPT_3001 === "string" &&
-            PT_3001 !== null &&
-            maintainPT_3001 === false
+            typeof HighPT_2001 === "string" &&
+            typeof LowPT_2001 === "string" &&
+            PT_2001 !== null &&
+            maintainPT_2001 === false
         ) {
-            const highValue = parseFloat(HighPT_3001);
-            const lowValue = parseFloat(LowPT_3001);
-            const PT_3001Value = parseFloat(PT_3001);
+            const highValue = parseFloat(HighPT_2001);
+            const lowValue = parseFloat(LowPT_2001);
+            const PT_2001Value = parseFloat(PT_2001);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_3001Value)) {
-                if (highValue < PT_3001Value || PT_3001Value < lowValue) {
-                    if (!audioPT_3001) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2001Value)) {
+                if (highValue < PT_2001Value || PT_2001Value < lowValue) {
+                    if (!audioPT_2001) {
                         audioRef.current?.play();
-                        setaudioPT_3001(true);
-                        setaudioColorPT_3001(true);
+                        setaudioPT_2001(true);
+                        setaudioColorPT_2001(true);
                     }
                 } else {
-                    setaudioPT_3001(false);
-                    setaudioColorPT_3001(false);
+                    setaudioPT_2001(false);
+                    setaudioColorPT_2001(false);
                 }
             }
         }
-    }, [HighPT_3001, PT_3001, audioPT_3001, LowPT_3001, maintainPT_3001]);
+    }, [HighPT_2001, PT_2001, audioPT_2001, LowPT_2001, maintainPT_2001]);
 
     useEffect(() => {
-        if (audioPT_3001) {
+        if (audioPT_2001) {
             const audioEnded = () => {
-                setaudioPT_3001(false);
+                setaudioPT_2001(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPT_3001]);
+    }, [audioPT_2001]);
 
-    //================================ PT_3001 ======================================================
+    //================================ PT_2001 ======================================================
 
-    //================================ PT_3002================================
+    //================================ PT_2002================================
 
-    const [audioPT_3002, setaudioPT_3002] = useState(false);
-    const [HighPT_3002, setHighPT_3002] = useState<number | null>(null);
-    const [LowPT_3002, setLowPT_3002] = useState<number | null>(null);
-    const [audioColorPT_3002, setaudioColorPT_3002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioPT_2002, setaudioPT_2002] = useState(false);
+    const [HighPT_2002, setHighPT_2002] = useState<number | null>(null);
+    const [LowPT_2002, setLowPT_2002] = useState<number | null>(null);
+    const [audioColorPT_2002, setaudioColorPT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPT_3002, setMaintainPT_3002] = useState<boolean>(false);
+    const [maintainPT_2002, setMaintainPT_2002] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT_3002 === "string" &&
-            typeof LowPT_3002 === "string" &&
-            PT_3002 !== null &&
-            maintainPT_3002 === false
+            typeof HighPT_2002 === "string" &&
+            typeof LowPT_2002 === "string" &&
+            PT_2002 !== null &&
+            maintainPT_2002 === false
         ) {
-            const highValue = parseFloat(HighPT_3002);
-            const lowValue = parseFloat(LowPT_3002);
-            const PT_3002Value = parseFloat(PT_3002);
+            const highValue = parseFloat(HighPT_2002);
+            const lowValue = parseFloat(LowPT_2002);
+            const PT_2002Value = parseFloat(PT_2002);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_3002Value)) {
-                if (highValue < PT_3002Value || PT_3002Value < lowValue) {
-                    if (!audioPT_3002) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2002Value)) {
+                if (highValue < PT_2002Value || PT_2002Value < lowValue) {
+                    if (!audioPT_2002) {
                         audioRef.current?.play();
-                        setaudioPT_3002(true);
-                        setaudioColorPT_3002(true);
+                        setaudioPT_2002(true);
+                        setaudioColorPT_2002(true);
                     }
                 } else {
-                    setaudioPT_3002(false);
-                    setaudioColorPT_3002(false);
+                    setaudioPT_2002(false);
+                    setaudioColorPT_2002(false);
                 }
             }
         }
-    }, [HighPT_3002, PT_3002, audioPT_3002, LowPT_3002, maintainPT_3002]);
+    }, [HighPT_2002, PT_2002, audioPT_2002, LowPT_2002, maintainPT_2002]);
 
     useEffect(() => {
-        if (audioPT_3002) {
+        if (audioPT_2002) {
             const audioEnded = () => {
-                setaudioPT_3002(false);
+                setaudioPT_2002(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPT_3002]);
+    }, [audioPT_2002]);
 
-    //================================ PT_3002 ======================================================
+    //================================ PT_2002 ======================================================
 
     //================================ EVC_02_Pressure================================
 
@@ -1393,319 +1381,319 @@ export default function Graphic_CNG_HUNGYEN() {
 
     //================================ EVC_02_Temperature================================
 
-    const [audioSDV_3001A, setaudioSDV_3001A] = useState(false);
-    const [HighSDV_3001A, setHighSDV_3001A] = useState<number | null>(null);
-    const [LowSDV_3001A, setLowSDV_3001A] = useState<number | null>(null);
-    const [audioColorSDV_3001A, setaudioColorSDV_3001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioSDV_2001A, setaudioSDV_2001A] = useState(false);
+    const [HighSDV_2001A, setHighSDV_2001A] = useState<number | null>(null);
+    const [LowSDV_2001A, setLowSDV_2001A] = useState<number | null>(null);
+    const [audioColorSDV_2001A, setaudioColorSDV_2001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainSDV_3001A, setMaintainSDV_3001A] = useState<boolean>(false);
+    const [maintainSDV_2001A, setMaintainSDV_2001A] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighSDV_3001A === "string" &&
-            typeof LowSDV_3001A === "string" &&
-            SDV_3001A !== null &&
-            maintainSDV_3001A === false
+            typeof HighSDV_2001A === "string" &&
+            typeof LowSDV_2001A === "string" &&
+            SDV_2001A !== null &&
+            maintainSDV_2001A === false
         ) {
-            const highValue = parseFloat(HighSDV_3001A);
-            const lowValue = parseFloat(LowSDV_3001A);
-            const SDV_3001AValue = parseFloat(SDV_3001A);
+            const highValue = parseFloat(HighSDV_2001A);
+            const lowValue = parseFloat(LowSDV_2001A);
+            const SDV_2001AValue = parseFloat(SDV_2001A);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(SDV_3001AValue)
+                !isNaN(SDV_2001AValue)
             ) {
-                if (highValue < SDV_3001AValue || SDV_3001AValue < lowValue) {
-                    if (!audioSDV_3001A) {
+                if (highValue < SDV_2001AValue || SDV_2001AValue < lowValue) {
+                    if (!audioSDV_2001A) {
                         audioRef.current?.play();
-                        setaudioSDV_3001A(true);
-                        setaudioColorSDV_3001A(true);
+                        setaudioSDV_2001A(true);
+                        setaudioColorSDV_2001A(true);
                     }
                 } else {
-                    setaudioSDV_3001A(false);
-                    setaudioColorSDV_3001A(false);
+                    setaudioSDV_2001A(false);
+                    setaudioColorSDV_2001A(false);
                 }
             }
         }
     }, [
-        HighSDV_3001A,
-        SDV_3001A,
-        audioSDV_3001A,
-        LowSDV_3001A,
-        maintainSDV_3001A,
+        HighSDV_2001A,
+        SDV_2001A,
+        audioSDV_2001A,
+        LowSDV_2001A,
+        maintainSDV_2001A,
     ]);
 
     useEffect(() => {
-        if (audioSDV_3001A) {
+        if (audioSDV_2001A) {
             const audioEnded = () => {
-                setaudioSDV_3001A(false);
+                setaudioSDV_2001A(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioSDV_3001A]);
+    }, [audioSDV_2001A]);
 
     //================================ EVC_02_Temperature ======================================================
 
     //================================ EVC_02_Temperature================================
 
-    const [audioSDV_3001B, setaudioSDV_3001B] = useState(false);
-    const [HighSDV_3001B, setHighSDV_3001B] = useState<number | null>(null);
-    const [LowSDV_3001B, setLowSDV_3001B] = useState<number | null>(null);
-    const [audioColorSDV_3001B, setaudioColorSDV_3001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioSDV_2001B, setaudioSDV_2001B] = useState(false);
+    const [HighSDV_2001B, setHighSDV_2001B] = useState<number | null>(null);
+    const [LowSDV_2001B, setLowSDV_2001B] = useState<number | null>(null);
+    const [audioColorSDV_2001B, setaudioColorSDV_2001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainSDV_3001B, setMaintainSDV_3001B] = useState<boolean>(false);
+    const [maintainSDV_2001B, setMaintainSDV_2001B] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighSDV_3001B === "string" &&
-            typeof LowSDV_3001B === "string" &&
-            SDV_3001B !== null &&
-            maintainSDV_3001B === false
+            typeof HighSDV_2001B === "string" &&
+            typeof LowSDV_2001B === "string" &&
+            SDV_2001B !== null &&
+            maintainSDV_2001B === false
         ) {
-            const highValue = parseFloat(HighSDV_3001B);
-            const lowValue = parseFloat(LowSDV_3001B);
-            const SDV_3001BValue = parseFloat(SDV_3001B);
+            const highValue = parseFloat(HighSDV_2001B);
+            const lowValue = parseFloat(LowSDV_2001B);
+            const SDV_2001BValue = parseFloat(SDV_2001B);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(SDV_3001BValue)
+                !isNaN(SDV_2001BValue)
             ) {
-                if (highValue < SDV_3001BValue || SDV_3001BValue < lowValue) {
-                    if (!audioSDV_3001B) {
+                if (highValue < SDV_2001BValue || SDV_2001BValue < lowValue) {
+                    if (!audioSDV_2001B) {
                         audioRef.current?.play();
-                        setaudioSDV_3001B(true);
-                        setaudioColorSDV_3001B(true);
+                        setaudioSDV_2001B(true);
+                        setaudioColorSDV_2001B(true);
                     }
                 } else {
-                    setaudioSDV_3001B(false);
-                    setaudioColorSDV_3001B(false);
+                    setaudioSDV_2001B(false);
+                    setaudioColorSDV_2001B(false);
                 }
             }
         }
     }, [
-        HighSDV_3001B,
-        SDV_3001B,
-        audioSDV_3001B,
-        LowSDV_3001B,
-        maintainSDV_3001B,
+        HighSDV_2001B,
+        SDV_2001B,
+        audioSDV_2001B,
+        LowSDV_2001B,
+        maintainSDV_2001B,
     ]);
 
     useEffect(() => {
-        if (audioSDV_3001B) {
+        if (audioSDV_2001B) {
             const audioEnded = () => {
-                setaudioSDV_3001B(false);
+                setaudioSDV_2001B(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioSDV_3001B]);
+    }, [audioSDV_2001B]);
 
     //================================ EVC_02_Temperature ======================================================
 
     //================================ EVC_02_Temperature================================
 
-    const [audioSDV_3002, setaudioSDV_3002] = useState(false);
-    const [HighSDV_3002, setHighSDV_3002] = useState<number | null>(null);
-    const [LowSDV_3002, setLowSDV_3002] = useState<number | null>(null);
-    const [audioColorSDV_3002, setaudioColorSDV_3002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [audioSDV_2002, setaudioSDV_2002] = useState(false);
+    const [HighSDV_2002, setHighSDV_2002] = useState<number | null>(null);
+    const [LowSDV_2002, setLowSDV_2002] = useState<number | null>(null);
+    const [audioColorSDV_2002, setaudioColorSDV_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainSDV_3002, setMaintainSDV_3002] = useState<boolean>(false);
+    const [maintainSDV_2002, setMaintainSDV_2002] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighSDV_3002 === "string" &&
-            typeof LowSDV_3002 === "string" &&
-            SDV_3002 !== null &&
-            maintainSDV_3002 === false
+            typeof HighSDV_2002 === "string" &&
+            typeof LowSDV_2002 === "string" &&
+            SDV_2002 !== null &&
+            maintainSDV_2002 === false
         ) {
-            const highValue = parseFloat(HighSDV_3002);
-            const lowValue = parseFloat(LowSDV_3002);
-            const SDV_3002Value = parseFloat(SDV_3002);
+            const highValue = parseFloat(HighSDV_2002);
+            const lowValue = parseFloat(LowSDV_2002);
+            const SDV_2002Value = parseFloat(SDV_2002);
 
             if (
                 !isNaN(highValue) &&
                 !isNaN(lowValue) &&
-                !isNaN(SDV_3002Value)
+                !isNaN(SDV_2002Value)
             ) {
-                if (highValue < SDV_3002Value || SDV_3002Value < lowValue) {
-                    if (!audioSDV_3002) {
+                if (highValue < SDV_2002Value || SDV_2002Value < lowValue) {
+                    if (!audioSDV_2002) {
                         audioRef.current?.play();
-                        setaudioSDV_3002(true);
-                        setaudioColorSDV_3002(true);
+                        setaudioSDV_2002(true);
+                        setaudioColorSDV_2002(true);
                     }
                 } else {
-                    setaudioSDV_3002(false);
-                    setaudioColorSDV_3002(false);
+                    setaudioSDV_2002(false);
+                    setaudioColorSDV_2002(false);
                 }
             }
         }
-    }, [HighSDV_3002, SDV_3002, audioSDV_3002, LowSDV_3002, maintainSDV_3002]);
+    }, [HighSDV_2002, SDV_2002, audioSDV_2002, LowSDV_2002, maintainSDV_2002]);
 
     useEffect(() => {
-        if (audioSDV_3002) {
+        if (audioSDV_2002) {
             const audioEnded = () => {
-                setaudioSDV_3002(false);
+                setaudioSDV_2002(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioSDV_3002]);
+    }, [audioSDV_2002]);
 
     //================================ EVC_02_Temperature =============================================
 
     //================================ EVC_02_Temperature================================
-    const [TT_3001, setTT_3001] = useState<string | null>(null);
-    const [audioTT_3001, setaudioTT_3001] = useState(false);
-    const [HighTT_3001, setHighTT_3001] = useState<number | null>(null);
-    const [LowTT_3001, setLowTT_3001] = useState<number | null>(null);
-    const [audioColorTT_3001, setaudioColorTT_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [TT_2001, setTT_2001] = useState<string | null>(null);
+    const [audioTT_2001, setaudioTT_2001] = useState(false);
+    const [HighTT_2001, setHighTT_2001] = useState<number | null>(null);
+    const [LowTT_2001, setLowTT_2001] = useState<number | null>(null);
+    const [audioColorTT_2001, setaudioColorTT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainTT_3001, setMaintainTT_3001] = useState<boolean>(false);
+    const [maintainTT_2001, setMaintainTT_2001] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighTT_3001 === "string" &&
-            typeof LowTT_3001 === "string" &&
-            TT_3001 !== null &&
-            maintainTT_3001 === false
+            typeof HighTT_2001 === "string" &&
+            typeof LowTT_2001 === "string" &&
+            TT_2001 !== null &&
+            maintainTT_2001 === false
         ) {
-            const highValue = parseFloat(HighTT_3001);
-            const lowValue = parseFloat(LowTT_3001);
-            const TT_3001Value = parseFloat(TT_3001);
+            const highValue = parseFloat(HighTT_2001);
+            const lowValue = parseFloat(LowTT_2001);
+            const TT_2001Value = parseFloat(TT_2001);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_3001Value)) {
-                if (highValue < TT_3001Value || TT_3001Value < lowValue) {
-                    if (!audioTT_3001) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2001Value)) {
+                if (highValue < TT_2001Value || TT_2001Value < lowValue) {
+                    if (!audioTT_2001) {
                         audioRef.current?.play();
-                        setaudioTT_3001(true);
-                        setaudioColorTT_3001(true);
+                        setaudioTT_2001(true);
+                        setaudioColorTT_2001(true);
                     }
                 } else {
-                    setaudioTT_3001(false);
-                    setaudioColorTT_3001(false);
+                    setaudioTT_2001(false);
+                    setaudioColorTT_2001(false);
                 }
             }
         }
-    }, [HighTT_3001, TT_3001, audioTT_3001, LowTT_3001, maintainTT_3001]);
+    }, [HighTT_2001, TT_2001, audioTT_2001, LowTT_2001, maintainTT_2001]);
 
     useEffect(() => {
-        if (audioTT_3001) {
+        if (audioTT_2001) {
             const audioEnded = () => {
-                setaudioTT_3001(false);
+                setaudioTT_2001(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioTT_3001]);
+    }, [audioTT_2001]);
 
     //================================ EVC_02_Temperature ======================================================
 
     //================================ EVC_02_Temperature================================
-    const [PT_3003, setPT_3003] = useState<string | null>(null);
-    const [audioPT_3003, setaudioPT_3003] = useState(false);
-    const [HighPT_3003, setHighPT_3003] = useState<number | null>(null);
-    const [LowPT_3003, setLowPT_3003] = useState<number | null>(null);
-    const [audioColorPT_3003, setaudioColorPT_3003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [PT_2003, setPT_2003] = useState<string | null>(null);
+    const [audioPT_2003, setaudioPT_2003] = useState(false);
+    const [HighPT_2003, setHighPT_2003] = useState<number | null>(null);
+    const [LowPT_2003, setLowPT_2003] = useState<number | null>(null);
+    const [audioColorPT_2003, setaudioColorPT_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPT_3003, setMaintainPT_3003] = useState<boolean>(false);
+    const [maintainPT_2003, setMaintainPT_2003] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT_3003 === "string" &&
-            typeof LowPT_3003 === "string" &&
-            PT_3003 !== null &&
-            maintainPT_3003 === false
+            typeof HighPT_2003 === "string" &&
+            typeof LowPT_2003 === "string" &&
+            PT_2003 !== null &&
+            maintainPT_2003 === false
         ) {
-            const highValue = parseFloat(HighPT_3003);
-            const lowValue = parseFloat(LowPT_3003);
-            const PT_3003Value = parseFloat(PT_3003);
+            const highValue = parseFloat(HighPT_2003);
+            const lowValue = parseFloat(LowPT_2003);
+            const PT_2003Value = parseFloat(PT_2003);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_3003Value)) {
-                if (highValue < PT_3003Value || PT_3003Value < lowValue) {
-                    if (!audioPT_3003) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2003Value)) {
+                if (highValue < PT_2003Value || PT_2003Value < lowValue) {
+                    if (!audioPT_2003) {
                         audioRef.current?.play();
-                        setaudioPT_3003(true);
-                        setaudioColorPT_3003(true);
+                        setaudioPT_2003(true);
+                        setaudioColorPT_2003(true);
                     }
                 } else {
-                    setaudioPT_3003(false);
-                    setaudioColorPT_3003(false);
+                    setaudioPT_2003(false);
+                    setaudioColorPT_2003(false);
                 }
             }
         }
-    }, [HighPT_3003, PT_3003, audioPT_3003, LowPT_3003, maintainPT_3003]);
+    }, [HighPT_2003, PT_2003, audioPT_2003, LowPT_2003, maintainPT_2003]);
 
     useEffect(() => {
-        if (audioPT_3003) {
+        if (audioPT_2003) {
             const audioEnded = () => {
-                setaudioPT_3003(false);
+                setaudioPT_2003(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioPT_3003]);
+    }, [audioPT_2003]);
 
     //================================ EVC_02_Temperature ======================================================
 
     //================================ EVC_02_Temperature================================
-    const [GD_3001, setGD_3001] = useState<string | null>(null);
-    const [audioGD_3001, setaudioGD_3001] = useState(false);
-    const [HighGD_3001, setHighGD_3001] = useState<number | null>(null);
-    const [LowGD_3001, setLowGD_3001] = useState<number | null>(null);
-    const [audioColorGD_3001, setaudioColorGD_3001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [GD_2001, setGD_2001] = useState<string | null>(null);
+    const [audioGD_2001, setaudioGD_2001] = useState(false);
+    const [HighGD_2001, setHighGD_2001] = useState<number | null>(null);
+    const [LowGD_2001, setLowGD_2001] = useState<number | null>(null);
+    const [audioColorGD_2001, setaudioColorGD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainGD_3001, setMaintainGD_3001] = useState<boolean>(false);
+    const [maintainGD_2001, setMaintainGD_2001] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighGD_3001 === "string" &&
-            typeof LowGD_3001 === "string" &&
-            GD_3001 !== null &&
-            maintainGD_3001 === false
+            typeof HighGD_2001 === "string" &&
+            typeof LowGD_2001 === "string" &&
+            GD_2001 !== null &&
+            maintainGD_2001 === false
         ) {
-            const highValue = parseFloat(HighGD_3001);
-            const lowValue = parseFloat(LowGD_3001);
-            const GD_3001Value = parseFloat(GD_3001);
+            const highValue = parseFloat(HighGD_2001);
+            const lowValue = parseFloat(LowGD_2001);
+            const GD_2001Value = parseFloat(GD_2001);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_3001Value)) {
-                if (highValue < GD_3001Value || GD_3001Value < lowValue) {
-                    if (!audioGD_3001) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2001Value)) {
+                if (highValue < GD_2001Value || GD_2001Value < lowValue) {
+                    if (!audioGD_2001) {
                         audioRef.current?.play();
-                        setaudioGD_3001(true);
-                        setaudioColorGD_3001(true);
+                        setaudioGD_2001(true);
+                        setaudioColorGD_2001(true);
                     }
                 } else {
-                    setaudioGD_3001(false);
-                    setaudioColorGD_3001(false);
+                    setaudioGD_2001(false);
+                    setaudioColorGD_2001(false);
                 }
             }
         }
-    }, [HighGD_3001, GD_3001, audioGD_3001, LowGD_3001, maintainGD_3001]);
+    }, [HighGD_2001, GD_2001, audioGD_2001, LowGD_2001, maintainGD_2001]);
 
     useEffect(() => {
-        if (audioGD_3001) {
+        if (audioGD_2001) {
             const audioEnded = () => {
-                setaudioGD_3001(false);
+                setaudioGD_2001(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioGD_3001]);
+    }, [audioGD_2001]);
 
     //================================ EVC_02_Temperature ======================================================
 
@@ -2948,9 +2936,9 @@ export default function Graphic_CNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "PIT_3001A_DATA") {
+            if (node.id === "PIT_2006_DATA") {
                 const roundedPT02 =
-                    PIT_3001A !== null ? parseFloat(PIT_3001A).toFixed(2) : "";
+                    PIT_2006 !== null ? parseFloat(PIT_2006).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2966,10 +2954,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_3001A &&
-                                        !maintainPIT_3001A
+                                        audioColorPIT_2006 && !maintainPIT_2006
                                             ? "#ff5656"
-                                            : maintainPIT_3001A
+                                            : maintainPIT_2006
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2985,7 +2972,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 3001A :
+                                        PIT-2006 :
                                     </p>
                                     <p
                                         style={{
@@ -3010,9 +2997,9 @@ export default function Graphic_CNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "PIT_3001B_DATA") {
+            if (node.id === "PIT_2007_DATA") {
                 const roundedPT02 =
-                    PIT_3001B !== null ? parseFloat(PIT_3001B).toFixed(2) : "";
+                    PIT_2007 !== null ? parseFloat(PIT_2007).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3028,10 +3015,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_3001B &&
-                                        !maintainPIT_3001B
+                                        audioColorPIT_2007 && !maintainPIT_2007
                                             ? "#ff5656"
-                                            : maintainPIT_3001B
+                                            : maintainPIT_2007
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3047,7 +3033,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 3001B :
+                                        PIT-2007 :
                                     </p>
                                     <p
                                         style={{
@@ -3073,9 +3059,9 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PT_3001_DATA") {
+            if (node.id === "PT_2001_DATA") {
                 const roundedPT02 =
-                    PT_3001 !== null ? parseFloat(PT_3001).toFixed(2) : "";
+                    PT_2001 !== null ? parseFloat(PT_2001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3091,9 +3077,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_3001 && !maintainPT_3001
+                                        audioColorPT_2001 && !maintainPT_2001
                                             ? "#ff5656"
-                                            : maintainPT_3001
+                                            : maintainPT_2001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3109,7 +3095,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3001 :
+                                        PT-2001 :
                                     </p>
                                     <p
                                         style={{
@@ -3134,9 +3120,9 @@ export default function Graphic_CNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "PT_3002_DATA") {
+            if (node.id === "PT_2002_DATA") {
                 const roundedPT02 =
-                    PT_3002 !== null ? parseFloat(PT_3002).toFixed(2) : "";
+                    PT_2002 !== null ? parseFloat(PT_2002).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3152,9 +3138,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_3002 && !maintainPT_3002
+                                        audioColorPT_2002 && !maintainPT_2002
                                             ? "#ff5656"
-                                            : maintainPT_3002
+                                            : maintainPT_2002
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3170,7 +3156,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3002 :
+                                        PT-2002 :
                                     </p>
                                     <p
                                         style={{
@@ -3453,7 +3439,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PCV_3001A_DATA") {
+            if (node.id === "PCV_2001A_DATA") {
                 return {
                     ...node,
                     data: {
@@ -3469,11 +3455,11 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PCV-3001A :
+                                    PCV-2001A :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_3001A}{" "}
+                                    {PCV_2001A}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -3482,7 +3468,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PCV_3001B_DATA") {
+            if (node.id === "PCV_2001B_DATA") {
                 return {
                     ...node,
                     data: {
@@ -3498,11 +3484,11 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PCV-3001B :
+                                    PCV-2001B :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_3001B}{" "}
+                                    {PCV_2001B}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -3511,7 +3497,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PCV_3002A_DATA") {
+            if (node.id === "PCV_2002A_DATA") {
                 return {
                     ...node,
                     data: {
@@ -3527,11 +3513,11 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PCV-3002A :
+                                    PCV-2002A :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_3002A}{" "}
+                                    {PCV_2002A}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -3540,7 +3526,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PCV_3002B_DATA") {
+            if (node.id === "PCV_2002B_DATA") {
                 return {
                     ...node,
                     data: {
@@ -3556,11 +3542,11 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PCV-3002B
+                                    PCV-2002B
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_3002B}{" "}
+                                    {PCV_2002B}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -3569,7 +3555,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "SDV_3001A") {
+            if (node.id === "SDV_2001A") {
                 return {
                     ...node,
                     data: {
@@ -3577,9 +3563,9 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div>
                                 <div>
-                                    {SDV_3001A === "1"
+                                    {SDV_2001A === "1"
                                         ? SVD_NO
-                                        : SDV_3001A === "0"
+                                        : SDV_2001A === "0"
                                         ? SVD_NC
                                         : null}
                                 </div>
@@ -3588,7 +3574,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "SDV_3001B") {
+            if (node.id === "SDV_2001B") {
                 return {
                     ...node,
                     data: {
@@ -3596,30 +3582,9 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div>
                                 <div>
-                                    {SDV_3001B === "1"
+                                    {SDV_2001B === "1"
                                         ? SVD_NO
-                                        : SDV_3001B === "0"
-                                        ? SVD_NC
-                                        : null}
-                                </div>
-                            </div>
-                        ),
-                    },
-                };
-            }
-
-            if (node.id === "SDV_3002") {
-                return {
-                    ...node,
-
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div>
-                                <div>
-                                    {SDV_3002 === "1"
-                                        ? SVD_NO
-                                        : SDV_3002 === "0"
+                                        : SDV_2001B === "0"
                                         ? SVD_NC
                                         : null}
                                 </div>
@@ -3629,9 +3594,30 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "TT_3001_DATA") {
+            if (node.id === "SDV_2002") {
+                return {
+                    ...node,
+
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div>
+                                <div>
+                                    {SDV_2002 === "1"
+                                        ? SVD_NO
+                                        : SDV_2002 === "0"
+                                        ? SVD_NC
+                                        : null}
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "TT_2001_DATA") {
                 const roundedPT02 =
-                    TT_3001 !== null ? parseFloat(TT_3001).toFixed(2) : "";
+                    TT_2001 !== null ? parseFloat(TT_2001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3647,9 +3633,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTT_3001 && !maintainTT_3001
+                                        audioColorTT_2001 && !maintainTT_2001
                                             ? "#ff5656"
-                                            : maintainTT_3001
+                                            : maintainTT_2001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3665,7 +3651,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-3001 :
+                                        TT-2001 :
                                     </p>
                                     <p
                                         style={{
@@ -3691,9 +3677,9 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PT_3003_DATA") {
+            if (node.id === "PT_2003_DATA") {
                 const roundedPT02 =
-                    PT_3003 !== null ? parseFloat(PT_3003).toFixed(2) : "";
+                    PT_2003 !== null ? parseFloat(PT_2003).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3709,9 +3695,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_3003 && !maintainPT_3003
+                                        audioColorPT_2003 && !maintainPT_2003
                                             ? "#ff5656"
-                                            : maintainPT_3003
+                                            : maintainPT_2003
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3727,7 +3713,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3003 :
+                                        PT-2003 :
                                     </p>
                                     <p
                                         style={{
@@ -3753,9 +3739,9 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "GD_3001") {
+            if (node.id === "GD_2001") {
                 const roundedPT02 =
-                    GD_3001 !== null ? parseFloat(GD_3001).toFixed(2) : "";
+                    GD_2001 !== null ? parseFloat(GD_2001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -3771,9 +3757,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorGD_3001 && !maintainGD_3001
+                                        audioColorGD_2001 && !maintainGD_2001
                                             ? "#ff5656"
-                                            : maintainGD_3001
+                                            : maintainGD_2001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -3789,7 +3775,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        GD-3001 :
+                                        GD-2001 :
                                     </p>
                                     <p
                                         style={{
@@ -3816,7 +3802,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PSV_3001A") {
+            if (node.id === "PSV_2001A") {
                 return {
                     ...node,
                     data: {
@@ -3832,11 +3818,11 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001B :
+                                    PSV-2001B :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PSV_3001A} :
+                                    {PSV_2001A} :
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -3845,7 +3831,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PSV_3002A") {
+            if (node.id === "PSV_2002A") {
                 return {
                     ...node,
                     data: {
@@ -3861,9 +3847,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002A :
+                                    PSV-2002A :
                                 </p>
-                                <p style={{ color: colorData }}> {PSV_3002A}</p>
+                                <p style={{ color: colorData }}> {PSV_2002A}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
@@ -3871,7 +3857,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PSV_3001B") {
+            if (node.id === "PSV_2001B") {
                 return {
                     ...node,
                     data: {
@@ -3887,9 +3873,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001B :
+                                    PSV-2001B :
                                 </p>
-                                <p style={{ color: colorData }}> {PCV_3002A}</p>
+                                <p style={{ color: colorData }}> {PCV_2002A}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
@@ -3897,7 +3883,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PSV_3002B") {
+            if (node.id === "PSV_2002B") {
                 return {
                     ...node,
                     data: {
@@ -3913,9 +3899,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002B :
+                                    PSV-2002B :
                                 </p>
-                                <p style={{ color: colorData }}> {PSV_3002B}</p>
+                                <p style={{ color: colorData }}> {PSV_2002B}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
@@ -4069,16 +4055,16 @@ export default function Graphic_CNG_HUNGYEN() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionPRU");
+    const storedPositionString = localStorage.getItem("positionPRU");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-              const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+              // const initialPositions = {
               Arrow10: { x: -492.7447218166488, y: 1273.1631739409133 },
               BallVavleLine2_Bottom: {
-                  x: -1662.1522526615677,
-                  y: 1481.9051265474757,
+                  x: -1661.682672878477,
+                  y: 1481.0920733587484,
               },
               BallVavleLine2_Bottom_none: {
                   x: -1650.5994566252746,
@@ -4108,7 +4094,7 @@ export default function Graphic_CNG_HUNGYEN() {
                   x: -959.090980952997,
                   y: 1068.376995289186,
               },
-              DownArrow: { x: -2440.1778265025932, y: 1638.6301381134936 },
+              DownArrow: { x: -2440.1778265025932, y: 1643.6301381134936 },
               EVC_01_Flow_at_Base_Condition: {
                   x: -944.7566756597366,
                   y: 877.4187744710375,
@@ -4205,32 +4191,32 @@ export default function Graphic_CNG_HUNGYEN() {
                   x: -691.7597706423713,
                   y: 1659.6681974922926,
               },
-              FIQ_3001A: { x: -1122.9979525971376, y: 1090.3467963356752 },
-              FIQ_3001B: { x: -1127.9442365313425, y: 1503.338633373814 },
-              GD_3001: { x: -1177.1116094437443, y: 1176.7839153333475 },
+              FIQ_2001A: { x: -1122.9979525971376, y: 1090.3467963356752 },
+              FIQ_2001B: { x: -1127.9442365313425, y: 1503.338633373814 },
+              GD_2001: { x: -1177.1116094437443, y: 1176.7839153333475 },
               GD_IMG: { x: -1096.8954721391294, y: 1232.7407461451007 },
-              Header: { x: -2347.783064181821, y: 737.4556589669556 },
-              PCV_3001A: { x: -1590.143839770737, y: 1466.187406343237 },
-              PCV_3001A_DATA: { x: -2116.661737058325, y: 989.2583128026904 },
-              PCV_3001A_SmallBallVavle: {
+              Header: { x: -2375.4269666355694, y: 739.4302234279377 },
+              PCV_2001A: { x: -1590.143839770737, y: 1466.187406343237 },
+              PCV_2001A_DATA: { x: -2120.636781865267, y: 986.2048880089947 },
+              PCV_2001A_SmallBallVavle: {
                   x: -1483.6177892854255,
                   y: 1469.3848130414924,
               },
-              PCV_3001A_none: { x: -1472.3253266041704, y: 1520.498001843855 },
-              PCV_3001A_none2: {
+              PCV_2001A_none: { x: -1472.3253266041704, y: 1520.498001843855 },
+              PCV_2001A_none2: {
                   x: -1560.2798867415365,
                   y: 1482.2617504326024,
               },
-              PCV_3001B: { x: -1589.6280768037607, y: 1051.7950507090916 },
-              PCV_3001B_DATA: { x: -2122.7870218126836, y: 1404.6541893713072 },
-              PCV_3001B_SmallBallVavle: {
+              PCV_2001B: { x: -1589.6280768037607, y: 1051.7950507090916 },
+              PCV_2001B_DATA: { x: -2124.789588576235, y: 1402.9439742063528 },
+              PCV_2001B_SmallBallVavle: {
                   x: -1486.9036877800625,
                   y: 1056.0055835082862,
               },
-              PCV_3001B_none: { x: -1559.0670889230703, y: 1066.5206445548827 },
-              PCV_3001B_none2: { x: -1475.720019744693, y: 1104.4215156026714 },
-              PCV_3002A_DATA: { x: -1649.2452410936926, y: 989.0313244141726 },
-              PCV_3002B_DATA: { x: -1648.4202186554123, y: 1405.1028607942028 },
+              PCV_2001B_none: { x: -1559.0670889230703, y: 1066.5206445548827 },
+              PCV_2001B_none2: { x: -1475.720019744693, y: 1104.4215156026714 },
+              PCV_2002A_DATA: { x: -1648.4407513108924, y: 983.9482732776437 },
+              PCV_2002B_DATA: { x: -1649.5209235672614, y: 1404.8908772927662 },
               PCV_line1_Bottom: { x: -2059.46440478068, y: 1051.690596866844 },
               PCV_line1_Bottom_SmallBallVavle: {
                   x: -1959.916081354473,
@@ -4257,18 +4243,18 @@ export default function Graphic_CNG_HUNGYEN() {
                   x: -1943.863015032123,
                   y: 1106.014175669431,
               },
-              PIT_3001A_COL: { x: -2194.366805384612, y: 1463.874739139494 },
-              PIT_3001A_DATA: { x: -2323.884062940713, y: 1148.6083704185041 },
-              PIT_3001A_IMG: { x: -2226.866805384612, y: 1400.374739139494 },
-              PIT_3001A_NONE: { x: -2197.8690826568136, y: 1007.3191633358758 },
-              PIT_3001B_COL: { x: -2197.6600827175034, y: 1050.3588175915195 },
-              PIT_3001B_DATA: { x: -2326.9359251148935, y: 1585.7692501253557 },
-              PIT_3001B_IMG: { x: -2230.624481311542, y: 986.990895895738 },
-              PIT_3001B_NONE: { x: -2193.7144666730205, y: 1424.0282015242046 },
-              PSV_3001A: { x: -1844.6249877968003, y: 904.7518340240545 },
-              PSV_3001B: { x: -1851.8971023103254, y: 1316.7167432666458 },
-              PSV_3002A: { x: -1307.7176662681832, y: 894.499205487562 },
-              PSV_3002B: { x: -1307.7176662681832, y: 1311.4439993566057 },
+              PIT_2006_COL: { x: -2194.366805384612, y: 1463.874739139494 },
+              PIT_2006_DATA: { x: -2323.884062940713, y: 1148.6083704185041 },
+              PIT_2006_IMG: { x: -2226.866805384612, y: 1400.374739139494 },
+              PIT_2006_NONE: { x: -2197.8690826568136, y: 1007.3191633358758 },
+              PIT_2007_COL: { x: -2197.6600827175034, y: 1050.3588175915195 },
+              PIT_2007_DATA: { x: -2326.9359251148935, y: 1585.7692501253557 },
+              PIT_2007_IMG: { x: -2230.624481311542, y: 986.990895895738 },
+              PIT_2007_NONE: { x: -2193.7144666730205, y: 1424.0282015242046 },
+              PSV_2001A: { x: -1844.6249877968003, y: 904.7518340240545 },
+              PSV_2001B: { x: -1851.8971023103254, y: 1316.7167432666458 },
+              PSV_2002A: { x: -1307.7176662681832, y: 894.499205487562 },
+              PSV_2002B: { x: -1307.7176662681832, y: 1311.4439993566057 },
               PSV_LINE2_BOTTOM: {
                   x: -1740.5499935425808,
                   y: 1021.4152979362718,
@@ -4356,28 +4342,28 @@ export default function Graphic_CNG_HUNGYEN() {
                   x: -1254.4104579359896,
                   y: 1415.3142896015559,
               },
-              PT_3001_COL: { x: -1866.4577639723273, y: 1462.4297119508683 },
-              PT_3001_DATA: { x: -1995.729893153021, y: 1149.2252195340056 },
-              PT_3001_IMG: { x: -1898.7568597618636, y: 1399.3826957761635 },
-              PT_3001_NONE: { x: -1865.795938216313, y: 1009.610885120657 },
-              PT_3002_COL: { x: -1866.073792487846, y: 1050.0079742479018 },
-              PT_3002_DATA: { x: -1993.699445139633, y: 1586.4921741314997 },
-              PT_3002_IMG: { x: -1898.5737924878463, y: 986.4938130080379 },
-              PT_3002_NONE: { x: -1866.220994341128, y: 1425.5940219176825 },
-              PT_3003: { x: -557.5192503184699, y: 1187.6953023585315 },
-              PT_3003_COL: { x: -524.7686430061353, y: 1250.0518497796409 },
-              PT_3003_DATA: { x: -635.9823668842814, y: 1114.4814628687584 },
-              PT_3003_NONE: { x: -525.5207270322528, y: 1211.5866709113047 },
-              SDV_3001A: { x: -2367.264096852104, y: 1047.9003450623102 },
-              SDV_3001A_Name: { x: -2400.231075578696, y: 1016.8765739089936 },
-              SDV_3001B: { x: -2347.936922940682, y: 1461.553943767321 },
-              SDV_3001B_Name: { x: -2380.436922940682, y: 1431.1155032793695 },
-              SDV_3002: { x: -678.3418360296369, y: 1247.6338925770501 },
-              SDV_3002_Name: { x: -711.4498629335723, y: 1217.0152763122878 },
-              TT_3001: { x: -774.5849596388143, y: 1165.272375766297 },
-              TT_3001_COL: { x: -752.0228109693398, y: 1212.6484692154747 },
-              TT_3001_DATA: { x: -861.674501492153, y: 1027.5582788874765 },
-              TT_3001_NONE: { x: -751.7461176685688, y: 1198.7307209642906 },
+              PT_2001_COL: { x: -1866.4577639723273, y: 1462.4297119508683 },
+              PT_2001_DATA: { x: -1995.729893153021, y: 1149.2252195340056 },
+              PT_2001_IMG: { x: -1898.7568597618636, y: 1399.3826957761635 },
+              PT_2001_NONE: { x: -1865.795938216313, y: 1009.610885120657 },
+              PT_2002_COL: { x: -1866.073792487846, y: 1050.0079742479018 },
+              PT_2002_DATA: { x: -1993.699445139633, y: 1586.4921741314997 },
+              PT_2002_IMG: { x: -1898.5737924878463, y: 986.4938130080379 },
+              PT_2002_NONE: { x: -1866.220994341128, y: 1425.5940219176825 },
+              PT_2003: { x: -557.5192503184699, y: 1187.6953023585315 },
+              PT_2003_COL: { x: -524.7686430061353, y: 1250.0518497796409 },
+              PT_2003_DATA: { x: -635.9823668842814, y: 1114.4814628687584 },
+              PT_2003_NONE: { x: -525.5207270322528, y: 1211.5866709113047 },
+              SDV_2001A: { x: -2367.264096852104, y: 1047.9003450623102 },
+              SDV_2001A_Name: { x: -2400.231075578696, y: 1016.8765739089936 },
+              SDV_2001B: { x: -2347.936922940682, y: 1461.553943767321 },
+              SDV_2001B_Name: { x: -2380.436922940682, y: 1431.1155032793695 },
+              SDV_2002: { x: -678.3418360296369, y: 1247.6338925770501 },
+              SDV_2002_Name: { x: -711.4498629335723, y: 1217.0152763122878 },
+              TT_2001: { x: -774.5849596388143, y: 1165.272375766297 },
+              TT_2001_COL: { x: -752.0228109693398, y: 1212.6484692154747 },
+              TT_2001_DATA: { x: -861.674501492153, y: 1027.5582788874765 },
+              TT_2001_NONE: { x: -751.7461176685688, y: 1198.7307209642906 },
               bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
               bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
@@ -4393,7 +4379,7 @@ export default function Graphic_CNG_HUNGYEN() {
               line8: { x: -1037.0272391551282, y: 1512.874739139494 },
               line9: { x: -661.0207270322528, y: 1298.5866709113047 },
               line10: { x: -449.9501828459661, y: 1298.5866709113047 },
-              timeUpdate3: { x: -2387.450182845966, y: 800.0866709113047 },
+              timeUpdate3: { x: -2381.52648946302, y: 800.0866709113047 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -4424,7 +4410,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                CNG HUNG YEN
+                                CNG BINH DUONG
                             </p>
                         </div>
                     </div>
@@ -4437,15 +4423,15 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: background,
                 border: background,
-                width: 300,
+                width: 330,
 
                 height: 10,
             },
             targetPosition: Position.Bottom,
         },
         {
-            id: "PSV_3001A",
-            position: positions.PSV_3001A,
+            id: "PSV_2001A",
+            position: positions.PSV_2001A,
             type: "custom",
             data: {
                 label: <div>1A</div>,
@@ -4464,8 +4450,8 @@ export default function Graphic_CNG_HUNGYEN() {
             zIndex: 999999,
         },
         {
-            id: "PSV_3001B",
-            position: positions.PSV_3001B,
+            id: "PSV_2001B",
+            position: positions.PSV_2001B,
             type: "custom",
             data: {
                 label: <div>1B</div>,
@@ -4484,8 +4470,8 @@ export default function Graphic_CNG_HUNGYEN() {
             zIndex: 999999,
         },
         {
-            id: "PSV_3002A",
-            position: positions.PSV_3002A,
+            id: "PSV_2002A",
+            position: positions.PSV_2002A,
             type: "custom",
             data: {
                 label: <div>2A</div>,
@@ -4504,8 +4490,8 @@ export default function Graphic_CNG_HUNGYEN() {
             zIndex: 999999,
         },
         {
-            id: "PSV_3002B",
-            position: positions.PSV_3002B,
+            id: "PSV_2002B",
+            position: positions.PSV_2002B,
             type: "custom",
             data: {
                 label: <div>2B</div>,
@@ -4527,11 +4513,11 @@ export default function Graphic_CNG_HUNGYEN() {
         // =================== data ================================
 
         {
-            id: "FIQ_3001A",
-            position: positions.FIQ_3001A,
+            id: "FIQ_2001A",
+            position: positions.FIQ_2001A,
             type: "custom",
             data: {
-                label: <div>FIQ 3001B</div>,
+                label: <div>FIQ-2001A</div>,
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
@@ -4546,11 +4532,11 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "FIQ_3001B",
-            position: positions.FIQ_3001B,
+            id: "FIQ_2001B",
+            position: positions.FIQ_2001B,
             type: "custom",
             data: {
-                label: <div>FIQ 3001B</div>,
+                label: <div>FIQ-2001B</div>,
             },
             sourcePosition: Position.Bottom,
             targetPosition: Position.Bottom,
@@ -4965,8 +4951,8 @@ export default function Graphic_CNG_HUNGYEN() {
             },
         },
         {
-            id: "GD_3001",
-            position: positions.GD_3001,
+            id: "GD_2001",
+            position: positions.GD_2001,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5139,8 +5125,8 @@ export default function Graphic_CNG_HUNGYEN() {
         //==========================Ball vavle ==========================
 
         {
-            id: "PCV_3001A",
-            position: positions.PCV_3001A,
+            id: "PCV_2001A",
+            position: positions.PCV_2001A,
             type: "custom",
             data: {
                 label: (
@@ -5166,8 +5152,8 @@ export default function Graphic_CNG_HUNGYEN() {
             zIndex: 9999,
         },
         {
-            id: "PCV_3001B",
-            position: positions.PCV_3001B,
+            id: "PCV_2001B",
+            position: positions.PCV_2001B,
             type: "custom",
             data: {
                 label: (
@@ -5286,12 +5272,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001B_none",
+            id: "PCV_2001B_none",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PCV_3001B_none,
+            position: positions.PCV_2001B_none,
 
             style: {
                 background: "none",
@@ -5304,12 +5290,12 @@ export default function Graphic_CNG_HUNGYEN() {
             sourcePosition: Position.Top,
         },
         {
-            id: "PCV_3001A_none",
+            id: "PCV_2001A_none",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PCV_3001A_none,
+            position: positions.PCV_2001A_none,
 
             style: {
                 background: "none",
@@ -5359,12 +5345,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001B_none2",
+            id: "PCV_2001B_none2",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PCV_3001B_none2,
+            position: positions.PCV_2001B_none2,
 
             style: {
                 background: "none",
@@ -5377,12 +5363,12 @@ export default function Graphic_CNG_HUNGYEN() {
             sourcePosition: Position.Top,
         },
         {
-            id: "PCV_3001A_none2",
+            id: "PCV_2001A_none2",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PCV_3001A_none2,
+            position: positions.PCV_2001A_none2,
 
             style: {
                 background: "none",
@@ -5452,8 +5438,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001A_SmallBallVavle",
-            position: positions.PCV_3001A_SmallBallVavle,
+            id: "PCV_2001A_SmallBallVavle",
+            position: positions.PCV_2001A_SmallBallVavle,
             type: "custom",
             data: {
                 label: (
@@ -5480,8 +5466,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001B_SmallBallVavle",
-            position: positions.PCV_3001B_SmallBallVavle,
+            id: "PCV_2001B_SmallBallVavle",
+            position: positions.PCV_2001B_SmallBallVavle,
             type: "custom",
             data: {
                 label: (
@@ -5508,8 +5494,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001A_DATA",
-            position: positions.PCV_3001A_DATA,
+            id: "PCV_2001A_DATA",
+            position: positions.PCV_2001A_DATA,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5529,8 +5515,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3001B_DATA",
-            position: positions.PCV_3001B_DATA,
+            id: "PCV_2001B_DATA",
+            position: positions.PCV_2001B_DATA,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5550,8 +5536,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3002A_DATA",
-            position: positions.PCV_3002A_DATA,
+            id: "PCV_2002A_DATA",
+            position: positions.PCV_2002A_DATA,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5571,8 +5557,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PCV_3002B_DATA",
-            position: positions.PCV_3002B_DATA,
+            id: "PCV_2002B_DATA",
+            position: positions.PCV_2002B_DATA,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5593,12 +5579,12 @@ export default function Graphic_CNG_HUNGYEN() {
         //==============PIT ===================
 
         {
-            id: "PIT_3001A_IMG",
+            id: "PIT_2006_IMG",
             data: {
                 label: <div>{PTV}</div>,
             },
 
-            position: positions.PIT_3001A_IMG,
+            position: positions.PIT_2006_IMG,
             zIndex: 9999,
             style: {
                 background: background,
@@ -5610,12 +5596,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PIT_3001B_IMG",
+            id: "PIT_2007_IMG",
             data: {
                 label: <div>{PTV}</div>,
             },
 
-            position: positions.PIT_3001B_IMG,
+            position: positions.PIT_2007_IMG,
             zIndex: 9999,
 
             style: {
@@ -5629,12 +5615,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3001_IMG",
+            id: "PT_2001_IMG",
             data: {
                 label: <div>{PTV}</div>,
             },
 
-            position: positions.PT_3001_IMG,
+            position: positions.PT_2001_IMG,
             zIndex: 9999,
             style: {
                 background: background,
@@ -5647,12 +5633,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3002_IMG",
+            id: "PT_2002_IMG",
             data: {
                 label: <div>{PTV}</div>,
             },
 
-            position: positions.PT_3002_IMG,
+            position: positions.PT_2002_IMG,
             zIndex: 9999,
 
             style: {
@@ -5702,12 +5688,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PIT_3001A_COL",
+            id: "PIT_2006_COL",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PIT_3001A_COL,
+            position: positions.PIT_2006_COL,
             zIndex: 9999,
             style: {
                 background: line,
@@ -5719,12 +5705,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PIT_3001B_COL",
+            id: "PIT_2007_COL",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PIT_3001B_COL,
+            position: positions.PIT_2007_COL,
             zIndex: 9999,
 
             style: {
@@ -5738,12 +5724,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3001_COL",
+            id: "PT_2001_COL",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PT_3001_COL,
+            position: positions.PT_2001_COL,
             zIndex: 9999,
             style: {
                 background: line2,
@@ -5755,12 +5741,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PT_3002_COL",
+            id: "PT_2002_COL",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PT_3002_COL,
+            position: positions.PT_2002_COL,
             zIndex: 9999,
 
             style: {
@@ -5810,7 +5796,7 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PIT_3001A_DATA",
+            id: "PIT_2006_DATA",
             data: {
                 label: (
                     <div
@@ -5824,7 +5810,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PIT_3001A_DATA,
+            position: positions.PIT_2006_DATA,
 
             style: {
                 border: background,
@@ -5836,7 +5822,7 @@ export default function Graphic_CNG_HUNGYEN() {
             sourcePosition: Position.Top,
         },
         {
-            id: "PIT_3001B_DATA",
+            id: "PIT_2007_DATA",
             data: {
                 label: (
                     <div
@@ -5850,7 +5836,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PIT_3001B_DATA,
+            position: positions.PIT_2007_DATA,
 
             style: {
                 border: background,
@@ -5862,7 +5848,7 @@ export default function Graphic_CNG_HUNGYEN() {
             sourcePosition: Position.Top,
         },
         {
-            id: "PT_3001_DATA",
+            id: "PT_2001_DATA",
             data: {
                 label: (
                     <div
@@ -5876,7 +5862,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3001_DATA,
+            position: positions.PT_2001_DATA,
 
             style: {
                 border: background,
@@ -5888,7 +5874,7 @@ export default function Graphic_CNG_HUNGYEN() {
             sourcePosition: Position.Top,
         },
         {
-            id: "PT_3002_DATA",
+            id: "PT_2002_DATA",
             data: {
                 label: (
                     <div
@@ -5902,7 +5888,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3002_DATA,
+            position: positions.PT_2002_DATA,
 
             style: {
                 border: background,
@@ -5966,12 +5952,12 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PIT_3001A_NONE",
+            id: "PIT_2006_NONE",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PIT_3001A_NONE,
+            position: positions.PIT_2006_NONE,
             zIndex: 9999,
 
             style: {
@@ -5984,12 +5970,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PIT_3001B_NONE",
+            id: "PIT_2007_NONE",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PIT_3001B_NONE,
+            position: positions.PIT_2007_NONE,
             zIndex: 9999,
 
             style: {
@@ -6002,12 +5988,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PT_3001_NONE",
+            id: "PT_2001_NONE",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PT_3001_NONE,
+            position: positions.PT_2001_NONE,
             zIndex: 9999,
 
             style: {
@@ -6020,12 +6006,12 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PT_3002_NONE",
+            id: "PT_2002_NONE",
             data: {
                 label: <div></div>,
             },
 
-            position: positions.PT_3002_NONE,
+            position: positions.PT_2002_NONE,
             zIndex: 9999,
 
             style: {
@@ -6705,8 +6691,8 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "SDV_3001A",
-            position: positions.SDV_3001A,
+            id: "SDV_2001A",
+            position: positions.SDV_2001A,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6723,7 +6709,7 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "SDV_3001B",
+            id: "SDV_2001B",
             data: {
                 label: (
                     <div
@@ -6732,11 +6718,11 @@ export default function Graphic_CNG_HUNGYEN() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV_3001B
+                        SDV_2001B
                     </div>
                 ),
             },
-            position: positions.SDV_3001B,
+            position: positions.SDV_2001B,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -6748,7 +6734,7 @@ export default function Graphic_CNG_HUNGYEN() {
             },
         },
         {
-            id: "SDV_3002",
+            id: "SDV_2002",
             data: {
                 label: (
                     <div
@@ -6757,11 +6743,11 @@ export default function Graphic_CNG_HUNGYEN() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV_3002
+                        SDV_2002
                     </div>
                 ),
             },
-            position: positions.SDV_3002,
+            position: positions.SDV_2002,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -6774,11 +6760,11 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "SDV_3001A_Name",
-            position: positions.SDV_3001A_Name,
+            id: "SDV_2001A_Name",
+            position: positions.SDV_2001A_Name,
             type: "custom",
             data: {
-                label: <div>SDV-3001A</div>,
+                label: <div>SDV-2001A</div>,
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
@@ -6792,8 +6778,8 @@ export default function Graphic_CNG_HUNGYEN() {
             },
         },
         {
-            id: "SDV_3001B_Name",
-            position: positions.SDV_3001B_Name,
+            id: "SDV_2001B_Name",
+            position: positions.SDV_2001B_Name,
 
             data: {
                 label: (
@@ -6803,7 +6789,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-3001B
+                        SDV-2001B
                     </div>
                 ),
             },
@@ -6819,8 +6805,8 @@ export default function Graphic_CNG_HUNGYEN() {
             },
         },
         {
-            id: "SDV_3002_Name",
-            position: positions.SDV_3002_Name,
+            id: "SDV_2002_Name",
+            position: positions.SDV_2002_Name,
 
             data: {
                 label: (
@@ -6830,7 +6816,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-6002
+                        SDV-2002
                     </div>
                 ),
             },
@@ -6847,8 +6833,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
         // ==========================================================================================
         {
-            id: "TT_3001_COL",
-            position: positions.TT_3001_COL,
+            id: "TT_2001_COL",
+            position: positions.TT_2001_COL,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6865,7 +6851,7 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "TT_3001_DATA",
+            id: "TT_2001_DATA",
             data: {
                 label: (
                     <div
@@ -6879,7 +6865,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.TT_3001_DATA,
+            position: positions.TT_2001_DATA,
 
             style: {
                 border: background,
@@ -6890,8 +6876,8 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "TT_3001",
-            position: positions.TT_3001,
+            id: "TT_2001",
+            position: positions.TT_2001,
             type: "custom",
             data: {
                 label: <div>{GaugeTemperature}</div>,
@@ -6908,8 +6894,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "TT_3001_NONE",
-            position: positions.TT_3001_NONE,
+            id: "TT_2001_NONE",
+            position: positions.TT_2001_NONE,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6927,8 +6913,8 @@ export default function Graphic_CNG_HUNGYEN() {
 
         // ==========================================================================================
         {
-            id: "PT_3003_COL",
-            position: positions.PT_3003_COL,
+            id: "PT_2003_COL",
+            position: positions.PT_2003_COL,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6946,7 +6932,7 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3003_DATA",
+            id: "PT_2003_DATA",
             data: {
                 label: (
                     <div
@@ -6960,7 +6946,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3003_DATA,
+            position: positions.PT_2003_DATA,
 
             style: {
                 border: background,
@@ -6971,8 +6957,8 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
         {
-            id: "PT_3003",
-            position: positions.PT_3003,
+            id: "PT_2003",
+            position: positions.PT_2003,
             type: "custom",
             data: {
                 label: <div>{PTV}</div>,
@@ -6989,8 +6975,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3003_NONE",
-            position: positions.PT_3003_NONE,
+            id: "PT_2003_NONE",
+            position: positions.PT_2003_NONE,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -7158,10 +7144,10 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     Arrow10: position,
     //                 }));
-    //             } else if (id === "GD_3001") {
+    //             } else if (id === "GD_2001") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     GD_3001: position,
+    //                     GD_2001: position,
     //                 }));
     //             } else if (id === "GD_IMG") {
     //                 setPositions((prevPositions: any) => ({
@@ -7217,15 +7203,15 @@ export default function Graphic_CNG_HUNGYEN() {
     //             }
 
     //             //======================= BallVavle ====================================
-    //             else if (id === "PCV_3001A") {
+    //             else if (id === "PCV_2001A") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001A: position,
+    //                     PCV_2001A: position,
     //                 }));
-    //             } else if (id === "PCV_3001B") {
+    //             } else if (id === "PCV_2001B") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001B: position,
+    //                     PCV_2001B: position,
     //                 }));
     //             } else if (id === "PCV_line1_Top") {
     //                 setPositions((prevPositions: any) => ({
@@ -7247,15 +7233,15 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     PCV_line1_Top_none: position,
     //                 }));
-    //             } else if (id === "PCV_3001B_none") {
+    //             } else if (id === "PCV_2001B_none") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001B_none: position,
+    //                     PCV_2001B_none: position,
     //                 }));
-    //             } else if (id === "PCV_3001A_none") {
+    //             } else if (id === "PCV_2001A_none") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001A_none: position,
+    //                     PCV_2001A_none: position,
     //                 }));
     //             } else if (id === "PCV_line1_Bottom_none2") {
     //                 setPositions((prevPositions: any) => ({
@@ -7267,77 +7253,77 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     PCV_line1_Top_none2: position,
     //                 }));
-    //             } else if (id === "PCV_3001B_none2") {
+    //             } else if (id === "PCV_2001B_none2") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001B_none2: position,
+    //                     PCV_2001B_none2: position,
     //                 }));
-    //             } else if (id === "PCV_3001A_none2") {
+    //             } else if (id === "PCV_2001A_none2") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001A_none2: position,
+    //                     PCV_2001A_none2: position,
     //                 }));
     //             } else if (id === "PCV_line1_Bottom_SmallBallVavle") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
     //                     PCV_line1_Bottom_SmallBallVavle: position,
     //                 }));
-    //             } else if (id === "PCV_3001B_SmallBallVavle") {
+    //             } else if (id === "PCV_2001B_SmallBallVavle") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001B_SmallBallVavle: position,
+    //                     PCV_2001B_SmallBallVavle: position,
     //                 }));
-    //             } else if (id === "PCV_3001A_SmallBallVavle") {
+    //             } else if (id === "PCV_2001A_SmallBallVavle") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001A_SmallBallVavle: position,
+    //                     PCV_2001A_SmallBallVavle: position,
     //                 }));
     //             } else if (id === "PCV_line1_Top_SmallBallVavle") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
     //                     PCV_line1_Top_SmallBallVavle: position,
     //                 }));
-    //             } else if (id === "PCV_3001A_DATA") {
+    //             } else if (id === "PCV_2001A_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001A_DATA: position,
+    //                     PCV_2001A_DATA: position,
     //                 }));
-    //             } else if (id === "PCV_3002A_DATA") {
+    //             } else if (id === "PCV_2002A_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3002A_DATA: position,
+    //                     PCV_2002A_DATA: position,
     //                 }));
-    //             } else if (id === "PCV_3001B_DATA") {
+    //             } else if (id === "PCV_2001B_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3001B_DATA: position,
+    //                     PCV_2001B_DATA: position,
     //                 }));
-    //             } else if (id === "PCV_3002B_DATA") {
+    //             } else if (id === "PCV_2002B_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PCV_3002B_DATA: position,
+    //                     PCV_2002B_DATA: position,
     //                 }));
     //             }
     //             //======================= BallVavle ====================================
-    //             else if (id === "PT_3001_IMG") {
+    //             else if (id === "PT_2001_IMG") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3001_IMG: position,
+    //                     PT_2001_IMG: position,
     //                 }));
-    //             } else if (id === "PT_3002_IMG") {
+    //             } else if (id === "PT_2002_IMG") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3002_IMG: position,
+    //                     PT_2002_IMG: position,
     //                 }));
-    //             } else if (id === "PIT_3001A_IMG") {
+    //             } else if (id === "PIT_2006_IMG") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001A_IMG: position,
+    //                     PIT_2006_IMG: position,
     //                 }));
-    //             } else if (id === "PIT_3001B_IMG") {
+    //             } else if (id === "PIT_2007_IMG") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001B_IMG: position,
+    //                     PIT_2007_IMG: position,
     //                 }));
     //             } else if (id === "EVC_01_Pressure_IMG") {
     //                 setPositions((prevPositions: any) => ({
@@ -7359,45 +7345,45 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     EVC_02_Pressure_COL: position,
     //                 }));
-    //             } else if (id === "PT_3001_COL") {
+    //             } else if (id === "PT_2001_COL") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3001_COL: position,
+    //                     PT_2001_COL: position,
     //                 }));
-    //             } else if (id === "PT_3002_COL") {
+    //             } else if (id === "PT_2002_COL") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3002_COL: position,
+    //                     PT_2002_COL: position,
     //                 }));
-    //             } else if (id === "PIT_3001A_COL") {
+    //             } else if (id === "PIT_2006_COL") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001A_COL: position,
+    //                     PIT_2006_COL: position,
     //                 }));
-    //             } else if (id === "PIT_3001B_COL") {
+    //             } else if (id === "PIT_2007_COL") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001B_COL: position,
+    //                     PIT_2007_COL: position,
     //                 }));
-    //             } else if (id === "PIT_3001A_DATA") {
+    //             } else if (id === "PIT_2006_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001A_DATA: position,
+    //                     PIT_2006_DATA: position,
     //                 }));
-    //             } else if (id === "PIT_3001B_DATA") {
+    //             } else if (id === "PIT_2007_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001B_DATA: position,
+    //                     PIT_2007_DATA: position,
     //                 }));
-    //             } else if (id === "PT_3001_DATA") {
+    //             } else if (id === "PT_2001_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3001_DATA: position,
+    //                     PT_2001_DATA: position,
     //                 }));
-    //             } else if (id === "PT_3002_DATA") {
+    //             } else if (id === "PT_2002_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3002_DATA: position,
+    //                     PT_2002_DATA: position,
     //                 }));
     //             } else if (id === "EVC_01_Pressure_DATA") {
     //                 setPositions((prevPositions: any) => ({
@@ -7409,25 +7395,25 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     EVC_02_Pressure_DATA: position,
     //                 }));
-    //             } else if (id === "PIT_3001A_NONE") {
+    //             } else if (id === "PIT_2006_NONE") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001A_NONE: position,
+    //                     PIT_2006_NONE: position,
     //                 }));
-    //             } else if (id === "PIT_3001B_NONE") {
+    //             } else if (id === "PIT_2007_NONE") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PIT_3001B_NONE: position,
+    //                     PIT_2007_NONE: position,
     //                 }));
-    //             } else if (id === "PT_3001_NONE") {
+    //             } else if (id === "PT_2001_NONE") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3001_NONE: position,
+    //                     PT_2001_NONE: position,
     //                 }));
-    //             } else if (id === "PT_3002_NONE") {
+    //             } else if (id === "PT_2002_NONE") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3002_NONE: position,
+    //                     PT_2002_NONE: position,
     //                 }));
     //             } else if (id === "EVC_01_Pressure_NONE") {
     //                 setPositions((prevPositions: any) => ({
@@ -7610,79 +7596,79 @@ export default function Graphic_CNG_HUNGYEN() {
     //                 }));
     //             }
     //             // ========================= Data  ===============================
-    //             else if (id === "SDV_3001A") {
+    //             else if (id === "SDV_2001A") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3001A: position,
+    //                     SDV_2001A: position,
     //                 }));
-    //             } else if (id === "SDV_3001B") {
+    //             } else if (id === "SDV_2001B") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3001B: position,
+    //                     SDV_2001B: position,
     //                 }));
-    //             } else if (id === "SDV_3002") {
+    //             } else if (id === "SDV_2002") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3002: position,
+    //                     SDV_2002: position,
     //                 }));
-    //             } else if (id === "SDV_3001A_Name") {
+    //             } else if (id === "SDV_2001A_Name") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3001A_Name: position,
+    //                     SDV_2001A_Name: position,
     //                 }));
-    //             } else if (id === "SDV_3001B_Name") {
+    //             } else if (id === "SDV_2001B_Name") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3001B_Name: position,
+    //                     SDV_2001B_Name: position,
     //                 }));
-    //             } else if (id === "SDV_3002_Name") {
+    //             } else if (id === "SDV_2002_Name") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     SDV_3002_Name: position,
-    //                 }));
-    //             }
-    //             //========================== pit line 1 =========================
-    //             else if (id === "TT_3001") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_3001: position,
-    //                 }));
-    //             } else if (id === "TT_3001_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_3001_DATA: position,
-    //                 }));
-    //             } else if (id === "TT_3001_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_3001_COL: position,
-    //                 }));
-    //             } else if (id === "TT_3001_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_3001_NONE: position,
+    //                     SDV_2002_Name: position,
     //                 }));
     //             }
     //             //========================== pit line 1 =========================
-    //             else if (id === "PT_3003") {
+    //             else if (id === "TT_2001") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3003: position,
+    //                     TT_2001: position,
     //                 }));
-    //             } else if (id === "PT_3003_DATA") {
+    //             } else if (id === "TT_2001_DATA") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3003_DATA: position,
+    //                     TT_2001_DATA: position,
     //                 }));
-    //             } else if (id === "PT_3003_COL") {
+    //             } else if (id === "TT_2001_COL") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3003_COL: position,
+    //                     TT_2001_COL: position,
     //                 }));
-    //             } else if (id === "PT_3003_NONE") {
+    //             } else if (id === "TT_2001_NONE") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PT_3003_NONE: position,
+    //                     TT_2001_NONE: position,
+    //                 }));
+    //             }
+    //             //========================== pit line 1 =========================
+    //             else if (id === "PT_2003") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_2003: position,
+    //                 }));
+    //             } else if (id === "PT_2003_DATA") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_2003_DATA: position,
+    //                 }));
+    //             } else if (id === "PT_2003_COL") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_2003_COL: position,
+    //                 }));
+    //             } else if (id === "PT_2003_NONE") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     PT_2003_NONE: position,
     //                 }));
     //             } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
     //                 setPositions((prevPositions: any) => ({
@@ -7724,35 +7710,35 @@ export default function Graphic_CNG_HUNGYEN() {
     //                     ...prevPositions,
     //                     EVC_02_Volume_at_Measurement_Condition: position,
     //                 }));
-    //             } else if (id === "FIQ_3001A") {
+    //             } else if (id === "FIQ_2001A") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     FIQ_3001A: position,
+    //                     FIQ_2001A: position,
     //                 }));
-    //             } else if (id === "FIQ_3001B") {
+    //             } else if (id === "FIQ_2001B") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     FIQ_3001B: position,
+    //                     FIQ_2001B: position,
     //                 }));
-    //             } else if (id === "PSV_3001A") {
+    //             } else if (id === "PSV_2001A") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PSV_3001A: position,
+    //                     PSV_2001A: position,
     //                 }));
-    //             } else if (id === "PSV_3001B") {
+    //             } else if (id === "PSV_2001B") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PSV_3001B: position,
+    //                     PSV_2001B: position,
     //                 }));
-    //             } else if (id === "PSV_3002A") {
+    //             } else if (id === "PSV_2002A") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PSV_3002A: position,
+    //                     PSV_2002A: position,
     //                 }));
-    //             } else if (id === "PSV_3002B") {
+    //             } else if (id === "PSV_2002B") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     PSV_3002B: position,
+    //                     PSV_2002B: position,
     //                 }));
     //             }
 
@@ -7805,7 +7791,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     background: background,
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -7831,7 +7817,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}

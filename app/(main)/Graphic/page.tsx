@@ -15,6 +15,7 @@ import TestFullScreen from '../TestFullScreen/page';
 import './GraphicSogec.css'
 import { MdOutlineZoomOutMap } from "react-icons/md";
 import Graphic_CNG_HUNGYEN from '../CNG_HUNGYEN/GraphicPRU/Graphic_CNG_HUNGYEN';
+import Graphic_CNG_BINHDUONG from '../CNG_BINHDUONG/GraphicPRU/Graphic_CNG_BINHDUONG';
 
 export default function GraphicSogec() {
 
@@ -170,7 +171,7 @@ export default function GraphicSogec() {
             label: stationList.stationList,
             items: [
          
-              { label: 'CNG BINH DUONG', command: () => CNG_CLICK(null , 'CNG BINH DUONG ') },
+              { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<Graphic_CNG_BINHDUONG/> , 'CNG BINH DUONG ') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK(<Graphic_CNG_HUNGYEN/> , 'CNG HUNG YEN ') },
               { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<GraphicPRU/> , 'CNG PHU MY 3 ') },
 
