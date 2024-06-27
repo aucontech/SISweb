@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { getAlarmTypes } from "@/api/alarm.api";
-import { getAssets } from "@/api/assets.api";
+import { getAssetById, getAssets } from "@/api/assets.api";
 import { Toast } from "primereact/toast";
+import { getRelations } from "@/api/relation.api";
+import { dt } from "@fullcalendar/core/internal-common";
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -50,16 +52,39 @@ const FilterGcValue: React.FC<Props> = ({
                 setSuggDevices([]);
             });
     };
-    const _onSuggAssets = (evt: any) => {
-        getAssets({ page: 0, pageSize: 50, textSearch: evt.query })
+    const _onSuggAssets = async (evt: any) => {
+        let reqParams = {
+            fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+            fromType: "ASSET",
+            relationType: "Contains",
+            relationTypeGroup: "COMMON",
+        };
+        getRelations(reqParams)
             .then((resp) => resp.data)
-            .then((res) => {
-                res.data.forEach((it: any) => {
-                    it.label = `${it.name}`;
-                });
-                setSuggAssets([...res.data]);
+            .then((resp) => {
+                let data = resp || [];
+                if (data.length > 0) {
+                    let pms = data.map((dt: any) => {
+                        return getAssetById(dt["to"]["id"]);
+                    });
+                    Promise.all(pms)
+                        .then((resp) => resp.map((dt: any) => dt.data))
+                        .then((resp) => {
+                            resp.forEach((it: any) => {
+                                it.label = `${it.name}`;
+                            });
+                            setSuggAssets(resp);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            setSuggAssets([]);
+                        });
+                }
+
+                setSuggAssets(data);
             })
-            .catch((err) => {
+            .catch((e) => {
+                console.log(e);
                 setSuggAssets([]);
             });
     };
