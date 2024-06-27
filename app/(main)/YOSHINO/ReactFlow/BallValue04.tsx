@@ -3,9 +3,9 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { BallVavleOff, BallVavleOn } from "../GraphicZOVC/iconSVG";
+import { BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
 import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicZOVC/Api_ZOVC";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
 
 export default function BallValue04() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -168,19 +168,8 @@ export default function BallValue04() {
 
                          >
                             
-                                {item.value.toString() === "false" ? (
-                                    <div style={{   }}>
+                            {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
 
-                                            {BallVavleOn}
-
-                                    </div>
-                                ) : (
-                                    <div style={{    }}>
-
-                                               {BallVavleOff}
-
-                                    </div>
-                                )}
                         </div>
                     )}
                 </div>

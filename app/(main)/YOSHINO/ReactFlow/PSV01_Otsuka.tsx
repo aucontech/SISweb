@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicZOVC/graphicYOSHINO";
+import { colorData, colorNameValue } from "../GraphicVREC/graphicYOSHINO";
 import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
 
 
@@ -167,7 +167,7 @@ export default function PSV01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PSV-1901 </p>
+                <p style={{ color: colorNameValue }}>PSV </p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>

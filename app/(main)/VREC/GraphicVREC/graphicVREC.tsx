@@ -3455,7 +3455,7 @@ export default function GraphicVREC() {
                             fontWeight: 500,
                         }}
                     >
-                        SSV-1801
+                        SDV-1801
                     </div>
                 ),
             },

@@ -1,9 +1,9 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
-import {  BallVavleOff, BallVavleOn } from "../GraphicZOVC/iconSVG";
+import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
 import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicZOVC/Api_ZOVC";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
 
 export default function BallValue09({ onDataLine09 }: { onDataLine09: (data: any) => void }) {
     const [sensorData, setSensorData] = useState<any>([]);

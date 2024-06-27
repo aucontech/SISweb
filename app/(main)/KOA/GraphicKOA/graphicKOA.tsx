@@ -25,7 +25,7 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_ZOCV } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_OTSUKA, id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -61,7 +61,11 @@ interface StateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "#aad4ff";
@@ -72,10 +76,11 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicYOSHINO() {
+export default function GraphicKOA() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
+    const [active, setActive] = useState();
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -94,19 +99,21 @@ export default function GraphicYOSHINO() {
 
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
-    const [PT03, setPT03] = useState<string | null>(null);
+    const [PT1, setPT1] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
     const [GD3, SetGD3] = useState<string | null>(null);
 
-    const [NC, setNC] = useState<any>();
+    const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
-    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
-
-    const [PLC_STT, setPLC_STT] = useState<string | null>(null);
+    const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
+    const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
+        null
+    );
+    const [Conn_STT, setConn_STT] = useState<string | null>(null);
+    const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
 
@@ -118,9 +125,65 @@ export default function GraphicYOSHINO() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_ZOCV,
+                    entityId: id_KOA,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
+                },
+            ],
+        };
+
+        const obj_PCV_PSV = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "active",
+                            },
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_KOA,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "active",
+                            },
+                        ],
+                    },
                 },
             ],
         };
@@ -131,6 +194,7 @@ export default function GraphicYOSHINO() {
                 setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
                 });
             };
 
@@ -155,33 +219,38 @@ export default function GraphicYOSHINO() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setSVF1,
-                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
+                        FC_01_Current_Values_Flow_Rate: setSVF1,
+                        FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,
 
-                        EVC_01_Volume_at_Base_Condition: setSVA1,
-                        EVC_01_Vm_Adjustable_Counter: setGVA1,
-                        EVC_01_Pressure: setPT01,
+                        FC_01_Accumulated_Values_Volume: setSVA1,
+                        FC_01_Accumulated_Values_Uncorrected_Volume: setGVA1,
+                        FC_01_Current_Values_Static_Pressure: setPT01,
 
-                        EVC_02_Flow_at_Base_Condition: setSVF2,
-                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
-                        EVC_02_Volume_at_Base_Condition: setSVA2,
-                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
+                        FC_02_Current_Values_Flow_Rate: setSVF2,
+                        FC_02_Current_Values_Uncorrected_Flow_Rate: setGVF2,
+                        FC_02_Accumulated_Values_Volume: setSVA2,
+                        FC_02_Accumulated_Values_Uncorrected_Volume: setGVA2,
 
-                        EVC_02_Pressure: setPT02,
+                        FC_02_Current_Values_Static_Pressure: setPT02,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
                         GD3: SetGD3,
 
-                        PT1: setPT03,
+                        PT1: setPT1,
 
-                        SSV_1101: setNC,
+                        DI_ZSC_1: setNC,
+                        DI_ZSO_1: setNO,
 
-                        EVC_01_Conn_STT: setEVC_STT01,
-                        EVC_02_Conn_STT: setEVC_STT02,
-                        PLC_Conn_STT: setPLC_STT,
+                        FC_Conn_STT: setFC_Conn_STT,
+                        PLC_Conn_STT: setConn_STT,
 
                         time: setTimeUpdate,
+                    };
+
+                    const valueStateMap: ValueStateMap = {
+                        FC_Conn_STT: setFC_Conn_STTValue,
+                        PLC_Conn_STT: setConn_STTValue,
                     };
 
                     keys.forEach((key) => {
@@ -190,8 +259,42 @@ export default function GraphicYOSHINO() {
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-                     
+
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                        }
                     });
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
+                    setActive(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
+                    setActive(updatedData);
                 }
                 fetchData();
             };
@@ -208,14 +311,14 @@ export default function GraphicYOSHINO() {
     const [LowPT01, setLowPT01] = useState<number | null>(null);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
+    const [maintainPCV1901, setMaintainPCV1901] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighPT01 === "string" &&
             typeof LowPT01 === "string" &&
             PT01 !== null &&
-            maintainPT_1901 === false
+            maintainPCV1901 === false
         ) {
             const highValue = parseFloat(HighPT01);
             const lowValue = parseFloat(LowPT01);
@@ -235,7 +338,7 @@ export default function GraphicYOSHINO() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPT_1901]);
+    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPCV1901]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -249,14 +352,13 @@ export default function GraphicYOSHINO() {
         }
     }, [audioPT1901]);
 
-    const ChangeMaintainPT_1901 = async () => {
+    const ChangeMaintainPCV1901 = async () => {
         try {
-            const newValue = !maintainPT_1901;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { PT_1901_maintain: newValue }
-            );
-            setMaintainPT_1901(newValue);
+            const newValue = !maintainPCV1901;
+            await httpApi.post(PostTelemetry_ZOVC, {
+                PCV1901_maintain: newValue,
+            });
+            setMaintainPCV1901(newValue);
 
             toast.current?.show({
                 severity: "info",
@@ -268,12 +370,12 @@ export default function GraphicYOSHINO() {
         } catch (error) {}
     };
 
-    const confirmPT_1901 = () => {
+    const confirmPCV1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
             header: " PT-1901",
             icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1901(),
+            accept: () => ChangeMaintainPCV1901(),
         });
     };
 
@@ -331,10 +433,9 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainPT_1902 = async () => {
         try {
             const newValue = !maintainPT_1902;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { PT_1902_maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, {
+                PT_1902_maintain: newValue,
+            });
             setMaintainPT_1902(newValue);
 
             toast.current?.show({
@@ -360,25 +461,25 @@ export default function GraphicYOSHINO() {
 
     //================================ PT 1903======================================================
     const [audioPT1903, setAudio1903] = useState(false);
-    const [HighPT03, setHighPT03] = useState<number | null>(null);
-    const [LowPT03, setLowPT03] = useState<number | null>(null);
+    const [HighPT1, setHighPT1] = useState<number | null>(null);
+    const [LowPT1, setLowPT1] = useState<number | null>(null);
     const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT03 === "string" &&
-            typeof LowPT03 === "string" &&
-            PT03 !== null &&
+            typeof HighPT1 === "string" &&
+            typeof LowPT1 === "string" &&
+            PT1 !== null &&
             maintainPT_1903 === false
         ) {
-            const highValue = parseFloat(HighPT03);
-            const lowValue = parseFloat(LowPT03);
-            const PT03Value = parseFloat(PT03);
+            const highValue = parseFloat(HighPT1);
+            const lowValue = parseFloat(LowPT1);
+            const PT1Value = parseFloat(PT1);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
-                if (highValue < PT03Value || PT03Value < lowValue) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
+                if (highValue < PT1Value || PT1Value < lowValue) {
                     if (!audioPT1903) {
                         audioRef.current?.play();
                         setAudio1903(true);
@@ -391,7 +492,7 @@ export default function GraphicYOSHINO() {
             }
             fetchData();
         }
-    }, [HighPT03, PT03, audioPT1903, LowPT03, maintainPT_1903]);
+    }, [HighPT1, PT1, audioPT1903, LowPT1, maintainPT_1903]);
 
     useEffect(() => {
         if (audioPT1903) {
@@ -408,10 +509,9 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainPT_1903 = async () => {
         try {
             const newValue = !maintainPT_1903;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { PT_1903_maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, {
+                PT_1903_maintain: newValue,
+            });
             setMaintainPT_1903(newValue);
 
             toast.current?.show({
@@ -489,10 +589,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGD_01 = async () => {
         try {
             const newValue = !maintainGD_1901;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GD1_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GD1_Maintain: newValue });
             setMaintainGD_1901(newValue);
 
             toast.current?.show({
@@ -573,10 +670,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGD_02 = async () => {
         try {
             const newValue = !maintainGD_1902;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GD2_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GD2_Maintain: newValue });
             setMaintainGD_1902(newValue);
 
             toast.current?.show({
@@ -657,10 +751,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGD_03 = async () => {
         try {
             const newValue = !maintainGD_1903;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GD3_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GD3_Maintain: newValue });
             setMaintainGD_1903(newValue);
 
             toast.current?.show({
@@ -740,10 +831,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainSVF_1 = async () => {
         try {
             const newValue = !maintainSVF1;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { SVF1_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { SVF1_Maintain: newValue });
             setMaintainSVF1(newValue);
 
             toast.current?.show({
@@ -821,10 +909,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGVF_1 = async () => {
         try {
             const newValue = !maintainGVF1;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GVF1_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GVF1_Maintain: newValue });
             setMaintainGVF1(newValue);
 
             toast.current?.show({
@@ -902,10 +987,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainSVA_1 = async () => {
         try {
             const newValue = !maintainSVA1;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { SVA1_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { SVA1_Maintain: newValue });
             setMaintainSVA1(newValue);
 
             toast.current?.show({
@@ -983,10 +1065,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGVA_1 = async () => {
         try {
             const newValue = !maintainGVA1;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GVA1_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GVA1_Maintain: newValue });
             setMaintainGVA1(newValue);
 
             toast.current?.show({
@@ -1065,10 +1144,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainSVF_2 = async () => {
         try {
             const newValue = !maintainSVF2;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { SVF2_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { SVF2_Maintain: newValue });
             setMaintainSVF2(newValue);
 
             toast.current?.show({
@@ -1146,10 +1222,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGVF_2 = async () => {
         try {
             const newValue = !maintainGVF2;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GVF2_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GVF2_Maintain: newValue });
             setMaintainGVF2(newValue);
 
             toast.current?.show({
@@ -1227,10 +1300,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainSVA_2 = async () => {
         try {
             const newValue = !maintainSVA2;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { SVA2_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { SVA2_Maintain: newValue });
             setMaintainSVA2(newValue);
 
             toast.current?.show({
@@ -1308,10 +1378,7 @@ export default function GraphicYOSHINO() {
     const ChangeMaintainGVA_2 = async () => {
         try {
             const newValue = !maintainGVA2;
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { GVA2_Maintain: newValue }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, { GVA2_Maintain: newValue });
             setMaintainGVA2(newValue);
 
             toast.current?.show({
@@ -1343,10 +1410,10 @@ export default function GraphicYOSHINO() {
             const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
-            await httpApi.post(
-                PostTelemetry_ZOVC,
-                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
-            );
+            await httpApi.post(PostTelemetry_ZOVC, {
+                FIQ1901_LineDuty: newValue1,
+                FIQ1902_LineDuty: newValue2,
+            });
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
@@ -1369,36 +1436,38 @@ export default function GraphicYOSHINO() {
 
     const fetchData = async () => {
         try {
-            const res = await httpApi.get(
-                GetTelemetry_ZOVC
-            );
+            const res = await httpApi.get(GetTelemetry_ZOVC);
 
             const highEVCPressureItem = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_High"
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_High"
             );
             setHighPT01(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_Low"
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_Low"
             );
             setLowPT01(lowEVCPressureItem?.value || null);
 
             const HighPT1902 = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_High"
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_High"
             );
             setHighPT02(HighPT1902?.value || null);
             const LowPT1902 = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_Low"
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_Low"
             );
             setLowPT02(LowPT1902?.value || null);
 
             const HighPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
-            setHighPT03(HighPT1903?.value || null);
+            setHighPT1(HighPT1903?.value || null);
             const LowPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_Low"
             );
-            setLowPT03(LowPT1903?.value || null);
+            setLowPT1(LowPT1903?.value || null);
 
             const HighGD01 = res.data.find(
                 (item: any) => item.key === "GD1_High"
@@ -1520,13 +1589,15 @@ export default function GraphicYOSHINO() {
             );
             setLowGVA2(LowGVA2?.value || null);
 
-            const MaintainPT_1901 = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_Maintain"
+            const MaintainPCV1901 = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
             );
-            setMaintainPT_1901(MaintainPT_1901?.value || false);
+            setMaintainPCV1901(MaintainPCV1901?.value || false);
 
             const MaintainPT_1902 = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_Maintain"
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_Maintain"
             );
             setMaintainPT_1902(MaintainPT_1902?.value || false);
 
@@ -1623,7 +1694,7 @@ export default function GraphicYOSHINO() {
         SVA: "SVA",
         GVA: "GVA",
         PT: "PT",
-        PT_1901: "PT-1901",
+        PCV1901: "PT-1901",
         PT_1902: "PT-1902",
         PT_1903: "PT-1903",
 
@@ -2149,8 +2220,8 @@ export default function GraphicYOSHINO() {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT03 =
-                    PT03 !== null ? parseFloat(PT03).toFixed(2) : "";
+                const roundedPT1 =
+                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2184,7 +2255,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1903} :
+                                        PT-1203 :
                                     </p>
                                     <p
                                         style={{
@@ -2192,7 +2263,7 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT03}
+                                        {roundedPT1}
                                     </p>
                                 </div>
                                 <p
@@ -2228,13 +2299,13 @@ export default function GraphicYOSHINO() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainPT_1901
+                                        exceedThreshold && !maintainPCV1901
                                             ? "#ff5656"
-                                            : maintainPT_1901
+                                            : maintainPCV1901
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                // onClick={() => confirmPT_1901()}
+                                // onClick={() => confirmPCV1901()}
                             >
                                 <div
                                     style={{
@@ -2245,7 +2316,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1901} :
+                                        PT-1201 :
                                     </p>
                                     <p
                                         style={{
@@ -2253,6 +2324,7 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
+                                        {/* {roundedPT01} */}
                                         {roundedPT01}
                                     </p>
                                 </div>
@@ -2263,7 +2335,7 @@ export default function GraphicYOSHINO() {
                                         top: 5,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                    Bara
                                 </p>
                             </div>
                         ),
@@ -2307,7 +2379,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1902} :
+                                        PT-1202 :
                                     </p>
                                     <p
                                         style={{
@@ -2325,7 +2397,7 @@ export default function GraphicYOSHINO() {
                                         top: 5,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                    Bara
                                 </p>
                             </div>
                         ),
@@ -2355,7 +2427,16 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        Gateway :{" "}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        FC :{" "}
                                     </p>
 
                                     <p
@@ -2365,22 +2446,32 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        EVC 01 :{" "}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        EVC 02 :{" "}
+                                        PLC :{" "}
                                     </p>
                                 </div>
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
-                                        {PLC_STT === "1" ? (
+                                        <p style={{ marginLeft: 5 }}>
+                                            {active === "true" ? (
+                                                <span
+                                                    style={{
+                                                        color: "#25d125",
+                                                    }}
+                                                >
+                                                    Active
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    style={{
+                                                        color: "#ff5656",
+                                                    }}
+                                                >
+                                                    Un Active
+                                                </span>
+                                            )}
+                                        </p>
+                                        {FC_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2398,27 +2489,9 @@ export default function GraphicYOSHINO() {
                                             </span>
                                         )}
                                     </p>
+
                                     <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT01 === "1" ? (
-                                            <span
-                                                style={{
-                                                    color: "#25d125",
-                                                }}
-                                            >
-                                                Connected
-                                            </span>
-                                        ) : (
-                                            <span
-                                                style={{
-                                                    color: "#ff5656",
-                                                }}
-                                            >
-                                                Disconnect
-                                            </span>
-                                        )}
-                                    </p>
-                                    <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT02 === "1" ? (
+                                        {Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2441,33 +2514,33 @@ export default function GraphicYOSHINO() {
                                 <div>
                                     <p
                                         style={{
-                                            color: "white",
+                                            color: background,
 
-                                          
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        null
                                     </p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                          
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {FC_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                          
+                                            fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {Conn_STTValue}
                                     </p>
                                 </div>
                             </div>
@@ -2494,7 +2567,6 @@ export default function GraphicYOSHINO() {
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
                                     right: 4,
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
@@ -2529,7 +2601,6 @@ export default function GraphicYOSHINO() {
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
                                     right: 4,
 
                                     backgroundColor:
@@ -2560,13 +2631,12 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
                                     right: 4,
 
                                     backgroundColor:
@@ -2593,8 +2663,13 @@ export default function GraphicYOSHINO() {
                         ...node.data,
                         label: (
                             <div>
-                                {NC === "1" && <div>{SVD_NO}1</div>}
-                                {NC === "0" && <div>{SVD_NC}2</div>}
+                                <div>
+                                    {NO === "1"
+                                        ? SVD_NO
+                                        : NC === "0"
+                                        ? SVD_NC
+                                        : null}
+                                </div>
                             </div>
                         ),
                     },
@@ -2617,7 +2692,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1901
+                                FIQ-1201
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2651,7 +2726,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1902
+                                FIQ-1202
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2674,17 +2749,17 @@ export default function GraphicYOSHINO() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-                // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-              ArrowRight: { x: 269.4256642678949, y: 1023.5985886548262 },
-              ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
-              BallValue01: { x: -1090.3623120428465, y: 1130.8426285378578 },
-              BallValue02: { x: -887.6141478861746, y: 1129.6502447788996 },
+              ArrowRight: { x: 361.63814192842443, y: 1022.694783335719 },
+              ArrowRight1: { x: -1117.5029742372521, y: 1028.4144814411625 },
+              BallValue01: { x: -1044.3623120428465, y: 1131.8426285378578 },
+              BallValue02: { x: -897.6141478861746, y: 1130.1502447788996 },
               BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
               BallValue04: { x: -127.98761243251244, y: 1129.5595186007586 },
               BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
@@ -2706,33 +2781,33 @@ export default function GraphicYOSHINO() {
                   x: -458.43233108676895,
                   y: 1047.9161594286932,
               },
-              BallValueFirst: { x: 338.15262421132076, y: 1010.0430441067174 },
-              BallValueLast: { x: -1237.9047231598838, y: 1013.6849449585161 },
-              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
-              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
+              BallValueFirst: { x: 429.15262421132076, y: 1009.0430441067174 },
+              BallValueLast: { x: -1185.7855496288498, y: 1013.9021150905016 },
+              BallValuePSV: { x: 289.72148707331525, y: 959.3028379757588 },
+              BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -600.2178332288872, y: 546.2634788476669 },
-              FIQ_1902: { x: -598.2269080233234, y: 1299.1773355305222 },
-              FIQ_none: { x: -526.0606587777817, y: 796.3620871361296 },
-              FIQ_none2: { x: -523.3216096811922, y: 1201.3983996314123 },
-              FIQ_none11: { x: -497.3625383626708, y: 840.3971285580416 },
-              FIQ_none22: { x: -494.39220510806797, y: 1245.3032297512827 },
+              FIQ_1901: { x: -600.2178332288872, y: 529.8047278642143 },
+              FIQ_1902: { x: -600.6873404684984, y: 1306.1020814778879 },
+              FIQ_none: { x: -491.4470769137962, y: 797.3702269986474 },
+              FIQ_none2: { x: -491.21770178252325, y: 1201.8983996314123 },
+              FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
+              FIQ_none22: { x: -461.747235677007, y: 1245.2621682188906 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              GD1: { x: -744.9526824268976, y: 1027.0908034534227 },
-              GD1_Name1901: { x: -750.5717919879045, y: 967.8438653513034 },
-              GD1_Value1901: { x: -750.6929582767964, y: 992.5597991500013 },
-              GD2: { x: -336.41350123805245, y: 1027.8276262499467 },
-              GD2_Name1902: { x: -341.1593682888764, y: 968.5169520281263 },
-              GD2_Value1902: { x: -341.38343464809464, y: 994.1346171684966 },
+              GD1: { x: -725.7034368640515, y: 1033.9450610768665 },
+              GD1_Name1901: { x: -754.4615849863011, y: 959.8454102012485 },
+              GD1_Value1901: { x: -755.1145731402554, y: 995.458904802694 },
+              GD2: { x: -21.04313525608083, y: 1033.1458449005702 },
+              GD2_Name1902: { x: -51.05869480682097, y: 961.6032677823157 },
+              GD2_Value1902: { x: -51.008696324053346, y: 996.7937264938082 },
               GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
               GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
               GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
-              GD_none1: { x: -720.3956940812873, y: 1045.5612154866174 },
-              GD_none2: { x: -311.4848030174507, y: 1042.5915840896632 },
+              GD_none1: { x: -700.0501253021391, y: 1052.778277582167 },
+              GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1315.0541148206603, y: 542.7414053545939 },
+              Header: { x: -1371.1652361754373, y: 500.2739306406778 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
@@ -2763,41 +2838,44 @@ export default function GraphicYOSHINO() {
               },
               PCV_none1: { x: -43.356336775693705, y: 932.4844638821777 },
               PCV_none2: { x: -43.63902265954965, y: 1160.9945398306136 },
-              PSV01: { x: 121.99644634072223, y: 722.5979741364629 },
-              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
-              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
-              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
-              PSV_None01: { x: 265.1066519200614, y: 1041.2984512500655 },
-              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
-              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
-              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -996.9532738162299, y: 949.6022756172126 },
+              PSV01: { x: 204.7769815796771, y: 722.5979741364629 },
+              PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
+              PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
+              PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
+              PSV_None01: { x: 447.48718383080245, y: 1041.2984512500652 },
+              PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
+              PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
+              PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
+              PT1: { x: 213.79089216580826, y: 952.8215389633342 },
               PT2: { x: -708.258294622871, y: 1154.2084571677146 },
               PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-              PT_col1: { x: -965.0334069238746, y: 1012.8802095314497 },
+              PT_col1: { x: 246.77020206396446, y: 1015.995256464112 },
               PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
               PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-              PT_none1: { x: -964.3722675067637, y: 978.9303239049175 },
+              PT_none1: { x: 245.97093596247453, y: 1035.3795085307177 },
               PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
               PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1049.2473802202082,
-                  y: 855.3114796471364,
+              Pressure_Trans01: { x: 86.22048227858289, y: 1213.0865077660026 },
+              Pressure_Trans02: {
+                  x: -1098.4737057224531,
+                  y: 707.7837211819499,
               },
-              Pressure_Trans02: { x: -945.1276880116326, y: 705.6733566761328 },
-              Pressure_Trans03: { x: -884.4967295957847, y: 1321.809670445742 },
-              SDV: { x: -1099.8835403835114, y: 956.6494709563746 },
-              SDV_Ball: { x: -1072.658207783444, y: 1161.1738486098288 },
-              SDV_IMG: { x: -1095.7464489538452, y: 994.0752335439693 },
+              Pressure_Trans03: {
+                  x: -1076.7058297119006,
+                  y: 1303.2403065558399,
+              },
+              SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
+              SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
+              SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1069.034965906526, y: 1045.0156837354775 },
+              SDV_None: { x: -1024.1286470234306, y: 1047.6886789070904 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-              Tank: { x: -903.8348910158862, y: 983.557904759858 },
-              Tank_Ball: { x: -869.8918792522013, y: 1161.3421223886141 },
-              Tank_None: { x: -880.9288889403146, y: 1045.4801484268744 },
+              Tank: { x: -910.7713207303586, y: 988.0249702520116 },
+              Tank_Ball: { x: -879.6133664723408, y: 1162.8377358070973 },
+              Tank_None: { x: -889.4859145000356, y: 1045.6292921984523 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -2834,18 +2912,18 @@ export default function GraphicYOSHINO() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1416.2258431989903, y: 535.4693400538745 },
+              borderWhite: { x: -1498.8938343741556, y: 498.0873006061162 },
               data1: { x: -600.7396652303086, y: 734.0298552462513 },
-              data2: { x: -600.6538263836953, y: 686.9577986165322 },
-              data3: { x: -600.4792235982375, y: 640.0276052862424 },
-              data4: { x: -600.2227613604565, y: 593.0874597693938 },
-              data5: { x: -597.9941090494707, y: 1346.0928722234303 },
-              data6: { x: -597.8317496942007, y: 1393.2027063708313 },
-              data7: { x: -597.8761635213684, y: 1440.4550015900893 },
-              data8: { x: -597.4659556614379, y: 1487.3491719032568 },
-              line1: { x: -1214.9782042334255, y: 1044.7946609746105 },
-              line2: { x: -857.076582460349, y: 1044.8496174211396 },
-              line3: { x: -743.3124450190387, y: 844.4761862219137 },
+              data2: { x: -600.6538263836953, y: 682.3968450603423 },
+              data3: { x: -600.4792235982375, y: 631.8178888851007 },
+              data4: { x: -600.1016616532435, y: 580.9222883481272 },
+              data5: { x: -601.1522947928718, y: 1356.8463110439388 },
+              data6: { x: -601.4899354376018, y: 1407.45614519134 },
+              data7: { x: -601.7877880852783, y: 1458.2084404105979 },
+              data8: { x: -601.8775802253477, y: 1509.1026107237653 },
+              line1: { x: -1163.5305423252987, y: 1045.8638590432556 },
+              line2: { x: -874.050262971247, y: 1046.097424130381 },
+              line3: { x: -743.0134159304, y: 844.6163804041859 },
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
               line5: { x: -300.65784806763253, y: 844.3342440262651 },
               line6: { x: -300.98065704991916, y: 1249.1529639630187 },
@@ -2854,19 +2932,19 @@ export default function GraphicYOSHINO() {
               line9: { x: -110.37038145875272, y: 1159.9359004593528 },
               line10: { x: 86.69745659087829, y: 930.5099856332267 },
               line11: { x: 86.19431979613125, y: 1160.0153295862324 },
-              line12: { x: 181.84921055529412, y: 1040.345253330986 },
-              line13: { x: 356.3312960971492, y: 1041.4713896720348 },
+              line12: { x: 212.34921055529412, y: 1040.345253330986 },
+              line13: { x: 445.3312960971492, y: 1041.4713896720348 },
               overlay_SmallVavle1: {
-                  x: -655.8048761234448,
-                  y: 990.8679355727855,
+                  x: -531.2918361488164,
+                  y: 919.397327575481,
               },
               overlay_SmallVavle2: {
-                  x: -1051.3932603321475,
-                  y: 1389.5626115369605,
+                  x: -1263.7593947324417,
+                  y: 1290.7025144885476,
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-              overlay_line13: { x: 144.51723493155333, y: 1038.2994432144098 },
-              timeUpdate3: { x: -1390.6628894607206, y: 609.4386242236333 },
+              overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
+              timeUpdate3: { x: -1459.1877972645498, y: 572.1636741927625 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3377,12 +3455,12 @@ export default function GraphicYOSHINO() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1901
+                        SDV-1201
                     </div>
                 ),
             },
             position: positions.SDV,
-            zIndex:99999,
+            zIndex: 99999,
 
             style: {
                 background: "yellow",
@@ -3962,7 +4040,7 @@ export default function GraphicYOSHINO() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -3986,7 +4064,7 @@ export default function GraphicYOSHINO() {
                 height: 50,
 
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
         {
@@ -4032,8 +4110,9 @@ export default function GraphicYOSHINO() {
                         }}
                         onClick={confirmLineDuty}
                     >
-                        FIQ-1901
-                        {lineDuty1901 && <span>1901</span>}
+                        {/* FIQ-1901
+                        {lineDuty1901 && <span>1901</span>} */}
+                        Not used
                     </div>
                 ),
             },
@@ -4613,7 +4692,7 @@ export default function GraphicYOSHINO() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4638,11 +4717,11 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 345,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Top,
         },
         {
             id: "Pressure_Trans02",
@@ -4661,9 +4740,9 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 360,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4686,9 +4765,9 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 340,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4874,11 +4953,11 @@ export default function GraphicYOSHINO() {
                             <p
                                 style={{
                                     fontSize: 45,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
                             >
-                                ZOVC
+                                KOA
                             </p>
                         </div>
                     </div>
@@ -5072,43 +5151,43 @@ export default function GraphicYOSHINO() {
 
         // ================ PT ICONS ===================
 
-        // // ============= GD =====================
+        // ============= GD =====================
 
-        // {
-        //     id: "GD1",
-        //     data: {
-        //         label: <div>{GD}</div>,
-        //     },
+        {
+            id: "GD1",
+            data: {
+                label: <div>{GD}</div>,
+            },
 
-        //     position: positions.GD1,
-        //     zIndex: 9999,
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
+            position: positions.GD1,
+            zIndex: 9999,
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
 
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Top,
-        // },
-        // {
-        //     id: "GD2",
-        //     data: {
-        //         label: <div>{GD}</div>,
-        //     },
+                height: 10,
+            },
+            targetPosition: Position.Top,
+        },
+        {
+            id: "GD2",
+            data: {
+                label: <div>{GD}</div>,
+            },
 
-        //     position: positions.GD2,
-        //     zIndex: 9999,
+            position: positions.GD2,
+            zIndex: 9999,
 
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
 
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Left,
-        // },
+                height: 10,
+            },
+            targetPosition: Position.Left,
+        },
         // {
         //     id: "GD3",
         //     data: {
@@ -5127,58 +5206,58 @@ export default function GraphicYOSHINO() {
         //     },
         //     targetPosition: Position.Top,
         // },
-        // {
-        //     id: "GD1_Name1901",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     fontSize: 20,
-        //                     fontWeight: 500,
-        //                     position: "relative",
-        //                     bottom: 5,
-        //                 }}
-        //             >
-        //                 GD-1901
-        //             </div>
-        //         ),
-        //     },
-        //     position: positions.GD1_Name1901,
+        {
+            id: "GD1_Name1901",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 500,
+                            position: "relative",
+                            bottom: 5,
+                        }}
+                    >
+                        GD-1201
+                    </div>
+                ),
+            },
+            position: positions.GD1_Name1901,
 
-        //     style: {
-        //         background: "yellow",
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Left,
-        // },
-        // {
-        //     id: "GD2_Name1902",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     fontSize: 20,
-        //                     fontWeight: 500,
-        //                     position: "relative",
-        //                     bottom: 5,
-        //                 }}
-        //             >
-        //                 GD-1902
-        //             </div>
-        //         ),
-        //     },
-        //     position: positions.GD2_Name1902,
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 130,
+                height: 35,
+            },
+            targetPosition: Position.Left,
+        },
+        {
+            id: "GD2_Name1902",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 500,
+                            position: "relative",
+                            bottom: 5,
+                        }}
+                    >
+                        GD-1202
+                    </div>
+                ),
+            },
+            position: positions.GD2_Name1902,
 
-        //     style: {
-        //         background: "yellow",
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Left,
-        // },
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 130,
+                height: 35,
+            },
+            targetPosition: Position.Left,
+        },
         // {
         //     id: "GD3_Name1903",
         //     data: {
@@ -5206,46 +5285,46 @@ export default function GraphicYOSHINO() {
         //     targetPosition: Position.Left,
         // },
 
-        // {
-        //     id: "GD1_Value1901",
-        //     data: {
-        //         label: <div style={{}}> </div>,
-        //     },
-        //     position: positions.GD1_Value1901,
+        {
+            id: "GD1_Value1901",
+            data: {
+                label: <div style={{}}> </div>,
+            },
+            position: positions.GD1_Value1901,
 
-        //     style: {
-        //         background: borderBox,
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-        // {
-        //     id: "GD2_Value1902",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     color: "green",
-        //                     fontSize: 18,
-        //                     fontWeight: 600,
-        //                 }}
-        //             >
-        //                 {" "}
-        //             </div>
-        //         ),
-        //     },
-        //     position: positions.GD2_Value1902,
+            style: {
+                background: borderBox,
+                border: "1px solid white",
+                width: 130,
+                height: 35,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "GD2_Value1902",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 18,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.GD2_Value1902,
 
-        //     style: {
-        //         background: borderBox,
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
+            style: {
+                background: borderBox,
+                border: "1px solid white",
+                width: 130,
+                height: 35,
+            },
+            targetPosition: Position.Bottom,
+        },
         // {
         //     id: "GD3_Value1903",
         //     data: {
@@ -5272,40 +5351,40 @@ export default function GraphicYOSHINO() {
         //     targetPosition: Position.Bottom,
         // },
 
-        // {
-        //     id: "GD_none1",
-        //     position: positions.GD_none1,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
+        {
+            id: "GD_none1",
+            position: positions.GD_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
 
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: colorIMG_none,
-        //         width: 10,
-        //         height: 1,
-        //     },
-        // },
-        // {
-        //     id: "GD_none2",
-        //     position: positions.GD_none2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 10,
+                height: 1,
+            },
+        },
+        {
+            id: "GD_none2",
+            position: positions.GD_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
 
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: colorIMG_none,
-        //         width: 10,
-        //         height: 1,
-        //     },
-        // },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 10,
+                height: 1,
+            },
+        },
         // {
         //     id: "GD_none3",
         //     position: positions.GD_none3,
@@ -6182,13 +6261,13 @@ export default function GraphicYOSHINO() {
     const toggleEditing = () => {
         setEditingEnabled(!editingEnabled);
     };
-    useEffect(() => {
-        localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <audio ref={audioRef}>
+            {/* <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
                     type="audio/mpeg"
@@ -6196,7 +6275,7 @@ export default function GraphicYOSHINO() {
             </audio>
             <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />
@@ -6259,8 +6338,8 @@ export default function GraphicYOSHINO() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

@@ -100,6 +100,11 @@ export default function Graphic_MEIKO() {
     const [GD_103_High, setGD_103_High] = useState<string | null>(null);
     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
 
+    const [Consumption_Flow, setConsumption_Flow] = useState<string | null>(
+        null
+    );
+    const [Flow_Velocity, setFlow_Velocity] = useState<string | null>(null);
+
     const [V2_Flow_Meter, setV2_Flow_Meter] = useState<any>();
     const [V1_Flow_Meter, setV1_Flow_Meter] = useState<any>();
     const [Flow_Meter_Total, setFlow_Meter_Total] = useState<any>();
@@ -171,6 +176,9 @@ export default function Graphic_MEIKO() {
                         GD_103_Low: setGD_103_Low,
 
                         Flow_Meter_Total: setFlow_Meter_Total,
+                        Consumption_Flow: setConsumption_Flow,
+                        Flow_Velocity: setFlow_Velocity,
+
                         V1_Flow_Meter: setV1_Flow_Meter,
                         V2_Flow_Meter: setV2_Flow_Meter,
                         PLC_Conn_STT: setPLC_STT,
@@ -1888,6 +1896,80 @@ export default function Graphic_MEIKO() {
                     },
                 };
             }
+
+            if (node.id === "Flow_Velocity") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorFlow_Meter_Total &&
+                                        !maintainFlow_Meter_Total
+                                            ? "#ff5656"
+                                            : maintainTank_01_Level
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                <p style={{ color: colorNameValue }}>V :</p>
+                                <p style={{ color: colorData }}>
+                                    {" "}
+                                    {Flow_Velocity}
+                                </p>
+                                <p style={{ color: colorNameValue }}>m³/h</p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "Consumption_Flow") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        audioColorFlow_Meter_Total &&
+                                        !maintainFlow_Meter_Total
+                                            ? "#ff5656"
+                                            : maintainTank_01_Level
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                <p style={{ color: colorNameValue }}>F :</p>
+                                <p style={{ color: colorData }}>
+                                    {" "}
+                                    {Consumption_Flow}
+                                </p>
+                                <p style={{ color: colorNameValue }}>m³</p>
+                            </div>
+                        ),
+                    },
+                };
+            }
             if (node.id === "timeUpdate3") {
                 return {
                     ...node,
@@ -1963,7 +2045,7 @@ export default function Graphic_MEIKO() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -2039.8350060092037, y: 976.922382090622 },
               Arrow1: { x: -1803.0251199711197, y: 1299.9325476252639 },
               Arrow2: { x: -1804.0487088215177, y: 1498.5264015128178 },
@@ -1971,10 +2053,12 @@ export default function Graphic_MEIKO() {
               Arrow4: { x: -1918.8136370318027, y: 1639.7830586231873 },
               Arrow5: { x: -1253.596324038457, y: 1067.148313152809 },
               Arrow6: { x: -2272.224330706418, y: 1854.2709334832514 },
+              Consumption_Flow: { x: -1378.645551480018, y: 1762.450181005429 },
               Flow_Meter_Total: {
-                  x: -1380.3441385769306,
-                  y: 1768.9094767563295,
+                  x: -1375.2483772861924,
+                  y: 1583.7634831928456,
               },
+              Flow_Velocity: { x: -1378.3826000458744, y: 1694.3158468973838 },
               GAUGE1: { x: -1890.5028653732359, y: 1780.385321121582 },
               GAUGE1_DATA: { x: -2194.051286744135, y: 1703.9071372995613 },
               GAUGE1_line: { x: -1858.5001593543586, y: 1841.8417141791438 },
@@ -2023,6 +2107,7 @@ export default function Graphic_MEIKO() {
               bor3: { x: -2576.8078213113167, y: 1886.894788044694 },
               bor4: { x: -356.4329469573597, y: 1859.0590100592938 },
               borderWhite: { x: -2572.8363750694525, y: 943.4663593260848 },
+              buffer: { x: -1107.5142214161438, y: 973.4889092603278 },
               fadeBOTTOM1: { x: -1891.3874692725385, y: 1737.7166359613877 },
               fadeBOTTOM2: { x: -1364.2545505356688, y: 1674.416428177142 },
               fadeTOP1: { x: -1890.2348282742848, y: 1378.8574681978128 },
@@ -2087,8 +2172,36 @@ export default function Graphic_MEIKO() {
             },
             targetPosition: Position.Bottom,
         },
+        // {
+        //     id: "Flow_Meter_Total",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 25,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //                 Flow Total
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.Flow_Meter_Total,
+
+        //     style: {
+        //         border: background,
+        //         width: 300,
+
+        //         background: borderBox,
+        //         // Thêm box shadow với màu (0, 255, 255)
+        //     },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Bottom,
+        // },
         {
-            id: "Flow_Meter_Total",
+            id: "Consumption_Flow",
             data: {
                 label: (
                     <div
@@ -2103,7 +2216,35 @@ export default function Graphic_MEIKO() {
                     </div>
                 ),
             },
-            position: positions.Flow_Meter_Total,
+            position: positions.Consumption_Flow,
+
+            style: {
+                border: background,
+                width: 300,
+
+                background: borderBox,
+                // Thêm box shadow với màu (0, 255, 255)
+            },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "Flow_Velocity",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                        Flow Total
+                    </div>
+                ),
+            },
+            position: positions.Flow_Velocity,
 
             style: {
                 border: background,
@@ -2683,7 +2824,28 @@ export default function Graphic_MEIKO() {
             style: { border: "none", width: 0, height: 10, background: "none" },
         },
         // ============================== line =========================================
+        {
+            id: "buffer",
+            position: positions.buffer,
+            type: "custom",
+            data: {
+                label: <div>Buffer Tank</div>,
+            },
 
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+            style: {
+                fontSize: 25,
+                fontWeight: 500,
+                padding: 5,
+                width: 200,
+
+                background: background,
+                color: "white",
+                border: "none",
+                borderRadius: 5,
+            },
+        },
         {
             id: "Tank_01_Level",
             data: {
@@ -3216,6 +3378,21 @@ export default function Graphic_MEIKO() {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
     //                     AlarmCenter: position,
+    //                 }));
+    //             } else if (id === "Flow_Velocity") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Flow_Velocity: position,
+    //                 }));
+    //             } else if (id === "Consumption_Flow") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     Consumption_Flow: position,
+    //                 }));
+    //             } else if (id === "buffer") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     buffer: position,
     //                 }));
     //             }
 
