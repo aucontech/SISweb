@@ -4,9 +4,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicSPMCV/graphicSPMCV";
-import { id_SPMCV } from "../../data-table-device/ID-DEVICE/IdDevice";
-
+import { colorData, colorNameValue } from "../GraphicZOVC/graphicYOSHINO";
+import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
 
 export default function PCV_01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -42,7 +41,7 @@ export default function PCV_01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_SPMCV,
+                                id: id_YOSHINO,
                             },
                         },
                         pageLink: {
@@ -128,28 +127,17 @@ export default function PCV_01_Otsuka() {
         }
     }, []);
 
-    // const handleButtonClick = async () => {
-    //     try {
-    //         await httpApi.post(
-    //             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-    //             { PCV_01: inputValue }
-    //         );
-    //         setUpData(inputValue);
-    //         op.current?.hide();
-    //     } catch (error) {
-    //         console.log("error: ", error);
-    //     }
-    // };
+ 
 
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const newValue = Number(event.target.value);
-    //     setInputValue(newValue);
-    // };
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        setInputValue(newValue);
+    };
 
-    // const handleButtonToggle = (e: React.MouseEvent) => {
-    //     op.current?.toggle(e);
-    //     setInputValue(upData);
-    // };
+    const handleButtonToggle = (e: React.MouseEvent) => {
+        op.current?.toggle(e);
+        setInputValue(upData);
+    };
 
     return (
         <div>
@@ -163,8 +151,9 @@ export default function PCV_01_Otsuka() {
                     justifyContent: "space-between",
                     fontWeight: 400,
                 }}
+                onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PCV-1701</p>
+                <p style={{ color: colorNameValue }}>PCV-1901</p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>

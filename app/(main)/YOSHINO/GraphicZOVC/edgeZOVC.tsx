@@ -15,7 +15,7 @@ const styleBallSmall = {
 }
 
 
-export const DemoEdges = [
+export const edgeZOVC = [
     {
         id: "line1-line2",
         source: "line1",
@@ -216,8 +216,8 @@ export const DemoEdges = [
         },
     },
     {
-        id: "line9-BallValueCenter_None",
-        source: "line9",
+        id: "line4-BallValueCenter_None",
+        source: "line4",
         target: "BallValueCenter_None",
         // animated: true,
         type: "smoothstep",
@@ -227,9 +227,9 @@ export const DemoEdges = [
         },
     },
     {
-        id: "line10-BallValueCenter_None2",
+        id: "line5-BallValueCenter_None2",
         source: "BallValueCenter_None2",
-        target: "line10",
+        target: "line5",
         // animated: true,
         type: "smoothstep",
 
@@ -271,9 +271,9 @@ export const DemoEdges = [
         stroke: "gray",
     }, 
      {
-        id: "FIQ_none11-EVC_01_Volume_at_Measurement_Condition",
+        id: "FIQ_none11-data1",
         source: "FIQ_none11",
-        target: "EVC_01_Volume_at_Measurement_Condition",
+        target: "data1",
         // animated: true,
         type: "smoothstep",
 

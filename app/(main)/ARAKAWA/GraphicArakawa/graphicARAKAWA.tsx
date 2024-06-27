@@ -27,6 +27,7 @@ import SDV_Otsuka from "../ReactFlow/SDV_Otsuka";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
+import { id_ARAKAWA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -54,14 +55,17 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
-import { id_ARAKAWA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import AlarmARAKAWA from "@/layout/AlarmBell/AlarmARAKAWA";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-
+interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "#aad4ff";
@@ -75,26 +79,42 @@ export const line = "#ffaa00";
 export default function GraphicARAKAWA() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
+    const [fitViewEnabled, setFitViewEnabled] = useState(true);
     const [editingEnabled, setEditingEnabled] = useState(false);
 
+    const handleFitView = () => {
+        setFitViewEnabled(true);
+    };
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
+
     const [data, setData] = useState<any[]>([]);
 
-    const [GVF1, setGVF1] = useState<string | null>(null);
-    const [SVF1, setSVF1] = useState<string | null>(null);
-    const [SVA1, setSVA1] = useState<string | null>(null);
-    const [GVA1, setGVA1] = useState<string | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition,
+        setEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
+    const [
+        EVC_01_Volume_at_Base_Condition,
+        setEVC_01_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
+    const [
+        EVC_01_Volume_at_Measurement_Condition,
+        setEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
     const [GVF2, setGVF2] = useState<string | null>(null);
     const [SVF2, setSVF2] = useState<string | null>(null);
     const [SVA2, setSVA2] = useState<string | null>(null);
     const [GVA2, setGVA2] = useState<string | null>(null);
 
-    const [PT01, setPT01] = useState<string | null>(null);
-    const [PT02, setPT02] = useState<string | null>(null);
-    const [PT03, setPT03] = useState<string | null>(null);
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
+    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
+    const [PT1, setPT1] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
@@ -103,11 +123,16 @@ export default function GraphicARAKAWA() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
-    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
-
+    const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+    const [EVC_01_Conn_STTValue, setEVC_01_Conn_STTValue] = useState<
+        string | null
+    >(null);
+    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+    const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<
+        string | null
+    >(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
-
+    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
 
     useEffect(() => {
@@ -155,47 +180,70 @@ export default function GraphicARAKAWA() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
+                        EVC_01_Flow_at_Base_Condition:
+                            setEVC_01_Flow_at_Base_Condition,
+                        EVC_01_Flow_at_Measurement_Condition:
+                            setEVC_01_Flow_at_Measurement_Condition,
 
-                        EVC_01_Volume_at_Base_Condition: setSVA1,
-                        EVC_01_Flow_at_Base_Condition: setSVF1,
-                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
-                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
+                        EVC_01_Volume_at_Base_Condition:
+                            setEVC_01_Volume_at_Base_Condition,
+                        EVC_01_Volume_at_Measurement_Condition:
+                            setEVC_01_Volume_at_Measurement_Condition,
+                        EVC_01_Pressure: setEVC_01_Pressure,
 
+                        EVC_02_Flow_at_Base_Condition: setSVF2,
+                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
 
+                        EVC_02_Volume_at_Base_Condition: setSVA2,
+                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
 
-                        EVC_01_Pressure: setPT01,
-
-
-
-                        // EVC_02_Flow_at_Base_Condition: setSVF2,
-                        // EVC_02_Flow_at_Measurement_Condition: setGVF2,
-
-                        // EVC_02_Volume_at_Base_Condition: setSVA2,
-                        // EVC_02_Vm_Adjustable_Counter: setGVA2,
-
-                        EVC_02_Pressure: setPT02,
+                        EVC_02_Pressure: setEVC_02_Pressure,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
                         GD3: SetGD3,
 
-                        PT1: setPT03,
+                        PT1: setPT1,
 
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        EVC_01_Conn_STT: setEVC_STT01,
-                        EVC_02_Conn_STT: setEVC_STT02,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
                         PLC_Conn_STT: setPLC_STT,
-
-                        time: setTimeUpdate,
                     };
-
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
+                        }
+
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }
@@ -210,25 +258,36 @@ export default function GraphicARAKAWA() {
     //================================ PT 1901================================
 
     const [audioPT1901, setAudio1901] = useState(false);
-    const [HighPT01, setHighPT01] = useState<number | null>(null);
-    const [LowPT01, setLowPT01] = useState<number | null>(null);
+    const [HighEVC_01_Pressure, setHighEVC_01_Pressure] = useState<
+        number | null
+    >(null);
+    const [LowEVC_01_Pressure, setLowEVC_01_Pressure] = useState<number | null>(
+        null
+    );
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT01 === "string" &&
-            typeof LowPT01 === "string" &&
-            PT01 !== null &&
+            typeof HighEVC_01_Pressure === "string" &&
+            typeof LowEVC_01_Pressure === "string" &&
+            EVC_01_Pressure !== null &&
             maintainPT_1901 === false
         ) {
-            const highValue = parseFloat(HighPT01);
-            const lowValue = parseFloat(LowPT01);
-            const PT01Value = parseFloat(PT01);
+            const highValue = parseFloat(HighEVC_01_Pressure);
+            const lowValue = parseFloat(LowEVC_01_Pressure);
+            const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue <= PT01Value || PT01Value <= lowValue) {
+            if (
+                !isNaN(highValue) &&
+                !isNaN(lowValue) &&
+                !isNaN(EVC_01_PressureValue)
+            ) {
+                if (
+                    highValue <= EVC_01_PressureValue ||
+                    EVC_01_PressureValue <= lowValue
+                ) {
                     if (!audioPT1901) {
                         audioRef.current?.play();
                         setAudio1901(true);
@@ -241,7 +300,13 @@ export default function GraphicARAKAWA() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPT_1901]);
+    }, [
+        HighEVC_01_Pressure,
+        EVC_01_Pressure,
+        audioPT1901,
+        LowEVC_01_Pressure,
+        maintainPT_1901,
+    ]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -266,7 +331,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: " Maintain PT-1901 ",
+                summary: " Maintain PT-1601 ",
                 detail: "Success",
                 life: 3000,
             });
@@ -277,7 +342,7 @@ export default function GraphicARAKAWA() {
     const confirmPT_1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " PT-1901",
+            header: " PT-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1901(),
         });
@@ -287,8 +352,12 @@ export default function GraphicARAKAWA() {
 
     //================================ PT 1902======================================================
     const [audioPT1902, setAudio1902] = useState(false);
-    const [HighPT02, setHighPT02] = useState<number | null>(null);
-    const [LowPT02, setLowPT02] = useState<number | null>(null);
+    const [HighEVC_02_Pressure, setHighEVC_02_Pressure] = useState<
+        number | null
+    >(null);
+    const [LowEVC_02_Pressure, setLowEVC_02_Pressure] = useState<number | null>(
+        null
+    );
     const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
@@ -297,17 +366,24 @@ export default function GraphicARAKAWA() {
 
     useEffect(() => {
         if (
-            typeof HighPT02 === "string" &&
-            typeof LowPT02 === "string" &&
-            PT02 !== null &&
+            typeof HighEVC_02_Pressure === "string" &&
+            typeof LowEVC_02_Pressure === "string" &&
+            EVC_02_Pressure !== null &&
             maintainPT_1902 === false
         ) {
-            const highValue = parseFloat(HighPT02);
-            const lowValue = parseFloat(LowPT02);
-            const PT02Value = parseFloat(PT02);
+            const highValue = parseFloat(HighEVC_02_Pressure);
+            const lowValue = parseFloat(LowEVC_02_Pressure);
+            const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue <= PT02Value || PT02Value <= lowValue) {
+            if (
+                !isNaN(highValue) &&
+                !isNaN(lowValue) &&
+                !isNaN(EVC_02_PressureValue)
+            ) {
+                if (
+                    highValue <= EVC_02_PressureValue ||
+                    EVC_02_PressureValue <= lowValue
+                ) {
                     if (!audioPT1902) {
                         audioRef.current?.play();
                         setAudio1902(true);
@@ -320,7 +396,13 @@ export default function GraphicARAKAWA() {
             }
             fetchData();
         }
-    }, [HighPT02, PT02, audioPT1902, LowPT02, maintainPT_1902]);
+    }, [
+        HighEVC_02_Pressure,
+        EVC_02_Pressure,
+        audioPT1902,
+        LowEVC_02_Pressure,
+        maintainPT_1902,
+    ]);
 
     useEffect(() => {
         if (audioPT1902) {
@@ -345,7 +427,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain PT-1902 ",
+                summary: "Maintain PT-1602 ",
                 detail: "Success",
                 life: 3000,
             });
@@ -356,7 +438,7 @@ export default function GraphicARAKAWA() {
     const confirmPT_1902 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " PT-1902",
+            header: " PT-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1902(),
         });
@@ -366,25 +448,25 @@ export default function GraphicARAKAWA() {
 
     //================================ PT 1903======================================================
     const [audioPT1903, setAudio1903] = useState(false);
-    const [HighPT03, setHighPT03] = useState<number | null>(null);
-    const [LowPT03, setLowPT03] = useState<number | null>(null);
+    const [HighPT1, setHighPT1] = useState<number | null>(null);
+    const [LowPT1, setLowPT1] = useState<number | null>(null);
     const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT03 === "string" &&
-            typeof LowPT03 === "string" &&
-            PT03 !== null &&
+            typeof HighPT1 === "string" &&
+            typeof LowPT1 === "string" &&
+            PT1 !== null &&
             maintainPT_1903 === false
         ) {
-            const highValue = parseFloat(HighPT03);
-            const lowValue = parseFloat(LowPT03);
-            const PT03Value = parseFloat(PT03);
+            const highValue = parseFloat(HighPT1);
+            const lowValue = parseFloat(LowPT1);
+            const PT1Value = parseFloat(PT1);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
-                if (highValue <= PT03Value || PT03Value <= lowValue) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
+                if (highValue <= PT1Value || PT1Value <= lowValue) {
                     if (!audioPT1903) {
                         audioRef.current?.play();
                         setAudio1903(true);
@@ -397,7 +479,7 @@ export default function GraphicARAKAWA() {
             }
             fetchData();
         }
-    }, [HighPT03, PT03, audioPT1903, LowPT03, maintainPT_1903]);
+    }, [HighPT1, PT1, audioPT1903, LowPT1, maintainPT_1903]);
 
     useEffect(() => {
         if (audioPT1903) {
@@ -422,7 +504,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain PT-1903 ",
+                summary: "Maintain PT-1603 ",
                 detail: "Success ",
                 life: 3000,
             });
@@ -433,7 +515,7 @@ export default function GraphicARAKAWA() {
     const confirmPT_1903 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " PT-1903",
+            header: " PT-1603",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainPT_1903(),
         });
@@ -503,7 +585,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain GD-1901 ",
+                summary: "Maintain GD-1601 ",
                 detail: "Success ",
                 life: 3000,
             });
@@ -514,7 +596,7 @@ export default function GraphicARAKAWA() {
     const confirmGD_1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GD-1901",
+            header: " GD-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_01(),
         });
@@ -587,7 +669,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain GD-1902 ",
+                summary: "Maintain GD-1602 ",
                 detail: "Success ",
                 life: 3000,
             });
@@ -598,7 +680,7 @@ export default function GraphicARAKAWA() {
     const confirmGD_1902 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GD-1902",
+            header: " GD-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_02(),
         });
@@ -671,7 +753,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "GD-1903 ",
+                summary: "GD-1603 ",
                 detail: "Success ",
                 life: 3000,
             });
@@ -682,7 +764,7 @@ export default function GraphicARAKAWA() {
     const confirmGD_1903 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: "Maintain GD-1903",
+            header: "Maintain GD-1603",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGD_03(),
         });
@@ -690,71 +772,109 @@ export default function GraphicARAKAWA() {
 
     //================================ GD 1902 ======================================================
 
-    //================================ SVF1 FIQ 1901 ======================================================
-    const [audioSVF1, setAudioSVF1] = useState(false);
-    const [HighSVF1, setHighSVF1] = useState<number | null>(null);
-    const [LowSVF1, setLowSVF1] = useState<number | null>(null);
-    const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighSVF1, setInputValueHighSVF1] = useState<any>();
-    const [inputValueLowSVF1, settInputValueLowSVF1] = useState<any>();
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+    const [
+        audioEVC_01_Flow_at_Base_Condition,
+        setAudioEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
+    const [
+        HighEVC_01_Flow_at_Base_Condition,
+        setHighEVC_01_Flow_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        LowEVC_01_Flow_at_Base_Condition,
+        setLowEVC_01_Flow_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setExceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        inputValueHighEVC_01_Flow_at_Base_Condition,
+        setInputValueHighEVC_01_Flow_at_Base_Condition,
+    ] = useState<any>();
+    const [
+        inputValueLowEVC_01_Flow_at_Base_Condition,
+        settInputValueLowEVC_01_Flow_at_Base_Condition,
+    ] = useState<any>();
 
-    const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setMaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighSVF1 === "string" &&
-            typeof LowSVF1 === "string" &&
-            SVF1 !== null &&
-            maintainSVF1 === false
+            typeof HighEVC_01_Flow_at_Base_Condition === "string" &&
+            typeof LowEVC_01_Flow_at_Base_Condition === "string" &&
+            EVC_01_Flow_at_Base_Condition !== null &&
+            maintainEVC_01_Flow_at_Base_Condition === false
         ) {
-            const highValueSVF1 = parseFloat(HighSVF1);
-            const lowValueSVF1 = parseFloat(LowSVF1);
-            const ValueSVF1 = parseFloat(SVF1);
+            const highValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                HighEVC_01_Flow_at_Base_Condition
+            );
+            const lowValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                LowEVC_01_Flow_at_Base_Condition
+            );
+            const ValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                EVC_01_Flow_at_Base_Condition
+            );
 
             if (
-                !isNaN(highValueSVF1) &&
-                !isNaN(lowValueSVF1) &&
-                !isNaN(ValueSVF1)
+                !isNaN(highValueEVC_01_Flow_at_Base_Condition) &&
+                !isNaN(lowValueEVC_01_Flow_at_Base_Condition) &&
+                !isNaN(ValueEVC_01_Flow_at_Base_Condition)
             ) {
-                if (highValueSVF1 <= ValueSVF1 || ValueSVF1 <= lowValueSVF1) {
-                    if (!audioSVF1) {
+                if (
+                    highValueEVC_01_Flow_at_Base_Condition <=
+                        ValueEVC_01_Flow_at_Base_Condition ||
+                    ValueEVC_01_Flow_at_Base_Condition <=
+                        lowValueEVC_01_Flow_at_Base_Condition
+                ) {
+                    if (!audioEVC_01_Flow_at_Base_Condition) {
                         audioRef.current?.play();
-                        setAudioSVF1(true);
-                        setExceedThresholdSVF1(true);
+                        setAudioEVC_01_Flow_at_Base_Condition(true);
+                        setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
                     }
                 } else {
-                    setAudioSVF1(false);
-                    setExceedThresholdSVF1(false);
+                    setAudioEVC_01_Flow_at_Base_Condition(false);
+                    setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
                 }
             }
             fetchData();
         }
-    }, [HighSVF1, SVF1, audioSVF1, LowSVF1, maintainSVF1]);
+    }, [
+        HighEVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition,
+        audioEVC_01_Flow_at_Base_Condition,
+        LowEVC_01_Flow_at_Base_Condition,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
 
     useEffect(() => {
-        if (audioSVF1) {
+        if (audioEVC_01_Flow_at_Base_Condition) {
             const audioEnded = () => {
-                setAudioSVF1(false);
+                setAudioEVC_01_Flow_at_Base_Condition(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioSVF1]);
+    }, [audioEVC_01_Flow_at_Base_Condition]);
 
     const ChangeMaintainSVF_1 = async () => {
         try {
-            const newValue = !maintainSVF1;
+            const newValue = !maintainEVC_01_Flow_at_Base_Condition;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { SVF1_Maintain: newValue }
+                { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
             );
-            setMaintainSVF1(newValue);
+            setMaintainEVC_01_Flow_at_Base_Condition(newValue);
 
             toast.current?.show({
                 severity: "info",
-                summary: " Maintain SVF FIQ-1901",
+                summary: " Maintain SVF FIQ-1601",
                 detail: "Success ",
                 life: 3000,
             });
@@ -765,77 +885,113 @@ export default function GraphicARAKAWA() {
     const confirmSVF_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " SVF FIQ-1901",
+            header: " SVF FIQ-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVF_1(),
         });
     };
 
-    //================================ SVF1 FIQ 1901 ======================================================
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ GVF1 FIQ 1901 ======================================================
-    const [audioGVF1, setAudioGVF1] = useState(false);
-    const [HighGVF1, setHighGVF1] = useState<number | null>(null);
-    const [LowGVF1, setLowGVF1] = useState<number | null>(null);
-    const [exceedThresholdGVF1, setExceedThresholdGVF1] = useState(false);
+    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
+    const [
+        audioEVC_01_Flow_at_Measurement_Condition,
+        setAudioEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        HighEVC_01_Flow_at_Measurement_Condition,
+        setHighEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<number | null>(null);
+    const [
+        LowEVC_01_Flow_at_Measurement_Condition,
+        setLowEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setExceedThresholdEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false);
 
-    const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
+    const [
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        setMaintainEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighGVF1 === "string" &&
-            typeof LowGVF1 === "string" &&
-            GVF1 !== null &&
-            maintainGVF1 === false
+            typeof HighEVC_01_Flow_at_Measurement_Condition === "string" &&
+            typeof LowEVC_01_Flow_at_Measurement_Condition === "string" &&
+            EVC_01_Flow_at_Measurement_Condition !== null &&
+            maintainEVC_01_Flow_at_Measurement_Condition === false
         ) {
-            const highValueGVF1 = parseFloat(HighGVF1);
-            const lowValueGVF1 = parseFloat(LowGVF1);
-            const ValueGVF1 = parseFloat(GVF1);
+            const highValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
+                HighEVC_01_Flow_at_Measurement_Condition
+            );
+            const lowValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
+                LowEVC_01_Flow_at_Measurement_Condition
+            );
+            const ValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
+                EVC_01_Flow_at_Measurement_Condition
+            );
 
             if (
-                !isNaN(highValueGVF1) &&
-                !isNaN(lowValueGVF1) &&
-                !isNaN(ValueGVF1)
+                !isNaN(highValueEVC_01_Flow_at_Measurement_Condition) &&
+                !isNaN(lowValueEVC_01_Flow_at_Measurement_Condition) &&
+                !isNaN(ValueEVC_01_Flow_at_Measurement_Condition)
             ) {
-                if (highValueGVF1 <= ValueGVF1 || ValueGVF1 <= lowValueGVF1) {
-                    if (!audioGVF1) {
+                if (
+                    highValueEVC_01_Flow_at_Measurement_Condition <=
+                        ValueEVC_01_Flow_at_Measurement_Condition ||
+                    ValueEVC_01_Flow_at_Measurement_Condition <=
+                        lowValueEVC_01_Flow_at_Measurement_Condition
+                ) {
+                    if (!audioEVC_01_Flow_at_Measurement_Condition) {
                         audioRef.current?.play();
-                        setAudioGVF1(true);
-                        setExceedThresholdGVF1(true);
+                        setAudioEVC_01_Flow_at_Measurement_Condition(true);
+                        setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                            true
+                        );
                     }
                 } else {
-                    setAudioGVF1(false);
-                    setExceedThresholdGVF1(false);
+                    setAudioEVC_01_Flow_at_Measurement_Condition(false);
+                    setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                        false
+                    );
                 }
             }
             fetchData();
         }
-    }, [HighGVF1, GVF1, audioGVF1, LowGVF1, maintainGVF1]);
+    }, [
+        HighEVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition,
+        audioEVC_01_Flow_at_Measurement_Condition,
+        LowEVC_01_Flow_at_Measurement_Condition,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+    ]);
 
     useEffect(() => {
-        if (audioGVF1) {
+        if (audioEVC_01_Flow_at_Measurement_Condition) {
             const audioEnded = () => {
-                setAudioGVF1(false);
+                setAudioEVC_01_Flow_at_Measurement_Condition(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioGVF1]);
+    }, [audioEVC_01_Flow_at_Measurement_Condition]);
 
     const ChangeMaintainGVF_1 = async () => {
         try {
-            const newValue = !maintainGVF1;
+            const newValue = !maintainEVC_01_Flow_at_Measurement_Condition;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { GVF1_Maintain: newValue }
+                { EVC_01_Flow_at_Measurement_Condition_Maintain: newValue }
             );
-            setMaintainGVF1(newValue);
+            setMaintainEVC_01_Flow_at_Measurement_Condition(newValue);
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain GVF FIQ-1901",
+                summary: "Maintain GVF FIQ-1601",
                 detail: "Success ",
                 life: 3000,
             });
@@ -846,77 +1002,109 @@ export default function GraphicARAKAWA() {
     const confirmGVF_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GVF FIQ-1901",
+            header: " GVF FIQ-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVF_1(),
         });
     };
 
-    //================================ GVF1 FIQ 1901 ======================================================
+    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
 
-    //================================ SVA1 FIQ 1901 ======================================================
-    const [audioSVA1, setAudioSVA1] = useState(false);
-    const [HighSVA1, setHighSVA1] = useState<number | null>(null);
-    const [LowSVA1, setLowSVA1] = useState<number | null>(null);
-    const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
+    const [
+        audioEVC_01_Volume_at_Base_Condition,
+        setAudioEVC_01_Volume_at_Base_Condition,
+    ] = useState(false);
+    const [
+        HighEVC_01_Volume_at_Base_Condition,
+        setHighEVC_01_Volume_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        LowEVC_01_Volume_at_Base_Condition,
+        setLowEVC_01_Volume_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Base_Condition,
+        setExceedThresholdEVC_01_Volume_at_Base_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
+    const [
+        maintainEVC_01_Volume_at_Base_Condition,
+        setMaintainEVC_01_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighSVA1 === "string" &&
-            typeof LowSVA1 === "string" &&
-            SVA1 !== null &&
-            maintainSVA1 === false
+            typeof HighEVC_01_Volume_at_Base_Condition === "string" &&
+            typeof LowEVC_01_Volume_at_Base_Condition === "string" &&
+            EVC_01_Volume_at_Base_Condition !== null &&
+            maintainEVC_01_Volume_at_Base_Condition === false
         ) {
-            const highValueSVA1 = parseFloat(HighSVA1);
-            const lowValueSVA1 = parseFloat(LowSVA1);
-            const ValueSVA1 = parseFloat(SVA1);
+            const highValueEVC_01_Volume_at_Base_Condition = parseFloat(
+                HighEVC_01_Volume_at_Base_Condition
+            );
+            const lowValueEVC_01_Volume_at_Base_Condition = parseFloat(
+                LowEVC_01_Volume_at_Base_Condition
+            );
+            const ValueEVC_01_Volume_at_Base_Condition = parseFloat(
+                EVC_01_Volume_at_Base_Condition
+            );
 
             if (
-                !isNaN(highValueSVA1) &&
-                !isNaN(lowValueSVA1) &&
-                !isNaN(ValueSVA1)
+                !isNaN(highValueEVC_01_Volume_at_Base_Condition) &&
+                !isNaN(lowValueEVC_01_Volume_at_Base_Condition) &&
+                !isNaN(ValueEVC_01_Volume_at_Base_Condition)
             ) {
-                if (highValueSVA1 <= ValueSVA1 || ValueSVA1 <= lowValueSVA1) {
-                    if (!audioSVA1) {
+                if (
+                    highValueEVC_01_Volume_at_Base_Condition <=
+                        ValueEVC_01_Volume_at_Base_Condition ||
+                    ValueEVC_01_Volume_at_Base_Condition <=
+                        lowValueEVC_01_Volume_at_Base_Condition
+                ) {
+                    if (!audioEVC_01_Volume_at_Base_Condition) {
                         audioRef.current?.play();
-                        setAudioSVA1(true);
-                        setExceedThresholdSVA1(true);
+                        setAudioEVC_01_Volume_at_Base_Condition(true);
+                        setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
                     }
                 } else {
-                    setAudioSVA1(false);
-                    setExceedThresholdSVA1(false);
+                    setAudioEVC_01_Volume_at_Base_Condition(false);
+                    setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
                 }
             }
             fetchData();
         }
-    }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
+    }, [
+        HighEVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition,
+        audioEVC_01_Volume_at_Base_Condition,
+        LowEVC_01_Volume_at_Base_Condition,
+        maintainEVC_01_Volume_at_Base_Condition,
+    ]);
 
     useEffect(() => {
-        if (audioSVA1) {
+        if (audioEVC_01_Volume_at_Base_Condition) {
             const audioEnded = () => {
-                setAudioSVA1(false);
+                setAudioEVC_01_Volume_at_Base_Condition(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioSVA1]);
+    }, [audioEVC_01_Volume_at_Base_Condition]);
 
     const ChangeMaintainSVA_1 = async () => {
         try {
-            const newValue = !maintainSVA1;
+            const newValue = !maintainEVC_01_Volume_at_Base_Condition;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { SVA1_Maintain: newValue }
+                { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
             );
-            setMaintainSVA1(newValue);
+            setMaintainEVC_01_Volume_at_Base_Condition(newValue);
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain SVA FIQ-1901",
+                summary: "Maintain SVA FIQ-1601",
                 detail: "Success ",
                 life: 3000,
             });
@@ -927,77 +1115,113 @@ export default function GraphicARAKAWA() {
     const confirmSVA_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " SVA FIQ-1901",
+            header: " SVA FIQ-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVA_1(),
         });
     };
 
-    //================================ SVA1 FIQ 1901 ======================================================
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ GVA1 FIQ 1901 ======================================================
-    const [audioGVA1, setAudioGVA1] = useState(false);
-    const [HighGVA1, setHighGVA1] = useState<number | null>(null);
-    const [LowGVA1, setLowGVA1] = useState<number | null>(null);
-    const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
+    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+    const [
+        audioEVC_01_Volume_at_Measurement_Condition,
+        setAudioEVC_01_Volume_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        HighEVC_01_Volume_at_Measurement_Condition,
+        setHighEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<number | null>(null);
+    const [
+        LowEVC_01_Volume_at_Measurement_Condition,
+        setLowEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        setExceedThresholdEVC_01_Volume_at_Measurement_Condition,
+    ] = useState(false);
 
-    const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
+    const [
+        maintainEVC_01_Volume_at_Measurement_Condition,
+        setMaintainEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighGVA1 === "string" &&
-            typeof LowGVA1 === "string" &&
-            GVA1 !== null &&
-            maintainGVA1 === false
+            typeof HighEVC_01_Volume_at_Measurement_Condition === "string" &&
+            typeof LowEVC_01_Volume_at_Measurement_Condition === "string" &&
+            EVC_01_Volume_at_Measurement_Condition !== null &&
+            maintainEVC_01_Volume_at_Measurement_Condition === false
         ) {
-            const highValueGVA1 = parseFloat(HighGVA1);
-            const lowValueGVA1 = parseFloat(LowGVA1);
-            const ValueGVA1 = parseFloat(GVA1);
+            const highValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
+                HighEVC_01_Volume_at_Measurement_Condition
+            );
+            const lowValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
+                LowEVC_01_Volume_at_Measurement_Condition
+            );
+            const ValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
+                EVC_01_Volume_at_Measurement_Condition
+            );
 
             if (
-                !isNaN(highValueGVA1) &&
-                !isNaN(lowValueGVA1) &&
-                !isNaN(ValueGVA1)
+                !isNaN(highValueEVC_01_Volume_at_Measurement_Condition) &&
+                !isNaN(lowValueEVC_01_Volume_at_Measurement_Condition) &&
+                !isNaN(ValueEVC_01_Volume_at_Measurement_Condition)
             ) {
-                if (highValueGVA1 <= ValueGVA1 || ValueGVA1 <= lowValueGVA1) {
-                    if (!audioGVA1) {
+                if (
+                    highValueEVC_01_Volume_at_Measurement_Condition <=
+                        ValueEVC_01_Volume_at_Measurement_Condition ||
+                    ValueEVC_01_Volume_at_Measurement_Condition <=
+                        lowValueEVC_01_Volume_at_Measurement_Condition
+                ) {
+                    if (!audioEVC_01_Volume_at_Measurement_Condition) {
                         audioRef.current?.play();
-                        setAudioGVA1(true);
-                        setExceedThresholdGVA1(true);
+                        setAudioEVC_01_Volume_at_Measurement_Condition(true);
+                        setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                            true
+                        );
                     }
                 } else {
-                    setAudioGVA1(false);
-                    setExceedThresholdGVA1(false);
+                    setAudioEVC_01_Volume_at_Measurement_Condition(false);
+                    setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                        false
+                    );
                 }
             }
             fetchData();
         }
-    }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
+    }, [
+        HighEVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition,
+        audioEVC_01_Volume_at_Measurement_Condition,
+        LowEVC_01_Volume_at_Measurement_Condition,
+        maintainEVC_01_Volume_at_Measurement_Condition,
+    ]);
 
     useEffect(() => {
-        if (audioGVA1) {
+        if (audioEVC_01_Volume_at_Measurement_Condition) {
             const audioEnded = () => {
-                setAudioGVA1(false);
+                setAudioEVC_01_Volume_at_Measurement_Condition(false);
             };
             audioRef.current?.addEventListener("ended", audioEnded);
             return () => {
                 audioRef.current?.removeEventListener("ended", audioEnded);
             };
         }
-    }, [audioGVA1]);
+    }, [audioEVC_01_Volume_at_Measurement_Condition]);
 
     const ChangeMaintainGVA_1 = async () => {
         try {
-            const newValue = !maintainGVA1;
+            const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { GVA1_Maintain: newValue }
+                { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
             );
-            setMaintainGVA1(newValue);
+            setMaintainEVC_01_Volume_at_Measurement_Condition(newValue);
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain GVA FIQ-1901 ",
+                summary: "Maintain GVA FIQ-1601 ",
                 detail: "Success ",
                 life: 3000,
             });
@@ -1008,16 +1232,16 @@ export default function GraphicARAKAWA() {
     const confirmGVA_1 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GVA FIQ-1901",
+            header: " GVA FIQ-1601",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVA_1(),
         });
     };
 
-    //================================ GVA1 FIQ 1901 ======================================================
+    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
 
     //================================ SVF2 FIQ 1901 ======================================================
-    //================================ SVF1 FIQ 1901 ======================================================
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
     const [audioSVF2, setAudioSVF2] = useState(false);
     const [HighSVF2, setHighSVF2] = useState<number | null>(null);
     const [LowSVF2, setLowSVF2] = useState<number | null>(null);
@@ -1079,7 +1303,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: " Maintain SVF FIQ-1902",
+                summary: " Maintain SVF FIQ-1602",
                 detail: "Success ",
                 life: 3000,
             });
@@ -1090,13 +1314,13 @@ export default function GraphicARAKAWA() {
     const confirmSVF_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " SVF FIQ-1902",
+            header: " SVF FIQ-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVF_2(),
         });
     };
 
-    //================================ SVF1 FIQ 1901 ======================================================
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
     //================================ GVF2 FIQ 1901 ======================================================
     const [audioGVF2, setAudioGVF2] = useState(false);
@@ -1160,7 +1384,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain GVF FIQ-1902",
+                summary: "Maintain GVF FIQ-1602",
                 detail: "Success ",
                 life: 3000,
             });
@@ -1171,13 +1395,13 @@ export default function GraphicARAKAWA() {
     const confirmGVF_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GVF FIQ-1902",
+            header: " GVF FIQ-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVF_2(),
         });
     };
 
-    //================================ GVF1 FIQ 1901 ======================================================
+    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
 
     //================================ SVA2 FIQ 1901 ======================================================
     const [audioSVA2, setAudioSVA2] = useState(false);
@@ -1241,7 +1465,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: "Maintain SVA FIQ-1902",
+                summary: "Maintain SVA FIQ-1602",
                 detail: "Success ",
                 life: 3000,
             });
@@ -1252,7 +1476,7 @@ export default function GraphicARAKAWA() {
     const confirmSVA_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " SVA FIQ-1902",
+            header: " SVA FIQ-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainSVA_2(),
         });
@@ -1322,7 +1546,7 @@ export default function GraphicARAKAWA() {
 
             toast.current?.show({
                 severity: "info",
-                summary: " Maintain GVA FIQ-1902",
+                summary: " Maintain GVA FIQ-1602",
                 detail: "Success ",
                 life: 3000,
             });
@@ -1333,13 +1557,13 @@ export default function GraphicARAKAWA() {
     const confirmGVA_2 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
-            header: " GVA FIQ-1902",
+            header: " GVA FIQ-1602",
             icon: "pi pi-info-circle",
             accept: () => ChangeMaintainGVA_2(),
         });
     };
 
-    //================================ GVA1 FIQ 1901 ======================================================
+    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
 
     const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
@@ -1382,29 +1606,29 @@ export default function GraphicARAKAWA() {
             const highEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
             );
-            setHighPT01(highEVCPressureItem?.value || null);
+            setHighEVC_01_Pressure(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Low"
             );
-            setLowPT01(lowEVCPressureItem?.value || null);
+            setLowEVC_01_Pressure(lowEVCPressureItem?.value || null);
 
             const HighPT1902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_High"
             );
-            setHighPT02(HighPT1902?.value || null);
+            setHighEVC_02_Pressure(HighPT1902?.value || null);
             const LowPT1902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Low"
             );
-            setLowPT02(LowPT1902?.value || null);
+            setLowEVC_02_Pressure(LowPT1902?.value || null);
 
             const HighPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
-            setHighPT03(HighPT1903?.value || null);
+            setHighPT1(HighPT1903?.value || null);
             const LowPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_Low"
             );
-            setLowPT03(LowPT1903?.value || null);
+            setLowPT1(LowPT1903?.value || null);
 
             const HighGD01 = res.data.find(
                 (item: any) => item.key === "GD1_High"
@@ -1436,51 +1660,67 @@ export default function GraphicARAKAWA() {
             );
             setLowGD03(LowGD03?.value || null);
 
-            const HighSVF1 = res.data.find(
+            const HighEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setHighSVF1(HighSVF1?.value || null);
+            setHighEVC_01_Flow_at_Base_Condition(
+                HighEVC_01_Flow_at_Base_Condition?.value || null
+            );
 
-            const LowSVF1 = res.data.find(
+            const LowEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setLowSVF1(LowSVF1?.value || null);
+            setLowEVC_01_Flow_at_Base_Condition(
+                LowEVC_01_Flow_at_Base_Condition?.value || null
+            );
 
-            const HighGVF1 = res.data.find(
+            const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setHighGVF1(HighGVF1?.value || null);
+            setHighEVC_01_Flow_at_Measurement_Condition(
+                HighEVC_01_Flow_at_Measurement_Condition?.value || null
+            );
 
-            const LowGVF1 = res.data.find(
+            const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setLowGVF1(LowGVF1?.value || null);
+            setLowEVC_01_Flow_at_Measurement_Condition(
+                LowEVC_01_Flow_at_Measurement_Condition?.value || null
+            );
 
-            const HighSVA1 = res.data.find(
+            const HighEVC_01_Volume_at_Base_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
-            setHighSVA1(HighSVA1?.value || null);
+            setHighEVC_01_Volume_at_Base_Condition(
+                HighEVC_01_Volume_at_Base_Condition?.value || null
+            );
 
-            const LowSVA1 = res.data.find(
+            const LowEVC_01_Volume_at_Base_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
-            setLowSVA1(LowSVA1?.value || null);
+            setLowEVC_01_Volume_at_Base_Condition(
+                LowEVC_01_Volume_at_Base_Condition?.value || null
+            );
 
-            const HighGVA1 = res.data.find(
+            const HighEVC_01_Volume_at_Measurement_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
-            setHighGVA1(HighGVA1?.value || null);
+            setHighEVC_01_Volume_at_Measurement_Condition(
+                HighEVC_01_Volume_at_Measurement_Condition?.value || null
+            );
 
-            const LowGVA1 = res.data.find(
+            const LowEVC_01_Volume_at_Measurement_Condition = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
-            setLowGVA1(LowGVA1?.value || null);
+            setLowEVC_01_Volume_at_Measurement_Condition(
+                LowEVC_01_Volume_at_Measurement_Condition?.value || null
+            );
 
             const HighSVF2 = res.data.find(
                 (item: any) =>
@@ -1560,26 +1800,34 @@ export default function GraphicARAKAWA() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainSVF1(MaintainSVF_1?.value || false);
+            setMaintainEVC_01_Flow_at_Base_Condition(
+                MaintainSVF_1?.value || false
+            );
 
             const MaintainGVF_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVF1(MaintainGVF_1?.value || false);
+            setMaintainEVC_01_Flow_at_Measurement_Condition(
+                MaintainGVF_1?.value || false
+            );
 
             const MaintainSVA_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainSVA1(MaintainSVA_1?.value || false);
+            setMaintainEVC_01_Volume_at_Base_Condition(
+                MaintainSVA_1?.value || false
+            );
 
             const MaintainGVA_1 = res.data.find(
                 (item: any) =>
                     item.key ===
                     "EVC_01_Volume_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVA1(MaintainGVA_1?.value || false);
+            setMaintainEVC_01_Volume_at_Measurement_Condition(
+                MaintainGVA_1?.value || false
+            );
 
             const MaintainSVF_2 = res.data.find(
                 (item: any) =>
@@ -1629,9 +1877,9 @@ export default function GraphicARAKAWA() {
         SVA: "SVA",
         GVA: "GVA",
         PT: "PT",
-        PT_1901: "PT-1901",
-        PT_1902: "PT-1902",
-        PT_1903: "PT-1903",
+        PT_1901: "PT-1601",
+        PT_1902: "PT-1602",
+        PT_1903: "PT-1603",
 
         TT: "TT",
     };
@@ -1660,9 +1908,11 @@ export default function GraphicARAKAWA() {
 
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
-            if (node.id === "data4") {
-                const roundedSVF1 =
-                    SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+            if (node.id === "EVC_01_Flow_at_Base_Condition") {
+                const roundedEVC_01_Flow_at_Base_Condition =
+                    EVC_01_Flow_at_Base_Condition !== null
+                        ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -1670,8 +1920,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1679,9 +1929,10 @@ export default function GraphicARAKAWA() {
                                     padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVF1 && !maintainSVF1
+                                        exceedThresholdEVC_01_Flow_at_Base_Condition &&
+                                        !maintainEVC_01_Flow_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVF1
+                                            : maintainEVC_01_Flow_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1704,7 +1955,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF1}
+                                        {roundedEVC_01_Flow_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1721,9 +1972,13 @@ export default function GraphicARAKAWA() {
                     },
                 };
             }
-            if (node.id === "data3") {
-                const roundedGVF1 =
-                    GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+            if (node.id === "EVC_01_Flow_at_Measurement_Condition") {
+                const roundedEVC_01_Flow_at_Measurement_Condition =
+                    EVC_01_Flow_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_01_Flow_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -1731,8 +1986,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1740,9 +1995,10 @@ export default function GraphicARAKAWA() {
                                     padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVF1 && !maintainGVF1
+                                        exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
+                                        !maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVF1
+                                            : maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1765,7 +2021,9 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF1}
+                                        {
+                                            roundedEVC_01_Flow_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1782,9 +2040,11 @@ export default function GraphicARAKAWA() {
                     },
                 };
             }
-            if (node.id === "data2") {
-                const roundedSVA1 =
-                    SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
+            if (node.id === "EVC_01_Volume_at_Base_Condition") {
+                const roundedEVC_01_Volume_at_Base_Condition =
+                    EVC_01_Volume_at_Base_Condition !== null
+                        ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -1792,8 +2052,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1801,9 +2061,10 @@ export default function GraphicARAKAWA() {
                                     padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVA1 && !maintainSVA1
+                                        exceedThresholdEVC_01_Volume_at_Base_Condition &&
+                                        !maintainEVC_01_Volume_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVA1
+                                            : maintainEVC_01_Volume_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1826,7 +2087,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVA1}
+                                        {roundedEVC_01_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1843,9 +2104,13 @@ export default function GraphicARAKAWA() {
                     },
                 };
             }
-            if (node.id === "data1") {
-                const roundedGVA1 =
-                    GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
+            if (node.id === "EVC_01_Volume_at_Measurement_Condition") {
+                const roundedEVC_01_Volume_at_Measurement_Condition =
+                    EVC_01_Volume_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_01_Volume_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1854,8 +2119,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1863,9 +2128,10 @@ export default function GraphicARAKAWA() {
                                     padding: 2,
                                     borderRadius: 5,
                                     background:
-                                        exceedThresholdGVA1 && !maintainGVA1
+                                        exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
+                                        !maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVA1
+                                            : maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1889,7 +2155,9 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVA1}
+                                        {
+                                            roundedEVC_01_Volume_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1917,8 +2185,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1951,7 +2219,8 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF2}
+                                        {/* {roundedSVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -1979,8 +2248,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2013,7 +2282,8 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF2}
+                                        {/* {roundedGVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2041,8 +2311,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2075,7 +2345,8 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedSVA2}
+                                        {/* {roundedSVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2103,8 +2374,8 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2137,7 +2408,8 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedGVA2}
+                                        {/* {roundedGVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2155,8 +2427,8 @@ export default function GraphicARAKAWA() {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT03 =
-                    PT03 !== null ? parseFloat(PT03).toFixed(2) : "";
+                const roundedPT1 =
+                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2167,8 +2439,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2198,7 +2470,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT03}
+                                        {roundedPT1}
                                     </p>
                                 </div>
                                 <p
@@ -2216,8 +2488,10 @@ export default function GraphicARAKAWA() {
                 };
             }
             if (node.id === "Pressure_Trans02") {
-                const roundedPT01 =
-                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+                const roundedEVC_01_Pressure =
+                    EVC_01_Pressure !== null
+                        ? parseFloat(EVC_01_Pressure).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -2228,8 +2502,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2259,7 +2533,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT01}
+                                        {roundedEVC_01_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2277,8 +2551,10 @@ export default function GraphicARAKAWA() {
                 };
             }
             if (node.id === "Pressure_Trans03") {
-                const roundedPT02 =
-                    PT02 !== null ? parseFloat(PT02).toFixed(2) : "";
+                const roundedEVC_02_Pressure =
+                    EVC_02_Pressure !== null
+                        ? parseFloat(EVC_02_Pressure).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -2289,8 +2565,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 15,
-                                    fontWeight: 400,
+                                    fontSize: 22,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2321,7 +2597,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2373,15 +2649,7 @@ export default function GraphicARAKAWA() {
                                         {" "}
                                         EVC 01 :{" "}
                                     </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        EVC 02 :{" "}
-                                    </p>
+                                   
                                 </div>
 
                                 <div style={{}}>
@@ -2405,7 +2673,7 @@ export default function GraphicARAKAWA() {
                                         )}
                                     </p>
                                     <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT01 === "1" ? (
+                                        {EVC_01_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2423,25 +2691,7 @@ export default function GraphicARAKAWA() {
                                             </span>
                                         )}
                                     </p>
-                                    <p style={{ marginLeft: 5 }}>
-                                        {EVC_STT02 === "1" ? (
-                                            <span
-                                                style={{
-                                                    color: "#25d125",
-                                                }}
-                                            >
-                                                Connected
-                                            </span>
-                                        ) : (
-                                            <span
-                                                style={{
-                                                    color: "#ff5656",
-                                                }}
-                                            >
-                                                Disconnect
-                                            </span>
-                                        )}
-                                    </p>
+                                   
                                 </div>
 
                                 <div>
@@ -2453,7 +2703,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {EVC_01_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -2463,18 +2713,9 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {timeUpdate}
+                                        {EVC_02_Conn_STTValue}
                                     </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {timeUpdate}
-                                    </p>
+                                    
                                 </div>
                             </div>
                         ),
@@ -2494,13 +2735,13 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
                                     backgroundColor:
                                         exceedThresholdGD01 && !maintainGD_1901
@@ -2529,13 +2770,13 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
 
                                     backgroundColor:
@@ -2566,13 +2807,13 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 13,
-                                    fontWeight: 400,
+                                    fontSize: 20,
+                                    fontWeight: 500,
                                     position: "relative",
                                     bottom: 5,
 
                                     borderRadius: 2,
-                                    width: 65,
+
                                     right: 4,
 
                                     backgroundColor:
@@ -2623,15 +2864,15 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
+                                    fontSize: 22,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1901
+                                FIQ-1601
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2657,15 +2898,15 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
+                                    fontSize: 22,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1902
+                                FIQ-1602
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2688,7 +2929,7 @@ export default function GraphicARAKAWA() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
@@ -2728,26 +2969,43 @@ export default function GraphicARAKAWA() {
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -240.7533028867357, y: 550.5684432829023 },
-              FIQ_1902: { x: -231.60088039032206, y: 1289.1255396791125 },
+              EVC_01_Flow_at_Base_Condition: {
+                  x: -275.258231018305,
+                  y: 594.1099182771684,
+              },
+              EVC_01_Flow_at_Measurement_Condition: {
+                  x: -275.5788897046258,
+                  y: 645.0064507552753,
+              },
+              EVC_01_Volume_at_Base_Condition: {
+                  x: -275.37496874581336,
+                  y: 695.5497653944917,
+              },
+              EVC_01_Volume_at_Measurement_Condition: {
+                  x: -274.9305105252121,
+                  y: 746.5043895523191,
+              },
+              FIQ_1901: { x: -275.39498197292176, y: 542.9840164170233 },
+              FIQ_1902: { x: -266.8066364957003, y: 1289.1255396791125 },
               FIQ_none: { x: -165.54268721568215, y: 798.0972512607284 },
               FIQ_none2: { x: -157.1205623176026, y: 1186.5853436430443 },
               FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
               FIQ_none22: { x: -127.36875034337497, y: 1231.0392945117674 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              GD1: { x: -745.9526824268976, y: 1025.5908034534227 },
-              GD1_Name1901: { x: -750.5717919879045, y: 968.8438653513034 },
-              GD1_Value1901: { x: -750.6929582767964, y: 994.0597991500013 },
-              GD2: { x: -349.9389941850782, y: 1019.7819038201158 },
-              GD2_Name1902: { x: -354.74096631277996, y: 964.7102283049067 },
-              GD2_Value1902: { x: -354.6295300462283, y: 989.9911271099056 },
-              GD3: { x: 19.041341761782917, y: 1021.9968146950976 },
-              GD3_Name1903: { x: 14.064251841848176, y: 962.5434170104967 },
-              GD3_Value1903: { x: 14.283320814722941, y: 988.28449275314 },
-              GD_none1: { x: -720.3956940812873, y: 1045.5612154866174 },
-              GD_none2: { x: -324.3704087949896, y: 1039.64552169912 },
-              GD_none3: { x: 44.43067084862969, y: 1036.1027102105159 },
+              FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
+              GD1: { x: -356.5274003534157, y: 1024.6843982746898 },
+              GD1_Name1901: { x: -386.7113084299622, y: 936.562287392658 },
+              GD1_Value1901: { x: -386.52346612478414, y: 971.9347273405062 },
+              GD2: { x: 16.219970605642402, y: 1017.2021439643406 },
+              GD2_Name1902: { x: -13.296698830843866, y: 936.370740418364 },
+              GD2_Value1902: { x: -13.467035961151623, y: 971.7686416536776 },
+              GD3: { x: 16.04134176178286, y: 1035.243511740587 },
+              GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
+              GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
+              GD_none1: { x: -331.3432333205292, y: 1041.210962690087 },
+              GD_none2: { x: 41.78855599573092, y: 1032.0316583224167 },
+              GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1151.6225319026826, y: 574.7715183161662 },
               PCV01: { x: -703.6225805120118, y: 879.1889175310166 },
@@ -2790,22 +3048,19 @@ export default function GraphicARAKAWA() {
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
               PT1: { x: -1114.171659503826, y: 949.7657148375583 },
               PT2: { x: -350.9391791978867, y: 1138.964910598512 },
-              PT3: { x: -344.2422546040923, y: 750.8313302579564 },
+              PT3: { x: -354.39235881679406, y: 750.8313302579563 },
               PT_col1: { x: -1081.6718862507378, y: 1012.7653932006001 },
-              PT_col2: { x: -311.61340748391814, y: 813.5387087224499 },
+              PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
               PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
               PT_none1: { x: -1081.59363157488, y: 971.649579153979 },
-              PT_none2: { x: -310.54194957541347, y: 782.7500279655704 },
+              PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
               PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: -1166.660688189441, y: 848.9043168081807 },
-              Pressure_Trans02: { x: -562.6962249223983, y: 688.6387678519382 },
-              Pressure_Trans03: {
-                  x: -564.0315214558219,
-                  y: 1323.5258392422122,
-              },
-              SDV: { x: -1014.5755767396676, y: 955.8651163728643 },
+              Pressure_Trans01: { x: -1221.685358835719, y: 850.466290459883 },
+              Pressure_Trans02: { x: -678.3851600513049, y: 668.8753213795461 },
+              Pressure_Trans03: { x: -677.1607204889335, y: 1299.179830907271 },
+              SDV: { x: -1033.7922368748887, y: 948.0837312492845 },
               SDV_Ball: { x: -987.3302143743845, y: 1160.2473446642948 },
               SDV_IMG: { x: -1011.1148428541994, y: 994.0707354298925 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
@@ -2849,14 +3104,10 @@ export default function GraphicARAKAWA() {
                   y: 1235.5350090951665,
               },
               borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data1: { x: -241.3789449409768, y: 742.0872704993753 },
-              data2: { x: -241.1892960415438, y: 694.1327393419244 },
-              data3: { x: -241.0146932560861, y: 646.4850519390955 },
-              data4: { x: -240.75823101830503, y: 598.1099182771684 },
-              data5: { x: -231.36808141646952, y: 1336.5701182589364 },
-              data6: { x: -231.73476394811564, y: 1384.208994293254 },
-              data7: { x: -231.77917777528347, y: 1431.9903313994284 },
-              data8: { x: -231.36896991535298, y: 1479.4135435995122 },
+              data5: { x: -266.9131945555665, y: 1339.4972181078178 },
+              data6: { x: -266.91104003332725, y: 1390.208994293254 },
+              data7: { x: -266.87005369020784, y: 1441.1285917462176 },
+              data8: { x: -267.38561112765143, y: 1492.1205588818639 },
               line1: { x: -1214.9782042334255, y: 1044.7946609746105 },
               line2: { x: -857.076582460349, y: 1044.8496174211396 },
               line3: { x: -740.4843786514932, y: 924.7734644855461 },
@@ -3387,11 +3638,11 @@ export default function GraphicARAKAWA() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 500,
+                            fontSize: 20,
+                            fontWeight: 600,
                         }}
                     >
-                        SDV-1901
+                        SDV-1601
                     </div>
                 ),
             },
@@ -3400,8 +3651,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 90,
-                height: 37,
+                width: 130,
+                height: 45,
             },
             targetPosition: Position.Bottom,
         },
@@ -3975,7 +4226,7 @@ export default function GraphicARAKAWA() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -3999,7 +4250,7 @@ export default function GraphicARAKAWA() {
                 height: 50,
 
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
         {
@@ -4041,11 +4292,11 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             fontSize: 32,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                         onClick={confirmLineDuty}
                     >
-                        FIQ-1901
+                        FIQ-1601
                         {lineDuty1901 && <span>1901</span>}
                     </div>
                 ),
@@ -4055,8 +4306,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4067,11 +4318,11 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             fontSize: 32,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                         onClick={confirmLineDuty}
                     >
-                        FIQ-1902
+                        FIQ-1602
                         {lineDuty1902 && <span>1902</span>}
                     </div>
                 ),
@@ -4081,8 +4332,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4273,63 +4524,63 @@ export default function GraphicARAKAWA() {
         // =================== data ================================
 
         {
-            id: "data1",
+            id: "EVC_01_Volume_at_Measurement_Condition",
             data: {
                 label: (
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 22,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
                     </div>
                 ),
             },
-            position: positions.data1,
+            position: positions.EVC_01_Volume_at_Measurement_Condition,
 
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
         {
-            id: "data2",
+            id: "EVC_01_Volume_at_Base_Condition",
             data: {
                 label: (
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
-                            fontWeight: 400,
+                            fontSize: 22,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
                     </div>
                 ),
             },
-            position: positions.data2,
+            position: positions.EVC_01_Volume_at_Base_Condition,
 
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
         {
-            id: "data3",
+            id: "EVC_01_Flow_at_Measurement_Condition",
             data: {
                 label: (
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4338,18 +4589,18 @@ export default function GraphicARAKAWA() {
                 ),
             },
 
-            position: positions.data3,
+            position: positions.EVC_01_Flow_at_Measurement_Condition,
 
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
         {
-            id: "data4",
+            id: "EVC_01_Flow_at_Base_Condition",
             data: {
                 label: (
                     <div
@@ -4364,13 +4615,13 @@ export default function GraphicARAKAWA() {
                 ),
             },
 
-            position: positions.data4,
+            position: positions.EVC_01_Flow_at_Base_Condition,
 
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Bottom,
         },
@@ -4382,7 +4633,7 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4396,8 +4647,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4408,7 +4659,7 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4422,8 +4673,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Left,
         },
@@ -4434,7 +4685,7 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4448,8 +4699,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4460,7 +4711,7 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -4474,8 +4725,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 230,
-                height: 47,
+                width: 300,
+                height: 50,
             },
             targetPosition: Position.Top,
         },
@@ -4626,7 +4877,7 @@ export default function GraphicARAKAWA() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4651,9 +4902,9 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 300,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -4664,7 +4915,7 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 15,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     ></div>
@@ -4674,9 +4925,9 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 300,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4699,9 +4950,9 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 190,
+                width: 300,
                 background: borderBox,
-                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+                // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4887,7 +5138,7 @@ export default function GraphicARAKAWA() {
                             <p
                                 style={{
                                     fontSize: 45,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
                             >
@@ -4968,7 +5219,7 @@ export default function GraphicARAKAWA() {
                             <p
                                 style={{
                                     fontSize: 60,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
                             ></p>
@@ -5122,37 +5373,37 @@ export default function GraphicARAKAWA() {
             },
             targetPosition: Position.Left,
         },
-        {
-            id: "GD3",
-            data: {
-                label: <div>{GD}</div>,
-            },
+        // {
+        //     id: "GD3",
+        //     data: {
+        //         label: <div>{GD}</div>,
+        //     },
 
-            position: positions.GD3,
-            zIndex: 9999,
+        //     position: positions.GD3,
+        //     zIndex: 9999,
 
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Top,
-        },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Top,
+        // },
         {
             id: "GD1_Name1901",
             data: {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 400,
+                            fontSize: 20,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
                     >
-                        GD-1901
+                        GD-1601
                     </div>
                 ),
             },
@@ -5161,8 +5412,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 80,
-                height: 25,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Left,
         },
@@ -5172,13 +5423,13 @@ export default function GraphicARAKAWA() {
                 label: (
                     <div
                         style={{
-                            fontSize: 13,
-                            fontWeight: 400,
+                            fontSize: 20,
+                            fontWeight: 500,
                             position: "relative",
                             bottom: 5,
                         }}
                     >
-                        GD-1902
+                        GD-1602
                     </div>
                 ),
             },
@@ -5187,37 +5438,37 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "yellow",
                 border: "1px solid white",
-                width: 80,
-                height: 25,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Left,
         },
-        {
-            id: "GD3_Name1903",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            position: "relative",
-                            bottom: 5,
-                        }}
-                    >
-                        GD-1903
-                    </div>
-                ),
-            },
-            position: positions.GD3_Name1903,
+        // {
+        //     id: "GD3_Name1903",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     fontSize: 20,
+        //                     fontWeight: 500,
+        //                     position: "relative",
+        //                     bottom: 5,
+        //                 }}
+        //             >
+        //                 GD-1603
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.GD3_Name1903,
 
-            style: {
-                background: "yellow",
-                border: "1px solid white",
-                width: 80,
-                height: 25,
-            },
-            targetPosition: Position.Left,
-        },
+        //     style: {
+        //         background: "yellow",
+        //         border: "1px solid white",
+        //         width: 130,
+        //         height: 35,
+        //     },
+        //     targetPosition: Position.Left,
+        // },
 
         {
             id: "GD1_Value1901",
@@ -5229,8 +5480,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 80,
-                height: 30,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Bottom,
         },
@@ -5241,12 +5492,10 @@ export default function GraphicARAKAWA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 18,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.GD2_Value1902,
@@ -5254,36 +5503,36 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 80,
-                height: 30,
+                width: 130,
+                height: 35,
             },
             targetPosition: Position.Bottom,
         },
-        {
-            id: "GD3_Value1903",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 18,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.GD3_Value1903,
+        // {
+        //     id: "GD3_Value1903",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 22,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.GD3_Value1903,
 
-            style: {
-                background: borderBox,
-                border: "1px solid white",
-                width: 80,
-                height: 30,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //     style: {
+        //         background: borderBox,
+        //         border: "1px solid white",
+        //         width: 130,
+        //         height: 35,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         {
             id: "GD_none1",
@@ -5319,23 +5568,23 @@ export default function GraphicARAKAWA() {
                 height: 1,
             },
         },
-        {
-            id: "GD_none3",
-            position: positions.GD_none3,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "GD_none3",
+        //     position: positions.GD_none3,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: colorIMG_none,
+        //         width: 10,
+        //         height: 1,
+        //     },
+        // },
 
         // ============ border white ======================
         {
@@ -5812,25 +6061,25 @@ export default function GraphicARAKAWA() {
     //                 }));
     //             }
     //             // ========================= data ==========================
-    //             else if (id === "data1") {
+    //             else if (id === "EVC_01_Volume_at_Measurement_Condition") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     data1: position,
+    //                     EVC_01_Volume_at_Measurement_Condition: position,
     //                 }));
-    //             } else if (id === "data2") {
+    //             } else if (id === "EVC_01_Volume_at_Base_Condition") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     data2: position,
+    //                     EVC_01_Volume_at_Base_Condition: position,
     //                 }));
-    //             } else if (id === "data3") {
+    //             } else if (id === "EVC_01_Flow_at_Measurement_Condition") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     data3: position,
+    //                     EVC_01_Flow_at_Measurement_Condition: position,
     //                 }));
-    //             } else if (id === "data4") {
+    //             } else if (id === "EVC_01_Flow_at_Base_Condition") {
     //                 setPositions((prevPositions: any) => ({
     //                     ...prevPositions,
-    //                     data4: position,
+    //                     EVC_01_Flow_at_Base_Condition: position,
     //                 }));
     //             } else if (id === "data5") {
     //                 setPositions((prevPositions: any) => ({
@@ -6186,6 +6435,11 @@ export default function GraphicARAKAWA() {
     //                     ...prevPositions,
     //                     AlarmCenter: position,
     //                 }));
+    //             } else if (id === "FullScreen") {
+    //                 setPositions((prevPositions: any) => ({
+    //                     ...prevPositions,
+    //                     FullScreen: position,
+    //                 }));
     //             }
     //         }
     //     },
@@ -6219,7 +6473,7 @@ export default function GraphicARAKAWA() {
                 onHide={() => setVisible(false)}
                 style={{
                     width: 500,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     fontSize: 17,
                 }}
             >
@@ -6275,8 +6529,6 @@ export default function GraphicARAKAWA() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
                 >
                     <Controls style={{ position: "absolute", top: 0 }} />
 
