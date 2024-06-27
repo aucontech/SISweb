@@ -61,11 +61,7 @@ interface StateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-interface ValueStateMap {
-    [key: string]:
-        | React.Dispatch<React.SetStateAction<string | null>>
-        | undefined;
-}
+
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "#aad4ff";
@@ -76,11 +72,10 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicZOCV() {
+export default function GraphicYOSHINO() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
-    const [active, setActive] = useState();
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -99,21 +94,19 @@ export default function GraphicZOCV() {
 
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
-    const [PT_1103, setPT_1103] = useState<string | null>(null);
+    const [PT03, setPT03] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
     const [GD3, SetGD3] = useState<string | null>(null);
 
-    const [NC, setNC] = useState<string | null>(null);
+    const [NC, setNC] = useState<any>();
     const [NO, setNO] = useState<string | null>(null);
 
-    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
-    const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<
-        string | null
-    >(null);
-    const [Conn_STT, setConn_STT] = useState<string | null>(null);
-    const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
+    const [EVC_STT01, setEVC_STT01] = useState<string | null>(null);
+    const [EVC_STT02, setEVC_STT02] = useState<string | null>(null);
+
+    const [PLC_STT, setPLC_STT] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
 
@@ -132,69 +125,12 @@ export default function GraphicZOCV() {
             ],
         };
 
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_ZOCV,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
                 });
             };
 
@@ -237,19 +173,15 @@ export default function GraphicZOCV() {
                         GD2: SetGD2,
                         GD3: SetGD3,
 
-                        PT_1103: setPT_1103,
+                        PT1: setPT03,
 
                         SSV_1101: setNC,
 
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        Conn_STT: setConn_STT,
+                        EVC_01_Conn_STT: setEVC_STT01,
+                        EVC_02_Conn_STT: setEVC_STT02,
+                        PLC_Conn_STT: setPLC_STT,
 
                         time: setTimeUpdate,
-                    };
-
-                    const valueStateMap: ValueStateMap = {
-                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
-                        FC_01_Conn_STT: setConn_STTValue,
                     };
 
                     keys.forEach((key) => {
@@ -258,42 +190,8 @@ export default function GraphicZOCV() {
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
+                     
                     });
-                }
-
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
                 }
                 fetchData();
             };
@@ -310,14 +208,14 @@ export default function GraphicZOCV() {
     const [LowPT01, setLowPT01] = useState<number | null>(null);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPCV1901, setMaintainPCV1901] = useState<boolean>(false);
+    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
 
     useEffect(() => {
         if (
             typeof HighPT01 === "string" &&
             typeof LowPT01 === "string" &&
             PT01 !== null &&
-            maintainPCV1901 === false
+            maintainPT_1901 === false
         ) {
             const highValue = parseFloat(HighPT01);
             const lowValue = parseFloat(LowPT01);
@@ -337,7 +235,7 @@ export default function GraphicZOCV() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPCV1901]);
+    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPT_1901]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -351,13 +249,14 @@ export default function GraphicZOCV() {
         }
     }, [audioPT1901]);
 
-    const ChangeMaintainPCV1901 = async () => {
+    const ChangeMaintainPT_1901 = async () => {
         try {
-            const newValue = !maintainPCV1901;
-            await httpApi.post(PostTelemetry_ZOVC, {
-                PCV1901_maintain: newValue,
-            });
-            setMaintainPCV1901(newValue);
+            const newValue = !maintainPT_1901;
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { PT_1901_maintain: newValue }
+            );
+            setMaintainPT_1901(newValue);
 
             toast.current?.show({
                 severity: "info",
@@ -369,12 +268,12 @@ export default function GraphicZOCV() {
         } catch (error) {}
     };
 
-    const confirmPCV1901 = () => {
+    const confirmPT_1901 = () => {
         confirmDialog({
             message: "Do you want to change the status?",
             header: " PT-1901",
             icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPCV1901(),
+            accept: () => ChangeMaintainPT_1901(),
         });
     };
 
@@ -432,9 +331,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainPT_1902 = async () => {
         try {
             const newValue = !maintainPT_1902;
-            await httpApi.post(PostTelemetry_ZOVC, {
-                PT_1902_maintain: newValue,
-            });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { PT_1902_maintain: newValue }
+            );
             setMaintainPT_1902(newValue);
 
             toast.current?.show({
@@ -460,25 +360,25 @@ export default function GraphicZOCV() {
 
     //================================ PT 1903======================================================
     const [audioPT1903, setAudio1903] = useState(false);
-    const [HighPT_1103, setHighPT_1103] = useState<number | null>(null);
-    const [LowPT_1103, setLowPT_1103] = useState<number | null>(null);
+    const [HighPT03, setHighPT03] = useState<number | null>(null);
+    const [LowPT03, setLowPT03] = useState<number | null>(null);
     const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
     const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT_1103 === "string" &&
-            typeof LowPT_1103 === "string" &&
-            PT_1103 !== null &&
+            typeof HighPT03 === "string" &&
+            typeof LowPT03 === "string" &&
+            PT03 !== null &&
             maintainPT_1903 === false
         ) {
-            const highValue = parseFloat(HighPT_1103);
-            const lowValue = parseFloat(LowPT_1103);
-            const PT_1103Value = parseFloat(PT_1103);
+            const highValue = parseFloat(HighPT03);
+            const lowValue = parseFloat(LowPT03);
+            const PT03Value = parseFloat(PT03);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_1103Value)) {
-                if (highValue < PT_1103Value || PT_1103Value < lowValue) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
+                if (highValue < PT03Value || PT03Value < lowValue) {
                     if (!audioPT1903) {
                         audioRef.current?.play();
                         setAudio1903(true);
@@ -491,7 +391,7 @@ export default function GraphicZOCV() {
             }
             fetchData();
         }
-    }, [HighPT_1103, PT_1103, audioPT1903, LowPT_1103, maintainPT_1903]);
+    }, [HighPT03, PT03, audioPT1903, LowPT03, maintainPT_1903]);
 
     useEffect(() => {
         if (audioPT1903) {
@@ -508,9 +408,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainPT_1903 = async () => {
         try {
             const newValue = !maintainPT_1903;
-            await httpApi.post(PostTelemetry_ZOVC, {
-                PT_1903_maintain: newValue,
-            });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { PT_1903_maintain: newValue }
+            );
             setMaintainPT_1903(newValue);
 
             toast.current?.show({
@@ -588,7 +489,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGD_01 = async () => {
         try {
             const newValue = !maintainGD_1901;
-            await httpApi.post(PostTelemetry_ZOVC, { GD1_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GD1_Maintain: newValue }
+            );
             setMaintainGD_1901(newValue);
 
             toast.current?.show({
@@ -669,7 +573,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGD_02 = async () => {
         try {
             const newValue = !maintainGD_1902;
-            await httpApi.post(PostTelemetry_ZOVC, { GD2_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GD2_Maintain: newValue }
+            );
             setMaintainGD_1902(newValue);
 
             toast.current?.show({
@@ -750,7 +657,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGD_03 = async () => {
         try {
             const newValue = !maintainGD_1903;
-            await httpApi.post(PostTelemetry_ZOVC, { GD3_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GD3_Maintain: newValue }
+            );
             setMaintainGD_1903(newValue);
 
             toast.current?.show({
@@ -830,7 +740,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainSVF_1 = async () => {
         try {
             const newValue = !maintainSVF1;
-            await httpApi.post(PostTelemetry_ZOVC, { SVF1_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { SVF1_Maintain: newValue }
+            );
             setMaintainSVF1(newValue);
 
             toast.current?.show({
@@ -908,7 +821,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGVF_1 = async () => {
         try {
             const newValue = !maintainGVF1;
-            await httpApi.post(PostTelemetry_ZOVC, { GVF1_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GVF1_Maintain: newValue }
+            );
             setMaintainGVF1(newValue);
 
             toast.current?.show({
@@ -986,7 +902,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainSVA_1 = async () => {
         try {
             const newValue = !maintainSVA1;
-            await httpApi.post(PostTelemetry_ZOVC, { SVA1_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { SVA1_Maintain: newValue }
+            );
             setMaintainSVA1(newValue);
 
             toast.current?.show({
@@ -1064,7 +983,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGVA_1 = async () => {
         try {
             const newValue = !maintainGVA1;
-            await httpApi.post(PostTelemetry_ZOVC, { GVA1_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GVA1_Maintain: newValue }
+            );
             setMaintainGVA1(newValue);
 
             toast.current?.show({
@@ -1143,7 +1065,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainSVF_2 = async () => {
         try {
             const newValue = !maintainSVF2;
-            await httpApi.post(PostTelemetry_ZOVC, { SVF2_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { SVF2_Maintain: newValue }
+            );
             setMaintainSVF2(newValue);
 
             toast.current?.show({
@@ -1221,7 +1146,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGVF_2 = async () => {
         try {
             const newValue = !maintainGVF2;
-            await httpApi.post(PostTelemetry_ZOVC, { GVF2_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GVF2_Maintain: newValue }
+            );
             setMaintainGVF2(newValue);
 
             toast.current?.show({
@@ -1299,7 +1227,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainSVA_2 = async () => {
         try {
             const newValue = !maintainSVA2;
-            await httpApi.post(PostTelemetry_ZOVC, { SVA2_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { SVA2_Maintain: newValue }
+            );
             setMaintainSVA2(newValue);
 
             toast.current?.show({
@@ -1377,7 +1308,10 @@ export default function GraphicZOCV() {
     const ChangeMaintainGVA_2 = async () => {
         try {
             const newValue = !maintainGVA2;
-            await httpApi.post(PostTelemetry_ZOVC, { GVA2_Maintain: newValue });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { GVA2_Maintain: newValue }
+            );
             setMaintainGVA2(newValue);
 
             toast.current?.show({
@@ -1409,10 +1343,10 @@ export default function GraphicZOCV() {
             const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
-            await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
-            });
+            await httpApi.post(
+                PostTelemetry_ZOVC,
+                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+            );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
@@ -1435,7 +1369,9 @@ export default function GraphicZOCV() {
 
     const fetchData = async () => {
         try {
-            const res = await httpApi.get(GetTelemetry_ZOVC);
+            const res = await httpApi.get(
+                GetTelemetry_ZOVC
+            );
 
             const highEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
@@ -1458,11 +1394,11 @@ export default function GraphicZOCV() {
             const HighPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
-            setHighPT_1103(HighPT1903?.value || null);
+            setHighPT03(HighPT1903?.value || null);
             const LowPT1903 = res.data.find(
                 (item: any) => item.key === "PT1_Low"
             );
-            setLowPT_1103(LowPT1903?.value || null);
+            setLowPT03(LowPT1903?.value || null);
 
             const HighGD01 = res.data.find(
                 (item: any) => item.key === "GD1_High"
@@ -1584,10 +1520,10 @@ export default function GraphicZOCV() {
             );
             setLowGVA2(LowGVA2?.value || null);
 
-            const MaintainPCV1901 = res.data.find(
+            const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
-            setMaintainPCV1901(MaintainPCV1901?.value || false);
+            setMaintainPT_1901(MaintainPT_1901?.value || false);
 
             const MaintainPT_1902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
@@ -1687,7 +1623,7 @@ export default function GraphicZOCV() {
         SVA: "SVA",
         GVA: "GVA",
         PT: "PT",
-        PCV1901: "PT-1901",
+        PT_1901: "PT-1901",
         PT_1902: "PT-1902",
         PT_1903: "PT-1903",
 
@@ -1762,7 +1698,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        Not used
+                                        {roundedSVF1}
                                     </p>
                                 </div>
                                 <p
@@ -1823,7 +1759,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        Not used
+                                        {roundedGVF1}
                                     </p>
                                 </div>
                                 <p
@@ -1884,7 +1820,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        Not used
+                                        {roundedSVA1}
                                     </p>
                                 </div>
                                 <p
@@ -1947,7 +1883,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        Not used
+                                        {roundedGVA1}
                                     </p>
                                 </div>
                                 <p
@@ -2213,8 +2149,8 @@ export default function GraphicZOCV() {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT_1103 =
-                    PT_1103 !== null ? parseFloat(PT_1103).toFixed(2) : "";
+                const roundedPT03 =
+                    PT03 !== null ? parseFloat(PT03).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2248,7 +2184,7 @@ export default function GraphicZOCV() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1103 :
+                                        {ValueGas.PT_1903} :
                                     </p>
                                     <p
                                         style={{
@@ -2256,7 +2192,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT_1103}
+                                        {roundedPT03}
                                     </p>
                                 </div>
                                 <p
@@ -2266,7 +2202,7 @@ export default function GraphicZOCV() {
                                         top: 5,
                                     }}
                                 >
-                                    Bar
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -2292,13 +2228,13 @@ export default function GraphicZOCV() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainPCV1901
+                                        exceedThreshold && !maintainPT_1901
                                             ? "#ff5656"
-                                            : maintainPCV1901
+                                            : maintainPT_1901
                                             ? "orange"
                                             : "transparent",
                                 }}
-                                // onClick={() => confirmPCV1901()}
+                                // onClick={() => confirmPT_1901()}
                             >
                                 <div
                                     style={{
@@ -2309,7 +2245,7 @@ export default function GraphicZOCV() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        EVC 01 Pressure :
+                                        {ValueGas.PT_1901} :
                                     </p>
                                     <p
                                         style={{
@@ -2317,10 +2253,18 @@ export default function GraphicZOCV() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {/* {roundedPT01} */}
-                                        Not used
+                                        {roundedPT01}
                                     </p>
                                 </div>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    {KeyGas.BAR}
+                                </p>
                             </div>
                         ),
                     },
@@ -2363,7 +2307,7 @@ export default function GraphicZOCV() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        EVC 02 Pressure :
+                                        {ValueGas.PT_1902} :
                                     </p>
                                     <p
                                         style={{
@@ -2381,7 +2325,7 @@ export default function GraphicZOCV() {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    {KeyGas.BAR}
                                 </p>
                             </div>
                         ),
@@ -2411,8 +2355,9 @@ export default function GraphicZOCV() {
                                         }}
                                     >
                                         {" "}
-                                        Gateway :{" "}
+                                        PLC :{" "}
                                     </p>
+
                                     <p
                                         style={{
                                             color: "white",
@@ -2420,9 +2365,8 @@ export default function GraphicZOCV() {
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        EVC 01 :{" "}
                                     </p>
-
                                     <p
                                         style={{
                                             color: "white",
@@ -2436,26 +2380,7 @@ export default function GraphicZOCV() {
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
-                                        <p style={{ marginLeft: 5 }}>
-                                            {active === "true" ? (
-                                                <span
-                                                    style={{
-                                                        color: "#25d125",
-                                                    }}
-                                                >
-                                                    Active
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    style={{
-                                                        color: "#ff5656",
-                                                    }}
-                                                >
-                                                    Un Active
-                                                </span>
-                                            )}
-                                        </p>
-                                        {Conn_STT === "1" ? (
+                                        {PLC_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2473,9 +2398,27 @@ export default function GraphicZOCV() {
                                             </span>
                                         )}
                                     </p>
-
                                     <p style={{ marginLeft: 5 }}>
-                                        {EVC_02_Conn_STT === "1" ? (
+                                        {EVC_STT01 === "1" ? (
+                                            <span
+                                                style={{
+                                                    color: "#25d125",
+                                                }}
+                                            >
+                                                Connected
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "#ff5656",
+                                                }}
+                                            >
+                                                Disconnect
+                                            </span>
+                                        )}
+                                    </p>
+                                    <p style={{ marginLeft: 5 }}>
+                                        {EVC_STT02 === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2498,33 +2441,33 @@ export default function GraphicZOCV() {
                                 <div>
                                     <p
                                         style={{
-                                            color: background,
+                                            color: "white",
 
-                                            fontSize: 15,
+                                          
                                             marginLeft: 15,
                                         }}
                                     >
-                                        null
+                                        {timeUpdate}
                                     </p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
+                                          
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Conn_STTValue}
+                                        {timeUpdate}
                                     </p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
+                                          
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {EVC_02_Conn_STTValue}
+                                        {timeUpdate}
                                     </p>
                                 </div>
                             </div>
@@ -2650,8 +2593,8 @@ export default function GraphicZOCV() {
                         ...node.data,
                         label: (
                             <div>
-                                {NC === "1" && <div>{SVD_NO}</div>}
-                                {NC === "0" && <div>{SVD_NC}</div>}
+                                {NC === "1" && <div>{SVD_NO}1</div>}
+                                {NC === "0" && <div>{SVD_NC}2</div>}
                             </div>
                         ),
                     },
@@ -2674,7 +2617,7 @@ export default function GraphicZOCV() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                {/* FIQ-1901
+                                FIQ-1901
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2686,8 +2629,7 @@ export default function GraphicZOCV() {
                                             }}
                                         ></i>
                                     </span>
-                                )} */}
-                                Not used
+                                )}
                             </div>
                         ),
                     },
@@ -2732,17 +2674,17 @@ export default function GraphicZOCV() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-              const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+                // const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-              ArrowRight: { x: 361.63814192842443, y: 1022.694783335719 },
-              ArrowRight1: { x: -1117.5029742372521, y: 1028.4144814411625 },
-              BallValue01: { x: -1044.3623120428465, y: 1131.8426285378578 },
-              BallValue02: { x: -897.6141478861746, y: 1130.1502447788996 },
+              ArrowRight: { x: 269.4256642678949, y: 1023.5985886548262 },
+              ArrowRight1: { x: -1165.821109536864, y: 1026.8452833725173 },
+              BallValue01: { x: -1090.3623120428465, y: 1130.8426285378578 },
+              BallValue02: { x: -887.6141478861746, y: 1129.6502447788996 },
               BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
               BallValue04: { x: -127.98761243251244, y: 1129.5595186007586 },
               BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
@@ -2764,17 +2706,17 @@ export default function GraphicZOCV() {
                   x: -458.43233108676895,
                   y: 1047.9161594286932,
               },
-              BallValueFirst: { x: 429.15262421132076, y: 1009.0430441067174 },
-              BallValueLast: { x: -1185.7855496288498, y: 1013.9021150905016 },
-              BallValuePSV: { x: 289.72148707331525, y: 956.6157106130481 },
-              BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
+              BallValueFirst: { x: 338.15262421132076, y: 1010.0430441067174 },
+              BallValueLast: { x: -1237.9047231598838, y: 1013.6849449585161 },
+              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
+              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -600.2178332288872, y: 529.8047278642143 },
-              FIQ_1902: { x: -566.782593545606, y: 1305.348642657379 },
-              FIQ_none: { x: -491.4470769137962, y: 797.3702269986474 },
-              FIQ_none2: { x: -455.8216096811922, y: 1201.8983996314123 },
-              FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
-              FIQ_none22: { x: -427.39220510806797, y: 1246.3032297512827 },
+              FIQ_1901: { x: -600.2178332288872, y: 546.2634788476669 },
+              FIQ_1902: { x: -598.2269080233234, y: 1299.1773355305222 },
+              FIQ_none: { x: -526.0606587777817, y: 796.3620871361296 },
+              FIQ_none2: { x: -523.3216096811922, y: 1201.3983996314123 },
+              FIQ_none11: { x: -497.3625383626708, y: 840.3971285580416 },
+              FIQ_none22: { x: -494.39220510806797, y: 1245.3032297512827 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               GD1: { x: -744.9526824268976, y: 1027.0908034534227 },
@@ -2790,7 +2732,7 @@ export default function GraphicZOCV() {
               GD_none2: { x: -311.4848030174507, y: 1042.5915840896632 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1133.1652361754373, y: 546.2739306406778 },
+              Header: { x: -1315.0541148206603, y: 542.7414053545939 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
@@ -2821,44 +2763,41 @@ export default function GraphicZOCV() {
               },
               PCV_none1: { x: -43.356336775693705, y: 932.4844638821777 },
               PCV_none2: { x: -43.63902265954965, y: 1160.9945398306136 },
-              PSV01: { x: 204.7769815796771, y: 722.5979741364629 },
-              PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
-              PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
-              PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-              PSV_None01: { x: 447.48718383080245, y: 1041.2984512500652 },
-              PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
-              PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
-              PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
-              PT1: { x: 213.79089216580826, y: 952.8215389633342 },
+              PSV01: { x: 121.99644634072223, y: 722.5979741364629 },
+              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
+              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
+              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
+              PSV_None01: { x: 265.1066519200614, y: 1041.2984512500655 },
+              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
+              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
+              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
+              PT1: { x: -996.9532738162299, y: 949.6022756172126 },
               PT2: { x: -708.258294622871, y: 1154.2084571677146 },
               PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-              PT_col1: { x: 246.77020206396446, y: 1015.995256464112 },
+              PT_col1: { x: -965.0334069238746, y: 1012.8802095314497 },
               PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
               PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-              PT_none1: { x: 245.97093596247453, y: 1035.3795085307177 },
+              PT_none1: { x: -964.3722675067637, y: 978.9303239049175 },
               PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
               PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: {
-                  x: 105.79787045542042,
-                  y: 1213.0865077660026,
+                  x: -1049.2473802202082,
+                  y: 855.3114796471364,
               },
-              Pressure_Trans02: { x: -1043.511197414419, y: 680.3024670279331 },
-              Pressure_Trans03: {
-                  x: -1051.4518439414317,
-                  y: 1310.5121860292993,
-              },
-              SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
-              SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
-              SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
+              Pressure_Trans02: { x: -945.1276880116326, y: 705.6733566761328 },
+              Pressure_Trans03: { x: -884.4967295957847, y: 1321.809670445742 },
+              SDV: { x: -1099.8835403835114, y: 956.6494709563746 },
+              SDV_Ball: { x: -1072.658207783444, y: 1161.1738486098288 },
+              SDV_IMG: { x: -1095.7464489538452, y: 994.0752335439693 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1024.1286470234306, y: 1047.6886789070904 },
+              SDV_None: { x: -1069.034965906526, y: 1045.0156837354775 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-              Tank: { x: -910.7713207303586, y: 988.0249702520116 },
-              Tank_Ball: { x: -879.6133664723408, y: 1162.8377358070973 },
-              Tank_None: { x: -889.4859145000356, y: 1045.6292921984523 },
+              Tank: { x: -903.8348910158862, y: 983.557904759858 },
+              Tank_Ball: { x: -869.8918792522013, y: 1161.3421223886141 },
+              Tank_None: { x: -880.9288889403146, y: 1045.4801484268744 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -2895,18 +2834,18 @@ export default function GraphicZOCV() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1268.0512994804117, y: 538.393140032008 },
+              borderWhite: { x: -1416.2258431989903, y: 535.4693400538745 },
               data1: { x: -600.7396652303086, y: 734.0298552462513 },
-              data2: { x: -600.6538263836953, y: 682.3968450603423 },
-              data3: { x: -600.4792235982375, y: 631.8178888851007 },
-              data4: { x: -600.1016616532435, y: 580.9222883481272 },
-              data5: { x: -566.4941090494707, y: 1356.0928722234303 },
-              data6: { x: -566.8317496942007, y: 1406.7027063708313 },
-              data7: { x: -566.3761635213684, y: 1457.4550015900893 },
-              data8: { x: -566.4659556614379, y: 1508.3491719032568 },
-              line1: { x: -1163.5305423252987, y: 1045.8638590432556 },
-              line2: { x: -874.050262971247, y: 1046.097424130381 },
-              line3: { x: -743.0134159304, y: 844.6163804041859 },
+              data2: { x: -600.6538263836953, y: 686.9577986165322 },
+              data3: { x: -600.4792235982375, y: 640.0276052862424 },
+              data4: { x: -600.2227613604565, y: 593.0874597693938 },
+              data5: { x: -597.9941090494707, y: 1346.0928722234303 },
+              data6: { x: -597.8317496942007, y: 1393.2027063708313 },
+              data7: { x: -597.8761635213684, y: 1440.4550015900893 },
+              data8: { x: -597.4659556614379, y: 1487.3491719032568 },
+              line1: { x: -1214.9782042334255, y: 1044.7946609746105 },
+              line2: { x: -857.076582460349, y: 1044.8496174211396 },
+              line3: { x: -743.3124450190387, y: 844.4761862219137 },
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
               line5: { x: -300.65784806763253, y: 844.3342440262651 },
               line6: { x: -300.98065704991916, y: 1249.1529639630187 },
@@ -2915,19 +2854,19 @@ export default function GraphicZOCV() {
               line9: { x: -110.37038145875272, y: 1159.9359004593528 },
               line10: { x: 86.69745659087829, y: 930.5099856332267 },
               line11: { x: 86.19431979613125, y: 1160.0153295862324 },
-              line12: { x: 212.34921055529412, y: 1040.345253330986 },
-              line13: { x: 445.3312960971492, y: 1041.4713896720348 },
+              line12: { x: 181.84921055529412, y: 1040.345253330986 },
+              line13: { x: 356.3312960971492, y: 1041.4713896720348 },
               overlay_SmallVavle1: {
-                  x: -531.2918361488164,
-                  y: 919.397327575481,
+                  x: -655.8048761234448,
+                  y: 990.8679355727855,
               },
               overlay_SmallVavle2: {
-                  x: -1263.7593947324417,
-                  y: 1290.7025144885476,
+                  x: -1051.3932603321475,
+                  y: 1389.5626115369605,
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-              overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              timeUpdate3: { x: -1240.6810951502703, y: 607.6569720784828 },
+              overlay_line13: { x: 144.51723493155333, y: 1038.2994432144098 },
+              timeUpdate3: { x: -1390.6628894607206, y: 609.4386242236333 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3438,12 +3377,12 @@ export default function GraphicZOCV() {
                             fontWeight: 500,
                         }}
                     >
-                        SSV-1101
+                        SDV-1901
                     </div>
                 ),
             },
             position: positions.SDV,
-            zIndex: 99999,
+            zIndex:99999,
 
             style: {
                 background: "yellow",
@@ -4023,7 +3962,7 @@ export default function GraphicZOCV() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 2)", // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4047,7 +3986,7 @@ export default function GraphicZOCV() {
                 height: 50,
 
                 background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
         },
         {
@@ -4093,9 +4032,8 @@ export default function GraphicZOCV() {
                         }}
                         onClick={confirmLineDuty}
                     >
-                        {/* FIQ-1901
-                        {lineDuty1901 && <span>1901</span>} */}
-                        Not used
+                        FIQ-1901
+                        {lineDuty1901 && <span>1901</span>}
                     </div>
                 ),
             },
@@ -4675,7 +4613,7 @@ export default function GraphicZOCV() {
                 width: 180,
                 height: 50,
                 background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
         },
 
@@ -4700,35 +4638,35 @@ export default function GraphicZOCV() {
 
             style: {
                 border: background,
-                width: 300,
+                width: 260,
                 background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
-        // {
-        //     id: "Pressure_Trans02",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     color: "green",
-        //                     fontSize: 22,
-        //                     fontWeight: 600,
-        //                 }}
-        //             ></div>
-        //         ),
-        //     },
-        //     position: positions.Pressure_Trans02,
+        {
+            id: "Pressure_Trans02",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 22,
+                            fontWeight: 600,
+                        }}
+                    ></div>
+                ),
+            },
+            position: positions.Pressure_Trans02,
 
-        //     style: {
-        //         border: background,
-        //         width: 360,
-        //         background: borderBox,
-        //          // Thêm box shadow với màu (0, 255, 255)
-        //     },
-        //     targetPosition: Position.Right,
-        // },
+            style: {
+                border: background,
+                width: 260,
+                background: borderBox,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Right,
+        },
         {
             id: "Pressure_Trans03",
             data: {
@@ -4748,9 +4686,9 @@ export default function GraphicZOCV() {
 
             style: {
                 border: background,
-                width: 340,
+                width: 260,
                 background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
@@ -4936,11 +4874,11 @@ export default function GraphicZOCV() {
                             <p
                                 style={{
                                     fontSize: 45,
-                                    fontWeight: 600,
+                                    fontWeight: 500,
                                     color: "#ffaa00",
                                 }}
                             >
-                                ZOCV
+                                ZOVC
                             </p>
                         </div>
                     </div>
@@ -5549,704 +5487,704 @@ export default function GraphicZOCV() {
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-    // const onNodeDragStop = useCallback(
-    //     (event: any, node: any) => {
-    //         if (editingEnabled) {
-    //             const { id, position } = node;
-    //             setNodes((prevNodes) =>
-    //                 prevNodes.map((n) =>
-    //                     n.id === id ? { ...n, position: position } : n
-    //                 )
-    //             );
-    //             if (id === "SDV") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV: position,
-    //                 }));
-    //             } else if (id === "SDV_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_None: position,
-    //                 }));
-    //             } else if (id === "SDV_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_IMG: position,
-    //                 }));
-    //             } else if (id === "SDV_Ball") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_Ball: position,
-    //                 }));
-    //             }
-    //             // ================================== end item ==================================
+    const onNodeDragStop = useCallback(
+        (event: any, node: any) => {
+            if (editingEnabled) {
+                const { id, position } = node;
+                setNodes((prevNodes) =>
+                    prevNodes.map((n) =>
+                        n.id === id ? { ...n, position: position } : n
+                    )
+                );
+                if (id === "SDV") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV: position,
+                    }));
+                } else if (id === "SDV_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_None: position,
+                    }));
+                } else if (id === "SDV_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG: position,
+                    }));
+                } else if (id === "SDV_Ball") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Ball: position,
+                    }));
+                }
+                // ================================== end item ==================================
 
-    //             // ============ line =========================
-    //             else if (id === "line1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line1: position,
-    //                 }));
-    //             } else if (id === "line2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line2: position,
-    //                 }));
-    //             } else if (id === "line3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3: position,
-    //                 }));
-    //             } else if (id === "line4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4: position,
-    //                 }));
-    //             } else if (id === "line5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line7: position,
-    //                 }));
-    //             } else if (id === "line8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line8: position,
-    //                 }));
-    //             } else if (id === "line9") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line9: position,
-    //                 }));
-    //             } else if (id === "line10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line10: position,
-    //                 }));
-    //             } else if (id === "line11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line11: position,
-    //                 }));
-    //             } else if (id === "line12") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line12: position,
-    //                 }));
-    //             } else if (id === "line13") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line13: position,
-    //                 }));
-    //             }
+                // ============ line =========================
+                else if (id === "line1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line1: position,
+                    }));
+                } else if (id === "line2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line2: position,
+                    }));
+                } else if (id === "line3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3: position,
+                    }));
+                } else if (id === "line4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4: position,
+                    }));
+                } else if (id === "line5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line7: position,
+                    }));
+                } else if (id === "line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line8: position,
+                    }));
+                } else if (id === "line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9: position,
+                    }));
+                } else if (id === "line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10: position,
+                    }));
+                } else if (id === "line11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line11: position,
+                    }));
+                } else if (id === "line12") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line12: position,
+                    }));
+                } else if (id === "line13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line13: position,
+                    }));
+                }
 
-    //             // ============ ball vavle ===========================
-    //             else if (id === "BallValue01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue01: position,
-    //                 }));
-    //             } else if (id === "BallValue02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue02: position,
-    //                 }));
-    //             } else if (id === "BallValue03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue03: position,
-    //                 }));
-    //             } else if (id === "BallValue04") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue04: position,
-    //                 }));
-    //             } else if (id === "BallValue05") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue05: position,
-    //                 }));
-    //             } else if (id === "BallValue06") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue06: position,
-    //                 }));
-    //             } else if (id === "BallValue07") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue07: position,
-    //                 }));
-    //             } else if (id === "BallValue08") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue08: position,
-    //                 }));
-    //             } else if (id === "BallValue09") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue09: position,
-    //                 }));
-    //             } else if (id === "BallValue10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValue10: position,
-    //                 }));
-    //             } else if (id === "BallValueFirst") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueFirst: position,
-    //                 }));
-    //             } else if (id === "BallValueLast") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueLast: position,
-    //                 }));
-    //             }
-    //             // ============ ball vavle ===========================
-    //             else if (id === "Tank") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank: position,
-    //                 }));
-    //             } else if (id === "Tank_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_None: position,
-    //                 }));
-    //             } else if (id === "Tank_Ball") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Tank_Ball: position,
-    //                 }));
-    //             }
-    //             // ============ PCV ===========================
-    //             else if (id === "PCV01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV01: position,
-    //                 }));
-    //             } else if (id === "PCV02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV02: position,
-    //                 }));
-    //             } else if (id === "PCV_NUM01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_NUM01: position,
-    //                 }));
-    //             } else if (id === "PCV_NUM02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_NUM02: position,
-    //                 }));
-    //             } else if (id === "PCV_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small1_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small1_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2_none1: position,
-    //                 }));
-    //             } else if (id === "PCV_ballVavle_Small2_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_ballVavle_Small2_none2: position,
-    //                 }));
-    //             }
+                // ============ ball vavle ===========================
+                else if (id === "BallValue01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue01: position,
+                    }));
+                } else if (id === "BallValue02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue02: position,
+                    }));
+                } else if (id === "BallValue03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue03: position,
+                    }));
+                } else if (id === "BallValue04") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue04: position,
+                    }));
+                } else if (id === "BallValue05") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue05: position,
+                    }));
+                } else if (id === "BallValue06") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue06: position,
+                    }));
+                } else if (id === "BallValue07") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue07: position,
+                    }));
+                } else if (id === "BallValue08") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue08: position,
+                    }));
+                } else if (id === "BallValue09") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue09: position,
+                    }));
+                } else if (id === "BallValue10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue10: position,
+                    }));
+                } else if (id === "BallValueFirst") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueFirst: position,
+                    }));
+                } else if (id === "BallValueLast") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueLast: position,
+                    }));
+                }
+                // ============ ball vavle ===========================
+                else if (id === "Tank") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank: position,
+                    }));
+                } else if (id === "Tank_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_None: position,
+                    }));
+                } else if (id === "Tank_Ball") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Tank_Ball: position,
+                    }));
+                }
+                // ============ PCV ===========================
+                else if (id === "PCV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV01: position,
+                    }));
+                } else if (id === "PCV02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV02: position,
+                    }));
+                } else if (id === "PCV_NUM01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM01: position,
+                    }));
+                } else if (id === "PCV_NUM02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_NUM02: position,
+                    }));
+                } else if (id === "PCV_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none1: position,
+                    }));
+                } else if (id === "PCV_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_none2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1_none1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small1_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small1_none2: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2_none1: position,
+                    }));
+                } else if (id === "PCV_ballVavle_Small2_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_ballVavle_Small2_none2: position,
+                    }));
+                }
 
-    //             // ============ FIQ ===========================
-    //             else if (id === "FIQ_1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_1901: position,
-    //                 }));
-    //             } else if (id === "FIQ_1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_1902: position,
-    //                 }));
-    //             } else if (id === "FIQ_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none: position,
-    //                 }));
-    //             } else if (id === "FIQ_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none2: position,
-    //                 }));
-    //             } else if (id === "FIQ_none11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none11: position,
-    //                 }));
-    //             } else if (id === "FIQ_none22") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_none22: position,
-    //                 }));
-    //             }
-    //             // ============ Ball center ===========================
-    //             else if (id === "BallValueCenter") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_Check") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_Check: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_None") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_None: position,
-    //                 }));
-    //             } else if (id === "BallValueCenter_None2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValueCenter_None2: position,
-    //                 }));
-    //             } else if (id === "BallValuePSV") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValuePSV: position,
-    //                 }));
-    //             } else if (id === "BallValuePSVNone") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallValuePSVNone: position,
-    //                 }));
-    //             } else if (id === "VavleWay") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     VavleWay: position,
-    //                 }));
-    //             }
-    //             // ========================= data ==========================
-    //             else if (id === "data1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data1: position,
-    //                 }));
-    //             } else if (id === "data2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data2: position,
-    //                 }));
-    //             } else if (id === "data3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data3: position,
-    //                 }));
-    //             } else if (id === "data4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data4: position,
-    //                 }));
-    //             } else if (id === "data5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data5: position,
-    //                 }));
-    //             } else if (id === "data6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data6: position,
-    //                 }));
-    //             } else if (id === "data7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data7: position,
-    //                 }));
-    //             } else if (id === "data8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     data8: position,
-    //                 }));
-    //             }
-    //             // ========================= PSV ==========================
-    //             else if (id === "PSV_01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_01: position,
-    //                 }));
-    //             } else if (id === "PSV_02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_02: position,
-    //                 }));
-    //             } else if (id === "PSV_03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_03: position,
-    //                 }));
-    //             } else if (id === "PSV_None01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None01: position,
-    //                 }));
-    //             } else if (id === "PSV_None02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None02: position,
-    //                 }));
-    //             } else if (id === "PSV_None03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None03: position,
-    //                 }));
-    //             } else if (id === "PSV_None04") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_None04: position,
-    //                 }));
-    //             } else if (id === "PSV01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV01: position,
-    //                 }));
-    //             }
-    //             //  ================ PT ===================
-    //             else if (id === "Pressure_Trans01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans01: position,
-    //                 }));
-    //             } else if (id === "Pressure_Trans02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans02: position,
-    //                 }));
-    //             } else if (id === "Pressure_Trans03") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Pressure_Trans03: position,
-    //                 }));
-    //             } else if (id === "PT1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT1: position,
-    //                 }));
-    //             } else if (id === "PT2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT2: position,
-    //                 }));
-    //             } else if (id === "PT3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT3: position,
-    //                 }));
-    //             } else if (id === "PT_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none1: position,
-    //                 }));
-    //             } else if (id === "PT_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none2: position,
-    //                 }));
-    //             } else if (id === "PT_none3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_none3: position,
-    //                 }));
-    //             } else if (id === "PT_col1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col1: position,
-    //                 }));
-    //             } else if (id === "PT_col2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col2: position,
-    //                 }));
-    //             } else if (id === "PT_col3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_col3: position,
-    //                 }));
-    //             }
+                // ============ FIQ ===========================
+                else if (id === "FIQ_1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1901: position,
+                    }));
+                } else if (id === "FIQ_1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1902: position,
+                    }));
+                } else if (id === "FIQ_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none: position,
+                    }));
+                } else if (id === "FIQ_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none2: position,
+                    }));
+                } else if (id === "FIQ_none11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none11: position,
+                    }));
+                } else if (id === "FIQ_none22") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_none22: position,
+                    }));
+                }
+                // ============ Ball center ===========================
+                else if (id === "BallValueCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter: position,
+                    }));
+                } else if (id === "BallValueCenter_Check") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_Check: position,
+                    }));
+                } else if (id === "BallValueCenter_None") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None: position,
+                    }));
+                } else if (id === "BallValueCenter_None2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueCenter_None2: position,
+                    }));
+                } else if (id === "BallValuePSV") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValuePSV: position,
+                    }));
+                } else if (id === "BallValuePSVNone") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValuePSVNone: position,
+                    }));
+                } else if (id === "VavleWay") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        VavleWay: position,
+                    }));
+                }
+                // ========================= data ==========================
+                else if (id === "data1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data1: position,
+                    }));
+                } else if (id === "data2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data2: position,
+                    }));
+                } else if (id === "data3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data3: position,
+                    }));
+                } else if (id === "data4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data4: position,
+                    }));
+                } else if (id === "data5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data5: position,
+                    }));
+                } else if (id === "data6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data6: position,
+                    }));
+                } else if (id === "data7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data7: position,
+                    }));
+                } else if (id === "data8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        data8: position,
+                    }));
+                }
+                // ========================= PSV ==========================
+                else if (id === "PSV_01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_01: position,
+                    }));
+                } else if (id === "PSV_02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_02: position,
+                    }));
+                } else if (id === "PSV_03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_03: position,
+                    }));
+                } else if (id === "PSV_None01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None01: position,
+                    }));
+                } else if (id === "PSV_None02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None02: position,
+                    }));
+                } else if (id === "PSV_None03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None03: position,
+                    }));
+                } else if (id === "PSV_None04") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_None04: position,
+                    }));
+                } else if (id === "PSV01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV01: position,
+                    }));
+                }
+                //  ================ PT ===================
+                else if (id === "Pressure_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans01: position,
+                    }));
+                } else if (id === "Pressure_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans02: position,
+                    }));
+                } else if (id === "Pressure_Trans03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Pressure_Trans03: position,
+                    }));
+                } else if (id === "PT1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT1: position,
+                    }));
+                } else if (id === "PT2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT2: position,
+                    }));
+                } else if (id === "PT3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT3: position,
+                    }));
+                } else if (id === "PT_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none1: position,
+                    }));
+                } else if (id === "PT_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none2: position,
+                    }));
+                } else if (id === "PT_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_none3: position,
+                    }));
+                } else if (id === "PT_col1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col1: position,
+                    }));
+                } else if (id === "PT_col2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col2: position,
+                    }));
+                } else if (id === "PT_col3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_col3: position,
+                    }));
+                }
 
-    //             // ================ TT =================
-    //             else if (id === "Temperature_Trans01") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Temperature_Trans01: position,
-    //                 }));
-    //             } else if (id === "Temperature_Trans02") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Temperature_Trans02: position,
-    //                 }));
-    //             }
-    //             // ============= header ===============
-    //             else if (id === "Header") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Header: position,
-    //                 }));
-    //             } else if (id === "HELP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     HELP: position,
-    //                 }));
-    //             }
-    //             // ============= Time Update ==================
-    //             else if (id === "timeUpdate") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate: position,
-    //                 }));
-    //             } else if (id === "timeUpdate2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate2: position,
-    //                 }));
-    //             } else if (id === "timeUpdate3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate3: position,
-    //                 }));
-    //             }
-    //             // ============= Connected ===================
-    //             else if (id === "ConnectData") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ConnectData: position,
-    //                 }));
-    //             }
-    //             // ============= Arrow ======================
-    //             else if (id === "ArrowRight") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ArrowRight: position,
-    //                 }));
-    //             } else if (id === "ArrowRight1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     ArrowRight1: position,
-    //                 }));
-    //             } else if (id === "Flow1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Flow1: position,
-    //                 }));
-    //             } else if (id === "Flow2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Flow2: position,
-    //                 }));
-    //             }
-    //             // =========== PT ICONS1 ==================
+                // ================ TT =================
+                else if (id === "Temperature_Trans01") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans01: position,
+                    }));
+                } else if (id === "Temperature_Trans02") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Temperature_Trans02: position,
+                    }));
+                }
+                // ============= header ===============
+                else if (id === "Header") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Header: position,
+                    }));
+                } else if (id === "HELP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        HELP: position,
+                    }));
+                }
+                // ============= Time Update ==================
+                else if (id === "timeUpdate") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate: position,
+                    }));
+                } else if (id === "timeUpdate2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate2: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
+                }
+                // ============= Connected ===================
+                else if (id === "ConnectData") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ConnectData: position,
+                    }));
+                }
+                // ============= Arrow ======================
+                else if (id === "ArrowRight") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ArrowRight: position,
+                    }));
+                } else if (id === "ArrowRight1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ArrowRight1: position,
+                    }));
+                } else if (id === "Flow1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Flow1: position,
+                    }));
+                } else if (id === "Flow2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Flow2: position,
+                    }));
+                }
+                // =========== PT ICONS1 ==================
 
-    //             //================ GD ====================
-    //             else if (id === "GD1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1: position,
-    //                 }));
-    //             } else if (id === "GD2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2: position,
-    //                 }));
-    //             } else if (id === "GD3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3: position,
-    //                 }));
-    //             } else if (id === "GD1_Name1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1_Name1901: position,
-    //                 }));
-    //             } else if (id === "GD2_Name1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2_Name1902: position,
-    //                 }));
-    //             } else if (id === "GD3_Name1903") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3_Name1903: position,
-    //                 }));
-    //             } else if (id === "GD1_Value1901") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD1_Value1901: position,
-    //                 }));
-    //             } else if (id === "GD2_Value1902") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD2_Value1902: position,
-    //                 }));
-    //             } else if (id === "GD3_Value1903") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD3_Value1903: position,
-    //                 }));
-    //             } else if (id === "GD_none1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none1: position,
-    //                 }));
-    //             } else if (id === "GD_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none2: position,
-    //                 }));
-    //             } else if (id === "GD_none3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_none3: position,
-    //                 }));
-    //             }
-    //             // ===================== border white ==================
-    //             else if (id === "borderWhite") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     borderWhite: position,
-    //                 }));
-    //             }
-    //             // ==================== overlay ========================
-    //             else if (id === "overlay_SmallVavle1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_SmallVavle1: position,
-    //                 }));
-    //             } else if (id === "overlay_SmallVavle2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_SmallVavle2: position,
-    //                 }));
-    //             } else if (id === "overlay_line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_line7: position,
-    //                 }));
-    //             } else if (id === "overlay_line13") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     overlay_line13: position,
-    //                 }));
-    //             }
-    //             //========================== animation line =======================
-    //             else if (id === "animation_line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line7: position,
-    //                 }));
-    //             } else if (id === "animation_line8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line8: position,
-    //                 }));
-    //             } else if (id === "animation_line9") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line9: position,
-    //                 }));
-    //             } else if (id === "animation_line10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line10: position,
-    //                 }));
-    //             } else if (id === "animation_line11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line11: position,
-    //                 }));
-    //             } else if (id === "animation_line12") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line12: position,
-    //                 }));
-    //             } else if (id === "animation_line13") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line13: position,
-    //                 }));
-    //             } else if (id === "animation_line14") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line14: position,
-    //                 }));
-    //             } else if (id === "animation_line15") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     animation_line15: position,
-    //                 }));
-    //             }
-    //             //========================== T juntion icon  =======================
-    //             else if (id === "T_juntion_11") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     T_juntion_11: position,
-    //                 }));
-    //             } else if (id === "T_juntion_14") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     T_juntion_14: position,
-    //                 }));
-    //             }
-    //             //========================== AlarmCenter  =======================
-    //             else if (id === "AlarmCenter") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     AlarmCenter: position,
-    //                 }));
-    //             }
-    //         }
-    //     },
-    //     [setNodes, setPositions, editingEnabled]
-    // );
+                //================ GD ====================
+                else if (id === "GD1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1: position,
+                    }));
+                } else if (id === "GD2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2: position,
+                    }));
+                } else if (id === "GD3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3: position,
+                    }));
+                } else if (id === "GD1_Name1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Name1901: position,
+                    }));
+                } else if (id === "GD2_Name1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Name1902: position,
+                    }));
+                } else if (id === "GD3_Name1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Name1903: position,
+                    }));
+                } else if (id === "GD1_Value1901") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD1_Value1901: position,
+                    }));
+                } else if (id === "GD2_Value1902") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD2_Value1902: position,
+                    }));
+                } else if (id === "GD3_Value1903") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD3_Value1903: position,
+                    }));
+                } else if (id === "GD_none1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none1: position,
+                    }));
+                } else if (id === "GD_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none2: position,
+                    }));
+                } else if (id === "GD_none3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_none3: position,
+                    }));
+                }
+                // ===================== border white ==================
+                else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                }
+                // ==================== overlay ========================
+                else if (id === "overlay_SmallVavle1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_SmallVavle1: position,
+                    }));
+                } else if (id === "overlay_SmallVavle2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_SmallVavle2: position,
+                    }));
+                } else if (id === "overlay_line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_line7: position,
+                    }));
+                } else if (id === "overlay_line13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_line13: position,
+                    }));
+                }
+                //========================== animation line =======================
+                else if (id === "animation_line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line7: position,
+                    }));
+                } else if (id === "animation_line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line8: position,
+                    }));
+                } else if (id === "animation_line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line9: position,
+                    }));
+                } else if (id === "animation_line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line10: position,
+                    }));
+                } else if (id === "animation_line11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line11: position,
+                    }));
+                } else if (id === "animation_line12") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line12: position,
+                    }));
+                } else if (id === "animation_line13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line13: position,
+                    }));
+                } else if (id === "animation_line14") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line14: position,
+                    }));
+                } else if (id === "animation_line15") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        animation_line15: position,
+                    }));
+                }
+                //========================== T juntion icon  =======================
+                else if (id === "T_juntion_11") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        T_juntion_11: position,
+                    }));
+                } else if (id === "T_juntion_14") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        T_juntion_14: position,
+                    }));
+                }
+                //========================== AlarmCenter  =======================
+                else if (id === "AlarmCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        AlarmCenter: position,
+                    }));
+                }
+            }
+        },
+        [setNodes, setPositions, editingEnabled]
+    );
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
-    // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    // }, [positions]);
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
+    useEffect(() => {
+        localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    }, [positions]);
 
     return (
         <>
@@ -6256,9 +6194,9 @@ export default function GraphicZOCV() {
                     type="audio/mpeg"
                 />
             </audio>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
+            </Button>
 
             <Toast ref={toast} />
             <ConfirmDialog />
@@ -6321,8 +6259,8 @@ export default function GraphicZOCV() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

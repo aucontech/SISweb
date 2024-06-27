@@ -1,23 +1,23 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicSPMCV/graphicSPMCV";
-import { id_SPMCV } from "../../data-table-device/ID-DEVICE/IdDevice";
+import {  BallVavleOff, BallVavleOn } from "../GraphicZOVC/iconSVG";
+import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC,  } from "../GraphicZOVC/Api_ZOVC";
 
+// export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
 
-export default function PCV_01_Otsuka() {
+export default function BallValue01() {
+
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
-    const [inputValue, setInputValue] = useState<any>();
+    const [data, setData] = useState([]);
+
 
     const token = readToken();
-    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -33,7 +33,7 @@ export default function PCV_01_Otsuka() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_01",
+                                key: "BallValue_01",
                             },
                         ],
                     },
@@ -42,7 +42,7 @@ export default function PCV_01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_SPMCV,
+                                id: id_YOSHINO,
                             },
                         },
                         pageLink: {
@@ -73,7 +73,7 @@ export default function PCV_01_Otsuka() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_01",
+                                key: "BallValue_01",
                             },
                         ],
                     },
@@ -83,18 +83,14 @@ export default function PCV_01_Otsuka() {
 
         if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj2));
                 });
             };
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+            ws.current.onclose = () => {};
 
             return () => {
-                console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
@@ -106,90 +102,85 @@ export default function PCV_01_Otsuka() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                            .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
+                            .ts;
                     setUpTS(ballTS);
+                    // onDataLine1({ value: ballValue});
+
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01
+                            .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
 
                     setUpData(updatedData);
-                    setUpTS(updateTS);
+                    // onDataLine1({ value: updatedData});
+
                 }
+        fetchData();
+
             };
         }
     }, []);
 
-    // const handleButtonClick = async () => {
-    //     try {
-    //         await httpApi.post(
-    //             "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-    //             { PCV_01: inputValue }
-    //         );
-    //         setUpData(inputValue);
-    //         op.current?.hide();
-    //     } catch (error) {
-    //         console.log("error: ", error);
-    //     }
-    // };
+    const handleButtonClick = async () => {
+        try {
+            const newValue = !sensorData;
+            await httpApi.post(
+               PostTelemetry_ZOVC,
+                { BallValue_01: newValue }
+            );
+            setSensorData(newValue);
+            
+        } catch (error) {}
+    };
 
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const newValue = Number(event.target.value);
-    //     setInputValue(newValue);
-    // };
+        const fetchData = async () => {
+            try {
+                const res = await httpApi.get(
+                   GetTelemetry_ZOVC
+                );
+                setData(res.data);
+                const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
+                // onDataLine1(ballValue);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        useEffect(() => {
+            fetchData();
 
-    // const handleButtonToggle = (e: React.MouseEvent) => {
-    //     op.current?.toggle(e);
-    //     setInputValue(upData);
-    // };
+    }, []);
+
 
     return (
         <div>
-            <div
-                style={{
-                    border: "none",
-                    fontSize: 15,
-                    color: "white",
-                    display: "flex",
-                    cursor: "pointer",
-                    justifyContent: "space-between",
-                    fontWeight: 400,
-                }}
-            >
-                <p style={{ color: colorNameValue }}>PCV-1701</p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
-            </div>
-
-            {/* <OverlayPanel ref={op}>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: 120,
-                    }}
-                >
-                    <p style={{ fontWeight: 500 }}>PCV-1901</p>
-                    <InputText
-                        keyfilter="int"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                    />
-                    <Button
-                        style={{ marginTop: 5 }}
-                        label="Update"
+            {data.map((item: any) => (
+                <div key={item.key}>
+                    {item.key === "BallValue_01" && (
+                        <div
+                        style={{
+                            cursor: "pointer",
+                            border: "none",
+                           
+                        }}
                         onClick={handleButtonClick}
-                    />
+
+                         >
+                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
+                        </div>
+                    )}
                 </div>
-            </OverlayPanel> */}
+            ))}
         </div>
     );
 }

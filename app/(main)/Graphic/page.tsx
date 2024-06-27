@@ -16,6 +16,8 @@ import './GraphicSogec.css'
 import { MdOutlineZoomOutMap } from "react-icons/md";
 import Graphic_CNG_HUNGYEN from '../CNG_HUNGYEN/GraphicPRU/Graphic_CNG_HUNGYEN';
 import Graphic_CNG_BINHDUONG from '../CNG_BINHDUONG/GraphicPRU/Graphic_CNG_BINHDUONG';
+import GraphicYOSHINO from '../YOSHINO/GraphicZOVC/graphicYOSHINO';
+import GraphicVREC from '../VREC/GraphicVREC/graphicVREC';
 
 export default function GraphicSogec() {
 
@@ -129,12 +131,12 @@ export default function GraphicSogec() {
               { label: 'LGDS', command: () => NG_Click(<TestFullScreen/>, 'LGDS') },
 
               // { label: 'CNG PRU', command: () => NG_Click(<GraphicPRU />, 'PCN PRU') },
-              { label: 'VREC', command: () => NG_Click(null, 'VREC') },
+              { label: 'VREC', command: () => NG_Click(<GraphicVREC/>, 'VREC') },
 
               { label: 'ZOVC EVC', command: () => NG_Click(<GraphicZOCV />, 'ZOVC EVC') },
               { label: 'KOA', command: () => NG_Click(null, 'KOA') },
               { label: 'NITORI', command: () => NG_Click(null, 'NITORI') },
-              { label: 'YOSHINO', command: () => NG_Click(null, 'YOSHINO') },
+              { label: 'YOSHINO', command: () => NG_Click(<GraphicYOSHINO/>, 'YOSHINO') },
               { label: 'IGUACU', command: () => NG_Click(null, 'IGUACU') },
             ]
           }
