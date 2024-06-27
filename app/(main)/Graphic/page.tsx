@@ -19,6 +19,7 @@ import Graphic_CNG_BINHDUONG from '../CNG_BINHDUONG/GraphicPRU/Graphic_CNG_BINHD
 import GraphicVREC from '../VREC/GraphicVREC/graphicVREC';
 import GraphicYOSHINO from '../YOSHINO/GraphicVREC/graphicYOSHINO';
 import GraphicKOA from '../KOA/GraphicKOA/graphicKOA';
+import GraphicLGDS from '../LGDS/GraphicLGDS/graphicLGDS';
 
 export default function GraphicSogec() {
 
@@ -129,12 +130,12 @@ export default function GraphicSogec() {
               { label: 'OTSUKA', command: () => NG_Click(<DemoFlowOTS />, 'OTSUKA') },
               { label: 'ARAKAWA', command: () => NG_Click(<GraphicARAKAWA />, 'ARAKAWA') },
               { label: 'SPMCV', command: () => NG_Click(<GraphicSPMCV />, 'SPMCV') },
-              { label: 'LGDS', command: () => NG_Click(null, 'LGDS') },
+              { label: 'LGDS', command: () => NG_Click(<GraphicLGDS/>, 'LGDS') },
 
               // { label: 'CNG PRU', command: () => NG_Click(<GraphicPRU />, 'PCN PRU') },
               { label: 'VREC', command: () => NG_Click(<GraphicVREC/>, 'VREC') },
 
-              { label: 'ZOVC EVC', command: () => NG_Click(<GraphicZOCV />, 'ZOVC EVC') },
+              { label: 'ZOCV', command: () => NG_Click(<GraphicZOCV />, 'ZOCV ') },
               { label: 'KOA', command: () => NG_Click(<GraphicKOA/>, 'KOA') },
               { label: 'NITORI', command: () => NG_Click(null, 'NITORI') },
               { label: 'YOSHINO', command: () => NG_Click(<GraphicYOSHINO/>, 'YOSHINO') },
