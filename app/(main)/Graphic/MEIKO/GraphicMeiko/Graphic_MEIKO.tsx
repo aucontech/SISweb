@@ -902,6 +902,142 @@ export default function Graphic_MEIKO() {
 
     //================================ Flow_Meter_Total ======================================================
 
+    //================================ Pipe_Press================================
+
+    const [audioConsumption_Flow, setaudioConsumption_Flow] = useState(false);
+    const [HighConsumption_Flow, setHighConsumption_Flow] = useState<
+        number | null
+    >(null);
+    const [LowConsumption_Flow, setLowConsumption_Flow] = useState<
+        number | null
+    >(null);
+    const [audioColorConsumption_Flow, setaudioColorConsumption_Flow] =
+        useState(false);
+
+    const [maintainConsumption_Flow, setMaintainConsumption_Flow] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighConsumption_Flow === "string" &&
+            typeof LowConsumption_Flow === "string" &&
+            Consumption_Flow !== null &&
+            maintainConsumption_Flow === false
+        ) {
+            const highValue = parseFloat(HighConsumption_Flow);
+            const lowValue = parseFloat(LowConsumption_Flow);
+            const Consumption_FlowValue = parseFloat(Consumption_Flow);
+
+            if (
+                !isNaN(highValue) &&
+                !isNaN(lowValue) &&
+                !isNaN(Consumption_FlowValue)
+            ) {
+                if (
+                    highValue < Consumption_FlowValue ||
+                    Consumption_FlowValue < lowValue
+                ) {
+                    if (!audioConsumption_Flow) {
+                        audioRef.current?.play();
+                        setaudioConsumption_Flow(true);
+                        setaudioColorConsumption_Flow(true);
+                    }
+                } else {
+                    setaudioConsumption_Flow(false);
+                    setaudioColorConsumption_Flow(false);
+                }
+            }
+        }
+    }, [
+        HighConsumption_Flow,
+        Consumption_Flow,
+        audioConsumption_Flow,
+        LowConsumption_Flow,
+        maintainConsumption_Flow,
+    ]);
+
+    useEffect(() => {
+        if (audioConsumption_Flow) {
+            const audioEnded = () => {
+                setaudioConsumption_Flow(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioConsumption_Flow]);
+
+    //================================ Flow_Meter_Total ======================================================
+
+    //================================ Pipe_Press================================
+
+    const [audioFlow_Velocity, setaudioFlow_Velocity] = useState(false);
+    const [HighFlow_Velocity, setHighFlow_Velocity] = useState<number | null>(
+        null
+    );
+    const [LowFlow_Velocity, setLowFlow_Velocity] = useState<number | null>(
+        null
+    );
+    const [audioColorFlow_Velocity, setaudioColorFlow_Velocity] =
+        useState(false);
+
+    const [maintainFlow_Velocity, setMaintainFlow_Velocity] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighFlow_Velocity === "string" &&
+            typeof LowFlow_Velocity === "string" &&
+            Flow_Velocity !== null &&
+            maintainFlow_Velocity === false
+        ) {
+            const highValue = parseFloat(HighFlow_Velocity);
+            const lowValue = parseFloat(LowFlow_Velocity);
+            const Flow_VelocityValue = parseFloat(Flow_Velocity);
+
+            if (
+                !isNaN(highValue) &&
+                !isNaN(lowValue) &&
+                !isNaN(Flow_VelocityValue)
+            ) {
+                if (
+                    highValue < Flow_VelocityValue ||
+                    Flow_VelocityValue < lowValue
+                ) {
+                    if (!audioFlow_Velocity) {
+                        audioRef.current?.play();
+                        setaudioFlow_Velocity(true);
+                        setaudioColorFlow_Velocity(true);
+                    }
+                } else {
+                    setaudioFlow_Velocity(false);
+                    setaudioColorFlow_Velocity(false);
+                }
+            }
+        }
+    }, [
+        HighFlow_Velocity,
+        Flow_Velocity,
+        audioFlow_Velocity,
+        LowFlow_Velocity,
+        maintainFlow_Velocity,
+    ]);
+
+    useEffect(() => {
+        if (audioFlow_Velocity) {
+            const audioEnded = () => {
+                setaudioFlow_Velocity(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioFlow_Velocity]);
+
+    //================================ Flow_Meter_Total ======================================================
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "Tank_01_Level") {
@@ -1922,7 +2058,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>V :</p>
+                                <p style={{ color: colorNameValue }}>F :</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {Flow_Velocity}
@@ -1959,7 +2095,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>F :</p>
+                                <p style={{ color: colorNameValue }}> V :</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {Consumption_Flow}
@@ -2045,7 +2181,7 @@ export default function Graphic_MEIKO() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -2039.8350060092037, y: 976.922382090622 },
               Arrow1: { x: -1803.0251199711197, y: 1299.9325476252639 },
               Arrow2: { x: -1804.0487088215177, y: 1498.5264015128178 },
@@ -2053,12 +2189,15 @@ export default function Graphic_MEIKO() {
               Arrow4: { x: -1918.8136370318027, y: 1639.7830586231873 },
               Arrow5: { x: -1253.596324038457, y: 1067.148313152809 },
               Arrow6: { x: -2272.224330706418, y: 1854.2709334832514 },
-              Consumption_Flow: { x: -1378.645551480018, y: 1762.450181005429 },
+              Consumption_Flow: {
+                  x: -1374.5609215581903,
+                  y: 1696.2791762718223,
+              },
               Flow_Meter_Total: {
                   x: -1375.2483772861924,
                   y: 1583.7634831928456,
               },
-              Flow_Velocity: { x: -1378.3826000458744, y: 1694.3158468973838 },
+              Flow_Velocity: { x: -1375.1148961084123, y: 1764.5714815528183 },
               GAUGE1: { x: -1890.5028653732359, y: 1780.385321121582 },
               GAUGE1_DATA: { x: -2194.051286744135, y: 1703.9071372995613 },
               GAUGE1_line: { x: -1858.5001593543586, y: 1841.8417141791438 },
