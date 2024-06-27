@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { getAlarmTypes } from "@/api/alarm.api";
-import { getAssetById, getAssets } from "@/api/assets.api";
+import { getAssetById } from "@/api/assets.api";
 import { Toast } from "primereact/toast";
 import { getRelations } from "@/api/relation.api";
-import { dt } from "@fullcalendar/core/internal-common";
+
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -26,12 +26,11 @@ const FilterGcValue: React.FC<Props> = ({
     onAction,
     showDate,
     showAsset,
-    showAlarmType,
 }) => {
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggAssets, setSuggAssets] = useState<any>([]);
-    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
+
     const toast = useRef<Toast>(null);
     useEffect(() => {
         let newFilter = {
@@ -49,10 +48,11 @@ const FilterGcValue: React.FC<Props> = ({
                 setSuggDevices([...res.data]);
             })
             .catch((err) => {
+                console.log(err);
                 setSuggDevices([]);
             });
     };
-    const _onSuggAssets = async (evt: any) => {
+    const _onSuggAssets = (evt: any) => {
         let reqParams = {
             fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
             fromType: "ASSET",
@@ -80,8 +80,6 @@ const FilterGcValue: React.FC<Props> = ({
                             setSuggAssets([]);
                         });
                 }
-
-                setSuggAssets(data);
             })
             .catch((e) => {
                 console.log(e);
@@ -97,16 +95,7 @@ const FilterGcValue: React.FC<Props> = ({
         setEditFilter(newFil);
         onAction(newFil);
     };
-    const _onSuggAlarmType = (evt: any) => {
-        getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((resp) => {
-                setSuggAlarmType([...resp.data]);
-            })
-            .catch((err) => {
-                setSuggAlarmType([]);
-            });
-    };
+
     return (
         <>
             <Toast ref={toast} />
