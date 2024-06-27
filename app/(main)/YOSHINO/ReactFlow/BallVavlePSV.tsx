@@ -3,9 +3,9 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { BallVavle, BallVavleOff, BallVavleOn, BallVavleRightOff } from "../GraphicZOVC/iconSVG";
+import { BallVavle, BallVavleOff, BallVavleOn, BallVavleRightOff } from "../GraphicVREC/iconSVG";
 import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicZOVC/Api_ZOVC";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
 
 export default function BallVavlePSV() {
     const [sensorData, setSensorData] = useState<any>([]);

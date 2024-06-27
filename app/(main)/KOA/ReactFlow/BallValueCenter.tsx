@@ -1,9 +1,9 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
-import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
-import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import {  BallVavleOff, BallVavleOn } from "../GraphicKOA/iconSVG";
+import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicKOA/Api_ZOVC";
 
 export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter: (data: any) => void }) {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -39,7 +39,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {

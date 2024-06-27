@@ -1,11 +1,13 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
+import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
-import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
-import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import Image from "next/image";
+import { BallVavleOff, BallVavleOn } from "../GraphicKOA/iconSVG";
+import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicKOA/Api_ZOVC";
 
-export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter: (data: any) => void }) {
+export default function BallValue06() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -13,6 +15,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
 
     const [data, setData] = useState([]);
 
+    const [Status, setStatus] = useState<any>([]);
 
     const token = readToken();
 
@@ -30,7 +33,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "BallValue_06",
                             },
                         ],
                     },
@@ -39,7 +42,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {
@@ -70,7 +73,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "BallValue_06",
                             },
                         ],
                     },
@@ -99,33 +102,31 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_06
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_06
                             .ts;
                     setUpTS(ballTS);
-                    onDataLineCenter({ value: ballValue});
-
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_06
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_06.ts;
 
                     setUpData(updatedData);
-                    onDataLineCenter({ value: updatedData});
-
+                    setUpTS(updateTS);
                 }
         fetchData();
 
             };
+
         }
     }, []);
 
@@ -134,35 +135,29 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
             const newValue = !sensorData;
             await httpApi.post(
                PostTelemetry_ZOVC,
-                { BallValue_center: newValue }
+                { BallValue_06: newValue }
             );
             setSensorData(newValue);
         } catch (error) {}
     };
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                    GetTelemetry_ZOVC                    
-                );
-                setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_center")?.value;
-                onDataLineCenter(ballValue);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                GetTelemetry_ZOVC
+            );
+            setData(res.data);
+        } catch (error) {}
+    };
 
+    useEffect(() => {
         fetchData();
-    }, [onDataLineCenter]);
-
-
+    }, []);
     return (
         <div>
             {data.map((item: any) => (
                 <div key={item.key}>
-                    {item.key === "BallValue_center" && (
+                    {item.key === "BallValue_06" && (
                         <div
                         style={{
                             cursor: "pointer",
@@ -172,7 +167,9 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         onClick={handleButtonClick}
 
                          >
-                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
+                            
+                            {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
+
                         </div>
                     )}
                 </div>

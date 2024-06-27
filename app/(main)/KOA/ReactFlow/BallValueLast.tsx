@@ -1,11 +1,14 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
-import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
-import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import {  BallVavleOff, BallVavleOn } from "../GraphicKOA/iconSVG";
+import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicKOA/Api_ZOVC";
 
-export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter: (data: any) => void }) {
+// export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
+
+export default function BallValueLast() {
+
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -30,7 +33,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "BallValue_Last",
                             },
                         ],
                     },
@@ -39,7 +42,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {
@@ -70,7 +73,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "BallValue_Last",
                             },
                         ],
                     },
@@ -99,28 +102,28 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_Last
                             .value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_Last
                             .ts;
                     setUpTS(ballTS);
-                    onDataLineCenter({ value: ballValue});
+                    // onDataLine1({ value: ballValue});
 
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_Last
                             .value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_Last.ts;
 
                     setUpData(updatedData);
-                    onDataLineCenter({ value: updatedData});
+                    // onDataLine1({ value: updatedData});
 
                 }
         fetchData();
@@ -133,36 +136,36 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
         try {
             const newValue = !sensorData;
             await httpApi.post(
-               PostTelemetry_ZOVC,
-                { BallValue_center: newValue }
+                PostTelemetry_ZOVC,
+                { BallValue_Last: newValue }
             );
             setSensorData(newValue);
+            
         } catch (error) {}
     };
 
         const fetchData = async () => {
             try {
                 const res = await httpApi.get(
-                    GetTelemetry_ZOVC                    
+                    GetTelemetry_ZOVC,
                 );
                 setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_center")?.value;
-                onDataLineCenter(ballValue);
+                const ballValue = res.data.find((item: any) => item.key === "BallValue_Last")?.value;
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
         useEffect(() => {
+            fetchData();
 
-        fetchData();
-    }, [onDataLineCenter]);
+    }, []);
 
 
     return (
         <div>
             {data.map((item: any) => (
                 <div key={item.key}>
-                    {item.key === "BallValue_center" && (
+                    {item.key === "BallValue_Last" && (
                         <div
                         style={{
                             cursor: "pointer",

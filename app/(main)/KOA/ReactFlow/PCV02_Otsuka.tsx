@@ -1,20 +1,24 @@
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { OverlayPanel } from "primereact/overlaypanel";
+import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
-import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import { colorData, colorNameValue } from "../GraphicKOA/graphicKOA";
+import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
 
-export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter: (data: any) => void }) {
+
+export default function PCV_02_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
     const [upTS, setUpTS] = useState<any>([]);
 
-    const [data, setData] = useState([]);
-
+    const [inputValue, setInputValue] = useState<any>();
 
     const token = readToken();
+    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -30,7 +34,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -39,7 +43,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {
@@ -70,7 +74,7 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "BallValue_center",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -80,14 +84,18 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
 
         if (ws.current) {
             ws.current.onopen = () => {
+                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj2));
                 });
             };
 
-            ws.current.onclose = () => {};
+            ws.current.onclose = () => {
+                console.log("WebSocket connection closed.");
+            };
 
             return () => {
+                console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
@@ -99,84 +107,68 @@ export default function BallValueCenter({ onDataLineCenter }: { onDataLineCenter
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
-                            .value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_center
-                            .ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.ts;
                     setUpTS(ballTS);
-                    onDataLineCenter({ value: ballValue});
-
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center
-                            .value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.BallValue_center.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.ts;
 
                     setUpData(updatedData);
-                    onDataLineCenter({ value: updatedData});
-
+                    setUpTS(updateTS);
                 }
-        fetchData();
-
             };
         }
     }, []);
 
-    const handleButtonClick = async () => {
-        try {
-            const newValue = !sensorData;
-            await httpApi.post(
-               PostTelemetry_ZOVC,
-                { BallValue_center: newValue }
-            );
-            setSensorData(newValue);
-        } catch (error) {}
+
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        setInputValue(newValue);
     };
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                    GetTelemetry_ZOVC                    
-                );
-                setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_center")?.value;
-                onDataLineCenter(ballValue);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        useEffect(() => {
-
-        fetchData();
-    }, [onDataLineCenter]);
-
+    const handleButtonToggle = (e: React.MouseEvent) => {
+        op.current?.toggle(e);
+        setInputValue(upData);
+    };
 
     return (
         <div>
-            {data.map((item: any) => (
-                <div key={item.key}>
-                    {item.key === "BallValue_center" && (
-                        <div
-                        style={{
-                            cursor: "pointer",
-                            border: "none",
-                           
-                        }}
-                        onClick={handleButtonClick}
+            <div
+                style={{
+                    border: "none",
+                    fontSize: 15,
+                    color: "white",
+                    display: "flex",
+                    cursor: "pointer",
+                    justifyContent: "space-between",
+                    fontWeight: 400,
+                }}
+                onClick={handleButtonToggle}
+            >
+                <p style={{ color: colorNameValue }}>PCV-1402</p>
+                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
+                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+            </div>
 
-                         >
-                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
-                        </div>
-                    )}
+            {/* <OverlayPanel ref={op}>
+                <div style={{display:'flex', flexDirection:'column',}}>
+                <p  style={{fontWeight:500}}>PCV-1902</p>
+
+                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
+
+                    <Button style={{marginTop:5}} label="Update" onClick={handleButtonClick} />
                 </div>
-            ))}
+            </OverlayPanel> */}
         </div>
     );
 }

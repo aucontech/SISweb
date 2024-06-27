@@ -1,24 +1,18 @@
+
+
+
 import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { OverlayPanel } from "primereact/overlaypanel";
-import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicVREC/graphicYOSHINO";
-import { id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
 
-
-export default function PSV01_Otsuka() {
+export default function InitalsNodes() {
     const [sensorData, setSensorData] = useState<any>([]);
 
-    const [upData, setUpData] = useState<any>([]);
-    const [upTS, setUpTS] = useState<any>([]);
-
-    const [inputValue, setInputValue] = useState<any>();
+    const [upData,setUpData] = useState<any>([])
+    const [upTS,setUpTS] = useState<any>([])
 
     const token = readToken();
-    const op = useRef<OverlayPanel>(null);
 
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const ws = useRef<WebSocket | null>(null);
@@ -27,6 +21,7 @@ export default function PSV01_Otsuka() {
         ws.current = new WebSocket(url);
 
         const obj2 = {
+       
             entityDataCmds: [
                 {
                     cmdId: 1,
@@ -34,7 +29,7 @@ export default function PSV01_Otsuka() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_01",
+                                key: "BallValue_01",
                             },
                         ],
                     },
@@ -43,7 +38,7 @@ export default function PSV01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
                             },
                         },
                         pageLink: {
@@ -74,12 +69,13 @@ export default function PSV01_Otsuka() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV_01",
+                                key: "BallValue_01",
                             },
                         ],
                     },
                 },
             ],
+       
         };
 
         if (ws.current) {
@@ -106,81 +102,42 @@ export default function PSV01_Otsuka() {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01.value;
-                    setUpData(ballValue);
+                    
+                    const ballValue = dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01.value;
+                        setUpData(ballValue);
 
-                    const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01.ts;
-                    setUpTS(ballTS);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.value;
-                    const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.ts;
+                        const ballTS = dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01.ts;
+                        setUpTS(ballTS)
+
+
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const updatedData = dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.value;
+                    const updateTS = dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
 
                     setUpData(updatedData);
-                    setUpTS(updateTS);
+                    setUpTS(updateTS)
                 }
             };
         }
     }, []);
-
+  
+    
     const handleButtonClick = async () => {
         try {
-            await httpApi.post(
-                "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE",
-                { PSV_01: inputValue }
-            );
-            setSensorData(inputValue);
-            setUpData(inputValue);
-            op.current?.hide();
+            const newValue = !sensorData; 
+            await httpApi.post('/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/SERVER_SCOPE', { BallValue_01: newValue });
+            setSensorData(newValue); 
         } catch (error) {
-            console.log("error: ", error);
+            console.log('error: ', error);
         }
-    };
+    }
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
-        setInputValue(newValue);
-    };
-
-    const handleButtonToggle = (e: React.MouseEvent) => {
-        op.current?.toggle(e);
-        setInputValue(upData);
-    };
 
     return (
         <div>
-            <div
-                style={{
-                    border: "none",
-                    fontSize: 15,
-                    color: "white",
-                    display: "flex",
-                    cursor: "pointer",
-                    justifyContent: "space-between",
-                    fontWeight: 400,
-                }}
-                onClick={handleButtonToggle}
-            >
-                <p style={{ color: colorNameValue }}>PSV </p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
-            </div>
+            <button onClick={handleButtonClick}>{upData }</button>
 
-            {/* <OverlayPanel ref={op}>
-                <div style={{display:'flex', flexDirection:'column', width:120}}>
-                <p  style={{fontWeight:500}}>PSV-1901</p>
-
-                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
-
-                    <Button style={{marginTop:5}} label="Update" onClick={handleButtonClick} />
-                </div>
-            </OverlayPanel> */}
         </div>
     );
 }
+1

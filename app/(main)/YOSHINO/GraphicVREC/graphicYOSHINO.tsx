@@ -25,7 +25,7 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_VREC } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_OTSUKA, id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -76,7 +76,7 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicVREC() {
+export default function GraphicYOSHINO() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -125,7 +125,7 @@ export default function GraphicVREC() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_VREC,
+                    entityId: id_YOSHINO,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -149,7 +149,7 @@ export default function GraphicVREC() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_VREC,
+                                id: id_YOSHINO,
                             },
                         },
                         pageLink: {
@@ -2255,7 +2255,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1803 :
+                                        PT-1403 :
                                     </p>
                                     <p
                                         style={{
@@ -2316,7 +2316,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1801 :
+                                        PT-1401 :
                                     </p>
                                     <p
                                         style={{
@@ -2379,7 +2379,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1802 :
+                                        PT-1402 :
                                     </p>
                                     <p
                                         style={{
@@ -2692,7 +2692,7 @@ export default function GraphicVREC() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1801
+                                FIQ-1401
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2726,7 +2726,7 @@ export default function GraphicVREC() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1802
+                                FIQ-1402
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -3455,7 +3455,7 @@ export default function GraphicVREC() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1801
+                        SDV-1401
                     </div>
                 ),
             },
@@ -4957,7 +4957,7 @@ export default function GraphicVREC() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                VREC
+                                YOSHINO
                             </p>
                         </div>
                     </div>
@@ -5218,7 +5218,7 @@ export default function GraphicVREC() {
                             bottom: 5,
                         }}
                     >
-                        GD-1801
+                        GD-1401
                     </div>
                 ),
             },
@@ -5244,7 +5244,7 @@ export default function GraphicVREC() {
                             bottom: 5,
                         }}
                     >
-                        GD-1802
+                        GD-1402
                     </div>
                 ),
             },
