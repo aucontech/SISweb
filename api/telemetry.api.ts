@@ -32,6 +32,17 @@ export const saveOrUpdateTimeseriesData = (
         requestBody
     );
 };
+
+export const saveOrUpdateTimeseriesDataByAsset = (
+    assetId: string,
+    params: any
+): Promise<any> => {
+    const requestBody = JSON.stringify(params);
+    return httpApi.post<any>(
+        `/plugins/telemetry/ASSET/${assetId}/timeseries/scope=ANY`,
+        requestBody
+    );
+};
 export const getSeverAttributesByDeviceandKeys = (
     deviceId: string,
     keys: string

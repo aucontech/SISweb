@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
 import { getAlarmTypes } from "@/api/alarm.api";
-import { getAssets } from "@/api/assets.api";
+import { getAssetById } from "@/api/assets.api";
 import { Toast } from "primereact/toast";
+import { getRelations } from "@/api/relation.api";
+
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -24,12 +26,11 @@ const FilterGcValue: React.FC<Props> = ({
     onAction,
     showDate,
     showAsset,
-    showAlarmType,
 }) => {
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggAssets, setSuggAssets] = useState<any>([]);
-    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
+
     const toast = useRef<Toast>(null);
     useEffect(() => {
         let newFilter = {
@@ -47,19 +48,41 @@ const FilterGcValue: React.FC<Props> = ({
                 setSuggDevices([...res.data]);
             })
             .catch((err) => {
+                console.log(err);
                 setSuggDevices([]);
             });
     };
     const _onSuggAssets = (evt: any) => {
-        getAssets({ page: 0, pageSize: 50, textSearch: evt.query })
+        let reqParams = {
+            fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+            fromType: "ASSET",
+            relationType: "Contains",
+            relationTypeGroup: "COMMON",
+        };
+        getRelations(reqParams)
             .then((resp) => resp.data)
-            .then((res) => {
-                res.data.forEach((it: any) => {
-                    it.label = `${it.name}`;
-                });
-                setSuggAssets([...res.data]);
+            .then((resp) => {
+                let data = resp || [];
+                if (data.length > 0) {
+                    let pms = data.map((dt: any) => {
+                        return getAssetById(dt["to"]["id"]);
+                    });
+                    Promise.all(pms)
+                        .then((resp) => resp.map((dt: any) => dt.data))
+                        .then((resp) => {
+                            resp.forEach((it: any) => {
+                                it.label = `${it.name}`;
+                            });
+                            setSuggAssets(resp);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            setSuggAssets([]);
+                        });
+                }
             })
-            .catch((err) => {
+            .catch((e) => {
+                console.log(e);
                 setSuggAssets([]);
             });
     };
@@ -72,16 +95,7 @@ const FilterGcValue: React.FC<Props> = ({
         setEditFilter(newFil);
         onAction(newFil);
     };
-    const _onSuggAlarmType = (evt: any) => {
-        getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((resp) => {
-                setSuggAlarmType([...resp.data]);
-            })
-            .catch((err) => {
-                setSuggAlarmType([]);
-            });
-    };
+
     return (
         <>
             <Toast ref={toast} />

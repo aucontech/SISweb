@@ -9,6 +9,7 @@ import {
     saveOrUpdateSeverAttributesByAsseet,
     saveOrUpdateSeverAttributesByDevice,
     saveOrUpdateTimeseriesData,
+    saveOrUpdateTimeseriesDataByAsset,
 } from "@/api/telemetry.api";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
@@ -33,14 +34,15 @@ const Page: React.FC<Props> = () => {
 
     const _fetchSeverAttributesByDevice = useCallback((filters: any) => {
         console.log(filters);
-        let { device, date } = filters;
-        if (device && device.id && date) {
+        let { asset, date } = filters;
+        console.log(asset);
+        if (asset && asset.id && date) {
             let params = {
                 keys: "heat_value",
                 startTs: date.getTime(),
                 endTs: date.getTime() + 86400000,
             };
-            getTimesSeriesData("DEVICE", device.id.id, params)
+            getTimesSeriesData("ASSET", asset.id.id, params)
                 .then((resp) => resp.data)
                 .then((resp) => {
                     console.log(resp);
@@ -89,7 +91,7 @@ const Page: React.FC<Props> = () => {
     }, []);
 
     const _handleSave = () => {
-        let { device, date } = filters;
+        let { asset, date } = filters;
         let params = {
             ts: date.getTime(),
             values: {
@@ -97,7 +99,7 @@ const Page: React.FC<Props> = () => {
             },
         };
         console.log(params);
-        saveOrUpdateTimeseriesData(device.id.id, params)
+        saveOrUpdateTimeseriesDataByAsset(asset.id.id, params)
             .then((resp) => {
                 if (resp.status === 200) {
                     UIUtils.showInfo({
@@ -123,7 +125,7 @@ const Page: React.FC<Props> = () => {
     };
 
     useEffect(() => {
-        if (filters.date && filters.device) {
+        if (filters.date && filters.asset) {
             _fetchSeverAttributesByDevice(filters);
         }
     }, [filters, _fetchSeverAttributesByDevice]);
@@ -133,7 +135,7 @@ const Page: React.FC<Props> = () => {
             <Toast ref={toast} />
             <FilterGcValue
                 onAction={_onFilterChange}
-                showDevice={true}
+                showAsset={true}
                 showDate={true}
             />
 
@@ -154,9 +156,7 @@ const Page: React.FC<Props> = () => {
                         onClick={_handleSave}
                         label="Save"
                         disabled={
-                            !filters.date ||
-                            !filters.device ||
-                            !filters.device.id
+                            !filters.date || !filters.asset || !filters.asset.id
                         }
                     />
                 </div>
