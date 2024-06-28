@@ -56,6 +56,9 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
+import BallVavleSDV_TOP from "../ReactFlow/BallVavleSDV_TOP";
+import BallVavleSDV_TOP1 from "../ReactFlow/BallVavleSDV_TOP";
+import BallVavleSDV_BOTTOM1 from "../ReactFlow/BallVavleSDV_BOTTOM";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -2255,7 +2258,7 @@ export default function GraphicLGDS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1203 :
+                                        PT-1003 :
                                     </p>
                                     <p
                                         style={{
@@ -2316,7 +2319,7 @@ export default function GraphicLGDS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1201 :
+                                        PT-1001 :
                                     </p>
                                     <p
                                         style={{
@@ -2379,7 +2382,7 @@ export default function GraphicLGDS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1202 :
+                                        PT-1002 :
                                     </p>
                                     <p
                                         style={{
@@ -2439,7 +2442,7 @@ export default function GraphicLGDS() {
                                         FC :{" "}
                                     </p>
 
-                                    <p
+                                    {/* <p
                                         style={{
                                             color: "white",
                                             display: "flex",
@@ -2447,7 +2450,7 @@ export default function GraphicLGDS() {
                                     >
                                         {" "}
                                         PLC :{" "}
-                                    </p>
+                                    </p> */}
                                 </div>
 
                                 <div style={{}}>
@@ -2490,7 +2493,7 @@ export default function GraphicLGDS() {
                                         )}
                                     </p>
 
-                                    <p style={{ marginLeft: 5 }}>
+                                    {/* <p style={{ marginLeft: 5 }}>
                                         {Conn_STT === "1" ? (
                                             <span
                                                 style={{
@@ -2508,7 +2511,7 @@ export default function GraphicLGDS() {
                                                 Disconnect
                                             </span>
                                         )}
-                                    </p>
+                                    </p> */}
                                 </div>
 
                                 <div>
@@ -2532,7 +2535,7 @@ export default function GraphicLGDS() {
                                     >
                                         {FC_Conn_STTValue}
                                     </p>
-                                    <p
+                                    {/* <p
                                         style={{
                                             color: "white",
 
@@ -2541,7 +2544,7 @@ export default function GraphicLGDS() {
                                         }}
                                     >
                                         {Conn_STTValue}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         ),
@@ -2692,7 +2695,7 @@ export default function GraphicLGDS() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1201
+                                FIQ-1001
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2726,7 +2729,7 @@ export default function GraphicLGDS() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1202
+                                FIQ-1002
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2754,11 +2757,11 @@ export default function GraphicLGDS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-              ArrowRight: { x: 361.63814192842443, y: 1022.694783335719 },
+              ArrowRight: { x: 356.13814192842443, y: 1023.694783335719 },
               ArrowRight1: { x: -1117.5029742372521, y: 1028.4144814411625 },
-              BallValue01: { x: -1044.3623120428465, y: 1131.8426285378578 },
+              BallValue01: { x: -1044.7385785725835, y: 1131.2887844323882 },
               BallValue02: { x: -897.6141478861746, y: 1130.1502447788996 },
               BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
               BallValue04: { x: -127.98761243251244, y: 1129.5595186007586 },
@@ -2768,6 +2771,10 @@ export default function GraphicLGDS() {
               BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
               BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
               BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
+              BallValue13_Line7Last: {
+                  x: 631.1042201758206,
+                  y: 1315.9529575924705,
+              },
               BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
@@ -2781,10 +2788,15 @@ export default function GraphicLGDS() {
                   x: -458.43233108676895,
                   y: 1047.9161594286932,
               },
-              BallValueFirst: { x: 429.15262421132076, y: 1009.0430441067174 },
+              BallValueFirst: { x: 625.4162665003979, y: 1008.7971963003097 },
               BallValueLast: { x: -1185.7855496288498, y: 1013.9021150905016 },
               BallValuePSV: { x: 289.72148707331525, y: 959.3028379757588 },
               BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
+              BallVavleSDV_BOTTOM: {
+                  x: 474.664352759413,
+                  y: 1413.3486441841403,
+              },
+              BallVavleSDV_TOP: { x: 473.738890499873, y: 1099.2673167534078 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
               FIQ_1901: { x: -600.2178332288872, y: 529.8047278642143 },
               FIQ_1902: { x: -600.6873404684984, y: 1306.1020814778879 },
@@ -2807,11 +2819,11 @@ export default function GraphicLGDS() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1371.1652361754373, y: 500.2739306406778 },
+              Header: { x: -1052.8606431401424, y: 517.3259624104257 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
-              PCV_NUM02: { x: -122.88535626384972, y: 1235.9700787578358 },
+              PCV_NUM02: { x: -122.76497253735502, y: 1225.7345933933648 },
               PCV_ballVavle_Small1: {
                   x: 26.02187311783564,
                   y: 889.8528829879407,
@@ -2842,7 +2854,7 @@ export default function GraphicLGDS() {
               PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
               PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
               PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-              PSV_None01: { x: 447.48718383080245, y: 1041.2984512500652 },
+              PSV_None01: { x: 641.7404382417537, y: 1040.7984512500652 },
               PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
               PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
               PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
@@ -2857,20 +2869,38 @@ export default function GraphicLGDS() {
               PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: 86.22048227858289, y: 1213.0865077660026 },
+              Pressure_Trans01: {
+                  x: 115.93810232606126,
+                  y: 1205.6192520331715,
+              },
               Pressure_Trans02: {
                   x: -1098.4737057224531,
                   y: 707.7837211819499,
               },
               Pressure_Trans03: {
-                  x: -1076.7058297119006,
-                  y: 1303.2403065558399,
+                  x: -1091.7490542547623,
+                  y: 1332.8674867372974,
               },
               SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
               SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
+              SDV_Ball_top: { x: 493.92546533290914, y: 1040.8451177997745 },
+              SDV_Ball_top1: { x: 496.2616132728566, y: 1349.9095997087377 },
               SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
+              SDV_IMG_top: { x: -1049.7709320021045, y: 1195.6790306469368 },
+              SDV_IMG_top1: { x: -1049.7709320021045, y: 895.6790306469368 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+              SDV_Name_none1: { x: -1249.6461839977737, y: 602.8410000476873 },
+              SDV_Name_none_top: {
+                  x: 491.3787260830244,
+                  y: 1131.2694256269242,
+              },
+              SDV_Name_none_top1: {
+                  x: 492.59003718906195,
+                  y: 1445.0989022878432,
+              },
               SDV_None: { x: -1024.1286470234306, y: 1047.6886789070904 },
+              SDV_top: { x: 449.5825063914986, y: 940.7316988911805 },
+              SDV_top1: { x: 450.6375108231846, y: 1253.9721549835006 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
               Tank: { x: -910.7713207303586, y: 988.0249702520116 },
@@ -2912,8 +2942,8 @@ export default function GraphicLGDS() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1498.8938343741556, y: 498.0873006061162 },
-              data1: { x: -600.7396652303086, y: 734.0298552462513 },
+              borderWhite: { x: -1173.0105605523063, y: 507.5606515893095 },
+              data1: { x: -600.7396652303086, y: 733.0298552462513 },
               data2: { x: -600.6538263836953, y: 682.3968450603423 },
               data3: { x: -600.4792235982375, y: 631.8178888851007 },
               data4: { x: -600.1016616532435, y: 580.9222883481272 },
@@ -2927,13 +2957,13 @@ export default function GraphicLGDS() {
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
               line5: { x: -300.65784806763253, y: 844.3342440262651 },
               line6: { x: -300.98065704991916, y: 1249.1529639630187 },
-              line7: { x: -196.38382079776343, y: 1044.3956117006094 },
+              line7: { x: -196.38382079776343, y: 1045.8956117006094 },
               line8: { x: -109.84769512178819, y: 930.3833450683701 },
               line9: { x: -110.37038145875272, y: 1159.9359004593528 },
               line10: { x: 86.69745659087829, y: 930.5099856332267 },
               line11: { x: 86.19431979613125, y: 1160.0153295862324 },
               line12: { x: 212.34921055529412, y: 1040.345253330986 },
-              line13: { x: 445.3312960971492, y: 1041.4713896720348 },
+              line13: { x: 641.4953422797897, y: 1041.1767855578794 },
               overlay_SmallVavle1: {
                   x: -531.2918361488164,
                   y: 919.397327575481,
@@ -2942,9 +2972,10 @@ export default function GraphicLGDS() {
                   x: -1263.7593947324417,
                   y: 1290.7025144885476,
               },
-              overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
+              overlay_line7: { x: -236.1834494763565, y: 1040.4087334931678 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              timeUpdate3: { x: -1459.1877972645498, y: 572.1636741927625 },
+              overlay_lineLast: { x: 648.2054550864606, y: 1348.8610985677146 },
+              timeUpdate3: { x: -1131.4098532460614, y: 587.3210357658719 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3334,7 +3365,7 @@ export default function GraphicLGDS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 5, background: line },
+            style: { border: "none", width: 10, height: 15, background: line },
         },
         {
             id: "line8",
@@ -3455,7 +3486,7 @@ export default function GraphicLGDS() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1201
+                        SDV-1001
                     </div>
                 ),
             },
@@ -3517,6 +3548,206 @@ export default function GraphicLGDS() {
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
+                background: background,
+                width: 0,
+                height: 0,
+            },
+        },
+
+        {
+            id: "SDV_top",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 500,
+                        }}
+                    >
+                        SDV-1002
+                    </div>
+                ),
+            },
+            position: positions.SDV_top,
+            zIndex: 99999,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 130,
+                height: 45,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "SDV_Ball_top",
+            position: positions.SDV_Ball_top,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "SDV_IMG_top",
+            position: positions.SDV_IMG_top,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 35,
+                height: 22,
+                opacity: 0.01,
+            },
+        },
+        {
+            id: "SDV_Name_none_top",
+            position: positions.SDV_Name_none_top,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 35,
+                height: 0,
+            },
+        },
+
+        {
+            id: "SDV_top1",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 500,
+                        }}
+                    >
+                        SDV-1003
+                    </div>
+                ),
+            },
+            position: positions.SDV_top1,
+            zIndex: 99999,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 130,
+                height: 45,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "SDV_Ball_top1",
+            position: positions.SDV_Ball_top1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "SDV_IMG_top1",
+            position: positions.SDV_IMG_top1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 35,
+                height: 22,
+                opacity: 0.01,
+            },
+        },
+        {
+            id: "SDV_Name_none_top1",
+            position: positions.SDV_Name_none_top1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 35,
+                height: 0,
+            },
+        },
+
+        {
+            id: "BallVavleSDV_TOP",
+            position: positions.BallVavleSDV_TOP,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallVavleSDV_TOP1 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                background: background,
+                width: 0,
+                height: 0,
+            },
+        },
+
+        {
+            id: "BallVavleSDV_BOTTOM",
+            position: positions.BallVavleSDV_BOTTOM,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallVavleSDV_BOTTOM1 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
                 background: background,
                 width: 0,
                 height: 0,
@@ -3777,6 +4008,28 @@ export default function GraphicLGDS() {
                 ),
             },
 
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+
+        {
+            id: "BallValue13_Line7Last",
+            position: positions.BallValue13_Line7Last,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueLast />
+                    </div>
+                ),
+            },
+            zIndex: 9999,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
@@ -4717,7 +4970,7 @@ export default function GraphicLGDS() {
 
             style: {
                 border: background,
-                width: 345,
+                width: 280,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4740,7 +4993,7 @@ export default function GraphicLGDS() {
 
             style: {
                 border: background,
-                width: 360,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4765,7 +5018,7 @@ export default function GraphicLGDS() {
 
             style: {
                 border: background,
-                width: 340,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4832,7 +5085,7 @@ export default function GraphicLGDS() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
@@ -5153,50 +5406,14 @@ export default function GraphicLGDS() {
 
         // ============= GD =====================
 
-        {
-            id: "GD1",
-            data: {
-                label: <div>{GD}</div>,
-            },
-
-            position: positions.GD1,
-            zIndex: 9999,
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Top,
-        },
-        {
-            id: "GD2",
-            data: {
-                label: <div>{GD}</div>,
-            },
-
-            position: positions.GD2,
-            zIndex: 9999,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Left,
-        },
         // {
-        //     id: "GD3",
+        //     id: "GD1",
         //     data: {
         //         label: <div>{GD}</div>,
         //     },
 
-        //     position: positions.GD3,
+        //     position: positions.GD1,
         //     zIndex: 9999,
-
         //     style: {
         //         background: background,
         //         border: "none",
@@ -5206,60 +5423,44 @@ export default function GraphicLGDS() {
         //     },
         //     targetPosition: Position.Top,
         // },
-        {
-            id: "GD1_Name1901",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            position: "relative",
-                            bottom: 5,
-                        }}
-                    >
-                        GD-1201
-                    </div>
-                ),
-            },
-            position: positions.GD1_Name1901,
-
-            style: {
-                background: "yellow",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Left,
-        },
-        {
-            id: "GD2_Name1902",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            position: "relative",
-                            bottom: 5,
-                        }}
-                    >
-                        GD-1202
-                    </div>
-                ),
-            },
-            position: positions.GD2_Name1902,
-
-            style: {
-                background: "yellow",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Left,
-        },
         // {
-        //     id: "GD3_Name1903",
+        //     id: "GD2",
+        //     data: {
+        //         label: <div>{GD}</div>,
+        //     },
+
+        //     position: positions.GD2,
+        //     zIndex: 9999,
+
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
+
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Left,
+        // },
+        // // {
+        // //     id: "GD3",
+        // //     data: {
+        // //         label: <div>{GD}</div>,
+        // //     },
+
+        // //     position: positions.GD3,
+        // //     zIndex: 9999,
+
+        // //     style: {
+        // //         background: background,
+        // //         border: "none",
+        // //         width: "10px",
+
+        // //         height: 10,
+        // //     },
+        // //     targetPosition: Position.Top,
+        // // },
+        // {
+        //     id: "GD1_Name1901",
         //     data: {
         //         label: (
         //             <div
@@ -5270,11 +5471,11 @@ export default function GraphicLGDS() {
         //                     bottom: 5,
         //                 }}
         //             >
-        //                 GD-1903
+        //                 GD-1001
         //             </div>
         //         ),
         //     },
-        //     position: positions.GD3_Name1903,
+        //     position: positions.GD1_Name1901,
 
         //     style: {
         //         background: "yellow",
@@ -5284,49 +5485,76 @@ export default function GraphicLGDS() {
         //     },
         //     targetPosition: Position.Left,
         // },
-
-        {
-            id: "GD1_Value1901",
-            data: {
-                label: <div style={{}}> </div>,
-            },
-            position: positions.GD1_Value1901,
-
-            style: {
-                background: borderBox,
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "GD2_Value1902",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 18,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.GD2_Value1902,
-
-            style: {
-                background: borderBox,
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Bottom,
-        },
         // {
-        //     id: "GD3_Value1903",
+        //     id: "GD2_Name1902",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     fontSize: 20,
+        //                     fontWeight: 500,
+        //                     position: "relative",
+        //                     bottom: 5,
+        //                 }}
+        //             >
+        //                 GD-1002
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.GD2_Name1902,
+
+        //     style: {
+        //         background: "yellow",
+        //         border: "1px solid white",
+        //         width: 130,
+        //         height: 35,
+        //     },
+        //     targetPosition: Position.Left,
+        // },
+        // // {
+        // //     id: "GD3_Name1903",
+        // //     data: {
+        // //         label: (
+        // //             <div
+        // //                 style={{
+        // //                     fontSize: 20,
+        // //                     fontWeight: 500,
+        // //                     position: "relative",
+        // //                     bottom: 5,
+        // //                 }}
+        // //             >
+        // //                 GD-1903
+        // //             </div>
+        // //         ),
+        // //     },
+        // //     position: positions.GD3_Name1903,
+
+        // //     style: {
+        // //         background: "yellow",
+        // //         border: "1px solid white",
+        // //         width: 130,
+        // //         height: 35,
+        // //     },
+        // //     targetPosition: Position.Left,
+        // // },
+
+        // {
+        //     id: "GD1_Value1901",
+        //     data: {
+        //         label: <div style={{}}> </div>,
+        //     },
+        //     position: positions.GD1_Value1901,
+
+        //     style: {
+        //         background: borderBox,
+        //         border: "1px solid white",
+        //         width: 130,
+        //         height: 35,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "GD2_Value1902",
         //     data: {
         //         label: (
         //             <div
@@ -5340,7 +5568,7 @@ export default function GraphicLGDS() {
         //             </div>
         //         ),
         //     },
-        //     position: positions.GD3_Value1903,
+        //     position: positions.GD2_Value1902,
 
         //     style: {
         //         background: borderBox,
@@ -5350,44 +5578,35 @@ export default function GraphicLGDS() {
         //     },
         //     targetPosition: Position.Bottom,
         // },
+        // // {
+        // //     id: "GD3_Value1903",
+        // //     data: {
+        // //         label: (
+        // //             <div
+        // //                 style={{
+        // //                     color: "green",
+        // //                     fontSize: 18,
+        // //                     fontWeight: 600,
+        // //                 }}
+        // //             >
+        // //                 {" "}
+        // //             </div>
+        // //         ),
+        // //     },
+        // //     position: positions.GD3_Value1903,
 
-        {
-            id: "GD_none1",
-            position: positions.GD_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // //     style: {
+        // //         background: borderBox,
+        // //         border: "1px solid white",
+        // //         width: 130,
+        // //         height: 35,
+        // //     },
+        // //     targetPosition: Position.Bottom,
+        // // },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
-        {
-            id: "GD_none2",
-            position: positions.GD_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
         // {
-        //     id: "GD_none3",
-        //     position: positions.GD_none3,
+        //     id: "GD_none1",
+        //     position: positions.GD_none1,
         //     type: "custom",
         //     data: {
         //         label: <div></div>,
@@ -5402,6 +5621,40 @@ export default function GraphicLGDS() {
         //         height: 1,
         //     },
         // },
+        // {
+        //     id: "GD_none2",
+        //     position: positions.GD_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
+
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: colorIMG_none,
+        //         width: 10,
+        //         height: 1,
+        //     },
+        // },
+        // // {
+        // //     id: "GD_none3",
+        // //     position: positions.GD_none3,
+        // //     type: "custom",
+        // //     data: {
+        // //         label: <div></div>,
+        // //     },
+
+        // //     sourcePosition: Position.Top,
+        // //     targetPosition: Position.Right,
+        // //     style: {
+        // //         border: "#333333",
+        // //         background: colorIMG_none,
+        // //         width: 10,
+        // //         height: 1,
+        // //     },
+        // // },
 
         // ============ border white ======================
         {
@@ -5425,7 +5678,7 @@ export default function GraphicLGDS() {
                 background: background,
                 border: "1px solid white",
                 width: 420,
-                height: 190,
+                height: 160,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -5474,7 +5727,7 @@ export default function GraphicLGDS() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
+            sourcePosition: Position.Bottom,
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
@@ -5498,6 +5751,24 @@ export default function GraphicLGDS() {
                 background: line,
                 width: 100,
                 height: 10,
+            },
+        },
+
+        {
+            id: "overlay_lineLast",
+            position: positions.overlay_lineLast,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 0,
+                height: 0,
             },
         },
         //============================ T_JUNTION ==========================
@@ -5594,6 +5865,60 @@ export default function GraphicLGDS() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         SDV_Ball: position,
+                    }));
+                }
+
+                if (id === "SDV_top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_top: position,
+                    }));
+                } else if (id === "SDV_Ball_top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Ball_top: position,
+                    }));
+                } else if (id === "SDV_IMG_top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG_top: position,
+                    }));
+                } else if (id === "SDV_Name_none_top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Name_none_top: position,
+                    }));
+                }
+
+                if (id === "SDV_top1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_top1: position,
+                    }));
+                } else if (id === "SDV_Ball_top1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Ball_top1: position,
+                    }));
+                } else if (id === "SDV_IMG_top1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG_top1: position,
+                    }));
+                } else if (id === "SDV_Name_none_top1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Name_none_top1: position,
+                    }));
+                } else if (id === "BallVavleSDV_TOP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleSDV_TOP: position,
+                    }));
+                } else if (id === "BallVavleSDV_BOTTOM") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleSDV_BOTTOM: position,
                     }));
                 }
                 // ================================== end item ==================================
@@ -5726,6 +6051,11 @@ export default function GraphicLGDS() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         BallValueLast: position,
+                    }));
+                } else if (id === "BallValue13_Line7Last") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValue13_Line7Last: position,
                     }));
                 }
                 // ============ ball vavle ===========================
@@ -6185,6 +6515,11 @@ export default function GraphicLGDS() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         overlay_line13: position,
+                    }));
+                } else if (id === "overlay_lineLast") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        overlay_lineLast: position,
                     }));
                 }
                 //========================== animation line =======================

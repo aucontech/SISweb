@@ -25,6 +25,11 @@ export default function GraphicSogec() {
 
   const [CNG, setCNG] = useState<string>('CNG');
   const [LPG, setLPG] = useState<string>('LPG');
+
+  const stationList ={ 
+    stationList :'Station list'
+  }
+
   const NG_Click = (component: React.ReactNode, newLabel?: string) => {
     if (component === null && newLabel) {
       setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
@@ -92,7 +97,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: '',
+            label: stationList.stationList,
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
               { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
@@ -120,7 +125,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: '',
+            label: stationList.stationList,
             items: [
               { label:  'SNG BINH DUONG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
               { label: 'SNG HUNG YEN', command: () => SNG_Click(<SetUpdata_HUNGYEN_SNG/>, 'SNG HUNG YEN') },
@@ -139,7 +144,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: '',
+            label: stationList.stationList,
             items: [
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
@@ -159,7 +164,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: '',
+            label: stationList.stationList,
             items: [
          
               { label: 'MEIKO', command: () => LPG_Click(<SetUpdata_Meiko/> , 'MEIKO ') },

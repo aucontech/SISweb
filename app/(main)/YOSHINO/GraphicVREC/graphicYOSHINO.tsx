@@ -25,7 +25,10 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_YOSHINO } from "../../data-table-device/ID-DEVICE/IdDevice";
+import {
+    id_OTSUKA,
+    id_YOSHINO,
+} from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -2754,7 +2757,7 @@ export default function GraphicYOSHINO() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
               ArrowRight: { x: 361.63814192842443, y: 1022.694783335719 },
               ArrowRight1: { x: -1117.5029742372521, y: 1028.4144814411625 },
@@ -2807,7 +2810,7 @@ export default function GraphicYOSHINO() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1371.1652361754373, y: 500.2739306406778 },
+              Header: { x: -1352.6043793654449, y: 541.1078156226613 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
@@ -2859,13 +2862,10 @@ export default function GraphicYOSHINO() {
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: { x: 86.22048227858289, y: 1213.0865077660026 },
               Pressure_Trans02: {
-                  x: -1098.4737057224531,
-                  y: 707.7837211819499,
+                  x: -1003.4136084602457,
+                  y: 686.5954601957928,
               },
-              Pressure_Trans03: {
-                  x: -1076.7058297119006,
-                  y: 1303.2403065558399,
-              },
+              Pressure_Trans03: { x: -997.7374151814473, y: 1289.625062671279 },
               SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
               SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
               SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
@@ -2912,8 +2912,8 @@ export default function GraphicYOSHINO() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1498.8938343741556, y: 498.0873006061162 },
-              data1: { x: -600.7396652303086, y: 734.0298552462513 },
+              borderWhite: { x: -1454.3477780301737, y: 538.9211855880995 },
+              data1: { x: -600.7396652303086, y: 733.0298552462513 },
               data2: { x: -600.6538263836953, y: 682.3968450603423 },
               data3: { x: -600.4792235982375, y: 631.8178888851007 },
               data4: { x: -600.1016616532435, y: 580.9222883481272 },
@@ -2944,7 +2944,7 @@ export default function GraphicYOSHINO() {
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              timeUpdate3: { x: -1459.1877972645498, y: 572.1636741927625 },
+              timeUpdate3: { x: -1433.2025977305602, y: 605.5732164507492 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -4717,7 +4717,7 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 345,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4740,7 +4740,7 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 360,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4765,7 +4765,7 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 340,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },

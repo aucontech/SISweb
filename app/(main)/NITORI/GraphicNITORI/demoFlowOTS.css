@@ -1,0 +1,14 @@
+
+.react-flow__handle{
+    opacity: 0.01;
+}
+.react-flow__attribution{
+    display: none;
+}
+.HelpHover:hover{
+    color: red;
+}
+
+.react-flow__controls-interactive{
+    display: none;
+}

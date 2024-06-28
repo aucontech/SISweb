@@ -25,7 +25,10 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import {
+    id_OTSUKA,
+    id_NITORI,
+} from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -76,7 +79,7 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicKOA() {
+export default function GraphicNITORI() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -125,7 +128,7 @@ export default function GraphicKOA() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_KOA,
+                    entityId: id_NITORI,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -149,7 +152,7 @@ export default function GraphicKOA() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_NITORI,
                             },
                         },
                         pageLink: {
@@ -219,12 +222,12 @@ export default function GraphicKOA() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        FC_01_Current_Values_Flow_Rate: setSVF1,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,
+                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
+                        EVC_01_Volume_at_Base_Condition: setSVA1,
+                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
 
-                        FC_01_Accumulated_Values_Volume: setSVA1,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setGVA1,
-                        FC_01_Current_Values_Static_Pressure: setPT01,
+                        EVC_01_Pressure: setPT01,
 
                         FC_02_Current_Values_Flow_Rate: setSVF2,
                         FC_02_Current_Values_Uncorrected_Flow_Rate: setGVF2,
@@ -242,14 +245,14 @@ export default function GraphicKOA() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        FC_Conn_STT: setFC_Conn_STT,
+                        EVC_01_Conn_STT: setFC_Conn_STT,
                         PLC_Conn_STT: setConn_STT,
 
                         time: setTimeUpdate,
                     };
 
                     const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
+                        EVC_01_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
 
@@ -2016,7 +2019,8 @@ export default function GraphicKOA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF2}
+                                        {/* {roundedSVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2078,7 +2082,8 @@ export default function GraphicKOA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF2}
+                                        {/* {roundedGVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2140,7 +2145,8 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedSVA2}
+                                        {/* {roundedSVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2202,7 +2208,8 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedGVA2}
+                                        {/* {roundedGVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2255,7 +2262,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1203 :
+                                        PT-1303 :
                                     </p>
                                     <p
                                         style={{
@@ -2316,7 +2323,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1201 :
+                                        PT-1301 :
                                     </p>
                                     <p
                                         style={{
@@ -2379,7 +2386,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1202 :
+                                        PT-1302 :
                                     </p>
                                     <p
                                         style={{
@@ -2387,7 +2394,8 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {/* {roundedPT02} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2436,7 +2444,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {" "}
-                                        FC :{" "}
+                                        EVC :{" "}
                                     </p>
 
                                     <p
@@ -2692,7 +2700,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1201
+                                FIQ-1301
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2726,7 +2734,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1202
+                                FIQ-1302
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2795,11 +2803,11 @@ export default function GraphicKOA() {
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               GD1: { x: -725.7034368640515, y: 1033.9450610768665 },
-              GD1_Name1901: { x: -754.9615849863011, y: 959.8454102012485 },
+              GD1_Name1901: { x: -754.4615849863011, y: 959.8454102012485 },
               GD1_Value1901: { x: -755.1145731402554, y: 995.458904802694 },
               GD2: { x: -21.04313525608083, y: 1033.1458449005702 },
               GD2_Name1902: { x: -51.05869480682097, y: 961.6032677823157 },
-              GD2_Value1902: { x: -51.008696324053346, y: 997.2937264938082 },
+              GD2_Value1902: { x: -51.008696324053346, y: 996.7937264938082 },
               GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
               GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
               GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
@@ -2807,7 +2815,7 @@ export default function GraphicKOA() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1296.8404850889895, y: 514.9783384320447 },
+              Header: { x: -1269.3033223939099, y: 516.5127864609212 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
@@ -2857,14 +2865,11 @@ export default function GraphicKOA() {
               PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: 126.90314245070238,
-                  y: 1214.4893581167653,
-              },
+              Pressure_Trans01: { x: 86.22048227858289, y: 1213.0865077660026 },
               Pressure_Trans02: { x: -957.4304447818461, y: 650.3416260681598 },
               Pressure_Trans03: {
-                  x: -954.7294131091916,
-                  y: 1314.4996680883976,
+                  x: -991.0827717506168,
+                  y: 1313.5741238959947,
               },
               SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
               SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
@@ -2912,7 +2917,7 @@ export default function GraphicKOA() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1416.9257941282945, y: 508.2288676850411 },
+              borderWhite: { x: -1401.4606994526948, y: 512.8498968063376 },
               data1: { x: -600.7396652303086, y: 733.0298552462513 },
               data2: { x: -600.6538263836953, y: 682.3968450603423 },
               data3: { x: -600.4792235982375, y: 631.8178888851007 },
@@ -2944,7 +2949,7 @@ export default function GraphicKOA() {
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              timeUpdate3: { x: -1391.3069595074076, y: 575.2799063852837 },
+              timeUpdate3: { x: -1372.0884796832438, y: 582.4974915329176 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3455,7 +3460,7 @@ export default function GraphicKOA() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1201
+                        SDV-1301
                     </div>
                 ),
             },
@@ -4765,7 +4770,7 @@ export default function GraphicKOA() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 300,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4957,7 +4962,7 @@ export default function GraphicKOA() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                KOA
+                                NITORI
                             </p>
                         </div>
                     </div>
@@ -5218,7 +5223,7 @@ export default function GraphicKOA() {
                             bottom: 5,
                         }}
                     >
-                        GD-1201
+                        GD-1301
                     </div>
                 ),
             },
@@ -5244,7 +5249,7 @@ export default function GraphicKOA() {
                             bottom: 5,
                         }}
                     >
-                        GD-1202
+                        GD-1302
                     </div>
                 ),
             },
@@ -6258,9 +6263,9 @@ export default function GraphicKOA() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);

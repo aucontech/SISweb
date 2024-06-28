@@ -25,7 +25,10 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import {
+    id_OTSUKA,
+    id_IGUECU,
+} from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -76,7 +79,7 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicKOA() {
+export default function GraphicIGUACU() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -108,12 +111,16 @@ export default function GraphicKOA() {
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
 
-    const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
-    const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
-        null
-    );
-    const [Conn_STT, setConn_STT] = useState<string | null>(null);
-    const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
+    const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+    const [EVC_01_Conn_STTValue, setEVC_01_Conn_STTValue] = useState<
+        string | null
+    >(null);
+    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+    const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<
+        string | null
+    >(null);
+    const [PLC_STT, setPLC_STT] = useState<string | null>(null);
+    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
 
@@ -125,7 +132,7 @@ export default function GraphicKOA() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_KOA,
+                    entityId: id_IGUECU,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -149,7 +156,7 @@ export default function GraphicKOA() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_IGUECU,
                             },
                         },
                         pageLink: {
@@ -219,19 +226,20 @@ export default function GraphicKOA() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        FC_01_Current_Values_Flow_Rate: setSVF1,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,
+                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
 
-                        FC_01_Accumulated_Values_Volume: setSVA1,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setGVA1,
-                        FC_01_Current_Values_Static_Pressure: setPT01,
+                        EVC_01_Volume_at_Base_Condition: setSVA1,
+                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
 
-                        FC_02_Current_Values_Flow_Rate: setSVF2,
-                        FC_02_Current_Values_Uncorrected_Flow_Rate: setGVF2,
-                        FC_02_Accumulated_Values_Volume: setSVA2,
-                        FC_02_Accumulated_Values_Uncorrected_Volume: setGVA2,
+                        EVC_01_Pressure: setPT01,
 
-                        FC_02_Current_Values_Static_Pressure: setPT02,
+                        EVC_02_Flow_at_Base_Condition: setSVF2,
+                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
+                        EVC_02_Volume_at_Base_Condition: setSVA2,
+                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
+
+                        EVC_02_Pressure: setPT02,
 
                         GD1: SetGD1,
                         GD2: SetGD2,
@@ -242,15 +250,17 @@ export default function GraphicKOA() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        FC_Conn_STT: setFC_Conn_STT,
-                        PLC_Conn_STT: setConn_STT,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                        PLC_Conn_STT: setPLC_STT,
 
                         time: setTimeUpdate,
                     };
 
                     const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                     };
 
                     keys.forEach((key) => {
@@ -2255,7 +2265,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1203 :
+                                        PT-1503 :
                                     </p>
                                     <p
                                         style={{
@@ -2316,7 +2326,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1201 :
+                                        PT-1501 :
                                     </p>
                                     <p
                                         style={{
@@ -2379,7 +2389,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1202 :
+                                        PT-1502 :
                                     </p>
                                     <p
                                         style={{
@@ -2436,7 +2446,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {" "}
-                                        FC :{" "}
+                                        PLC :{" "}
                                     </p>
 
                                     <p
@@ -2446,32 +2456,41 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        EVC 01 :{" "}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        EVC 02 :{" "}
                                     </p>
                                 </div>
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
-                                        <p style={{ marginLeft: 5 }}>
-                                            {active === "true" ? (
-                                                <span
-                                                    style={{
-                                                        color: "#25d125",
-                                                    }}
-                                                >
-                                                    Active
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    style={{
-                                                        color: "#ff5656",
-                                                    }}
-                                                >
-                                                    Un Active
-                                                </span>
-                                            )}
-                                        </p>
-                                        {FC_Conn_STT === "1" ? (
+                                        {active === "true" ? (
+                                            <span
+                                                style={{
+                                                    color: "#25d125",
+                                                }}
+                                            >
+                                                Active
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "#ff5656",
+                                                }}
+                                            >
+                                                Un Active
+                                            </span>
+                                        )}
+                                    </p>
+                                    <p style={{ marginLeft: 5 }}>
+                                        {PLC_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2489,9 +2508,27 @@ export default function GraphicKOA() {
                                             </span>
                                         )}
                                     </p>
-
                                     <p style={{ marginLeft: 5 }}>
-                                        {Conn_STT === "1" ? (
+                                        {EVC_01_Conn_STT === "1" ? (
+                                            <span
+                                                style={{
+                                                    color: "#25d125",
+                                                }}
+                                            >
+                                                Connected
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "#ff5656",
+                                                }}
+                                            >
+                                                Disconnect
+                                            </span>
+                                        )}
+                                    </p>
+                                    <p style={{ marginLeft: 5 }}>
+                                        {EVC_02_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2530,7 +2567,7 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_Conn_STTValue}
+                                        {EVC_01_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -2540,7 +2577,17 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Conn_STTValue}
+                                        {EVC_02_Conn_STTValue}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        {PLC_Conn_STT}
                                     </p>
                                 </div>
                             </div>
@@ -2692,7 +2739,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1201
+                                FIQ-1501
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2726,7 +2773,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1202
+                                FIQ-1502
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -3455,7 +3502,7 @@ export default function GraphicKOA() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1201
+                        SDV-1501
                     </div>
                 ),
             },
@@ -4957,7 +5004,7 @@ export default function GraphicKOA() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                KOA
+                                IGUACU
                             </p>
                         </div>
                     </div>
@@ -5218,7 +5265,7 @@ export default function GraphicKOA() {
                             bottom: 5,
                         }}
                     >
-                        GD-1201
+                        GD-1501
                     </div>
                 ),
             },
@@ -5244,7 +5291,7 @@ export default function GraphicKOA() {
                             bottom: 5,
                         }}
                     >
-                        GD-1202
+                        GD-1502
                     </div>
                 ),
             },
@@ -5425,7 +5472,7 @@ export default function GraphicKOA() {
                 background: background,
                 border: "1px solid white",
                 width: 420,
-                height: 190,
+                height: 220,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
