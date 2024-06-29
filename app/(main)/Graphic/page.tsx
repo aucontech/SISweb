@@ -22,6 +22,8 @@ import GraphicKOA from '../KOA/GraphicKOA/graphicKOA';
 import GraphicLGDS from '../LGDS/GraphicLGDS/graphicLGDS';
 import GraphicNITORI from '../NITORI/GraphicNITORI/graphicNITORI';
 import GraphicIGUACU from '../IGUACU/GraphicIGUACU/graphicIGUACU';
+import Graphic_SNG_BINHDUONG from '../SNG/SNG_BINHDUONG/Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG';
+import Graphic_SNG_HUNGYEN from '../SNG/SNG_HUNGYEN/Graphic_SNG_HUNGYEN/Graphic_SNG_HUNGYEN';
 
 export default function GraphicSogec() {
 
@@ -157,8 +159,8 @@ export default function GraphicSogec() {
             label: stationList.stationList,
             items: [
          
-              { label: ' SNG BINH DUONG', command: () => SNG_Click(null , ' SNG BINH DUONG') },
-              { label: ' SNG HUNG YEN', command: () => SNG_Click(null , ' SNG HUNG YEN') },
+              { label: ' SNG BINH DUONG', command: () => SNG_Click(<Graphic_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
+              { label: ' SNG HUNG YEN', command: () => SNG_Click(<Graphic_SNG_HUNGYEN/>, ' SNG HUNG YEN') },
 
             
             ]
