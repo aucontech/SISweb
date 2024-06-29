@@ -2484,12 +2484,12 @@ export default function Graphic_SNG_BINHDUONG() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionMEIKO");
+    // const storedPositionString = localStorage.getItem("positionMEIKO");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AIR_INLET: { x: -2721.4692108086797, y: 2179.722332941774 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
               Arrow2: { x: -2246.4848054605154, y: 2163.170126568243 },
@@ -4048,15 +4048,15 @@ export default function Graphic_SNG_BINHDUONG() {
         setEditingEnabled(!editingEnabled);
     };
 
-    useEffect(() => {
-        localStorage.setItem("positionMEIKO", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     // width: "100%",
@@ -4067,7 +4067,7 @@ export default function Graphic_SNG_BINHDUONG() {
                     background: background,
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -4093,15 +4093,15 @@ export default function Graphic_SNG_BINHDUONG() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

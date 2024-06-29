@@ -237,10 +237,10 @@ export default function Graphic_SNG_HUNGYEN() {
 
                         SDV_3004: setSDV,
 
-                        WB_1001: setWB_1001,
+                        WB_3001: setWB_1001,
 
                         WB_Setpoint: setWB_Setpoint,
-                        HV_1001: setHV_1001,
+                        HV_3001: setHV_1001,
 
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
@@ -326,8 +326,8 @@ export default function Graphic_SNG_HUNGYEN() {
         PT: "PT",
         PT_2004: " Tank 01",
         PT_2005: "Volume",
-        TM_2002_SNG: "TM-2002",
-        TM_2003_SNG: "TM-2003",
+        TM_2002_SNG: "TM-3002",
+        TM_2003_SNG: "TM-3003",
         TT_2003: "TT 301",
         VP_301: "EVC 02 Pressure",
 
@@ -1616,7 +1616,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2004 :
+                                        PIT-3004 :
                                     </p>
                                     <p
                                         style={{
@@ -1678,7 +1678,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2005 :
+                                        PIT-3005 :
                                     </p>
                                     <p
                                         style={{
@@ -1870,7 +1870,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-2003 :
+                                        TT-3003 :
                                     </p>
                                     <p
                                         style={{
@@ -1932,7 +1932,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-2004 :
+                                        TT-3004 :
                                     </p>
                                     <p
                                         style={{
@@ -2013,7 +2013,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        FCV-2001 :
+                                        FCV-3001 :
                                     </p>
                                     <p
                                         style={{
@@ -2076,7 +2076,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        WB-1001 :
+                                        WB-3001 :
                                     </p>
                                     <p
                                         style={{
@@ -2484,12 +2484,12 @@ export default function Graphic_SNG_HUNGYEN() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionMEIKO");
+    // const storedPositionString = localStorage.getItem("positionMEIKO");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AIR_INLET: { x: -2721.4692108086797, y: 2179.722332941774 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
               Arrow2: { x: -2246.4848054605154, y: 2163.170126568243 },
@@ -3346,7 +3346,7 @@ export default function Graphic_SNG_HUNGYEN() {
             position: positions.SDV_Name,
             type: "custom",
             data: {
-                label: <div>SDV-2004</div>,
+                label: <div>SDV-3004</div>,
             },
 
             sourcePosition: Position.Right,
@@ -4048,15 +4048,15 @@ export default function Graphic_SNG_HUNGYEN() {
         setEditingEnabled(!editingEnabled);
     };
 
-    useEffect(() => {
-        localStorage.setItem("positionMEIKO", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     // width: "100%",
@@ -4067,7 +4067,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     background: background,
                 }}
             >
-                {!editingEnabled && (
+                {/* {!editingEnabled && (
                     <div
                         style={{
                             position: "absolute",
@@ -4093,15 +4093,15 @@ export default function Graphic_SNG_HUNGYEN() {
                             height: "100%",
                         }}
                     ></div>
-                )}
+                )} */}
 
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
