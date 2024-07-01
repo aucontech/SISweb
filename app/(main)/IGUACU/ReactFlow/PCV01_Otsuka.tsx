@@ -4,8 +4,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicLGDS/graphicLGDS";
-import { id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { colorData, colorNameValue } from "../GraphicIGUACU/graphicIGUACU";
+import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
 
 export default function PCV_01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -41,7 +41,7 @@ export default function PCV_01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_LGDS,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {
@@ -153,7 +153,7 @@ export default function PCV_01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PCV-1001</p>
+                <p style={{ color: colorNameValue }}>PCV-1501</p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>

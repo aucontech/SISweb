@@ -3,11 +3,13 @@ import { readToken } from "@/service/localStorage";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { colorData, colorNameValue } from "../GraphicLGDS/graphicLGDS";
-import { id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { colorData, colorNameValue } from "../GraphicNITORI/graphicNITORI";
+import { id_NITORI } from "../../data-table-device/ID-DEVICE/IdDevice";
 
-export default function PCV_01_Otsuka() {
+
+export default function PCV_02_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -32,7 +34,7 @@ export default function PCV_01_Otsuka() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_01",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -41,7 +43,7 @@ export default function PCV_01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_LGDS,
+                                id: id_NITORI,
                             },
                         },
                         pageLink: {
@@ -72,7 +74,7 @@ export default function PCV_01_Otsuka() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PCV_01",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -105,20 +107,20 @@ export default function PCV_01_Otsuka() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01.ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.ts;
                     setUpTS(ballTS);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
@@ -127,7 +129,7 @@ export default function PCV_01_Otsuka() {
         }
     }, []);
 
- 
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = Number(event.target.value);
@@ -153,30 +155,18 @@ export default function PCV_01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PCV-1001</p>
+                <p style={{ color: colorNameValue }}>PCV-1302</p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>
 
             {/* <OverlayPanel ref={op}>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: 120,
-                    }}
-                >
-                    <p style={{ fontWeight: 500 }}>PCV-1901</p>
-                    <InputText
-                        keyfilter="int"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                    />
-                    <Button
-                        style={{ marginTop: 5 }}
-                        label="Update"
-                        onClick={handleButtonClick}
-                    />
+                <div style={{display:'flex', flexDirection:'column',}}>
+                <p  style={{fontWeight:500}}>PCV-1902</p>
+
+                <InputText keyfilter="int" value={inputValue} onChange={handleInputChange} />
+
+                    <Button style={{marginTop:5}} label="Update" onClick={handleButtonClick} />
                 </div>
             </OverlayPanel> */}
         </div>

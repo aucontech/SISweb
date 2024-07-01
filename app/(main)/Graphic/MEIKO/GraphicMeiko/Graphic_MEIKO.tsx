@@ -382,6 +382,42 @@ export default function Graphic_MEIKO() {
                 Flow_Meter_Total_Maintain?.value || false
             );
             //===========================================================================================
+
+            const HighConsumption_Flow = res.data.find(
+                (item: any) => item.key === "Consumption_Flow_High"
+            );
+            setHighConsumption_Flow(HighConsumption_Flow?.value || null);
+
+            const LowConsumption_Flow = res.data.find(
+                (item: any) => item.key === "Consumption_Flow_Low"
+            );
+            setLowConsumption_Flow(LowConsumption_Flow?.value || null);
+
+            const Consumption_Flow_Maintain = res.data.find(
+                (item: any) => item.key === "Consumption_Flow_Maintain"
+            );
+            setMaintainConsumption_Flow(
+                Consumption_Flow_Maintain?.value || false
+            );
+            //===========================================================================================
+
+            const HighFlow_Velocity = res.data.find(
+                (item: any) => item.key === "Flow_Velocity_High"
+            );
+            setHighFlow_Velocity(HighFlow_Velocity?.value || null);
+
+            const LowFlow_Velocity = res.data.find(
+                (item: any) => item.key === "Flow_Velocity_Low"
+            );
+            setLowFlow_Velocity(LowFlow_Velocity?.value || null);
+
+            const Flow_Velocity_Maintain = res.data.find(
+                (item: any) => item.key === "Flow_Velocity_Maintain"
+            );
+            setMaintainFlow_Velocity(
+                Flow_Velocity_Maintain?.value || false
+            );
+            //===========================================================================================
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -2049,10 +2085,10 @@ export default function Graphic_MEIKO() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorFlow_Meter_Total &&
-                                        !maintainFlow_Meter_Total
+                                        audioColorFlow_Velocity &&
+                                        !maintainFlow_Velocity
                                             ? "#ff5656"
-                                            : maintainTank_01_Level
+                                            : maintainFlow_Velocity
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2086,10 +2122,10 @@ export default function Graphic_MEIKO() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorFlow_Meter_Total &&
-                                        !maintainFlow_Meter_Total
+                                        audioColorConsumption_Flow &&
+                                        !maintainConsumption_Flow
                                             ? "#ff5656"
-                                            : maintainTank_01_Level
+                                            : maintainConsumption_Flow
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",

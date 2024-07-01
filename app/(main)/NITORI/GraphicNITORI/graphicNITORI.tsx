@@ -27,7 +27,7 @@ import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
 import {
     id_OTSUKA,
-    id_YOSHINO,
+    id_NITORI,
 } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
@@ -79,7 +79,7 @@ export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
-export default function GraphicYOSHINO() {
+export default function GraphicNITORI() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -128,7 +128,7 @@ export default function GraphicYOSHINO() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_YOSHINO,
+                    entityId: id_NITORI,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -152,7 +152,7 @@ export default function GraphicYOSHINO() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_YOSHINO,
+                                id: id_NITORI,
                             },
                         },
                         pageLink: {
@@ -222,12 +222,12 @@ export default function GraphicYOSHINO() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        FC_01_Current_Values_Flow_Rate: setSVF1,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,
+                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
+                        EVC_01_Volume_at_Base_Condition: setSVA1,
+                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
 
-                        FC_01_Accumulated_Values_Volume: setSVA1,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setGVA1,
-                        FC_01_Current_Values_Static_Pressure: setPT01,
+                        EVC_01_Pressure: setPT01,
 
                         FC_02_Current_Values_Flow_Rate: setSVF2,
                         FC_02_Current_Values_Uncorrected_Flow_Rate: setGVF2,
@@ -245,14 +245,14 @@ export default function GraphicYOSHINO() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        FC_Conn_STT: setFC_Conn_STT,
+                        EVC_01_Conn_STT: setFC_Conn_STT,
                         PLC_Conn_STT: setConn_STT,
 
                         time: setTimeUpdate,
                     };
 
                     const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
+                        EVC_01_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
 
@@ -2019,7 +2019,8 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF2}
+                                        {/* {roundedSVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2081,7 +2082,8 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF2}
+                                        {/* {roundedGVF2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2143,7 +2145,8 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedSVA2}
+                                        {/* {roundedSVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2205,7 +2208,8 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedGVA2}
+                                        {/* {roundedGVA2} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2258,7 +2262,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1403 :
+                                        PT-1303 :
                                     </p>
                                     <p
                                         style={{
@@ -2319,7 +2323,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1401 :
+                                        PT-1301 :
                                     </p>
                                     <p
                                         style={{
@@ -2382,7 +2386,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1402 :
+                                        PT-1302 :
                                     </p>
                                     <p
                                         style={{
@@ -2390,7 +2394,8 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {/* {roundedPT02} */}
+                                        Not used
                                     </p>
                                 </div>
                                 <p
@@ -2439,7 +2444,7 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        FC :{" "}
+                                        EVC :{" "}
                                     </p>
 
                                     <p
@@ -2695,7 +2700,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1401
+                                FIQ-1301
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2729,7 +2734,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1402
+                                FIQ-1302
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2810,7 +2815,7 @@ export default function GraphicYOSHINO() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1352.6043793654449, y: 541.1078156226613 },
+              Header: { x: -1269.3033223939099, y: 516.5127864609212 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
@@ -2861,14 +2866,14 @@ export default function GraphicYOSHINO() {
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: {
-                  x: 128.38612848867058,
-                  y: 1213.0865077660026,
+                x: 128.38612848867058,
+                y: 1213.0865077660026,
+            },
+              Pressure_Trans02: { x: -957.4304447818461, y: 650.3416260681598 },
+              Pressure_Trans03: {
+                  x: -991.0827717506168,
+                  y: 1313.5741238959947,
               },
-              Pressure_Trans02: {
-                  x: -1003.4136084602457,
-                  y: 686.5954601957928,
-              },
-              Pressure_Trans03: { x: -997.7374151814473, y: 1289.625062671279 },
               SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
               SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
               SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
@@ -2915,7 +2920,7 @@ export default function GraphicYOSHINO() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1454.3477780301737, y: 538.9211855880995 },
+              borderWhite: { x: -1401.4606994526948, y: 512.8498968063376 },
               data1: { x: -600.7396652303086, y: 733.0298552462513 },
               data2: { x: -600.6538263836953, y: 682.3968450603423 },
               data3: { x: -600.4792235982375, y: 631.8178888851007 },
@@ -2947,7 +2952,7 @@ export default function GraphicYOSHINO() {
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              timeUpdate3: { x: -1433.2025977305602, y: 605.5732164507492 },
+              timeUpdate3: { x: -1372.0884796832438, y: 582.4974915329176 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3458,7 +3463,7 @@ export default function GraphicYOSHINO() {
                             fontWeight: 500,
                         }}
                     >
-                        SDV-1401
+                        SDV-1301
                     </div>
                 ),
             },
@@ -4768,7 +4773,7 @@ export default function GraphicYOSHINO() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 300,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4960,7 +4965,7 @@ export default function GraphicYOSHINO() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                YOSHINO
+                                NITORI
                             </p>
                         </div>
                     </div>
@@ -5221,7 +5226,7 @@ export default function GraphicYOSHINO() {
                             bottom: 5,
                         }}
                     >
-                        GD-1401
+                        GD-1301
                     </div>
                 ),
             },
@@ -5247,7 +5252,7 @@ export default function GraphicYOSHINO() {
                             bottom: 5,
                         }}
                     >
-                        GD-1402
+                        GD-1302
                     </div>
                 ),
             },
@@ -6261,9 +6266,9 @@ export default function GraphicYOSHINO() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);
