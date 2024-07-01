@@ -17,10 +17,12 @@ import SetUpdata_YOSHINO from './YOSHINO/SetUpdata_YOSHINO';
 import SetUpdata_NITORI from './NITORI/SetUpdata_NITORI';
 import SetUpdata_ARAKAWA from './ARAKAWA/SetUpdata_ARAKAWA';
 import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
+import SetUpdata_VREC from './VREC/SetUpdata_VREC';
+import SetUpdata_LGDS from './VREC/SetUpdata_VREC';
 
 export default function GraphicSogec() {
-  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<LowHighData />);
-  const [NG, setNG] = useState<string>('OTSUKA');
+  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<SetUpdata_LGDS />);
+  const [NG, setNG] = useState<string>('LGDS');
   const [SNG, setSNG] = useState<string>('SNG');
 
   const [CNG, setCNG] = useState<string>('CNG');
@@ -100,18 +102,23 @@ export default function GraphicSogec() {
             label: stationList.stationList,
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
-              { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
-              { label: 'ARAKAWA', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'ARAKAWA') },
-              { label: 'SPMCV', command: () => NG_Click(<SetUpdata_SPMCV/>, 'SPMCV') },
 
-              // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
-              { label: 'VREC', command: () => NG_Click(null, 'VREC') },
-
+              { label: 'LGDS', command: () => NG_Click(<SetUpdata_LGDS/>, 'LGDS') },
               { label: 'ZOCV', command: () => NG_Click(<SetUpdata_ZOVC/>, 'ZOCV') },
+              { label: 'KOA', command: () => NG_Click(<SetUpdata_KOA/>, 'KOA') },
               { label: 'NITORI', command: () => NG_Click(<SetUpdata_NITORI/>, 'NITORI') },
               { label: 'YOSHINO', command: () => NG_Click(<SetUpdata_YOSHINO/>, 'YOSHINO') },
               { label: 'IGUACU', command: () => NG_Click(<SetUpdata_IGUACU/>, 'IGUACU') },
-              { label: 'KOA', command: () => NG_Click(<SetUpdata_KOA/>, 'KOA') },
+              { label: 'ARAKAWA', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'ARAKAWA') },
+              { label: 'SPMCV', command: () => NG_Click(<SetUpdata_SPMCV/>, 'SPMCV') },
+              { label: 'VREC', command: () => NG_Click(<SetUpdata_VREC/>, 'VREC') },
+
+              { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
+
+              // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
+
+
+
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }
@@ -146,9 +153,11 @@ export default function GraphicSogec() {
           {
             label: stationList.stationList,
             items: [
+
+              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
+
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
-              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
 
             
             ]

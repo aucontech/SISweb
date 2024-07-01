@@ -163,7 +163,7 @@ export default function PSV01() {
                     fontWeight: 400,
                 }}
             >
-                <p style={{ color: colorNameValue }}>PSV-2003</p>
+                <p style={{ color: colorNameValue }}>PSV-3003</p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>
