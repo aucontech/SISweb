@@ -10,6 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -5032,10 +5033,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC: 'FC -  Prameter & configuration',
-    FC01: 'FC01 -  Prameter & configuration',
-    FC02: 'FC02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    FC: 'FC -  Parameter & Configuration',
+    FC01: 'FC01 -  Parameter & Configuration',
+    FC02: 'FC02 -  Parameter & Configuration',
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
 
@@ -5047,7 +5048,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
              modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status}</span> , 
+            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} </span> , 
              high: <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5067,7 +5068,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
              modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
     
-            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage}</span> , 
+            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
              high: <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5086,7 +5087,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
    
             modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
    
-           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage}</span> , 
+           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
             high: <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5105,7 +5106,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
   
            modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
   
-          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage}</span> , 
+          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
            high: <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5129,7 +5130,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  
           modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
  
-         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume}</span> , 
+         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
           high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5148,7 +5149,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
 
-        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume}</span> , 
+        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
          high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5159,7 +5160,48 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
      ></Checkbox>
 
         },
+        {
+       
+            mainCategory: mainCategoryFC.FC01 ,
+           timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
+          name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
+    
+          modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
+    
+         value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
+          high: <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainFC_01_Current_Values_Uncorrected_Flow_Rate}
+          checked={maintainFC_01_Current_Values_Uncorrected_Flow_Rate}
+      ></Checkbox>
+    
+         },
+    
+        {
+            
+            mainCategory: mainCategoryFC.FC01 ,
+           timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
+       name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
 
+       modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
+
+      value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
+       high: <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainFC_01_Current_Values_Flow_Rate}
+       checked={maintainFC_01_Current_Values_Flow_Rate}
+   ></Checkbox>
+
+      },
+
+
+ 
   
         {
             
@@ -5169,7 +5211,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
         modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
 
-       value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure}</span> , 
+       value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5188,7 +5230,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
 
-      value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature}</span> , 
+      value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
        high: <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5200,46 +5242,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
       },
 
-        {
-            
-             mainCategory: mainCategoryFC.FC01 ,
-            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
 
-        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
-
-       value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate}</span> , 
-        high: <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainFC_01_Current_Values_Flow_Rate}
-        checked={maintainFC_01_Current_Values_Flow_Rate}
-    ></Checkbox>
-
-       },
-
-
-       {
-        
-         mainCategory: mainCategoryFC.FC01 ,
-        timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
-
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
-
-      value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate}</span> , 
-       high: <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
-       style={{ marginRight: 20, }}
-       onChange={ChangeMaintainFC_01_Current_Values_Uncorrected_Flow_Rate}
-       checked={maintainFC_01_Current_Values_Uncorrected_Flow_Rate}
-   ></Checkbox>
-
-      },
 
               
       {
@@ -5250,7 +5253,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
       modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
 
-     value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume}</span> , 
+     value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
       high: <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Volume} onChange={handleInputChange2FC_01_Today_Values_Volume} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5272,7 +5275,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
        
             modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
        
-           value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume}</span> , 
+           value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
             high: <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5297,7 +5300,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
     modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
 
-   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume}</span> , 
+   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
     high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Volume} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5318,7 +5321,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
 
-  value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume}</span> , 
+  value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
    high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6010,7 +6013,7 @@ checked={maintainDO_SV_02}
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const Configuration = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -6072,9 +6075,9 @@ checked={maintainDO_SV_02}
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

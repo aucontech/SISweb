@@ -5033,10 +5033,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC: 'FC -  Prameter & configuration',
-    FC01: 'FC01 -  Prameter & configuration',
-    FC02: 'FC02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    FC: 'FC -  Parameter & Configuration',
+    FC01: 'FC01 -  Parameter & Configuration',
+    FC02: 'FC02 -  Parameter & Configuration',
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
 
@@ -5958,7 +5958,7 @@ checked={maintainDO_SV_01}
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const Configuration = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -6014,9 +6014,9 @@ checked={maintainDO_SV_01}
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

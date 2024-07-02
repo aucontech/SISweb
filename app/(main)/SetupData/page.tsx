@@ -18,7 +18,7 @@ import SetUpdata_NITORI from './NITORI/SetUpdata_NITORI';
 import SetUpdata_ARAKAWA from './ARAKAWA/SetUpdata_ARAKAWA';
 import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 import SetUpdata_VREC from './VREC/SetUpdata_VREC';
-import SetUpdata_LGDS from './VREC/SetUpdata_VREC';
+import SetUpdata_LGDS from './LGDS/SetUpdata_LGDS';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<SetUpdata_LGDS />);
@@ -155,7 +155,6 @@ export default function GraphicSogec() {
             items: [
 
               { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
-
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
 
@@ -163,7 +162,6 @@ export default function GraphicSogec() {
             ]
           }
         ],
-       
       ]
     },
 

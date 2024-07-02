@@ -4957,7 +4957,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             
 
             {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
@@ -4978,7 +4978,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
          
             {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Temperature}>Temperature</span> ,
@@ -4998,7 +4998,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             },
 
             {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSEVC_01_Pressure}>Pressure</span> ,
@@ -5018,7 +5018,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            },
 
            {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}> Volume at Base Condition</span> ,
@@ -5038,7 +5038,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
           },
 
           {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
@@ -5057,7 +5057,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
  
          },
          {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
@@ -5078,7 +5078,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   
         {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
@@ -5097,7 +5097,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        },
        {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
@@ -5117,7 +5117,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
       },
 
         {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
@@ -5138,7 +5138,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
        {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>Vb of Last Day</span> ,
@@ -5159,7 +5159,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
               
       {
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
@@ -5190,7 +5190,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
             {
                 
-                mainCategory: 'EVC 02 -  Prameter & configuration ',
+                mainCategory: 'EVC 02 -  Parameter & Configuration ',
 
                 
                 timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{EVC_STT02Value}</span>,
@@ -5217,7 +5217,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     {
         
-        mainCategory: 'EVC 02 -  Prameter & configuration ',
+        mainCategory: 'EVC 02 -  Parameter & Configuration ',
 
         
         timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{EVC_STT02Value}</span>,
@@ -5240,7 +5240,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure</span> ,
@@ -5262,7 +5262,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>Volume at Base Condition</span> ,
@@ -5283,7 +5283,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
@@ -5305,7 +5305,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
@@ -5329,7 +5329,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
@@ -5350,7 +5350,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
 {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>Vb of Current Day</span> ,
@@ -5372,7 +5372,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
  {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>Vm of Current Day</span> ,
@@ -5394,7 +5394,7 @@ value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Curr
 
 {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
@@ -5416,7 +5416,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 {
     
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
@@ -5446,7 +5446,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
         
 
             {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD1}>Gas Detector GD-1501</span> ,
@@ -5467,7 +5467,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
          
             {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD2}>Gas Detector GD-1502</span> ,
@@ -5487,7 +5487,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
     
             {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
@@ -5508,7 +5508,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
             {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSDI_ZSO_1}>SDV-ZSO</span> ,
@@ -5528,7 +5528,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
 
             {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
                 
                 timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC</span> ,
@@ -5549,7 +5549,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
            {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
@@ -5573,7 +5573,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
          {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
@@ -5594,7 +5594,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
         {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
@@ -5616,7 +5616,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
        {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
@@ -5637,7 +5637,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
       {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
@@ -5656,7 +5656,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
      },
      {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
@@ -5677,7 +5677,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
      {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_RESET}>Reset</span> ,
@@ -5698,7 +5698,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
     {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop_NO</span> ,
@@ -5719,7 +5719,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
    {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop_NC</span> ,
@@ -5740,7 +5740,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
   {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
@@ -5760,7 +5760,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  },
 
  {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSDO_HR_01}>HORN</span> ,
@@ -5781,7 +5781,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
   {
-            mainCategory: 'PLC -  Prameter & configuration ',
+            mainCategory: 'PLC -  Parameter & Configuration ',
     
     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSDO_BC_01}>DO_BC_01</span> ,
@@ -5801,7 +5801,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  },
 
  {
-    mainCategory: 'PLC -  Prameter & configuration ',
+    mainCategory: 'PLC -  Parameter & Configuration ',
     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
 
@@ -5853,7 +5853,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const Configuration = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -5915,9 +5915,9 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

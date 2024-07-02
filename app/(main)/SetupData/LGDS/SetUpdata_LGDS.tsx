@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { id_KOA } from '../../data-table-device/ID-DEVICE/IdDevice';
+import { id_LGDS } from '../../data-table-device/ID-DEVICE/IdDevice';
 import { Toast } from 'primereact/toast';
 import { readToken } from '@/service/localStorage';
 import { httpApi } from '@/api/http.api';
@@ -10,6 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -23,7 +24,7 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-export default function SetUpdata_KOA() {
+export default function SetUpdata_LGDS() {
 
     const audioRef = useRef<HTMLAudioElement>(null);
     const token = readToken();
@@ -47,7 +48,7 @@ export default function SetUpdata_KOA() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_KOA,
+                    entityId: id_LGDS,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -71,7 +72,7 @@ export default function SetUpdata_KOA() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_LGDS,
                             },
                         },
                         pageLink: {
@@ -170,7 +171,7 @@ export default function SetUpdata_KOA() {
                         FC_02_Yesterday_Values_Uncorrected_Volume: setFC_02_Yesterday_Values_Uncorrected_Volume,
 
 
-                        GD1: setGD1,
+                        PT_1003: setPT_1003,
                         GD2: setGD2,
                         PT1: setPT1,
                         DI_ZSO_1: setDI_ZSO_1,
@@ -253,7 +254,7 @@ export default function SetUpdata_KOA() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_KOA}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_LGDS}/values/attributes/SERVER_SCOPE`
             );
 
 
@@ -505,12 +506,12 @@ export default function SetUpdata_KOA() {
                 (item: any) => item.key === "FC_02_Yesterday_Values_Uncorrected_Volume_Maintain"
             );
 
-            const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
-            setGD1_High(GD1_High?.value || null);
-            const GD1_Low = res.data.find((item: any) => item.key === "GD1_Low");
-            setGD1_Low(GD1_Low?.value || null);
-            const GD1_Maintain = res.data.find(
-                (item: any) => item.key === "GD1_Maintain"
+            const PT_1003_High = res.data.find((item: any) => item.key === "PT_1003_High");
+            setPT_1003_High(PT_1003_High?.value || null);
+            const PT_1003_Low = res.data.find((item: any) => item.key === "PT_1003_Low");
+            setPT_1003_Low(PT_1003_Low?.value || null);
+            const PT_1003_Maintain = res.data.find(
+                (item: any) => item.key === "PT_1003_Maintain"
             );
 
 
@@ -729,7 +730,7 @@ export default function SetUpdata_KOA() {
 
             setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_Maintain?.value || false);
 
-            setMaintainGD1(GD1_Maintain?.value || false);
+            setMaintainPT_1003(PT_1003_Maintain?.value || false);
 
 
             setMaintainGD2(GD2_Maintain?.value || false);
@@ -841,7 +842,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         try {
             const newValue = !maintainFC_Lithium_Battery_Status;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                 { FC_Lithium_Battery_Status_Maintain: newValue }
             );
             setMaintainFC_Lithium_Battery_Status(newValue);
@@ -910,7 +911,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
              try {
                  const newValue = !maintainFC_Battery_Voltage;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { FC_Battery_Voltage_Maintain: newValue }
                  );
                  setMaintainFC_Battery_Voltage(newValue);
@@ -980,7 +981,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
              try {
                  const newValue = !maintainFC_System_Voltage;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { FC_System_Voltage_Maintain: newValue }
                  );
                  setMaintainFC_System_Voltage(newValue);
@@ -1051,7 +1052,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_Charger_Voltage;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_Charger_Voltage_Maintain: newValue }
                       );
                       setMaintainFC_Charger_Voltage(newValue);
@@ -1121,7 +1122,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Accumulated_Values_Uncorrected_Volume;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Accumulated_Values_Uncorrected_Volume_Maintain: newValue }
                       );
                       setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(newValue);
@@ -1190,7 +1191,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Accumulated_Values_Volume;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Accumulated_Values_Volume_Maintain: newValue }
                       );
                       setMaintainFC_01_Accumulated_Values_Volume(newValue);
@@ -1260,7 +1261,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Current_Values_Flow_Rate;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Current_Values_Flow_Rate_Maintain: newValue }
                       );
                       setMaintainFC_01_Current_Values_Flow_Rate(newValue);
@@ -1329,7 +1330,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Current_Values_Temperature;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Current_Values_Temperature_Maintain: newValue }
                       );
                       setMaintainFC_01_Current_Values_Temperature(newValue);
@@ -1398,7 +1399,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Current_Values_Static_Pressure;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Current_Values_Static_Pressure_Maintain: newValue }
                       );
                       setMaintainFC_01_Current_Values_Static_Pressure(newValue);
@@ -1467,7 +1468,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                   try {
                       const newValue = !maintainFC_01_Current_Values_Uncorrected_Flow_Rate;
                       await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                          `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                           { FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain: newValue }
                       );
                       setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(newValue);
@@ -1538,7 +1539,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
             try {
                 const newValue = !maintainFC_01_Today_Values_Volume;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                     { FC_01_Today_Values_Volume_Maintain: newValue }
                 );
                 setMaintainFC_01_Today_Values_Volume(newValue);
@@ -1609,7 +1610,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
                 try {
                     const newValue = !maintainFC_01_Today_Values_Uncorrected_Volume;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                         { FC_01_Today_Values_Uncorrected_Volume_Maintain: newValue }
                     );
                     setMaintainFC_01_Today_Values_Uncorrected_Volume(newValue);
@@ -1680,7 +1681,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
             try {
                 const newValue = !maintainFC_01_Yesterday_Values_Volume;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                     { FC_01_Yesterday_Values_Volume_Maintain: newValue }
                 );
                 setMaintainFC_01_Yesterday_Values_Volume(newValue);
@@ -1750,7 +1751,7 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
             try {
                 const newValue = !maintainFC_01_Yesterday_Values_Uncorrected_Volume;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                     { FC_01_Yesterday_Values_Uncorrected_Volume_Maintain: newValue }
                 );
                 setMaintainFC_01_Yesterday_Values_Uncorrected_Volume(newValue);
@@ -1821,7 +1822,7 @@ const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Acc
         try {
             const newValue = !maintainFC_02_Accumulated_Values_Uncorrected_Volume;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                 { FC_02_Accumulated_Values_Uncorrected_Volume_Maintain: newValue }
             );
             setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(newValue);
@@ -1891,7 +1892,7 @@ const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Val
         try {
             const newValue = !maintainFC_02_Accumulated_Values_Volume;
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                 { FC_02_Accumulated_Values_Volume_Maintain: newValue }
             );
             setMaintainFC_02_Accumulated_Values_Volume(newValue);
@@ -1962,7 +1963,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     try {
         const newValue = !maintainFC_02_Current_Values_Static_Pressure;
         await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+            `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
             { FC_02_Current_Values_Static_Pressure_Maintain: newValue }
         );
         setMaintainFC_02_Current_Values_Static_Pressure(newValue);
@@ -2034,7 +2035,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 try {
                     const newValue = !maintainFC_02_Current_Values_Temperature;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                         { FC_02_Current_Values_Temperature_Maintain: newValue }
                     );
                     setMaintainFC_02_Current_Values_Temperature(newValue);
@@ -2104,7 +2105,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 try {
                     const newValue = !maintainFC_02_Current_Values_Flow_Rate;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                         { FC_02_Current_Values_Flow_Rate_Maintain: newValue }
                     );
                     setMaintainFC_02_Current_Values_Flow_Rate(newValue);
@@ -2175,7 +2176,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             try {
                 const newValue = !maintainFC_02_Current_Values_Uncorrected_Flow_Rate;
                 await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                     { FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain: newValue }
                 );
                 setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(newValue);
@@ -2247,7 +2248,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 try {
                     const newValue = !maintainFC_02_Today_Values_Volume;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                         { FC_02_Today_Values_Volume_Maintain: newValue }
                     );
                     setMaintainFC_02_Today_Values_Volume(newValue);
@@ -2320,7 +2321,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 try {
                     const newValue = !maintainFC_02_Today_Values_Uncorrected_Volume;
                     await httpApi.post(
-                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                        `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                         { FC_02_Today_Values_Uncorrected_Volume_Maintain: newValue }
                     );
                     setMaintainFC_02_Today_Values_Uncorrected_Volume(newValue);
@@ -2391,7 +2392,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          try {
              const newValue = !maintainFC_02_Yesterday_Values_Volume;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                  { FC_02_Yesterday_Values_Volume_Maintain: newValue }
              );
              setMaintainFC_02_Yesterday_Values_Volume(newValue);
@@ -2460,7 +2461,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
               try {
                   const newValue = !maintainFC_02_Yesterday_Values_Uncorrected_Volume;
                   await httpApi.post(
-                      `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                      `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                       { FC_02_Yesterday_Values_Uncorrected_Volume_Maintain: newValue }
                   );
                   setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newValue);
@@ -2472,68 +2473,68 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
       // =================================================================================================================== 
  
  
-      const [GD1, setGD1] = useState<string | null>(null);
-      const [audioPlayingGD1, setAudioPlayingGD1] = useState(false);
-      const [inputValueGD1, setInputValueGD1] = useState<any>();
-      const [inputValue2GD1, setInputValue2GD1] = useState<any>();
-      const [GD1_High, setGD1_High] = useState<number | null>(null);
-      const [GD1_Low, setGD1_Low] = useState<number | null>(null);
-      const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [PT_1003, setPT_1003] = useState<string | null>(null);
+      const [audioPlayingPT_1003, setAudioPlayingPT_1003] = useState(false);
+      const [inputValuePT_1003, setInputValuePT_1003] = useState<any>();
+      const [inputValue2PT_1003, setInputValue2PT_1003] = useState<any>();
+      const [PT_1003_High, setPT_1003_High] = useState<number | null>(null);
+      const [PT_1003_Low, setPT_1003_Low] = useState<number | null>(null);
+      const [exceedThresholdPT_1003, setExceedThresholdPT_1003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
       
-      const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
+      const [maintainPT_1003, setMaintainPT_1003] = useState<boolean>(false);
       
       
           useEffect(() => {
-              if (typeof GD1_High === 'string' && typeof GD1_Low === 'string' && GD1 !== null && maintainGD1 === false
+              if (typeof PT_1003_High === 'string' && typeof PT_1003_Low === 'string' && PT_1003 !== null && maintainPT_1003 === false
               ) {
-                  const highValue = parseFloat(GD1_High);
-                  const lowValue = parseFloat(GD1_Low);
-                  const GD1Value = parseFloat(GD1);
+                  const highValue = parseFloat(PT_1003_High);
+                  const lowValue = parseFloat(PT_1003_Low);
+                  const PT_1003Value = parseFloat(PT_1003);
           
-                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1Value)) {
-                      if (highValue <= GD1Value || GD1Value <= lowValue) {
-                          if (!audioPlayingGD1) {
+                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_1003Value)) {
+                      if (highValue <= PT_1003Value || PT_1003Value <= lowValue) {
+                          if (!audioPlayingPT_1003) {
                               audioRef.current?.play();
-                              setAudioPlayingGD1(true);
-                              setExceedThresholdGD1(true);
+                              setAudioPlayingPT_1003(true);
+                              setExceedThresholdPT_1003(true);
                           }
                       } else {
-                         setAudioPlayingGD1(false);
-                         setExceedThresholdGD1(false);
+                         setAudioPlayingPT_1003(false);
+                         setExceedThresholdPT_1003(false);
                       }
                   } 
               } 
-          }, [GD1_High, GD1, audioPlayingGD1, GD1_Low,maintainGD1]);
+          }, [PT_1003_High, PT_1003, audioPlayingPT_1003, PT_1003_Low,maintainPT_1003]);
       
           useEffect(() => {
-              if (audioPlayingGD1) {
+              if (audioPlayingPT_1003) {
                   const audioEnded = () => {
-                     setAudioPlayingGD1(false);
+                     setAudioPlayingPT_1003(false);
                   };
                   audioRef.current?.addEventListener('ended', audioEnded);
                   return () => {
                       audioRef.current?.removeEventListener('ended', audioEnded);
                   };
               }
-          }, [audioPlayingGD1]);
+          }, [audioPlayingPT_1003]);
       
-          const handleInputChangeGD1 = (event: any) => {
+          const handleInputChangePT_1003 = (event: any) => {
               const newValue = event.target.value;
-              setInputValueGD1(newValue);
+              setInputValuePT_1003(newValue);
           };
       
-          const handleInputChange2GD1 = (event: any) => {
+          const handleInputChange2PT_1003 = (event: any) => {
               const newValue2 = event.target.value;
-              setInputValue2GD1(newValue2);
+              setInputValue2PT_1003(newValue2);
           };
-          const ChangeMaintainGD1 = async () => {
+          const ChangeMaintainPT_1003 = async () => {
               try {
-                  const newValue = !maintainGD1;
+                  const newValue = !maintainPT_1003;
                   await httpApi.post(
-                      `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
-                      { GD1_Maintain: newValue }
+                      `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
+                      { PT_1003_Maintain: newValue }
                   );
-                  setMaintainGD1(newValue);
+                  setMaintainPT_1003(newValue);
                   
               } catch (error) {}
           };
@@ -2601,7 +2602,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainGD2;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { GD2_Maintain: newValue }
                        );
                        setMaintainGD2(newValue);
@@ -2671,7 +2672,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainPT1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { PT1_Maintain: newValue }
                        );
                        setMaintainPT1(newValue);
@@ -2740,7 +2741,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainDI_ZSO_1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { DI_ZSO_1_Maintain: newValue }
                        );
                        setMaintainDI_ZSO_1(newValue);
@@ -2810,7 +2811,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainDI_ZSO_2;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { DI_ZSO_2_Maintain: newValue }
                        );
                        setMaintainDI_ZSO_2(newValue);
@@ -2879,7 +2880,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainDI_ZSC_1;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { DI_ZSC_1_Maintain: newValue }
                        );
                        setMaintainDI_ZSC_1(newValue);
@@ -2949,7 +2950,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                    try {
                        const newValue = !maintainDI_ZSC_2;
                        await httpApi.post(
-                           `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                            { DI_ZSC_2_Maintain: newValue }
                        );
                        setMaintainDI_ZSC_2(newValue);
@@ -3020,7 +3021,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
              try {
                  const newValue = !maintainDI_MAP_1;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { DI_MAP_1_Maintain: newValue }
                  );
                  setMaintainDI_MAP_1(newValue);
@@ -3091,7 +3092,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                  try {
                      const newValue = !maintainDI_UPS_CHARGING;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                          { DI_UPS_CHARGING_Maintain: newValue }
                      );
                      setMaintainDI_UPS_CHARGING(newValue);
@@ -3162,7 +3163,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
              try {
                  const newValue = !maintainDI_UPS_ALARM;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { DI_UPS_ALARM_Maintain: newValue }
                  );
                  setMaintainDI_UPS_ALARM(newValue);
@@ -3232,7 +3233,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
              try {
                  const newValue = !maintainDI_SD_1;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { DI_SD_1_Maintain: newValue }
                  );
                  setMaintainDI_SD_1(newValue);
@@ -3303,7 +3304,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          try {
              const newValue = !maintainDI_SELECT_SW;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                  { DI_SELECT_SW_Maintain: newValue }
              );
              setMaintainDI_SELECT_SW(newValue);
@@ -3373,7 +3374,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          try {
              const newValue = !maintainDI_RESET;
              await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                 `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                  { DI_RESET_Maintain: newValue }
              );
              setMaintainDI_RESET(newValue);
@@ -3444,7 +3445,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
      try {
          const newValue = !maintainEmergency_NO;
          await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+             `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
              { Emergency_NO_Maintain: newValue }
          );
          setMaintainEmergency_NO(newValue);
@@ -3516,7 +3517,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                  try {
                      const newValue = !maintainDI_UPS_BATTERY;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                          { DI_UPS_BATTERY_Maintain: newValue }
                      );
                      setMaintainDI_UPS_BATTERY(newValue);
@@ -3586,7 +3587,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                  try {
                      const newValue = !maintainEmergency_NC;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                          { Emergency_NC_Maintain: newValue }
                      );
                      setMaintainEmergency_NC(newValue);
@@ -3657,7 +3658,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
              try {
                  const newValue = !maintainUPS_Mode;
                  await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                     `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                      { UPS_Mode_Maintain: newValue }
                  );
                  setMaintainUPS_Mode(newValue);
@@ -3726,7 +3727,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                  try {
                      const newValue = !maintainDO_HR_01;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                          { DO_HR_01_Maintain: newValue }
                      );
                      setMaintainDO_HR_01(newValue);
@@ -3796,7 +3797,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                  try {
                      const newValue = !maintainSD;
                      await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                         `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                          { SD_Maintain: newValue }
                      );
                      setMaintainSD(newValue);
@@ -3867,7 +3868,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                       try {
                           const newValue = !maintainDO_BC_01;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                               { DO_BC_01_Maintain: newValue }
                           );
                           setMaintainDO_BC_01(newValue);
@@ -3937,7 +3938,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                       try {
                           const newValue = !maintainDO_SV_01;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                               { DO_SV_01_Maintain: newValue }
                           );
                           setMaintainDO_SV_01(newValue);
@@ -4006,7 +4007,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                       try {
                           const newValue = !maintainDO_SV_02;
                           await httpApi.post(
-                              `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                              `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
                               { DO_SV_02_Maintain: newValue }
                           );
                           setMaintainDO_SV_02(newValue);
@@ -4027,7 +4028,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+                `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
 
 
 
@@ -4084,7 +4085,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
                     FC_02_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_02_Yesterday_Values_Uncorrected_Volume,FC_02_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_02_Yesterday_Values_Uncorrected_Volume,
-                    GD1_High: inputValueGD1,GD1_Low:inputValue2GD1,
+                    PT_1003_High: inputValuePT_1003,PT_1003_Low:inputValue2PT_1003,
                     FC_02_Yesterday_Values_Volume_High: inputValueFC_02_Yesterday_Values_Volume,FC_02_Yesterday_Values_Volume_Low:inputValue2FC_02_Yesterday_Values_Volume,
 
 
@@ -4216,11 +4217,11 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             setFC_02_Yesterday_Values_Uncorrected_Volume_High(inputValueFC_02_Yesterday_Values_Uncorrected_Volume);
             setFC_02_Yesterday_Values_Uncorrected_Volume_Low(inputValue2FC_02_Yesterday_Values_Uncorrected_Volume);
 
-            setGD1_High(inputValueGD1);
-            setGD1_Low(inputValue2GD1);
+            setPT_1003_High(inputValuePT_1003);
+            setPT_1003_Low(inputValue2PT_1003);
 
-            setGD1_High(inputValueGD1);
-            setGD1_Low(inputValue2GD1);
+            setPT_1003_High(inputValuePT_1003);
+            setPT_1003_Low(inputValue2PT_1003);
 
             setGD2_High(inputValueGD2);
             setGD2_Low(inputValue2GD2);
@@ -4398,8 +4399,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_High); 
         setInputValue2FC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_Low); 
 
-        setInputValueGD1(GD1_High); 
-        setInputValue2GD1(GD1_Low); 
+        setInputValuePT_1003(PT_1003_High); 
+        setInputValue2PT_1003(PT_1003_Low); 
 
 
 
@@ -4507,7 +4508,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
            FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume_Low ,
         FC_02_Yesterday_Values_Uncorrected_Volume_High, FC_02_Yesterday_Values_Uncorrected_Volume_Low 
-        ,GD1_High, GD1_Low ,
+        ,PT_1003_High, PT_1003_Low ,
 
 
         PT1_High,PT1_Low,
@@ -4849,10 +4850,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             height:25,
             fontWeight:400,
         },
-        CSSGD1 : {
-            color:exceedThresholdGD1 && !maintainGD1
+        CSSPT_1003 : {
+            color:exceedThresholdPT_1003 && !maintainPT_1003
             ? "#ff5656"
-            : maintainGD1
+            : maintainPT_1003
             ? "orange"
             : "" ,
             height:25,
@@ -5032,10 +5033,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC: 'FC -  Prameter & configuration',
-    FC01: 'FC01 -  Prameter & configuration',
-    FC02: 'FC02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    FC: 'FC -  Parameter & Configuration',
+    FC01: 'FC01 -  Parameter & Configuration',
+    FC02: 'FC02 -  Parameter & Configuration',
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
 
@@ -5067,7 +5068,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
              modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
     
-            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage}</span> , 
+            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
              high: <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5086,7 +5087,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
    
             modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
    
-           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage}</span> , 
+           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
             high: <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5105,7 +5106,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
   
            modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
   
-          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage}</span> , 
+          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
            high: <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5129,7 +5130,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  
           modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
  
-         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume}</span> , 
+         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
           high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5148,7 +5149,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
 
-        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume}</span> , 
+        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
          high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5169,7 +5170,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
         modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
 
-       value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure}</span> , 
+       value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5188,7 +5189,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
 
-      value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature}</span> , 
+      value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
        high: <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5208,7 +5209,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
         modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
 
-       value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate}</span> , 
+       value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
         high: <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5229,7 +5230,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
 
-      value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate}</span> , 
+      value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
        high: <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5250,7 +5251,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
       modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
 
-     value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume}</span> , 
+     value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
       high: <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Volume} onChange={handleInputChange2FC_01_Today_Values_Volume} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5272,7 +5273,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
        
             modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
        
-           value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume}</span> , 
+           value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
             high: <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5297,7 +5298,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
     modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
 
-   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume}</span> , 
+   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
     high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Volume} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5318,7 +5319,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
 
-  value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume}</span> , 
+  value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
    high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5343,7 +5344,7 @@ const dataFC02 = [
 
   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>8615	 </span> ,
 
- value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume}</span> , 
+ value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
   high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5363,7 +5364,7 @@ const dataFC02 = [
 
    modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>8617	 </span> ,
 
-  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume}</span> , 
+  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
    high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Volume} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5384,7 +5385,7 @@ const dataFC02 = [
 
   modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
 
- value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure}</span> , 
+ value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
   high: <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5407,7 +5408,7 @@ const dataFC02 = [
 
  modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
  high: <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5427,7 +5428,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Cur
 
   modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>8623	 </span> ,
 
- value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate}</span> , 
+ value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
   high: <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5448,7 +5449,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Cur
 
  modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>8625	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
  high: <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5469,7 +5470,7 @@ name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>Standard Volume Vb T
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>8627	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume}</span> , 
+value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume} {nameValue.Sm3}</span> , 
 high: <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Volume} onChange={handleInputChange2FC_02_Today_Values_Volume} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5490,7 +5491,7 @@ name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>Gross Vo
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>8629	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume}</span> , 
+value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
 high: <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5515,7 +5516,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     
              modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>8631	 </span> ,
     
-            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume}</span> , 
+            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
              high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2VP303} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5536,7 +5537,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     
              modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>8633	 </span> ,
     
-            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume}</span> , 
+            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
              high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5555,429 +5556,429 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
             {
                  mainCategory: mainCategoryFC.PLC ,
-                timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSGD1}>Gas Detector GD-1601</span> ,
+                timeUpdate: <span style={combineCss.CSSPT_1003} >{EVC_STT01Value}</span>,
+             name: <span style={combineCss.CSSPT_1003}>Gas Detector GD-1601</span> ,
     
-             modbus: <span style={combineCss.CSSGD1}>40002</span> ,
+             modbus: <span style={combineCss.CSSPT_1003}>40002</span> ,
     
-            value: <span style={combineCss.CSSGD1} > {GD1}</span> , 
-             high: <InputText style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1} onChange={handleInputChange2GD1} inputMode="decimal" />,
+            value: <span style={combineCss.CSSPT_1003} > {PT_1003} {nameValue.Bara}</span> , 
+             high: <InputText style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
-             onChange={ChangeMaintainGD1}
-             checked={maintainGD1}
+             onChange={ChangeMaintainPT_1003}
+             checked={maintainPT_1003}
          ></Checkbox>
     
             },
 
 
-            {
-                 mainCategory: mainCategoryFC.PLC ,
-                timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSGD2}>Gas Detector GD-1602</span> ,
+//             {
+//                  mainCategory: mainCategoryFC.PLC ,
+//                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
+//              name: <span style={combineCss.CSSGD2}>Gas Detector GD-1602</span> ,
     
-             modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
+//              modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
     
-            value: <span style={combineCss.CSSGD2} > {GD2}</span> , 
-             high: <InputText style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainGD2}
-             checked={maintainGD2}
-         ></Checkbox>
+//             value: <span style={combineCss.CSSGD2} > {GD2}</span> , 
+//              high: <InputText style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
+//              low:  <InputText style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
+//              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//              Maintain:   <Checkbox
+//              style={{ marginRight: 20, }}
+//              onChange={ChangeMaintainGD2}
+//              checked={maintainGD2}
+//          ></Checkbox>
     
-            },
+//             },
 
-            {
-                 mainCategory: mainCategoryFC.PLC ,
-                timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
+//             {
+//                  mainCategory: mainCategoryFC.PLC ,
+//                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
+//             name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
    
-            modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
+//             modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
    
-           value: <span style={combineCss.CSSPT1} > {PT1}</span> , 
-            high: <InputText style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
-            style={{ marginRight: 20, }}
-            onChange={ChangeMaintainPT1}
-            checked={maintainPT1}
-        ></Checkbox>
+//            value: <span style={combineCss.CSSPT1} > {PT1}</span> , 
+//             high: <InputText style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
+//             low:  <InputText style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
+//             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//             Maintain:   <Checkbox
+//             style={{ marginRight: 20, }}
+//             onChange={ChangeMaintainPT1}
+//             checked={maintainPT1}
+//         ></Checkbox>
    
-           },
+//            },
 
 
-           {
-             mainCategory: mainCategoryFC.PLC ,
-            timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
-           name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO 1</span> ,
+//            {
+//              mainCategory: mainCategoryFC.PLC ,
+//             timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
+//            name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO 1</span> ,
   
-           modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
+//            modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
   
-          value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1}</span> , 
-           high: <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-           Maintain:   <Checkbox
-           style={{ marginRight: 20, }}
-           onChange={ChangeMaintainDI_ZSO_1}
-           checked={maintainDI_ZSO_1}
-       ></Checkbox>
+//           value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1}</span> , 
+//            high: <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
+//            low:  <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
+//            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//            Maintain:   <Checkbox
+//            style={{ marginRight: 20, }}
+//            onChange={ChangeMaintainDI_ZSO_1}
+//            checked={maintainDI_ZSO_1}
+//        ></Checkbox>
   
-          },
+//           },
 
 
 
 
 
-         {
-             mainCategory: mainCategoryFC.PLC ,
-            timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC 1</span> ,
+//          {
+//              mainCategory: mainCategoryFC.PLC ,
+//             timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
+//          name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC 1</span> ,
 
-         modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
+//          modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
 
-        value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1}</span> , 
-         high: <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-         Maintain:   <Checkbox
-         style={{ marginRight: 20, }}
-         onChange={ChangeMaintainDI_ZSC_1}
-         checked={maintainDI_ZSC_1}
-     ></Checkbox>
+//         value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1}</span> , 
+//          high: <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
+//          low:  <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
+//          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//          Maintain:   <Checkbox
+//          style={{ marginRight: 20, }}
+//          onChange={ChangeMaintainDI_ZSC_1}
+//          checked={maintainDI_ZSC_1}
+//      ></Checkbox>
 
-        },
-
-
-        {
-             mainCategory: mainCategoryFC.PLC ,
-            timeUpdate: <span style={combineCss.CSSDI_ZSO_2} >{PLC_STTValue}</span>,
-        name: <span style={combineCss.CSSDI_ZSO_2}>SDV_ZSO 2</span> ,
-
-        modbus: <span style={combineCss.CSSDI_ZSO_2}>	40011 </span> ,
-
-       value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2}</span> , 
-        high: <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_2} onChange={handleInputChangeDI_ZSO_2} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_2} onChange={handleInputChange2DI_ZSO_2} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_ZSO_2}
-        checked={maintainDI_ZSO_2}
-    ></Checkbox>
-
-       },
+//         },
 
 
+//         {
+//              mainCategory: mainCategoryFC.PLC ,
+//             timeUpdate: <span style={combineCss.CSSDI_ZSO_2} >{PLC_STTValue}</span>,
+//         name: <span style={combineCss.CSSDI_ZSO_2}>SDV_ZSO 2</span> ,
 
-       {
-         mainCategory: mainCategoryFC.PLC ,
-        timeUpdate: <span style={combineCss.CSSDI_ZSC_2} >{PLC_STTValue}</span>,
-       name: <span style={combineCss.CSSDI_ZSC_2}>SDV-ZSC 2</span> ,
+//         modbus: <span style={combineCss.CSSDI_ZSO_2}>	40011 </span> ,
 
-       modbus: <span style={combineCss.CSSDI_ZSC_2}>	40012 </span> ,
+//        value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2}</span> , 
+//         high: <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_2} onChange={handleInputChangeDI_ZSO_2} inputMode="decimal" />, 
+//         low:  <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_2} onChange={handleInputChange2DI_ZSO_2} inputMode="decimal" />,
+//         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//         Maintain:   <Checkbox
+//         style={{ marginRight: 20, }}
+//         onChange={ChangeMaintainDI_ZSO_2}
+//         checked={maintainDI_ZSO_2}
+//     ></Checkbox>
 
-      value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2}</span> , 
-       high: <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_2} onChange={handleInputChangeDI_ZSC_2} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_2} onChange={handleInputChange2DI_ZSC_2} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
-       style={{ marginRight: 20, }}
-       onChange={ChangeMaintainDI_ZSC_2}
-       checked={maintainDI_ZSC_2}
-   ></Checkbox>
-
-      },
+//        },
 
 
-      {
-         mainCategory: mainCategoryFC.PLC ,
-        timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
-      name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
 
-      modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
+//        {
+//          mainCategory: mainCategoryFC.PLC ,
+//         timeUpdate: <span style={combineCss.CSSDI_ZSC_2} >{PLC_STTValue}</span>,
+//        name: <span style={combineCss.CSSDI_ZSC_2}>SDV-ZSC 2</span> ,
 
-     value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1}</span> , 
-      high: <InputText style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSDI_MAP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainDI_MAP_1}
-      checked={maintainDI_MAP_1}
-  ></Checkbox>
+//        modbus: <span style={combineCss.CSSDI_ZSC_2}>	40012 </span> ,
 
-     },
-     {
-         mainCategory: mainCategoryFC.PLC ,
-        timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
+//       value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2}</span> , 
+//        high: <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_2} onChange={handleInputChangeDI_ZSC_2} inputMode="decimal" />, 
+//        low:  <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_2} onChange={handleInputChange2DI_ZSC_2} inputMode="decimal" />,
+//        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//        Maintain:   <Checkbox
+//        style={{ marginRight: 20, }}
+//        onChange={ChangeMaintainDI_ZSC_2}
+//        checked={maintainDI_ZSC_2}
+//    ></Checkbox>
+
+//       },
+
+
+//       {
+//          mainCategory: mainCategoryFC.PLC ,
+//         timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
+//       name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
+
+//       modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
+
+//      value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1}</span> , 
+//       high: <InputText style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
+//       low:  <InputText style={combineCss.CSSDI_MAP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
+//       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//       Maintain:   <Checkbox
+//       style={{ marginRight: 20, }}
+//       onChange={ChangeMaintainDI_MAP_1}
+//       checked={maintainDI_MAP_1}
+//   ></Checkbox>
+
+//      },
+//      {
+//          mainCategory: mainCategoryFC.PLC ,
+//         timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
+//      name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
     
-     modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
+//      modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
     
-    value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY}</span> , 
-     high: <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
-     style={{ marginRight: 20, }}
-     onChange={ChangeMaintainDI_UPS_BATTERY}
-     checked={maintainDI_UPS_BATTERY}
-    ></Checkbox>
+//     value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY}</span> , 
+//      high: <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
+//      low:  <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
+//      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//      Maintain:   <Checkbox
+//      style={{ marginRight: 20, }}
+//      onChange={ChangeMaintainDI_UPS_BATTERY}
+//      checked={maintainDI_UPS_BATTERY}
+//     ></Checkbox>
     
-    },
-
+//     },
+
 
-     {
-         mainCategory: mainCategoryFC.PLC ,
-        timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
+//      {
+//          mainCategory: mainCategoryFC.PLC ,
+//         timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
+//      name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
 
-     modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
+//      modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
 
-    value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING}</span> , 
-     high: <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
-     style={{ marginRight: 20, }}
-     onChange={ChangeMaintainDI_UPS_CHARGING}
-     checked={maintainDI_UPS_CHARGING}
- ></Checkbox>
-
-    },
-
+//     value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING}</span> , 
+//      high: <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
+//      low:  <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
+//      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//      Maintain:   <Checkbox
+//      style={{ marginRight: 20, }}
+//      onChange={ChangeMaintainDI_UPS_CHARGING}
+//      checked={maintainDI_UPS_CHARGING}
+//  ></Checkbox>
+
+//     },
+
 
-    {
-         mainCategory: mainCategoryFC.PLC ,
-        timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
+//     {
+//          mainCategory: mainCategoryFC.PLC ,
+//         timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
+//     name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
 
-    modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
+//     modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
 
-   value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM}</span> , 
-    high: <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
-    style={{ marginRight: 20, }}
-    onChange={ChangeMaintainDI_UPS_ALARM}
-    checked={maintainDI_UPS_ALARM}
-></Checkbox>
+//    value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM}</span> , 
+//     high: <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
+//     low:  <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
+//     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//     Maintain:   <Checkbox
+//     style={{ marginRight: 20, }}
+//     onChange={ChangeMaintainDI_UPS_ALARM}
+//     checked={maintainDI_UPS_ALARM}
+// ></Checkbox>
 
-   },
+//    },
 
 
-   {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
+//    {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
+//    name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
 
-   modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
+//    modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
 
-  value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
-   high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
-   style={{ marginRight: 20, }}
-   onChange={ChangeMaintainDI_SD_1}
-   checked={maintainDI_SD_1}
-></Checkbox>
+//   value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
+//    high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
+//    low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
+//    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//    Maintain:   <Checkbox
+//    style={{ marginRight: 20, }}
+//    onChange={ChangeMaintainDI_SD_1}
+//    checked={maintainDI_SD_1}
+// ></Checkbox>
 
-  },
+//   },
 
 
-  {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
+//   {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
+//   name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
 
-  modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
+//   modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
 
- value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW}</span> , 
-  high: <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainDI_SELECT_SW}
-  checked={maintainDI_SELECT_SW}
-></Checkbox>
+//  value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW}</span> , 
+//   high: <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
+//   low:  <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
+//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//   Maintain:   <Checkbox
+//   style={{ marginRight: 20, }}
+//   onChange={ChangeMaintainDI_SELECT_SW}
+//   checked={maintainDI_SELECT_SW}
+// ></Checkbox>
 
- },
+//  },
 
- {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSDI_RESET}>Reset Button</span> ,
+//  {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
+//    name: <span style={combineCss.CSSDI_RESET}>Reset Button</span> ,
 
-   modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
+//    modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
 
-  value: <span style={combineCss.CSSDI_RESET} > {DI_RESET}</span> , 
-   high: <InputText style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSDI_RESET}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
-   style={{ marginRight: 20, }}
-   onChange={ChangeMaintainDI_RESET}
-   checked={maintainDI_RESET}
-></Checkbox>
+//   value: <span style={combineCss.CSSDI_RESET} > {DI_RESET}</span> , 
+//    high: <InputText style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
+//    low:  <InputText style={combineCss.CSSDI_RESET}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
+//    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//    Maintain:   <Checkbox
+//    style={{ marginRight: 20, }}
+//    onChange={ChangeMaintainDI_RESET}
+//    checked={maintainDI_RESET}
+// ></Checkbox>
 
-  },
+//   },
 
 
-  {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
+//   {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
+//   name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
 
-  modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
+//   modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
 
- value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO}</span> , 
-  high: <InputText style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSEmergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainEmergency_NO}
-  checked={maintainEmergency_NO}
-></Checkbox>
+//  value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO}</span> , 
+//   high: <InputText style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
+//   low:  <InputText style={combineCss.CSSEmergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
+//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//   Maintain:   <Checkbox
+//   style={{ marginRight: 20, }}
+//   onChange={ChangeMaintainEmergency_NO}
+//   checked={maintainEmergency_NO}
+// ></Checkbox>
 
- },
+//  },
 
 
 
 
 
 
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
+// {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
+//   name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
 
-  modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
+//   modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
 
- value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC}</span> , 
-  high: <InputText style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSEmergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainEmergency_NC}
-  checked={maintainEmergency_NC}
-></Checkbox>
+//  value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC}</span> , 
+//   high: <InputText style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
+//   low:  <InputText style={combineCss.CSSEmergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
+//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//   Maintain:   <Checkbox
+//   style={{ marginRight: 20, }}
+//   onChange={ChangeMaintainEmergency_NC}
+//   checked={maintainEmergency_NC}
+// ></Checkbox>
 
- },
+//  },
 
 
- {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
+//  {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
+//  name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
 
- modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
+//  modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
 
-value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode}</span> , 
- high: <InputText style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSUPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
- style={{ marginRight: 20, }}
- onChange={ChangeMaintainUPS_Mode}
- checked={maintainUPS_Mode}
-></Checkbox>
+// value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode}</span> , 
+//  high: <InputText style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
+//  low:  <InputText style={combineCss.CSSUPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
+//  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+//  Maintain:   <Checkbox
+//  style={{ marginRight: 20, }}
+//  onChange={ChangeMaintainUPS_Mode}
+//  checked={maintainUPS_Mode}
+// ></Checkbox>
 
-},
+// },
 
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
+// {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
+// name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
 
-modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
+// modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
 
-value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01}</span> , 
-high: <InputText style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_BC_01}
-checked={maintainDO_BC_01}
-></Checkbox>
+// value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01}</span> , 
+// high: <InputText style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
+// low:  <InputText style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
+// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+// Maintain:   <Checkbox
+// style={{ marginRight: 20, }}
+// onChange={ChangeMaintainDO_BC_01}
+// checked={maintainDO_BC_01}
+// ></Checkbox>
 
-},
+// },
 
 
 
 
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
+// {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
+// name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
 
-modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
+// modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
 
-value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01}</span> , 
-high: <InputText style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_HR_01}
-checked={maintainDO_HR_01}
-></Checkbox>
+// value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01}</span> , 
+// high: <InputText style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
+// low:  <InputText style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
+// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+// Maintain:   <Checkbox
+// style={{ marginRight: 20, }}
+// onChange={ChangeMaintainDO_HR_01}
+// checked={maintainDO_HR_01}
+// ></Checkbox>
 
-},
+// },
 
 
 
 
 
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
+// {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
+// name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
 
-modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
+// modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
 
-value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> , 
-high: <InputText style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_SV_01}
-checked={maintainDO_SV_01}
-></Checkbox>
+// value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> , 
+// high: <InputText style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
+// low:  <InputText style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
+// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+// Maintain:   <Checkbox
+// style={{ marginRight: 20, }}
+// onChange={ChangeMaintainDO_SV_01}
+// checked={maintainDO_SV_01}
+// ></Checkbox>
 
-},
+// },
 
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDO_SV_02} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID</span> ,
+// {
+//      mainCategory: mainCategoryFC.PLC ,
+//     timeUpdate: <span style={combineCss.CSSDO_SV_02} >{PLC_STTValue}</span>,
+// name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID</span> ,
 
-modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
+// modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
 
-value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02}</span> , 
-high: <InputText style={combineCss.CSSDO_SV_02}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_02} onChange={handleInputChangeDO_SV_02} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSDO_SV_02}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_02} onChange={handleInputChange2DO_SV_02} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_SV_02}
-checked={maintainDO_SV_02}
-></Checkbox>
+// value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02}</span> , 
+// high: <InputText style={combineCss.CSSDO_SV_02}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_02} onChange={handleInputChangeDO_SV_02} inputMode="decimal" />, 
+// low:  <InputText style={combineCss.CSSDO_SV_02}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_02} onChange={handleInputChange2DO_SV_02} inputMode="decimal" />,
+// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+// Maintain:   <Checkbox
+// style={{ marginRight: 20, }}
+// onChange={ChangeMaintainDO_SV_02}
+// checked={maintainDO_SV_02}
+// ></Checkbox>
 
-},
+// },
 
           ]
 
@@ -6051,7 +6052,7 @@ checked={maintainDO_SV_02}
 
         <ConfirmDialog />
 
-<h2>KOA</h2>
+<h2>LGDS</h2>
 
     <div style={{width:'100%' ,  borderRadius:5 }}>
 
@@ -6072,8 +6073,8 @@ checked={maintainDO_SV_02}
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
                 <DataTable value={configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 

@@ -4360,7 +4360,7 @@ const confirmUpChangeGatewayPhone = () => {
       const dataEVC01 = [
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SVF1} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_SVF1}> {modbusEVC1.SVF}</span> ,
@@ -4380,7 +4380,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_GVF1} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_GVF1}>{modbusEVC1.GVF}</span> ,
@@ -4401,7 +4401,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
        
           { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SVA1} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_SVA1}>{modbusEVC1.SVA}</span> ,
@@ -4422,7 +4422,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_GVA1} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_GVA1}>{modbusEVC1.GVA}</span> ,
@@ -4443,7 +4443,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSpt02} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSSpt02}>{modbusEVC1.PT}</span> ,
@@ -4461,7 +4461,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Temperature} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSS_Temperature}>{paragraphContents.TT} </span> ,
@@ -4480,7 +4480,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VbToDay01} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_VbToDay01}>{modbusEVC1.VB_TODAY}</span> ,
@@ -4500,7 +4500,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VmToDay01} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_VmToDay01}>{modbusEVC1.VM_TODAY}</span> ,
@@ -4519,7 +4519,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
        { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSS_VbLastDay01} >{EVC_STT01Value}</span>,
        modbus: <span style={combineCss.CSS_VbLastDay01}>{modbusEVC1.VB_Yesterday}</span> ,
@@ -4539,7 +4539,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VmLastDay01} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_VmLastDay01}>{modbusEVC1.VM_Yesterday}</span> ,
@@ -4559,7 +4559,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         { 
-            mainCategory: 'EVC 01 -  Prameter & configuration ',
+            mainCategory: 'EVC 01 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Rebattery} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSS_Rebattery}>{modbusEVC1.ReBattery}</span> ,
@@ -4595,7 +4595,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SVF2} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_SVF2}>{modbusEVC2.SVF}</span> ,
@@ -4615,7 +4615,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_GVF2} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_GVF2}>{modbusEVC2.GVF}</span> ,
@@ -4636,7 +4636,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
           {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SVA2} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_SVA2}>{modbusEVC2.SVA}</span> ,
@@ -4656,7 +4656,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_GVA2} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_GVA2}>{modbusEVC2.GVA}</span> ,
@@ -4676,7 +4676,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSpt03} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSSpt03}>{modbusEVC2.PT}</span> ,
@@ -4694,7 +4694,7 @@ const confirmUpChangeGatewayPhone = () => {
     },
     {
         
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSS_Temperature02} >{EVC_STT02Value}</span>,
     modbus: <span style={combineCss.CSS_Temperature02}>{modbusEVC2.TT}</span> ,
@@ -4716,7 +4716,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VbToDay02} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_VbToDay02}>{modbusEVC2.VB_TODAY}</span> ,
@@ -4737,7 +4737,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VmToDay02} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_VmToDay02}>{modbusEVC2.VM_TODAY}</span> ,
@@ -4758,7 +4758,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VbLastDay02} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_VbLastDay02}>{modbusEVC2.VB_Yesterday}</span> ,
@@ -4778,7 +4778,7 @@ const confirmUpChangeGatewayPhone = () => {
        },
         {
             
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_VmLastDay02} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_VmLastDay02}>{modbusEVC2.VM_Yesterday}</span> ,
@@ -4798,7 +4798,7 @@ const confirmUpChangeGatewayPhone = () => {
        },
 
         {
-            mainCategory: 'EVC 02 -  Prameter & configuration ',
+            mainCategory: 'EVC 02 -  Parameter & Configuration ',
             timeUpdate: <span style={combineCss.CSS_Rebattery02} >{EVC_STT02Value}</span>,
 
         modbus: <span style={combineCss.CSS_Rebattery02}>{modbusEVC2.ReBattery}</span> ,
@@ -4868,7 +4868,7 @@ const confirmUpChangeGatewayPhone = () => {
       const dataPLC = [
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSSpt01} >{PLC_STTValue}</span>,
         modbus: <span style={combineCss.CSSpt01}>{modbusPLC.PT1}</span> ,
@@ -4887,7 +4887,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
      {
-         mainCategory: 'PLC -  Prameter & configuration ',
+         mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSgd01} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSSgd01}>{modbusPLC.GD1}</span> ,
@@ -4906,7 +4906,7 @@ const confirmUpChangeGatewayPhone = () => {
      },
 
      {
-         mainCategory: 'PLC -  Prameter & configuration ',
+         mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSgd02} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSSgd02}>{modbusPLC.GD2}</span> ,
@@ -4925,7 +4925,7 @@ const confirmUpChangeGatewayPhone = () => {
      },
 
      {
-         mainCategory: 'PLC -  Prameter & configuration ',
+         mainCategory: 'PLC -  Parameter & Configuration ',
         
         timeUpdate: <span style={combineCss.CSSgd03} >{PLC_STTValue}</span>,
      modbus: <span  style={combineCss.CSSgd03}>{modbusPLC.GD3}</span> ,
@@ -4945,7 +4945,7 @@ const confirmUpChangeGatewayPhone = () => {
 
      
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_UpsCharging} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_UpsCharging}>{modbusPLC.UPS_CHARGING}</span> ,
@@ -4963,7 +4963,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_UpsBattery} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_UpsBattery} >{modbusPLC.UPS_BATTERY}</span> ,
@@ -4980,7 +4980,7 @@ const confirmUpChangeGatewayPhone = () => {
     ></Checkbox>
         },
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_UpsAlarm} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_UpsAlarm}>{modbusPLC.UPS_ALARM}</span> ,
@@ -4998,7 +4998,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_UpsMode} >{PLC_STTValue}</span>,
      modbus: <span>{modbusPLC.UPS_MODE}</span> ,
@@ -5017,7 +5017,7 @@ const confirmUpChangeGatewayPhone = () => {
        
     
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SelectSW} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_SelectSW}>{modbusPLC.DI_SELECT_SW}</span> ,
@@ -5035,7 +5035,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Reset} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_Reset}>{modbusPLC.RESET}</span> ,
@@ -5053,7 +5053,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
      
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_SELENOID} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_SELENOID}>{modbusPLC.SDV_SOLENOID}</span> ,
@@ -5071,7 +5071,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_EmergencyNC} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_EmergencyNC}>{modbusPLC.Emergency_Stop_NC}</span> ,
@@ -5088,7 +5088,7 @@ const confirmUpChangeGatewayPhone = () => {
     ></Checkbox>
         },
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_EmergencyNO} >{PLC_STTValue}</span>,
      modbus : <span style={combineCss.CSS_EmergencyNO}>{modbusPLC.Emergency_Stop_NO}</span> ,
@@ -5106,7 +5106,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Horn} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_Horn}>{modbusPLC.HORN}</span> ,
@@ -5123,7 +5123,7 @@ const confirmUpChangeGatewayPhone = () => {
     ></Checkbox>
         },
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_ZSC} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_ZSC}>{modbusPLC.SDV_ZSC}</span> ,
@@ -5141,7 +5141,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_ZSO} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_ZSO}>{modbusPLC.SDV_ZSO}</span> ,
@@ -5159,7 +5159,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Map} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_Map}>{modbusPLC.DI_MAP_1}</span> ,
@@ -5177,7 +5177,7 @@ const confirmUpChangeGatewayPhone = () => {
         },
 
         {
-             mainCategory: 'PLC -  Prameter & configuration ',
+             mainCategory: 'PLC -  Parameter & Configuration ',
             
             timeUpdate: <span style={combineCss.CSS_Beacon} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_Beacon}>{modbusPLC.BEACON}</span> ,
@@ -5245,7 +5245,7 @@ const confirmUpChangeGatewayPhone = () => {
 
 
 
-<div style={{width:'100%' ,  borderRadius:5 }}>
+<div style={{width:'100%' ,  borderRadius:5,   }}>
 
 <SetAttribute/>
 </div>

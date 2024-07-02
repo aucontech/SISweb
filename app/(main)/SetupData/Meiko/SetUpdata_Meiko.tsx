@@ -2397,9 +2397,9 @@ const ChangeMaintainTank_PT_301 = async () => {
     
          
   const mainCategoryFC = {
-    EVC: 'EVC01 -  Prameter & configuration',
+    EVC: 'EVC01 -  Parameter & Configuration',
  
-    PLC: 'PLC -  Prameter & configuration'
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
         const dataEVC01 = [
@@ -2874,7 +2874,7 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const Configuration = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -2913,10 +2913,8 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
         <Toast ref={toast} />
 
         <ConfirmDialog />
-<div style={{display:'flex' }}>
 <h2>MEIKO</h2>
 
-</div>
 <div style={{width:'100%' ,  borderRadius:5 }}>
     <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
                     sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
@@ -2935,8 +2933,8 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />
