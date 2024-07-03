@@ -576,8 +576,7 @@ export default function SetAttribute() {
                     {configurationName.EVC_02_Battery_Expiration_Date}
                 </span>
             ),
-          
-         
+            
             Value: (
                 <Calendar
                 

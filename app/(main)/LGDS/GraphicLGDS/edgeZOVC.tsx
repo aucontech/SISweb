@@ -486,4 +486,16 @@ export const edgeZOVC = [
         }
     },
 
+    {
+        id: "Line2_NONE-Line2_NONE1",
+        source: "Line2_NONE",
+        target: "Line2_NONE1",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine
+        }
+    },
+
 ];

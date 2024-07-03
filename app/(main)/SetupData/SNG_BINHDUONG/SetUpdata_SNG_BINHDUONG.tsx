@@ -4588,9 +4588,9 @@ const ChangeMaintainGD1_STATUS = async () => {
          
     
   const mainCategoryFC = {
-    EVC01: 'EVC01 -  Prameter & configuration',
-    EVC02: 'EVC02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    EVC01: 'EVC01 -  Parameter & Configuration',
+    EVC02: 'EVC02 -  Parameter & Configuration',
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
           const PLC01 = [
@@ -5450,7 +5450,7 @@ checked={maintainSD}
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const Configuration = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -5489,10 +5489,8 @@ checked={maintainSD}
 
         <ConfirmDialog />
 
-<div style={{display:'flex' }}>
 <h2>SNG BINH DUONG</h2>
 
-</div>
    
 
 <div style={{width:'100%' , borderRadius:5 }}>
@@ -5515,9 +5513,9 @@ checked={maintainSD}
 <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

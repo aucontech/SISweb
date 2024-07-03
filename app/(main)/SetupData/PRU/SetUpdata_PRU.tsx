@@ -10,6 +10,9 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
+import { nameValue } from '../namValue';
+import { C } from '@fullcalendar/core/internal-common';
 
 interface StateMap {
 
@@ -40,6 +43,39 @@ export default function SetUpdata_PRU() {
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+
+    const [PCV_6001A,setPCV_6001A] = useState<any>()
+    const [inputPCV_6001A, setInputPCV_6001A] = useState<any>();
+
+    const [PCV_6001B,setPCV_6001B] = useState<any>()
+    const [inputPCV_6001B, setInputPCV_6001B] = useState<any>();
+
+    const [PCV_6002A,setPCV_6002A] = useState<any>()
+    const [inputPCV_6002A, setInputPCV_6002A] = useState<any>();
+
+    const [PCV_6002B,setPCV_6002B] = useState<any>()
+    const [inputPCV_6002B, setInputPCV_6002B] = useState<any>();
+
+
+    const [PSV_6001A,setPSV_6001A] = useState<any>()
+    const [inputPSV_6001A, setInputPSV_6001A] = useState<any>();
+
+    const [PSV_6001B,setPSV_6001B] = useState<any>()
+    const [inputPSV_6001B, setInputPSV_6001B] = useState<any>();
+
+    const [PSV_6002A,setPSV_6002A] = useState<any>()
+    const [inputPSV_6002A, setInputPSV_6002A] = useState<any>();
+
+    const [PSV_6002B,setPSV_6002B] = useState<any>()
+    const [inputPSV_6002B, setInputPSV_6002B] = useState<any>();
+
+    const [timeEVC_01,setTimeEVC_01] = useState<any>()
+    const [timeEVC_02,setTimeEVC_02] = useState<any>()
+
+
+    const [timeEVC_03,setTimeEVC_03] = useState<any>()
+    const [timeEVC_04,setTimeEVC_04] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -64,6 +100,57 @@ export default function SetUpdata_PRU() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
+                            
                            
                         ],
                     },
@@ -105,6 +192,57 @@ export default function SetUpdata_PRU() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_6002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_6002B",
+                            },
+
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
                            
                         ],
                     },
@@ -138,7 +276,7 @@ export default function SetUpdata_PRU() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
 
@@ -268,10 +406,160 @@ export default function SetUpdata_PRU() {
                         dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
                         setGetWayPhoneOTSUKA(updatedData);
                 }
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_6001A?.value;
+                    setPCV_6001A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_6001A?.value;
+                    setPCV_6001A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_6001B?.value;
+                    setPCV_6001B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_6001B?.value;
+                    setPCV_6001B(updatedData);
+                }
+
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_6002A?.value;
+                    setPCV_6002A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_6002A?.value;
+                    setPCV_6002A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_6002B?.value;
+                    setPCV_6002B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_6002B?.value;
+                    setPCV_6002B(updatedData);
+                }
+
+                //=================================
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_6001A?.value;
+                    setPSV_6001A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_6001A?.value;
+                    setPSV_6001A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_6001B?.value;
+                    setPSV_6001B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_6001B?.value;
+                    setPSV_6001B(updatedData);
+                }
+
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_6002A?.value;
+                    setPSV_6002A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_6002A?.value;
+                    setPSV_6002A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_6002B?.value;
+                    setPSV_6002B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_6002B?.value;
+                    setPSV_6002B(updatedData);
+                }
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                }
+
+
+
                 fetchData()
             };
         }
     }, [data]);
+
+
+ 
 
     const fetchData = async () => {
         try {
@@ -4609,8 +4897,40 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                     GD_STATUS_High: inputValueGD_STATUS,GD_STATUS_Low:inputValue2GD_STATUS,
                     IOT_Gateway_Phone: inputGetwayPhone,
 
+                    //==========================================
+
+
+                    PCV_6001A: inputPCV_6001A,
+                    PCV_6001B: inputPCV_6001B,
+
+                    PCV_6002A: inputPCV_6002A,
+                    PCV_6002B: inputPCV_6002B,
+
+                    PSV_6001A: inputPSV_6001A,
+                    PSV_6001B: inputPSV_6001B,
+
+                    PSV_6002A: inputPSV_6002A,
+                    PSV_6002B: inputPSV_6002B,
+
+                    EVC_01_Battery_Expiration_Date: timeEVC_01,
+                    EVC_01_Battery_Installation_Date: timeEVC_02,
+                    EVC_02_Battery_Expiration_Date: timeEVC_03,
+                    EVC_02_Battery_Installation_Date: timeEVC_04,
+
                 }
             );
+
+            setPCV_6001A(inputPCV_6001A)
+            setPCV_6001B(inputPCV_6001B)
+            setPCV_6002A(inputPCV_6002A)
+            setPCV_6002B(inputPCV_6002B)
+
+            setPSV_6001A(inputPSV_6001A)
+            setPSV_6001B(inputPSV_6001B)
+            setPSV_6002A(inputPSV_6002A)
+            setPSV_6002B(inputPSV_6002B)
+
+            //===========================================
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             setESD_High(inputValueESD);
@@ -4793,6 +5113,17 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     useEffect(() => {
 
+        setInputPCV_6001A(PCV_6001A)
+        setInputPCV_6001B(PCV_6001B)
+        setInputPCV_6002A(PCV_6002A)
+        setInputPCV_6002B(PCV_6002B)
+
+
+        setInputPSV_6001A(PSV_6001A)
+        setInputPSV_6001B(PSV_6001B)
+        setInputPSV_6002A(PSV_6002A)
+        setInputPSV_6002B(PSV_6002B)
+//========================================================
         setInputValueESD(ESD_High); 
         setInputValue2ESD(ESD_Low); 
 
@@ -5053,10 +5384,21 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            GD_STATUS_High,GD_STATUS_Low,
 
               getWayPhoneOTSUKA,
+
+              PCV_6001A,
+              PCV_6001B,
+              PCV_6002A,
+              PCV_6002B,
+
+              PSV_6001A,
+              PSV_6001B,
+              PSV_6002A,
+              PSV_6002B,
+
+              timeEVC_01,timeEVC_02
         ]);
 
 
-        
     const combineCss = {
 
 
@@ -5602,9 +5944,9 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   };
          
   const mainCategoryFC = {
-    EVC01: 'EVC01 -  Prameter & configuration',
-    EVC02: 'EVC02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    EVC01: 'EVC01 -  Parameter & Configuration',
+    EVC02: 'EVC02 -  Parameter & Configuration',
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
 
@@ -5622,7 +5964,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5643,7 +5985,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature} {nameValue.C} </span> , 
              high: <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5663,7 +6005,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
    
-           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure}</span> , 
+           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure}  {nameValue.Bara}</span> , 
             high: <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5674,6 +6016,25 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         ></Checkbox>
    
            },
+           {
+            
+            mainCategory: mainCategoryFC.EVC01,
+            timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
+          name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
+ 
+          modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
+ 
+         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition} {nameValue.m3} </span> , 
+          high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainEVC_01_Volume_at_Measurement_Condition}
+          checked={maintainEVC_01_Volume_at_Measurement_Condition}
+      ></Checkbox>
+ 
+         },
 
            {
             
@@ -5683,7 +6044,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
   
-          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition}</span> , 
+          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
            high: <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5695,25 +6056,26 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   
           },
 
-          {
+
+         {
             
             mainCategory: mainCategoryFC.EVC01,
-            timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
-          name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
- 
-          modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
- 
-         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition}</span> , 
-          high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
-          low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
-          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-          Maintain:   <Checkbox
-          style={{ marginRight: 20, }}
-          onChange={ChangeMaintainEVC_01_Volume_at_Measurement_Condition}
-          checked={maintainEVC_01_Volume_at_Measurement_Condition}
-      ></Checkbox>
- 
-         },
+            timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
+        name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
+
+        modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
+
+       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition} {nameValue.m3h}</span> , 
+        high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainEVC_01_Flow_at_Measurement_Condition}
+        checked={maintainEVC_01_Flow_at_Measurement_Condition}
+    ></Checkbox>
+
+       },
          {
             
             mainCategory: mainCategoryFC.EVC01,
@@ -5722,7 +6084,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
 
-        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition}</span> , 
+        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
          high: <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5738,51 +6100,12 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         {
             
             mainCategory: mainCategoryFC.EVC01,
-            timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
-
-        modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
-
-       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition}</span> , 
-        high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Flow_at_Measurement_Condition}
-        checked={maintainEVC_01_Flow_at_Measurement_Condition}
-    ></Checkbox>
-
-       },
-       {
-        
-        mainCategory: mainCategoryFC.EVC01,
-        timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
-
-       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
-
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day}</span> , 
-       high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
-       style={{ marginRight: 20, }}
-       onChange={ChangeMaintainEVC_01_Vb_of_Current_Day}
-       checked={maintainEVC_01_Vb_of_Current_Day}
-   ></Checkbox>
-
-      },
-
-        {
-            
-            mainCategory: mainCategoryFC.EVC01,
             timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
 
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
 
-       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day}</span> , 
+       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day}  {nameValue.m3} </span> , 
         high: <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5794,6 +6117,45 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        },
 
+       {
+        
+        mainCategory: mainCategoryFC.EVC01,
+        timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
+       name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
+
+       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
+
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day}  {nameValue.Sm3}</span> , 
+       high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainEVC_01_Vb_of_Current_Day}
+       checked={maintainEVC_01_Vb_of_Current_Day}
+   ></Checkbox>
+
+      },
+
+      {
+        
+        mainCategory: mainCategoryFC.EVC01,
+        timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
+      name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
+
+      modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
+
+     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day} {nameValue.m3}</span> , 
+      high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainEVC_01_Vm_of_Last_Day}
+      checked={maintainEVC_01_Vm_of_Last_Day}
+  ></Checkbox>
+
+     },
 
        {
         
@@ -5803,7 +6165,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
 
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day}</span> , 
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5816,25 +6178,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
       },
 
               
-      {
-        
-        mainCategory: mainCategoryFC.EVC01,
-        timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
-      name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
-
-      modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
-
-     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day}</span> , 
-      high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-      Maintain:   <Checkbox
-      style={{ marginRight: 20, }}
-      onChange={ChangeMaintainEVC_01_Vm_of_Last_Day}
-      checked={maintainEVC_01_Vm_of_Last_Day}
-  ></Checkbox>
-
-     },
+  
 
 
 
@@ -5853,7 +6197,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        
             modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40001	 </span> ,
        
-           value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life}</span> , 
+           value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life} {nameValue.month}</span> , 
             high: <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5877,7 +6221,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     modbus: <span style={combineCss.CSSEVC_02_Temperature}>40850	 </span> ,
 
-   value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature}</span> , 
+   value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature} {nameValue.C}</span> , 
     high: <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5897,7 +6241,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
 
-  value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure}</span> , 
+  value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure} {nameValue.Bara}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5917,7 +6261,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40854	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition} {nameValue.m3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5936,7 +6280,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40856	 </span> ,
 
-  value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition}</span> , 
+  value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition} {nameValue.Sm3}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5956,7 +6300,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40858	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition} {nameValue.Sm3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5978,7 +6322,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40860	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition}</span> , 
+value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition} {nameValue.Sm3h}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5997,7 +6341,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
   modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40862	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day} {nameValue.m3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6017,7 +6361,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
  modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40864	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day} {nameValue.Sm3}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6037,7 +6381,7 @@ name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40866	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day} {nameValue.m3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6057,7 +6401,7 @@ name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40868	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day} {nameValue.Sm3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6086,7 +6430,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_6001A}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSPIT_6001A} > {PIT_6001A}</span> , 
+            value: <span style={combineCss.CSSPIT_6001A} > {PIT_6001A} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_6001A}   placeholder='High' step="0.1" type='number' value={inputValuePIT_6001A} onChange={handleInputChangePIT_6001A} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_6001A}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_6001A} onChange={handleInputChange2VP303} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6106,7 +6450,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_6001B}>40003	 </span> ,
     
-            value: <span style={combineCss.CSSPIT_6001B} > {PIT_6001B}</span> , 
+            value: <span style={combineCss.CSSPIT_6001B} > {PIT_6001B} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_6001B}   placeholder='High' step="0.1" type='number' value={inputValuePIT_6001B} onChange={handleInputChangePIT_6001B} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_6001B}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_6001B} onChange={handleInputChange2PIT_6001B} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6125,7 +6469,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_6002A}>40005</span> ,
     
-            value: <span style={combineCss.CSSPIT_6002A} > {PIT_6002A}</span> , 
+            value: <span style={combineCss.CSSPIT_6002A} > {PIT_6002A} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_6002A}   placeholder='High' step="0.1" type='number' value={inputValuePIT_6002A} onChange={handleInputChangePIT_6002A} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_6002A}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_6002A} onChange={handleInputChange2PIT_6002A} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6145,7 +6489,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_6002B}>40007	 </span> ,
     
-            value: <span style={combineCss.CSSPIT_6002B} > {PIT_6002B}</span> , 
+            value: <span style={combineCss.CSSPIT_6002B} > {PIT_6002B} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_6002B}   placeholder='High' step="0.1" type='number' value={inputValuePIT_6002B} onChange={handleInputChangePIT_6002B} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_6002B}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_6002B} onChange={handleInputChange2PIT_6002B} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6164,7 +6508,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
    
             modbus: <span style={combineCss.CSSPIT_6003A}>40009	 </span> ,
    
-           value: <span style={combineCss.CSSPIT_6003A} > {PIT_6003A}</span> , 
+           value: <span style={combineCss.CSSPIT_6003A} > {PIT_6003A} {nameValue.BARG}</span> , 
             high: <InputText style={combineCss.CSSPIT_6003A}   placeholder='High' step="0.1" type='number' value={inputValuePIT_6003A} onChange={handleInputChangePIT_6003A} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSPIT_6003A}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_6003A} onChange={handleInputChange2PIT_6003A} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6176,7 +6520,24 @@ checked={maintainEVC_02_Vm_of_Last_Day}
    
            },
 
-
+           {
+            mainCategory: mainCategoryFC.PLC,
+            timeUpdate: <span style={combineCss.CSSPT_6004} >{PLC_STTValue}</span>,
+        name: <span style={combineCss.CSSPT_6004}> Pressure Transmitter PT-6004</span> ,
+        
+        modbus: <span style={combineCss.CSSPT_6004}>40047	 </span> ,
+        
+        value: <span style={combineCss.CSSPT_6004} > {PT_6004} {nameValue.BARG}</span> , 
+        high: <InputText style={combineCss.CSSPT_6004}   placeholder='High' step="0.1" type='number' value={inputValuePT_6004} onChange={handleInputChangePT_6004} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSPT_6004}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_6004} onChange={handleInputChange2PT_6004} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainPT_6004}
+        checked={maintainPT_6004}
+        ></Checkbox>
+        
+        },
            {
             mainCategory: mainCategoryFC.PLC,
             timeUpdate: <span style={combineCss.CSSTIT_6001A} >{PLC_STTValue}</span>,
@@ -6184,7 +6545,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
   
            modbus: <span style={combineCss.CSSTIT_6001A}>40011	 </span> ,
   
-          value: <span style={combineCss.CSSTIT_6001A} > {TIT_6001A}</span> , 
+          value: <span style={combineCss.CSSTIT_6001A} > {TIT_6001A} {nameValue.C}</span> , 
            high: <InputText style={combineCss.CSSTIT_6001A}   placeholder='High' step="0.1" type='number' value={inputValueTIT_6001A} onChange={handleInputChangeTIT_6001A} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSTIT_6001A}   placeholder='Low' step="0.1" type='number' value={inputValue2TIT_6001A} onChange={handleInputChange2TIT_6001A} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6206,7 +6567,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  
           modbus: <span style={combineCss.CSSTIT_6002}>40013	 </span> ,
  
-         value: <span style={combineCss.CSSTIT_6002} > {TIT_6002}</span> , 
+         value: <span style={combineCss.CSSTIT_6002} > {TIT_6002 } {nameValue.C}</span> , 
           high: <InputText style={combineCss.CSSTIT_6002}   placeholder='High' step="0.1" type='number' value={inputValueTIT_6002} onChange={handleInputChangeTIT_6002} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSTIT_6002}   placeholder='Low' step="0.1" type='number' value={inputValue2TIT_6002} onChange={handleInputChange2TIT_6002} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6225,7 +6586,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
          modbus: <span style={combineCss.CSSGD_6001}>40015	 </span> ,
 
-        value: <span style={combineCss.CSSGD_6001} > {GD_6001}</span> , 
+        value: <span style={combineCss.CSSGD_6001} > {GD_6001} {nameValue.LEL}</span> , 
          high: <InputText style={combineCss.CSSGD_6001}   placeholder='High' step="0.1" type='number' value={inputValueGD_6001} onChange={handleInputChangeGD_6001} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSGD_6001}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_6001} onChange={handleInputChange2GD_6001} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6539,24 +6900,7 @@ checked={maintainSD}
 
 },
 
-{
-    mainCategory: mainCategoryFC.PLC,
-    timeUpdate: <span style={combineCss.CSSPT_6004} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSPT_6004}> Pressure Transmitter PT-6004</span> ,
 
-modbus: <span style={combineCss.CSSPT_6004}>40047	 </span> ,
-
-value: <span style={combineCss.CSSPT_6004} > {PT_6004}</span> , 
-high: <InputText style={combineCss.CSSPT_6004}   placeholder='High' step="0.1" type='number' value={inputValuePT_6004} onChange={handleInputChangePT_6004} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSPT_6004}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_6004} onChange={handleInputChange2PT_6004} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainPT_6004}
-checked={maintainPT_6004}
-></Checkbox>
-
-},
 
 {
     mainCategory: mainCategoryFC.PLC,
@@ -6627,8 +6971,313 @@ checked={maintainSDV_6003}
         setInputGetwayPhone(newValue);
     };
 
-    const configuration = [
+    const handleInputPCV_6001A = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_6001A(newValue);
+    };
+    const handleInputPCV_6001B = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_6001B(newValue);
+    };
+    const handleInputPCV_6002A = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_6002A(newValue);
+    };
+    const handleInputPCV_6002B = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_6002B(newValue);
+    };
+    const handleInputPSV_6001A = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_6001A(newValue);
+    };
+    const handleInputPSV_6001B = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_6001B(newValue);
+    };
+    const handleInputPSV_6002A = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_6002A(newValue);
+    };
+    const handleInputPSV_6002B = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_6002B(newValue);
+    };
+
+    const timeEVC_01Number = parseFloat(timeEVC_01);
+    const date = !isNaN(timeEVC_01Number) ? new Date(timeEVC_01Number) : null;
+
+    const timeEVC_02Number = parseFloat(timeEVC_02);
+    const date2 = !isNaN(timeEVC_02Number) ? new Date(timeEVC_02Number) : null;
+
+    const timeEVC_03Number = parseFloat(timeEVC_03);
+    const date3 = !isNaN(timeEVC_03Number) ? new Date(timeEVC_03Number) : null;
+
+    const timeEVC_04Number = parseFloat(timeEVC_04);
+    const date4 = !isNaN(timeEVC_04Number) ? new Date(timeEVC_04Number) : null;
+    
+    const handleDateChange = (e: any) => {
+        const selectedDate = e.value;
+        setTimeEVC_02(selectedDate.getTime());
+
+        const expirationDate = new Date(selectedDate);
+        expirationDate.setMonth(expirationDate.getMonth() + 18);
+        setTimeEVC_01(expirationDate.getTime());
+    };
+
+    const handleDateChange2 = (e: any) => {
+        const selectedDate = e.value;
+        setTimeEVC_03(selectedDate.getTime());
+
+        const expirationDate = new Date(selectedDate);
+        expirationDate.setMonth(expirationDate.getMonth() + 18);
+        setTimeEVC_04(expirationDate.getTime());
+    };
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    useEffect(() => {
+        const dateString = "01-03-2024";
+        const parts = dateString.split('-');
+        const year = parseInt(parts[2], 10);
+        const month = parseInt(parts[1], 10) - 1; 
+        const day = parseInt(parts[0], 10);
+        const dateObject :any = new Date(year, month, day);
+    
+        setSelectedDate(dateObject);
+      }, []);
+
+      const ConfigurationName ={
+        PSV: "Pressure Safety Valve ( PSV-1901)" ,
+        PCV1: "Pressure Control Valve (PCV-1901)",
+        PCV2: "Pressure Control Valve (PCV-1902)",
+        IOT: "IOT getway phone number",
+        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+
+        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+
+    }
+
+    const combineCssTime = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+    const Configuration = [
        
+       
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV 6001A </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_6001A}
+                    onChange={handleInputPCV_6001A}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV 6001B </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_6001B}
+                    onChange={handleInputPCV_6001B}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV 6002A </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_6002A}
+                    onChange={handleInputPCV_6002A}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV 6002B </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_6002B}
+                    onChange={handleInputPCV_6002B}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+
+        //===========================================
+
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PSV 6001A </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_6001A}
+                    onChange={handleInputPSV_6001A}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PSV 6001B </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_6001B}
+                    onChange={handleInputPSV_6001B}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PSV 6002A </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_6002A}
+                    onChange={handleInputPSV_6002A}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PSV 6002B </span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_6002B}
+                    onChange={handleInputPSV_6002B}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
 
@@ -6654,6 +7303,127 @@ checked={maintainSDV_6003}
             ),
         },
 
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_01_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCssTime.PCV}
+                    value={date2}
+                    onChange={handleDateChange}
+
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_01_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCssTime.PCV}
+                    value={date}
+                    disabled
+
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_02_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCssTime.PCV}
+                    value={date3}
+                    onChange={handleDateChange2}
+
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_02_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCssTime.PCV}
+                    value={date4}
+                    disabled
+
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+                
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+
     ];
 
        //=========================================================================
@@ -6666,6 +7436,7 @@ checked={maintainSDV_6003}
 
         <ConfirmDialog />
 
+        {SDV_6003}
 
 <h2>CNG PRU</h2>
 
@@ -6689,9 +7460,9 @@ checked={maintainSDV_6003}
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />
@@ -6703,6 +7474,7 @@ checked={maintainSDV_6003}
 
 <br />
 <br />
+
 
 
 </div>

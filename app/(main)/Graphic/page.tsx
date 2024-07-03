@@ -131,19 +131,22 @@ export default function GraphicSogec() {
             label: stationList.stationList,
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
-              { label: 'OTSUKA', command: () => NG_Click(<DemoFlowOTS />, 'OTSUKA') },
-              { label: 'ARAKAWA', command: () => NG_Click(<GraphicARAKAWA />, 'ARAKAWA') },
-              { label: 'SPMCV', command: () => NG_Click(<GraphicSPMCV />, 'SPMCV') },
+
               { label: 'LGDS', command: () => NG_Click(<GraphicLGDS/>, 'LGDS') },
-
-              // { label: 'CNG PRU', command: () => NG_Click(<GraphicPRU />, 'PCN PRU') },
-              { label: 'VREC', command: () => NG_Click(<GraphicVREC/>, 'VREC') },
-
               { label: 'ZOCV', command: () => NG_Click(<GraphicZOCV />, 'ZOCV ') },
               { label: 'KOA', command: () => NG_Click(<GraphicKOA/>, 'KOA') },
               { label: 'NITORI', command: () => NG_Click(<GraphicNITORI/>, 'NITORI') },
               { label: 'YOSHINO', command: () => NG_Click(<GraphicYOSHINO/>, 'YOSHINO') },
               { label: 'IGUACU', command: () => NG_Click(<GraphicIGUACU/>, 'IGUACU') },
+
+              { label: 'ARAKAWA', command: () => NG_Click(<GraphicARAKAWA />, 'ARAKAWA') },
+              { label: 'SPMCV', command: () => NG_Click(<GraphicSPMCV />, 'SPMCV') },
+
+
+              { label: 'VREC', command: () => NG_Click(<GraphicVREC/>, 'VREC') },
+
+              { label: 'OTSUKA', command: () => NG_Click(<DemoFlowOTS />, 'OTSUKA') },
+
             ]
           }
         ],
@@ -178,10 +181,10 @@ export default function GraphicSogec() {
           {
             label: stationList.stationList,
             items: [
+              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<GraphicPRU/> , 'CNG PHU MY 3 ') },
          
               { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<Graphic_CNG_BINHDUONG/> , 'CNG BINH DUONG ') },
               { label: 'CNG HUNG YEN', command: () => CNG_CLICK(<Graphic_CNG_HUNGYEN/> , 'CNG HUNG YEN ') },
-              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<GraphicPRU/> , 'CNG PHU MY 3 ') },
 
 
             

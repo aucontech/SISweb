@@ -2430,7 +2430,7 @@ export default function GraphicLGDS() {
                                         }}
                                     >
                                         {" "}
-                                        Gateway :{" "}
+                                        Gateway{" "}
                                     </p>
                                     <p
                                         style={{
@@ -2439,7 +2439,7 @@ export default function GraphicLGDS() {
                                         }}
                                     >
                                         {" "}
-                                        FC :{" "}
+                                        FC{" "}
                                     </p>
 
                                     {/* <p
@@ -2451,6 +2451,27 @@ export default function GraphicLGDS() {
                                         {" "}
                                         PLC :{" "}
                                     </p> */}
+                                </div>
+
+                                <div style={{ marginLeft: 5 }}>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :
+                                    </p>
                                 </div>
 
                                 <div style={{}}>
@@ -2760,9 +2781,9 @@ export default function GraphicLGDS() {
                 const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
               ArrowRight: { x: 356.13814192842443, y: 1023.694783335719 },
-              ArrowRight1: { x: -1117.5029742372521, y: 1028.4144814411625 },
-              BallValue01: { x: -1044.7385785725835, y: 1131.2887844323882 },
-              BallValue02: { x: -897.6141478861746, y: 1130.1502447788996 },
+              ArrowRight1: { x: -1234.9855228544018, y: 1028.4017827933426 },
+              BallValue01: { x: -1124.791936249579, y: 1134.3068528748481 },
+              BallValue02: { x: -953.0583181071518, y: 1141.6043679334266 },
               BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
               BallValue04: { x: -127.98761243251244, y: 1129.5595186007586 },
               BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
@@ -2772,8 +2793,8 @@ export default function GraphicLGDS() {
               BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
               BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
               BallValue13_Line7Last: {
-                  x: 631.1042201758206,
-                  y: 1315.9529575924705,
+                  x: 627.4013311130955,
+                  y: 1291.6241510603852,
               },
               BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
               BallValueCenter_Check: {
@@ -2789,16 +2810,16 @@ export default function GraphicLGDS() {
                   y: 1047.9161594286932,
               },
               BallValueFirst: { x: 625.4162665003979, y: 1008.7971963003097 },
-              BallValueLast: { x: -1185.7855496288498, y: 1013.9021150905016 },
+              BallValueLast: { x: -1308.166509063442, y: 1014.389416442682 },
               BallValuePSV: { x: 289.72148707331525, y: 959.3028379757588 },
               BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
               BallVavleSDV_BOTTOM: {
-                  x: 474.664352759413,
-                  y: 1413.3486441841403,
+                  x: 476.361535602378,
+                  y: 1389.1444184485877,
               },
               BallVavleSDV_TOP: { x: 473.738890499873, y: 1099.2673167534078 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -600.2178332288872, y: 529.8047278642143 },
+              FIQ_1901: { x: -601.7178332288872, y: 530.3047278642143 },
               FIQ_1902: { x: -600.6873404684984, y: 1306.1020814778879 },
               FIQ_none: { x: -491.4470769137962, y: 797.3702269986474 },
               FIQ_none2: { x: -491.21770178252325, y: 1201.8983996314123 },
@@ -2819,11 +2840,13 @@ export default function GraphicLGDS() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1052.8606431401424, y: 517.3259624104257 },
+              Header: { x: -1024.1333958267373, y: 511.90588253142255 },
+              Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
+              Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
-              PCV_NUM01: { x: -122.09253737877799, y: 798.0320306377063 },
-              PCV_NUM02: { x: -122.76497253735502, y: 1225.7345933933648 },
+              PCV_NUM01: { x: -161.7625021188708, y: 789.6330305586855 },
+              PCV_NUM02: { x: -163.0359973492674, y: 1205.2985509514988 },
               PCV_ballVavle_Small1: {
                   x: 26.02187311783564,
                   y: 889.8528829879407,
@@ -2850,7 +2873,7 @@ export default function GraphicLGDS() {
               },
               PCV_none1: { x: -43.356336775693705, y: 932.4844638821777 },
               PCV_none2: { x: -43.63902265954965, y: 1160.9945398306136 },
-              PSV01: { x: 204.7769815796771, y: 722.5979741364629 },
+              PSV01: { x: 164.5709321156188, y: 712.2637541233555 },
               PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
               PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
               PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
@@ -2873,18 +2896,12 @@ export default function GraphicLGDS() {
                   x: 115.93810232606126,
                   y: 1205.6192520331715,
               },
-              Pressure_Trans02: {
-                  x: -1098.4737057224531,
-                  y: 707.7837211819499,
-              },
-              Pressure_Trans03: {
-                  x: -1091.7490542547623,
-                  y: 1332.8674867372974,
-              },
-              SDV: { x: -1071.3582463875289, y: 954.4462932886439 },
-              SDV_Ball: { x: -1026.6826908317034, y: 1162.2430466784738 },
+              Pressure_Trans02: { x: -990.2974317013955, y: 699.3816804812852 },
+              Pressure_Trans03: { x: -989.4559802798087, y: 1310.658341965765 },
+              SDV: { x: -1152.6996152623774, y: 939.6846925365174 },
+              SDV_Ball: { x: -1107.27002180917, y: 1164.281142621933 },
               SDV_Ball_top: { x: 493.92546533290914, y: 1040.8451177997745 },
-              SDV_Ball_top1: { x: 496.2616132728566, y: 1349.9095997087377 },
+              SDV_Ball_top1: { x: 497.6559789587865, y: 1323.4095997087377 },
               SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
               SDV_IMG_top: { x: -1049.7709320021045, y: 1195.6790306469368 },
               SDV_IMG_top1: { x: -1049.7709320021045, y: 895.6790306469368 },
@@ -2895,17 +2912,17 @@ export default function GraphicLGDS() {
                   y: 1131.2694256269242,
               },
               SDV_Name_none_top1: {
-                  x: 492.59003718906195,
-                  y: 1445.0989022878432,
+                  x: 493.8858114535093,
+                  y: 1421.5918593952554,
               },
-              SDV_None: { x: -1024.1286470234306, y: 1047.6886789070904 },
-              SDV_top: { x: 449.5825063914986, y: 940.7316988911805 },
-              SDV_top1: { x: 450.6375108231846, y: 1253.9721549835006 },
+              SDV_None: { x: -1103.1286470234306, y: 1045.1886789070904 },
+              SDV_top: { x: 440.03889757643407, y: 940.7316988911805 },
+              SDV_top1: { x: 442.1855917892983, y: 1229.4615897852307 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-              Tank: { x: -910.7713207303586, y: 988.0249702520116 },
-              Tank_Ball: { x: -879.6133664723408, y: 1162.8377358070973 },
-              Tank_None: { x: -889.4859145000356, y: 1045.6292921984523 },
+              Tank: { x: -966.9522035078584, y: 985.336366992427 },
+              Tank_Ball: { x: -935.8789201820911, y: 1173.2073553122648 },
+              Tank_None: { x: -944.673167794951, y: 1045.6292921984523 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -2946,13 +2963,13 @@ export default function GraphicLGDS() {
               data1: { x: -600.7396652303086, y: 733.0298552462513 },
               data2: { x: -600.6538263836953, y: 682.3968450603423 },
               data3: { x: -600.4792235982375, y: 631.8178888851007 },
-              data4: { x: -600.1016616532435, y: 580.9222883481272 },
+              data4: { x: -601.1016616532435, y: 580.9222883481272 },
               data5: { x: -601.1522947928718, y: 1356.8463110439388 },
               data6: { x: -601.4899354376018, y: 1407.45614519134 },
               data7: { x: -601.7877880852783, y: 1458.2084404105979 },
               data8: { x: -601.8775802253477, y: 1509.1026107237653 },
-              line1: { x: -1163.5305423252987, y: 1045.8638590432556 },
-              line2: { x: -874.050262971247, y: 1046.097424130381 },
+              line1: { x: -1285.1281398603076, y: 1045.9201535079228 },
+              line2: { x: -845.3367977758118, y: 1046.097424130381 },
               line3: { x: -743.0134159304, y: 844.6163804041859 },
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
               line5: { x: -300.65784806763253, y: 844.3342440262651 },
@@ -2972,10 +2989,10 @@ export default function GraphicLGDS() {
                   x: -1263.7593947324417,
                   y: 1290.7025144885476,
               },
-              overlay_line7: { x: -236.1834494763565, y: 1040.4087334931678 },
+              overlay_line7: { x: -236.18344947635651, y: 1045.7973361160095 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              overlay_lineLast: { x: 648.2054550864606, y: 1348.8610985677146 },
-              timeUpdate3: { x: -1131.4098532460614, y: 587.3210357658719 },
+              overlay_lineLast: { x: 644.824687472906, y: 1323.5053414660558 },
+              timeUpdate3: { x: -1142.6573519525596, y: 587.3210357658719 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3281,7 +3298,12 @@ export default function GraphicLGDS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 10, background: line },
+            style: {
+                border: "none",
+                width: 30,
+                height: 10,
+                background: "none",
+            },
         },
         {
             id: "line3",
@@ -3365,7 +3387,7 @@ export default function GraphicLGDS() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 10, height: 15, background: line },
+            style: { border: "none", width: 10, height: 30, background: line },
         },
         {
             id: "line8",
@@ -4290,8 +4312,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 180,
-                height: 50,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4313,8 +4334,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Top,
             style: {
                 border: background,
-                width: 180,
-                height: 50,
+                width: 260,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -4942,8 +4962,8 @@ export default function GraphicLGDS() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 180,
-                height: 50,
+                width: 260,
+
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -5834,6 +5854,43 @@ export default function GraphicLGDS() {
                 borderRadius: 5,
             },
         },
+
+        //=================================================
+
+        {
+            id: "Line2_NONE",
+            position: positions.Line2_NONE,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+        {
+            id: "Line2_NONE1",
+            position: positions.Line2_NONE1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -6586,6 +6643,19 @@ export default function GraphicLGDS() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         AlarmCenter: position,
+                    }));
+                }
+
+                //===========================================================
+                else if (id === "Line2_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Line2_NONE: position,
+                    }));
+                } else if (id === "Line2_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Line2_NONE1: position,
                     }));
                 }
             }

@@ -6112,7 +6112,7 @@ checked={maintainSD_2002}
 
 
 </div>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
                 <h4>Station - configuration </h4>
                 <DataTable value={configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />

@@ -3458,9 +3458,9 @@ const ChangeMaintainEmergency_NO = async () => {
   };
          
   const mainCategoryFC = {
-    EVC: 'EVC01 -  Prameter & configuration',
+    EVC: 'EVC01 -  Parameter & Configuration',
  
-    PLC: 'PLC -  Prameter & configuration'
+    PLC: 'PLC -  Parameter & Configuration'
 };
 
 
@@ -4086,7 +4086,7 @@ const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>
     setInputGetwayPhone(newValue);
 };
 
-const configuration = [
+const Configuration = [
    
     {
         Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
@@ -4148,9 +4148,9 @@ const configuration = [
   <Column field="update" header="Update" />
 
 </DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:10 }}>
-                <h4>Station - configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+                <h4>Station - Configuration </h4>
+                <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />
