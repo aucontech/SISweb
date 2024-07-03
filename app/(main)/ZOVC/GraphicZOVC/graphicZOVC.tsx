@@ -324,7 +324,7 @@ export default function GraphicZOCV() {
             const PT01Value = parseFloat(PT01);
 
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue < PT01Value || PT01Value < lowValue) {
+                if (highValue <= PT01Value || PT01Value <= lowValue) {
                     if (!audioPT1901) {
                         audioRef.current?.play();
                         setAudio1901(true);
@@ -402,7 +402,7 @@ export default function GraphicZOCV() {
             const PT02Value = parseFloat(PT02);
 
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue < PT02Value || PT02Value < lowValue) {
+                if (highValue <= PT02Value || PT02Value <= lowValue) {
                     if (!audioPT1902) {
                         audioRef.current?.play();
                         setAudio1902(true);
@@ -478,7 +478,7 @@ export default function GraphicZOCV() {
             const PT_1103Value = parseFloat(PT_1103);
 
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_1103Value)) {
-                if (highValue < PT_1103Value || PT_1103Value < lowValue) {
+                if (highValue <= PT_1103Value || PT_1103Value <= lowValue) {
                     if (!audioPT1903) {
                         audioRef.current?.play();
                         setAudio1903(true);
@@ -558,7 +558,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGD01) &&
                 !isNaN(ValueGD01)
             ) {
-                if (highValueGD01 < ValueGD01 || ValueGD01 < lowValueGD01) {
+                if (highValueGD01 <= ValueGD01 || ValueGD01 <= lowValueGD01) {
                     if (!audioGD01) {
                         audioRef.current?.play();
                         setAudioGD01(true);
@@ -639,7 +639,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGD02) &&
                 !isNaN(ValueGD02)
             ) {
-                if (highValueGD02 < ValueGD02 || ValueGD02 < lowValueGD02) {
+                if (highValueGD02 <= ValueGD02 || ValueGD02 <= lowValueGD02) {
                     if (!audioGD02) {
                         audioRef.current?.play();
                         setAudioGD02(true);
@@ -720,7 +720,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGD03) &&
                 !isNaN(ValueGD03)
             ) {
-                if (highValueGD03 < ValueGD03 || ValueGD03 < lowValueGD03) {
+                if (highValueGD03 <= ValueGD03 || ValueGD03 <= lowValueGD03) {
                     if (!audioGD03) {
                         audioRef.current?.play();
                         setAudioGD03(true);
@@ -800,7 +800,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueSVF1) &&
                 !isNaN(ValueSVF1)
             ) {
-                if (highValueSVF1 < ValueSVF1 || ValueSVF1 < lowValueSVF1) {
+                if (highValueSVF1 <= ValueSVF1 || ValueSVF1 <= lowValueSVF1) {
                     if (!audioSVF1) {
                         audioRef.current?.play();
                         setAudioSVF1(true);
@@ -878,7 +878,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGVF1) &&
                 !isNaN(ValueGVF1)
             ) {
-                if (highValueGVF1 < ValueGVF1 || ValueGVF1 < lowValueGVF1) {
+                if (highValueGVF1 <= ValueGVF1 || ValueGVF1 <= lowValueGVF1) {
                     if (!audioGVF1) {
                         audioRef.current?.play();
                         setAudioGVF1(true);
@@ -956,7 +956,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueSVA1) &&
                 !isNaN(ValueSVA1)
             ) {
-                if (highValueSVA1 < ValueSVA1 || ValueSVA1 < lowValueSVA1) {
+                if (highValueSVA1 <= ValueSVA1 || ValueSVA1 <= lowValueSVA1) {
                     if (!audioSVA1) {
                         audioRef.current?.play();
                         setAudioSVA1(true);
@@ -1034,7 +1034,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGVA1) &&
                 !isNaN(ValueGVA1)
             ) {
-                if (highValueGVA1 < ValueGVA1 || ValueGVA1 < lowValueGVA1) {
+                if (highValueGVA1 <= ValueGVA1 || ValueGVA1 <= lowValueGVA1) {
                     if (!audioGVA1) {
                         audioRef.current?.play();
                         setAudioGVA1(true);
@@ -1113,7 +1113,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueSVF2) &&
                 !isNaN(ValueSVF2)
             ) {
-                if (highValueSVF2 < ValueSVF2 || ValueSVF2 < lowValueSVF2) {
+                if (highValueSVF2 <= ValueSVF2 || ValueSVF2 <= lowValueSVF2) {
                     if (!audioSVF2) {
                         audioRef.current?.play();
                         setAudioSVF2(true);
@@ -1191,7 +1191,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGVF2) &&
                 !isNaN(ValueGVF2)
             ) {
-                if (highValueGVF2 < ValueGVF2 || ValueGVF2 < lowValueGVF2) {
+                if (highValueGVF2 <= ValueGVF2 || ValueGVF2 <= lowValueGVF2) {
                     if (!audioGVF2) {
                         audioRef.current?.play();
                         setAudioGVF2(true);
@@ -1269,7 +1269,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueSVA2) &&
                 !isNaN(ValueSVA2)
             ) {
-                if (highValueSVA2 < ValueSVA2 || ValueSVA2 < lowValueSVA2) {
+                if (highValueSVA2 <= ValueSVA2 || ValueSVA2 <= lowValueSVA2) {
                     if (!audioSVA2) {
                         audioRef.current?.play();
                         setAudioSVA2(true);
@@ -1347,7 +1347,7 @@ export default function GraphicZOCV() {
                 !isNaN(lowValueGVA2) &&
                 !isNaN(ValueGVA2)
             ) {
-                if (highValueGVA2 < ValueGVA2 || ValueGVA2 < lowValueGVA2) {
+                if (highValueGVA2 <= ValueGVA2 || ValueGVA2 <= lowValueGVA2) {
                     if (!audioGVA2) {
                         audioRef.current?.play();
                         setAudioGVA2(true);
@@ -3437,7 +3437,7 @@ export default function GraphicZOCV() {
                 label: (
                     <div
                         style={{
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: 500,
                         }}
                     >

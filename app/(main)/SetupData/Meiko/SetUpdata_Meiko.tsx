@@ -236,7 +236,7 @@ export default function SetUpdata_Meiko() {
     
             const VP_303_High = res.data.find((item: any) => item.key === "VP_303_High");
             setVP_303_High(VP_303_High?.value || null);
-            const VP_303_Low = res.data.find((item: any) => item.key === "VP_302_Low");
+            const VP_303_Low = res.data.find((item: any) => item.key === "VP_303_Low");
             setVP_303_Low(VP_303_Low?.value || null);
             const MaintainVP_303 = res.data.find(
                 (item: any) => item.key === "VP_303_Maintain"
@@ -1989,14 +1989,16 @@ const ChangeMaintainTank_PT_301 = async () => {
             setFlow_Meter_Total_High(inputValueFlow_Meter_Total);
             setFlow_Meter_Total_Low(inputValue2Flow_Meter_Total);
 
+            setVP_303_High(inputValueVP_303);
+            setVP_303_Low(inputValue2VP_303);
+
             setVP_302_High(inputValueVP_302);
             setVP_302_Low(inputValue2VP_302);
 
             setVP_301_High(inputValueVP_301);
             setVP_301_Low(inputValue2VP_301);
 
-            setVP_301_High(inputValueVP_301);
-            setVP_301_Low(inputValue2VP_301);
+    
 
             setGD_103_High_High(inputValueGD_103_High);
             setGD_103_High_Low(inputValue2GD_103_High);
@@ -2823,26 +2825,6 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 ></Checkbox>
 
 },
-
-{
-    mainCategory: mainCategoryFC.PLC ,
-       
-       timeUpdate: <span style={combineCss.CSSFlow_Meter_Total} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSFlow_Meter_Total}>Flow Meter Total</span> ,
-   
-    modbus: <span style={combineCss.CSSFlow_Meter_Total}>not available	 </span> ,
-   
-   value: <span style={combineCss.CSSFlow_Meter_Total} > {Flow_Meter_Total}</span> , 
-    high: <InputText style={combineCss.CSSFlow_Meter_Total}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Meter_Total} onChange={handleInputChangeFlow_Meter_Total} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSFlow_Meter_Total}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Meter_Total} onChange={handleInputChange2Flow_Meter_Total} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
-    style={{ marginRight: 20, }}
-    onChange={ChangeMaintainFlow_Meter_Total}
-    checked={maintainFlow_Meter_Total}
-   ></Checkbox>
-   
-   },
 
           ]
 
