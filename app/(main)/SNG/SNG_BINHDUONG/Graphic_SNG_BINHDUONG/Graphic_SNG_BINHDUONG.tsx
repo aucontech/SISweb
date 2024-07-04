@@ -2489,8 +2489,8 @@ export default function Graphic_SNG_BINHDUONG() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
-              AIR_INLET: { x: -2721.4692108086797, y: 2179.722332941774 },
+                const initialPositions = {
+              AIR_INLET: { x: -2721.4692108086797, y: 2178.2907767624192 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
               Arrow2: { x: -2246.4848054605154, y: 2163.170126568243 },
               Arrow3: { x: -2248.2397512254984, y: 1536.7414426555551 },
@@ -2524,10 +2524,10 @@ export default function Graphic_SNG_BINHDUONG() {
               MIXED_GAS_OUT: { x: -2723.1498211288877, y: 1866.5461610946509 },
               PCV_BOTTOM: { x: -1805.6040907182978, y: 2124.1143674165332 },
               PCV_TOP: { x: -1805.969879472551, y: 1499.8300133358384 },
-              PSV01: { x: -2462.438136977051, y: 1464.3566803647977 },
-              PSV01_IMG: { x: -2413.9660492969106, y: 1509.5596531094666 },
-              PSV02: { x: -2460.3740303520035, y: 2087.266634284197 },
-              PSV02_IMG: { x: -2416.2967627548664, y: 2135.2403497097134 },
+              PSV01: { x: -2524.555753361747, y: 1396.1332968176719 },
+              PSV01_IMG: { x: -2438.813095850789, y: 1509.5596531094666 },
+              PSV02: { x: -2520.3740303520035, y: 2026.2666342841972 },
+              PSV02_IMG: { x: -2437.4724669071406, y: 2135.119959178102 },
               PTV_BOTTOM: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_BOTTOM_COL: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_TOP: { x: -2434.736534286145, y: 2280.792696466395 },
@@ -2570,11 +2570,11 @@ export default function Graphic_SNG_BINHDUONG() {
               },
               WB_1001: { x: -1896.9232355027152, y: 1735.774769535127 },
               WB_Setpoint: { x: -2236.7052623296595, y: 1258.7416601549014 },
-              borderWhite: { x: -2921.2776782961173, y: 1234.29424911232 },
+              borderWhite: { x: -3068.585168579825, y: 1156.2035313715592 },
               line1: { x: -2520.638664749054, y: 1563.7956401030622 },
               line2: { x: -945.3136370318025, y: 1897.7955179886687 },
               line3: { x: -2524.296141994977, y: 2189.2006419886534 },
-              timeUpdate3: { x: -2879.032251014028, y: 1343.5255638494805 },
+              timeUpdate3: { x: -3045.8624207329262, y: 1254.7861118713433 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -3450,8 +3450,7 @@ export default function Graphic_SNG_BINHDUONG() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 180,
-                height: 50,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3473,8 +3472,7 @@ export default function Graphic_SNG_BINHDUONG() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width: 180,
-                height: 50,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3638,12 +3636,12 @@ export default function Graphic_SNG_BINHDUONG() {
                 label: (
                     <div
                         style={{
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: 600,
                         }}
                     >
                         TOTAL VOLUME
-                        <div>Waiting...</div>
+                        <div style={{ marginTop: 10 }}>Waiting...</div>
                     </div>
                 ),
             },
