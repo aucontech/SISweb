@@ -9,11 +9,11 @@ const AppMenu = () => {
         if (user && user.authority === "CUSTOMER_USER") {
             const modelData: MenuModel[] = [
                 {
-                    label: "Dashboards",
+                    label: "Station detail",
                     icon: "pi pi-home",
                     items: [
                         {
-                            label: "Overview",
+                            label: "Graphics",
                             icon: "pi pi-fw pi-home",
                             to: "/OTSUKA",
                         },
@@ -29,22 +29,22 @@ const AppMenu = () => {
                         // },
                     ],
                 },
-                // {
-                //     label: "Alarm",
-                //     icon: "pi pi-home",
-                //     items: [
-                //         {
-                //             label: "Alarm Summary",
-                //             icon: "pi pi-fw pi-comment",
-                //             to: "/alarmsummarycustomer",
-                //         },
-                //         // {
-                //         //     label: "Alarm History",
-                //         //     icon: "pi pi-fw pi-calendar",
-                //         //     to: "/alarmhistorycustomer",
-                //         // },
-                //     ],
-                // },
+                {
+                    label: "Alarm" ,
+                    icon: "pi pi-home",
+                    items: [
+                        {
+                            label: "Alarm Summary",
+                            icon: "pi pi-fw pi-comment",
+                            to: "/alarmsummarycustomer",
+                        },
+                        // {
+                        //     label: "Alarm History",
+                        //     icon: "pi pi-fw pi-calendar",
+                        //     to: "/alarmhistorycustomer",
+                        // },
+                    ],
+                },
                 {
                     label: "Setting",
                     icon: "pi pi-home",

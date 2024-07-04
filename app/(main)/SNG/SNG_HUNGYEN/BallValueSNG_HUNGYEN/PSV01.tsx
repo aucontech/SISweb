@@ -155,15 +155,15 @@ export default function PSV01() {
             <div
                 style={{
                     border: "none",
-                    fontSize: 15,
+                    fontSize: 22,
                     color: "white",
                     display: "flex",
                     cursor: "pointer",
                     justifyContent: "space-between",
-                    fontWeight: 400,
+                    fontWeight: 500,
                 }}
             >
-                <p style={{ color: colorNameValue }}>PSV-3003</p>
+                <p style={{ color: colorNameValue }}>PSV-3003 : </p>
                 <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>
