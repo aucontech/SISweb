@@ -21,6 +21,7 @@ import {
     IGUACU_DEVICE_ID,
     ZOCV_DEVICE_ID,
     LGDS_DEVICE_ID,
+    CNG_PM3_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -368,6 +369,19 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
+                    case CNG_PM3_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 6001 <br />
+                                <Checkbox
+                                    checked={isLine1Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line1")
+                                    }
+                                />
+                            </>
+                        );
+
                     default:
                         return (
                             <>
@@ -519,6 +533,18 @@ const CustomerReport = () => {
                         return (
                             <>
                                 FC 1002 <br />
+                                <Checkbox
+                                    checked={isLine2Selected}
+                                    onChange={(e: any) =>
+                                        _onSelectLine(e.checked, "line2")
+                                    }
+                                />
+                            </>
+                        );
+                    case CNG_PM3_DEVICE_ID:
+                        return (
+                            <>
+                                EVC 6002 <br />
                                 <Checkbox
                                     checked={isLine2Selected}
                                     onChange={(e: any) =>

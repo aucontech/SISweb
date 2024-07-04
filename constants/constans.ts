@@ -10,3 +10,4 @@ export const SPMCV_DEVICE_ID = "28b009c0-a3ce-11ee-9ca1-8f006c3fce43";
 export const IGUACU_DEVICE_ID = "28af6d80-a3ce-11ee-9ca1-8f006c3fce43";
 export const ZOCV_DEVICE_ID = "28ca96a0-a3ce-11ee-9ca1-8f006c3fce43";
 export const LGDS_DEVICE_ID = "28cf2a80-a3ce-11ee-9ca1-8f006c3fce43";
+export const CNG_PM3_DEVICE_ID = "28cedc60-a3ce-11ee-9ca1-8f006c3fce43";
