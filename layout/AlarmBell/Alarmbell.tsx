@@ -5,12 +5,13 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
-import { readToken } from "@/service/localStorage";
+//import { readToken } from "@/service/localStorage";
 import { readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { PiBellRingingBold, PiBellZFill } from "react-icons/pi";
+import { PiBellRingingBold } from "react-icons/pi";
 import { Utils } from "@/service/Utils";
+import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
 interface Notification {
     subject: string;
@@ -63,11 +64,7 @@ export default function Alarmbell() {
                                     type: "entityList",
                                     resolveMultiple: true,
                                     entityType: "DEVICE",
-                                    entityList: [
-                                        //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                                        "b92cda00-07c9-11ef-973a-dde5fe61203a",
-                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                    ],
+                                    entityList: [OTSUKA_DEVICE_ID],
                                 },
                             },
                             // query: {
@@ -137,12 +134,7 @@ export default function Alarmbell() {
                                     type: "entityList",
                                     resolveMultiple: true,
                                     entityType: "DEVICE",
-                                    entityList: [
-                                        "6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                                        "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                        // "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                                    ],
+                                    entityList: [OTSUKA_DEVICE_ID],
                                 },
                                 pageLink: {
                                     page: 0,
@@ -203,26 +195,17 @@ export default function Alarmbell() {
                 //console.log("dataReceive", dataReceive);
 
                 if (dataReceive && dataReceive["cmdId"] === 1) {
-                    if (
-                        dataReceive.data &&
-                        dataReceive.data.data &&
-                        dataReceive.data.data.length > 0
-                    ) {
-                        console.log(dataReceive);
-                        // setNotifications(dataReceive.data.data);
-                        //  setLoading(false);
+                    if (dataReceive.data && dataReceive.data.data) {
                         let alarms = dataReceive.data.data;
-                        console.log(alarms);
+                        let alarmsCount = dataReceive.data.totalElements;
                         let criticalAlarm = alarms.filter(
                             (alarm: any) => alarm.severity === "CRITICAL"
                         );
                         let majorAlarm = alarms.filter(
                             (alarm: any) => alarm.severity === "MAJOR"
                         );
-                        console.log(criticalAlarm);
-                        console.log(majorAlarm);
+
                         if (criticalAlarm.length > majorAlarm.length) {
-                            console.log("Play audio");
                             const promise = audioRef.current?.play();
                             if (promise !== undefined) {
                                 promise
@@ -238,7 +221,7 @@ export default function Alarmbell() {
                             }
                         }
                         setNotifications(alarms);
-                        setAlarmCount(dataReceive.data?.totalElements);
+                        setAlarmCount(alarmsCount);
                         setLoading(false);
                     } else if (
                         dataReceive.data &&
