@@ -834,7 +834,7 @@ export default function SetUpdata_PRU() {
             );
             const PIT_6001A_High = res.data.find((item: any) => item.key === "PIT_6001A_High");
             setPIT_6001A_High(PIT_6001A_High?.value || null);
-            const PIT_6001A_Low = res.data.find((item: any) => item.key === "PIT_6001B_Low");
+            const PIT_6001A_Low = res.data.find((item: any) => item.key === "PIT_6001A_Low");
             setPIT_6001A_Low(PIT_6001A_Low?.value || null);
             const MaintainPIT_6001A = res.data.find(
                 (item: any) => item.key === "PIT_6001A_Maintain"

@@ -11,175 +11,135 @@ export default function AlarmOTSUKA() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const ws = useRef<WebSocket | null>(null);
-    const [alarmCount, setAlarmCount] = useState<number | undefined>(undefined);
+    const [alarmCount, setAlarmCount] = useState<number>(0);
 
     useEffect(() => {
-        const connectWebSocket = () => {
-            ws.current = new WebSocket(url);
+        ws.current = new WebSocket(url);
 
-            const obj1 = {
-                attrSubCmds: [],
-                tsSubCmds: [],
-                historyCmds: [],
-                entityDataCmds: [
-                    {
-                        query: {
-                            entityFilter: {
-                                type: "singleEntity",
-                                singleEntity: {
-                                    entityType: "DEVICE",
-                                    id: id_OTSUKA,
-                                },
+        const obj1 = {
+            attrSubCmds: [],
+            tsSubCmds: [],
+            historyCmds: [],
+            entityDataCmds: [],
+            entityDataUnsubscribeCmds: [],
+            alarmDataCmds: [
+                {
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_OTSUKA,
                             },
-                            pageLink: {
-                                pageSize: 1024,
-                                page: 0,
-                                sortOrder: {
-                                    key: {
-                                        type: "ENTITY_FIELD",
-                                        key: "createdTime",
-                                    },
-                                    direction: "DESC",
-                                },
-                            },
-                            entityFields: [
-                                { type: "ENTITY_FIELD", key: "name" },
-                                { type: "ENTITY_FIELD", key: "label" },
-                                { type: "ENTITY_FIELD", key: "additionalInfo" },
-                            ],
-                            latestValues: [],
                         },
-                        cmdId: 1,
-                    },
-                    {
-                        query: {
-                            entityFilter: {
-                                type: "singleEntity",
-                                singleEntity: {
-                                    entityType: "DEVICE",
-                                    id: id_OTSUKA,
-                                },
-                            },
-                            pageLink: {
-                                pageSize: 1024,
-                                page: 0,
-                                sortOrder: {
-                                    key: {
-                                        type: "ENTITY_FIELD",
-                                        key: "createdTime",
-                                    },
-                                    direction: "DESC",
-                                },
-                            },
-                            entityFields: [
-                                { type: "ENTITY_FIELD", key: "name" },
-                                { type: "ENTITY_FIELD", key: "label" },
-                                { type: "ENTITY_FIELD", key: "additionalInfo" },
-                            ],
-                            latestValues: [],
-                        },
-                        cmdId: 2,
-                    },
-                ],
-                entityDataUnsubscribeCmds: [],
-                alarmDataCmds: [],
-                alarmDataUnsubscribeCmds: [],
-                entityCountCmds: [],
-                entityCountUnsubscribeCmds: [],
-                alarmCountCmds: [
-                    {
-                        query: {
+                        pageLink: {
+                            page: 0,
+                            pageSize: 10,
+                            textSearch: null,
+                            typeList: [],
                             severityList: ["CRITICAL"],
-                            statusList: ["ACTIVE", "UNACK"],
+                            statusList: ["ACTIVE"],
                             searchPropagatedAlarms: false,
                             assigneeId: null,
+                            sortOrder: {
+                                key: {
+                                    key: "createdTime",
+                                    type: "ALARM_FIELD",
+                                },
+                                direction: "DESC",
+                            },
+                            timeWindow: 86400000,
                         },
-                        cmdId: 3,
+                        alarmFields: [
+                            { type: "ALARM_FIELD", key: "createdTime" },
+                            { type: "ALARM_FIELD", key: "originator" },
+                            { type: "ALARM_FIELD", key: "type" },
+                            { type: "ALARM_FIELD", key: "severity" },
+                            { type: "ALARM_FIELD", key: "status" },
+                            { type: "ALARM_FIELD", key: "assignee" },
+                        ],
+                        entityFields: [],
+                        latestValues: [],
                     },
-                ],
-                alarmCountUnsubscribeCmds: [],
-            };
+                    cmdId: 1,
+                },
+            ],
+            alarmDataUnsubscribeCmds: [],
+            entityCountCmds: [],
+            entityCountUnsubscribeCmds: [],
+            alarmCountCmds: [],
+            alarmCountUnsubscribeCmds: [],
+        };
 
+        if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connection opened.");
-                ws.current?.send(JSON.stringify(obj1));
+                console.log("WebSocket connected");
+                setTimeout(() => {
+                    ws.current?.send(JSON.stringify(obj1));
+                });
             };
 
             ws.current.onmessage = (evt) => {
-                const dataReceive = JSON.parse(evt.data);
-                setAlarmCount(dataReceive.count);
+                let dataReceived = JSON.parse(evt.data);
+                if (dataReceived.update !== null) {
+                    const dataReceive = JSON.parse(evt.data);
+                    const alarmDataArray = dataReceive.data.data || [];
+                    if (alarmDataArray.length === 0) {
+                        setAlarmCount(0);
+                    } else {
+                        setAlarmCount(1);
+                    }
+                }
             };
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
             };
-        };
 
-        connectWebSocket();
-
-        const interval = setInterval(() => {
-            if (ws.current?.readyState === WebSocket.OPEN) {
-                ws.current.send(JSON.stringify({
-                    alarmCountCmds: [
-                        {
-                            query: {
-                                severityList: ["CRITICAL"],
-                                statusList: ["ACTIVE", "UNACK"],
-                                searchPropagatedAlarms: false,
-                                assigneeId: null,
-                            },
-                            cmdId: 3,
-                        },
-                    ],
-                }));
-            }
-        }, 10000); // 10 seconds interval
-
-        return () => {
-            clearInterval(interval);
-            ws.current?.close();
-        };
+            return () => {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current?.close();
+            };
+        }
     }, [url]);
 
     return (
         <div>
-            {alarmCount === undefined ? (
-                <div style={{}}></div>
-            ) : alarmCount > 0 ? (
+            {alarmCount === 0 ? (
                 <div
                     style={{
-                        background: 'red',
+                        background: "green",
                         width: 150,
                         height: 60,
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: 'white',
-                        borderRadius: 5,
-                        fontWeight: 500,
-                        fontSize: 25,
-                    }}
-                >
-                    Alarming
-                </div>
-            ) : (
-                <div
-                    style={{
-                        background: 'green',
-                        width: 150,
-                        height: 60,
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: 'white',
+                        textAlign: "center",
+                        justifyContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        color: "white",
                         borderRadius: 5,
                         fontWeight: 500,
                         fontSize: 25,
                     }}
                 >
                     Normal
+                </div>
+            ) : (
+                <div
+                    style={{
+                        background: "red",
+                        width: 150,
+                        height: 60,
+                        textAlign: "center",
+                        justifyContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        color: "white",
+                        borderRadius: 5,
+                        fontWeight: 500,
+                        fontSize: 25,
+                    }}
+                >
+                    Alarming
                 </div>
             )}
         </div>

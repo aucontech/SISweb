@@ -2793,14 +2793,14 @@ export default function GraphicNITORI() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-              ArrowRight: { x: 361.63814192842443, y: 1022.694783335719 },
-              ArrowRight1: { x: -1248.4283737310109, y: 1028.1532161432224 },
-              BallValue01: { x: -1145.3623120428465, y: 1132.3426285378578 },
-              BallValue02: { x: -975.0488084444129, y: 1132.9611112928555 },
-              BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
-              BallValue04: { x: -127.98761243251244, y: 1129.5595186007586 },
+              ArrowRight: { x: 504.63814192842443, y: 1023.694783335719 },
+              ArrowRight1: { x: -1310.4283737310109, y: 1027.6532161432224 },
+              BallValue01: { x: -1111.3623120428465, y: 1132.3426285378578 },
+              BallValue02: { x: -934.0488084444128, y: 1134.4611112928555 },
+              BallValue03: { x: -195.79621954129698, y: 899.6124566834239 },
+              BallValue04: { x: -195.48761243251244, y: 1130.5595186007586 },
               BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
               BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
               BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
@@ -2820,8 +2820,8 @@ export default function GraphicNITORI() {
                   x: -458.43233108676895,
                   y: 1047.9161594286932,
               },
-              BallValueFirst: { x: 429.15262421132076, y: 1009.0430441067174 },
-              BallValueLast: { x: -1323.4348814622088, y: 1014.5065165529766 },
+              BallValueFirst: { x: 407.65262421132076, y: 1010.0430441067174 },
+              BallValueLast: { x: -1251.9348814622088, y: 1013.5065165529766 },
               BallValuePSV: { x: 289.72148707331525, y: 956.6157106130481 },
               BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
@@ -2847,58 +2847,62 @@ export default function GraphicNITORI() {
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1128.591121975559, y: 485.690264872979 },
-              Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
-              Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
-              PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
-              PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
-              PCV_NUM01: { x: -161.90249819080248, y: 784.6363564017703 },
-              PCV_NUM02: { x: -162.8853562638497, y: 1212.9700787578358 },
+              Line2_NONE: { x: -868.3336203769039, y: 993.0974241303809 },
+              Line2_NONE1: { x: -814.9885863058424, y: 1005.5974241303809 },
+              LineBall_1_1: { x: -1308.5317402818896, y: 1045.9869361614612 },
+              PCV01: { x: -112.72537660665107, y: 884.6622322842105 },
+              PCV02: { x: -111.36105695687999, y: 1115.7032165712826 },
+              PCV_NUM01: { x: -203.65899751963087, y: 784.2296712286724 },
+              PCV_NUM02: { x: -201.3853562638497, y: 1212.4700787578358 },
               PCV_ballVavle_Small1: {
-                  x: 26.02187311783564,
-                  y: 889.8528829879407,
+                  x: -14.389965908396135,
+                  y: 891.0103931252636,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -46.98048131286686,
-                  y: 903.2535606409883,
+                  x: -88.73698064169524,
+                  y: 907.2782834678633,
               },
               PCV_ballVavle_Small1_none2: {
-                  x: -46.74022897904909,
-                  y: 1132.8134902831985,
+                  x: -85.7402289790491,
+                  y: 1139.3134902831985,
               },
               PCV_ballVavle_Small2: {
-                  x: 23.019930237652545,
-                  y: 1120.1549395281857,
+                  x: -12.480069762347455,
+                  y: 1122.1549395281857,
               },
               PCV_ballVavle_Small2_none1: {
-                  x: 32.51922482421617,
-                  y: 938.3135634050248,
+                  x: -8.327552976003687,
+                  y: 938.3376781995523,
               },
               PCV_ballVavle_Small2_none2: {
-                  x: 29.126918736836018,
-                  y: 1167.5225930073495,
+                  x: -6.373081263163982,
+                  y: 1168.0225930073495,
               },
-              PCV_none1: { x: -43.356336775693705, y: 932.4844638821777 },
-              PCV_none2: { x: -43.63902265954965, y: 1160.9945398306136 },
+              PCV_none1: { x: -84.10665539780331, y: 931.4782831754591 },
+              PCV_none2: { x: -82.13902265954965, y: 1161.4945398306136 },
               PSV01: { x: 164.5653138749226, y: 709.1940849015447 },
               PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
               PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
               PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-              PSV_None01: { x: 447.48718383080245, y: 1041.2984512500652 },
+              PSV_None01: { x: 424.48718383080245, y: 1041.2984512500652 },
               PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
               PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
               PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
-              PT1: { x: 213.79089216580826, y: 952.8215389633342 },
+              PT1: { x: 194.79089216580826, y: 951.3487441112211 },
               PT2: { x: -708.258294622871, y: 1154.2084571677146 },
               PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-              PT_col1: { x: 246.77020206396446, y: 1015.995256464112 },
+              PT_col1: { x: 227.74299691607746, y: 1013.495256464112 },
               PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
               PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-              PT_none1: { x: 245.97093596247453, y: 1035.3795085307177 },
+              PT_none1: { x: 226.97093596247453, y: 987.3795085307177 },
               PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
               PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: { x: 128.0682335755737, y: 1213.572155461012 },
+              Pressure_Trans01: {
+                  x: 108.15542245236782,
+                  y: 1212.5241127703168,
+              },
               Pressure_Trans02: {
                   x: -1019.4423849427775,
                   y: 706.6585420699575,
@@ -2907,16 +2911,16 @@ export default function GraphicNITORI() {
                   x: -1022.6221979715284,
                   y: 1306.0599379762566,
               },
-              SDV: { x: -1175.7804525595525, y: 947.3166088808405 },
-              SDV_Ball: { x: -1127.6826908317034, y: 1163.2430466784738 },
-              SDV_IMG: { x: -1153.2858651854403, y: 995.2834321094119 },
+              SDV: { x: -1136.7804525595525, y: 948.3166088808405 },
+              SDV_Ball: { x: -1093.6826908317034, y: 1163.2430466784738 },
+              SDV_IMG: { x: -1116.2858651854403, y: 995.7834321094119 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1127.1286470234306, y: 1044.6886789070904 },
+              SDV_None: { x: -1090.1286470234306, y: 1047.6886789070904 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-              Tank: { x: -990.5017188978301, y: 982.9072016916937 },
-              Tank_Ball: { x: -957.0480270305792, y: 1164.3460365617266 },
-              Tank_None: { x: -967.920575058274, y: 1045.359003360467 },
+              Tank: { x: -949.5017188978301, y: 982.9072016916937 },
+              Tank_Ball: { x: -916.5480270305792, y: 1165.3460365617266 },
+              Tank_None: { x: -926.920575058274, y: 1047.359003360467 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -2962,19 +2966,20 @@ export default function GraphicNITORI() {
               data6: { x: -600.8317496942007, y: 1408.2027063708313 },
               data7: { x: -600.8761635213684, y: 1458.4550015900893 },
               data8: { x: -600.4659556614379, y: 1508.8491719032568 },
-              line1: { x: -1300.9244277428284, y: 1045.9109300929706 },
-              line2: { x: -848.6307313177314, y: 1046.097424130381 },
+              line1: { x: -1233.9244277428284, y: 1045.9109300929706 },
+              line2: { x: -764.1307313177314, y: 1046.097424130381 },
               line3: { x: -743.0134159304, y: 844.6163804041859 },
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
               line5: { x: -300.65784806763253, y: 844.3342440262651 },
               line6: { x: -300.98065704991916, y: 1249.1529639630187 },
-              line7: { x: -196.38382079776343, y: 1044.3956117006094 },
-              line8: { x: -109.84769512178819, y: 930.3833450683701 },
-              line9: { x: -110.37038145875272, y: 1159.9359004593528 },
+              line7: { x: -241.6382268189932, y: 1041.7359796478943 },
+              line8: { x: -178.3476951217882, y: 930.3833450683701 },
+              line9: { x: -178.37038145875272, y: 1161.2417569105805 },
               line10: { x: 86.69745659087829, y: 930.5099856332267 },
-              line11: { x: 86.19431979613125, y: 1160.0153295862324 },
-              line12: { x: 212.34921055529412, y: 1040.345253330986 },
-              line13: { x: 445.3312960971492, y: 1041.4713896720348 },
+              line11: { x: 86.19431979613125, y: 1161.0153295862324 },
+              line12: { x: 117.97948908353231, y: 1040.345253330986 },
+              line13: { x: 424.8312960971492, y: 1041.4713896720348 },
+              lineBall_13_1: { x: 519.8312960971493, y: 1041.4713896720348 },
               overlay_SmallVavle1: {
                   x: -593.2918361488164,
                   y: 1011.397327575481,
@@ -2983,8 +2988,8 @@ export default function GraphicNITORI() {
                   x: -1263.7593947324417,
                   y: 1290.7025144885476,
               },
-              overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-              overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
+              overlay_line7: { x: -178.28949300874476, y: 1055.0208403085655 },
+              overlay_line13: { x: 10.627155198405035, y: 1078.9922387519823 },
               timeUpdate3: { x: -1237.6690589838854, y: 555.0282539654617 },
           };
     const [positions, setPositions] = useState(initialPositions);
@@ -3276,7 +3281,7 @@ export default function GraphicNITORI() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 30,
+                width: 35,
                 height: 10,
                 background: background,
             },
@@ -3306,8 +3311,8 @@ export default function GraphicNITORI() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3342,8 +3347,8 @@ export default function GraphicNITORI() {
                 label: <div>5</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3380,7 +3385,7 @@ export default function GraphicNITORI() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 30, height: 5, background: line },
+            style: { border: "none", width: 35, height: 5, background: line },
         },
         {
             id: "line8",
@@ -3390,8 +3395,8 @@ export default function GraphicNITORI() {
                 label: <div>8</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3426,8 +3431,8 @@ export default function GraphicNITORI() {
                 label: <div>10</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3483,7 +3488,7 @@ export default function GraphicNITORI() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 10,
+                width: 35,
                 height: 1,
                 background: background,
             },
@@ -4314,7 +4319,7 @@ export default function GraphicNITORI() {
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -5509,40 +5514,7 @@ export default function GraphicNITORI() {
                 height: 1,
             },
         },
-        {
-            id: "overlay_line7",
-            position: positions.overlay_line7,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: line,
-                width: 100,
-                height: 22,
-            },
-        },
-        {
-            id: "overlay_line13",
-            position: positions.overlay_line13,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: line,
-                width: 100,
-                height: 10,
-            },
-        },
         //============================ T_JUNTION ==========================
 
         {
@@ -5608,15 +5580,15 @@ export default function GraphicNITORI() {
         },
 
         {
-            id: "Line2_NONE",
-            position: positions.Line2_NONE,
+            id: "LineBall_1_1",
+            position: positions.LineBall_1_1,
             type: "custom",
             data: {
                 label: <div></div>,
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
                 border: "#333333",
                 background: "none",
@@ -5624,15 +5596,16 @@ export default function GraphicNITORI() {
                 height: 1,
             },
         },
+
         {
-            id: "Line2_NONE1",
-            position: positions.Line2_NONE1,
+            id: "lineBall_13_1",
+            position: positions.lineBall_13_1,
             type: "custom",
             data: {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
@@ -6254,16 +6227,6 @@ export default function GraphicNITORI() {
                         ...prevPositions,
                         overlay_SmallVavle2: position,
                     }));
-                } else if (id === "overlay_line7") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_line7: position,
-                    }));
-                } else if (id === "overlay_line13") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_line13: position,
-                    }));
                 }
                 //========================== animation line =======================
                 else if (id === "animation_line7") {
@@ -6330,15 +6293,15 @@ export default function GraphicNITORI() {
                         ...prevPositions,
                         AlarmCenter: position,
                     }));
-                } else if (id === "Line2_NONE") {
+                } else if (id === "LineBall_1_1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Line2_NONE: position,
+                        LineBall_1_1: position,
                     }));
-                } else if (id === "Line2_NONE1") {
+                } else if (id === "lineBall_13_1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Line2_NONE1: position,
+                        lineBall_13_1: position,
                     }));
                 }
             }
@@ -6346,9 +6309,9 @@ export default function GraphicNITORI() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);

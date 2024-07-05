@@ -12,6 +12,7 @@ export default function AlarmMeiko() {
 
     const ws = useRef<WebSocket | null>(null);
     const [alarmCount, setAlarmCount] = useState<number | undefined>(undefined);
+    console.log('alarmCount: ', alarmCount);
 
     useEffect(() => {
         const connectWebSocket = () => {

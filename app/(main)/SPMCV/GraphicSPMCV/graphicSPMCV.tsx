@@ -2761,8 +2761,6 @@ export default function GraphicSPMCV() {
                                         {" "}
                                         :
                                     </p>
-
-                                    
                                 </div>
 
                                 <div style={{}}>
@@ -3076,36 +3074,36 @@ export default function GraphicSPMCV() {
     //     : {
               const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
-              ArrowRight: { x: 258.9256642678949, y: 1019.0985886548262 },
-              ArrowRight1: { x: -1288.0392165062376, y: 1026.6849832324785 },
-              BallValue01: { x: -1138.9557044799226, y: 1131.3322603162176 },
-              BallValue02: { x: -963.3369273349099, y: 1132.977155507791 },
-              BallValue03: { x: -758.5075509147275, y: 894.4326848093123 },
+              ArrowRight: { x: 405.8579396585199, y: 1019.5985886548262 },
+              ArrowRight1: { x: -1368.5392165062376, y: 1028.1849832324785 },
+              BallValue01: { x: -1095.4557044799226, y: 1133.8322603162176 },
+              BallValue02: { x: -923.8369273349099, y: 1130.977155507791 },
+              BallValue03: { x: -757.5075509147275, y: 891.9326848093123 },
               BallValue04: { x: -757.8322908208111, y: 1127.684549644359 },
-              BallValue05: { x: -573.743025120388, y: 893.7254573680121 },
-              BallValue06: { x: -574.2453934982136, y: 1128.1337792139873 },
+              BallValue05: { x: -513.243025120388, y: 893.7254573680121 },
+              BallValue06: { x: -509.4496840725251, y: 1127.72814287204 },
               BallValue07: { x: -391.71326336183927, y: 813.8244470890327 },
-              BallValue08: { x: 45.69338469127294, y: 814.8530502988284 },
+              BallValue08: { x: 42.15083782557815, y: 816.0796734600065 },
               BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
               BallValue10: { x: 44.70166109368827, y: 1204.159292175339 },
               BallValueCenter: {
-                  x: -175.80710887361258,
-                  y: 1006.8595594996316,
+                  x: -164.71252745056012,
+                  y: 1005.5989474744415,
               },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
                   y: 1084.2937921267353,
               },
               BallValueCenter_None: {
-                  x: -148.86672654059413,
-                  y: 1039.286470841561,
+                  x: -145.42156456595674,
+                  y: 1038.1015248331069,
               },
               BallValueCenter_None2: {
-                  x: -133.78263324371193,
-                  y: 1038.6243048935844,
+                  x: -132.46485980466053,
+                  y: 1037.669487186285,
               },
-              BallValueFirst: { x: 342.15262421132076, y: 1005.5430441067174 },
-              BallValueLast: { x: -1371.6236072690967, y: 1012.4432496140678 },
+              BallValueFirst: { x: 325.15262421132076, y: 1005.5430441067174 },
+              BallValueLast: { x: -1310.1236072690967, y: 1012.4432496140678 },
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
@@ -3150,37 +3148,38 @@ export default function GraphicSPMCV() {
               Header: { x: -1151.6225319026826, y: 574.7715183161662 },
               IsGateWay: { x: -1224.1168870724678, y: 634.2416848243695 },
               Line2_NONE: { x: -884.3336203769039, y: 1044.8496174211396 },
-              Line2_NONE1: { x: -771.9885863058424, y: 1044.8496174211396 },
-              PCV01: { x: -703.6225805120118, y: 879.1889175310166 },
-              PCV02: { x: -703.7261320869296, y: 1113.240259699294 },
-              PCV_NUM01: { x: -795.4775944144799, y: 783.9870428669313 },
-              PCV_NUM02: { x: -793.5449352428925, y: 1204.8849283397149 },
+              Line2_NONE1: { x: -766.9885863058424, y: 1044.8496174211396 },
+              LineBall_1_1: { x: -1366.0317402818896, y: 1044.9869361614612 },
+              PCV01: { x: -670.1225805120118, y: 879.0152725114849 },
+              PCV02: { x: -670.2261320869296, y: 1112.240259699294 },
+              PCV_NUM01: { x: -760.4775944144799, y: 784.4870428669313 },
+              PCV_NUM02: { x: -759.5449352428925, y: 1206.8849283397149 },
               PCV_ballVavle_Small1: {
-                  x: -617.133632772711,
-                  y: 885.6388490887801,
+                  x: -580.633632772711,
+                  y: 883.6388490887801,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -679.9410117692291,
-                  y: 895.8737610941586,
+                  x: -645.9410117692291,
+                  y: 901.8737610941586,
               },
               PCV_ballVavle_Small1_none2: {
-                  x: -678.2299433549822,
-                  y: 1129.2909413576103,
+                  x: -645.2299433549822,
+                  y: 1136.2909413576103,
               },
               PCV_ballVavle_Small2: {
-                  x: -615.6989498965552,
-                  y: 1119.4114511310147,
+                  x: -580.1989498965552,
+                  y: 1118.9114511310147,
               },
               PCV_ballVavle_Small2_none1: {
-                  x: -610.8824333182524,
-                  y: 932.044876458853,
+                  x: -574.3824333182524,
+                  y: 933.044876458853,
               },
               PCV_ballVavle_Small2_none2: {
-                  x: -609.4476614967655,
-                  y: 1165.7292372994432,
+                  x: -573.4476614967655,
+                  y: 1166.7292372994432,
               },
-              PCV_none1: { x: -675.8483009440444, y: 925.4958577880325 },
-              PCV_none2: { x: -674.3258973272732, y: 1158.0479877126536 },
+              PCV_none1: { x: -640.8483009440444, y: 924.9958577880326 },
+              PCV_none2: { x: -639.8258973272732, y: 1157.5479877126536 },
               PSV01: { x: 82.49644634072223, y: 723.0979741364629 },
               PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
               PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
@@ -3189,33 +3188,33 @@ export default function GraphicSPMCV() {
               PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
               PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -1254.664008009856, y: 952.3406963537602 },
+              PT1: { x: -1234.164008009856, y: 952.8406963537602 },
               PT2: { x: -350.9391791978867, y: 1138.964910598512 },
               PT3: { x: -354.39235881679406, y: 750.8313302579563 },
-              PT_col1: { x: -1222.8607244900436, y: 1015.4980803923286 },
+              PT_col1: { x: -1201.3607244900436, y: 1015.4980803923286 },
               PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
               PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
-              PT_none1: { x: -1222.3732273075652, y: 972.9251147492969 },
+              PT_none1: { x: -1200.8732273075652, y: 978.4251147492969 },
               PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
               PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: {
-                  x: -1342.3030147115624,
-                  y: 842.8281276778143,
+                  x: -1320.8030147115624,
+                  y: 844.3281276778143,
               },
               Pressure_Trans02: { x: -678.3851600513049, y: 676.0406821423652 },
               Pressure_Trans03: { x: -677.1607204889335, y: 1317.179830907271 },
-              SDV: { x: -1166.2959635804082, y: 947.2081481555467 },
-              SDV_Ball: { x: -1120.4263678382936, y: 1162.5358794189733 },
-              SDV_IMG: { x: -1142.8745453221554, y: 994.4369024411992 },
+              SDV: { x: -1129.2959635804082, y: 947.2081481555467 },
+              SDV_Ball: { x: -1077.4263678382936, y: 1163.5358794189733 },
+              SDV_IMG: { x: -1101.3745453221554, y: 994.4369024411992 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1116.530977114345, y: 1043.7816682466746 },
+              SDV_None: { x: -1076.030977114345, y: 1045.2816682466746 },
               T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
               T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
-              Tank: { x: -979.289316539069, y: 980.9019552194111 },
-              Tank_Ball: { x: -945.1466611736813, y: 1164.2030144638798 },
-              Tank_None: { x: -956.1394366344451, y: 1045.4801484268744 },
+              Tank: { x: -941.289316539069, y: 980.4019552194111 },
+              Tank_Ball: { x: -906.1466611736813, y: 1163.2030144638798 },
+              Tank_None: { x: -918.1394366344451, y: 1046.9801484268744 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -3224,9 +3223,9 @@ export default function GraphicSPMCV() {
                   x: -796.1166124474211,
                   y: 1445.5258186779024,
               },
-              VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
+              VavleWay: { x: -222.72576198688358, y: 1014.3730342723888 },
               animation_line7: { x: -359.940697041692, y: 845.650011090059 },
-              animation_line8: { x: 58.61285378247803, y: 845.7339111102631 },
+              animation_line8: { x: 56.29508034342663, y: 846.5065022566135 },
               animation_line9: {
                   x: -367.83294526673615,
                   y: 1235.2489576729074,
@@ -3238,8 +3237,8 @@ export default function GraphicSPMCV() {
                   y: 1038.0566391817506,
               },
               animation_line13: {
-                  x: -149.50201219483813,
-                  y: 1038.8111762620706,
+                  x: -147.57082438083057,
+                  y: 1037.941284245162,
               },
               animation_line14: {
                   x: -253.98006830837323,
@@ -3254,29 +3253,30 @@ export default function GraphicSPMCV() {
               data6: { x: -276.1507528711019, y: 1388.6690421536248 },
               data7: { x: -276.0698143883534, y: 1439.0886396065885 },
               data8: { x: -275.88561112765143, y: 1489.6205588818639 },
-              line1: { x: -1348.9355190654237, y: 1044.7946609746105 },
+              line1: { x: -1291.4355190654237, y: 1044.7946609746105 },
               line2: { x: -840.6900006887158, y: 1044.8496174211396 },
               line3: { x: -740.4843786514932, y: 924.7734644855461 },
               line4: { x: -740.238419040097, y: 1158.8559724650454 },
-              line5: { x: -556.2037786773546, y: 924.6826669400624 },
-              line6: { x: -556.6558035478338, y: 1158.6558163299526 },
-              line7: { x: -460.3340758870887, y: 1039.7355815474468 },
+              line5: { x: -492.53130770016935, y: 1158.9405157738784 },
+              line6: { x: -496.4503499534759, y: 924.7932564328161 },
+              line7: { x: -430.11535382326633, y: 1034.9023972070609 },
               line8: { x: -374.1947990352617, y: 845.1255935069244 },
               line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-              line10: { x: 63.19832835757296, y: 845.1595827580492 },
+              line10: { x: 59.481695703628134, y: 846.6623022055546 },
               line11: { x: 62.86985056843554, y: 1234.683954724923 },
-              line12: { x: 159.8198310785691, y: 1035.9323508670825 },
-              line13: { x: 359.3312960971492, y: 1036.9713896720348 },
+              line12: { x: 92.81983107856911, y: 1035.9323508670825 },
+              line13: { x: 342.8312960971492, y: 1036.9713896720348 },
+              lineBall_13_1: { x: 421.8312960971493, y: 1036.9713896720348 },
               overlay_SmallVavle1: {
-                  x: -620.7026867284558,
-                  y: 942.6024251546756,
+                  x: -649.7026867284558,
+                  y: 987.6024251546756,
               },
               overlay_SmallVavle2: {
-                  x: -618.7304687850988,
-                  y: 1176.6189557419923,
+                  x: -551.7200932796283,
+                  y: 1186.191866528488,
               },
-              overlay_line7: { x: -496.1247334784416, y: 1038.8156819743556 },
-              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
+              overlay_line7: { x: -656.1247334784416, y: 1017.8156819743556 },
+              overlay_line13: { x: 253.74722988332098, y: 1120.0819112793884 },
               timeUpdate3: { x: -1224.1168870724678, y: 634.2416848243695 },
           };
     const [positions, setPositions] = useState(initialPositions);
@@ -3568,7 +3568,7 @@ export default function GraphicSPMCV() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 30,
+                width: 35,
                 height: 10,
                 background: background,
             },
@@ -3598,8 +3598,8 @@ export default function GraphicSPMCV() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3652,8 +3652,8 @@ export default function GraphicSPMCV() {
                 label: <div>6</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3682,8 +3682,8 @@ export default function GraphicSPMCV() {
                 label: <div>8</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3718,8 +3718,8 @@ export default function GraphicSPMCV() {
                 label: <div>10</div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -3775,7 +3775,7 @@ export default function GraphicSPMCV() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 10,
+                width: 35,
                 height: 1,
                 background: background,
             },
@@ -4318,7 +4318,7 @@ export default function GraphicSPMCV() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: line,
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -4335,7 +4335,7 @@ export default function GraphicSPMCV() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: background,
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -4352,7 +4352,7 @@ export default function GraphicSPMCV() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: line,
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -4604,7 +4604,7 @@ export default function GraphicSPMCV() {
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
                 background: colorIMG_none,
@@ -5763,74 +5763,6 @@ export default function GraphicSPMCV() {
         },
         // =================== overlay =================================
 
-        {
-            id: "overlay_SmallVavle1",
-            position: positions.overlay_SmallVavle1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 50,
-                height: 1,
-            },
-        },
-        {
-            id: "overlay_SmallVavle2",
-            position: positions.overlay_SmallVavle2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 50,
-                height: 1,
-            },
-        },
-        {
-            id: "overlay_line7",
-            position: positions.overlay_line7,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: line,
-                width: 100,
-                height: 22,
-            },
-        },
-        {
-            id: "overlay_line13",
-            position: positions.overlay_line13,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: line,
-                width: 100,
-                height: 10,
-            },
-        },
         //============================ T_JUNTION ==========================
 
         {
@@ -5923,6 +5855,42 @@ export default function GraphicSPMCV() {
             },
 
             sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+
+        {
+            id: "LineBall_1_1",
+            position: positions.LineBall_1_1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+
+        {
+            id: "lineBall_13_1",
+            position: positions.lineBall_13_1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
@@ -6534,27 +6502,7 @@ export default function GraphicSPMCV() {
                     }));
                 }
                 // ==================== overlay ========================
-                else if (id === "overlay_SmallVavle1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_SmallVavle1: position,
-                    }));
-                } else if (id === "overlay_SmallVavle2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_SmallVavle2: position,
-                    }));
-                } else if (id === "overlay_line7") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_line7: position,
-                    }));
-                } else if (id === "overlay_line13") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        overlay_line13: position,
-                    }));
-                }
+
                 //========================== animation line =======================
                 else if (id === "animation_line7") {
                     setPositions((prevPositions: any) => ({
@@ -6638,15 +6586,25 @@ export default function GraphicSPMCV() {
                         ...prevPositions,
                         Line2_NONE1: position,
                     }));
+                } else if (id === "LineBall_1_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        LineBall_1_1: position,
+                    }));
+                } else if (id === "lineBall_13_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        lineBall_13_1: position,
+                    }));
                 }
             }
         },
         [setNodes, setPositions, editingEnabled]
     );
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);

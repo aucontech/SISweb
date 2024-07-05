@@ -206,6 +206,7 @@ export default function GraphicSogec() {
          
               { label: 'MEIKO', command: () => LPG_Click(<Graphic_MEIKO/>, 'MEIKO ') },
 
+              { label: 'Test', command: () => LPG_Click(<AlarmOTSUKA/>, 'Test ') },
 
             
             ]
