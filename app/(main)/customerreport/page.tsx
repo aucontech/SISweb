@@ -21,7 +21,7 @@ import {
     IGUACU_DEVICE_ID,
     ZOCV_DEVICE_ID,
     LGDS_DEVICE_ID,
-    CNG_PM3_DEVICE_ID,
+    CNGPM3_DEVICE_ID,
 } from "@/constants/constans";
 import { Toast } from "primereact/toast";
 
@@ -369,7 +369,7 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
-                    case CNG_PM3_DEVICE_ID:
+                    case CNGPM3_DEVICE_ID:
                         return (
                             <>
                                 EVC 6001 <br />
@@ -541,7 +541,7 @@ const CustomerReport = () => {
                                 />
                             </>
                         );
-                    case CNG_PM3_DEVICE_ID:
+                    case CNGPM3_DEVICE_ID:
                         return (
                             <>
                                 EVC 6002 <br />
