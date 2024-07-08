@@ -31,7 +31,7 @@ const Login: Page = () => {
         getCurrentUser()
             .then((resp) => {
                 persistUser(resp.data);
-                //router.push("/Graphic");
+                router.push("/Graphic");
             })
             .catch((err) => {
                 console.log(err);

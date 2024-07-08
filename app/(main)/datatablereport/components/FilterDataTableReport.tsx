@@ -348,7 +348,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                         <span className="p-float-label">
                             <Button
                                 // dropdown
-                                className="w-6"
+                                className="w-4 flex justify-content-center"
                                 onClick={() => setIsFormVisible(true)}
                                 value={editFilter.tags}
                                 // onChange={(e) => {

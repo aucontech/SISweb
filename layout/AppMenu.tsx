@@ -17,20 +17,10 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-home",
                             to: "/OTSUKA",
                         },
-                        // {
-                        //     label: "Setup Data",
-                        //     icon: "pi pi-fw pi-home",
-                        //     to: "/SetupData",
-                        // },
-                        // {
-                        //     label: "Score card",
-                        //     icon: "pi pi-fw pi-home",
-                        //     to: "/scorecard",
-                        // },
                     ],
                 },
                 {
-                    label: "Alarm" ,
+                    label: "Alarms",
                     icon: "pi pi-home",
                     items: [
                         {
@@ -38,15 +28,15 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-comment",
                             to: "/alarmsummarycustomer",
                         },
-                        // {
-                        //     label: "Alarm History",
-                        //     icon: "pi pi-fw pi-calendar",
-                        //     to: "/alarmhistorycustomer",
-                        // },
+                        {
+                            label: "Alarm History",
+                            icon: "pi pi-fw pi-comment",
+                            to: "/alarmhistorycustomer",
+                        },
                     ],
                 },
                 {
-                    label: "Setting",
+                    label: "Settings",
                     icon: "pi pi-home",
                     items: [
                         {
@@ -60,8 +50,6 @@ const AppMenu = () => {
             setModel(modelData);
         } else {
             const modelData: MenuModel[] = [
-
-               
                 {
                     label: "Dashboards",
                     icon: "pi pi-home",
@@ -87,7 +75,7 @@ const AppMenu = () => {
                 },
 
                 {
-                    label: "Alarm",
+                    label: "Alarms",
                     icon: "pi pi-home",
                     items: [
                         {
@@ -103,7 +91,7 @@ const AppMenu = () => {
                     ],
                 },
                 {
-                    label: "Device",
+                    label: "Devices",
                     icon: "pi pi-home",
                     items: [
                         {
@@ -140,7 +128,7 @@ const AppMenu = () => {
                 //     ],
                 // },
                 {
-                    label: "Report",
+                    label: "Reports",
                     icon: "pi pi-home",
                     items: [
                         {
@@ -172,7 +160,7 @@ const AppMenu = () => {
                     ],
                 },
                 {
-                    label: "Setting",
+                    label: "Settings",
                     icon: "pi pi-home",
                     items: [
                         {

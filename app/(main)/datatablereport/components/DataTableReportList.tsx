@@ -153,6 +153,12 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                 </div>
             ) : (
                 <>
+                    <ExportToExcel
+                        filters={filters}
+                        data={tableData}
+                        columns={columnExcelHeaders}
+                        user={currentUser}
+                    />
                     <DataTable
                         paginator
                         rows={10}
@@ -173,13 +179,6 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
                             />
                         ))}
                     </DataTable>
-
-                    <ExportToExcel
-                        filters={filters}
-                        data={tableData}
-                        columns={columnExcelHeaders}
-                        user={currentUser}
-                    />
                 </>
             )}
         </div>

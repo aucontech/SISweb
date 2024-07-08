@@ -1,6 +1,6 @@
 "use client";
-import AlarmList from "./components/AlarmList";
-import FilterAlarm from "./components/FilterAlarm";
+import AlarmList from "../components/AlarmList";
+import FilterAlarm from "../components/FilterAlarm";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getDeviceById } from "@/api/device.api";
@@ -30,7 +30,8 @@ const Alarm = () => {
                     onAction={_onFilterChange}
                     showDevice={true}
                     showDate={true}
-                    showAlarmType={true}
+                    showStatus={true}
+                    showSeverity={true}
                 />
             </div>
             <AlarmList filters={filters} />
