@@ -358,4 +358,14 @@ export const edgePRU = [
         target: "EVC_02_Flow_at_Base_Condition",
         type: "smoothstep",
     },
+
+    {
+        id: "line9none-line10none",
+        source: "line9none",
+        target: "line10none",
+        type: "smoothstep",
+        style: {
+            ...styleLine3,
+        },
+    },
 ]

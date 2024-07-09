@@ -11,7 +11,8 @@ export default function AlarmOTSUKA() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const ws = useRef<WebSocket | null>(null);
-    const [alarmCount, setAlarmCount] = useState<number>(0);
+    const [totalElements, setTotalElements] = useState<number>(0);
+    console.log('totalElements: ', totalElements);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
@@ -80,15 +81,10 @@ export default function AlarmOTSUKA() {
             };
 
             ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    const dataReceive = JSON.parse(evt.data);
-                    const alarmDataArray = dataReceive.data.data || [];
-                    if (alarmDataArray.length === 0) {
-                        setAlarmCount(0);
-                    } else {
-                        setAlarmCount(1);
-                    }
+                const dataReceived = JSON.parse(evt.data);
+                if (dataReceived.data) {
+                    const totalElements = dataReceived.data.totalElements || 0;
+                    setTotalElements(totalElements);
                 }
             };
 
@@ -105,41 +101,44 @@ export default function AlarmOTSUKA() {
 
     return (
         <div>
-            {alarmCount === 0 ? (
+
+            {totalElements === undefined ? (
+                <div style={{}}></div>
+            ) : totalElements > 0 ? (
                 <div
                     style={{
-                        background: "green",
+                        background: 'red',
                         width: 150,
                         height: 60,
-                        textAlign: "center",
-                        justifyContent: "center",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "white",
-                        borderRadius: 5,
-                        fontWeight: 500,
-                        fontSize: 25,
-                    }}
-                >
-                    Normal
-                </div>
-            ) : (
-                <div
-                    style={{
-                        background: "red",
-                        width: 150,
-                        height: 60,
-                        textAlign: "center",
-                        justifyContent: "center",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "white",
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
                         borderRadius: 5,
                         fontWeight: 500,
                         fontSize: 25,
                     }}
                 >
                     Alarming
+                </div>
+            ) : (
+                <div
+                    style={{
+                        background: 'green',
+                        width: 150,
+                        height: 60,
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
+                        borderRadius: 5,
+                        fontWeight: 500,
+                        fontSize: 25,
+                    }}
+                >
+                    Normal
                 </div>
             )}
         </div>

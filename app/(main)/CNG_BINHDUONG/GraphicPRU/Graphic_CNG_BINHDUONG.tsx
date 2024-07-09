@@ -129,6 +129,10 @@ export default function Graphic_CNG_BINHDUONG() {
     >(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
     const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+    const [LPG,setLPG] = useState<any>()
+    const [AIR,setAIR] = useState<any>()
+
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -325,6 +329,12 @@ export default function Graphic_CNG_BINHDUONG() {
                         EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
                         PLC_Conn_STT: setPLC_STT,
+
+                        
+                        PERCENT_AIR:setAIR,
+                        PERCENT_LPG:setLPG,
+
+
                     };
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
@@ -4055,13 +4065,13 @@ export default function Graphic_CNG_BINHDUONG() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionPRU");
+    // const storedPositionString = localStorage.getItem("positionPRU");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
-              Arrow10: { x: -492.7447218166488, y: 1273.1631739409133 },
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+                const initialPositions = {
+              Arrow10: { x: -419.8018780792174, y: 1273.381523476552 },
               BallVavleLine2_Bottom: {
                   x: -1661.682672878477,
                   y: 1481.0920733587484,
@@ -4350,20 +4360,20 @@ export default function Graphic_CNG_BINHDUONG() {
               PT_2002_DATA: { x: -1993.699445139633, y: 1586.4921741314997 },
               PT_2002_IMG: { x: -1898.5737924878463, y: 986.4938130080379 },
               PT_2002_NONE: { x: -1866.220994341128, y: 1425.5940219176825 },
-              PT_2003: { x: -557.5192503184699, y: 1187.6953023585315 },
-              PT_2003_COL: { x: -524.7686430061353, y: 1250.0518497796409 },
-              PT_2003_DATA: { x: -635.9823668842814, y: 1114.4814628687584 },
-              PT_2003_NONE: { x: -525.5207270322528, y: 1211.5866709113047 },
+              PT_2003: { x: -666.2089558729057, y: 1188.8850079129675 },
+              PT_2003_COL: { x: -633.9583485605712, y: 1251.8967025568588 },
+              PT_2003_DATA: { x: -742.9610697521994, y: 1091.3785184131166 },
+              PT_2003_NONE: { x: -633.0354493104628, y: 1209.00064035183 },
               SDV_2001A: { x: -2367.264096852104, y: 1047.9003450623102 },
               SDV_2001A_Name: { x: -2400.231075578696, y: 1016.8765739089936 },
               SDV_2001B: { x: -2347.936922940682, y: 1461.553943767321 },
               SDV_2001B_Name: { x: -2380.436922940682, y: 1431.1155032793695 },
-              SDV_2002: { x: -678.3418360296369, y: 1247.6338925770501 },
-              SDV_2002_Name: { x: -711.4498629335723, y: 1217.0152763122878 },
-              TT_2001: { x: -774.5849596388143, y: 1165.272375766297 },
-              TT_2001_COL: { x: -752.0228109693398, y: 1212.6484692154747 },
-              TT_2001_DATA: { x: -861.674501492153, y: 1027.5582788874765 },
-              TT_2001_NONE: { x: -751.7461176685688, y: 1198.7307209642906 },
+              SDV_2002: { x: -546.8250410658575, y: 1247.6548809936753 },
+              SDV_2002_Name: { x: -578.6384414106462, y: 1206.9501983013681 },
+              TT_2001: { x: -804.780575412963, y: 1160.3568104077146 },
+              TT_2001_COL: { x: -782.9206503661431, y: 1211.2440219701655 },
+              TT_2001_DATA: { x: -891.8701172663017, y: 1010.002688321111 },
+              TT_2001_NONE: { x: -781.9417334427174, y: 1174.1528941713789 },
               bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
               bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
@@ -4378,7 +4388,12 @@ export default function Graphic_CNG_BINHDUONG() {
               line7: { x: -1036.0060026105384, y: 1098.3096365331119 },
               line8: { x: -1037.0272391551282, y: 1512.874739139494 },
               line9: { x: -661.0207270322528, y: 1298.5866709113047 },
+              line9none: { x: -713.1893118583799, y: 1298.7824600879364 },
               line10: { x: -449.9501828459661, y: 1298.5866709113047 },
+              line10none: { x: -405.6683476271253, y: 1298.7587875755169 },
+
+              percent: { x: -405.6683476271253, y: 1298.7587875755169 },
+
               timeUpdate3: { x: -2381.52648946302, y: 800.0866709113047 },
           };
 
@@ -4885,6 +4900,41 @@ export default function Graphic_CNG_BINHDUONG() {
         {
             id: "line10",
             position: positions.line10,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+
+        {
+            id: "line9none",
+            position: positions.line9none,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+        {
+            id: "line10none",
+            position: positions.line10none,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -7060,714 +7110,724 @@ export default function Graphic_CNG_BINHDUONG() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
 
-    // const onNodeDragStop = useCallback(
-    //     (event: any, node: any) => {
-    //         if (editingEnabled) {
-    //             const { id, position } = node;
-    //             setNodes((prevNodes) =>
-    //                 prevNodes.map((n) =>
-    //                     n.id === id ? { ...n, position: position } : n
-    //                 )
-    //             );
-    //             if (id === "bor1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor1: position,
-    //                 }));
-    //             } else if (id === "bor2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor2: position,
-    //                 }));
-    //             } else if (id === "bor3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor3: position,
-    //                 }));
-    //             } else if (id === "bor4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor4: position,
-    //                 }));
-    //             } else if (id === "line1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line1: position,
-    //                 }));
-    //             } else if (id === "line2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line2: position,
-    //                 }));
-    //             } else if (id === "line3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3: position,
-    //                 }));
-    //             } else if (id === "line4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4: position,
-    //                 }));
-    //             } else if (id === "line5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line7: position,
-    //                 }));
-    //             } else if (id === "line8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line8: position,
-    //                 }));
-    //             } else if (id === "line9") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line9: position,
-    //                 }));
-    //             } else if (id === "line10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line10: position,
-    //                 }));
-    //             } else if (id === "Arrow10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow10: position,
-    //                 }));
-    //             } else if (id === "GD_2001") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_2001: position,
-    //                 }));
-    //             } else if (id === "GD_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_IMG: position,
-    //                 }));
-    //             }
+    const onNodeDragStop = useCallback(
+        (event: any, node: any) => {
+            if (editingEnabled) {
+                const { id, position } = node;
+                setNodes((prevNodes) =>
+                    prevNodes.map((n) =>
+                        n.id === id ? { ...n, position: position } : n
+                    )
+                );
+                if (id === "bor1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor1: position,
+                    }));
+                } else if (id === "bor2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor2: position,
+                    }));
+                } else if (id === "bor3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor3: position,
+                    }));
+                } else if (id === "bor4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor4: position,
+                    }));
+                } else if (id === "line1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line1: position,
+                    }));
+                } else if (id === "line2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line2: position,
+                    }));
+                } else if (id === "line3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3: position,
+                    }));
+                } else if (id === "line4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4: position,
+                    }));
+                } else if (id === "line5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line7: position,
+                    }));
+                } else if (id === "line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line8: position,
+                    }));
+                } else if (id === "line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9: position,
+                    }));
+                } else if (id === "line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10: position,
+                    }));
+                } else if (id === "Arrow10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow10: position,
+                    }));
+                } else if (id === "GD_2001") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_2001: position,
+                    }));
+                } else if (id === "GD_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_IMG: position,
+                    }));
+                }
 
-    //             //======================= BallVavle 2 ====================================
-    //             else if (id === "BallVavleLine2_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Top: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Bottom: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Top_none: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Bottom_none: position,
-    //                 }));
-    //             }
+                //======================= BallVavle 2 ====================================
+                else if (id === "BallVavleLine2_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Top: position,
+                    }));
+                } else if (id === "BallVavleLine2_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Bottom: position,
+                    }));
+                } else if (id === "BallVavleLine2_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Top_none: position,
+                    }));
+                } else if (id === "BallVavleLine2_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Bottom_none: position,
+                    }));
+                }
 
-    //             //======================= BallVavle 3 ====================================
-    //             else if (id === "BallVavle_Line3_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavle_Line3_Top: position,
-    //                 }));
-    //             } else if (id === "BallVavle_Line3_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavle_Line3_Bottom: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine3_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine3_Top_none: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine3_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine3_Bottom_none: position,
-    //                 }));
-    //             }
+                //======================= BallVavle 3 ====================================
+                else if (id === "BallVavle_Line3_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavle_Line3_Top: position,
+                    }));
+                } else if (id === "BallVavle_Line3_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavle_Line3_Bottom: position,
+                    }));
+                } else if (id === "BallVavleLine3_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine3_Top_none: position,
+                    }));
+                } else if (id === "BallVavleLine3_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine3_Bottom_none: position,
+                    }));
+                }
 
-    //             //======================= BallVavle ====================================
-    //             else if (id === "PCV_2001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001A: position,
-    //                 }));
-    //             } else if (id === "PCV_2001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001B: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_none: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_none: position,
-    //                 }));
-    //             } else if (id === "PCV_2001B_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001B_none: position,
-    //                 }));
-    //             } else if (id === "PCV_2001A_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001A_none: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_2001B_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001B_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_2001A_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001A_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_2001B_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001B_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_2001A_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001A_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_2001A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001A_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_2002A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2002A_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_2001B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2001B_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_2002B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_2002B_DATA: position,
-    //                 }));
-    //             }
-    //             //======================= BallVavle ====================================
-    //             else if (id === "PT_2001_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2001_IMG: position,
-    //                 }));
-    //             } else if (id === "PT_2002_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2002_IMG: position,
-    //                 }));
-    //             } else if (id === "PIT_2006_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2006_IMG: position,
-    //                 }));
-    //             } else if (id === "PIT_2007_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2007_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_COL: position,
-    //                 }));
-    //             } else if (id === "PT_2001_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2001_COL: position,
-    //                 }));
-    //             } else if (id === "PT_2002_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2002_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_2006_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2006_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_2007_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2007_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_2006_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2006_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_2007_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2007_DATA: position,
-    //                 }));
-    //             } else if (id === "PT_2001_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2001_DATA: position,
-    //                 }));
-    //             } else if (id === "PT_2002_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2002_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_2006_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2006_NONE: position,
-    //                 }));
-    //             } else if (id === "PIT_2007_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_2007_NONE: position,
-    //                 }));
-    //             } else if (id === "PT_2001_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2001_NONE: position,
-    //                 }));
-    //             } else if (id === "PT_2002_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2002_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_NONE: position,
-    //                 }));
-    //             }
+                //======================= BallVavle ====================================
+                else if (id === "PCV_2001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001A: position,
+                    }));
+                } else if (id === "PCV_2001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001B: position,
+                    }));
+                } else if (id === "PCV_line1_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_none: position,
+                    }));
+                } else if (id === "PCV_line1_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_none: position,
+                    }));
+                } else if (id === "PCV_2001B_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001B_none: position,
+                    }));
+                } else if (id === "PCV_2001A_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001A_none: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_none2: position,
+                    }));
+                } else if (id === "PCV_line1_Top_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_none2: position,
+                    }));
+                } else if (id === "PCV_2001B_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001B_none2: position,
+                    }));
+                } else if (id === "PCV_2001A_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001A_none2: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_2001B_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001B_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_2001A_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001A_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_line1_Top_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_2001A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001A_DATA: position,
+                    }));
+                } else if (id === "PCV_2002A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2002A_DATA: position,
+                    }));
+                } else if (id === "PCV_2001B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2001B_DATA: position,
+                    }));
+                } else if (id === "PCV_2002B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_2002B_DATA: position,
+                    }));
+                }
+                //======================= BallVavle ====================================
+                else if (id === "PT_2001_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2001_IMG: position,
+                    }));
+                } else if (id === "PT_2002_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2002_IMG: position,
+                    }));
+                } else if (id === "PIT_2006_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2006_IMG: position,
+                    }));
+                } else if (id === "PIT_2007_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2007_IMG: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_IMG: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_IMG: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_COL: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_COL: position,
+                    }));
+                } else if (id === "PT_2001_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2001_COL: position,
+                    }));
+                } else if (id === "PT_2002_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2002_COL: position,
+                    }));
+                } else if (id === "PIT_2006_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2006_COL: position,
+                    }));
+                } else if (id === "PIT_2007_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2007_COL: position,
+                    }));
+                } else if (id === "PIT_2006_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2006_DATA: position,
+                    }));
+                } else if (id === "PIT_2007_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2007_DATA: position,
+                    }));
+                } else if (id === "PT_2001_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2001_DATA: position,
+                    }));
+                } else if (id === "PT_2002_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2002_DATA: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_DATA: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_DATA: position,
+                    }));
+                } else if (id === "PIT_2006_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2006_NONE: position,
+                    }));
+                } else if (id === "PIT_2007_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_2007_NONE: position,
+                    }));
+                } else if (id === "PT_2001_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2001_NONE: position,
+                    }));
+                } else if (id === "PT_2002_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2002_NONE: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_NONE: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_NONE: position,
+                    }));
+                }
 
-    //             //======================= BallVavle ====================================
-    //             else if (id === "EVC_01_Temperature") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_NONE: position,
-    //                 }));
-    //             }
+                //======================= BallVavle ====================================
+                else if (id === "EVC_01_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature: position,
+                    }));
+                } else if (id === "EVC_02_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_COL: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_COL: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_DATA: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_DATA: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_NONE: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_NONE: position,
+                    }));
+                }
 
-    //             // ========================= PSV LINE 2  ===============================
-    //             else if (id === "PSV_LINE2_TOP_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE2: position,
-    //                 }));
-    //             }
+                // ========================= PSV LINE 2  ===============================
+                else if (id === "PSV_LINE2_TOP_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE2: position,
+                    }));
+                }
 
-    //             // ========================= PSV LINE 2  ===============================
-    //             else if (id === "PSV_LINE3_TOP_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_HALFCIRCLE: position,
-    //                 }));
-    //             }
-    //             // ========================= Data  ===============================
-    //             else if (id === "SDV_2001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2001A: position,
-    //                 }));
-    //             } else if (id === "SDV_2001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2001B: position,
-    //                 }));
-    //             } else if (id === "SDV_2002") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2002: position,
-    //                 }));
-    //             } else if (id === "SDV_2001A_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2001A_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_2001B_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2001B_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_2002_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_2002_Name: position,
-    //                 }));
-    //             }
-    //             //========================== pit line 1 =========================
-    //             else if (id === "TT_2001") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_2001: position,
-    //                 }));
-    //             } else if (id === "TT_2001_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_2001_DATA: position,
-    //                 }));
-    //             } else if (id === "TT_2001_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_2001_COL: position,
-    //                 }));
-    //             } else if (id === "TT_2001_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TT_2001_NONE: position,
-    //                 }));
-    //             }
-    //             //========================== pit line 1 =========================
-    //             else if (id === "PT_2003") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2003: position,
-    //                 }));
-    //             } else if (id === "PT_2003_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2003_DATA: position,
-    //                 }));
-    //             } else if (id === "PT_2003_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2003_COL: position,
-    //                 }));
-    //             } else if (id === "PT_2003_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PT_2003_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Volume_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Volume_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Volume_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Flow_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Flow_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Flow_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Flow_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Flow_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Flow_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Flow_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Flow_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Volume_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Volume_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Volume_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Volume_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "FIQ_2001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_2001A: position,
-    //                 }));
-    //             } else if (id === "FIQ_2001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_2001B: position,
-    //                 }));
-    //             } else if (id === "PSV_2001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_2001A: position,
-    //                 }));
-    //             } else if (id === "PSV_2001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_2001B: position,
-    //                 }));
-    //             } else if (id === "PSV_2002A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_2002A: position,
-    //                 }));
-    //             } else if (id === "PSV_2002B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_2002B: position,
-    //                 }));
-    //             }
+                // ========================= PSV LINE 2  ===============================
+                else if (id === "PSV_LINE3_TOP_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_HALFCIRCLE: position,
+                    }));
+                }
+                // ========================= Data  ===============================
+                else if (id === "SDV_2001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2001A: position,
+                    }));
+                } else if (id === "SDV_2001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2001B: position,
+                    }));
+                } else if (id === "SDV_2002") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2002: position,
+                    }));
+                } else if (id === "SDV_2001A_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2001A_Name: position,
+                    }));
+                } else if (id === "SDV_2001B_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2001B_Name: position,
+                    }));
+                } else if (id === "SDV_2002_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_2002_Name: position,
+                    }));
+                }
+                //========================== pit line 1 =========================
+                else if (id === "TT_2001") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TT_2001: position,
+                    }));
+                } else if (id === "TT_2001_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TT_2001_DATA: position,
+                    }));
+                } else if (id === "TT_2001_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TT_2001_COL: position,
+                    }));
+                } else if (id === "TT_2001_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TT_2001_NONE: position,
+                    }));
+                }
+                //========================== pit line 1 =========================
+                else if (id === "PT_2003") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2003: position,
+                    }));
+                } else if (id === "PT_2003_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2003_DATA: position,
+                    }));
+                } else if (id === "PT_2003_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2003_COL: position,
+                    }));
+                } else if (id === "PT_2003_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_2003_NONE: position,
+                    }));
+                } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Volume_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Volume_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Volume_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Flow_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Flow_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Flow_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Flow_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Flow_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Flow_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Flow_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Flow_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Volume_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Volume_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Volume_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Volume_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "FIQ_2001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2001A: position,
+                    }));
+                } else if (id === "FIQ_2001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2001B: position,
+                    }));
+                } else if (id === "PSV_2001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_2001A: position,
+                    }));
+                } else if (id === "PSV_2001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_2001B: position,
+                    }));
+                } else if (id === "PSV_2002A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_2002A: position,
+                    }));
+                } else if (id === "PSV_2002B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_2002B: position,
+                    }));
+                }
 
-    //             // =====================================================
-    //             else if (id === "borderWhite") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     borderWhite: position,
-    //                 }));
-    //             } else if (id === "timeUpdate3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate3: position,
-    //                 }));
-    //             } else if (id === "Header") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Header: position,
-    //                 }));
-    //             } else if (id === "DownArrow") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     DownArrow: position,
-    //                 }));
-    //             }
-    //         }
-    //     },
-    //     [setNodes, setPositions, editingEnabled]
-    // );
+                // =====================================================
+                else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
+                } else if (id === "Header") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Header: position,
+                    }));
+                } else if (id === "DownArrow") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        DownArrow: position,
+                    }));
+                } else if (id === "line9none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9none: position,
+                    }));
+                } else if (id === "line10none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10none: position,
+                    }));
+                }
+            }
+        },
+        [setNodes, setPositions, editingEnabled]
+    );
     // const toggleEditing = () => {
     //     setEditingEnabled(!editingEnabled);
     // };

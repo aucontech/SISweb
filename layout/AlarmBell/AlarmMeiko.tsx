@@ -3,7 +3,7 @@ import { readToken } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { id_OTSUKA, id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
-export default function AlarmMeiko() {
+export default function AlarmOTSUKA() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
@@ -11,142 +11,100 @@ export default function AlarmMeiko() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const ws = useRef<WebSocket | null>(null);
-    const [alarmCount, setAlarmCount] = useState<number | undefined>(undefined);
-    console.log('alarmCount: ', alarmCount);
+    const [totalElements, setTotalElements] = useState<number>(0);
+    console.log('totalElements: ', totalElements);
 
     useEffect(() => {
-        const connectWebSocket = () => {
-            ws.current = new WebSocket(url);
+        ws.current = new WebSocket(url);
 
-            const obj1 = {
-                attrSubCmds: [],
-                tsSubCmds: [],
-                historyCmds: [],
-                entityDataCmds: [
-                    {
-                        query: {
-                            entityFilter: {
-                                type: "singleEntity",
-                                singleEntity: {
-                                    entityType: "DEVICE",
-                                    id: id_THACHTHAT,
-                                },
+        const obj1 = {
+            attrSubCmds: [],
+            tsSubCmds: [],
+            historyCmds: [],
+            entityDataCmds: [],
+            entityDataUnsubscribeCmds: [],
+            alarmDataCmds: [
+                {
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_THACHTHAT,
                             },
-                            pageLink: {
-                                pageSize: 1024,
-                                page: 0,
-                                sortOrder: {
-                                    key: {
-                                        type: "ENTITY_FIELD",
-                                        key: "createdTime",
-                                    },
-                                    direction: "DESC",
-                                },
-                            },
-                            entityFields: [
-                                { type: "ENTITY_FIELD", key: "name" },
-                                { type: "ENTITY_FIELD", key: "label" },
-                                { type: "ENTITY_FIELD", key: "additionalInfo" },
-                            ],
-                            latestValues: [],
                         },
-                        cmdId: 1,
-                    },
-                    {
-                        query: {
-                            entityFilter: {
-                                type: "singleEntity",
-                                singleEntity: {
-                                    entityType: "DEVICE",
-                                    id: id_THACHTHAT,
-                                },
-                            },
-                            pageLink: {
-                                pageSize: 1024,
-                                page: 0,
-                                sortOrder: {
-                                    key: {
-                                        type: "ENTITY_FIELD",
-                                        key: "createdTime",
-                                    },
-                                    direction: "DESC",
-                                },
-                            },
-                            entityFields: [
-                                { type: "ENTITY_FIELD", key: "name" },
-                                { type: "ENTITY_FIELD", key: "label" },
-                                { type: "ENTITY_FIELD", key: "additionalInfo" },
-                            ],
-                            latestValues: [],
-                        },
-                        cmdId: 2,
-                    },
-                ],
-                entityDataUnsubscribeCmds: [],
-                alarmDataCmds: [],
-                alarmDataUnsubscribeCmds: [],
-                entityCountCmds: [],
-                entityCountUnsubscribeCmds: [],
-                alarmCountCmds: [
-                    {
-                        query: {
+                        pageLink: {
+                            page: 0,
+                            pageSize: 10,
+                            textSearch: null,
+                            typeList: [],
                             severityList: ["CRITICAL"],
-                            statusList: ["ACTIVE", "UNACK"],
+                            statusList: ["ACTIVE"],
                             searchPropagatedAlarms: false,
                             assigneeId: null,
+                            sortOrder: {
+                                key: {
+                                    key: "createdTime",
+                                    type: "ALARM_FIELD",
+                                },
+                                direction: "DESC",
+                            },
+                            timeWindow: 86400000,
                         },
-                        cmdId: 3,
+                        alarmFields: [
+                            { type: "ALARM_FIELD", key: "createdTime" },
+                            { type: "ALARM_FIELD", key: "originator" },
+                            { type: "ALARM_FIELD", key: "type" },
+                            { type: "ALARM_FIELD", key: "severity" },
+                            { type: "ALARM_FIELD", key: "status" },
+                            { type: "ALARM_FIELD", key: "assignee" },
+                        ],
+                        entityFields: [],
+                        latestValues: [],
                     },
-                ],
-                alarmCountUnsubscribeCmds: [],
-            };
+                    cmdId: 1,
+                },
+            ],
+            alarmDataUnsubscribeCmds: [],
+            entityCountCmds: [],
+            entityCountUnsubscribeCmds: [],
+            alarmCountCmds: [],
+            alarmCountUnsubscribeCmds: [],
+        };
 
+        if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connection opened.");
-                ws.current?.send(JSON.stringify(obj1));
+                console.log("WebSocket connected");
+                setTimeout(() => {
+                    ws.current?.send(JSON.stringify(obj1));
+                });
             };
 
             ws.current.onmessage = (evt) => {
-                const dataReceive = JSON.parse(evt.data);
-                setAlarmCount(dataReceive.count);
+                const dataReceived = JSON.parse(evt.data);
+                if (dataReceived.data) {
+                    const totalElements = dataReceived.data.totalElements || 0;
+                    setTotalElements(totalElements);
+                }
             };
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
             };
-        };
 
-        connectWebSocket();
-
-        const interval = setInterval(() => {
-            if (ws.current?.readyState === WebSocket.OPEN) {
-                ws.current.send(JSON.stringify({
-                    alarmCountCmds: [
-                        {
-                            query: {
-                                severityList: ["CRITICAL"],
-                                statusList: ["ACTIVE", "UNACK"],
-                                searchPropagatedAlarms: false,
-                                assigneeId: null,
-                            },
-                            cmdId: 3,
-                        },
-                    ],
-                }));
-            }
-        }, 10000); // 10 seconds interval
-
-        return () => {
-            clearInterval(interval);
-            ws.current?.close();
-        };
+            return () => {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current?.close();
+            };
+        }
     }, [url]);
 
     return (
         <div>
-            {alarmCount === undefined ? (
+
+            {totalElements === undefined ? (
                 <div style={{}}></div>
-            ) : alarmCount > 0 ? (
+            ) : totalElements > 0 ? (
                 <div
                     style={{
                         background: 'red',
