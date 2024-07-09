@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { readToken } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
-import {  id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
+import { id_KOA } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
-export default function AlarmMeiko() {
+export default function AlarmKOA() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
@@ -30,7 +30,7 @@ export default function AlarmMeiko() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_THACHTHAT,
+                                id: id_KOA,
                             },
                         },
                         pageLink: {

@@ -3262,7 +3262,7 @@ export default function Graphic_MEIKO() {
             data: {
                 label: (
                     <div>
-                        <AlarmMeiko />
+                        <AlarmMeiko/>
                     </div>
                 ),
             },

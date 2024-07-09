@@ -2687,7 +2687,7 @@ export default function GraphicZOCV() {
                                         ></i>
                                     </span>
                                 )} */}
-                                FIQ-1101 : Not used
+                                FIQ-1101 
                             </div>
                         ),
                     },

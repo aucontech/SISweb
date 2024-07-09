@@ -1333,33 +1333,7 @@ export default function DemoFlowOTS() {
         }
     }, [audioSVA2]);
 
-    const ChangeMaintainSVA_2 = async () => {
-        try {
-            const newValue = !maintainSVA2;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVA2_Maintain: newValue }
-            );
-            setMaintainSVA2(newValue);
 
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain SVA FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVA_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVA FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVA_2(),
-        });
-    };
 
     //================================ SVA2 FIQ 1901 ======================================================
 
@@ -1788,8 +1762,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVF1 && !maintainSVF1
@@ -1849,8 +1823,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVF1 && !maintainGVF1
@@ -1910,8 +1884,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVA1 && !maintainSVA1
@@ -1972,8 +1946,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdGVA1 && !maintainGVA1
@@ -2035,8 +2009,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVF2 && !maintainSVF2
@@ -2097,8 +2071,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVF2 && !maintainGVF2
@@ -2159,8 +2133,8 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVA2 && !maintainSVA2
@@ -2221,8 +2195,7 @@ export default function DemoFlowOTS() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 8,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVA2 && !maintainGVA2

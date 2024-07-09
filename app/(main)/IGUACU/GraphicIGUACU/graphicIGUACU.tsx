@@ -5108,7 +5108,7 @@ export default function GraphicIGUACU() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
+                width: 390,
 
                 height: 10,
             },
@@ -5483,7 +5483,7 @@ export default function GraphicIGUACU() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 420,
+                width: 440,
                 height: 220,
                 borderRadius: 50,
             },

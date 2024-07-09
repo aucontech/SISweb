@@ -3,7 +3,7 @@ import { readToken } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { id_OTSUKA, id_SPMCV, id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
-export default function AlarmOTSUKA() {
+export default function AlarmSPMCV() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
