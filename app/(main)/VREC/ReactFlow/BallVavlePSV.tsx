@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { BallVavle, BallVavleOff, BallVavleOn, BallVavleRightOff } from "../GraphicVREC/iconSVG";
 import { id_VREC } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import {  GetTelemetry_id_VREC, PostTelemetry_id_VREC } from "../GraphicVREC/Api_ZOVC";
+
 
 export default function BallVavlePSV() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -133,7 +134,7 @@ export default function BallVavlePSV() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-                PostTelemetry_ZOVC,
+                PostTelemetry_id_VREC,
               
                 { BallVavlePSV: newValue }
             );
@@ -144,7 +145,7 @@ export default function BallVavlePSV() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                GetTelemetry_ZOVC,
+                GetTelemetry_id_VREC,
             );
             setData(res.data);
         } catch (error) {}

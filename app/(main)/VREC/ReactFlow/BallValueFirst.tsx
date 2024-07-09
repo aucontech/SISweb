@@ -3,7 +3,8 @@ import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
 import {  BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
 import { id_VREC } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import {  GetTelemetry_id_VREC, PostTelemetry_id_VREC } from "../GraphicVREC/Api_ZOVC";
+
 
 // export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
 
@@ -136,7 +137,7 @@ export default function BallValueFirst() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-                PostTelemetry_ZOVC,
+                PostTelemetry_id_VREC,
                 { BallValue_First: newValue }
             );
             setSensorData(newValue);
@@ -147,7 +148,7 @@ export default function BallValueFirst() {
         const fetchData = async () => {
             try {
                 const res = await httpApi.get(
-                   GetTelemetry_ZOVC
+                   GetTelemetry_id_VREC
                 );
                 setData(res.data);
                 const ballValue = res.data.find((item: any) => item.key === "BallValue_First")?.value;

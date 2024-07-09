@@ -3,7 +3,7 @@ import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
 import { BallVavleOff, BallVavleOn } from "../GraphicVREC/iconSVG";
 import { id_VREC } from "../../data-table-device/ID-DEVICE/IdDevice";
-import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicVREC/Api_ZOVC";
+import {  GetTelemetry_id_VREC, PostTelemetry_id_VREC } from "../GraphicVREC/Api_ZOVC";
 
 export default function BallValue05() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -132,7 +132,7 @@ export default function BallValue05() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-                PostTelemetry_ZOVC,
+                PostTelemetry_id_VREC,
                 { BallValue_05: newValue }
             );
             setSensorData(newValue);
@@ -142,7 +142,7 @@ export default function BallValue05() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                GetTelemetry_ZOVC
+                GetTelemetry_id_VREC
             );
             setData(res.data);
         } catch (error) {}
