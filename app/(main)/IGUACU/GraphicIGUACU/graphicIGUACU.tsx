@@ -60,6 +60,7 @@ import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
 import { Status } from "../../Graphic/StatusGraphic";
+import AlarmIGUACU from "@/layout/AlarmBell/AlarmIGUACU";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -5575,7 +5576,7 @@ export default function GraphicIGUACU() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmIGUACU />
                     </div>
                 ),
             },

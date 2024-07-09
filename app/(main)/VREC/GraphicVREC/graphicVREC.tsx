@@ -56,6 +56,7 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_id_VREC, PostTelemetry_id_VREC } from "./Api_ZOVC";
+import AlarmVREC from "@/layout/AlarmBell/AlarmVREC";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -5525,7 +5526,7 @@ export default function GraphicVREC() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmVREC />
                     </div>
                 ),
             },

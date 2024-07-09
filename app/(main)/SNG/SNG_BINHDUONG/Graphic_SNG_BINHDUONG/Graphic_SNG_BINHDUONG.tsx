@@ -2530,9 +2530,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                             position: "absolute",
                                             top: "0",
                                         }}
-                                    >
-
-                                    </div>
+                                    ></div>
                                     <div
                                         className="name"
                                         style={{
@@ -2558,12 +2556,18 @@ export default function Graphic_SNG_BINHDUONG() {
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{fontSize:'23px', fontWeight:500}}>
-                               <p style={{alignItems:'center', justifyContent:'center', textAlign:'center'}}>
-                               LPG 
-                               </p>
+                            <div style={{ fontSize: "23px", fontWeight: 500 }}>
+                                <p
+                                    style={{
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    LPG
+                                </p>
 
-                               <p>{LPG} %</p>
+                                <p>{LPG} %</p>
                             </div>
                         ),
                     },
@@ -2576,12 +2580,18 @@ export default function Graphic_SNG_BINHDUONG() {
                     data: {
                         ...node.data,
                         label: (
-                            <div style={{fontSize:'23px', fontWeight:500}}>
-                              <p style={{alignItems:'center', justifyContent:'center', textAlign:'center'}}>
-                               AIR 
-                               </p>
+                            <div style={{ fontSize: "23px", fontWeight: 500 }}>
+                                <p
+                                    style={{
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    AIR
+                                </p>
 
-                               <p>{AIR} %</p>
+                                <p>{AIR} %</p>
                             </div>
                         ),
                     },
@@ -2593,12 +2603,12 @@ export default function Graphic_SNG_BINHDUONG() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionMEIKO");
+    // const storedPositionString = localStorage.getItem("positionMEIKO");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AIR_INLET: { x: -2721.4692108086797, y: 2178.2907767624192 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
               Arrow2: { x: -2246.4848054605154, y: 2163.170126568243 },
@@ -2620,6 +2630,8 @@ export default function Graphic_SNG_BINHDUONG() {
               BallValue11: { x: -2562.687334970434, y: 1525.380959202904 },
               BallValue22: { x: -2568.3193414331317, y: 1857.5519670170406 },
               BallValue33: { x: -2565.343560648521, y: 2151.586409954696 },
+              DATA_AIR: { x: -787.1794744946745, y: 2214.105613896207 },
+              DATA_LPG: { x: -794.9699574379098, y: 1440.04907533999 },
               FCV_2001: { x: -1254.3812438605855, y: 2023.7863110251546 },
               FCV_BOTTOM: { x: -1168.803254788462, y: 2125.64217446725 },
               FCV_MODE: { x: -1132.3050547590105, y: 1256.5220916366088 },
@@ -2684,10 +2696,6 @@ export default function Graphic_SNG_BINHDUONG() {
               line2: { x: -945.3136370318025, y: 1897.7955179886687 },
               line3: { x: -2524.296141994977, y: 2189.2006419886534 },
               percent: { x: -802.620762343302, y: 1565.641363272772 },
-              DATA_AIR: { x: -802.620762343302, y: 1565.641363272772 },
-
-              DATA_LPG: { x: -802.620762343302, y: 1565.641363272772 },
-
               timeUpdate3: { x: -2820.484797907167, y: 1247.8726878582834 },
           };
 
@@ -3886,7 +3894,7 @@ export default function Graphic_SNG_BINHDUONG() {
                 border: borderBox,
                 width: 120,
                 height: 120,
-                borderRadius:100
+                borderRadius: 100,
             },
             targetPosition: Position.Bottom,
         },
@@ -3902,7 +3910,7 @@ export default function Graphic_SNG_BINHDUONG() {
                             fontWeight: 600,
                         }}
                     >
-                   AIR
+                        AIR
                     </div>
                 ),
             },
@@ -3913,13 +3921,10 @@ export default function Graphic_SNG_BINHDUONG() {
                 border: borderBox,
                 width: 120,
                 height: 120,
-                borderRadius:100
-
+                borderRadius: 100,
             },
             targetPosition: Position.Bottom,
         },
-
-     
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -4260,15 +4265,15 @@ export default function Graphic_SNG_BINHDUONG() {
         setEditingEnabled(!editingEnabled);
     };
 
-    useEffect(() => {
-        localStorage.setItem("positionMEIKO", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     // width: "100%",
@@ -4312,8 +4317,8 @@ export default function Graphic_SNG_BINHDUONG() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
