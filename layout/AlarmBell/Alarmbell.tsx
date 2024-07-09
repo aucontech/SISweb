@@ -11,7 +11,7 @@ import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold } from "react-icons/pi";
 import { Utils } from "@/service/Utils";
-import { OTSUKA_DEVICE_ID } from "@/constants/constans";
+import { OTSUKA_DEVICE_ID, MEIKO_DEVICE_ID } from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
 interface Notification {
     subject: string;
@@ -134,7 +134,10 @@ export default function Alarmbell() {
                                     type: "entityList",
                                     resolveMultiple: true,
                                     entityType: "DEVICE",
-                                    entityList: [OTSUKA_DEVICE_ID],
+                                    entityList: [
+                                        OTSUKA_DEVICE_ID,
+                                        MEIKO_DEVICE_ID,
+                                    ],
                                 },
                                 pageLink: {
                                     page: 0,
