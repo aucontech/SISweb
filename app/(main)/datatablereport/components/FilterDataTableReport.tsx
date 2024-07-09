@@ -310,7 +310,7 @@ const FilterDataTableReport: React.FC<Props> = ({
         <>
             <div className="grid p-fluid">
                 {showDevice && (
-                    <div className="col-12 lg:col-3">
+                    <div className="col-12 lg:col-3 md:col-3">
                         <span className="p-float-label">
                             <AutoComplete
                                 dropdown
@@ -327,7 +327,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                     </div>
                 )}
                 {showDate && (
-                    <div className="col-12 lg:col-3">
+                    <div className="col-12 lg:col-3 md:col-3">
                         <span className="p-float-label">
                             <Calendar
                                 value={editFilter.dates}
@@ -344,11 +344,11 @@ const FilterDataTableReport: React.FC<Props> = ({
                     </div>
                 )}
                 {showTags && (
-                    <div className="col-12 lg:col-3">
+                    <div className="col-12 lg:col-3 md:col-4">
                         <span className="p-float-label">
                             <Button
                                 // dropdown
-                                className="w-5 flex justify-content-center"
+                                className="w-6 flex justify-content-center"
                                 onClick={() => setIsFormVisible(true)}
                                 value={editFilter.tags}
                                 // onChange={(e) => {

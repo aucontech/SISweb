@@ -20,7 +20,7 @@ const showError = ({
     let life = 7000;
     sticky = sticky === undefined ? false : sticky;
     if (error) {
-        toast.show({ severity, summary, detail: error, sticky, life });
+        toast?.show({ severity, summary, detail: error, sticky, life });
         return;
     }
     return;
