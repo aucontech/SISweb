@@ -2708,7 +2708,7 @@ export default function GraphicLGDS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "center",
@@ -2742,7 +2742,7 @@ export default function GraphicLGDS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "center",
@@ -2778,10 +2778,11 @@ export default function GraphicLGDS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-              ArrowRight: { x: 356.13814192842443, y: 1023.694783335719 },
-              ArrowRight1: { x: -1234.9855228544018, y: 1028.4017827933426 },
+              ArrowRight: { x: 706.1381419284244, y: 1023.694783335719 },
+              ArrowRight1: { x: -1310.4855228544018, y: 1027.4017827933426 },
+              ArrowRight2: { x: 704.5144771455982, y: 1305.4017827933426 },
               BallValue01: { x: -1124.791936249579, y: 1134.3068528748481 },
               BallValue02: { x: -953.0583181071518, y: 1141.6043679334266 },
               BallValue03: { x: -127.79621954129698, y: 899.6124566834239 },
@@ -2793,8 +2794,8 @@ export default function GraphicLGDS() {
               BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
               BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
               BallValue13_Line7Last: {
-                  x: 627.4013311130955,
-                  y: 1291.6241510603852,
+                  x: 617.9013311130955,
+                  y: 1290.6241510603852,
               },
               BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
               BallValueCenter_Check: {
@@ -2809,8 +2810,8 @@ export default function GraphicLGDS() {
                   x: -458.43233108676895,
                   y: 1047.9161594286932,
               },
-              BallValueFirst: { x: 625.4162665003979, y: 1008.7971963003097 },
-              BallValueLast: { x: -1308.166509063442, y: 1014.389416442682 },
+              BallValueFirst: { x: 621.4162665003979, y: 1008.7971963003097 },
+              BallValueLast: { x: -1230.666509063442, y: 1014.389416442682 },
               BallValuePSV: { x: 289.72148707331525, y: 959.3028379757588 },
               BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
               BallVavleSDV_BOTTOM: {
@@ -2843,6 +2844,9 @@ export default function GraphicLGDS() {
               Header: { x: -1024.1333958267373, y: 511.90588253142255 },
               Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
               Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
+              LineBall_1_1: { x: -1308.1239277818895, y: 1045.9869361614612 },
+              LineBall_13: { x: 720.9953422797897, y: 1041.1767855578794 },
+              LineBall_14: { x: 722.4431724600979, y: 1323.2688737834267 },
               PCV01: { x: -72.47814833790082, y: 884.6622322842105 },
               PCV02: { x: -72.36105695687999, y: 1114.7032165712826 },
               PCV_NUM01: { x: -161.7625021188708, y: 789.6330305586855 },
@@ -2877,7 +2881,7 @@ export default function GraphicLGDS() {
               PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
               PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
               PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-              PSV_None01: { x: 641.7404382417537, y: 1040.7984512500652 },
+              PSV_None01: { x: 432.74043824175374, y: 1041.2984512500652 },
               PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
               PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
               PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
@@ -2968,7 +2972,7 @@ export default function GraphicLGDS() {
               data6: { x: -601.4899354376018, y: 1407.45614519134 },
               data7: { x: -601.7877880852783, y: 1458.2084404105979 },
               data8: { x: -601.8775802253477, y: 1509.1026107237653 },
-              line1: { x: -1285.1281398603076, y: 1045.9201535079228 },
+              line1: { x: -1213.6281398603076, y: 1045.9201535079228 },
               line2: { x: -845.3367977758118, y: 1046.097424130381 },
               line3: { x: -743.0134159304, y: 844.6163804041859 },
               line4: { x: -743.9949690251686, y: 1249.172245093845 },
@@ -2980,7 +2984,7 @@ export default function GraphicLGDS() {
               line10: { x: 86.69745659087829, y: 930.5099856332267 },
               line11: { x: 86.19431979613125, y: 1160.0153295862324 },
               line12: { x: 212.34921055529412, y: 1040.345253330986 },
-              line13: { x: 641.4953422797897, y: 1041.1767855578794 },
+              line13: { x: 638.9953422797897, y: 1041.1767855578794 },
               overlay_SmallVavle1: {
                   x: -531.2918361488164,
                   y: 919.397327575481,
@@ -2991,7 +2995,7 @@ export default function GraphicLGDS() {
               },
               overlay_line7: { x: -236.18344947635651, y: 1045.7973361160095 },
               overlay_line13: { x: 167.2070841208254, y: 1038.3974423646882 },
-              overlay_lineLast: { x: 644.824687472906, y: 1323.5053414660558 },
+              overlay_lineLast: { x: 635.324687472906, y: 1323.0053414660558 },
               timeUpdate3: { x: -1142.6573519525596, y: 587.3210357658719 },
           };
     const [positions, setPositions] = useState(initialPositions);
@@ -3283,7 +3287,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 30,
+                width: 35,
                 height: 10,
                 background: background,
             },
@@ -3490,7 +3494,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Left,
             style: {
                 border: "none",
-                width: 10,
+                width: 35,
                 height: 1,
                 background: background,
             },
@@ -3535,7 +3539,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: line,
+                background: 'none',
                 width: 30,
                 height: 1,
             },
@@ -3613,7 +3617,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: line,
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -3691,7 +3695,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: line,
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -5385,7 +5389,23 @@ export default function GraphicLGDS() {
             },
             targetPosition: Position.Bottom,
         },
+        {
+            id: "ArrowRight2",
+            data: {
+                label: <div>{ArrowRight}</div>,
+            },
 
+            position: positions.ArrowRight2,
+
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
+
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
         // {
         //     id: "Flow1",
         //     data: {
@@ -5782,12 +5802,12 @@ export default function GraphicLGDS() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
                 background: background,
-                width: 0,
+                width: 35,
                 height: 0,
             },
         },
@@ -5883,6 +5903,59 @@ export default function GraphicLGDS() {
             },
 
             sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+
+        {
+            id: "LineBall_1_1",
+            position: positions.LineBall_1_1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+
+        {
+            id: "LineBall_13",
+            position: positions.LineBall_13,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: "none",
+                width: 10,
+                height: 1,
+            },
+        },
+        {
+            id: "LineBall_14",
+            position: positions.LineBall_14,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
                 border: "#333333",
@@ -6657,15 +6730,36 @@ export default function GraphicLGDS() {
                         ...prevPositions,
                         Line2_NONE1: position,
                     }));
+                } else if (id === "LineBall_1_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        LineBall_1_1: position,
+                    }));
+                } else if (id === "LineBall_13") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        LineBall_13: position,
+                    }));
+                } else if (id === "LineBall_14") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        LineBall_14: position,
+                    }));
+                } else if (id === "ArrowRight2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        ArrowRight2: position,
+                    }));
                 }
             }
         },
+
         [setNodes, setPositions, editingEnabled]
     );
 
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);

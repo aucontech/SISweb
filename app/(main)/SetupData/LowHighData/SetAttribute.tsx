@@ -215,7 +215,7 @@ export default function SetAttribute() {
                     dataReceived.update.length > 0
                 ) {
                     const updatedData3 =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01.value;
+                        dataReceived.update[0].latest.ATTRIBUTE?.PSV_01.value;
 
                     setUpData3(updatedData3);
                 }

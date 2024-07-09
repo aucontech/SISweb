@@ -496,6 +496,44 @@ export const edgeZOVC = [
         style: {
             ...styleLine
         }
+    }, 
+    {
+        id: "line1-LineBall_1_1",
+        source: "LineBall_1_1",
+        target: "line1",
+        // animated: true,
+        type: "smoothstep",
+        style: {
+            ...styleLine
+        }
+
+     
+    },
+
+    {
+        id: "line13-LineBall_13",
+        source: "line13",
+        target: "LineBall_13",
+        // animated: true,
+        type: "smoothstep",
+        style: {
+            ...styleLine
+        }
+
+     
+    },
+
+    {
+        id: "overlay_lineLast-LineBall_14",
+        source: "overlay_lineLast",
+        target: "LineBall_14",
+        // animated: true,
+        type: "smoothstep",
+        style: {
+            ...styleLine
+        }
+
+     
     },
 
 ];

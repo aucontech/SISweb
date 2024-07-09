@@ -1,0 +1,36 @@
+.column-chart {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100px; /* Chiều cao cố định của cột */
+    width: 100px;  /* Chiều rộng cố định của cột */
+    border: 1px solid #000; /* Đường viền tùy chỉnh cho cột */
+    position: relative;
+  }
+  
+  .column {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse; /* Đặt để name từ dưới lên và id từ trên xuống */
+  }
+  
+  .id, .name {
+    width: 100%;
+    text-align: center;
+    color: white; /* Màu chữ tùy chỉnh */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .id {
+    background-color: red; /* Màu cho ID */
+   
+  }
+  
+  .name {
+    background-color: blue; /* Màu cho Name */
+    position:absolute;
+    top: 0;
+  }
+  

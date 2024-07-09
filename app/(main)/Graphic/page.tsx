@@ -24,6 +24,7 @@ import GraphicNITORI from '../NITORI/GraphicNITORI/graphicNITORI';
 import GraphicIGUACU from '../IGUACU/GraphicIGUACU/graphicIGUACU';
 import Graphic_SNG_BINHDUONG from '../SNG/SNG_BINHDUONG/Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG';
 import Graphic_SNG_HUNGYEN from '../SNG/SNG_HUNGYEN/Graphic_SNG_HUNGYEN/Graphic_SNG_HUNGYEN';
+import TestGraphicSogec from './TestGraphicSogec';
 
 export default function GraphicSogec() {
 
@@ -51,8 +52,8 @@ export default function GraphicSogec() {
     };
   }, [isFullscreen]);
 
-  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<DemoFlowOTS />);
-  const [NG, setNG] = useState<string>('OTSUKA');
+  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<GraphicLGDS />);
+  const [NG, setNG] = useState<string>('LGDS');
   const [SNG, setSNG] = useState<string>('SNG');
 
   const [CNG, setCNG] = useState<string>('CNG');
@@ -206,7 +207,9 @@ export default function GraphicSogec() {
          
               { label: 'MEIKO', command: () => LPG_Click(<Graphic_MEIKO/>, 'MEIKO ') },
 
+              // { label: 'Test', command: () => LPG_Click(<AlarmOTSUKA/>, 'Test ') },
 
+              // { label: 'Test', command: () => LPG_Click(<TestGraphicSogec/>, 'Test ') },
             
             ]
           }

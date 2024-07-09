@@ -1538,28 +1538,32 @@ export default function DemoFlowOTS() {
                 (item: any) => item.key === "GD3_Low"
             );
             setLowGD03(LowGD03?.value || null);
+//========================================================================
 
             const HighSVF1 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setHighSVF1(HighSVF1?.value || null);
 
             const LowSVF1 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setLowSVF1(LowSVF1?.value || null);
+//========================================================================
+ 
 
             const HighGVF1 = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setHighGVF1(HighGVF1?.value || null);
 
             const LowGVF1 = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setLowGVF1(LowGVF1?.value || null);
+//========================================================================
 
             const HighSVA1 = res.data.find(
                 (item: any) =>
@@ -1572,6 +1576,7 @@ export default function DemoFlowOTS() {
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
             setLowSVA1(LowSVA1?.value || null);
+//========================================================================
 
             const HighGVA1 = res.data.find(
                 (item: any) =>
@@ -1584,50 +1589,55 @@ export default function DemoFlowOTS() {
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
             setLowGVA1(LowGVA1?.value || null);
+//========================================================================
 
             const HighSVF2 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
             setHighSVF2(HighSVF2?.value || null);
 
             const LowSVF2 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
             setLowSVF2(LowSVF2?.value || null);
+//========================================================================
 
             const HighGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
             setHighGVF2(HighGVF2?.value || null);
 
             const LowGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
             setLowGVF2(LowGVF2?.value || null);
+//========================================================================
 
             const HighSVA2 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_02_Volume_at_Base_Condition_High"
             );
             setHighSVA2(HighSVA2?.value || null);
 
             const LowSVA2 = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
             setLowSVA2(LowSVA2?.value || null);
+//========================================================================
 
             const HighGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
             setHighGVA2(HighGVA2?.value || null);
 
             const LowGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
             setLowGVA2(LowGVA2?.value || null);
+//========================================================================
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"

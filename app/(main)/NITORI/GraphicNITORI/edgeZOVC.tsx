@@ -29,22 +29,8 @@ export const edgeZOVC = [
     },
   
     {
-        id: "line2-line3",
-        source: "line2",
-        target: "line3",
-        type: "smoothstep",
-        // animated: true,
-        
-
-        style: {
-            ...styleLine,
-        },
-    },
-
-   
-    {
-        id: "line2-line4",
-        source: "line2",
+        id: "line3-line4",
+        source: "line3",
         target: "line4",
         // animated: true,
         type: "smoothstep",
@@ -53,65 +39,25 @@ export const edgeZOVC = [
             ...styleLine,
         },
     },
-    {
-        id: "line3-line5",
-        source: "line3",
-        target: "line5",
-        type: "smoothstep",
 
-        style: {
-            ...styleLine,
-        },
-    },
     {
         id: "line4-line6",
         source: "line4",
         target: "line6",
+        // animated: true,
         type: "smoothstep",
-        
+
         style: {
             ...styleLine,
         },
     },
 
-    {
-        id: "line5-line7",
-        source: "line5",
-        target: "line7",
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
 
     {
         id: "line6-line6",
         source: "line6",
-        target: "line7",
-        type: "smoothstep",
-        
-        style: {
-            ...styleLine,
-        },
-    },
-
-    {
-        id: "line7-line8",
-        source: "line7",
-        target: "line8",
-        type: "smoothstep",
+        target: "line5",
         // animated: true,
-        
-        style: {
-            ...styleLine,
-        },
-    },
-
-    {
-        id: "line7-line9",
-        source: "line7",
-        target: "line9",
         type: "smoothstep",
 
         style: {
@@ -119,9 +65,21 @@ export const edgeZOVC = [
         },
     },
     {
-        id: "line8-line10",
+        id: "line5-line3",
+        source: "line5",
+        target: "line3",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLine,
+        },
+    },
+
+    {
+        id: "line8-line9",
         source: "line8",
-        target: "line10",
+        target: "line9",
         // animated: true,
         type: "smoothstep",
 
@@ -129,6 +87,7 @@ export const edgeZOVC = [
             ...styleLine,
         },
     },
+  
     {
         id: "line9-line11",
         source: "line9",
@@ -140,21 +99,22 @@ export const edgeZOVC = [
             ...styleLine,
         },
     },
-   
     {
-        id: "line10-line12",
-        source: "line10",
-        target: "line12",
+        id: "line11-line10",
+        source: "line11",
+        target: "line10",
+        // animated: true,
         type: "smoothstep",
-        
+
         style: {
             ...styleLine,
         },
     },
     {
-        id: "line11-line12",
-        source: "line11",
-        target: "line12",
+        id: "line10-line8",
+        source: "line10",
+        target: "line8",
+        // animated: true,
         type: "smoothstep",
 
         style: {
@@ -228,8 +188,8 @@ export const edgeZOVC = [
     },
     {
         id: "line5-BallValueCenter_None2",
-        source: "BallValueCenter_None2",
-        target: "line5",
+        source: "line5",
+        target: "BallValueCenter_None2",
         // animated: true,
         type: "smoothstep",
 
@@ -433,5 +393,31 @@ export const edgeZOVC = [
         style: {
             ...styleLine
         }
+    },
+    {
+        id: "line1-LineBall_1_1",
+        source: "LineBall_1_1",
+        target: "line1",
+        // animated: true,
+        type: "smoothstep",
+        style: {
+            ...styleLine
+        }
+
+     
+    },
+
+
+    {
+        id: "line13-lineBall_13_1",
+        source: "line13",
+        target: "lineBall_13_1",
+        // animated: true,
+        type: "smoothstep",
+        style: {
+            ...styleLine
+        }
+
+     
     },
 ];
