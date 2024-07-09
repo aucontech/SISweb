@@ -133,6 +133,12 @@ export default function Graphic_CNG_BINHDUONG() {
     const [LPG,setLPG] = useState<any>()
     const [AIR,setAIR] = useState<any>()
 
+
+    const totalHeight = 500; 
+    const totalWidth = 50; 
+
+    const DataLPG = (totalHeight * LPG ) / 100 
+    const DataAir = (totalHeight * AIR ) / 100 
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -330,9 +336,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
                         PLC_Conn_STT: setPLC_STT,
 
-                        
-                        PERCENT_AIR:setAIR,
-                        PERCENT_LPG:setLPG,
+                   
 
 
                     };
@@ -2410,6 +2414,12 @@ export default function Graphic_CNG_BINHDUONG() {
     }, [audioEVC_02_Volume_at_Measurement_Condition]);
 
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+
+ 
+
+//====================================================================
+
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "EVC_01_Flow_at_Base_Condition") {
@@ -4056,6 +4066,27 @@ export default function Graphic_CNG_BINHDUONG() {
                                     </p>
                                 </div>
                             </div>
+                        ),
+                    },
+                };
+            }
+
+
+            if (node.id === "percent") {
+                return {
+                    ...node,
+
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div className="column-chart" style={{ height: `${totalHeight}px`, display:'flex', justifyContent:'center', alignItems:'flex-end', width:'50px', border:'1px solid red', position:'relative' }}>
+                            <div style={{width:'100%', display:'flex', flexDirection:'column-reverse', }} className="column">
+                              <div className="id" style={{ height: `${DataLPG}px`, width:'100%',textAlign:'center', color:'white', alignItems:'center', justifyContent:'center', backgroundColor:'yellow', position:'absolute', top:'0'  }}>
+                              </div>
+                              <div className="name" style={{ height: `${DataAir}px`,  width:'100%',textAlign:'center', color:'white', alignItems:'center', justifyContent:'center' ,backgroundColor:'blue'  }}>
+                              </div>
+                            </div>
+                          </div>
                         ),
                     },
                 };
@@ -7069,6 +7100,34 @@ export default function Graphic_CNG_BINHDUONG() {
             targetPosition: Position.Bottom,
         },
 
+
+        // {
+        //     id: "percent",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 32,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.percent,
+
+        //     style: {
+        //         background: 'none',
+        //         border: "1px solid white",
+        //         width: 0,
+        //         height: 0,
+        //         borderRadius: 50,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+
         {
             id: "timeUpdate3",
             data: {
@@ -7823,8 +7882,13 @@ export default function Graphic_CNG_BINHDUONG() {
                         ...prevPositions,
                         line10none: position,
                     }));
+                } else if (id === "percent") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        percent: position,
+                    }));
                 }
-            }
+            } 
         },
         [setNodes, setPositions, editingEnabled]
     );

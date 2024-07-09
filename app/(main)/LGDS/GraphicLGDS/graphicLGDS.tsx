@@ -59,6 +59,7 @@ import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
 import BallVavleSDV_TOP from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_TOP1 from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_BOTTOM1 from "../ReactFlow/BallVavleSDV_BOTTOM";
+import AlarmLGDS from "@/layout/AlarmBell/AlarmLGDS";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -5860,7 +5861,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmLGDS />
                     </div>
                 ),
             },
