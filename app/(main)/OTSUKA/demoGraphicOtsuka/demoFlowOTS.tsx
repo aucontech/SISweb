@@ -71,7 +71,7 @@ export const borderBox = "#aad4ff";
 
 export const colorNameValue = "black";
 export const colorData = "green";
-export const backgroundGraphic = background;
+export const backgroundGraphic = '#036E9B';
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 

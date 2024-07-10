@@ -59,6 +59,7 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
+import AlarmNITORI from "@/layout/AlarmBell/AlarmNITORI";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -5564,7 +5565,7 @@ export default function GraphicNITORI() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmNITORI />
                     </div>
                 ),
             },
