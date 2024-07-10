@@ -3937,15 +3937,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <div>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        PLC :{" "}
-                                    </p>
+                                   
 
                                     <p
                                         style={{
@@ -3964,6 +3956,16 @@ export default function Graphic_CNG_HUNGYEN() {
                                     >
                                         {" "}
                                         EVC 02 :{" "}
+                                    </p>
+
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        PLC :{" "}
                                     </p>
                                 </div>
 

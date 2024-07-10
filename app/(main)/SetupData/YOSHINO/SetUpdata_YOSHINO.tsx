@@ -9,6 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
+import { Button } from 'primereact/button';
 
 interface StateMap {
 
@@ -38,6 +39,15 @@ export default function SetUpdata_YOSHINO() {
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
 
+
+    const [PCV_01,setPCV_01] = useState<any>()
+    const [inputPCV_01, setInputPCV_01] = useState<any>();
+
+    const [PCV_02,setPCV_02] = useState<any>()
+    const [inputPCV_02, setInputPCV_02] = useState<any>();
+
+    const [PSV_01,setPSV_01] = useState<any>()
+    const [inputPSV_01, setInputPSV_01] = useState<any>();
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -62,7 +72,18 @@ export default function SetUpdata_YOSHINO() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                             {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
                         ],
                     },
                     query: {
@@ -103,7 +124,18 @@ export default function SetUpdata_YOSHINO() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
                         ],
                     },
                 },
@@ -245,6 +277,48 @@ export default function SetUpdata_YOSHINO() {
                     const updatedData =
                         dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
                         setGetWayPhoneOTSUKA(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setPCV_01(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setPCV_01(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02?.value;
+                    setPCV_02(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02?.value;
+                    setPCV_02(updatedData);
+                }
+
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01?.value;
+                    setPSV_01(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01?.value;
+                    setPSV_01(updatedData);
                 }
                 fetchData()
             };
@@ -4116,12 +4190,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     Emergency_NC_High: inputValueEmergency_NC,Emergency_NC_Low:inputValue2Emergency_NC,
                     UPS_Mode_High: inputValueUPS_Mode,UPS_Mode_Low:inputValue2UPS_Mode,
                     IOT_Gateway_Phone: inputGetwayPhone,
-
+                    PCV_01: inputPCV_01,
+                    PCV_02: inputPCV_02,
+                    PSV_01: inputPSV_01,
                 }
             );
      
             setGetWayPhoneOTSUKA(inputGetwayPhone);
-
+            setPSV_01(inputPSV_01)
+            setPCV_02(inputPCV_02)
+            setPCV_01(inputPCV_01)
             setDO_HR_01_High(inputValueDO_HR_01);
             setDO_HR_01_Low(inputValue2DO_HR_01);
 
@@ -4295,7 +4373,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
    
         setInputGetwayPhone(getWayPhoneOTSUKA)
-      
+        setInputPCV_01(PCV_01)
+        setInputPCV_02(PCV_02)
+        setInputPSV_01(PSV_01)
 
         setInputValueSD(SD_High); 
         setInputValue2SD(SD_Low); 
@@ -4536,6 +4616,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            UPS_Mode_High,UPS_Mode_Low,
 
               getWayPhoneOTSUKA,
+
+              PCV_01,
+              PCV_02,
+              PSV_01
         ]);
 
 
@@ -5957,9 +6041,94 @@ checked={maintainDO_SV_01}
         const newValue : any = event.target.value;
         setInputGetwayPhone(newValue);
     };
+    const handleInputPCV_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_01(newValue);
+    };
 
+    const handleInputPCV_02 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_02(newValue);
+    };
+    const handleInputPSV_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_01(newValue);
+    };
     const Configuration = [
-       
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV-01</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_01}
+                    onChange={handleInputPCV_01}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PCV-02</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_02}
+                    onChange={handleInputPCV_02}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>PSV-01</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_01}
+                    onChange={handleInputPSV_01}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
 
@@ -5976,7 +6145,7 @@ checked={maintainDO_SV_01}
             ),
 
             Update: 
-                <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+                <Button className='buttonUpdateSetData' onClick={confirmUpData} > Update </Button>,
             
         },
 
