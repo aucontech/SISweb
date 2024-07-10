@@ -136,11 +136,15 @@ const Page: React.FC<Props> = () => {
                 showDate={true}
             />
 
-            {datas &&
-                datas.length > 0 &&
-                datas.map((data, index) => {
-                    return <GcValueForm data={data} key={index} />;
-                })}
+            <div className="grid">
+                {datas &&
+                    datas.length > 0 &&
+                    datas.map((data, index) => (
+                        <div className="col-4" key={index}>
+                            <GcValueForm data={data} />
+                        </div>
+                    ))}
+            </div>
         </>
     );
 };
