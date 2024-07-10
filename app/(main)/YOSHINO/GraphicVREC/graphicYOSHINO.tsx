@@ -59,7 +59,7 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
-import AlarmYOSHINO from "@/layout/AlarmBell/Alarmyoshino";
+import AlarmYOSHINO from "@/layout/AlarmBell/AlarmYOSHINO";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>

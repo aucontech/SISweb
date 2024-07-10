@@ -3943,15 +3943,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 }}
                             >
                                 <div>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        PLC :{" "}
-                                    </p>
+                                   
 
                                     <p
                                         style={{
@@ -3970,6 +3962,16 @@ export default function Graphic_CNG_BINHDUONG() {
                                     >
                                         {" "}
                                         EVC 02 :{" "}
+                                    </p>
+
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        PLC :{" "}
                                     </p>
                                 </div>
 
