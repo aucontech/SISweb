@@ -3,19 +3,12 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import FilterGcValue from "./components/FilterGcValue";
 import {
-    getSeverAttributesByAsset,
-    getSeverAttributesByDevice,
     getTimesSeriesData,
-    saveOrUpdateSeverAttributesByAsseet,
-    saveOrUpdateSeverAttributesByDevice,
-    saveOrUpdateTimeseriesData,
     saveOrUpdateTimeseriesDataByAsset,
 } from "@/api/telemetry.api";
 import { Toast } from "primereact/toast";
-import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
-import { UIUtils, Utils } from "@/service/Utils";
-import { co } from "@fullcalendar/core/internal-common";
+
+import GcValueForm from "./components/GcValueForm";
 
 interface Props {}
 const defaultValue = {
@@ -23,9 +16,9 @@ const defaultValue = {
 };
 const Page: React.FC<Props> = () => {
     const [filters, setFilters] = useState<any>({});
-    const [gcData, setGcData] = useState<any>([]);
+
     const [seletetedData, setSeletetedData] = useState<any>([]);
-    const [isNewData, setIsNewData] = useState<boolean>(false);
+    const [datas, setDatas] = useState<any[]>([]);
     const toast = useRef<any>(null);
     const _onFilterChange = (evt: any) => {
         console.log(evt);
@@ -34,15 +27,15 @@ const Page: React.FC<Props> = () => {
 
     const _fetchSeverAttributesByDevice = useCallback((filters: any) => {
         console.log(filters);
-        let { asset, date } = filters;
-        console.log(asset);
-        if (asset && asset.id && date) {
+        let { device, date } = filters;
+        //console.log(asset);
+        if (device && device.id && date) {
             let params = {
                 keys: "heat_value",
                 startTs: date.getTime(),
                 endTs: date.getTime() + 86400000,
             };
-            getTimesSeriesData("ASSET", asset.id.id, params)
+            getTimesSeriesData("DEVICE", device.id.id, params)
                 .then((resp) => resp.data)
                 .then((resp) => {
                     console.log(resp);
@@ -89,47 +82,51 @@ const Page: React.FC<Props> = () => {
         //         console.log(err);
         //     });
     }, []);
+    const _fetchSeverAttributesByDevice1 = useCallback((filters: any) => {
+        console.log(filters);
+        let { devices, date } = filters;
+        //console.log(asset);
 
-    const _handleSave = () => {
-        let { asset, date } = filters;
         let params = {
-            ts: date.getTime(),
-            values: {
-                heat_value: Number(seletetedData.heatValue).toFixed(2),
-            },
+            keys: "heat_value",
+            startTs: date.getTime(),
+            endTs: date.getTime() + 86400000,
         };
-        console.log(params);
-        saveOrUpdateTimeseriesDataByAsset(asset.id.id, params)
-            .then((resp) => {
-                if (resp.status === 200) {
-                    UIUtils.showInfo({
-                        summary: "Success",
-                        detail: "Save data success",
-                        toast: toast.current,
-                    });
+        let promises = devices.map((device: any) => {
+            return getTimesSeriesData("DEVICE", device.id.id, params).then(
+                (data) => {
+                    return {
+                        device: device,
+                        data: data.data,
+                        date: date.getTime(),
+                    }; // Attach the device info to the data
                 }
+            );
+        });
+
+        Promise.all(promises)
+            .then((results) => {
+                setDatas(results); // results is now an array of {device, data}
             })
             .catch((err) => {
                 console.log(err);
-                UIUtils.showError({
-                    error: err?.response?.message,
-                    toast: toast.current,
-                });
             });
-    };
-    const handleChangeB1 = (e: any) => {
-        setSeletetedData((prevState: any) => ({
-            ...prevState,
-            heatValue: e.value, // Directly use e.value
-        }));
-    };
+    }, []);
 
     useEffect(() => {
-        if (filters.date && filters.asset) {
+        console.log(filters);
+        if (filters.date && filters.device && filters.device.id) {
             _fetchSeverAttributesByDevice(filters);
         }
     }, [filters, _fetchSeverAttributesByDevice]);
 
+    useEffect(() => {
+        console.log(filters);
+        if (filters.date && filters.devices && filters.devices.length > 0) {
+            _fetchSeverAttributesByDevice1(filters);
+        }
+    }, [filters, _fetchSeverAttributesByDevice1]);
+    console.log(datas);
     return (
         <>
             <Toast ref={toast} />
@@ -139,28 +136,11 @@ const Page: React.FC<Props> = () => {
                 showDate={true}
             />
 
-            <div className="card">
-                <div className="col">
-                    Heat Value :{" "}
-                    <InputNumber
-                        value={seletetedData.heatValue || 0} // default to 0 if undefined
-                        onChange={(e) => handleChangeB1(e)}
-                        mode="decimal"
-                        minFractionDigits={2}
-                        maxFractionDigits={5}
-                    />
-                </div>
-
-                <div className="col">
-                    <Button
-                        onClick={_handleSave}
-                        label="Save"
-                        disabled={
-                            !filters.date || !filters.asset || !filters.asset.id
-                        }
-                    />
-                </div>
-            </div>
+            {datas &&
+                datas.length > 0 &&
+                datas.map((data, index) => {
+                    return <GcValueForm data={data} key={index} />;
+                })}
         </>
     );
 };

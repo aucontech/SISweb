@@ -75,6 +75,7 @@ const CustomerReport = () => {
                 });
             })
             .catch((error) => {
+                console.log(error);
                 UIUtils.showError({
                     toast: toast.current,
                     error: error?.response?.data?.message,

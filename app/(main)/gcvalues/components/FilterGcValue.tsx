@@ -1,9 +1,9 @@
 "use client";
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useRef, useState } from "react";
-import { getDevices } from "@/api/device.api";
+import { getDeviceById } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
-import { getAlarmTypes } from "@/api/alarm.api";
+
 import { getAssetById } from "@/api/assets.api";
 import { Toast } from "primereact/toast";
 import { getRelations } from "@/api/relation.api";
@@ -20,6 +20,7 @@ const defFilter = {
     date: null,
     asset: null,
     alarmType: null,
+    devices: [],
 };
 const FilterGcValue: React.FC<Props> = ({
     showDevice,
@@ -38,19 +39,96 @@ const FilterGcValue: React.FC<Props> = ({
         };
         setEditFilter(editFilter);
     }, []);
-    const _onSuggDevices = (evt: any) => {
-        getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((res) => {
-                res.data.forEach((it: any) => {
-                    it.label = `${it.name}`;
+    useEffect(() => {
+        if (editFilter && editFilter.asset && editFilter.asset.id) {
+            console.log(editFilter.asset);
+            let reqParams = {
+                fromId: editFilter.asset.id.id,
+                fromType: "ASSET",
+                relationType: "Contains",
+                relationTypeGroup: "COMMON",
+            };
+            getRelations(reqParams)
+                .then((resp) => resp.data)
+                .then((resp) => {
+                    console.log(resp);
+                    let data = resp || [];
+                    if (data.length > 0) {
+                        let pms = data.map((dt: any) => {
+                            return getDeviceById(dt["to"]["id"]);
+                        });
+                        Promise.all(pms)
+                            .then((resp) => resp.map((dt: any) => dt.data))
+                            .then((resp) => {
+                                // resp.forEach((it: any) => {
+                                //     it.label = `${it.name}`;
+                                // });
+                                // setSuggDevices(resp);
+                                let newEditFilter = {
+                                    ...editFilter,
+                                    devices: resp,
+                                };
+                                setEditFilter(newEditFilter);
+                                onAction(newEditFilter);
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                                setSuggDevices([]);
+                            });
+                    }
+                })
+                .catch((e) => {
+                    console.log(e);
+                    // setSuggAssets([]);
                 });
-                setSuggDevices([...res.data]);
-            })
-            .catch((err) => {
-                console.log(err);
-                setSuggDevices([]);
-            });
+        } else {
+            let newEditFilter = {
+                ...editFilter,
+                devices: [],
+            };
+            setEditFilter(newEditFilter);
+            onAction(newEditFilter);
+        }
+    }, [editFilter.asset]);
+    const _onSuggDevices = (evt: any) => {
+        if (editFilter && editFilter.asset && editFilter.asset.id) {
+            console.log(editFilter.asset);
+            let reqParams = {
+                fromId: editFilter.asset.id.id,
+                fromType: "ASSET",
+                relationType: "Contains",
+                relationTypeGroup: "COMMON",
+            };
+            getRelations(reqParams)
+                .then((resp) => resp.data)
+                .then((resp) => {
+                    console.log(resp);
+                    let data = resp || [];
+                    if (data.length > 0) {
+                        let pms = data.map((dt: any) => {
+                            return getDeviceById(dt["to"]["id"]);
+                        });
+                        Promise.all(pms)
+                            .then((resp) => resp.map((dt: any) => dt.data))
+                            .then((resp) => {
+                                resp.forEach((it: any) => {
+                                    it.label = `${it.name}`;
+                                });
+                                setSuggDevices(resp);
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                                setSuggDevices([]);
+                            });
+                    }
+                })
+                .catch((e) => {
+                    console.log(e);
+                    // setSuggAssets([]);
+                });
+        } else {
+            setSuggDevices([]);
+        }
     };
     const _onSuggAssets = (evt: any) => {
         let reqParams = {
@@ -100,23 +178,6 @@ const FilterGcValue: React.FC<Props> = ({
         <>
             <Toast ref={toast} />
             <div className="grid p-fluid">
-                {showDevice && (
-                    <div className="col-12 lg:col-3">
-                        <span className="p-float-label">
-                            <AutoComplete
-                                dropdown
-                                suggestions={suggDevices}
-                                field="label"
-                                value={editFilter.device}
-                                completeMethod={_onSuggDevices}
-                                onChange={(e) =>
-                                    _processFilterChange("device", e.value)
-                                }
-                            />
-                            <label>Device</label>
-                        </span>
-                    </div>
-                )}
                 {showDate && (
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
@@ -144,6 +205,23 @@ const FilterGcValue: React.FC<Props> = ({
                                 }
                             />
                             <label>Assets</label>
+                        </span>
+                    </div>
+                )}
+                {showDevice && (
+                    <div className="col-12 lg:col-3">
+                        <span className="p-float-label">
+                            <AutoComplete
+                                dropdown
+                                suggestions={suggDevices}
+                                field="label"
+                                value={editFilter.device}
+                                completeMethod={_onSuggDevices}
+                                onChange={(e) =>
+                                    _processFilterChange("device", e.value)
+                                }
+                            />
+                            <label>Devices</label>
                         </span>
                     </div>
                 )}

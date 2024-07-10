@@ -8,13 +8,13 @@ export interface ReportRequest {
 
 // Hàm getReport với đối số là một đối tượng ReportRequest và sử dụng phương thức POST
 export const getReport = (reqParams: ReportRequest): Promise<any> => {
-    return httpApi.post<any>("/v1/report", reqParams);
+    return httpApi.post<any>("/report", reqParams);
 };
 
-
-export const exportReport = (reqParams: ReportRequest): Promise<Response> => {
+export const exportReport = (reqParams: ReportRequest): Promise<any> => {
     // This assumes httpApi.post returns a fetch-like Response object
-    return httpApi.post<Blob>("/v1/exportreport", reqParams,{responseType:'blob',withCredentials:true});
+    return httpApi.post<Blob>("/exportreport", reqParams, {
+        responseType: "blob",
+        withCredentials: true,
+    });
 };
-
-
