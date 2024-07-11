@@ -59,14 +59,23 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                         ></Button>
                     </li>
                     <li className="ml-3">
-                        <a
+                        {/* <a
                             className="cursor-pointer flex mt-2 surface-border align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
                             onClick={handleLogOut}
-                        >
-                            <span>
+                        > */}
+                        {/* <span>
                                 <i className="pi pi-power-off text-xl text-primary"></i>
-                            </span>
-                        </a>
+                            </span> */}
+                        <Button
+                            type="button"
+                            icon="pi pi-power-off"
+                            text
+                            rounded
+                            severity="secondary"
+                            className="flex-shrink-0 cursor-pointer flex mt-2 surface-border align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
+                            onClick={handleLogOut}
+                        ></Button>
+                        {/* </a> */}
                     </li>
                 </ul>
             </div>

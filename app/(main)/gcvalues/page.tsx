@@ -140,7 +140,10 @@ const Page: React.FC<Props> = () => {
                 {datas &&
                     datas.length > 0 &&
                     datas.map((data, index) => (
-                        <div className="col-4" key={index}>
+                        <div
+                            className="lg:col-4 sm:col-12 md:col-6"
+                            key={index}
+                        >
                             <GcValueForm data={data} />
                         </div>
                     ))}
