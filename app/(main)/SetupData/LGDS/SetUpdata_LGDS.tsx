@@ -10,7 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
-import { nameValue } from '../namValue';
+import { namePCV_PSV, nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -6122,7 +6122,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     const configuration = [
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV-01</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1001) (BarG)</span>,
 
             Value: (
                 <InputText
@@ -6147,7 +6147,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV-02</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1002) (BarG)</span>,
 
             Value: (
                 <InputText
@@ -6172,7 +6172,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV-01</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety}  (PSV-1001) (BarG)</span>,
 
             Value: (
                 <InputText

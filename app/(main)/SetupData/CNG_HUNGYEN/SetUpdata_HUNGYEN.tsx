@@ -10,6 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
 
 interface StateMap {
 
@@ -40,6 +41,38 @@ export default function SetUpdata_HUNGYEN() {
 
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+    const [PCV_3001A,setPCV_3001A] = useState<any>()
+    const [inputPCV_3001A, setInputPCV_3001A] = useState<any>();
+
+    const [PCV_3001B,setPCV_3001B] = useState<any>()
+    const [inputPCV_3001B, setInputPCV_3001B] = useState<any>();
+
+    const [PCV_3002A,setPCV_3002A] = useState<any>()
+    const [inputPCV_3002A, setInputPCV_3002A] = useState<any>();
+
+    const [PCV_3002B,setPCV_3002B] = useState<any>()
+    const [inputPCV_3002B, setInputPCV_3002B] = useState<any>();
+
+
+    const [PSV_3001A,setPSV_3001A] = useState<any>()
+    const [inputPSV_3001A, setInputPSV_3001A] = useState<any>();
+
+    const [PSV_3001B,setPSV_3001B] = useState<any>()
+    const [inputPSV_3001B, setInputPSV_3001B] = useState<any>();
+
+    const [PSV_3002A,setPSV_3002A] = useState<any>()
+    const [inputPSV_3002A, setInputPSV_3002A] = useState<any>();
+
+    const [PSV_3002B,setPSV_3002B] = useState<any>()
+    const [inputPSV_3002B, setInputPSV_3002B] = useState<any>();
+
+    const [timeEVC_01,setTimeEVC_01] = useState<any>()
+    const [timeEVC_02,setTimeEVC_02] = useState<any>()
+
+
+    const [timeEVC_03,setTimeEVC_03] = useState<any>()
+    const [timeEVC_04,setTimeEVC_04] = useState<any>()
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -64,7 +97,56 @@ export default function SetUpdata_HUNGYEN() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
                         ],
                     },
                     query: {
@@ -105,7 +187,56 @@ export default function SetUpdata_HUNGYEN() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_3002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3001A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3001B",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3002A",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_3002B",
+                            },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
                         ],
                     },
                 },
@@ -254,6 +385,150 @@ export default function SetUpdata_HUNGYEN() {
                     const updatedData =
                         dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
                         setGetWayPhoneOTSUKA(updatedData);
+                }
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001A?.value;
+                    setPCV_3001A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A?.value;
+                    setPCV_3001A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001B?.value;
+                    setPCV_3001B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001B?.value;
+                    setPCV_3001B(updatedData);
+                }
+
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002A?.value;
+                    setPCV_3002A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002A?.value;
+                    setPCV_3002A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002B?.value;
+                    setPCV_3002B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002B?.value;
+                    setPCV_3002B(updatedData);
+                }
+
+                //=================================
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001A?.value;
+                    setPSV_3001A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3001A?.value;
+                    setPSV_3001A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001B?.value;
+                    setPSV_3001B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3001B?.value;
+                    setPSV_3001B(updatedData);
+                }
+
+
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002A?.value;
+                    setPSV_3002A(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002A?.value;
+                    setPSV_3002A(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002B?.value;
+                    setPSV_3002B(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002B?.value;
+                    setPSV_3002B(updatedData);
+                }
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
                 }
                 fetchData()
             };
@@ -4127,10 +4402,33 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                     BOILER_High: inputValueBOILER,BOILER_Low:inputValue2BOILER,
                     GD_STATUS_High: inputValueGD_STATUS,GD_STATUS_Low:inputValue2GD_STATUS,
                     IOT_Gateway_Phone: inputGetwayPhone,
+                    PCV_3001A: inputPCV_3001A,
+                    PCV_3001B: inputPCV_3001B,
 
+                    PCV_3002A: inputPCV_3002A,
+                    PCV_3002B: inputPCV_3002B,
+
+                    PSV_3001A: inputPSV_3001A,
+                    PSV_3001B: inputPSV_3001B,
+
+                    PSV_3002A: inputPSV_3002A,
+                    PSV_3002B: inputPSV_3002B,
+
+                    EVC_01_Battery_Expiration_Date: timeEVC_01,
+                    EVC_01_Battery_Installation_Date: timeEVC_02,
+                    EVC_02_Battery_Expiration_Date: timeEVC_03,
+                    EVC_02_Battery_Installation_Date: timeEVC_04,
                 }
             );
-     
+            setPCV_3001A(inputPCV_3001A)
+            setPCV_3001B(inputPCV_3001B)
+            setPCV_3002A(inputPCV_3002A)
+            setPCV_3002B(inputPCV_3002B)
+
+            setPSV_3001A(inputPSV_3001A)
+            setPSV_3001B(inputPSV_3001B)
+            setPSV_3002A(inputPSV_3002A)
+            setPSV_3002B(inputPSV_3002B)
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
             setHR_BC_High(inputValueHR_BC);
@@ -4304,7 +4602,16 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     useEffect(() => {
         setInputGetwayPhone(getWayPhoneOTSUKA)
+        setInputPCV_3001A(PCV_3001A)
+        setInputPCV_3001B(PCV_3001B)
+        setInputPCV_3002A(PCV_3002A)
+        setInputPCV_3002B(PCV_3002B)
 
+
+        setInputPSV_3001A(PSV_3001A)
+        setInputPSV_3001B(PSV_3001B)
+        setInputPSV_3002A(PSV_3002A)
+        setInputPSV_3002B(PSV_3002B)
    
         setInputValueHR_BC(HR_BC_High); 
         setInputValue2HR_BC(HR_BC_Low); 
@@ -4548,6 +4855,17 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            BOILER_High,BOILER_Low,
            GD_STATUS_High,GD_STATUS_Low,
 
+           PCV_3001A,
+           PCV_3001B,
+           PCV_3002A,
+           PCV_3002B,
+
+           PSV_3001A,
+           PSV_3001B,
+           PSV_3002A,
+           PSV_3002B,
+
+           timeEVC_01,timeEVC_02
         ]);
 
 
@@ -6043,9 +6361,311 @@ checked={maintainSD_3002}
             const newValue : any = event.target.value;
             setInputGetwayPhone(newValue);
         };
+        const handleInputPCV_3001A = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPCV_3001A(newValue);
+        };
+        const handleInputPCV_3001B = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPCV_3001B(newValue);
+        };
+        const handleInputPCV_3002A = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPCV_3002A(newValue);
+        };
+        const handleInputPCV_3002B = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPCV_3002B(newValue);
+        };
+        const handleInputPSV_3001A = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPSV_3001A(newValue);
+        };
+        const handleInputPSV_3001B = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPSV_3001B(newValue);
+        };
+        const handleInputPSV_3002A = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPSV_3002A(newValue);
+        };
+        const handleInputPSV_3002B = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue : any = event.target.value;
+            setInputPSV_3002B(newValue);
+        };
     
+        const timeEVC_01Number = parseFloat(timeEVC_01);
+        const date = !isNaN(timeEVC_01Number) ? new Date(timeEVC_01Number) : null;
+    
+        const timeEVC_02Number = parseFloat(timeEVC_02);
+        const date2 = !isNaN(timeEVC_02Number) ? new Date(timeEVC_02Number) : null;
+    
+        const timeEVC_03Number = parseFloat(timeEVC_03);
+        const date3 = !isNaN(timeEVC_03Number) ? new Date(timeEVC_03Number) : null;
+    
+        const timeEVC_04Number = parseFloat(timeEVC_04);
+        const date4 = !isNaN(timeEVC_04Number) ? new Date(timeEVC_04Number) : null;
+        
+        const handleDateChange = (e: any) => {
+            const selectedDate = e.value;
+            setTimeEVC_02(selectedDate.getTime());
+    
+            const expirationDate = new Date(selectedDate);
+            expirationDate.setMonth(expirationDate.getMonth() + 18);
+            setTimeEVC_01(expirationDate.getTime());
+        };
+    
+        const handleDateChange2 = (e: any) => {
+            const selectedDate = e.value;
+            setTimeEVC_03(selectedDate.getTime());
+    
+            const expirationDate = new Date(selectedDate);
+            expirationDate.setMonth(expirationDate.getMonth() + 18);
+            setTimeEVC_04(expirationDate.getTime());
+        };
+        const [selectedDate, setSelectedDate] = useState(null);
+    
+        useEffect(() => {
+            const dateString = "01-03-2024";
+            const parts = dateString.split('-');
+            const year = parseInt(parts[2], 10);
+            const month = parseInt(parts[1], 10) - 1; 
+            const day = parseInt(parts[0], 10);
+            const dateObject :any = new Date(year, month, day);
+        
+            setSelectedDate(dateObject);
+          }, []);
+    
+          const ConfigurationName ={
+            PSV: "Pressure Safety Valve ( PSV-1901)" ,
+            PCV1: "Pressure Control Valve (PCV-1901)",
+            PCV2: "Pressure Control Valve (PCV-1902)",
+            IOT: "IOT getway phone number",
+            EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
+            EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+    
+            EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
+            EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+    
+        }
+    
+        const combineCssTime = {
+            PCV: {
+                height: 25,
+                fontWeight: 400,
+            },
+        };
         const Configuration = [
            
+            {
+                Name: <span style={combineCssAttribute.PCV}>PCV 6001A </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPCV_3001A}
+                        onChange={handleInputPCV_3001A}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PCV 6001B </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPCV_3001B}
+                        onChange={handleInputPCV_3001B}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PCV 6002A </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPCV_3002A}
+                        onChange={handleInputPCV_3002A}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PCV 6002B </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPCV_3002B}
+                        onChange={handleInputPCV_3002B}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+    
+    
+            //===========================================
+    
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PSV 6001A </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPSV_3001A}
+                        onChange={handleInputPSV_3001A}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PSV 6001B </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPSV_3001B}
+                        onChange={handleInputPSV_3001B}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PSV 6002A </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPSV_3002A}
+                        onChange={handleInputPSV_3002A}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
+    
+            {
+                Name: <span style={combineCssAttribute.PCV}>PSV 6002B </span>,
+    
+                Value: (
+                    <InputText
+                        style={combineCssAttribute.PCV}
+                        placeholder="High"
+                        step="0.1"
+                        type="Name"
+                        value={inputPSV_3002B}
+                        onChange={handleInputPSV_3002B}
+                        inputMode="decimal"
+                    />
+                ),
+    
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+    
             {
                 Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
     
@@ -6069,6 +6689,127 @@ checked={maintainSD_3002}
                         onClick={confirmUpData}
                     />
                 ),
+            },
+    
+            {
+                Name: (
+                    <span style={combineCssTime.PCV}>
+                        {ConfigurationName.EVC_01_Battery_Installation_Date}
+                    </span>
+                ),
+              
+                Value: (
+                    <Calendar
+                        style={combineCssTime.PCV}
+                        value={date2}
+                        onChange={handleDateChange}
+    
+                        showTime={false}
+                        inputId="timeEVC_02"
+                        dateFormat="dd-mm-yy"
+                    />
+                ),
+               
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+            {
+                Name: (
+                    <span style={combineCssTime.PCV}>
+                        {ConfigurationName.EVC_01_Battery_Expiration_Date}
+                    </span>
+                ),
+              
+             
+                Value: (
+                    <Calendar
+                    
+                        style={combineCssTime.PCV}
+                        value={date}
+                        disabled
+    
+                        showTime={false}
+                        inputId="timeEVC_01"
+                        dateFormat="dd-mm-yy"
+                    />
+                ),
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+    
+                        disabled
+                        style={{ marginTop: 5,cursor:"no-drop" }}
+                        label="Update"
+                    />
+                ),
+               
+            },
+    
+            {
+                Name: (
+                    <span style={combineCssTime.PCV}>
+                        {ConfigurationName.EVC_02_Battery_Installation_Date}
+                    </span>
+                ),
+              
+                Value: (
+                    <Calendar
+                        style={combineCssTime.PCV}
+                        value={date3}
+                        onChange={handleDateChange2}
+    
+                        showTime={false}
+                        inputId="timeEVC_02"
+                        dateFormat="dd-mm-yy"
+                    />
+                ),
+               
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        style={{ marginTop: 5 }}
+                        label="Update"
+                        onClick={confirmUpData}
+                    />
+                ),
+            },
+            {
+                Name: (
+                    <span style={combineCssTime.PCV}>
+                        {ConfigurationName.EVC_02_Battery_Expiration_Date}
+                    </span>
+                ),
+              
+             
+                Value: (
+                    <Calendar
+                    
+                        style={combineCssTime.PCV}
+                        value={date4}
+                        disabled
+    
+                        showTime={false}
+                        inputId="timeEVC_01"
+                        dateFormat="dd-mm-yy"
+                    />
+                    
+                ),
+                Update: (
+                    <Button
+                        className="buttonUpdateSetData"
+                        
+                        disabled
+                        style={{ marginTop: 5,cursor:"no-drop" }}
+                        label="Update"
+                    />
+                ),
+               
             },
     
         ];

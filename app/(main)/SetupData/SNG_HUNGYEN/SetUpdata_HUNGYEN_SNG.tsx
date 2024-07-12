@@ -10,6 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -201,7 +202,9 @@ export default function SetUpdata_HUNGYEN_SNG() {
                   
                         ESD_3001: setESD_3001,
                    
-
+                        WIS_Calorimeter: setWIS_Calorimeter,
+                        CVS_Calorimeter: setCVS_Calorimeter,
+                        SG_Calorimeter :setSG_Calorimeter,
 
                   
                     };
@@ -619,12 +622,38 @@ export default function SetUpdata_HUNGYEN_SNG() {
             );
 
       
+            const WIS_Calorimeter_High = res.data.find((item: any) => item.key === "WIS_Calorimeter_High");
+            setWIS_Calorimeter_High(WIS_Calorimeter_High?.value || null);
+            const WIS_Calorimeter_Low = res.data.find((item: any) => item.key === "WIS_Calorimeter_Low");
+            setWIS_Calorimeter_Low(WIS_Calorimeter_Low?.value || null);
+            const WIS_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "WIS_Calorimeter_Maintain"
+            );
 
+            const CVS_Calorimeter_High = res.data.find((item: any) => item.key === "CVS_Calorimeter_High");
+            setCVS_Calorimeter_High(CVS_Calorimeter_High?.value || null);
+            const CVS_Calorimeter_Low = res.data.find((item: any) => item.key === "CVS_Calorimeter_Low");
+            setCVS_Calorimeter_Low(CVS_Calorimeter_Low?.value || null);
+            const CVS_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "CVS_Calorimeter_Maintain"
+            );
+
+            const SG_Calorimeter_High = res.data.find((item: any) => item.key === "SG_Calorimeter_High");
+            setSG_Calorimeter_High(SG_Calorimeter_High?.value || null);
+            const SG_Calorimeter_Low = res.data.find((item: any) => item.key === "SG_Calorimeter_Low");
+            setSG_Calorimeter_Low(SG_Calorimeter_Low?.value || null);
+            const SG_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "SG_Calorimeter_Maintain"
+            );
          
  // =================================================================================================================== 
 
 
+ setMaintainWIS_Calorimeter(WIS_Calorimeter_Maintain?.value || false);
 
+ setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
+
+ setMaintainSG_Calorimeter(SG_Calorimeter_Maintain?.value || false);
             setMaintainHR_BC(HR_BC_Maintain?.value || false);
 
             setMaintainSD(SD_Maintain?.value || false);
@@ -3644,7 +3673,227 @@ const ChangeMaintainGD1_STATUS = async () => {
               // =================================================================================================================== 
     
     
-         
+                     // =================================================================================================================== 
+    
+    
+    
+                     const [WIS_Calorimeter, setWIS_Calorimeter] = useState<string | null>(null);
+                     const [audioPlayingWIS_Calorimeter, setAudioPlayingWIS_Calorimeter] = useState(false);
+                     const [inputValueWIS_Calorimeter, setInputValueWIS_Calorimeter] = useState<any>();
+                     const [inputValue2WIS_Calorimeter, setInputValue2WIS_Calorimeter] = useState<any>();
+                     const [WIS_Calorimeter_High, setWIS_Calorimeter_High] = useState<number | null>(null);
+                     const [WIS_Calorimeter_Low, setWIS_Calorimeter_Low] = useState<number | null>(null);
+                     const [exceedThresholdWIS_Calorimeter, setExceedThresholdWIS_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                     
+                     const [maintainWIS_Calorimeter, setMaintainWIS_Calorimeter] = useState<boolean>(false);
+                     
+                     
+                         useEffect(() => {
+                             if (typeof WIS_Calorimeter_High === 'string' && typeof WIS_Calorimeter_Low === 'string' && WIS_Calorimeter !== null && maintainWIS_Calorimeter === false
+                             ) {
+                                 const highValue = parseFloat(WIS_Calorimeter_High);
+                                 const lowValue = parseFloat(WIS_Calorimeter_Low);
+                                 const WIS_CalorimeterValue = parseFloat(WIS_Calorimeter);
+                         
+                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WIS_CalorimeterValue)) {
+                                     if (highValue <= WIS_CalorimeterValue || WIS_CalorimeterValue <= lowValue) {
+                                         if (!audioPlayingWIS_Calorimeter) {
+                                             audioRef.current?.play();
+                                             setAudioPlayingWIS_Calorimeter(true);
+                                             setExceedThresholdWIS_Calorimeter(true);
+                                         }
+                                     } else {
+                                        setAudioPlayingWIS_Calorimeter(false);
+                                        setExceedThresholdWIS_Calorimeter(false);
+                                     }
+                                 } 
+                             } 
+                         }, [WIS_Calorimeter_High, WIS_Calorimeter, audioPlayingWIS_Calorimeter, WIS_Calorimeter_Low,maintainWIS_Calorimeter]);
+                     
+                         useEffect(() => {
+                             if (audioPlayingWIS_Calorimeter) {
+                                 const audioEnded = () => {
+                                    setAudioPlayingWIS_Calorimeter(false);
+                                 };
+                                 audioRef.current?.addEventListener('ended', audioEnded);
+                                 return () => {
+                                     audioRef.current?.removeEventListener('ended', audioEnded);
+                                 };
+                             }
+                         }, [audioPlayingWIS_Calorimeter]);
+                     
+                         const handleInputChangeWIS_Calorimeter = (event: any) => {
+                             const newValue = event.target.value;
+                             setInputValueWIS_Calorimeter(newValue);
+                         };
+                     
+                         const handleInputChange2WIS_Calorimeter = (event: any) => {
+                             const newValue2 = event.target.value;
+                             setInputValue2WIS_Calorimeter(newValue2);
+                         };
+                         const ChangeMaintainWIS_Calorimeter = async () => {
+                             try {
+                                 const newValue = !maintainWIS_Calorimeter;
+                                 await httpApi.post(
+                                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                                     { WIS_Calorimeter_Maintain: newValue }
+                                 );
+                                 setMaintainWIS_Calorimeter(newValue);
+                                 
+                             } catch (error) {}
+                         };
+                
+                
+                     // =================================================================================================================== 
+                 
+                           // =================================================================================================================== 
+            
+            
+            
+                           const [CVS_Calorimeter, setCVS_Calorimeter] = useState<string | null>(null);
+                           const [audioPlayingCVS_Calorimeter, setAudioPlayingCVS_Calorimeter] = useState(false);
+                           const [inputValueCVS_Calorimeter, setInputValueCVS_Calorimeter] = useState<any>();
+                           const [inputValue2CVS_Calorimeter, setInputValue2CVS_Calorimeter] = useState<any>();
+                           const [CVS_Calorimeter_High, setCVS_Calorimeter_High] = useState<number | null>(null);
+                           const [CVS_Calorimeter_Low, setCVS_Calorimeter_Low] = useState<number | null>(null);
+                           const [exceedThresholdCVS_Calorimeter, setExceedThresholdCVS_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                           
+                           const [maintainCVS_Calorimeter, setMaintainCVS_Calorimeter] = useState<boolean>(false);
+                           
+                           
+                               useEffect(() => {
+                                   if (typeof CVS_Calorimeter_High === 'string' && typeof CVS_Calorimeter_Low === 'string' && CVS_Calorimeter !== null && maintainCVS_Calorimeter === false
+                                   ) {
+                                       const highValue = parseFloat(CVS_Calorimeter_High);
+                                       const lowValue = parseFloat(CVS_Calorimeter_Low);
+                                       const CVS_CalorimeterValue = parseFloat(CVS_Calorimeter);
+                               
+                                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(CVS_CalorimeterValue)) {
+                                           if (highValue <= CVS_CalorimeterValue || CVS_CalorimeterValue <= lowValue) {
+                                               if (!audioPlayingCVS_Calorimeter) {
+                                                   audioRef.current?.play();
+                                                   setAudioPlayingCVS_Calorimeter(true);
+                                                   setExceedThresholdCVS_Calorimeter(true);
+                                               }
+                                           } else {
+                                              setAudioPlayingCVS_Calorimeter(false);
+                                              setExceedThresholdCVS_Calorimeter(false);
+                                           }
+                                       } 
+                                   } 
+                               }, [CVS_Calorimeter_High, CVS_Calorimeter, audioPlayingCVS_Calorimeter, CVS_Calorimeter_Low,maintainCVS_Calorimeter]);
+                           
+                               useEffect(() => {
+                                   if (audioPlayingCVS_Calorimeter) {
+                                       const audioEnded = () => {
+                                          setAudioPlayingCVS_Calorimeter(false);
+                                       };
+                                       audioRef.current?.addEventListener('ended', audioEnded);
+                                       return () => {
+                                           audioRef.current?.removeEventListener('ended', audioEnded);
+                                       };
+                                   }
+                               }, [audioPlayingCVS_Calorimeter]);
+                           
+                               const handleInputChangeCVS_Calorimeter = (event: any) => {
+                                   const newValue = event.target.value;
+                                   setInputValueCVS_Calorimeter(newValue);
+                               };
+                           
+                               const handleInputChange2CVS_Calorimeter = (event: any) => {
+                                   const newValue2 = event.target.value;
+                                   setInputValue2CVS_Calorimeter(newValue2);
+                               };
+                               const ChangeMaintainCVS_Calorimeter = async () => {
+                                   try {
+                                       const newValue = !maintainCVS_Calorimeter;
+                                       await httpApi.post(
+                                           `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                                           { CVS_Calorimeter_Maintain: newValue }
+                                       );
+                                       setMaintainCVS_Calorimeter(newValue);
+                                       
+                                   } catch (error) {}
+                               };
+                      
+                      
+                           // =================================================================================================================== 
+        
+        
+        
+        
+                                     // =================================================================================================================== 
+            
+            
+            
+                                     const [SG_Calorimeter, setSG_Calorimeter] = useState<string | null>(null);
+                                     const [audioPlayingSG_Calorimeter, setAudioPlayingSG_Calorimeter] = useState(false);
+                                     const [inputValueSG_Calorimeter, setInputValueSG_Calorimeter] = useState<any>();
+                                     const [inputValue2SG_Calorimeter, setInputValue2SG_Calorimeter] = useState<any>();
+                                     const [SG_Calorimeter_High, setSG_Calorimeter_High] = useState<number | null>(null);
+                                     const [SG_Calorimeter_Low, setSG_Calorimeter_Low] = useState<number | null>(null);
+                                     const [exceedThresholdSG_Calorimeter, setExceedThresholdSG_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                                     
+                                     const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(false);
+                                     
+                                     
+                                         useEffect(() => {
+                                             if (typeof SG_Calorimeter_High === 'string' && typeof SG_Calorimeter_Low === 'string' && SG_Calorimeter !== null && maintainSG_Calorimeter === false
+                                             ) {
+                                                 const highValue = parseFloat(SG_Calorimeter_High);
+                                                 const lowValue = parseFloat(SG_Calorimeter_Low);
+                                                 const SG_CalorimeterValue = parseFloat(SG_Calorimeter);
+                                         
+                                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SG_CalorimeterValue)) {
+                                                     if (highValue <= SG_CalorimeterValue || SG_CalorimeterValue <= lowValue) {
+                                                         if (!audioPlayingSG_Calorimeter) {
+                                                             audioRef.current?.play();
+                                                             setAudioPlayingSG_Calorimeter(true);
+                                                             setExceedThresholdSG_Calorimeter(true);
+                                                         }
+                                                     } else {
+                                                        setAudioPlayingSG_Calorimeter(false);
+                                                        setExceedThresholdSG_Calorimeter(false);
+                                                     }
+                                                 } 
+                                             } 
+                                         }, [SG_Calorimeter_High, SG_Calorimeter, audioPlayingSG_Calorimeter, SG_Calorimeter_Low,maintainSG_Calorimeter]);
+                                     
+                                         useEffect(() => {
+                                             if (audioPlayingSG_Calorimeter) {
+                                                 const audioEnded = () => {
+                                                    setAudioPlayingSG_Calorimeter(false);
+                                                 };
+                                                 audioRef.current?.addEventListener('ended', audioEnded);
+                                                 return () => {
+                                                     audioRef.current?.removeEventListener('ended', audioEnded);
+                                                 };
+                                             }
+                                         }, [audioPlayingSG_Calorimeter]);
+                                     
+                                         const handleInputChangeSG_Calorimeter = (event: any) => {
+                                             const newValue = event.target.value;
+                                             setInputValueSG_Calorimeter(newValue);
+                                         };
+                                     
+                                         const handleInputChange2SG_Calorimeter = (event: any) => {
+                                             const newValue2 = event.target.value;
+                                             setInputValue2SG_Calorimeter(newValue2);
+                                         };
+                                         const ChangeMaintainSG_Calorimeter = async () => {
+                                             try {
+                                                 const newValue = !maintainSG_Calorimeter;
+                                                 await httpApi.post(
+                                                     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                                                     { SG_Calorimeter_Maintain: newValue }
+                                                 );
+                                                 setMaintainSG_Calorimeter(newValue);
+                                                 
+                                             } catch (error) {}
+                                         };
+                                
+                                
+                                     // =================================================================================================================== 
          
          // =================================================================================================================== 
          
@@ -3660,6 +3909,11 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
                 {
+
+
+                    WIS_Calorimeter_High: inputValueWIS_Calorimeter,WIS_Calorimeter_Low:inputValue2WIS_Calorimeter,
+                    CVS_Calorimeter_High: inputValueCVS_Calorimeter,CVS_Calorimeter_Low:inputValue2CVS_Calorimeter,
+                    SG_Calorimeter_High: inputValueSG_Calorimeter,SG_Calorimeter_Low:inputValue2SG_Calorimeter,
                     
                     HR_BC_High: inputValueHR_BC,HR_BC_Low:inputValue2HR_BC,
                     SD_High: inputValueSD,SD_Low:inputValue2SD,
@@ -3741,7 +3995,14 @@ const ChangeMaintainGD1_STATUS = async () => {
                 }
             );
             setGetWayPhoneOTSUKA(inputGetwayPhone);
-     
+            setWIS_Calorimeter_High(inputValueWIS_Calorimeter);
+            setWIS_Calorimeter_Low(inputValue2WIS_Calorimeter);
+
+            setCVS_Calorimeter_High(inputValueCVS_Calorimeter);
+            setCVS_Calorimeter_Low(inputValue2CVS_Calorimeter);
+
+            setSG_Calorimeter_High(inputValueSG_Calorimeter);
+            setSG_Calorimeter_Low(inputValue2SG_Calorimeter);
 
             setHR_BC_High(inputValueHR_BC);
             setHR_BC_Low(inputValue2HR_BC);
@@ -3918,6 +4179,14 @@ const ChangeMaintainGD1_STATUS = async () => {
         setInputValue2ESD_3001(ESD_3001_Low); 
 
 
+        setInputValueWIS_Calorimeter(WIS_Calorimeter_High); 
+        setInputValue2WIS_Calorimeter(WIS_Calorimeter_Low); 
+
+        setInputValueCVS_Calorimeter(CVS_Calorimeter_High); 
+        setInputValue2CVS_Calorimeter(CVS_Calorimeter_Low); 
+
+        setInputValueSG_Calorimeter(SG_Calorimeter_High); 
+        setInputValue2SG_Calorimeter(SG_Calorimeter_Low); 
 
 
         setInputValuePT_3005(PT_3005_High); 
@@ -4137,6 +4406,10 @@ const ChangeMaintainGD1_STATUS = async () => {
 
            RATIO_MODE_High,RATIO_MODE_Low,
            getWayPhoneOTSUKA,
+
+           WIS_Calorimeter_High,WIS_Calorimeter_Low,
+           CVS_Calorimeter_High,CVS_Calorimeter_Low,
+           SG_Calorimeter_High,SG_Calorimeter_Low,
 
         ]);
 
@@ -4585,6 +4858,37 @@ const ChangeMaintainGD1_STATUS = async () => {
         },
 
 
+        CSSWIS_Calorimeter : {
+            color:exceedThresholdWIS_Calorimeter && !maintainWIS_Calorimeter
+            ? "#ff5656"
+            : maintainWIS_Calorimeter
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSCVS_Calorimeter : {
+            color:exceedThresholdCVS_Calorimeter && !maintainCVS_Calorimeter
+            ? "#ff5656"
+            : maintainCVS_Calorimeter
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSSG_Calorimeter : {
+            color:exceedThresholdSG_Calorimeter && !maintainSG_Calorimeter
+            ? "#ff5656"
+            : maintainSG_Calorimeter
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
 
   
   };
@@ -4606,7 +4910,7 @@ const ChangeMaintainGD1_STATUS = async () => {
     
              modbus: <span style={combineCss.CSSPT_3005}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSPT_3005} > {PT_3005}</span> , 
+            value: <span style={combineCss.CSSPT_3005} > {PT_3005} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPT_3005}   placeholder='High' step="0.1" type='number' value={inputValuePT_3005} onChange={handleInputChangePT_3005} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPT_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3005} onChange={handleInputChange2PT_3005} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4627,7 +4931,7 @@ const ChangeMaintainGD1_STATUS = async () => {
     
              modbus: <span style={combineCss.CSSPT_3006}>40003	 </span> ,
     
-            value: <span style={combineCss.CSSPT_3006} > {PT_3006}</span> , 
+            value: <span style={combineCss.CSSPT_3006} > {PT_3006} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPT_3006}   placeholder='High' step="0.1" type='number' value={inputValuePT_3006} onChange={handleInputChangePT_3006} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPT_3006}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3006} onChange={handleInputChange2PT_3006} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4647,7 +4951,7 @@ const ChangeMaintainGD1_STATUS = async () => {
    
             modbus: <span style={combineCss.CSSTT_3003}>40005	 </span> ,
    
-           value: <span style={combineCss.CSSTT_3003} > {TT_3003}</span> , 
+           value: <span style={combineCss.CSSTT_3003} > {TT_3003} {nameValue.C}</span> , 
             high: <InputText style={combineCss.CSSTT_3003}   placeholder='High' step="0.1" type='number' value={inputValueTT_3003} onChange={handleInputChangeTT_3003} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSTT_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3003} onChange={handleInputChange2TT_3003} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4667,7 +4971,7 @@ const ChangeMaintainGD1_STATUS = async () => {
   
            modbus: <span style={combineCss.CSSTT_3004}>40007	 </span> ,
   
-          value: <span style={combineCss.CSSTT_3004} > {TT_3004}</span> , 
+          value: <span style={combineCss.CSSTT_3004} > {TT_3004} {nameValue.C}</span> , 
            high: <InputText style={combineCss.CSSTT_3004}   placeholder='High' step="0.1" type='number' value={inputValueTT_3004} onChange={handleInputChangeTT_3004} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSTT_3004}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3004} onChange={handleInputChange2TT_3004} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4687,7 +4991,7 @@ const ChangeMaintainGD1_STATUS = async () => {
  
           modbus: <span style={combineCss.CSSTG_3005}>40009	 </span> ,
  
-         value: <span style={combineCss.CSSTG_3005} > {TG_3005}</span> , 
+         value: <span style={combineCss.CSSTG_3005} > {TG_3005} {nameValue.C}</span> , 
           high: <InputText style={combineCss.CSSTG_3005}   placeholder='High' step="0.1" type='number' value={inputValueTG_3005} onChange={handleInputChangeTG_3005} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSTG_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2TG_3005} onChange={handleInputChange2TG_3005} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4706,7 +5010,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
          modbus: <span style={combineCss.CSSWB_3001}>40011	 </span> ,
 
-        value: <span style={combineCss.CSSWB_3001} > {WB_3001}</span> , 
+        value: <span style={combineCss.CSSWB_3001} > {WB_3001} ( MJ/Sm³ )</span> , 
          high: <InputText style={combineCss.CSSWB_3001}   placeholder='High' step="0.1" type='number' value={inputValueWB_3001} onChange={handleInputChangeWB_3001} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSWB_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_3001} onChange={handleInputChange2WB_3001} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4727,7 +5031,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
         modbus: <span style={combineCss.CSSGD_3002}>40013	 </span> ,
 
-       value: <span style={combineCss.CSSGD_3002} > {GD_3002}</span> , 
+       value: <span style={combineCss.CSSGD_3002} > {GD_3002} {nameValue.LEL}</span> , 
         high: <InputText style={combineCss.CSSGD_3002}   placeholder='High' step="0.1" type='number' value={inputValueGD_3002} onChange={handleInputChangeGD_3002} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSGD_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3002} onChange={handleInputChange2GD_3002} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4746,7 +5050,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
        modbus: <span style={combineCss.CSSGD_3003}>40015	 </span> ,
 
-      value: <span style={combineCss.CSSGD_3003} > {GD_3003}</span> , 
+      value: <span style={combineCss.CSSGD_3003} > {GD_3003} {nameValue.LEL}</span> , 
        high: <InputText style={combineCss.CSSGD_3003}   placeholder='High' step="0.1" type='number' value={inputValueGD_3003} onChange={handleInputChangeGD_3003} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSGD_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3003} onChange={handleInputChange2GD_3003} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4766,7 +5070,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
         modbus: <span style={combineCss.CSSGD_3004}>40017	 </span> ,
 
-       value: <span style={combineCss.CSSGD_3004} > {GD_3004}</span> , 
+       value: <span style={combineCss.CSSGD_3004} > {GD_3004} {nameValue.LEL}</span> , 
         high: <InputText style={combineCss.CSSGD_3004}   placeholder='High' step="0.1" type='number' value={inputValueGD_3004} onChange={handleInputChangeGD_3004} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSGD_3004}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3004} onChange={handleInputChange2GD_3004} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4787,7 +5091,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
        modbus: <span style={combineCss.CSSGD_3005}>40019	 </span> ,
 
-      value: <span style={combineCss.CSSGD_3005} > {GD_3005}</span> , 
+      value: <span style={combineCss.CSSGD_3005} > {GD_3005} {nameValue.LEL}</span> , 
        high: <InputText style={combineCss.CSSGD_3005}   placeholder='High' step="0.1" type='number' value={inputValueGD_3005} onChange={handleInputChangeGD_3005} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSGD_3005}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3005} onChange={handleInputChange2GD_3005} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4808,7 +5112,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
       modbus: <span style={combineCss.CSSGD_3006}>40021	 </span> ,
 
-     value: <span style={combineCss.CSSGD_3006} > {GD_3006}</span> , 
+     value: <span style={combineCss.CSSGD_3006} > {GD_3006} {nameValue.LEL}</span> , 
       high: <InputText style={combineCss.CSSGD_3006}   placeholder='High' step="0.1" type='number' value={inputValueGD_3006} onChange={handleInputChangeGD_3006} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSGD_3006}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3006} onChange={handleInputChange2GD_3006} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5209,7 +5513,7 @@ checked={maintainSD}
 
          modbus: <span style={combineCss.CSSFCV_3001}>40059	 </span> ,
 
-        value: <span style={combineCss.CSSFCV_3001} > {FCV_3001}</span> , 
+        value: <span style={combineCss.CSSFCV_3001} > {FCV_3001} ( % )</span> , 
          high: <InputText style={combineCss.CSSFCV_3001}   placeholder='High' step="0.1" type='number' value={inputValueFCV_3001} onChange={handleInputChangeFCV_3001} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSFCV_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_3001} onChange={handleInputChange2FCV_3001} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5230,7 +5534,7 @@ checked={maintainSD}
 
         modbus: <span style={combineCss.CSSPERCENT_LPG}>40061	 </span> ,
 
-       value: <span style={combineCss.CSSPERCENT_LPG} > {PERCENT_LPG}</span> , 
+       value: <span style={combineCss.CSSPERCENT_LPG} > {PERCENT_LPG} ( % )</span> , 
         high: <InputText style={combineCss.CSSPERCENT_LPG}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_LPG} onChange={handleInputChangePERCENT_LPG} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSPERCENT_LPG}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_LPG} onChange={handleInputChange2PERCENT_LPG} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5252,7 +5556,7 @@ checked={maintainSD}
 
        modbus: <span style={combineCss.CSSPERCENT_AIR}>40063	 </span> ,
 
-      value: <span style={combineCss.CSSPERCENT_AIR} > {PERCENT_AIR}</span> , 
+      value: <span style={combineCss.CSSPERCENT_AIR} > {PERCENT_AIR} ( % )</span> , 
        high: <InputText style={combineCss.CSSPERCENT_AIR}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_AIR} onChange={handleInputChangePERCENT_AIR} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSPERCENT_AIR}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_AIR} onChange={handleInputChange2PERCENT_AIR} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5273,7 +5577,7 @@ checked={maintainSD}
 
       modbus: <span style={combineCss.CSSHV_3001}>40065	 </span> ,
 
-     value: <span style={combineCss.CSSHV_3001} > {HV_3001}</span> , 
+     value: <span style={combineCss.CSSHV_3001} > {HV_3001} ( MJ/Sm³ )</span> , 
       high: <InputText style={combineCss.CSSHV_3001}   placeholder='High' step="0.1" type='number' value={inputValueHV_3001} onChange={handleInputChangeHV_3001} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSHV_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2HV_3001} onChange={handleInputChange2HV_3001} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5407,6 +5711,67 @@ checked={maintainSD}
 ></Checkbox>
 
   },
+
+  {
+    mainCategory: mainCategoryFC.PLC,
+
+timeUpdate: <span style={combineCss.CSSWIS_Calorimeter} >{PLC_STTValue}</span>,
+name: <span style={combineCss.CSSWIS_Calorimeter}>WIS Calorimeter</span> ,
+
+modbus: <span style={combineCss.CSSWIS_Calorimeter}>40001	 </span> ,
+
+value: <span style={combineCss.CSSWIS_Calorimeter} > {WIS_Calorimeter}  ( MJ/Sm³ )</span> , 
+high: <InputText style={combineCss.CSSWIS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueWIS_Calorimeter} onChange={handleInputChangeWIS_Calorimeter} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSWIS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2WIS_Calorimeter} onChange={handleInputChange2WIS_Calorimeter} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainWIS_Calorimeter}
+checked={maintainWIS_Calorimeter}
+></Checkbox>
+
+},
+
+
+{
+    mainCategory: mainCategoryFC.PLC,
+
+timeUpdate: <span style={combineCss.CSSCVS_Calorimeter} >{PLC_STTValue}</span>,
+name: <span style={combineCss.CSSCVS_Calorimeter}>CVS Calorimeter</span> ,
+
+modbus: <span style={combineCss.CSSCVS_Calorimeter}>40002	 </span> ,
+
+value: <span style={combineCss.CSSCVS_Calorimeter} > {CVS_Calorimeter}  ( MJ/Sm³ )</span> , 
+high: <InputText style={combineCss.CSSCVS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueCVS_Calorimeter} onChange={handleInputChangeCVS_Calorimeter} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSCVS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2CVS_Calorimeter} onChange={handleInputChange2CVS_Calorimeter} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainCVS_Calorimeter}
+checked={maintainCVS_Calorimeter}
+></Checkbox>
+
+},
+
+{
+    mainCategory: mainCategoryFC.PLC,
+
+timeUpdate: <span style={combineCss.CSSSG_Calorimeter} >{PLC_STTValue}</span>,
+name: <span style={combineCss.CSSSG_Calorimeter}>SG Calorimeter</span> ,
+
+modbus: <span style={combineCss.CSSSG_Calorimeter}>40003	 </span> ,
+
+value: <span style={combineCss.CSSSG_Calorimeter} > {SG_Calorimeter} ( rel )</span> , 
+high: <InputText style={combineCss.CSSSG_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueSG_Calorimeter} onChange={handleInputChangeSG_Calorimeter} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSSG_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2SG_Calorimeter} onChange={handleInputChange2SG_Calorimeter} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainSG_Calorimeter}
+checked={maintainSG_Calorimeter}
+></Checkbox>
+
+},
 
           ]
 

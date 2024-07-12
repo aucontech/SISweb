@@ -146,8 +146,6 @@ export default function ScoreCard_Otsuka() {
 
                         PT1: setPT03,
 
-                        time: setTimeUpdate,
-
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
