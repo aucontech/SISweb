@@ -195,10 +195,13 @@ export default function Alarmbell() {
 
             ws.current.onmessage = (evt: any) => {
                 const dataReceive: any = JSON.parse(evt.data);
-                //console.log("dataReceive", dataReceive);
-
                 if (dataReceive && dataReceive["cmdId"] === 1) {
-                    if (dataReceive.data && dataReceive.data.data) {
+                    if (
+                        dataReceive.data &&
+                        dataReceive.data.data &&
+                        dataReceive.data.data.length > 0 &&
+                        dataReceive.update === null
+                    ) {
                         let alarms = dataReceive.data.data;
                         let alarmsCount = dataReceive.data.totalElements;
                         let criticalAlarm = alarms.filter(
@@ -232,10 +235,10 @@ export default function Alarmbell() {
                         dataReceive.data.data.length === 0 &&
                         dataReceive.update === null
                     ) {
-                        // handleStopAudio();
-                        audioRef.current?.pause();
+                        handleStopAudio();
                         setNotifications([]);
                         setLoading(false);
+                        setAlarmCount(0);
                     }
                 } else if (dataReceive && dataReceive["cmdId"] === 2) {
                     //console.log(dataReceive.count);
@@ -244,15 +247,12 @@ export default function Alarmbell() {
                 }
             };
             ws.current.onclose = () => {
-                // console.log("WebSocket connection closed. Trying to reconnect...");
-                // setLoading(true);
                 setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
             };
             ws.current.onerror = (error) => {
                 console.error("WebSocket error:", error);
                 setLoading(true);
                 setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
-                // UIUtils.showError({});
             };
         },
         [sendData]
