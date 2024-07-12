@@ -10,7 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
-import { nameValue } from '../namValue';
+import { namePCV_PSV, nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -5642,7 +5642,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             {
                  mainCategory: mainCategoryFC.PLC ,
                 timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSGD1}>Gas Detector GD-1601</span> ,
+             name: <span style={combineCss.CSSGD1}>Gas Detector GD-1201</span> ,
     
              modbus: <span style={combineCss.CSSGD1}>40002</span> ,
     
@@ -5662,7 +5662,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             {
                  mainCategory: mainCategoryFC.PLC ,
                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSGD2}>Gas Detector GD-1602</span> ,
+             name: <span style={combineCss.CSSGD2}>Gas Detector GD-1202</span> ,
     
              modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
     
@@ -6111,7 +6111,7 @@ checked={maintainDO_SV_02}
     const Configuration = [
        
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV-01</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control}(PCV-1201) (BarG)</span>,
 
             Value: (
                 <InputText
@@ -6136,7 +6136,7 @@ checked={maintainDO_SV_02}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV-02</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control}(PCV-1202) (BarG)</span>,
 
             Value: (
                 <InputText
@@ -6161,7 +6161,7 @@ checked={maintainDO_SV_02}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV-01</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety}(PSV-1201) (BarG)</span>,
 
             Value: (
                 <InputText

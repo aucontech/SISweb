@@ -15,6 +15,7 @@ import { Toast } from 'primereact/toast';
 import SetAttribute from './SetAttribute';
 import { Calendar } from 'primereact/calendar';
 import SetAttribute1 from '../../OTSUKA/title-OTK';
+import { nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -4367,7 +4368,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_SVF1}>{paragraphContents.SVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_SVF1} > {SVF1format} sm³/h </span> , 
+        value: <span style={combineCss.CSS_SVF1} > {SVF1format}  {nameValue.Sm3h}  </span> , 
          high: <InputText style={combineCss.CSS_SVF1}   placeholder='High' step="0.1" type='number' value={inputHighSVF1} onChange={handleInputChangeHighSVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF1}   placeholder='Low' step="0.1" type='number' value={inputLowSVF1} onChange={handleInputChangeLowSVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4388,7 +4389,7 @@ const confirmUpChangeGatewayPhone = () => {
         name: <span style={combineCss.CSS_GVF1}>{paragraphContents.GVF} </span> ,
 
 
-        value: <span style={combineCss.CSS_GVF1} > {GVF1format} m³/h</span> , 
+        value: <span style={combineCss.CSS_GVF1} > {GVF1format}  {nameValue.m3h}</span> , 
          high: <InputText style={combineCss.CSS_GVF1}   placeholder='High' step="0.1" type='number' value={inputHighGVF1} onChange={handleInputChangeHighGVF1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF1}   placeholder='Low' step="0.1" type='number' value={inputLowGVF1} onChange={handleInputChangeLowGVF1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4409,7 +4410,7 @@ const confirmUpChangeGatewayPhone = () => {
         name: <span  style={combineCss.CSS_SVA1}>{paragraphContents.SVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
 
-        value: <span style={combineCss.CSS_SVA1} >  {SVA1format} sm³</span> , 
+        value: <span style={combineCss.CSS_SVA1} >  {SVA1format}  {nameValue.m3h}</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA1}   placeholder='Low' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4430,7 +4431,7 @@ const confirmUpChangeGatewayPhone = () => {
         name: <span style={combineCss.CSS_GVA1}>{paragraphContents.GVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_GVA1}>40872	 </span> ,
 
-        value: <span style={combineCss.CSS_GVA1} > {GVA1format} m³</span> , 
+        value: <span style={combineCss.CSS_GVA1} > {GVA1format} {nameValue.m3}</span> , 
          high: <InputText style={combineCss.CSS_GVA1}   placeholder='High' step="0.1" type='number' value={inputHighGVA1} onChange={handleInputChangeHighGVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA1}   placeholder='Low' step="0.1" type='number' value={inputLowGVA1} onChange={handleInputChangeLowGVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4449,7 +4450,7 @@ const confirmUpChangeGatewayPhone = () => {
         modbus: <span style={combineCss.CSSpt02}>{modbusEVC1.PT}</span> ,
 
         name: <span style={combineCss.CSSpt02}>{paragraphContents.PT} </span> ,
-        value: <span style={combineCss.CSSpt02} > {PT02} Bara</span> , 
+        value: <span style={combineCss.CSSpt02} > {PT02} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt02}   placeholder='Low' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4467,7 +4468,7 @@ const confirmUpChangeGatewayPhone = () => {
     name: <span style={combineCss.CSS_Temperature}>{paragraphContents.TT} </span> ,
     modbus: <span style={combineCss.CSS_Temperature}>{modbusEVC1.TT}</span> ,
 
-    value: <span style={combineCss.CSS_Temperature} > {Temperature01} °C</span>, 
+    value: <span style={combineCss.CSS_Temperature} > {Temperature01} {nameValue.C}</span>, 
     high: <InputText style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighTemperature01} onChange={handleInputChangeHighTemperature01} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature01} onChange={handleInputChangeLowTemperature01} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4487,7 +4488,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VbToDay01}> {paragraphContents.VB_TODAY}</span> ,
 
-        value: <span style={combineCss.CSS_VbToDay01} > {VBTodayformat} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbToDay01} > {VBTodayformat} {nameValue.Sm3}</span>, 
         high: <InputText style={combineCss.CSS_VbToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay01} onChange={handleInputChangeHighVbToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay01} onChange={handleInputChangeLowVbToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4506,7 +4507,7 @@ const confirmUpChangeGatewayPhone = () => {
         modbus: <span style={combineCss.CSS_VmToDay01}>{modbusEVC1.VM_TODAY}</span> ,
 
         name: <span style={combineCss.CSS_VmToDay01}>{paragraphContents.VM_TODAY}</span> ,
-        value: <span style={combineCss.CSS_VmToDay01} > {VMTodayformat} m³</span>, 
+        value: <span style={combineCss.CSS_VmToDay01} > {VMTodayformat} {nameValue.m3}</span>, 
         high: <InputText style={combineCss.CSS_VmToDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay01} onChange={handleInputChangeHighVmToDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay01} onChange={handleInputChangeLowVmToDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4526,7 +4527,7 @@ const confirmUpChangeGatewayPhone = () => {
 
        name: <span style={combineCss.CSS_VbLastDay01}> {paragraphContents.VB_Yesterday}</span> ,
 
-       value: <span style={combineCss.CSS_VbLastDay01} > {VBLastdayformat} Sm³</span>, 
+       value: <span style={combineCss.CSS_VbLastDay01} > {VBLastdayformat} {nameValue.Sm3}</span>, 
        high: <InputText style={combineCss.CSS_VbLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay01} onChange={handleInputChangeHighVbLastDay01} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSS_VbLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay01} onChange={handleInputChangeLowVbLastDay01} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4546,7 +4547,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VmLastDay01}> {paragraphContents.VM_Yesterday} </span> ,
 
-        value: <span style={combineCss.CSS_VmLastDay01} > {VMLastdayformat} m³</span>, 
+        value: <span style={combineCss.CSS_VmLastDay01} > {VMLastdayformat} {nameValue.m3}</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay01}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay01} onChange={handleInputChangeHighVmLastDay01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay01}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay01} onChange={handleInputChangeLowVmLastDay01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4566,7 +4567,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_Rebattery}>{paragraphContents.ReBattery}</span> ,
 
-        value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} Months </span>, 
+        value: <span style={combineCss.CSS_Rebattery} > {ReBattery01} {nameValue.month} </span>, 
         high: <InputText style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighReBattery01} onChange={handleInputChangeHighReBattery01} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery01} onChange={handleInputChangeLowReBattery01} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4602,7 +4603,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_SVF2}>{paragraphContents.SVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_SVF2} > {SVF2format} m³/h </span> , 
+        value: <span style={combineCss.CSS_SVF2} > {SVF2format} {nameValue.m3h} </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF2}   placeholder='Low' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4622,7 +4623,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_GVF2}>{paragraphContents.GVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_GVF2} > {GVF2format} m³/h</span> , 
+        value: <span style={combineCss.CSS_GVF2} > {GVF2format} {nameValue.m3h} </span> , 
          high: <InputText style={combineCss.CSS_GVF2}   placeholder='High' step="0.1" type='number' value={inputHighGVF2} onChange={handleInputChangeHighGVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVF2}   placeholder='Low' step="0.1" type='number' value={inputLowGVF2} onChange={handleInputChangeLowGVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4643,7 +4644,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_SVA2}>{paragraphContents.SVA}	 </span> ,
 
-        value: <span style={combineCss.CSS_SVA2} > {SVA2format} sm³</span> , 
+        value: <span style={combineCss.CSS_SVA2} > {SVA2format} {nameValue.Sm3}</span> , 
          high: <InputText style={combineCss.CSS_SVA2}   placeholder='High' step="0.1" type='number' value={inputHighSVA2} onChange={handleInputChangeHighSVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA2}   placeholder='Low' step="0.1" type='number' value={inputLowSVA2} onChange={handleInputChangeLowSVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4663,7 +4664,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_GVA2}>{paragraphContents.GVA}	 </span> ,
 
-        value: <span style={combineCss.CSS_GVA2} > {GVA2format} m³</span> , 
+        value: <span style={combineCss.CSS_GVA2} > {GVA2format} {nameValue.m3}</span> , 
          high: <InputText style={combineCss.CSS_GVA2}   placeholder='High' step="0.1" type='number' value={inputHighGVA2} onChange={handleInputChangeHighGVA2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_GVA2}   placeholder='Low' step="0.1" type='number' value={inputLowGVA2} onChange={handleInputChangeLowGVA2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4682,7 +4683,7 @@ const confirmUpChangeGatewayPhone = () => {
         modbus: <span style={combineCss.CSSpt03}>{modbusEVC2.PT}</span> ,
 
         name: <span style={combineCss.CSSpt03}>{paragraphContents.PT} </span> ,
-        value: <span style={combineCss.CSSpt03} > {PT03} Bara</span> , 
+        value: <span style={combineCss.CSSpt03} > {PT03} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4701,7 +4702,7 @@ const confirmUpChangeGatewayPhone = () => {
 
     name: <span style={combineCss.CSS_Temperature02}>{paragraphContents.TT} </span> ,
 
-    value: <span style={combineCss.CSS_Temperature02} > {Temperature02} °C</span>, 
+    value: <span style={combineCss.CSS_Temperature02} > {Temperature02}  {nameValue.C}</span>, 
     high: <InputText style={combineCss.CSS_Temperature02}   placeholder='High' step="0.1" type='number' value={inputHighTemperature02} onChange={handleInputChangeHighTemperature02} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSS_Temperature02}    placeholder='Low' step="0.1" type='number' value={inputLowTemperature02} onChange={handleInputChangeLowTemperature02} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4723,7 +4724,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VbToDay02}> {paragraphContents.VB_TODAY}</span> ,
 
-        value: <span style={combineCss.CSS_VbToDay02} > {VBTodayformat2} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbToDay02} > {VBTodayformat2} {nameValue.Sm3}</span>, 
         high: <InputText style={combineCss.CSS_VbToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbToDay02} onChange={handleInputChangeHighVbToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbToDay02} onChange={handleInputChangeLowVbToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4744,7 +4745,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VmToDay02}> {paragraphContents.VM_TODAY}</span> ,
 
-        value: <span style={combineCss.CSS_VmToDay02} > {VMTodayformat2} m³</span>, 
+        value: <span style={combineCss.CSS_VmToDay02} > {VMTodayformat2} {nameValue.m3}</span>, 
         high: <InputText style={combineCss.CSS_VmToDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmToDay02} onChange={handleInputChangeHighVmToDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmToDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmToDay02} onChange={handleInputChangeLowVmToDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4765,7 +4766,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VbLastDay02}> {paragraphContents.VB_Yesterday}</span> ,
 
-        value: <span style={combineCss.CSS_VbLastDay02} > {VBLastdayformat2} Sm³</span>, 
+        value: <span style={combineCss.CSS_VbLastDay02} > {VBLastdayformat2} {nameValue.Sm3}</span>, 
         high: <InputText style={combineCss.CSS_VbLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVbLastDay02} onChange={handleInputChangeHighVbLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VbLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVbLastDay02} onChange={handleInputChangeLowVbLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4785,7 +4786,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VmLastDay02}> {paragraphContents.VM_Yesterday} </span> ,
 
-        value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} m³</span>, 
+        value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} {nameValue.m3}</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4805,7 +4806,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_Rebattery02}>{paragraphContents.ReBattery}</span> ,
 
-        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery02} Months</span>, 
+        value: <span style={combineCss.CSS_Rebattery02} > {ReBattery02} {nameValue.month}</span>, 
         high: <InputText style={combineCss.CSS_Rebattery02}   placeholder='High' step="0.1" type='number' value={inputHighReBattery02} onChange={handleInputChangeHighReBattery02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_Rebattery02}    placeholder='Low' step="0.1" type='number' value={inputLowReBattery02} onChange={handleInputChangeLowReBattery02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,
@@ -4874,7 +4875,7 @@ const confirmUpChangeGatewayPhone = () => {
         modbus: <span style={combineCss.CSSpt01}>{modbusPLC.PT1}</span> ,
 
         name: <span style={combineCss.CSSpt01}>{paragraphContentsPLC.PT03} </span> ,
-        value: <span style={combineCss.CSSpt01} > {PT01format} BarG</span> , 
+        value: <span style={combineCss.CSSpt01} > {PT01format} {nameValue.BARG}</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4893,7 +4894,7 @@ const confirmUpChangeGatewayPhone = () => {
      modbus: <span style={combineCss.CSSgd01}>{modbusPLC.GD1}</span> ,
 
      name: <span style={combineCss.CSSgd01}>{paragraphContentsPLC.GD1} </span> ,
-     value: <span style={combineCss.CSSgd01} > {GD01} LEL</span> , 
+     value: <span style={combineCss.CSSgd01} > {GD01} {nameValue.LEL}</span> , 
       high: <InputText style={combineCss.CSSgd01}   placeholder='High' step="0.1" type='number' value={inputHighGD01} onChange={handleInputChangeHighGD01} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd01}   placeholder='Low' step="0.1" type='number' value={inputLowGD01} onChange={handleInputChangeLowGD01} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4912,7 +4913,7 @@ const confirmUpChangeGatewayPhone = () => {
      modbus: <span style={combineCss.CSSgd02}>{modbusPLC.GD2}</span> ,
 
      name: <span style={combineCss.CSSgd02}>{paragraphContentsPLC.GD2} </span> ,
-     value: <span style={combineCss.CSSgd02} > {GD02} LEL</span> , 
+     value: <span style={combineCss.CSSgd02} > {GD02} {nameValue.LEL}</span> , 
       high: <InputText style={combineCss.CSSgd02}   placeholder='High' step="0.1" type='number' value={inputHighGD02} onChange={handleInputChangeHighGD02} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd02}   placeholder='Low' step="0.1" type='number' value={inputLowGD02} onChange={handleInputChangeLowGD02} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4931,7 +4932,7 @@ const confirmUpChangeGatewayPhone = () => {
      modbus: <span  style={combineCss.CSSgd03}>{modbusPLC.GD3}</span> ,
 
      name: <span style={combineCss.CSSgd03}>{paragraphContentsPLC.GD3}</span> ,
-     value: <span style={combineCss.CSSgd03} > {GD03} LEL</span> , 
+     value: <span style={combineCss.CSSgd03} > {GD03} {nameValue.LEL}</span> , 
       high: <InputText style={combineCss.CSSgd03}   placeholder='High' step="0.1" type='number' value={inputHighGD03} onChange={handleInputChangeHighGD03} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSgd03}   placeholder='Low' step="0.1" type='number' value={inputLowGD03} onChange={handleInputChangeLowGD03} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,

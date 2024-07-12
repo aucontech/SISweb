@@ -10,6 +10,8 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
+import { namePCV_PSV, nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -39,6 +41,21 @@ export default function SetUpdata_ARAKAWA() {
     const [PLC_STTValue, setPLC_STTValue] = useState<string | null>(null);
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+    const [PCV_01,setPCV_01] = useState<any>()
+    const [inputPCV_01, setInputPCV_01] = useState<any>();
+
+    const [PCV_02,setPCV_02] = useState<any>()
+    const [inputPCV_02, setInputPCV_02] = useState<any>();
+
+    const [PSV_01,setPSV_01] = useState<any>()
+    const [inputPSV_01, setInputPSV_01] = useState<any>();
+
+    const [timeEVC_01,setTimeEVC_01] = useState<any>()
+    const [timeEVC_02,setTimeEVC_02] = useState<any>()
+
+
+
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -68,7 +85,26 @@ export default function SetUpdata_ARAKAWA() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
                         ],
                     },
                     query: {
@@ -109,7 +145,26 @@ export default function SetUpdata_ARAKAWA() {
                                 type: "ATTRIBUTE",
                                 key: "IOT_Gateway_Phone",
                             },
-                           
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
                         ],
                     },
                 },
@@ -236,7 +291,57 @@ export default function SetUpdata_ARAKAWA() {
                         setGetWayPhoneOTSUKA(updatedData);
                 }
 
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setPCV_01(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setPCV_01(updatedData);
+                }
 
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02?.value;
+                    setPCV_02(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02?.value;
+                    setPCV_02(updatedData);
+                }
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01?.value;
+                    setPSV_01(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_01?.value;
+                    setPSV_01(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                }
                 fetchData()
             };
         }
@@ -2842,11 +2947,18 @@ const ChangeMaintainEmergency_NO = async () => {
                     Emergency_NC_High: inputValueEmergency_NC,Emergency_NC_Low:inputValue2Emergency_NC,
                     UPS_Mode_High: inputValueUPS_Mode,UPS_Mode_Low:inputValue2UPS_Mode,
                     IOT_Gateway_Phone: inputGetwayPhone,
+                    PCV_01: inputPCV_01,
+                    PCV_02: inputPCV_02,
+                    PSV_01: inputPSV_01,
+                    EVC_01_Battery_Expiration_Date: timeEVC_01,
+                    EVC_01_Battery_Installation_Date: timeEVC_02,
                 }
             );
      
             setGetWayPhoneOTSUKA(inputGetwayPhone);
-
+            setPSV_01(inputPSV_01)
+            setPCV_02(inputPCV_02)
+            setPCV_01(inputPCV_01)
 
             setEVC_01_Remain_Battery_Service_Life_High(inputValueEVC_01_Remain_Battery_Service_Life);
             setEVC_01_Remain_Battery_Service_Life_Low(inputValue2EVC_01_Remain_Battery_Service_Life);
@@ -2970,7 +3082,9 @@ const ChangeMaintainEmergency_NO = async () => {
     useEffect(() => {
 
         setInputGetwayPhone(getWayPhoneOTSUKA)
-   
+        setInputPCV_01(PCV_01)
+        setInputPCV_02(PCV_02)
+        setInputPSV_01(PSV_01)
          setInputValueDO_HR_01(DO_HR_01_High); 
         setInputValue2DO_HR_01(DO_HR_01_Low); 
         setInputValueDO_BC_01(DO_BC_01_High); 
@@ -3130,6 +3244,11 @@ const ChangeMaintainEmergency_NO = async () => {
               DO_BC_01_High,DO_BC_01_Low,
               DO_SV_01_High,DO_SV_01_Low,
               getWayPhoneOTSUKA,
+              PCV_01,
+              PCV_02,
+              PSV_01,
+           timeEVC_01,timeEVC_02
+
         ]);
 
 
@@ -3478,11 +3597,11 @@ const ChangeMaintainEmergency_NO = async () => {
             {
                 mainCategory:mainCategoryFC.EVC,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
+             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life </span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3502,7 +3621,7 @@ const ChangeMaintainEmergency_NO = async () => {
     
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature} {nameValue.C}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3521,7 +3640,7 @@ const ChangeMaintainEmergency_NO = async () => {
    
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
    
-           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure}</span> , 
+           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure} {nameValue.Bara}</span> , 
             high: <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3540,7 +3659,7 @@ const ChangeMaintainEmergency_NO = async () => {
   
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
   
-          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition}</span> , 
+          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
            high: <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3559,7 +3678,7 @@ const ChangeMaintainEmergency_NO = async () => {
  
           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
  
-         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition}</span> , 
+         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
           high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3577,7 +3696,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
 
-        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition}</span> , 
+        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
          high: <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3597,7 +3716,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
 
-       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition}</span> , 
+       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition} {nameValue.m3h}</span> , 
         high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3615,7 +3734,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
 
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day}</span> , 
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3634,7 +3753,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
 
-       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day}</span> , 
+       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day} {nameValue.m3}</span> , 
         high: <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3654,7 +3773,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
 
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day}</span> , 
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3674,7 +3793,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
       modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
 
-     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day}</span> , 
+     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day} {nameValue.m3}</span> , 
       high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3698,7 +3817,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
          modbus: <span style={combineCss.CSSGD1}>40002</span> ,
 
-        value: <span style={combineCss.CSSGD1} > {GD1}</span> , 
+        value: <span style={combineCss.CSSGD1} > {GD1} {nameValue.LEL}</span> , 
          high: <InputText style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1} onChange={handleInputChange2GD1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3718,7 +3837,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
          modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
 
-        value: <span style={combineCss.CSSGD2} > {GD2}</span> , 
+        value: <span style={combineCss.CSSGD2} > {GD2} {nameValue.LEL}</span> , 
          high: <InputText style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3737,7 +3856,7 @@ const ChangeMaintainEmergency_NO = async () => {
 
         modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
 
-       value: <span style={combineCss.CSSPT1} > {PT1}</span> , 
+       value: <span style={combineCss.CSSPT1} > {PT1} {nameValue.BARG}</span> , 
         high: <InputText style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4089,9 +4208,142 @@ checked={maintainDO_SV_01}
         const newValue : any = event.target.value;
         setInputGetwayPhone(newValue);
     };
+    const handleInputPCV_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_01(newValue);
+    };
 
-    const configuration = [
+    const handleInputPCV_02 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPCV_02(newValue);
+    };
+    const handleInputPSV_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_01(newValue);
+    };
+
        
+    const timeEVC_01Number = parseFloat(timeEVC_01);
+    const date = !isNaN(timeEVC_01Number) ? new Date(timeEVC_01Number) : null;
+
+    const timeEVC_02Number = parseFloat(timeEVC_02);
+    const date2 = !isNaN(timeEVC_02Number) ? new Date(timeEVC_02Number) : null;
+
+    const handleDateChange = (e: any) => {
+        const selectedDate = e.value;
+        setTimeEVC_02(selectedDate.getTime());
+
+        const expirationDate = new Date(selectedDate);
+        expirationDate.setMonth(expirationDate.getMonth() + 18);
+        setTimeEVC_01(expirationDate.getTime());
+    };
+    const [selectedDate, setSelectedDate] = useState(null);
+    
+    useEffect(() => {
+        const dateString = "01-03-2024";
+        const parts = dateString.split('-');
+        const year = parseInt(parts[2], 10);
+        const month = parseInt(parts[1], 10) - 1; 
+        const day = parseInt(parts[0], 10);
+        const dateObject :any = new Date(year, month, day);
+    
+        setSelectedDate(dateObject);
+      }, []);
+
+      const ConfigurationName ={
+        PSV: "Pressure Safety Valve ( PSV-1901)" ,
+        PCV1: "{namePCV_PSV.control} (PCV-1901)",
+        PCV2: "{namePCV_PSV.control} (PCV-1902)",
+        IOT: "IOT getway phone number",
+        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+
+        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+
+    }
+
+    const combineCssTime = {
+        PCV: {
+            height: 25,
+            fontWeight: 400,
+        },
+    };
+    const configuration = [
+        {
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1601) (BarG)</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_01}
+                    onChange={handleInputPCV_01}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1602) (BarG)</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPCV_02}
+                    onChange={handleInputPCV_02}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+
+        {
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PCV-1601) (BarG)</span>,
+
+            Value: (
+                <InputText
+                    style={combineCssAttribute.PCV}
+                    placeholder="High"
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_01}
+                    onChange={handleInputPSV_01}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
         {
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
 
@@ -4115,6 +4367,67 @@ checked={maintainDO_SV_01}
                     onClick={confirmUpData}
                 />
             ),
+        },
+
+
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_01_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCssTime.PCV}
+                    value={date2}
+                    onChange={handleDateChange}
+
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCssTime.PCV}>
+                    {ConfigurationName.EVC_01_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCssTime.PCV}
+                    value={date}
+                    disabled
+
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
         },
 
     ];

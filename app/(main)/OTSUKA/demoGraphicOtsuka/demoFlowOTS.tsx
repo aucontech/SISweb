@@ -2771,11 +2771,7 @@ export default function DemoFlowOTS() {
                                         ? SVD_NC
                                         : null}
 
-                                        {NC === "1"
-                                        ? SVD_NC
-                                             : NC === "0"
-                                        ? SVD_NC
-                                        : null}
+                                     
                                 </div>
 
                                 {/* {NO === "1" && <div>{SVD_NO}</div>}
