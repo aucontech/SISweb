@@ -3642,7 +3642,7 @@ const ChangeMaintainEmergency_NO = async () => {
             {
                 mainCategory:mainCategoryFC.EVC,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
+             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
@@ -3917,7 +3917,7 @@ const ChangeMaintainEmergency_NO = async () => {
        {
          mainCategory: mainCategoryFC.PLC ,
         timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
-       name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO</span> ,
+       name: <span style={combineCss.CSSDI_ZSO_1}>SDV-ZSO</span> ,
 
        modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
 

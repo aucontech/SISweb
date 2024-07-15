@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { readToken } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
-import { id_CNG_HungYen, id_OTSUKA, id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
+import { id_CNG_BinhDuong, id_OTSUKA, id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
-export default function AlarmCNG_HUNGYEN() {
+export default function AlarmCNG_BINHDUONG() {
     let token: string | null = "";
     if (typeof window !== "undefined") {
         token = readToken();
@@ -30,7 +30,7 @@ export default function AlarmCNG_HUNGYEN() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_CNG_HungYen,
+                                id: id_CNG_BinhDuong,
                             },
                         },
                         pageLink: {

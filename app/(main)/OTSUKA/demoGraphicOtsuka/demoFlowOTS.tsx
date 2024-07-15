@@ -2765,17 +2765,11 @@ export default function DemoFlowOTS() {
                         label: (
                             <div>
                                 <div>
-                                    {NO === "1"
-                                        ? SVD_NO
-                                        : NC === "0"
-                                        ? SVD_NC
-                                        : null}
-
+                                {NO === "1" ? SVD_NO : NO === "0" ? SVD_NC : null}
                                      
                                 </div>
 
-                                {/* {NO === "1" && <div>{SVD_NO}</div>}
-                                {NC === "0" && <div>{SVD_NC}</div>} */}
+                          
                             </div>
                         ),
                     },

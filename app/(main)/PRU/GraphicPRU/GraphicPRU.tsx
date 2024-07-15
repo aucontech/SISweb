@@ -30,6 +30,7 @@ import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
+import AlarmPRU from "@/layout/AlarmBell/AlarmPRU";
 
 interface StateMap {
     [key: string]:
@@ -4538,6 +4539,8 @@ export default function GraphicPRU() {
         timeUpdate3
         : 
         {x: -2387.450182845966, y: 800.0866709113047},
+        AlarmCenter: {x: -1244.529411972646, y: 762.0298862357979},
+
 
     };
 
@@ -7248,6 +7251,28 @@ export default function GraphicPRU() {
                 width: 10,
                 height: 10,
                 background: "none",
+            },
+        },
+
+        {
+            id: "AlarmCenter",
+            position: positions.AlarmCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <AlarmPRU />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                background: backgroundGraphic,
+                border: "none",
+                width: 0,
+                borderRadius: 5,
             },
         },
     ]);

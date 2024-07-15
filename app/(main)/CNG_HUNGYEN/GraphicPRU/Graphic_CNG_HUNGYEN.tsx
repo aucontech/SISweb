@@ -30,6 +30,7 @@ import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
+import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 
 interface StateMap {
     [key: string]:
@@ -4398,6 +4399,9 @@ export default function Graphic_CNG_HUNGYEN() {
               line10: { x: -449.9501828459661, y: 1298.5866709113047 },
               line10none: { x: -405.6683476271253, y: 1298.7587875755169 },
               timeUpdate3: { x: -2387.450182845966, y: 800.0866709113047 },
+
+        AlarmCenter: {x: -1244.529411972646, y: 762.0298862357979},
+
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -7109,6 +7113,29 @@ export default function Graphic_CNG_HUNGYEN() {
                 background: "none",
             },
         },
+
+
+        {
+            id: "AlarmCenter",
+            position: positions.AlarmCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <AlarmCNG_HUNGYEN />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                background: backgroundGraphic,
+                border: "none",
+                width: 0,
+                borderRadius: 5,
+            },
+        },
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -7825,6 +7852,11 @@ export default function Graphic_CNG_HUNGYEN() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         line10none: position,
+                    }));
+                } else if (id === "AlarmCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        AlarmCenter: position,
                     }));
                 }
             }
