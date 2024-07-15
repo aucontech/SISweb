@@ -155,7 +155,9 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     );
 
                     let datasets = keys.map((key, index) => {
-                        let values = res[key].map((d: any) => d.value);
+                        let values = res[key].map((d: any) =>
+                            Utils.round(d.value, 3)
+                        );
                         if (units[key]) {
                             key = `${key} (${units[key]})`;
                         }
