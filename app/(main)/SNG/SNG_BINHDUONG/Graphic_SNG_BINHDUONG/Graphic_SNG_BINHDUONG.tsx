@@ -49,6 +49,7 @@ import BallValue02 from "../BallValueSNG_BINHDUONG/BallValue02";
 import BallValue03 from "../BallValueSNG_BINHDUONG/BallValue03";
 import PSV01 from "../BallValueSNG_BINHDUONG/PSV01";
 import PSV02 from "../BallValueSNG_BINHDUONG/PSV02";
+import AlarmSNG_BINHDUONG from "@/layout/AlarmBell/AlarmSNG_BINHDUONG";
 
 interface StateMap {
     [key: string]:
@@ -2697,6 +2698,9 @@ export default function Graphic_SNG_BINHDUONG() {
               line3: { x: -2524.296141994977, y: 2189.2006419886534 },
               percent: { x: -802.620762343302, y: 1565.641363272772 },
               timeUpdate3: { x: -2820.484797907167, y: 1247.8726878582834 },
+
+        AlarmCenter: {x: -800.5294119726459, y: 1246.647867192829},
+
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -3925,6 +3929,29 @@ export default function Graphic_SNG_BINHDUONG() {
             },
             targetPosition: Position.Bottom,
         },
+
+
+        {
+            id: "AlarmCenter",
+            position: positions.AlarmCenter,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <AlarmSNG_BINHDUONG />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                background: backgroundGraphic,
+                border: "none",
+                width: 0,
+                borderRadius: 5,
+            },
+        },
     ]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -4256,14 +4283,19 @@ export default function Graphic_SNG_BINHDUONG() {
                         ...prevPositions,
                         DATA_AIR: position,
                     }));
+                } else if (id === "AlarmCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        AlarmCenter: position,
+                    }));
                 }
             }
         },
         [setNodes, setPositions, editingEnabled]
     );
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
 
     // useEffect(() => {
     //     localStorage.setItem("positionMEIKO", JSON.stringify(positions));

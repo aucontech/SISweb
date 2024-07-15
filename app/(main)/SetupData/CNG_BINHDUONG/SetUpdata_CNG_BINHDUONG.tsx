@@ -11,6 +11,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
+import { namePCV_PSV, nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -5374,9 +5375,9 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
          
     
   const mainCategoryFC = {
-    EVC01: 'EVC-01 -  Prameter & configuration',
-    EVC02: 'EVC-02 -  Prameter & configuration',
-    PLC: 'PLC -  Prameter & configuration'
+    EVC01: 'EVC-01 -  Parameter & configuration',
+    EVC02: 'EVC-02 -  Parameter & configuration',
+    PLC: 'PLC -  Parameter & configuration'
 };
         const dataEVC01 = [
 
@@ -5388,11 +5389,11 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 mainCategory: mainCategoryFC.EVC01,
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
+             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5413,7 +5414,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
     
-            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}</span> , 
+            value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}  {nameValue.C}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5433,7 +5434,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
    
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
    
-           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure}</span> , 
+           value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure} {nameValue.Bara}</span> , 
             high: <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5453,7 +5454,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
   
-          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition}</span> , 
+          value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
            high: <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5473,7 +5474,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
  
           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
  
-         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition}</span> , 
+         value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
           high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5492,7 +5493,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
 
-        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition}</span> , 
+        value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
          high: <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5513,7 +5514,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
 
-       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition}</span> , 
+       value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition} {nameValue.m3h} </span> , 
         high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5532,7 +5533,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
 
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day}</span> , 
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5552,7 +5553,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
 
-       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day}</span> , 
+       value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day} {nameValue.m3}</span> , 
         high: <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5573,7 +5574,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
 
-      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day}</span> , 
+      value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5594,7 +5595,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
       modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
 
-     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day}</span> , 
+     value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day} {nameValue.m3}</span> , 
       high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5624,7 +5625,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
        
             modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40001	 </span> ,
        
-           value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life}</span> , 
+           value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life} {nameValue.month}</span> , 
             high: <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5649,7 +5650,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     modbus: <span style={combineCss.CSSEVC_02_Temperature}>40850	 </span> ,
 
-   value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature}</span> , 
+   value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature} {nameValue.C}</span> , 
     high: <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5670,7 +5671,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
 
-  value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure}</span> , 
+  value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure} {nameValue.Bara}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5691,7 +5692,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40854	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5711,7 +5712,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40856	 </span> ,
 
-  value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition}</span> , 
+  value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5732,7 +5733,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40858	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5755,7 +5756,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40860	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition}</span> , 
+value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition} {nameValue.m3h}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5775,7 +5776,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
   modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40862	 </span> ,
 
- value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day}</span> , 
+ value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5796,7 +5797,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
  modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40864	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day} {nameValue.m3}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5817,7 +5818,7 @@ name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40866	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5838,7 +5839,7 @@ name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
 modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40868	 </span> ,
 
-value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day}</span> , 
+value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day} {nameValue.m3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5868,7 +5869,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_2006}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSPIT_2006} > {PIT_2006}</span> , 
+            value: <span style={combineCss.CSSPIT_2006} > {PIT_2006} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_2006}   placeholder='High' step="0.1" type='number' value={inputValuePIT_2006} onChange={handleInputChangePIT_2006} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_2006}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_2006} onChange={handleInputChange2VP303} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5889,7 +5890,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPIT_2007}>40003	 </span> ,
     
-            value: <span style={combineCss.CSSPIT_2007} > {PIT_2007}</span> , 
+            value: <span style={combineCss.CSSPIT_2007} > {PIT_2007} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPIT_2007}   placeholder='High' step="0.1" type='number' value={inputValuePIT_2007} onChange={handleInputChangePIT_2007} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPIT_2007}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_2007} onChange={handleInputChange2PIT_2007} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5909,7 +5910,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPT_2001}>40005</span> ,
     
-            value: <span style={combineCss.CSSPT_2001} > {PT_2001}</span> , 
+            value: <span style={combineCss.CSSPT_2001} > {PT_2001} {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPT_2001}   placeholder='High' step="0.1" type='number' value={inputValuePT_2001} onChange={handleInputChangePT_2001} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPT_2001}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2001} onChange={handleInputChange2PT_2001} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5930,7 +5931,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
              modbus: <span style={combineCss.CSSPT_2002}>40007	 </span> ,
     
-            value: <span style={combineCss.CSSPT_2002} > {PT_2002}</span> , 
+            value: <span style={combineCss.CSSPT_2002} > {PT_2002}  {nameValue.BARG}</span> , 
              high: <InputText style={combineCss.CSSPT_2002}   placeholder='High' step="0.1" type='number' value={inputValuePT_2002} onChange={handleInputChangePT_2002} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSPT_2002}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2002} onChange={handleInputChange2PT_2002} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5950,7 +5951,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
    
             modbus: <span style={combineCss.CSSPT_2003}>40009	 </span> ,
    
-           value: <span style={combineCss.CSSPT_2003} > {PT_2003}</span> , 
+           value: <span style={combineCss.CSSPT_2003} > {PT_2003}  {nameValue.BARG}</span> , 
             high: <InputText style={combineCss.CSSPT_2003}   placeholder='High' step="0.1" type='number' value={inputValuePT_2003} onChange={handleInputChangePT_2003} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSPT_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2003} onChange={handleInputChange2PT_2003} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5971,7 +5972,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
   
            modbus: <span style={combineCss.CSSTT_2001}>40011	 </span> ,
   
-          value: <span style={combineCss.CSSTT_2001} > {TT_2001}</span> , 
+          value: <span style={combineCss.CSSTT_2001} > {TT_2001} {nameValue.C}</span> , 
            high: <InputText style={combineCss.CSSTT_2001}   placeholder='High' step="0.1" type='number' value={inputValueTT_2001} onChange={handleInputChangeTT_2001} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSTT_2001}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2001} onChange={handleInputChange2TT_2001} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5995,7 +5996,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
          modbus: <span style={combineCss.CSSTT_2002}>40013	 </span> ,
 
-        value: <span style={combineCss.CSSTT_2002} > {TT_2002}</span> , 
+        value: <span style={combineCss.CSSTT_2002} > {TT_2002} {nameValue.C}</span> , 
          high: <InputText style={combineCss.CSSTT_2002}   placeholder='High' step="0.1" type='number' value={inputValueTT_2002} onChange={handleInputChangeTT_2002} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSTT_2002}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2002} onChange={handleInputChange2TT_2002} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6016,7 +6017,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
         modbus: <span style={combineCss.CSSGD_2001}>40015	 </span> ,
 
-       value: <span style={combineCss.CSSGD_2001} > {GD_2001}</span> , 
+       value: <span style={combineCss.CSSGD_2001} > {GD_2001} {nameValue.LEL}</span> , 
         high: <InputText style={combineCss.CSSGD_2001}   placeholder='High' step="0.1" type='number' value={inputValueGD_2001} onChange={handleInputChangeGD_2001} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSGD_2001}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2001} onChange={handleInputChange2GD_2001} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6355,7 +6356,7 @@ checked={maintainSD_2002}
 
           const mainCategoryTemplate = (data: any) => {
               return (
-                  <div style={{fontWeight:200, fontSize:23,background:'#f8fafc'}}>
+                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
                       <span >{data.mainCategory}</span>
                   </div>
               );
@@ -6472,7 +6473,7 @@ checked={maintainSD_2002}
         };
         const configuration = [
             {
-                Name: <span style={combineCssAttribute.PCV}>PCV 2001A </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 2001A {nameValue.BARG} </span>,
     
                 Value: (
                     <InputText
@@ -6496,9 +6497,8 @@ checked={maintainSD_2002}
                 ),
             },
     
-    
             {
-                Name: <span style={combineCssAttribute.PCV}>PCV 2001B </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 2001B {nameValue.BARG} </span>,
     
                 Value: (
                     <InputText
@@ -6523,8 +6523,7 @@ checked={maintainSD_2002}
             },
     
             {
-                Name: <span style={combineCssAttribute.PCV}>PCV 2002A </span>,
-    
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 2002A {nameValue.BARG} </span>,
                 Value: (
                     <InputText
                         style={combineCssAttribute.PCV}
@@ -6549,7 +6548,7 @@ checked={maintainSD_2002}
     
     
             {
-                Name: <span style={combineCssAttribute.PCV}>PCV 2002B </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 2002B {nameValue.BARG} </span>,
     
                 Value: (
                     <InputText
@@ -6574,12 +6573,11 @@ checked={maintainSD_2002}
             },
     
     
-    
             //===========================================
     
     
             {
-                Name: <span style={combineCssAttribute.PCV}>PSV 2001A </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 2001A ( Bar )</span>,
     
                 Value: (
                     <InputText
@@ -6603,9 +6601,8 @@ checked={maintainSD_2002}
                 ),
             },
     
-    
             {
-                Name: <span style={combineCssAttribute.PCV}>PSV 2001B </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 2001B ( Bar )</span>,
     
                 Value: (
                     <InputText
@@ -6630,7 +6627,9 @@ checked={maintainSD_2002}
             },
     
             {
-                Name: <span style={combineCssAttribute.PCV}>PSV 2002A </span>,
+
+
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 2002A ( Bar )</span>,
     
                 Value: (
                     <InputText
@@ -6656,7 +6655,7 @@ checked={maintainSD_2002}
     
     
             {
-                Name: <span style={combineCssAttribute.PCV}>PSV 2002B </span>,
+                Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 2002B ( Bar )</span>,
     
                 Value: (
                     <InputText
@@ -6840,11 +6839,11 @@ checked={maintainSD_2002}
     <div style={{width:'100%' , borderRadius:5 }}>
 
         
+
     <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
                     sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}    >
-  {/* <Column field="modbus" header="Modbus" /> */}
   <Column field="timeUpdate" header="Time Update" />
-
+ 
   <Column field="modbus" header="Modbus" />
 
   <Column field="name" header="Name" />

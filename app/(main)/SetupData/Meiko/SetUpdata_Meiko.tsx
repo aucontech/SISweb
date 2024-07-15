@@ -10,6 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
+import { nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -172,6 +173,9 @@ export default function SetUpdata_Meiko() {
                         Tank_01_Mass: setTank_01_Mass,
                         Tank_01_Level: setTank_01_Level,
                         Flow_Meter_Total: setFlow_Meter_Total,
+
+                        Consumption_Flow: setConsumption_Flow,
+                        Flow_Velocity: setFlow_Velocity,
 
 
                     };
@@ -406,7 +410,31 @@ export default function SetUpdata_Meiko() {
                 (item: any) => item.key === "Tank_01_Level_Maintain"
             );
 
+
+            const Flow_Velocity_High = res.data.find((item: any) => item.key === "Flow_Velocity_High");
+            setFlow_Velocity_High(Flow_Velocity_High?.value || null);
+            const Flow_Velocity_Low = res.data.find((item: any) => item.key === "Flow_Velocity_Low");
+            setFlow_Velocity_Low(Flow_Velocity_Low?.value || null);
+            const Flow_Velocity_Maintain = res.data.find(
+                (item: any) => item.key === "Flow_Velocity_Maintain"
+            );
+
+            const Consumption_Flow_High = res.data.find((item: any) => item.key === "Consumption_Flow_High");
+            setConsumption_Flow_High(Consumption_Flow_High?.value || null);
+            const Consumption_Flow_Low = res.data.find((item: any) => item.key === "Consumption_Flow_Low");
+            setConsumption_Flow_Low(Consumption_Flow_Low?.value || null);
+            const Consumption_Flow_Maintain = res.data.find(
+                (item: any) => item.key === "Consumption_Flow_Maintain"
+            );
+
  // =================================================================================================================== 
+
+ setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
+
+
+ setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
+
+
             setMaintainVP_303(MaintainVP_303?.value || false);
 
 
@@ -1943,6 +1971,152 @@ const ChangeMaintainTank_PT_301 = async () => {
           
           // =================================================================================================================== 
 
+
+
+                  // =================================================================================================================== 
+        
+                  const [Consumption_Flow, setConsumption_Flow] = useState<string | null>(null);
+                  const [audioPlayingConsumption_Flow, setAudioPlayingConsumption_Flow] = useState(false);
+                  const [inputValueConsumption_Flow, setInputValueConsumption_Flow] = useState<any>();
+                  const [inputValue2Consumption_Flow, setInputValue2Consumption_Flow] = useState<any>();
+                  const [Consumption_Flow_High, setConsumption_Flow_High] = useState<number | null>(null);
+                  const [Consumption_Flow_Low, setConsumption_Flow_Low] = useState<number | null>(null);
+                  const [exceedThresholdConsumption_Flow, setExceedThresholdConsumption_Flow] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                  
+                  const [maintainConsumption_Flow, setMaintainConsumption_Flow] = useState<boolean>(false);
+                  
+                  
+                  useEffect(() => {
+                      if (typeof Consumption_Flow_High === 'string' && typeof Consumption_Flow_Low === 'string' && Consumption_Flow !== null && maintainConsumption_Flow === false
+                      ) {
+                          const highValue = parseFloat(Consumption_Flow_High);
+                          const lowValue = parseFloat(Consumption_Flow_Low);
+                          const Consumption_FlowValue = parseFloat(Consumption_Flow);
+                  
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Consumption_FlowValue)) {
+                              if (highValue <= Consumption_FlowValue || Consumption_FlowValue <= lowValue) {
+                                  if (!audioPlayingConsumption_Flow) {
+                                      audioRef.current?.play();
+                                      setAudioPlayingConsumption_Flow(true);
+                                      setExceedThresholdConsumption_Flow(true);
+                                  }
+                              } else {
+                                 setAudioPlayingConsumption_Flow(false);
+                                 setExceedThresholdConsumption_Flow(false);
+                              }
+                          } 
+                      } 
+                  }, [Consumption_Flow_High, Consumption_Flow, audioPlayingConsumption_Flow, Consumption_Flow_Low,maintainConsumption_Flow]);
+                  
+                  useEffect(() => {
+                      if (audioPlayingConsumption_Flow) {
+                          const audioEnded = () => {
+                             setAudioPlayingConsumption_Flow(false);
+                          };
+                          audioRef.current?.addEventListener('ended', audioEnded);
+                          return () => {
+                              audioRef.current?.removeEventListener('ended', audioEnded);
+                          };
+                      }
+                  }, [audioPlayingConsumption_Flow]);
+                  
+                  const handleInputChangeConsumption_Flow = (event: any) => {
+                      const newValue = event.target.value;
+                      setInputValueConsumption_Flow(newValue);
+                  };
+                  
+                  const handleInputChange2Consumption_Flow = (event: any) => {
+                      const newValue2 = event.target.value;
+                      setInputValue2Consumption_Flow(newValue2);
+                  };
+                  const ChangeMaintainConsumption_Flow = async () => {
+                      try {
+                          const newValue = !maintainConsumption_Flow;
+                          await httpApi.post(
+                              `/plugins/telemetry/DEVICE/${id_THACHTHAT}/SERVER_SCOPE`,
+                              { Consumption_Flow_Maintain: newValue }
+                          );
+                          setMaintainConsumption_Flow(newValue);
+                          
+                      } catch (error) {}
+                  };
+                  
+                  
+                  // =================================================================================================================== 
+
+
+                         // =================================================================================================================== 
+        
+                         const [Flow_Velocity, setFlow_Velocity] = useState<string | null>(null);
+                         const [audioPlayingFlow_Velocity, setAudioPlayingFlow_Velocity] = useState(false);
+                         const [inputValueFlow_Velocity, setInputValueFlow_Velocity] = useState<any>();
+                         const [inputValue2Flow_Velocity, setInputValue2Flow_Velocity] = useState<any>();
+                         const [Flow_Velocity_High, setFlow_Velocity_High] = useState<number | null>(null);
+                         const [Flow_Velocity_Low, setFlow_Velocity_Low] = useState<number | null>(null);
+                         const [exceedThresholdFlow_Velocity, setExceedThresholdFlow_Velocity] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                         
+                         const [maintainFlow_Velocity, setMaintainFlow_Velocity] = useState<boolean>(false);
+                         
+                         
+                         useEffect(() => {
+                             if (typeof Flow_Velocity_High === 'string' && typeof Flow_Velocity_Low === 'string' && Flow_Velocity !== null && maintainFlow_Velocity === false
+                             ) {
+                                 const highValue = parseFloat(Flow_Velocity_High);
+                                 const lowValue = parseFloat(Flow_Velocity_Low);
+                                 const Flow_VelocityValue = parseFloat(Flow_Velocity);
+                         
+                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_VelocityValue)) {
+                                     if (highValue <= Flow_VelocityValue || Flow_VelocityValue <= lowValue) {
+                                         if (!audioPlayingFlow_Velocity) {
+                                             audioRef.current?.play();
+                                             setAudioPlayingFlow_Velocity(true);
+                                             setExceedThresholdFlow_Velocity(true);
+                                         }
+                                     } else {
+                                        setAudioPlayingFlow_Velocity(false);
+                                        setExceedThresholdFlow_Velocity(false);
+                                     }
+                                 } 
+                             } 
+                         }, [Flow_Velocity_High, Flow_Velocity, audioPlayingFlow_Velocity, Flow_Velocity_Low,maintainFlow_Velocity]);
+                         
+                         useEffect(() => {
+                             if (audioPlayingFlow_Velocity) {
+                                 const audioEnded = () => {
+                                    setAudioPlayingFlow_Velocity(false);
+                                 };
+                                 audioRef.current?.addEventListener('ended', audioEnded);
+                                 return () => {
+                                     audioRef.current?.removeEventListener('ended', audioEnded);
+                                 };
+                             }
+                         }, [audioPlayingFlow_Velocity]);
+                         
+                         const handleInputChangeFlow_Velocity = (event: any) => {
+                             const newValue = event.target.value;
+                             setInputValueFlow_Velocity(newValue);
+                         };
+                         
+                         const handleInputChange2Flow_Velocity = (event: any) => {
+                             const newValue2 = event.target.value;
+                             setInputValue2Flow_Velocity(newValue2);
+                         };
+                         const ChangeMaintainFlow_Velocity = async () => {
+                             try {
+                                 const newValue = !maintainFlow_Velocity;
+                                 await httpApi.post(
+                                     `/plugins/telemetry/DEVICE/${id_THACHTHAT}/SERVER_SCOPE`,
+                                     { Flow_Velocity_Maintain: newValue }
+                                 );
+                                 setMaintainFlow_Velocity(newValue);
+                                 
+                             } catch (error) {}
+                         };
+                         
+                         
+                         // =================================================================================================================== 
+        
+
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
@@ -1982,6 +2156,10 @@ const ChangeMaintainTank_PT_301 = async () => {
 
                     IOT_Gateway_Phone: inputGetwayPhone,
 
+
+                    Consumption_Flow_High: inputValueConsumption_Flow,Consumption_Flow_Low:inputValue2Consumption_Flow,
+                    Flow_Velocity_High: inputValueFlow_Velocity,Flow_Velocity_Low:inputValue2Flow_Velocity,
+
                 }
             );
             setGetWayPhoneOTSUKA(inputGetwayPhone);
@@ -1999,6 +2177,14 @@ const ChangeMaintainTank_PT_301 = async () => {
             setVP_301_Low(inputValue2VP_301);
 
     
+
+            setConsumption_Flow_High(inputValueConsumption_Flow);
+            setConsumption_Flow_Low(inputValue2Consumption_Flow);
+
+            setFlow_Velocity_High(inputValueFlow_Velocity);
+            setFlow_Velocity_Low(inputValue2Flow_Velocity);
+
+
 
             setGD_103_High_High(inputValueGD_103_High);
             setGD_103_High_Low(inputValue2GD_103_High);
@@ -2086,6 +2272,13 @@ const ChangeMaintainTank_PT_301 = async () => {
         setInputValue2VP_301(VP_301_Low); 
 
 
+        setInputValueConsumption_Flow(Consumption_Flow_High); 
+        setInputValue2Consumption_Flow(Consumption_Flow_Low); 
+
+        setInputValueFlow_Velocity(Flow_Velocity_High); 
+        setInputValue2Flow_Velocity(Flow_Velocity_Low); 
+
+
 
         setInputValueGD_102_High(GD_102_High_High); 
         setInputValue2GD_102_High(GD_102_High_Low); 
@@ -2168,6 +2361,9 @@ const ChangeMaintainTank_PT_301 = async () => {
            Tank_PT_301_High,Tank_PT_301_Low,
            Tank_TT_301_High,Tank_TT_301_Low,
 
+
+           Consumption_Flow_High,Consumption_Flow_Low,
+           Flow_Velocity_High,Flow_Velocity_Low,
 
            Tank_01_Volume_High,Tank_01_Volume_Low,
            Tank_01_Mass_High,Tank_01_Mass_Low,
@@ -2389,6 +2585,27 @@ const ChangeMaintainTank_PT_301 = async () => {
             color:exceedThresholdTank_01_Level && !maintainTank_01_Level
             ? "#ff5656"
             : maintainTank_01_Level
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSConsumption_Flow : {
+            color:exceedThresholdConsumption_Flow && !maintainConsumption_Flow
+            ? "#ff5656"
+            : maintainConsumption_Flow
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+        CSSFlow_Velocity : {
+            color:exceedThresholdFlow_Velocity && !maintainFlow_Velocity
+            ? "#ff5656"
+            : maintainFlow_Velocity
             ? "orange"
             : "" ,
             height:25,
@@ -2642,11 +2859,11 @@ const ChangeMaintainTank_PT_301 = async () => {
  mainCategory: mainCategoryFC.PLC ,
         
         timeUpdate: <span style={combineCss.CSSV1_Flow_Meter} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSV1_Flow_Meter}> V1 Flow Meter </span> ,
+     name: <span style={combineCss.CSSV1_Flow_Meter}> V1 Flow Meter  </span> ,
 
      modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
 
-    value: <span style={combineCss.CSSV1_Flow_Meter} > {V1_Flow_Meter}</span> , 
+    value: <span style={combineCss.CSSV1_Flow_Meter} > {V1_Flow_Meter} {nameValue.m3}</span> , 
      high: <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
      low:  <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2667,7 +2884,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
     modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
 
-   value: <span style={combineCss.CSSV2_Flow_Meter} > {V2_Flow_Meter}</span> , 
+   value: <span style={combineCss.CSSV2_Flow_Meter} > {V2_Flow_Meter} {nameValue.m3}</span> , 
     high: <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2688,7 +2905,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
    modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
 
-  value: <span style={combineCss.CSSPipe_Temp} > {Pipe_Temp}</span> , 
+  value: <span style={combineCss.CSSPipe_Temp} > {Pipe_Temp} {nameValue.C}</span> , 
    high: <InputText style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2709,7 +2926,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
   modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
 
- value: <span style={combineCss.CSSPipe_Press} > {Pipe_Press}</span> , 
+ value: <span style={combineCss.CSSPipe_Press} > {Pipe_Press} ( Bar )</span> , 
   high: <InputText style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2729,7 +2946,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
    modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
 
-  value: <span style={combineCss.CSSTank_TT_301} > {Tank_TT_301}</span> , 
+  value: <span style={combineCss.CSSTank_TT_301} > {Tank_TT_301} {nameValue.C}</span> , 
    high: <InputText style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2750,7 +2967,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
   modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
 
- value: <span style={combineCss.CSSTank_PT_301} > {Tank_PT_301}</span> , 
+ value: <span style={combineCss.CSSTank_PT_301} > {Tank_PT_301} ( Bar )</span> , 
   high: <InputText style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2773,7 +2990,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
  modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
 
-value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume}</span> , 
+value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume} ( L )</span> , 
  high: <InputText style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2793,7 +3010,7 @@ value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume}</span> ,
 
   modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
 
- value: <span style={combineCss.CSSTank_01_Mass} > {Tank_01_Mass}</span> , 
+ value: <span style={combineCss.CSSTank_01_Mass} > {Tank_01_Mass} ( Kg )</span> , 
   high: <InputText style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2814,7 +3031,7 @@ value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume}</span> ,
 
  modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
 
-value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> , 
+value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level} ( % )</span> , 
  high: <InputText style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2825,6 +3042,49 @@ value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level}</span> ,
 ></Checkbox>
 
 },
+
+
+
+{
+    mainCategory: mainCategoryFC.PLC ,
+       
+       timeUpdate: <span style={combineCss.CSSConsumption_Flow} >{PLC_STTValue}</span>,
+     name: <span style={combineCss.CSSConsumption_Flow}>Consumption Flow</span> ,
+   
+     modbus: <span style={combineCss.CSSConsumption_Flow}>400019	 </span> ,
+   
+    value: <span style={combineCss.CSSConsumption_Flow} > {Consumption_Flow} {nameValue.m3}</span> , 
+     high: <InputText style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
+     low:  <InputText style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainConsumption_Flow}
+     checked={maintainConsumption_Flow}
+   ></Checkbox>
+   
+    },
+   
+   
+    {
+    mainCategory: mainCategoryFC.PLC ,
+       
+       timeUpdate: <span style={combineCss.CSSFlow_Velocity} >{PLC_STTValue}</span>,
+    name: <span style={combineCss.CSSFlow_Velocity}>Flow Velocity</span> ,
+   
+    modbus: <span style={combineCss.CSSFlow_Velocity}>400021	 </span> ,
+   
+   value: <span style={combineCss.CSSFlow_Velocity} > {Flow_Velocity} {nameValue.m3h}</span> , 
+    high: <InputText style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainFlow_Velocity}
+    checked={maintainFlow_Velocity}
+   ></Checkbox>
+   
+   },
 
           ]
 

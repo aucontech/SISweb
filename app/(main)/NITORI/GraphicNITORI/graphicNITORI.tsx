@@ -2704,11 +2704,8 @@ export default function GraphicNITORI() {
                         label: (
                             <div>
                                 <div>
-                                    {NO === "1"
-                                        ? SVD_NO
-                                        : NC === "0"
-                                        ? SVD_NC
-                                        : null}
+
+{NO === "1" ? SVD_NO : NO === "0" ? SVD_NC : null}
                                 </div>
                             </div>
                         ),

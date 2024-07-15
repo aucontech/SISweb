@@ -11,7 +11,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
-import { nameValue } from '../namValue';
+import { namePCV_PSV, nameValue } from '../namValue';
 import { C } from '@fullcalendar/core/internal-common';
 
 interface StateMap {
@@ -5962,8 +5962,8 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 
                 mainCategory: mainCategoryFC.EVC01,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
-    
+             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
+ 
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
             value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
@@ -7072,7 +7072,7 @@ checked={maintainSDV_6003}
        
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV 6001A </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 6001A ( BARG ) </span>,
 
             Value: (
                 <InputText
@@ -7098,7 +7098,7 @@ checked={maintainSDV_6003}
 
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV 6001B </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 6001B ( BARG ) </span>,
 
             Value: (
                 <InputText
@@ -7123,7 +7123,7 @@ checked={maintainSDV_6003}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV 6002A </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 6002A ( BARG ) </span>,
 
             Value: (
                 <InputText
@@ -7149,7 +7149,7 @@ checked={maintainSDV_6003}
 
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PCV 6002B </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} 6002B ( BARG ) </span>,
 
             Value: (
                 <InputText
@@ -7179,7 +7179,7 @@ checked={maintainSDV_6003}
 
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV 6001A </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 6001A ( Bar ) </span>,
 
             Value: (
                 <InputText
@@ -7205,7 +7205,7 @@ checked={maintainSDV_6003}
 
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV 6001B </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 6001B ( Bar ) </span>,
 
             Value: (
                 <InputText
@@ -7230,7 +7230,7 @@ checked={maintainSDV_6003}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV 6002A </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 6002A ( Bar ) </span>,
 
             Value: (
                 <InputText
@@ -7256,7 +7256,7 @@ checked={maintainSDV_6003}
 
 
         {
-            Name: <span style={combineCssAttribute.PCV}>PSV 6002B </span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} 6002B ( Bar ) </span>,
 
             Value: (
                 <InputText
