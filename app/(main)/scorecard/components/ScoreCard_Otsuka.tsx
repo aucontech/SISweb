@@ -201,7 +201,7 @@ export default function ScoreCard_Otsuka() {
     }, [data]);
 
     const tagNameEVC = {
-        outputPressure: "Output Pressure (Bara)",
+        InputPressure: "Input Pressure (Bara)",
         Temperature: "Temperature (°C)",
         GVF: "Gross Volume Flow (m³/h)",
         SVF: "Standard Volume Flow (Sm³/h)",
@@ -215,7 +215,7 @@ export default function ScoreCard_Otsuka() {
     };
 
     const tagNamePLC = {
-        PT03: "Input Pressure (BarG)",
+        PT03: "Output Pressure (BarG)",
         GD1: "Gas Detector GD-1901 (%LEL)",
         GD2: "Gas Detector GD-1902 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
@@ -282,7 +282,7 @@ export default function ScoreCard_Otsuka() {
 
     const dataEVC = [
         {
-            name: <span>{tagNameEVC.outputPressure}</span>,
+            name: <span>{tagNameEVC.InputPressure}</span>,
             evc1901: <span style={{}}>{PT01}</span>,
             evc1902: <span style={{}}> {PT02}</span>,
         },
@@ -411,13 +411,13 @@ export default function ScoreCard_Otsuka() {
         },
         {
             name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={{}}>{DataMap}</span>,
+            PLC: <span style={{}}> {DataMap}</span>,
         },
     ];
 
     return (
         <div >
-            <div style={{ width: "49%" }}>
+            <div >
                 <div
                     style={{
                         background: "#64758B",
@@ -449,7 +449,7 @@ export default function ScoreCard_Otsuka() {
                             padding: "0px 5px 0px 5px",
                         }}
                     >
-                        <div style={{ width: "50%" }}>
+                        <div >
                             {" "}
                             Otsuka Thang Nutrition Co. Ltd
                         </div>
@@ -483,7 +483,7 @@ export default function ScoreCard_Otsuka() {
                             padding: "0px 5px 5px 5px",
                         }}
                     >
-                        <div style={{ width: "50%" }}>
+                        <div >
                             Phu My 3 Specialized Industrial Park
                         </div>
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "primereact/button";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
@@ -224,7 +226,7 @@ export default function DemoFlowOTS() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setSVF1,
                         EVC_01_Flow_at_Measurement_Condition: setGVF1,
@@ -798,8 +800,7 @@ export default function DemoFlowOTS() {
     const [HighSVF1, setHighSVF1] = useState<number | null>(null);
     const [LowSVF1, setLowSVF1] = useState<number | null>(null);
     const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighSVF1, setInputValueHighSVF1] = useState<any>();
-    const [inputValueLowSVF1, settInputValueLowSVF1] = useState<any>();
+
 
     const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
 

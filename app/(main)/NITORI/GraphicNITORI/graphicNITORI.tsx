@@ -221,7 +221,7 @@ export default function GraphicNITORI() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setSVF1,
                         EVC_01_Flow_at_Measurement_Condition: setGVF1,
@@ -249,7 +249,6 @@ export default function GraphicNITORI() {
                         EVC_01_Conn_STT: setFC_Conn_STT,
                         PLC_Conn_STT: setConn_STT,
 
-                        time: setTimeUpdate,
                     };
 
                     const valueStateMap: ValueStateMap = {

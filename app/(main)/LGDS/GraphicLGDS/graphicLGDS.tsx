@@ -221,7 +221,7 @@ export default function GraphicLGDS() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         FC_01_Current_Values_Flow_Rate: setSVF1,
                         FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,

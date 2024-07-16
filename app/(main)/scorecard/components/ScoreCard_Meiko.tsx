@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_ARAKAWA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./ScoreCard.css";
 import SetAttribute1 from "../../OTSUKA/title-OTK";
+import { httpApi } from "@/api/http.api";
 
 interface StateMap {
     [key: string]:
@@ -13,13 +14,15 @@ interface StateMap {
 }
 export default function ScoreCard_Meiko() {
     const [data, setData] = useState<any[]>([]);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<string | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
     const [GVF1, setGVF1] = useState<string | null>(null);
-    const [SVF1, setSVF1] = useState<string | null>(null);
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
     const [SVA1, setSVA1] = useState<string | null>(null);
     const [GVA1, setGVA1] = useState<string | null>(null);
 
@@ -90,7 +93,7 @@ export default function ScoreCard_Meiko() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_OTSUKA,
+                    entityId: id_ARAKAWA,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -125,7 +128,8 @@ export default function ScoreCard_Meiko() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setSVF1,
+                        EVC_01_Flow_at_Base_Condition:
+                            setEVC_01_Flow_at_Base_Condition,
                         EVC_01_Flow_at_Measurement_Condition: setGVF1,
 
                         EVC_01_Volume_at_Base_Condition: setSVA1,
@@ -196,9 +200,133 @@ export default function ScoreCard_Meiko() {
                         }
                     });
                 }
+                fetchData();
             };
         }
     }, [data]);
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                `/plugins/telemetry/DEVICE/${id_ARAKAWA}/values/attributes/SERVER_SCOPE`
+            );
+
+            const HighEVC_01_Flow_at_Base_Condition = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
+            );
+            setHighEVC_01_Flow_at_Base_Condition(
+                HighEVC_01_Flow_at_Base_Condition?.value || null
+            );
+
+            const LowEVC_01_Flow_at_Base_Condition = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
+            );
+            setLowEVC_01_Flow_at_Base_Condition(
+                LowEVC_01_Flow_at_Base_Condition?.value || null
+            );
+
+            const MaintainSVF_1 = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
+            );
+            setMaintainEVC_01_Flow_at_Base_Condition(
+                MaintainSVF_1?.value || false
+            );
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+    const [
+        audioEVC_01_Flow_at_Base_Condition,
+        setAudioEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
+    const [
+        HighEVC_01_Flow_at_Base_Condition,
+        setHighEVC_01_Flow_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        LowEVC_01_Flow_at_Base_Condition,
+        setLowEVC_01_Flow_at_Base_Condition,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setExceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        inputValueHighEVC_01_Flow_at_Base_Condition,
+        setInputValueHighEVC_01_Flow_at_Base_Condition,
+    ] = useState<any>();
+    const [
+        inputValueLowEVC_01_Flow_at_Base_Condition,
+        settInputValueLowEVC_01_Flow_at_Base_Condition,
+    ] = useState<any>();
+
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setMaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (
+            typeof HighEVC_01_Flow_at_Base_Condition === "string" &&
+            typeof LowEVC_01_Flow_at_Base_Condition === "string" &&
+            EVC_01_Flow_at_Base_Condition !== null &&
+            maintainEVC_01_Flow_at_Base_Condition === false
+        ) {
+            const highValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                HighEVC_01_Flow_at_Base_Condition
+            );
+            const lowValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                LowEVC_01_Flow_at_Base_Condition
+            );
+            const ValueEVC_01_Flow_at_Base_Condition = parseFloat(
+                EVC_01_Flow_at_Base_Condition
+            );
+
+            if (
+                !isNaN(highValueEVC_01_Flow_at_Base_Condition) &&
+                !isNaN(lowValueEVC_01_Flow_at_Base_Condition) &&
+                !isNaN(ValueEVC_01_Flow_at_Base_Condition)
+            ) {
+                if (
+                    highValueEVC_01_Flow_at_Base_Condition <=
+                        ValueEVC_01_Flow_at_Base_Condition ||
+                    ValueEVC_01_Flow_at_Base_Condition <=
+                        lowValueEVC_01_Flow_at_Base_Condition
+                ) {
+                    if (!audioEVC_01_Flow_at_Base_Condition) {
+                        audioRef.current?.play();
+                        setAudioEVC_01_Flow_at_Base_Condition(true);
+                        setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
+                    }
+                } else {
+                    setAudioEVC_01_Flow_at_Base_Condition(false);
+                    setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
+                }
+            }
+            fetchData();
+        }
+    }, [
+        HighEVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition,
+        audioEVC_01_Flow_at_Base_Condition,
+        LowEVC_01_Flow_at_Base_Condition,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
+
+    useEffect(() => {
+        if (audioEVC_01_Flow_at_Base_Condition) {
+            const audioEnded = () => {
+                setAudioEVC_01_Flow_at_Base_Condition(false);
+            };
+            audioRef.current?.addEventListener("ended", audioEnded);
+            return () => {
+                audioRef.current?.removeEventListener("ended", audioEnded);
+            };
+        }
+    }, [audioEVC_01_Flow_at_Base_Condition]);
+
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
     const tagNameEVC = {
         outputPressure: "Output Pressure (Bara)",
@@ -235,6 +363,7 @@ export default function ScoreCard_Meiko() {
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
     };
+
     const DataCharging =
         UpsCharging === "0"
             ? "Normal"
@@ -282,142 +411,105 @@ export default function ScoreCard_Meiko() {
 
     const dataEVC = [
         {
-            name: <span>{tagNameEVC.outputPressure}</span>,
-            evc1901: <span style={{}}>{PT01}</span>,
-            evc1902: <span style={{}}> {PT02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.Temperature}</span>,
-            evc1901: <span style={{}}>{Temperature01}</span>,
-            evc1902: <span style={{}}> {Temperature02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.GVF}</span>,
-            evc1901: <span style={{}}>{GVF1}</span>,
-            evc1902: <span style={{}}> {GVF2}</span>,
-        },
-        {
             name: <span>{tagNameEVC.SVF}</span>,
-            evc1901: <span style={{}}>{SVF1}</span>,
-            evc1902: <span style={{}}> {SVF2}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.GVA}</span>,
-            evc1901: <span style={{}}>{GVA1}</span>,
-            evc1902: <span style={{}}> {GVA2}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.SVA}</span>,
-            evc1901: <span style={{}}>{SVA1}</span>,
-            evc1902: <span style={{}}> {SVA2}</span>,
-        },
-
-        {
-            name: <span>{tagNameEVC.VbToday}</span>,
-            evc1901: <span style={{}}>{VbToDay01}</span>,
-            evc1902: <span style={{}}> {VbToDay02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VbLastDay}</span>,
-            evc1901: <span style={{}}>{VbLastDay01}</span>,
-            evc1902: <span style={{}}> {VbLastDay02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VmToday}</span>,
-            evc1901: <span style={{}}>{VmToday01}</span>,
-            evc1902: <span style={{}}> {VmToday02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VmLastDay}</span>,
-            evc1901: <span style={{}}>{VmLastDay01}</span>,
-            evc1902: <span style={{}}> {VmLastDay02}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.ReBattery}</span>,
-            evc1901: <span style={{}}>{ReBattery01}</span>,
-            evc1902: <span style={{}}> {ReBattery02}</span>,
+            evc1901: (
+                <span
+                    style={{
+                        padding: 5,
+                        borderRadius: 10,
+                        fontWeight: 500,
+                        color: exceedThresholdEVC_01_Flow_at_Base_Condition
+                            ? "#ff5656"
+                            : maintainEVC_01_Flow_at_Base_Condition
+                            ? "orange"
+                            : "transparent",
+                    }}
+                >
+                    {EVC_01_Flow_at_Base_Condition}
+                </span>
+            ),
         },
     ];
 
-    const dataPLC = [
-        {
-            name: <span>{tagNamePLC.PT03}</span>,
-            PLC: <span style={{}}>{PT03}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD1}</span>,
-            PLC: <span style={{}}>{GD1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD2}</span>,
-            PLC: <span style={{}}>{GD2}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD3}</span>,
-            PLC: <span style={{}}>{GD3}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.DO_SV1}</span>,
-            PLC: <span style={{}}>{DataSV_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ZSC}</span>,
-            PLC: <span style={{}}>{DataZSC_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ZSO}</span>,
-            PLC: <span style={{}}>{DataZSO_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_BATTERY}</span>,
-            PLC: <span style={{}}>{DataBattery}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_CHARGING}</span>,
-            PLC: <span style={{}}>{DataCharging}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_ALARM}</span>,
-            PLC: <span style={{}}>{DataAlarm}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_MODE}</span>,
-            PLC: <span style={{}}>{DataMode}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.SELECT_SW}</span>,
-            PLC: <span style={{}}>{DataSelectSW}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.RESET}</span>,
-            PLC: <span style={{}}>{DataReset}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyStop_NO}</span>,
-            PLC: <span style={{}}>{DataEmergencyNO}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
-            PLC: <span style={{}}>{DataEmergencyNC}</span>,
-        },
+    // const dataPLC = [
+    //     {
+    //         name: <span>{tagNamePLC.PT03}</span>,
+    //         PLC: <span style={{}}>{PT03}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.GD1}</span>,
+    //         PLC: <span style={{}}>{GD1}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.GD2}</span>,
+    //         PLC: <span style={{}}>{GD2}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.GD3}</span>,
+    //         PLC: <span style={{}}>{GD3}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.DO_SV1}</span>,
+    //         PLC: <span style={{}}>{DataSV_1}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.ZSC}</span>,
+    //         PLC: <span style={{}}>{DataZSC_1}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.ZSO}</span>,
+    //         PLC: <span style={{}}>{DataZSO_1}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.UPS_BATTERY}</span>,
+    //         PLC: <span style={{}}>{DataBattery}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.UPS_CHARGING}</span>,
+    //         PLC: <span style={{}}>{DataCharging}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.UPS_ALARM}</span>,
+    //         PLC: <span style={{}}>{DataAlarm}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.UPS_MODE}</span>,
+    //         PLC: <span style={{}}>{DataMode}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.SELECT_SW}</span>,
+    //         PLC: <span style={{}}>{DataSelectSW}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.RESET}</span>,
+    //         PLC: <span style={{}}>{DataReset}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.EmergencyStop_NO}</span>,
+    //         PLC: <span style={{}}>{DataEmergencyNO}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.EmergencyStop_NC}</span>,
+    //         PLC: <span style={{}}>{DataEmergencyNC}</span>,
+    //     },
 
-        {
-            name: <span>{tagNamePLC.HORN}</span>,
-            PLC: <span style={{}}>{DataHorn}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.BEACON}</span>,
-            PLC: <span style={{}}>{DataBeacon}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={{}}>{DataMap}</span>,
-        },
-    ];
+    //     {
+    //         name: <span>{tagNamePLC.HORN}</span>,
+    //         PLC: <span style={{}}>{DataHorn}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.BEACON}</span>,
+    //         PLC: <span style={{}}>{DataBeacon}</span>,
+    //     },
+    //     {
+    //         name: <span>{tagNamePLC.MAP}</span>,
+    //         PLC: <span style={{}}>{DataMap}</span>,
+    //     },
+    // ];
 
     return (
-        <div >
-            <div style={{ width: "49%" }}>
+        <div>
+            <div>
                 <div
                     style={{
                         background: "#64758B",
@@ -449,10 +541,7 @@ export default function ScoreCard_Meiko() {
                             padding: "0px 5px 0px 5px",
                         }}
                     >
-                        <div style={{ width: "50%" }}>
-                            {" "}
-                            Otsuka Thang Nutrition Co. Ltd
-                        </div>
+                        <div> Otsuka Thang Nutrition Co. Ltd</div>
 
                         <div
                             style={{
@@ -483,9 +572,7 @@ export default function ScoreCard_Meiko() {
                             padding: "0px 5px 5px 5px",
                         }}
                     >
-                        <div style={{ width: "50%" }}>
-                            Phu My 3 Specialized Industrial Park
-                        </div>
+                        <div>Phu My 3 Specialized Industrial Park</div>
 
                         <div
                             style={{
@@ -499,7 +586,7 @@ export default function ScoreCard_Meiko() {
                         </div>
                     </div>
                 </div>
-                <DataTable value={dataEVC} size="small" selectionMode="single"> 
+                <DataTable value={dataEVC} size="small" selectionMode="single">
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
                         field="evc1901"
@@ -517,7 +604,7 @@ export default function ScoreCard_Meiko() {
                     <Column field="evc1902" header="EVC-1902"></Column>
                 </DataTable>
 
-                <div>
+                {/* <div>
                     <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column field="name" header="PLC Parameter"></Column>
                         <Column
@@ -534,9 +621,21 @@ export default function ScoreCard_Meiko() {
                             }
                         ></Column>
                     </DataTable>
-                </div>
+                </div> */}
             </div>
-
+            <div
+                style={{
+                    backgroundColor:
+                        exceedThresholdEVC_01_Flow_at_Base_Condition &&
+                        !maintainEVC_01_Flow_at_Base_Condition
+                            ? "#ff5656"
+                            : maintainEVC_01_Flow_at_Base_Condition
+                            ? "orange"
+                            : "transparent",
+                }}
+            >
+                {EVC_01_Flow_at_Base_Condition}
+            </div>
             {/* <div>
                 <SetAttribute1/>
             </div> */}

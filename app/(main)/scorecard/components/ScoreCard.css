@@ -6,3 +6,7 @@
 .ShowMore{
     transition: 0.3s ease-in-out;
 }
+.p-datatable .p-datatable-thead > tr > th{
+    background:#e5e5e5;
+    color:black
+}
