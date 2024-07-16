@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useContext } from "react";
-//igore next/navigation typescript
-// @ts-ignore
-import { useNavigation } from "next/navigation";
+
+//import { useNavigation } from "next/navigation";
 import { forgotPassword } from "@/api/auth.api";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { useState, useRef } from "react";
@@ -17,7 +16,7 @@ const ForgotPassword: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "light";
     const [email, setEmail] = useState("");
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     const toast = useRef<Toast>(null);
     const _handleForgotPassword = () => {
         forgotPassword({ email: email });
@@ -85,9 +84,7 @@ const ForgotPassword: Page = () => {
                                 outlined
                                 className="flex-auto"
                                 onClick={() => {
-                                    if (navigation.canGoBack()) {
-                                        navigation.back();
-                                    }
+                                    router.push("/login");
                                 }}
                             ></Button>
                             <Button
