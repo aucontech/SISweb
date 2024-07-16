@@ -28,11 +28,11 @@ const AppMenu = () => {
                             icon: "pi pi-fw pi-comment",
                             to: "/alarmsummarycustomer",
                         },
-                        {
-                            label: "Alarm History",
-                            icon: "pi pi-fw pi-comment",
-                            to: "/alarmhistorycustomer",
-                        },
+                        // {
+                        //     label: "Alarm History",
+                        //     icon: "pi pi-fw pi-comment",
+                        //     to: "/alarmhistorycustomer",
+                        // },
                     ],
                 },
                 {

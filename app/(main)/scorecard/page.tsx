@@ -1,25 +1,31 @@
 "use client";
 
+import ScoreCard_Meiko from "./components/ScoreCard_Meiko";
+import ScoreCard_Nitori from "./components/ScoreCard_Nitori";
 import ScoreCard_Otsuka from "./components/ScoreCard_Otsuka";
 
 const ScoreCard = () => {
     return (
-        <div className="grid">
-            <div style={{ width: "100%" }}>
-                {/* <TabView>
-              
-                 
-                     <TabPanel header="Graphic">
-                        <DemoFlowOTS />
-                    </TabPanel>
-                  
-                
-             
-                </TabView> */}
+        <>
+        <div style={{display:'flex', justifyContent:'space-between'}}>
+            <div style={{width:'49%'}} >
+           
 
                 <ScoreCard_Otsuka />
+
             </div>
+
+            <div style={{width:'49%'}}>
+                <ScoreCard_Nitori/>
+
+            </div>
+
         </div>
+
+
+<br />
+<br />
+</>
     );
 };
 

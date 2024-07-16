@@ -1733,7 +1733,7 @@ export default function GraphicARAKAWA() {
 
             const HighEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setHighEVC_01_Flow_at_Base_Condition(
                 HighEVC_01_Flow_at_Base_Condition?.value || null
@@ -1741,21 +1741,21 @@ export default function GraphicARAKAWA() {
 
             const LowEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setLowEVC_01_Flow_at_Base_Condition(
                 LowEVC_01_Flow_at_Base_Condition?.value || null
             );
 
             const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setHighEVC_01_Flow_at_Measurement_Condition(
                 HighEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
             const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setLowEVC_01_Flow_at_Measurement_Condition(
                 LowEVC_01_Flow_at_Measurement_Condition?.value || null
@@ -1793,49 +1793,7 @@ export default function GraphicARAKAWA() {
                 LowEVC_01_Volume_at_Measurement_Condition?.value || null
             );
 
-            const HighSVF2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
-            );
-            setHighSVF2(HighSVF2?.value || null);
-
-            const LowSVF2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
-            );
-            setLowSVF2(LowSVF2?.value || null);
-
-            const HighGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
-            );
-            setHighGVF2(HighGVF2?.value || null);
-
-            const LowGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
-            );
-            setLowGVF2(LowGVF2?.value || null);
-
-            const HighSVA2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
-            );
-            setHighSVA2(HighSVA2?.value || null);
-
-            const LowSVA2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
-            );
-            setLowSVA2(LowSVA2?.value || null);
-
-            const HighGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
-            );
-            setHighGVA2(HighGVA2?.value || null);
-
-            const LowGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
-            );
-            setLowGVA2(LowGVA2?.value || null);
+     
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
@@ -1899,31 +1857,6 @@ export default function GraphicARAKAWA() {
             setMaintainEVC_01_Volume_at_Measurement_Condition(
                 MaintainGVA_1?.value || false
             );
-
-            const MaintainSVF_2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
-            );
-            setMaintainSVF2(MaintainSVF_2?.value || false);
-
-            const MaintainGVF_2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
-            );
-            setMaintainGVF2(MaintainGVF_2?.value || false);
-
-            const MaintainSVA_2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
-            );
-            setMaintainSVA2(MaintainSVA_2?.value || false);
-
-            const MaintainGVA_2 = res.data.find(
-                (item: any) =>
-                    item.key ===
-                    "EVC_02_Volume_at_Measurement_Condition_Maintain"
-            );
-            setMaintainGVA2(MaintainGVA_2?.value || false);
 
             const LineDuty1901 = res.data.find(
                 (item: any) => item.key === "FIQ1901_LineDuty"
@@ -6709,6 +6642,16 @@ export default function GraphicARAKAWA() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
+            <div style={{  backgroundColor:
+                                        exceedThresholdEVC_01_Flow_at_Base_Condition &&
+                                        !maintainEVC_01_Flow_at_Base_Condition
+                                            ? "#ff5656"
+                                            : maintainEVC_01_Flow_at_Base_Condition
+                                            ? "orange"
+                                            : "transparent",}}>
+                {EVC_01_Flow_at_Base_Condition}
+            </div>
+
             <Toast ref={toast} />
             <ConfirmDialog />
 
@@ -6778,6 +6721,9 @@ export default function GraphicARAKAWA() {
 
                     <Controls />
                 </ReactFlow>
+
+
+                
             </div>
         </>
     );

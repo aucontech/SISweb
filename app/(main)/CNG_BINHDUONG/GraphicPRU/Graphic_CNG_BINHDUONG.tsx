@@ -4461,6 +4461,8 @@ export default function Graphic_CNG_BINHDUONG() {
         percent: { x: -405.6683476271253, y: 1298.7587875755169 },
 
         timeUpdate3: { x: -2381.52648946302, y: 800.0866709113047 },
+
+        
     };
 
     const [positions, setPositions] = useState(initialPositions);

@@ -4410,7 +4410,7 @@ const confirmUpChangeGatewayPhone = () => {
         name: <span  style={combineCss.CSS_SVA1}>{paragraphContents.SVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_SVA1}>40854	 </span> ,
 
-        value: <span style={combineCss.CSS_SVA1} >  {SVA1format}  {nameValue.m3h}</span> , 
+        value: <span style={combineCss.CSS_SVA1} >  {SVA1format}  {nameValue.Sm3}</span> , 
          high: <InputText style={combineCss.CSS_SVA1}   placeholder='High' step="0.1" type='number' value={inputHighSVA1} onChange={handleInputChangeHighSVA1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVA1}   placeholder='Low' step="0.1" type='number' value={inputLowSVA1} onChange={handleInputChangeLowSVA1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4590,6 +4590,8 @@ const confirmUpChangeGatewayPhone = () => {
       const VBTodayformat2 = VbToDay02 !== null ? parseFloat(VbToDay02).toFixed(2) : "";
       const VMTodayformat2 = VmToDay02 !== null ? parseFloat(VmToDay02).toFixed(2) : "";
       const VBLastdayformat2 = VbLastDay02 !== null ? parseFloat(VbLastDay02).toFixed(2) : "";
+      const VmLastdayformat2 = VmLastDay02 !== null ? parseFloat(VmLastDay02).toFixed(2) : "";
+
       const c = VmLastDay02 !== null ? parseFloat(VmLastDay02).toFixed(2) : "";
 
       const dataEVC02 = [
@@ -4603,7 +4605,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_SVF2}>{paragraphContents.SVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_SVF2} > {SVF2format} {nameValue.m3h} </span> , 
+        value: <span style={combineCss.CSS_SVF2} > {SVF2format} {nameValue.Sm3h} </span> , 
          high: <InputText style={combineCss.CSS_SVF2}   placeholder='High' step="0.1" type='number' value={inputHighSVF2} onChange={handleInputChangeHighSVF2} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSS_SVF2}   placeholder='Low' step="0.1" type='number' value={inputLowSVF2} onChange={handleInputChangeLowSVF2} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -4786,7 +4788,7 @@ const confirmUpChangeGatewayPhone = () => {
 
         name: <span style={combineCss.CSS_VmLastDay02}> {paragraphContents.VM_Yesterday} </span> ,
 
-        value: <span style={combineCss.CSS_VmLastDay02} > {VBLastdayformat2} {nameValue.m3}</span>, 
+        value: <span style={combineCss.CSS_VmLastDay02} > {VmLastdayformat2} {nameValue.m3}</span>, 
         high: <InputText style={combineCss.CSS_VmLastDay02}   placeholder='High' step="0.1" type='number' value={inputHighVmLastDay02} onChange={handleInputChangeHighVmLastDay02} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSS_VmLastDay02}    placeholder='Low' step="0.1" type='number' value={inputLowVmLastDay02} onChange={handleInputChangeLowVmLastDay02} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData'   onClick={confirmUpData} > Update </button>,

@@ -213,7 +213,7 @@ export default function SetUpdata_NITORI() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
 
@@ -235,18 +235,20 @@ export default function SetUpdata_NITORI() {
                         PT1: setPT1,
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
-                        DI_ZSO_2: setDI_ZSO_2,
-                        DI_ZSC_2: setDI_ZSC_2,
                         DI_MAP_1: setDI_MAP_1,
+
+                        DI_SD_1: setDI_SD_1,
+
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
                         DI_UPS_ALARM: setDI_UPS_ALARM,
-                        DI_SD_1: setDI_SD_1,
+                        UPS_Mode: setUPS_Mode,
+
                         DI_SELECT_SW: setDI_SELECT_SW,
                         DI_RESET: setDI_RESET,
+
                         Emergency_NO: setEmergency_NO,
                         Emergency_NC: setEmergency_NC,
-                        UPS_Mode: setUPS_Mode,
 
 
                         DO_HR_01: setDO_HR_01,

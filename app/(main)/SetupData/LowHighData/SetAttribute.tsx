@@ -208,14 +208,14 @@ export default function SetAttribute() {
                 }
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue3 =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01?.value;
                     setUpData3(ballValue3);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData3 =
-                        dataReceived.update[0].latest.ATTRIBUTE?.PSV_01.value;
+                        dataReceived.update[0].latest.ATTRIBUTE?.PSV_01?.value;
 
                     setUpData3(updatedData3);
                 }
