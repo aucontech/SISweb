@@ -1,17 +1,5 @@
 "use client";
-import React, {
-    useEffect,
-    useCallback,
-    useState,
-    ReactNode,
-    Suspense,
-} from "react";
-import { getCurrentUser, refreshTokenFun } from "@/api/auth.api";
-import {
-    persistRefreshToken,
-    persistToken,
-    readRefreshToken,
-} from "@/service/localStorage";
+import React, { useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation"; // Đảm bảo rằng đây là cách đúng để import useRouter
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useContext } from "react";
@@ -21,7 +9,6 @@ import { usePathname } from "next/navigation";
 interface AppWrapperProps {
     children: ReactNode;
 }
-
 const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -29,16 +16,21 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     if (!authContext) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-    const { isAuthenticated, setIsAuthenticated, isLoading } = authContext;
+    const { isAuthenticated, isLoading } = authContext;
 
     useEffect(() => {
+        console.log(pathname);
         if (!isAuthenticated) {
             router.push("/login");
         } else {
             if (pathname === "/login") {
-                router.push("/");
+                router.push("/Graphic");
             } else {
-                router.push(pathname);
+                if (pathname === "/") {
+                    router.push("/Graphic");
+                } else {
+                    router.push(pathname);
+                }
             }
         }
     }, [isAuthenticated, pathname]);

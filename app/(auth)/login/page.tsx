@@ -9,6 +9,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
+
 import { UIUtils } from "@/service/Utils";
 import { AuthContext } from "@/context/AuthProvider";
 import {
@@ -17,6 +18,7 @@ import {
     persistUser,
 } from "@/service/localStorage";
 import Image from "next/image";
+import Link from "next/link";
 
 const Login: Page = () => {
     const authContext = useContext(AuthContext);
@@ -157,9 +159,12 @@ const Login: Page = () => {
                                     Remember Me
                                 </label>
                             </div>
-                            <a className="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300">
+                            <Link
+                                href="/forgotpassword"
+                                className="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300"
+                            >
                                 Reset password
-                            </a>
+                            </Link>
                         </div>
                         <Button
                             label="Log In"

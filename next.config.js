@@ -3,14 +3,14 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-    async rewrites() {
-        return [
-            {
-                source: "/",
-                destination: "/Graphic",
-            },
-        ];
-    },
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: "/",
+    //             destination: "/Graphic",
+    //         },
+    //     ];
+    // },
 };
 
 module.exports = nextConfig;

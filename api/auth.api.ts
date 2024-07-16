@@ -35,3 +35,12 @@ export const updateProfile = (reqData: any): Promise<any> => {
 export const logout = (): Promise<any> => {
     return httpApi.post<any>("/auth/logout");
 };
+export const forgotPassword = (reqData: any): Promise<any> => {
+    return httpApi.post<any>("/noauth/resetPasswordByEmailSogec", {
+        ...reqData,
+    });
+};
+
+export const resetPassword = (reqData: any): Promise<any> => {
+    return httpApi.post<any>("/noauth/resetPassword", { ...reqData });
+};
