@@ -69,8 +69,8 @@ const CustomerReport = () => {
             .then((resp) => {
                 setReportData({
                     ...resp,
-                    heatingValueLine1: resp.heatValue,
-                    heatingValueLine2: resp.heatValue,
+                    heatingValueLine1: resp.heatingValue,
+                    heatingValueLine2: resp.heatingValue,
                     deviceInfo: filters.device,
                 });
             })

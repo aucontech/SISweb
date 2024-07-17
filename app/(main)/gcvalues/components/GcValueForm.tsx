@@ -87,7 +87,7 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
         let params = {
             ts: gcData.date,
             values: {
-                heat_value: Number(gcData.heat_value).toFixed(2),
+                heating_value: Number(gcData.heat_value).toFixed(2),
             },
         };
         saveOrUpdateTimeseriesData(gcData.device.id.id, params)

@@ -52,7 +52,7 @@ const Page: React.FC<Props> = () => {
         let { devices, date } = filters;
 
         let params = {
-            keys: "heat_value",
+            keys: "heating_value",
             startTs: date.getTime(),
             endTs: date.getTime() + 86400000,
         };
