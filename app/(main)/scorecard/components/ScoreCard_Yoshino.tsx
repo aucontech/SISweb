@@ -3017,12 +3017,12 @@ useEffect(() => {
                     <Column
                             field="FC1901"
                             header={FC_STT01 === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:50}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-01</p>
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1401</p>
                                 </div>
                             ) : (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:50}}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-01</p>
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
     
                                 </div>
                             )}
@@ -3033,11 +3033,11 @@ useEffect(() => {
                             field="FC1902"
                             header={FC_STT01 === "0" ? (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-02</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1402</p>
                                 </div>
                             ) : (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-02</p>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
     
                                 </div>
                             )}

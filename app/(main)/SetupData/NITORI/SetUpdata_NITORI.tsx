@@ -4040,24 +4040,24 @@ checked={maintainDI_UPS_ALARM}
 },
 
 
-{
- mainCategory: mainCategoryFC.PLC ,
-timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
+// {
+//  mainCategory: mainCategoryFC.PLC ,
+// timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
+// name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
 
-modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
+// modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
 
-value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
-high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDI_SD_1}
-checked={maintainDI_SD_1}
-></Checkbox>
+// value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
+// high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
+// low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
+// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+// Maintain:   <Checkbox
+// style={{ marginRight: 20, }}
+// onChange={ChangeMaintainDI_SD_1}
+// checked={maintainDI_SD_1}
+// ></Checkbox>
 
-},
+// },
 
 
 {

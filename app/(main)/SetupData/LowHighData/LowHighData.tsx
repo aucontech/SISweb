@@ -4449,7 +4449,7 @@ const confirmUpChangeGatewayPhone = () => {
             timeUpdate: <span style={combineCss.CSSpt02} >{EVC_STT01Value}</span>,
         modbus: <span style={combineCss.CSSpt02}>{modbusEVC1.PT}</span> ,
 
-        name: <span style={combineCss.CSSpt02}>{paragraphContents.PT} </span> ,
+        name: <span style={combineCss.CSSpt02}>{'Input Pressure'} </span> ,
         value: <span style={combineCss.CSSpt02} > {PT02} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSpt02}  placeholder='High' step="0.1" type='number' value={inputValue} onChange={handleInputChange} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt02}   placeholder='Low' step="0.1" type='number' value={inputValue2} onChange={handleInputChange2} inputMode="decimal" />,
@@ -4684,7 +4684,7 @@ const confirmUpChangeGatewayPhone = () => {
             timeUpdate: <span style={combineCss.CSSpt03} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSSpt03}>{modbusEVC2.PT}</span> ,
 
-        name: <span style={combineCss.CSSpt03}>{paragraphContents.PT} </span> ,
+        name: <span style={combineCss.CSSpt03}>{'Input Pressure'} </span> ,
         value: <span style={combineCss.CSSpt03} > {PT03} {nameValue.Bara}</span> , 
         high: <InputText style={combineCss.CSSpt03}  placeholder='High' step="0.1" type='number' value={inputValueEK2Hight} onChange={handleInputChangeEK2High} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSpt03}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEK2Low} inputMode="decimal" />,
@@ -4876,7 +4876,7 @@ const confirmUpChangeGatewayPhone = () => {
             timeUpdate: <span style={combineCss.CSSpt01} >{PLC_STTValue}</span>,
         modbus: <span style={combineCss.CSSpt01}>{modbusPLC.PT1}</span> ,
 
-        name: <span style={combineCss.CSSpt01}>{paragraphContentsPLC.PT03} </span> ,
+        name: <span style={combineCss.CSSpt01}>{'Output Pressure'} </span> ,
         value: <span style={combineCss.CSSpt01} > {PT01format} {nameValue.BARG}</span> , 
          high: <InputText style={combineCss.CSSpt01}   placeholder='High' step="0.1" type='number' value={inputValueEK3Hight} onChange={handleInputChangeEK3High} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSpt01}   placeholder='Low' step="0.1" type='number' value={inputValueEK3Low} onChange={handleInputChangeEK3Low} inputMode="decimal" />,
