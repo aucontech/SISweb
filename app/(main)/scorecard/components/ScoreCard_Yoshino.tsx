@@ -1976,8 +1976,8 @@ useEffect(() => {
 
     const tagNamePLC = {
         PT01: "Output Pressure (BarG)",
-        GD1: "Gas Detector GD-1901 (%LEL)",
-        GD2: "Gas Detector GD-1902 (%LEL)",
+        GD1: "Gas Detector GD-1401 (%LEL)",
+        GD2: "Gas Detector GD-1402 (%LEL)",
         ZSC: "SDV-ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
