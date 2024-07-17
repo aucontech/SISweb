@@ -2088,7 +2088,7 @@ useEffect(() => {
 
     return (
         <div >
-            <div >
+            <div style={{border:'1px solid gray', borderRadius:"10px 10px 0 0"}} >
                 <div
                     style={{
                         background: "#64758B",
