@@ -59,6 +59,7 @@ const Page: React.FC<Props> = () => {
         let promises = devices.map((device: any) => {
             return getTimesSeriesData("DEVICE", device.id.id, params).then(
                 (data) => {
+                    console.log(data);
                     return {
                         device: device,
                         data: data.data,

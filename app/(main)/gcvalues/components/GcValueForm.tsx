@@ -22,11 +22,11 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
         let gcValue = {
             date: data.date,
             device: data.device,
-            heat_value:
+            heating_value:
                 data.data &&
-                data.data.heat_value &&
-                data.data.heat_value.length > 0
-                    ? Number(data.data.heat_value[0].value)
+                data.data.heating_value &&
+                data.data.heating_value.length > 0
+                    ? Number(data.data.heating_value[0].value)
                     : 0,
         };
         setGcData(gcValue);
@@ -80,14 +80,14 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
 
     const handleChangeValue = (e: any) => {
         let newData = { ...gcData };
-        newData.heat_value = e.value;
+        newData.heating_value = e.value;
         setGcData(newData);
     };
     const _handleSave = () => {
         let params = {
             ts: gcData.date,
             values: {
-                heating_value: Number(gcData.heat_value).toFixed(2),
+                heating_value: Number(gcData.heating_value).toFixed(2),
             },
         };
         saveOrUpdateTimeseriesData(gcData.device.id.id, params)
@@ -117,7 +117,7 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
                     Heat Value :{" "}
                     <InputNumber
                         // check if gcData.data.heat_value[0] is not null
-                        value={gcData.heat_value}
+                        value={gcData.heating_value}
                         onChange={(e) => handleChangeValue(e)}
                         mode="decimal"
                         minFractionDigits={2}
