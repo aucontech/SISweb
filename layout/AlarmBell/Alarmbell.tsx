@@ -11,7 +11,22 @@ import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold } from "react-icons/pi";
 import { Utils } from "@/service/Utils";
-import { OTSUKA_DEVICE_ID, MEIKO_DEVICE_ID } from "@/constants/constans";
+import {
+    OTSUKA_DEVICE_ID,
+    MEIKO_DEVICE_ID,
+    YOSHINO_DEVICE_ID,
+    CNGHY_DEVICE_ID,
+    CNGBD_DEVICE_ID,
+    NITORI_DEVICE_ID,
+    ARAKAWA_DEVICE_ID,
+    VREC_DEVICE_ID,
+    KOA_DEVICE_ID,
+    SPMCV_DEVICE_ID,
+    IGUACU_DEVICE_ID,
+    ZOCV_DEVICE_ID,
+    LGDS_DEVICE_ID,
+    CNGPM3_DEVICE_ID,
+} from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
 interface Notification {
     subject: string;
@@ -67,63 +82,7 @@ export default function Alarmbell() {
                                     entityList: [OTSUKA_DEVICE_ID],
                                 },
                             },
-                            // query: {
-                            //     entityFilter: {
-                            //         type: "entityList",
-                            //         resolveMultiple: true,
-                            //         entityType: "DEVICE",
-                            //         entityList: [
-                            //             //"6996ea90-ece8-11ee-b18f-f142b946d0bb",
-                            //             "b92cda00-07c9-11ef-973a-dde5fe61203a",
-                            //             "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
-                            //         ],
-                            //     },
-                            //     pageLink: {
-                            //         page: 0,
-                            //         pageSize: 10,
-                            //         textSearch: null,
-                            //         typeList: [],
-                            //         severityList: ["CRITICAL"],
-                            //         statusList: ["ACTIVE", "UNACK"],
-                            //         searchPropagatedAlarms: false,
-                            //         sortOrder: {
-                            //             key: {
-                            //                 key: "createdTime",
-                            //                 type: "ALARM_FIELD",
-                            //             },
-                            //             direction: "DESC",
-                            //         },
-                            //         timeWindow: 2592000,
-                            //     },
-                            //     alarmFields: [
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "createdTime",
-                            //         },
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "originator",
-                            //         },
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "type",
-                            //         },
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "severity",
-                            //         },
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "status",
-                            //         },
-                            //         {
-                            //             type: "ALARM_FIELD",
-                            //             key: "assignee",
-                            //         },
-                            //     ],
-                            //     entityFields: [],
-                            //     latestValues: [],
-                            // },
+
                             cmdId: 2,
                         },
                     ],
@@ -137,6 +96,18 @@ export default function Alarmbell() {
                                     entityList: [
                                         OTSUKA_DEVICE_ID,
                                         MEIKO_DEVICE_ID,
+                                        YOSHINO_DEVICE_ID,
+                                        CNGHY_DEVICE_ID,
+                                        CNGBD_DEVICE_ID,
+                                        NITORI_DEVICE_ID,
+                                        ARAKAWA_DEVICE_ID,
+                                        VREC_DEVICE_ID,
+                                        KOA_DEVICE_ID,
+                                        SPMCV_DEVICE_ID,
+                                        IGUACU_DEVICE_ID,
+                                        ZOCV_DEVICE_ID,
+                                        LGDS_DEVICE_ID,
+                                        CNGPM3_DEVICE_ID,
                                     ],
                                 },
                                 pageLink: {
