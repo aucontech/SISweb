@@ -11,7 +11,7 @@ import { Button } from "primereact/button";
 import BallVavle_Line2_Top from "../BallVavlueMEIKO/BallVavle_Line2_Top";
 import BallVavle_Line2_Bottom from "../BallVavlueMEIKO/BallVavle_Line2_Bottom";
 import Image from "next/image";
-
+import "./ForCssGraphic.css"
 import {
     ArrowRight,
     BlackTriangle,
