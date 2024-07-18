@@ -2,11 +2,13 @@ import type { MenuModel } from "@/types";
 import AppSubMenu from "./AppSubMenu";
 import { useEffect, useState } from "react";
 import { readUser } from "@/service/localStorage";
+import Graphic_MEIKO from "@/app/(main)/Graphic/MEIKO/GraphicMeiko/Graphic_MEIKO";
 const AppMenu = () => {
     const [model, setModel] = useState<MenuModel[]>([]);
     useEffect(() => {
         const user = readUser();
-        if (user && user.authority === "CUSTOMER_USER") {
+       
+         if(user && user.authority === "CUSTOMER_USER" && user.customerId.id === "630d27a0-44c4-11ef-ae4f-ffd5655df896" ){
             const modelData: MenuModel[] = [
                 {
                     label: "Station detail",
@@ -15,10 +17,12 @@ const AppMenu = () => {
                         {
                             label: "Graphics",
                             icon: "pi pi-fw pi-home",
-                            to: "/OTSUKA",
+                            to: "/Graphic/MEIKO" ,
                         },
                     ],
                 },
+
+                
                 {
                     label: "Alarms",
                     icon: "pi pi-home",
@@ -43,7 +47,10 @@ const AppMenu = () => {
                 },
             ];
             setModel(modelData);
-        } else {
+
+        }
+        
+        else {
             const modelData: MenuModel[] = [
                 {
                     label: "Dashboards",

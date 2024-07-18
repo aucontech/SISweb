@@ -16,6 +16,7 @@ import {
     persistToken,
     persistRefreshToken,
     persistUser,
+    readUser,
 } from "@/service/localStorage";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +30,7 @@ const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "dark";
     const router = useRouter();
+
     useEffect(() => {
         getCurrentUser()
             .then((resp) => {
@@ -39,24 +41,27 @@ const Login: Page = () => {
                 console.log(err);
             });
     }, []);
+
     const _onLogin = () => {
-        login({ username: username, password: password })
+        login({ username, password })
             .then((resp) => resp.data)
             .then((resp) => {
                 persistToken(resp.token);
                 persistRefreshToken(resp.refreshToken);
-                getCurrentUser()
-                    .then((resp) => {
-                        persistUser(resp.data);
-                        router.push("/Graphic");
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        UIUtils.showError({
-                            error: err?.message,
-                            toast: toast.current,
-                        });
-                    });
+                return getCurrentUser();
+            })
+            .then((resp) => {
+                const currentUser = resp.data;
+                persistUser(currentUser);
+
+                if (
+                    currentUser.authority === "CUSTOMER_USER" &&
+                    currentUser.customerId.id === "630d27a0-44c4-11ef-ae4f-ffd5655df896"
+                ) {
+                    router.push("/Graphic/MEIKO");
+                } else if (currentUser.authority === "TENANT_ADMIN") {
+                    router.push("/Graphic");
+                }
             })
             .catch((err) => {
                 console.log(err);
