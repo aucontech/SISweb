@@ -1413,8 +1413,8 @@ useEffect(() => {
 
     const tagNamePLC = {
         PT01: "Output Pressure (BarG)",
-        GD1: "Gas Detector GD-1901 (%LEL)",
-        GD2: "Gas Detector GD-1902 (%LEL)",
+        GD1: "Gas Detector GD-1301 (%LEL)",
+        GD2: "Gas Detector GD-1302 (%LEL)",
         ZSC: "SDV-ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
@@ -2040,10 +2040,10 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
         },
 
-        {
-            name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
-        },
+        // {
+        //     name: <span>{tagNamePLC.Smoker_Detected}</span>,
+        //     PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
+        // },
         {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
             PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
@@ -2088,7 +2088,7 @@ useEffect(() => {
 
     return (
         <div >
-            <div >
+            <div style={{border:'1px solid gray', borderRadius:"10px 10px 0 0"}} >
                 <div
                     style={{
                         background: "#64758B",
