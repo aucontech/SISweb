@@ -1,3 +1,8 @@
+.react-flow__controls-button .react-flow__controls-interactive{
+
+    display: none;
+}
+
 .react-flow__node-default{
 }
 .react-flow__handle{
