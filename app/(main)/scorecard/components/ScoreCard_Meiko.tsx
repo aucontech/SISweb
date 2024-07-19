@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { nameValue } from "../../SetupData/namValue";
 
 interface StateMap {
     [key: string]:
@@ -118,10 +119,16 @@ export default function ScoreCard_Meiko() {
 
                         Tank_01_Volume: setTank_01_Volume,
 
+
+                        Tank_01_Mass: setTank_01_Mass,
+                        Tank_01_Level: setTank_01_Level,
+                        Flow_Meter_Total: setFlow_Meter_Total,
+
+                        Consumption_Flow: setConsumption_Flow,
+                        Flow_Velocity: setFlow_Velocity,
+
                         
                         EVC_01_Conn_STT: setEVC_STT01,
-
-
                         PLC_Conn_STT: setPLC_Conn_STT,
 
                     };
@@ -324,6 +331,47 @@ export default function ScoreCard_Meiko() {
                 (item: any) => item.key === "Pipe_Press_Maintain"
             );
 
+            const Tank_01_Mass_High = res.data.find((item: any) => item.key === "Tank_01_Mass_High");
+            setTank_01_Mass_High(Tank_01_Mass_High?.value || null);
+            const Tank_01_Mass_Low = res.data.find((item: any) => item.key === "Tank_01_Mass_Low");
+            setTank_01_Mass_Low(Tank_01_Mass_Low?.value || null);
+            const Tank_01_Mass_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Mass_Maintain"
+            );
+
+            const Tank_01_Level_High = res.data.find((item: any) => item.key === "Tank_01_Level_High");
+            setTank_01_Level_High(Tank_01_Level_High?.value || null);
+            const Tank_01_Level_Low = res.data.find((item: any) => item.key === "Tank_01_Level_Low");
+            setTank_01_Level_Low(Tank_01_Level_Low?.value || null);
+            const Tank_01_Level_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Maintain"
+            );
+
+            const Flow_Meter_Total_High = res.data.find((item: any) => item.key === "Flow_Meter_Total_High");
+            setFlow_Meter_Total_High(Flow_Meter_Total_High?.value || null);
+            const Flow_Meter_Total_Low = res.data.find((item: any) => item.key === "Flow_Meter_Total_Low");
+            setFlow_Meter_Total_Low(Flow_Meter_Total_Low?.value || null);
+            const Flow_Meter_Total_Maintain = res.data.find(
+                (item: any) => item.key === "Tank_01_Level_Maintain"
+            );
+
+
+            const Flow_Velocity_High = res.data.find((item: any) => item.key === "Flow_Velocity_High");
+            setFlow_Velocity_High(Flow_Velocity_High?.value || null);
+            const Flow_Velocity_Low = res.data.find((item: any) => item.key === "Flow_Velocity_Low");
+            setFlow_Velocity_Low(Flow_Velocity_Low?.value || null);
+            const Flow_Velocity_Maintain = res.data.find(
+                (item: any) => item.key === "Flow_Velocity_Maintain"
+            );
+
+            const Consumption_Flow_High = res.data.find((item: any) => item.key === "Consumption_Flow_High");
+            setConsumption_Flow_High(Consumption_Flow_High?.value || null);
+            const Consumption_Flow_Low = res.data.find((item: any) => item.key === "Consumption_Flow_Low");
+            setConsumption_Flow_Low(Consumption_Flow_Low?.value || null);
+            const Consumption_Flow_Maintain = res.data.find(
+                (item: any) => item.key === "Consumption_Flow_Maintain"
+            );
+
  // =================================================================================================================== 
 
 
@@ -382,6 +430,19 @@ export default function ScoreCard_Meiko() {
 
 
             setMaintainTank_01_Volume(Tank_01_Volume_Maintain?.value || false);
+
+            setMaintainTank_01_Mass(Tank_01_Mass_Maintain?.value || false);
+
+            setMaintainTank_01_Level(Tank_01_Level_Maintain?.value || false);
+
+            setMaintainFlow_Meter_Total(Flow_Meter_Total_Maintain?.value || false);
+
+
+            setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
+
+
+            setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
+           
             } catch (error) {
             console.error("Error fetching data:", error);
             }
@@ -949,105 +1010,232 @@ useEffect(() => {
              } 
          } 
      }, [Pipe_Press_High, Pipe_Press, Pipe_Press_Low,maintainPipe_Press]);
+         // =================================================================================================================== 
+        
+        
+        const [Tank_01_Mass, setTank_01_Mass] = useState<string | null>(null);
+
+        const [Tank_01_Mass_High, setTank_01_Mass_High] = useState<number | null>(null);
+        const [Tank_01_Mass_Low, setTank_01_Mass_Low] = useState<number | null>(null);
+        const [exceedThresholdTank_01_Mass, setExceedThresholdTank_01_Mass] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainTank_01_Mass, setMaintainTank_01_Mass] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof Tank_01_Mass_High === 'string' && typeof Tank_01_Mass_Low === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
+                ) {
+                    const highValue = parseFloat(Tank_01_Mass_High);
+                    const lowValue = parseFloat(Tank_01_Mass_Low);
+                    const Tank_01_MassValue = parseFloat(Tank_01_Mass);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_MassValue)) {
+                        if (highValue <= Tank_01_MassValue || Tank_01_MassValue <= lowValue) {
+                                setExceedThresholdTank_01_Mass(true);
+                        } else {
+                           setExceedThresholdTank_01_Mass(false);
+                        }
+                    } 
+                } 
+            }, [Tank_01_Mass_High, Tank_01_Mass, Tank_01_Mass_Low,maintainTank_01_Mass]);
+        
+         
+        
+        
+        // =================================================================================================================== 
+        
+            // =================================================================================================================== 
+        
+        const [Tank_01_Level, setTank_01_Level] = useState<string | null>(null);
+   
+        const [Tank_01_Level_High, setTank_01_Level_High] = useState<number | null>(null);
+        const [Tank_01_Level_Low, setTank_01_Level_Low] = useState<number | null>(null);
+        const [exceedThresholdTank_01_Level, setExceedThresholdTank_01_Level] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainTank_01_Level, setMaintainTank_01_Level] = useState<boolean>(false);
+        
+        
+        useEffect(() => {
+            if (typeof Tank_01_Level_High === 'string' && typeof Tank_01_Level_Low === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
+            ) {
+                const highValue = parseFloat(Tank_01_Level_High);
+                const lowValue = parseFloat(Tank_01_Level_Low);
+                const Tank_01_LevelValue = parseFloat(Tank_01_Level);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_LevelValue)) {
+                    if (highValue <= Tank_01_LevelValue || Tank_01_LevelValue <= lowValue) {
+                            setExceedThresholdTank_01_Level(true);
+                    } else {
+                       setExceedThresholdTank_01_Level(false);
+                    }
+                } 
+            } 
+        }, [Tank_01_Level_High, Tank_01_Level, Tank_01_Level_Low,maintainTank_01_Level]);
+        
  
+        // =================================================================================================================== 
+        
+          // =================================================================================================================== 
+        
+          const [Flow_Meter_Total, setFlow_Meter_Total] = useState<string | null>(null);
+       
+          const [Flow_Meter_Total_High, setFlow_Meter_Total_High] = useState<number | null>(null);
+          const [Flow_Meter_Total_Low, setFlow_Meter_Total_Low] = useState<number | null>(null);
+          const [exceedThresholdFlow_Meter_Total, setExceedThresholdFlow_Meter_Total] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          
+          const [maintainFlow_Meter_Total, setMaintainFlow_Meter_Total] = useState<boolean>(false);
+          
+          
+          useEffect(() => {
+              if (typeof Flow_Meter_Total_High === 'string' && typeof Flow_Meter_Total_Low === 'string' && Flow_Meter_Total !== null && maintainFlow_Meter_Total === false
+              ) {
+                  const highValue = parseFloat(Flow_Meter_Total_High);
+                  const lowValue = parseFloat(Flow_Meter_Total_Low);
+                  const Flow_Meter_TotalValue = parseFloat(Flow_Meter_Total);
+          
+                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_Meter_TotalValue)) {
+                      if (highValue <= Flow_Meter_TotalValue || Flow_Meter_TotalValue <= lowValue) {
+                              setExceedThresholdFlow_Meter_Total(true);
+                      } else {
+                         setExceedThresholdFlow_Meter_Total(false);
+                      }
+                  } 
+              } 
+          }, [Flow_Meter_Total_High, Flow_Meter_Total, Flow_Meter_Total_Low,maintainFlow_Meter_Total]);
+          
+       
+          
+          
+          // =================================================================================================================== 
+
+
+
+                  // =================================================================================================================== 
+        
+                  const [Consumption_Flow, setConsumption_Flow] = useState<string | null>(null);
+                  const [Consumption_Flow_High, setConsumption_Flow_High] = useState<number | null>(null);
+                  const [Consumption_Flow_Low, setConsumption_Flow_Low] = useState<number | null>(null);
+                  const [exceedThresholdConsumption_Flow, setExceedThresholdConsumption_Flow] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                  
+                  const [maintainConsumption_Flow, setMaintainConsumption_Flow] = useState<boolean>(false);
+                  
+                  
+                  useEffect(() => {
+                      if (typeof Consumption_Flow_High === 'string' && typeof Consumption_Flow_Low === 'string' && Consumption_Flow !== null && maintainConsumption_Flow === false
+                      ) {
+                          const highValue = parseFloat(Consumption_Flow_High);
+                          const lowValue = parseFloat(Consumption_Flow_Low);
+                          const Consumption_FlowValue = parseFloat(Consumption_Flow);
+                  
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Consumption_FlowValue)) {
+                              if (highValue <= Consumption_FlowValue || Consumption_FlowValue <= lowValue) {
+                                      setExceedThresholdConsumption_Flow(true);
+                              } else {
+                                 setExceedThresholdConsumption_Flow(false);
+                              }
+                          } 
+                      } 
+                  }, [Consumption_Flow_High, Consumption_Flow, Consumption_Flow_Low,maintainConsumption_Flow]);
+                  
+      
+                  
+                  // =================================================================================================================== 
+
+
+                         // =================================================================================================================== 
+        
+                         const [Flow_Velocity, setFlow_Velocity] = useState<string | null>(null);
+                
+                         const [Flow_Velocity_High, setFlow_Velocity_High] = useState<number | null>(null);
+                         const [Flow_Velocity_Low, setFlow_Velocity_Low] = useState<number | null>(null);
+                         const [exceedThresholdFlow_Velocity, setExceedThresholdFlow_Velocity] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                         
+                         const [maintainFlow_Velocity, setMaintainFlow_Velocity] = useState<boolean>(false);
+                         
+                         
+                         useEffect(() => {
+                             if (typeof Flow_Velocity_High === 'string' && typeof Flow_Velocity_Low === 'string' && Flow_Velocity !== null && maintainFlow_Velocity === false
+                             ) {
+                                 const highValue = parseFloat(Flow_Velocity_High);
+                                 const lowValue = parseFloat(Flow_Velocity_Low);
+                                 const Flow_VelocityValue = parseFloat(Flow_Velocity);
+                         
+                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_VelocityValue)) {
+                                     if (highValue <= Flow_VelocityValue || Flow_VelocityValue <= lowValue) {
+                                             setExceedThresholdFlow_Velocity(true);
+                                     } else {
+                                        setExceedThresholdFlow_Velocity(false);
+                                     }
+                                 } 
+                             } 
+                         }, [Flow_Velocity_High, Flow_Velocity, Flow_Velocity_Low,maintainFlow_Velocity]);
+                         
+                     
+                         
+                         
+                         // =================================================================================================================== 
   
 
      //======================================================================================================================
-    const tagNameEVC = {
-        InputPressure: "Input Pressure (BarA)",
-        Temperature: "Temperature (°C)",
-        GVF: "Gross Volume Flow (m³/h)",
-        SVF: "Standard Volume Flow (Sm³/h)",
-        GVA: "Gross Volume Accumulated (m³)",
-        SVA: "Standard Volume Accumulated (Sm³)",
-        VbToday: "Standard Volume Vb Today (Sm³)",
-        VbLastDay: "Standard Volume Vb Yesterday (Sm³)",
-        VmToday: "Gross Volume Vm Today (m³)",
-        VmLastDay: "Gross Volume Vm Yesterday (m³)",
-        ReBattery: "Remainning Battery (Months)",
-    };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
-        VP_303: "Gas Detector GD-1301 (%LEL)",
-        VP_302: "Gas Detector GD-1302 (%LEL)",
-        ZSC: "SDV-ZSC (0: ON - 1: OFF)",
-        ZSO: "SDV-ZSO (0: OFF - 1: ON)",
-        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
-        UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        VP_301: "VP 301 (0: Stop - 1: Run) ",
+        VP_302: "VP 302 (0: Stop - 1: Run)",
+        VP_303: "VP 303 (0: Stop - 1: Run)",
+        GD_101_High: "GD 101 High (0: Normal - 1: Alarm)",
+        GD_102_High: "GD 102 High (0: Normal - 1: Alarm)",
+        GD_103_High: "GD 103 High (0: Normal - 1: Alarm)",
 
-        Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 
-        GD_102_Low:
-            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
-        SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
-        RESET: "RESET (0: OFF - 1: ON)",
-        EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
-        EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal )",
-        HORN: "HORN (0: OFF - 1: ON)",
-        BEACON: "BEACON (0: OFF - 1: ON)",
-        MAP: "MAP (0: Normal - 1: Emergency)",
-        Tank_01_Volume: "SDV SOLENOID (0: Off - 1: On)",
+        GD_103_Low: "GD 103 Low (0: Normal - 1: Alarm)",
+        GD_102_Low: "GD 102 Low (0: Normal - 1: Alarm)",
+
+        GD_101_Low: "GD 101 Low (0: Normal - 1: Alarm)",
+
+        SDV_302: "SDV 302 (0: Off - 1: On)",
+        SDV_301: "SDV 301 (0: Off - 1: On)",
+
+        V1_Flow_Meter: `V1 Flow Meter ${nameValue.m3}`,
+        V2_Flow_Meter: `V2 Flow Meter ${nameValue.m3}`,
+
+        Pipe_Temp:`Pipe Temp ${nameValue.C}`,
+        Pipe_Press:`Pipe Press  ( Bar )`,
+
+        Tank_TT_301: `Tank TT 301  ${nameValue.C}`,
+
+        Tank_PT_301: `Tank PT 301 ( Bar )`,
+
+        Tank_01_Level: `Tank_01_Level `,
+
+        HORN: `HORN (0: OFF - 1: ON)`,
+        Tank_01_Volume: `SDV SOLENOID (0: Off - 1: On)`,
+
+        Consumption_Flow: `Consumption Flow ${nameValue.m3}`,
+        Flow_Velocity:`Flow Velocity ${nameValue.m3h}`
+
 
     };
 
-    const DataRESET = V1_Flow_Meter === "0" ? "Off" : V1_Flow_Meter === "1" ? "On" : null;
-    const DataTank_01_Volume = Tank_01_Volume === "0" ? "Off" : Tank_01_Volume === "1" ? "On" : null;
-    const DataMap1 = SDV_301 === "0" ? "Normal" : V1_Flow_Meter === "1" ? "Emergency" : null;
+        const DataVP_301  = VP_301 === "0" ? "Stop" : VP_301 === "1" ? "Run" : null;
+        const DataVP_302  = VP_302 === "0" ? "Stop" : VP_302 === "1" ? "Run" : null;
+        const DataVP_303  = VP_303 === "0" ? "Stop" : VP_303 === "1" ? "Run" : null;
 
-    const DataSmoker_Detected = Pipe_Press === "0" ? "Normal" : Pipe_Press === "1" ? "Smoker Detected" : null;
+        const DataGD_101_High  = GD_101_High === "0" ? "Normal" : GD_101_High === "1" ? "Alarm" : null;
+        const DataGD_102_High  = GD_102_High === "0" ? "Normal" : GD_102_High === "1" ? "Alarm" : null;
+        const DataGD_103_High  = GD_103_High === "0" ? "Normal" : GD_103_High === "1" ? "Alarm" : null;
 
-    const DataCharging =
-        GD_103_Low === "0"
-            ? "Normal"
-            : GD_103_Low === "1"
-            ? "Charging"
-            : null;
-    const DataBattery =
-        GD_101_High === "0" ? "Normal" : GD_101_High === "1" ? "Battery" : null;
-    const DataAlarm =
-        GD_101_Low === "0" ? "Normal" : GD_101_Low === "1" ? "No Battery" : null;
-    const DataMode =
-        GD_102_Low === "0"
-            ? "Error"
-            : GD_102_Low === "1"
-            ? "Using Running"
-            : GD_102_Low === "2"
-            ? "Charging"
-            : GD_102_Low === "3"
-            ? "No Battery"
-            : GD_102_Low === "4"
-            ? "Normal"
-            : null;
-    const DataZSC_1 = GD_103_High === "0" ? " On" : GD_103_High === "1" ? "Off" : null;
-    const DataZSO_1 = GD_102_High === "0" ? " On" : GD_102_High === "1" ? "Off" : null;
+        const DataGD_101_Low  = GD_101_Low === "0" ? "Normal" : GD_101_Low === "1" ? "Alarm" : null;
+        const DataGD_102_Low  = GD_102_Low === "0" ? "Normal" : GD_102_Low === "1" ? "Alarm" : null;
+        const DataGD_103_Low  = GD_103_Low === "0" ? "Normal" : GD_103_Low === "1" ? "Alarm" : null;
 
-    const DataSDV_302 =
-        SDV_302 === "0" ? "Local" : SDV_302 === "1" ? "Remote" : null;
-    const DataHorn = Tank_TT_301 === "0" ? "Off" : Tank_TT_301 === "1" ? "On" : null;
-    const DataBeacon =
-        Tank_PT_301 === "0" ? "Off" : Tank_PT_301 === "1" ? "On" : null;
-    const DataV2_Flow_Meter =
-        V2_Flow_Meter === "0"
-            ? " Normal"
-            : V2_Flow_Meter === "1"
-            ? "Emergency"
-            : null;
-    const DataPipe_Temp =
-        Pipe_Temp === "0"
-            ? "Emergency"
-            : Pipe_Temp === "1"
-            ? " Normal"
-            : null;
-
+        const DataSDV_301  = SDV_301 === "0" ? "Off" : SDV_301 === "1" ? "On" : null;
+        const DataSDV_302  = SDV_302 === "0" ? "Off" : SDV_302 === "1" ? "On" : null;
 
 
             const combineCss = {
 
 
 
-    
 
 
             
@@ -1184,19 +1372,7 @@ useEffect(() => {
                     : ""
                 },
         
-                CSSPipe_Press : {
-                    color:exceedThresholdPipe_Press && !maintainPipe_Press
-                    ? "#ff5656"
-                    : maintainPipe_Press
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdPipe_Press || maintainPipe_Press)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdPipe_Press || maintainPipe_Press)
-                    ? 18
-                    : ""
-                },
+          
         
         
                 CSSV1_Flow_Meter : {
@@ -1258,6 +1434,19 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+                CSSPipe_Press : {
+                    color:exceedThresholdPipe_Press && !maintainPipe_Press
+                    ? "#ff5656"
+                    : maintainPipe_Press
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdPipe_Press || maintainPipe_Press)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdPipe_Press || maintainPipe_Press)
+                    ? 18
+                    : ""
+                },
         
                 CSSGD_102_Low : {
                     color:exceedThresholdGD_102_Low && !maintainGD_102_Low
@@ -1312,143 +1501,196 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+
+
+                CSSTank_01_Mass : {
+                    color:exceedThresholdTank_01_Mass && !maintainTank_01_Mass
+               ? "#ff5656"
+               : maintainTank_01_Mass
+               ? "orange"
+               : "" ,
+               fontWeight: (exceedThresholdTank_01_Mass || maintainTank_01_Mass)
+               ? 600
+               : "",
+               fontSize: (exceedThresholdTank_01_Mass || maintainTank_01_Mass)
+               ? 18
+               : ""
+           },
+   
+           CSSTank_01_Level : {
+               color:exceedThresholdTank_01_Level && !maintainTank_01_Level
+               ? "#ff5656"
+               : maintainTank_01_Level
+               ? "orange"
+               : "" ,
+               fontWeight: (exceedThresholdTank_01_Level || maintainTank_01_Level)
+               ? 600
+               : "",
+               fontSize: (exceedThresholdTank_01_Level || maintainTank_01_Level)
+               ? 18
+               : ""
+           },
+   
+           CSSFlow_Meter_Total : {
+               color:exceedThresholdFlow_Meter_Total && !maintainFlow_Meter_Total
+               ? "#ff5656"
+               : maintainFlow_Meter_Total
+               ? "orange"
+               : "" ,
+               fontWeight: (exceedThresholdFlow_Meter_Total || maintainFlow_Meter_Total)
+               ? 600
+               : "",
+               fontSize: (exceedThresholdFlow_Meter_Total || maintainFlow_Meter_Total)
+               ? 18
+               : ""
+           },
+           CSSConsumption_Flow : {
+               color:exceedThresholdConsumption_Flow && !maintainConsumption_Flow
+               ? "#ff5656"
+               : maintainConsumption_Flow
+               ? "orange"
+               : "" ,
+               fontWeight: (exceedThresholdConsumption_Flow || maintainConsumption_Flow)
+               ? 600
+               : "",
+               fontSize: (exceedThresholdConsumption_Flow || maintainConsumption_Flow)
+               ? 18
+               : ""
+           },
+           CSSFlow_Velocity : {
+               color:exceedThresholdFlow_Velocity && !maintainFlow_Velocity
+               ? "#ff5656"
+               : maintainFlow_Velocity
+               ? "orange"
+               : "" ,
+               fontWeight: (exceedThresholdFlow_Velocity || maintainFlow_Velocity)
+               ? 600
+               : "",
+               fontSize: (exceedThresholdFlow_Velocity || maintainFlow_Velocity)
+               ? 18
+               : ""
+           },
+   
         
           };
 
 
 
-    // const dataEVC = [
-    //     {
-    //         name: <span>{tagNameEVC.InputPressure}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{EVC_01_Pressure}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.Temperature}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{EVC_01_Temperature}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.SVF}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{EVC_01_Flow_at_Base_Condition}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.GVF}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{EVC_01_Flow_at_Measurement_Condition}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.SVA}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{EVC_01_Volume_at_Base_Condition}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.GVA}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{EVC_01_Volume_at_Measurement_Condition}</span>,
-    //     },
-     
-
-    //     {
-    //         name: <span>{tagNameEVC.VbToday}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{EVC_01_Vb_of_Current_Day}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.VbLastDay}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{EVC_01_Vb_of_Last_Day}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.VmToday}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{EVC_01_Vm_of_Current_Day}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.VmLastDay}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{EVC_01_Vm_of_Last_Day}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNameEVC.ReBattery}</span>,
-    //         evc1901: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{EVC_01_Remain_Battery_Service_Life}</span>,
-    //     },
-    // ];
 
     const dataPLC = [
+
         {
-            name: <span>{tagNamePLC.PT01}</span>,
-            PLC: <span style={combineCss.CSSVP_301}> {VP_301}</span>,
+            name: <span>{tagNamePLC.V1_Flow_Meter}</span>,
+            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{V1_Flow_Meter} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.V2_Flow_Meter}</span>,
+            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {V2_Flow_Meter} </span>,
+        },
+
+
+        {
+            name: <span>{tagNamePLC.Pipe_Temp}</span>,
+            PLC: <span style={combineCss.CSSPipe_Temp}>{Pipe_Temp} </span>,
+        },
+     
+        {
+            name: <span>{tagNamePLC.Pipe_Press}</span>,
+            PLC: <span style={combineCss.CSSPipe_Press}>{Pipe_Press}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.Tank_TT_301}</span>,
+            PLC: <span style={combineCss.CSSTank_TT_301}>{Tank_TT_301}  </span>,
+        },
+        {
+            name: <span>{tagNamePLC.Tank_PT_301}</span>,
+            PLC: <span style={combineCss.CSSTank_PT_301}> {Tank_PT_301} </span>,
+        },
+
+
+        {
+            name: <span>Tank Level ( % )</span>,
+            PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
+        },
+
+    
+//===
+
+        {
+            name: <span>Tank Mass ( Kg )</span>,
+            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Mass}  </span>,
+        },
+     
+        {
+            name: <span>Tank Volume ( L )</span>,
+            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Volume}  </span>,
+        },
+      
+
+
+        {
+            name: <span>{tagNamePLC.Consumption_Flow}</span>,
+            PLC: <span style={combineCss.CSSConsumption_Flow}>{Consumption_Flow} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.Flow_Velocity}</span>,
+            PLC: <span style={combineCss.CSSFlow_Velocity}> {Flow_Velocity} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.VP_301}</span>,
+            PLC: <span style={combineCss.CSSVP_301}> {VP_301} {DataVP_301}</span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.VP_302}</span>,
+            PLC: <span style={combineCss.CSSVP_302}> {VP_302} {DataVP_302}</span>,
         },
         {
             name: <span>{tagNamePLC.VP_303}</span>,
-            PLC: <span style={combineCss.CSSVP_303}>{} {VP_303}</span>,
+            PLC: <span style={combineCss.CSSVP_303}>{} {VP_303} {DataVP_303}</span>,
         },
         {
-            name: <span>{tagNamePLC.VP_302}</span>,
-            PLC: <span style={combineCss.CSSVP_302}> {VP_302}</span>,
+            name: <span>{tagNamePLC.GD_101_High}</span>,
+            PLC: <span style={combineCss.CSSGD_101_High}> {GD_101_High} {DataGD_101_High}</span>,
         },
-    
-      
-
         {
-            name: <span>{tagNamePLC.ZSO}</span>,
-            PLC: <span style={combineCss.CSSGD_103_High}>{GD_103_High} {DataZSO_1}</span>,
+            name: <span>{tagNamePLC.GD_103_High}</span>,
+            PLC: <span style={combineCss.CSSGD_102_High}>{GD_102_High} {DataGD_102_High}</span>,
         },
-      
         {
-            name: <span>{tagNamePLC.ZSC}</span>,
-            PLC: <span style={combineCss.CSSGD_102_High}>{GD_102_High} {DataZSC_1}</span>,
+            name: <span>{tagNamePLC.GD_102_High}</span>,
+            PLC: <span style={combineCss.CSSGD_103_High}>{GD_103_High} {DataGD_103_High}</span>,
         },
       
+      
         {
-            name: <span>{tagNamePLC.UPS_BATTERY}</span>,
-            PLC: <span style={combineCss.CSSGD_101_High}> {GD_101_High} {DataBattery}</span>,
+            name: <span>{tagNamePLC.GD_101_Low}</span>,
+            PLC: <span style={combineCss.CSSGD_101_Low}>{GD_101_Low} {DataGD_101_Low}</span>,
         },
-        {
-            name: <span>{tagNamePLC.UPS_CHARGING}</span>,
-            PLC: <span style={combineCss.CSSGD_103_Low}> {GD_103_Low} {DataCharging}</span>,
-        },
-
-     
-        {
-            name: <span>{tagNamePLC.UPS_ALARM}</span>,
-            PLC: <span style={combineCss.CSSGD_101_Low}>{GD_101_Low} {DataAlarm}</span>,
-        },
-
-        // {
-        //     name: <span>{tagNamePLC.Smoker_Detected}</span>,
-        //     PLC: <span style={combineCss.CSSPipe_Press}>{Pipe_Press} {DataSmoker_Detected}</span>,
-        // },
         {
             name: <span>{tagNamePLC.GD_102_Low}</span>,
-            PLC: <span style={combineCss.CSSGD_102_Low}> {GD_102_Low} {DataMode}</span>,
-        },
-
-
-        
-
-        {
-            name: <span>{tagNamePLC.RESET}</span>,
-            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{V1_Flow_Meter} {DataRESET}</span>,
+            PLC: <span style={combineCss.CSSGD_102_Low}> {GD_102_Low} {DataGD_102_Low}</span>,
         },
         {
-            name: <span>{tagNamePLC.EmergencyNO}</span>,
-            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {V2_Flow_Meter} {DataV2_Flow_Meter}</span>,
+            name: <span>{tagNamePLC.GD_103_Low}</span>,
+            PLC: <span style={combineCss.CSSGD_103_Low}> {GD_103_Low} {DataGD_103_Low}</span>,
         },
-        {
-            name: <span>{tagNamePLC.EmergencyNC}</span>,
-            PLC: <span style={combineCss.CSSPipe_Temp}>{Pipe_Temp} {DataPipe_Temp}</span>,
-        },
+
      
+ 
+
 
         {
-            name: <span>{tagNamePLC.HORN}</span>,
-            PLC: <span style={combineCss.CSSTank_TT_301}>{Tank_TT_301} {DataHorn}</span>,
+            name: <span>{tagNamePLC.SDV_301}</span>,
+            PLC: <span style={combineCss.CSSSDV_301}> {SDV_301} {DataSDV_301}</span>,
         },
+        
         {
-            name: <span>{tagNamePLC.BEACON}</span>,
-            PLC: <span style={combineCss.CSSTank_PT_301}> {Tank_PT_301} {DataBeacon}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.SELECT_SW}</span>,
+            name: <span>{tagNamePLC.SDV_302}</span>,
             PLC: <span style={combineCss.CSSSDV_302}>{SDV_302} {DataSDV_302}</span>,
         },
-        {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSSDV_301}> {SDV_301} {DataMap1}</span>,
-        },
+      
     ];
 
     return (

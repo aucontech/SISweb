@@ -170,6 +170,8 @@ export default function SetUpdata_Meiko() {
                         Tank_PT_301: setTank_PT_301,
 
                         Tank_01_Volume: setTank_01_Volume,
+
+
                         Tank_01_Mass: setTank_01_Mass,
                         Tank_01_Level: setTank_01_Level,
                         Flow_Meter_Total: setFlow_Meter_Total,
@@ -2623,6 +2625,239 @@ const ChangeMaintainTank_PT_301 = async () => {
 
         const dataEVC01 = [
 
+
+     {
+        mainCategory: mainCategoryFC.PLC ,
+               
+               timeUpdate: <span style={combineCss.CSSV1_Flow_Meter} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSV1_Flow_Meter}> V1 Flow Meter  </span> ,
+       
+            modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
+       
+           value: <span style={combineCss.CSSV1_Flow_Meter} > {V1_Flow_Meter} {nameValue.m3}</span> , 
+            high: <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainV1_Flow_Meter}
+            checked={maintainV1_Flow_Meter}
+        ></Checkbox>
+       
+           },
+       
+       
+           {
+        mainCategory: mainCategoryFC.PLC ,
+               
+               timeUpdate: <span style={combineCss.CSSV2_Flow_Meter} >{PLC_STTValue}</span>,
+           name: <span style={combineCss.CSSV2_Flow_Meter}>V2 Flow Meter</span> ,
+       
+           modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
+       
+          value: <span style={combineCss.CSSV2_Flow_Meter} > {V2_Flow_Meter} {nameValue.m3}</span> , 
+           high: <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainV2_Flow_Meter}
+           checked={maintainV2_Flow_Meter}
+       ></Checkbox>
+       
+          },
+       
+       
+          {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSPipe_Temp} >{PLC_STTValue}</span>,
+          name: <span style={combineCss.CSSPipe_Temp}>Pipe Temp</span> ,
+       
+          modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
+       
+         value: <span style={combineCss.CSSPipe_Temp} > {Pipe_Temp} {nameValue.C}</span> , 
+          high: <InputText style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainPipe_Temp}
+          checked={maintainPipe_Temp}
+       ></Checkbox>
+       
+         },
+       
+       
+         {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSPipe_Press} >{PLC_STTValue}</span>,
+         name: <span style={combineCss.CSSPipe_Press}>Pipe Press</span> ,
+       
+         modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
+       
+        value: <span style={combineCss.CSSPipe_Press} > {Pipe_Press} ( Bar )</span> , 
+         high: <InputText style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainPipe_Press}
+         checked={maintainPipe_Press}
+       ></Checkbox>
+       
+        },
+       
+        {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSTank_TT_301} >{PLC_STTValue}</span>,
+          name: <span style={combineCss.CSSTank_TT_301}>Tank TT-301</span> ,
+       
+          modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
+       
+         value: <span style={combineCss.CSSTank_TT_301} > {Tank_TT_301} {nameValue.C}</span> , 
+          high: <InputText style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainTank_TT_301}
+          checked={maintainTank_TT_301}
+       ></Checkbox>
+       
+         },
+       
+       
+         {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSTank_PT_301} >{PLC_STTValue}</span>,
+         name: <span style={combineCss.CSSTank_PT_301}>Tank PT-301</span> ,
+       
+         modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
+       
+        value: <span style={combineCss.CSSTank_PT_301} > {Tank_PT_301} ( Bar )</span> , 
+         high: <InputText style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainTank_PT_301}
+         checked={maintainTank_PT_301}
+       ></Checkbox>
+       
+        },
+       
+       
+       
+       
+        {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSTank_01_Volume} >{PLC_STTValue}</span>,
+        name: <span style={combineCss.CSSTank_01_Volume}>Tank-01 Volume</span> ,
+       
+        modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
+       
+       value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume} ( L )</span> , 
+        high: <InputText style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTank_01_Volume}
+        checked={maintainTank_01_Volume}
+       ></Checkbox>
+       
+       },
+       
+       {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSTank_01_Mass} >{PLC_STTValue}</span>,
+         name: <span style={combineCss.CSSTank_01_Mass}>Tank-01 Mass</span> ,
+       
+         modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
+       
+        value: <span style={combineCss.CSSTank_01_Mass} > {Tank_01_Mass} ( Kg )</span> , 
+         high: <InputText style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
+         low:  <InputText style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
+         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         Maintain:   <Checkbox
+         style={{ marginRight: 20, }}
+         onChange={ChangeMaintainTank_01_Mass}
+         checked={maintainTank_01_Mass}
+       ></Checkbox>
+       
+        },
+       
+       
+        {
+        mainCategory: mainCategoryFC.PLC ,
+           
+           timeUpdate: <span style={combineCss.CSSTank_01_Level} >{PLC_STTValue}</span>,
+        name: <span style={combineCss.CSSTank_01_Level}>Tank-01 Level</span> ,
+       
+        modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
+       
+       value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level} ( % )</span> , 
+        high: <InputText style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
+        low:  <InputText style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
+        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainTank_01_Level}
+        checked={maintainTank_01_Level}
+       ></Checkbox>
+       
+       },
+       
+       
+       
+       {
+           mainCategory: mainCategoryFC.PLC ,
+              
+              timeUpdate: <span style={combineCss.CSSConsumption_Flow} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSConsumption_Flow}>Consumption Flow</span> ,
+          
+            modbus: <span style={combineCss.CSSConsumption_Flow}>400019	 </span> ,
+          
+           value: <span style={combineCss.CSSConsumption_Flow} > {Consumption_Flow} {nameValue.m3}</span> , 
+            high: <InputText style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainConsumption_Flow}
+            checked={maintainConsumption_Flow}
+          ></Checkbox>
+          
+           },
+          
+          
+           {
+           mainCategory: mainCategoryFC.PLC ,
+              
+              timeUpdate: <span style={combineCss.CSSFlow_Velocity} >{PLC_STTValue}</span>,
+           name: <span style={combineCss.CSSFlow_Velocity}>Flow Velocity</span> ,
+          
+           modbus: <span style={combineCss.CSSFlow_Velocity}>400021	 </span> ,
+          
+          value: <span style={combineCss.CSSFlow_Velocity} > {Flow_Velocity} {nameValue.m3h}</span> , 
+           high: <InputText style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainFlow_Velocity}
+           checked={maintainFlow_Velocity}
+          ></Checkbox>
+          
+          },
+       
+
             {
  mainCategory: mainCategoryFC.PLC ,
                 
@@ -2854,237 +3089,6 @@ const ChangeMaintainTank_PT_301 = async () => {
      },
 
 
-
-     {
- mainCategory: mainCategoryFC.PLC ,
-        
-        timeUpdate: <span style={combineCss.CSSV1_Flow_Meter} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSV1_Flow_Meter}> V1 Flow Meter  </span> ,
-
-     modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
-
-    value: <span style={combineCss.CSSV1_Flow_Meter} > {V1_Flow_Meter} {nameValue.m3}</span> , 
-     high: <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
-     style={{ marginRight: 20, }}
-     onChange={ChangeMaintainV1_Flow_Meter}
-     checked={maintainV1_Flow_Meter}
- ></Checkbox>
-
-    },
-
-
-    {
- mainCategory: mainCategoryFC.PLC ,
-        
-        timeUpdate: <span style={combineCss.CSSV2_Flow_Meter} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSV2_Flow_Meter}>V2 Flow Meter</span> ,
-
-    modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
-
-   value: <span style={combineCss.CSSV2_Flow_Meter} > {V2_Flow_Meter} {nameValue.m3}</span> , 
-    high: <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
-    style={{ marginRight: 20, }}
-    onChange={ChangeMaintainV2_Flow_Meter}
-    checked={maintainV2_Flow_Meter}
-></Checkbox>
-
-   },
-
-
-   {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSPipe_Temp} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSPipe_Temp}>Pipe Temp</span> ,
-
-   modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
-
-  value: <span style={combineCss.CSSPipe_Temp} > {Pipe_Temp} {nameValue.C}</span> , 
-   high: <InputText style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
-   style={{ marginRight: 20, }}
-   onChange={ChangeMaintainPipe_Temp}
-   checked={maintainPipe_Temp}
-></Checkbox>
-
-  },
-
-
-  {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSPipe_Press} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSPipe_Press}>Pipe Press</span> ,
-
-  modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
-
- value: <span style={combineCss.CSSPipe_Press} > {Pipe_Press} ( Bar )</span> , 
-  high: <InputText style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainPipe_Press}
-  checked={maintainPipe_Press}
-></Checkbox>
-
- },
-
- {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSTank_TT_301} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSTank_TT_301}>Tank TT-301</span> ,
-
-   modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
-
-  value: <span style={combineCss.CSSTank_TT_301} > {Tank_TT_301} {nameValue.C}</span> , 
-   high: <InputText style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
-   style={{ marginRight: 20, }}
-   onChange={ChangeMaintainTank_TT_301}
-   checked={maintainTank_TT_301}
-></Checkbox>
-
-  },
-
-
-  {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSTank_PT_301} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSTank_PT_301}>Tank PT-301</span> ,
-
-  modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
-
- value: <span style={combineCss.CSSTank_PT_301} > {Tank_PT_301} ( Bar )</span> , 
-  high: <InputText style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainTank_PT_301}
-  checked={maintainTank_PT_301}
-></Checkbox>
-
- },
-
-
-
-
- {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSTank_01_Volume} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSTank_01_Volume}>Tank-01 Volume</span> ,
-
- modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
-
-value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume} ( L )</span> , 
- high: <InputText style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
- style={{ marginRight: 20, }}
- onChange={ChangeMaintainTank_01_Volume}
- checked={maintainTank_01_Volume}
-></Checkbox>
-
-},
-
-{
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSTank_01_Mass} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSTank_01_Mass}>Tank-01 Mass</span> ,
-
-  modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
-
- value: <span style={combineCss.CSSTank_01_Mass} > {Tank_01_Mass} ( Kg )</span> , 
-  high: <InputText style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainTank_01_Mass}
-  checked={maintainTank_01_Mass}
-></Checkbox>
-
- },
-
-
- {
- mainCategory: mainCategoryFC.PLC ,
-    
-    timeUpdate: <span style={combineCss.CSSTank_01_Level} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSTank_01_Level}>Tank-01 Level</span> ,
-
- modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
-
-value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level} ( % )</span> , 
- high: <InputText style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
- style={{ marginRight: 20, }}
- onChange={ChangeMaintainTank_01_Level}
- checked={maintainTank_01_Level}
-></Checkbox>
-
-},
-
-
-
-{
-    mainCategory: mainCategoryFC.PLC ,
-       
-       timeUpdate: <span style={combineCss.CSSConsumption_Flow} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSConsumption_Flow}>Consumption Flow</span> ,
-   
-     modbus: <span style={combineCss.CSSConsumption_Flow}>400019	 </span> ,
-   
-    value: <span style={combineCss.CSSConsumption_Flow} > {Consumption_Flow} {nameValue.m3}</span> , 
-     high: <InputText style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
-     style={{ marginRight: 20, }}
-     onChange={ChangeMaintainConsumption_Flow}
-     checked={maintainConsumption_Flow}
-   ></Checkbox>
-   
-    },
-   
-   
-    {
-    mainCategory: mainCategoryFC.PLC ,
-       
-       timeUpdate: <span style={combineCss.CSSFlow_Velocity} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSFlow_Velocity}>Flow Velocity</span> ,
-   
-    modbus: <span style={combineCss.CSSFlow_Velocity}>400021	 </span> ,
-   
-   value: <span style={combineCss.CSSFlow_Velocity} > {Flow_Velocity} {nameValue.m3h}</span> , 
-    high: <InputText style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
-    style={{ marginRight: 20, }}
-    onChange={ChangeMaintainFlow_Velocity}
-    checked={maintainFlow_Velocity}
-   ></Checkbox>
-   
-   },
 
           ]
 

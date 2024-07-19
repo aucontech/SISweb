@@ -1406,18 +1406,18 @@ export default function GraphicYOSHINO() {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+    const [lineDuty1901, setLineduty1901] = useState<any>();
+    const [lineDuty1902, setLineduty1902] = useState<any>();
 
     const ChangeStatusFIQ = async () => {
         try {
             const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
-            await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
-            });
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_YOSHINO}/SERVER_SCOPE`,
+                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+            );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
@@ -1437,7 +1437,6 @@ export default function GraphicYOSHINO() {
             accept: () => ChangeStatusFIQ(),
         });
     };
-
     const fetchData = async () => {
         try {
             const res = await httpApi.get(GetTelemetry_ZOVC);

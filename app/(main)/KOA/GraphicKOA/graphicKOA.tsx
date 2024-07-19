@@ -1403,8 +1403,8 @@ export default function GraphicKOA() {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+    const [lineDuty1901, setLineduty1901] = useState<any>();
+    const [lineDuty1902, setLineduty1902] = useState<any>();
 
     const ChangeStatusFIQ = async () => {
         try {
