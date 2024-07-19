@@ -1401,19 +1401,15 @@ export default function GraphicZOCV() {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
     const ChangeStatusFIQ = async () => {
         try {
-            const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
             await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
                 FIQ1902_LineDuty: newValue2,
             });
-            setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
             toast.current?.show({
@@ -1664,10 +1660,6 @@ export default function GraphicZOCV() {
             );
             setMaintainGVA2(MaintainGVA_2?.value || false);
 
-            const LineDuty1901 = res.data.find(
-                (item: any) => item.key === "FIQ1901_LineDuty"
-            );
-            setLineduty1901(LineDuty1901?.value || false);
 
             const LineDuty1902 = res.data.find(
                 (item: any) => item.key === "FIQ1902_LineDuty"
@@ -2598,7 +2590,7 @@ export default function GraphicZOCV() {
 
                                     cursor: "pointer",
                                 }}
-                                // onClick={() => confirmGD_1902()}
+                                onClick={() => confirmGD_1902()}
                             >
                                 <p>{roundedGD02} LEL</p>
                             </div>
@@ -2672,7 +2664,7 @@ export default function GraphicZOCV() {
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
+                                // onClick={confirmLineDuty}
                             >
                                 {/* FIQ-1901
                                 {lineDuty1901 && (

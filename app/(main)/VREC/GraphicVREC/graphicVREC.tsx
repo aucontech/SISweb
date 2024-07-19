@@ -1411,10 +1411,10 @@ export default function GraphicVREC() {
             const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
-            await httpApi.post(PostTelemetry_id_VREC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
-            });
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_VREC}/SERVER_SCOPE`,
+                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+            );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
@@ -1686,11 +1686,12 @@ export default function GraphicVREC() {
             }
         };
 
-    
 
     useEffect(() => {
         fetchData();
     }, []);
+
+
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",

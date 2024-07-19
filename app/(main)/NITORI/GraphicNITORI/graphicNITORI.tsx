@@ -1413,10 +1413,10 @@ export default function GraphicNITORI() {
             const newValue1 = !lineDuty1901;
             const newValue2 = !lineDuty1902;
 
-            await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
-            });
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_NITORI}/SERVER_SCOPE`,
+                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+            );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
 
@@ -2760,10 +2760,10 @@ export default function GraphicNITORI() {
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
+                                // onClick={confirmLineDuty}
                             >
-                                FIQ-1302
-                                {lineDuty1902 && (
+                                FIQ-1302 
+                                {/* {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
                                             className="pi pi-check"
@@ -2774,7 +2774,7 @@ export default function GraphicNITORI() {
                                             }}
                                         ></i>
                                     </span>
-                                )}
+                                )} */}
                             </div>
                         ),
                     },

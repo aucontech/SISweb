@@ -1403,8 +1403,8 @@ export default function GraphicKOA() {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+    const [lineDuty1901, setLineduty1901] = useState<any>();
+    const [lineDuty1902, setLineduty1902] = useState<any>();
 
     const ChangeStatusFIQ = async () => {
         try {
@@ -4879,8 +4879,8 @@ export default function GraphicKOA() {
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+                background: 'none',
                 width: 10,
                 height: 1,
             },
@@ -6313,13 +6313,13 @@ export default function GraphicKOA() {
 
     return (
         <>
-            {/* <audio ref={audioRef}>
+            <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
                     type="audio/mpeg"
                 />
             </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 

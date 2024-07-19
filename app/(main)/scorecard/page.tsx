@@ -14,7 +14,7 @@ const ScoreCard = () => {
 
                 <ScoreCard_Otsuka />
                 <br />
-                {/* <ScoreCard_Meiko/> */}
+                <ScoreCard_Meiko/>
 
             </div>
 

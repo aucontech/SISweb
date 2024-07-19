@@ -2027,8 +2027,8 @@ useEffect(() => {
             : UPS_Mode === "4"
             ? "Normal"
             : null;
-    const DataZSC_1 = DI_ZSO_1 === "0" ? " On" : DI_ZSO_1 === "1" ? "Off" : null;
-    const DataZSO_1 = DI_ZSC_1 === "0" ? " On" : DI_ZSC_1 === "1" ? "Off" : null;
+    const DataZSO_1 = DI_ZSO_1 === "0" ? " Off" : DI_ZSO_1 === "1" ? "On" : null;
+    const DataZSC_1 = DI_ZSC_1 === "0" ? " On" : DI_ZSC_1 === "1" ? "Off" : null;
 
     const DataDI_SELECT_SW =
         DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
