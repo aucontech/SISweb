@@ -196,6 +196,8 @@ export default function Alarmbell() {
                                         );
                                     });
                             }
+                        } else {
+                            handleStopAudio();
                         }
                         setNotifications(alarms);
                         setAlarmCount(alarmsCount);
