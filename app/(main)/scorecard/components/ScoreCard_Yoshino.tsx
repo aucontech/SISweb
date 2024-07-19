@@ -2965,10 +2965,6 @@ useEffect(() => {
                             YOSHINO
                         </div>
 
-                        <div style={{ fontSize: 22, fontWeight: 700 }}>
-                            {" "}
-                            Connection
-                        </div>
                        
                     </div>
                     <div
@@ -2980,9 +2976,7 @@ useEffect(() => {
 
                         }}
                     >
-                        <div >
-                            YOSHINO Nutrition Co. Ltd
-                        </div>
+                       
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            <p style={{fontWeight:700}}>FC</p> : {FC_Conn_STTValue}
                         </div>
@@ -2996,9 +2990,7 @@ useEffect(() => {
 
                         }}
                     >
-                        <div >
-                            Phu My 3 Specialized Industrial Park
-                        </div>
+                        
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
                         </div>

@@ -3311,10 +3311,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                             OTSUKA
                         </div>
 
-                        <div style={{ fontSize: 22, fontWeight: 700 }}>
-                            {" "}
-                            Connection
-                        </div>
+                     
                        
                     </div>
                     <div
@@ -3326,9 +3323,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
                         }}
                     >
-                        <div >
-                            OTSUKA Nutrition Co. Ltd
-                        </div>
+                    
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            <p style={{fontWeight:700}}>EVC</p> : {FC_Conn_STTValue}
                         </div>
@@ -3342,9 +3337,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
                         }}
                     >
-                        <div >
-                            Phu My 3 Specialized Industrial Park
-                        </div>
+                        
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
                         </div>

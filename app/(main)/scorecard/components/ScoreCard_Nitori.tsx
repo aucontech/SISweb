@@ -2109,10 +2109,7 @@ useEffect(() => {
                             NITORI
                         </div>
 
-                        <div style={{ fontSize: 22, fontWeight: 700 }}>
-                            {" "}
-                            Connection
-                        </div>
+                        
                        
                     </div>
                     <div
@@ -2124,9 +2121,7 @@ useEffect(() => {
 
                         }}
                     >
-                        <div >
-                            Nitori Nutrition Co. Ltd
-                        </div>
+                      
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            <p style={{fontWeight:700}}>EVC</p> : {FC_Conn_STTValue}
                         </div>
@@ -2140,9 +2135,7 @@ useEffect(() => {
 
                         }}
                     >
-                        <div >
-                            Phu My 3 Specialized Industrial Park
-                        </div>
+                       
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
                         </div>

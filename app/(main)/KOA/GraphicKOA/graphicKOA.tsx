@@ -1742,7 +1742,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVF1 && !maintainSVF1
@@ -1803,7 +1803,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVF1 && !maintainGVF1
@@ -1864,7 +1864,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVA1 && !maintainSVA1
@@ -1926,7 +1926,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdGVA1 && !maintainGVA1
@@ -1989,7 +1989,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVF2 && !maintainSVF2
@@ -2051,7 +2051,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVF2 && !maintainGVF2
@@ -2113,7 +2113,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVA2 && !maintainSVA2
@@ -2175,7 +2175,7 @@ export default function GraphicKOA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVA2 && !maintainGVA2
@@ -2231,7 +2231,7 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     fontSize: 22,
                                     fontWeight: 500,
@@ -2292,7 +2292,7 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     fontSize: 22,
                                     fontWeight: 500,
@@ -2354,7 +2354,7 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     fontSize: 22,
                                     fontWeight: 500,
