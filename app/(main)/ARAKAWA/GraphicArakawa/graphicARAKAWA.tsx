@@ -1668,6 +1668,9 @@ export default function GraphicARAKAWA() {
         });
     };
 
+
+
+
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
@@ -1930,7 +1933,7 @@ export default function GraphicARAKAWA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
@@ -1996,7 +1999,7 @@ export default function GraphicARAKAWA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
@@ -2062,7 +2065,7 @@ export default function GraphicARAKAWA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Volume_at_Base_Condition &&
@@ -2129,7 +2132,7 @@ export default function GraphicARAKAWA() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     bottom: 7,
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
@@ -2504,7 +2507,7 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     fontSize: 22,
                                     fontWeight: 500,
@@ -2567,7 +2570,7 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
+                                    // padding: 2,
                                     borderRadius: 5,
                                     fontSize: 22,
                                     fontWeight: 500,
@@ -6642,7 +6645,7 @@ export default function GraphicARAKAWA() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
-            <div style={{  backgroundColor:
+            {/* <div style={{  backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
                                         !maintainEVC_01_Flow_at_Base_Condition
                                             ? "#ff5656"
@@ -6650,7 +6653,7 @@ export default function GraphicARAKAWA() {
                                             ? "orange"
                                             : "transparent",}}>
                 {EVC_01_Flow_at_Base_Condition}
-            </div>
+            </div> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />

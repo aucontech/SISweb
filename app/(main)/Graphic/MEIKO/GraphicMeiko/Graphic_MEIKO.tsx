@@ -2095,7 +2095,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>F :</p>
+                                <p style={{ color: colorNameValue }}>Flow rate :</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {Flow_Velocity}
@@ -2132,7 +2132,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}> V :</p>
+                                <p style={{ color: colorNameValue }}> Volumn :</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {Consumption_Flow}
