@@ -2950,6 +2950,9 @@ useEffect(() => {
                         background: "#64758B",
                         color: "white",
                         borderRadius: "10px 10px 0 0",
+                        display:'flex',
+                        justifyContent:'space-between'
+
                     }}
                 >
                     <div
@@ -2969,10 +2972,8 @@ useEffect(() => {
                     </div>
                     <div
                         style={{
-                            display: "flex",
                             alignItems: "center",
-                            padding: "0px 5px 0px 5px",
-                            justifyContent: "space-between",
+                           padding:5
 
                         }}
                     >
@@ -2980,21 +2981,11 @@ useEffect(() => {
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            <p style={{fontWeight:700}}>FC</p> : {FC_Conn_STTValue}
                         </div>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            padding: "0px 5px 5px 5px",
-                            justifyContent: "space-between",
-
-                        }}
-                    >
-                        
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
                         </div>
                     </div>
+                    
                 </div>
 
 

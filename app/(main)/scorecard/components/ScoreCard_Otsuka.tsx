@@ -3296,6 +3296,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                         background: "#64758B",
                         color: "white",
                         borderRadius: "10px 10px 0 0",
+                        display:'flex',
+                        justifyContent:'space-between'
                     }}
                 >
                     <div
@@ -3316,10 +3318,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                     </div>
                     <div
                         style={{
-                            display: "flex",
                             alignItems: "center",
-                            padding: "0px 5px 0px 5px",
-                            justifyContent: "space-between",
+                            padding:5
 
                         }}
                     >
@@ -3327,21 +3327,11 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            <p style={{fontWeight:700}}>EVC</p> : {FC_Conn_STTValue}
                         </div>
-                    </div>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            padding: "0px 5px 5px 5px",
-                            justifyContent: "space-between",
-
-                        }}
-                    >
-                        
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
                         </div>
                     </div>
+                   
                 </div>
                 <DataTable value={dataEVC} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
