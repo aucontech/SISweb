@@ -114,7 +114,7 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
             <div className="card">
                 <div className="col">
                     <h3>{gcData?.device?.name}</h3>
-                    Heat Value :{" "}
+                    Heating Value :{" "}
                     <InputNumber
                         // check if gcData.data.heat_value[0] is not null
                         value={gcData.heating_value}

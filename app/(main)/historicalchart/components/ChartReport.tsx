@@ -58,11 +58,11 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     pinch: {
                         enabled: true, // Enable zooming with pinch gesture
                     },
-                    mode: "xy", // Allow zooming in both x and y directions
+                    mode: "x", // Allow zooming in both x and y directions
                 },
                 pan: {
                     enabled: true, // Enable panning
-                    mode: "xy", // Allow panning in both x and y directions
+                    mode: "x", // Allow panning in both x and y directions
                 },
             },
         },
@@ -77,12 +77,12 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     display: false,
                 },
             },
-            // y: {
-            //     beginAtZero: true,
-            //     grid: {
-            //         display: false,
-            //     },
-            // },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: false,
+                },
+            },
         },
         // datasets: [
         //     {
@@ -112,7 +112,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     }, []);
     const _fetchDataTimeseries = useCallback(async ({ filters }) => {
         setLoading(true);
-        console.log(filters);
         let { device, tags, dates, agg, interval } = filters;
 
         if (
