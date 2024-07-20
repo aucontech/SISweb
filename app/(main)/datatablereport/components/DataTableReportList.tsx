@@ -56,15 +56,16 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         ) {
             let reqParams: any = {
                 keys: tagNames.join(","),
-                startTs: dates[0].getTime(),
-                endTs: dates[1].getTime(),
+                startTs: Utils.ZeroOutSeconds(new Date(dates[0])),
+                endTs: Utils.ZeroOutSeconds(new Date(dates[1])),
                 orderBy: "ASC",
                 limit: 100000,
             };
+
             getTimesSeriesData("DEVICE", device?.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    // console.log(res);
+                    console.log(res);
                     // console.log(tags);
                     const tagUnitLookup: { [key: string]: string } = {};
                     tags.forEach((tag: any) => {

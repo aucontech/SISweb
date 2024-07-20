@@ -568,6 +568,32 @@ const CustomerReport = () => {
                         );
                 }
             }
+        } else {
+            if (line === 1) {
+                return (
+                    <>
+                        Line 1 <br />
+                        <Checkbox
+                            checked={isLine1Selected}
+                            onChange={(e: any) =>
+                                _onSelectLine(e.checked, "line1")
+                            }
+                        />
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        Line 2 <br />
+                        <Checkbox
+                            checked={isLine2Selected}
+                            onChange={(e: any) =>
+                                _onSelectLine(e.checked, "line2")
+                            }
+                        />
+                    </>
+                );
+            }
         }
     };
 

@@ -126,8 +126,8 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
         ) {
             let reqParams: any = {
                 keys: tags.join(","),
-                startTs: dates[0].getTime(),
-                endTs: dates[1].getTime(),
+                startTs: Utils.ZeroOutSeconds(new Date(dates[0])),
+                endTs: Utils.ZeroOutSeconds(new Date(dates[1])),
                 orderBy: "ASC",
                 limit: 50000,
             };
@@ -148,6 +148,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             getTimesSeriesData("DEVICE", device.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
+                    console.log(res);
                     let keys = Object.keys(res);
                     let labels = res[keys[0]].map((dt: any) =>
                         Utils.formatUnixTimeToString(dt.ts, "dd-MM HH:mm")

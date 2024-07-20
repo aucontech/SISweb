@@ -131,6 +131,10 @@ const formatDurationWithWords = (duration: any) => {
     return [hoursText, minutesText, secondsText].filter(Boolean).join(", ");
 };
 
+const ZeroOutSeconds = (date: any) => {
+    date.setSeconds(0, 0);
+    return date.getTime();
+};
 const calculateDurationFromUnixWithWords = (startTime: any, endTime: any) => {
     const start: any = new Date(startTime);
     const end: any = new Date(endTime);
@@ -186,6 +190,7 @@ const Utils = {
     calculateDurationFromUnixWithWords,
     getType,
     round,
+    ZeroOutSeconds,
     formateJsTime,
 };
 export { UIUtils, Utils };
