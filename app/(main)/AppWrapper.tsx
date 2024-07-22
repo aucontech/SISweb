@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation"; // Đảm bảo rằng đây là cách đúng để import useRouter
+import { useRouter } from "next/navigation";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthProvider";
@@ -16,11 +16,10 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     if (!authContext) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-    const { isAuthenticated, isLoading } = authContext;
+    const { isAuthenticated, isLoading, isRedirectToLogin } = authContext;
 
     useEffect(() => {
-        console.log(pathname);
-        if (!isAuthenticated) {
+        if (isRedirectToLogin && !isAuthenticated) {
             router.push("/login");
         } else {
             if (pathname === "/login") {
@@ -33,7 +32,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
                 }
             }
         }
-    }, [isAuthenticated, pathname]);
+    }, [isAuthenticated, pathname, isRedirectToLogin]);
 
     const spinnerStyle = {
         display: "flex",

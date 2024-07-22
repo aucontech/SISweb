@@ -25,6 +25,7 @@ interface AuthContextType {
     setIsAuthenticated: (value: boolean) => void;
     user: User | null;
     isLoading: boolean;
+    isRedirectToLogin: boolean;
 }
 
 // Tạo một Context với kiểu AuthContextType
@@ -39,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isRedirectToLogin, setIsRedirectToLogin] = useState(false);
 
     const authenticate = useCallback(async () => {
         setIsLoading(() => true);
@@ -67,8 +69,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             persistToken(newTokens?.data.token);
             persistRefreshToken(newTokens?.data.refreshToken);
             setIsAuthenticated(() => true);
-        } catch (error) {
-            setIsAuthenticated(() => false);
+        } catch (error: any) {
+            console.log(error);
+            if (error?.response?.data?.errorCode === 11) {
+                setIsAuthenticated(() => false);
+                setIsRedirectToLogin(() => true);
+            } else {
+                setIsAuthenticated(() => false);
+            }
         }
     };
 
@@ -76,6 +84,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         try {
             const user = await getCurrentUser();
             if (user) {
+                if (!isAuthenticated) {
+                    setIsAuthenticated(true);
+                }
             } else {
             }
         } catch (error) {
@@ -96,7 +107,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }, [authenticate]);
     return (
         <AuthContext.Provider
-            value={{ isAuthenticated, setIsAuthenticated, user, isLoading }}
+            value={{
+                isAuthenticated,
+                setIsAuthenticated,
+                user,
+                isLoading,
+                isRedirectToLogin,
+            }}
         >
             {children}
         </AuthContext.Provider>
