@@ -54,7 +54,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             }
         } catch (error: any) {
             //console.log(error);
-            if (error?.response?.data?.errorCode !== 11) {
+            if (
+                error?.response?.data?.errorCode !== 11 ||
+                error?.response?.data?.errorCode === 10
+            ) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             } else {
@@ -73,7 +76,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setIsAuthenticated(() => true);
         } catch (error: any) {
             console.log(error);
-            if (error?.response?.data?.errorCode === 11) {
+            if (
+                error?.response?.data?.errorCode === 11 ||
+                error?.response?.data?.errorCode === 10
+            ) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             } else {
