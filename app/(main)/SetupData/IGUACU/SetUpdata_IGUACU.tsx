@@ -5114,7 +5114,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             
 
             {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery_Service Life</span> ,
@@ -5135,7 +5135,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     
          
             {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Temperature}>Temperature</span> ,
@@ -5155,7 +5155,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             },
 
             {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSEVC_01_Pressure}>Pressure</span> ,
@@ -5175,7 +5175,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            },
 
            {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}> Volume at Base Condition</span> ,
@@ -5195,7 +5195,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
           },
 
           {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
@@ -5214,7 +5214,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
  
          },
          {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
@@ -5235,7 +5235,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   
         {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
@@ -5254,7 +5254,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
        },
        {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
@@ -5274,7 +5274,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
       },
 
         {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
@@ -5295,7 +5295,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
        {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>Vb of Last Day</span> ,
@@ -5316,7 +5316,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
               
       {
-            mainCategory: 'EVC 01 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1501 -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
@@ -5347,7 +5347,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
             {
                 
-                mainCategory: 'EVC 02 -  Parameter & Configuration ',
+                mainCategory: 'EVC-1502 -  Parameters & Configurations ',
 
                 
                 timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{EVC_STT02Value}</span>,
@@ -5374,7 +5374,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
     {
         
-        mainCategory: 'EVC 02 -  Parameter & Configuration ',
+        mainCategory: 'EVC-1502 -  Parameters & Configurations ',
 
         
         timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{EVC_STT02Value}</span>,
@@ -5397,7 +5397,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
    {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure</span> ,
@@ -5419,7 +5419,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>Volume at Base Condition</span> ,
@@ -5440,7 +5440,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
@@ -5462,7 +5462,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
   {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
@@ -5486,7 +5486,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
  {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
@@ -5507,7 +5507,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
 {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>Vb of Current Day</span> ,
@@ -5529,7 +5529,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
 
  {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>Vm of Current Day</span> ,
@@ -5551,7 +5551,7 @@ value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Curr
 
 {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
@@ -5573,7 +5573,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 {
     
-            mainCategory: 'EVC 02 -  Parameter & Configuration ',
+            mainCategory: 'EVC-1502 -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
@@ -5595,15 +5595,31 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
           ]
 
-
+          const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
+          const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+          
+          const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
+          const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
+          const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
+          const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
+          const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+          const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
+          const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
+          
+          const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
+          const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null;
+          const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
+          
+          const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
+          const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
+          const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
 
           const PLC01 = [
-
 
         
 
             {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD1}>Gas Detector GD-1501</span> ,
@@ -5624,7 +5640,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     
          
             {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD2}>Gas Detector GD-1502</span> ,
@@ -5644,7 +5660,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
     
             {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
@@ -5665,14 +5681,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
             {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSDI_ZSO_1}>SDV-ZSO</span> ,
     
              modbus: <span style={combineCss.CSSDI_ZSO_1}>8	 </span> ,
     
-            value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1}</span> , 
+            value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1} {DataDI_ZSO_1}</span> , 
              high: <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5685,14 +5701,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
             },
 
             {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
                 
                 timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC</span> ,
    
             modbus: <span style={combineCss.CSSDI_ZSC_1}>9	 </span> ,
    
-           value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1}</span> , 
+           value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1} {DataDI_ZSC_1}</span> , 
             high: <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5706,14 +5722,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
            {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
   
            modbus: <span style={combineCss.CSSDI_MAP_1}>12	 </span> ,
   
-          value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1}</span> , 
+          value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1} {DataDI_MAP_1}</span> , 
            high: <InputText style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSDI_MAP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5730,14 +5746,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
          {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
 
          modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>13	 </span> ,
 
-        value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY}</span> , 
+        value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY} {DataDI_UPS_BATTERY}</span> , 
          high: <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5751,14 +5767,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
         {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
             
             timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
 
         modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>14	 </span> ,
 
-       value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING}</span> , 
+       value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING} {DataDI_UPS_CHARGING}</span> , 
         high: <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5773,14 +5789,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
        {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
 
        modbus: <span style={combineCss.CSSDI_UPS_ALARM}>15	 </span> ,
 
-      value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM}</span> , 
+      value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM} {DataDI_UPS_ALARM}</span> , 
        high: <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5794,14 +5810,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
       {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
 
       modbus: <span style={combineCss.CSSDI_SD_1}>	 </span> ,
 
-     value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
+     value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1} {DataDI_SD_1}</span> , 
       high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5813,14 +5829,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
      },
      {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
     
      modbus: <span style={combineCss.CSSDI_SELECT_SW}>17	 </span> ,
     
-    value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW}</span> , 
+    value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW} {DataDI_SELECT_SW}</span> , 
      high: <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
      low:  <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5834,14 +5850,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
      {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_RESET}>Reset</span> ,
 
      modbus: <span style={combineCss.CSSDI_RESET}>18	 </span> ,
 
-    value: <span style={combineCss.CSSDI_RESET} > {DI_RESET}</span> , 
+    value: <span style={combineCss.CSSDI_RESET} > {DI_RESET} {DataDI_RESET}</span> , 
      high: <InputText style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
      low:  <InputText style={combineCss.CSSDI_RESET}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5855,14 +5871,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
     {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
         
         timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
 
     modbus: <span style={combineCss.CSSEmergency_NO}>19	 </span> ,
 
-   value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO}</span> , 
+   value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO} {DataEmergency_NO}</span> , 
     high: <InputText style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSEmergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5876,14 +5892,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
    {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
 
    modbus: <span style={combineCss.CSSEmergency_NC}>20	 </span> ,
 
-  value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC}</span> , 
+  value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC} {DataEmergency_NC}</span> , 
    high: <InputText style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSEmergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5897,14 +5913,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
   {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
 
   modbus: <span style={combineCss.CSSUPS_Mode}>22	 </span> ,
 
- value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode}</span> , 
+ value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode} {DataUPS_Mode}</span> , 
   high: <InputText style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSUPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5917,14 +5933,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  },
 
  {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
    name: <span style={combineCss.CSSDO_HR_01}>HORN</span> ,
 
    modbus: <span style={combineCss.CSSDO_HR_01}>25	 </span> ,
 
-  value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01}</span> , 
+  value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
    high: <InputText style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5938,14 +5954,14 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 
 
   {
-            mainCategory: 'PLC -  Parameter & Configuration ',
+            mainCategory: 'PLC -  Parameters & Configurations ',
     
     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSDO_BC_01}>DO BC 01</span> ,
 
   modbus: <span style={combineCss.CSSDO_BC_01}>26	 </span> ,
 
- value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01}</span> , 
+ value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
   high: <InputText style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5958,13 +5974,13 @@ checked={maintainEVC_02_Vm_of_Last_Day}
  },
 
  {
-    mainCategory: 'PLC -  Parameter & Configuration ',
+    mainCategory: 'PLC -  Parameters & Configurations ',
     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
 
  modbus: <span style={combineCss.CSSDO_SV_01}>27	 </span> ,
 
-value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> , 
+value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> , 
  high: <InputText style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_01} onChange={handleInputChangeDO_SV_01} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6036,6 +6052,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
     const date4 = !isNaN(timeEVC_04Number) ? new Date(timeEVC_04Number) : null;
 
 
+
     const handleDateChange = (e: any) => {
         const selectedDate = e.value;
         setTimeEVC_02(selectedDate.getTime());
@@ -6066,13 +6083,13 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         setSelectedDate(dateObject);
       }, []);
 
-      const ConfigurationName ={
+      const ConfigurationsName ={
 
         IOT: "IOT getway phone number",
-        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
-        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
-        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
-        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+        EVC_01_Battery_Expiration_Date: "EVC-1501 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC-1501 Battery Installation Date",
+        EVC_02_Battery_Expiration_Date: "EVC-1502 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC-1502 Battery Installation Date"
 
     }
     const combineCssTime = {
@@ -6081,7 +6098,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
             fontWeight: 400,
         },
     };
-    const Configuration = [
+    const Configurations = [
         {
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1501) (BarG)</span>,
 
@@ -6185,7 +6202,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_01_Battery_Installation_Date}
+                    {ConfigurationsName.EVC_01_Battery_Installation_Date}
                 </span>
             ),
           
@@ -6213,7 +6230,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_01_Battery_Expiration_Date}
+                    {ConfigurationsName.EVC_01_Battery_Expiration_Date}
                 </span>
             ),
           
@@ -6245,7 +6262,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_02_Battery_Installation_Date}
+                    {ConfigurationsName.EVC_02_Battery_Installation_Date}
                 </span>
             ),
           
@@ -6273,7 +6290,7 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_02_Battery_Expiration_Date}
+                    {ConfigurationsName.EVC_02_Battery_Expiration_Date}
                 </span>
             ),
           
@@ -6321,8 +6338,8 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
     <div style={{width:'100%' ,borderRadius:5 }}>
 
 
-    <DataTable  value={combinedData} size={'small'} selectionMode="single" rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}    >
+    <DataTable size={'small'}    value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" 
+                    sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
 
       <Column field="timeUpdate" header="Time Update" />
 
@@ -6339,8 +6356,8 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> ,
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
+                <h4>Station - Configurations </h4>
+                <DataTable value={Configurations} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

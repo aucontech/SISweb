@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { id_YOSHINO,  } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_KOA,  } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -20,7 +20,7 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-export default function ScoreCard_Yoshino() {
+export default function ScoreCard_KOA() {
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
@@ -50,7 +50,7 @@ export default function ScoreCard_Yoshino() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_YOSHINO,
+                    entityId: id_KOA,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -86,7 +86,7 @@ export default function ScoreCard_Yoshino() {
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithinum_Battery_Status: setFC_Lithium_Battery_Status,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -123,6 +123,9 @@ export default function ScoreCard_Yoshino() {
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
 
+                        DI_ZSO_2: setDI_ZSO_2,
+                        DI_ZSC_2: setDI_ZSC_2,
+
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
                         DI_UPS_ALARM: setDI_UPS_ALARM,
@@ -137,7 +140,7 @@ export default function ScoreCard_Yoshino() {
                         DO_HR_01: setDO_HR_01,
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
-
+                        DO_SV_02: setDO_SV_02,
 
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
@@ -186,7 +189,7 @@ export default function ScoreCard_Yoshino() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_YOSHINO}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_KOA}/values/attributes/SERVER_SCOPE`
             );
             const FC_Lithium_Battery_Status_High = res.data.find((item: any) => item.key === "FC_Lithium_Battery_Status_High");
             setFC_Lithium_Battery_Status_High(FC_Lithium_Battery_Status_High?.value || null);
@@ -433,6 +436,26 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
 
 
 
+            const DI_ZSO_2_High = res.data.find((item: any) => item.key === "DI_ZSO_2_High");
+            setDI_ZSO_2_High(DI_ZSO_2_High?.value || null);
+            const DI_ZSO_2_Low = res.data.find((item: any) => item.key === "DI_ZSO_2_Low");
+            setDI_ZSO_2_Low(DI_ZSO_2_Low?.value || null);
+            const DI_ZSO_2_Maintain = res.data.find(
+                (item: any) => item.key === "DI_ZSO_2_Maintain"
+            );
+
+
+            const DI_ZSC_2_High = res.data.find((item: any) => item.key === "DI_ZSC_2_High");
+            setDI_ZSC_2_High(DI_ZSC_2_High?.value || null);
+            const DI_ZSC_2_Low = res.data.find((item: any) => item.key === "DI_ZSC_2_Low");
+            setDI_ZSC_2_Low(DI_ZSC_2_Low?.value || null);
+            const DI_ZSC_2_Maintain = res.data.find(
+                (item: any) => item.key === "DI_ZSC_2_Maintain"
+            );
+
+
+
+
             const DI_MAP_1_High = res.data.find((item: any) => item.key === "DI_MAP_1_High");
             setDI_MAP_1_High(DI_MAP_1_High?.value || null);
             const DI_MAP_1_Low = res.data.find((item: any) => item.key === "DI_MAP_1_Low");
@@ -528,6 +551,14 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             setDO_SV_01_Low(DO_SV_01_Low?.value || null);
             const DO_SV_01_Maintain = res.data.find(
                 (item: any) => item.key === "DO_SV_01_Maintain"
+            );
+
+            const DO_SV_02_High = res.data.find((item: any) => item.key === "DO_SV_02_High");
+            setDO_SV_02_High(DO_SV_02_High?.value || null);
+            const DO_SV_02_Low = res.data.find((item: any) => item.key === "DO_SV_02_Low");
+            setDO_SV_02_Low(DO_SV_02_Low?.value || null);
+            const DO_SV_02_Maintain = res.data.find(
+                (item: any) => item.key === "DO_SV_02_Maintain"
             );
             const DI_SD_1_High = res.data.find((item: any) => item.key === "DI_SD_1_High");
             setDI_SD_1_High(DI_SD_1_High?.value || null);
@@ -656,6 +687,8 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
 
 
             setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+            setMaintainDO_SV_02(DO_SV_02_Maintain?.value || false);
+
             } catch (error) {
             console.error("Error fetching data:", error);
             }
@@ -1235,6 +1268,66 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
        // =================================================================================================================== 
 
 
+              // =================================================================================================================== 
+
+              const [DI_ZSO_2, setDI_ZSO_2] = useState<string | null>(null);
+              const [DI_ZSO_2_High, setDI_ZSO_2_High] = useState<number | null>(null);
+              const [DI_ZSO_2_Low, setDI_ZSO_2_Low] = useState<number | null>(null);
+              const [exceedThresholdDI_ZSO_2, setExceedThresholdDI_ZSO_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [maintainDI_ZSO_2, setMaintainDI_ZSO_2] = useState<boolean>(false);
+              
+              
+                  useEffect(() => {
+                      if (typeof DI_ZSO_2_High === 'string' && typeof DI_ZSO_2_Low === 'string' && DI_ZSO_2 !== null && maintainDI_ZSO_2 === false
+                      ) {
+                          const highValue = parseFloat(DI_ZSO_2_High);
+                          const lowValue = parseFloat(DI_ZSO_2_Low);
+                          const DI_ZSO_2Value = parseFloat(DI_ZSO_2);
+                  
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_2Value)) {
+                              if (highValue <= DI_ZSO_2Value || DI_ZSO_2Value <= lowValue) {
+                                      setExceedThresholdDI_ZSO_2(true);
+                              } else {
+                                 setExceedThresholdDI_ZSO_2(false);
+                              }
+                          } 
+                      } 
+                  }, [DI_ZSO_2_High, DI_ZSO_2, DI_ZSO_2_Low,maintainDI_ZSO_2]);
+              
+       
+         
+         
+              // =================================================================================================================== 
+       
+              const [DI_ZSC_2, setDI_ZSC_2] = useState<string | null>(null);
+              const [DI_ZSC_2_High, setDI_ZSC_2_High] = useState<number | null>(null);
+              const [DI_ZSC_2_Low, setDI_ZSC_2_Low] = useState<number | null>(null);
+              const [exceedThresholdDI_ZSC_2, setExceedThresholdDI_ZSC_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [maintainDI_ZSC_2, setMaintainDI_ZSC_2] = useState<boolean>(false);
+              
+              
+                  useEffect(() => {
+                      if (typeof DI_ZSC_2_High === 'string' && typeof DI_ZSC_2_Low === 'string' && DI_ZSC_2 !== null && maintainDI_ZSC_2 === false
+                      ) {
+                          const highValue = parseFloat(DI_ZSC_2_High);
+                          const lowValue = parseFloat(DI_ZSC_2_Low);
+                          const DI_ZSC_2Value = parseFloat(DI_ZSC_2);
+                  
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_2Value)) {
+                              if (highValue <= DI_ZSC_2Value || DI_ZSC_2Value <= lowValue) {
+                                      setExceedThresholdDI_ZSC_2(true);
+                              } else {
+                                 setExceedThresholdDI_ZSC_2(false);
+                              }
+                          } 
+                      } 
+                  }, [DI_ZSC_2_High, DI_ZSC_2, DI_ZSC_2_Low,maintainDI_ZSC_2]);
+              
+        
+         
+              // =================================================================================================================== 
+
+
 
 
  // =================================================================================================================== 
@@ -1622,6 +1715,40 @@ useEffect(() => {
          
          // =================================================================================================================== 
 
+                   // =================================================================================================================== 
+
+
+                   const [DO_SV_02, setDO_SV_02] = useState<string | null>(null);
+ 
+                   const [DO_SV_02_High, setDO_SV_02_High] = useState<number | null>(null);
+                   const [DO_SV_02_Low, setDO_SV_02_Low] = useState<number | null>(null);
+                   const [exceedThresholdDO_SV_02, setExceedThresholdDO_SV_02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                   
+                   const [maintainDO_SV_02, setMaintainDO_SV_02] = useState<boolean>(false);
+                   
+                   
+                       useEffect(() => {
+                           if (typeof DO_SV_02_High === 'string' && typeof DO_SV_02_Low === 'string' && DO_SV_02 !== null && maintainDO_SV_02 === false
+                           ) {
+                               const highValue = parseFloat(DO_SV_02_High);
+                               const lowValue = parseFloat(DO_SV_02_Low);
+                               const DO_SV_02Value = parseFloat(DO_SV_02);
+                       
+                               if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV_02Value)) {
+                                   if (highValue <= DO_SV_02Value || DO_SV_02Value <= lowValue) {
+                                           setExceedThresholdDO_SV_02(true);
+                                   } else {
+                                      setExceedThresholdDO_SV_02(false);
+                                   }
+                               } 
+                           } 
+                       }, [DO_SV_02_High, DO_SV_02 , DO_SV_02_Low,maintainDO_SV_02]);
+                   
+                
+             
+                  
+                  // =================================================================================================================== 
+
          const [DI_SD_1, setDI_SD_1] = useState<string | null>(null);
 
         const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
@@ -1978,8 +2105,12 @@ useEffect(() => {
         PT01: "Output Pressure (BarG)",
         GD1: "Gas Detector GD-1401 (%LEL)",
         GD2: "Gas Detector GD-1402 (%LEL)",
-        ZSC: "SDV-ZSC (0: ON - 1: OFF)",
-        ZSO: "SDV-ZSO (0: OFF - 1: ON)",
+        ZSC1: "SDV-ZSC-1 (0: ON - 1: OFF)",
+        ZSO1: "SDV-ZSO-1 (0: OFF - 1: ON)",
+
+
+        ZSC2: "SDV-ZSC-2 (0: ON - 1: OFF)",
+        ZSO2: "SDV-ZSO-2 (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
@@ -1996,11 +2127,15 @@ useEffect(() => {
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
         DO_SV_01: "SDV SOLENOID (0: Off - 1: On)",
+        DO_SV_02: "SDV SOLENOID (0: Off - 1: On)",
 
     };
 
     const DataRESET = DI_RESET === "0" ? "Off" : DI_RESET === "1" ? "On" : null;
     const DataDO_SV_01 = DO_SV_01 === "0" ? "Off" : DO_SV_01 === "1" ? "On" : null;
+
+    const DataDO_SV_02 = DO_SV_02 === "0" ? "Off" : DO_SV_02 === "1" ? "On" : null;
+
     const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
@@ -2029,6 +2164,10 @@ useEffect(() => {
             : null;
     const DataZSO_1 = DI_ZSO_1 === "0" ? " Off" : DI_ZSO_1 === "1" ? "On" : null;
     const DataZSC_1 = DI_ZSC_1 === "0" ? " On" : DI_ZSC_1 === "1" ? "Off" : null;
+
+
+    const DataZSO_2 = DI_ZSO_2 === "0" ? " Off" : DI_ZSO_2 === "1" ? "On" : null;
+    const DataZSC_2 = DI_ZSC_2 === "0" ? " On" : DI_ZSC_2 === "1" ? "Off" : null;
 
     const DataDI_SELECT_SW =
         DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
@@ -2572,6 +2711,40 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+
+
+                CSSDI_ZSO_2 : {
+                    color:exceedThresholdDI_ZSO_2 && !maintainDI_ZSO_2
+                    ? "#ff5656"
+                    : maintainDI_ZSO_2
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdDI_ZSO_2 || maintainDI_ZSO_2)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdDI_ZSO_2 || maintainDI_ZSO_2)
+                    ? 18
+                    : ""
+                },
+        
+        
+             
+        
+        
+                CSSDI_ZSC_2 : {
+                    color:exceedThresholdDI_ZSC_2 && !maintainDI_ZSC_2
+                    ? "#ff5656"
+                    : maintainDI_ZSC_2
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdDI_ZSC_2 || maintainDI_ZSC_2)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdDI_ZSC_2 || maintainDI_ZSC_2)
+                    ? 18
+                    : ""
+                },
            
         
                 CSSDI_MAP_1 : {
@@ -2732,6 +2905,21 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+
+                CSSDO_SV_02 : {
+                    color:exceedThresholdDO_SV_02 && !maintainDO_SV_02
+                    ? "#ff5656"
+                    : maintainDO_SV_02
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdDO_SV_02 || maintainDO_SV_02)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdDO_SV_02 || maintainDO_SV_02)
+                    ? 18
+                    : ""
+                },
                 CSSDO_HR_01 : {
                     color:exceedThresholdDO_HR_01 && !maintainDO_HR_01
                     ? "#ff5656"
@@ -2869,16 +3057,31 @@ useEffect(() => {
             name: <span>{tagNamePLC.DO_SV_01}</span>,
             PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
         },
+        {
+            name: <span>{tagNamePLC.DO_SV_02}</span>,
+            PLC: <span style={combineCss.CSSDO_SV_02}> {DO_SV_02} {DataDO_SV_02}</span>,
+        },
       
 
         {
-            name: <span>{tagNamePLC.ZSO}</span>,
+            name: <span>{tagNamePLC.ZSO1}</span>,
             PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
         },
       
         {
-            name: <span>{tagNamePLC.ZSC}</span>,
+            name: <span>{tagNamePLC.ZSC1}</span>,
             PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
+        },
+
+
+        {
+            name: <span>{tagNamePLC.ZSO2}</span>,
+            PLC: <span style={combineCss.CSSDI_ZSO_2}>{DI_ZSO_1} {DataZSO_2}</span>,
+        },
+      
+        {
+            name: <span>{tagNamePLC.ZSC2}</span>,
+            PLC: <span style={combineCss.CSSDI_ZSC_2}>{DI_ZSC_2} {DataZSC_2}</span>,
         },
       
         {
@@ -2965,7 +3168,7 @@ useEffect(() => {
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            YOSHINO
+                            KOA
                         </div>
 
                        
@@ -2996,36 +3199,33 @@ useEffect(() => {
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
                     <Column field="name" header="FC Parameter"></Column>
 
-     
                     <Column
                             field="FC1901"
                             header={FC_STT01 === "0" ? (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1401</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1201</p>
                                 </div>
                             ) : (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1201</p>
     
                                 </div>
                             )}
                         ></Column>
-                    <Column
+                        <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
-
                             field="FC1902"
                             header={FC_STT01 === "0" ? (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1402</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1202</p>
                                 </div>
                             ) : (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1202</p>
     
                                 </div>
                             )}
                         ></Column>
-
                 </DataTable>
                     <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>

@@ -5127,92 +5127,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC: 'FC -  Parameter & Configuration',
-    FC01: 'FC01 -  Parameter & Configuration',
-    FC02: 'FC02 -  Parameter & Configuration',
-    PLC: 'PLC -  Parameter & Configuration'
+    FC01: 'FC-1001 -  Parameters & Configurations',
+    FC02: 'FC-1002 -  Parameters & Configurations',
+    PLC: 'PLC -  Parameters & Configurations',
+    FC: 'FC -  Parameters & Configurations',
+
 };
 
 
 
-        const dataFC = [
-
-            {
-                mainCategory: mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
-             modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status}</span> , 
-             high: <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_Lithium_Battery_Status}
-             checked={maintainFC_Lithium_Battery_Status}
-         ></Checkbox>
-    
-            },
-    
-         
-            {
-                mainCategory:mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_Battery_Voltage} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_Battery_Voltage}>Battery Voltage</span> ,
-    
-             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
-    
-            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
-             high: <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_Battery_Voltage}
-             checked={maintainFC_Battery_Voltage}
-         ></Checkbox>
-    
-            },
-
-            {
-                mainCategory:mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_System_Voltage} >{EVC_STT01Value}</span>,
-            name: <span style={combineCss.CSSFC_System_Voltage}>System Voltage</span> ,
-   
-            modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
-   
-           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
-            high: <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
-            style={{ marginRight: 20, }}
-            onChange={ChangeMaintainFC_System_Voltage}
-            checked={maintainFC_System_Voltage}
-        ></Checkbox>
-   
-           },
-
-           {
-            mainCategory:mainCategoryFC.FC ,
-            timeUpdate: <span style={combineCss.CSSFC_Charger_Voltage} >{EVC_STT01Value}</span>,
-           name: <span style={combineCss.CSSFC_Charger_Voltage}>Charger Voltage</span> ,
   
-           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
-  
-          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
-           high: <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-           Maintain:   <Checkbox
-           style={{ marginRight: 20, }}
-           onChange={ChangeMaintainFC_Charger_Voltage}
-           checked={maintainFC_Charger_Voltage}
-       ></Checkbox>
-  
-          },
-
-        ]
 
         const dataFC01 =  [
 
@@ -5668,424 +5592,90 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             },
 
 
-//             {
-//                  mainCategory: mainCategoryFC.PLC ,
-//                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
-//              name: <span style={combineCss.CSSGD2}>Gas Detector GD-1602</span> ,
-    
-//              modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
-    
-//             value: <span style={combineCss.CSSGD2} > {GD2}</span> , 
-//              high: <InputText style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
-//              low:  <InputText style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
-//              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//              Maintain:   <Checkbox
-//              style={{ marginRight: 20, }}
-//              onChange={ChangeMaintainGD2}
-//              checked={maintainGD2}
-//          ></Checkbox>
-    
-//             },
-
-//             {
-//                  mainCategory: mainCategoryFC.PLC ,
-//                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
-//             name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
-   
-//             modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
-   
-//            value: <span style={combineCss.CSSPT1} > {PT1}</span> , 
-//             high: <InputText style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
-//             low:  <InputText style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
-//             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//             Maintain:   <Checkbox
-//             style={{ marginRight: 20, }}
-//             onChange={ChangeMaintainPT1}
-//             checked={maintainPT1}
-//         ></Checkbox>
-   
-//            },
-
-
-//            {
-//              mainCategory: mainCategoryFC.PLC ,
-//             timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
-//            name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO 1</span> ,
-  
-//            modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
-  
-//           value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1}</span> , 
-//            high: <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
-//            low:  <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
-//            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//            Maintain:   <Checkbox
-//            style={{ marginRight: 20, }}
-//            onChange={ChangeMaintainDI_ZSO_1}
-//            checked={maintainDI_ZSO_1}
-//        ></Checkbox>
-  
-//           },
-
-
-
-
-
-//          {
-//              mainCategory: mainCategoryFC.PLC ,
-//             timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
-//          name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC 1</span> ,
-
-//          modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
-
-//         value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1}</span> , 
-//          high: <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
-//          low:  <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
-//          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//          Maintain:   <Checkbox
-//          style={{ marginRight: 20, }}
-//          onChange={ChangeMaintainDI_ZSC_1}
-//          checked={maintainDI_ZSC_1}
-//      ></Checkbox>
-
-//         },
-
-
-//         {
-//              mainCategory: mainCategoryFC.PLC ,
-//             timeUpdate: <span style={combineCss.CSSDI_ZSO_2} >{PLC_STTValue}</span>,
-//         name: <span style={combineCss.CSSDI_ZSO_2}>SDV_ZSO 2</span> ,
-
-//         modbus: <span style={combineCss.CSSDI_ZSO_2}>	40011 </span> ,
-
-//        value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2}</span> , 
-//         high: <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_2} onChange={handleInputChangeDI_ZSO_2} inputMode="decimal" />, 
-//         low:  <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_2} onChange={handleInputChange2DI_ZSO_2} inputMode="decimal" />,
-//         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//         Maintain:   <Checkbox
-//         style={{ marginRight: 20, }}
-//         onChange={ChangeMaintainDI_ZSO_2}
-//         checked={maintainDI_ZSO_2}
-//     ></Checkbox>
-
-//        },
-
-
-
-//        {
-//          mainCategory: mainCategoryFC.PLC ,
-//         timeUpdate: <span style={combineCss.CSSDI_ZSC_2} >{PLC_STTValue}</span>,
-//        name: <span style={combineCss.CSSDI_ZSC_2}>SDV-ZSC 2</span> ,
-
-//        modbus: <span style={combineCss.CSSDI_ZSC_2}>	40012 </span> ,
-
-//       value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2}</span> , 
-//        high: <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_2} onChange={handleInputChangeDI_ZSC_2} inputMode="decimal" />, 
-//        low:  <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_2} onChange={handleInputChange2DI_ZSC_2} inputMode="decimal" />,
-//        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//        Maintain:   <Checkbox
-//        style={{ marginRight: 20, }}
-//        onChange={ChangeMaintainDI_ZSC_2}
-//        checked={maintainDI_ZSC_2}
-//    ></Checkbox>
-
-//       },
-
-
-//       {
-//          mainCategory: mainCategoryFC.PLC ,
-//         timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
-//       name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
-
-//       modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
-
-//      value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1}</span> , 
-//       high: <InputText style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
-//       low:  <InputText style={combineCss.CSSDI_MAP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
-//       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//       Maintain:   <Checkbox
-//       style={{ marginRight: 20, }}
-//       onChange={ChangeMaintainDI_MAP_1}
-//       checked={maintainDI_MAP_1}
-//   ></Checkbox>
-
-//      },
-//      {
-//          mainCategory: mainCategoryFC.PLC ,
-//         timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
-//      name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
-    
-//      modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
-    
-//     value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY}</span> , 
-//      high: <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
-//      low:  <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
-//      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//      Maintain:   <Checkbox
-//      style={{ marginRight: 20, }}
-//      onChange={ChangeMaintainDI_UPS_BATTERY}
-//      checked={maintainDI_UPS_BATTERY}
-//     ></Checkbox>
-    
-//     },
-
-
-//      {
-//          mainCategory: mainCategoryFC.PLC ,
-//         timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
-//      name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
-
-//      modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
-
-//     value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING}</span> , 
-//      high: <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
-//      low:  <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
-//      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//      Maintain:   <Checkbox
-//      style={{ marginRight: 20, }}
-//      onChange={ChangeMaintainDI_UPS_CHARGING}
-//      checked={maintainDI_UPS_CHARGING}
-//  ></Checkbox>
-
-//     },
-
-
-//     {
-//          mainCategory: mainCategoryFC.PLC ,
-//         timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
-//     name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
-
-//     modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
-
-//    value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM}</span> , 
-//     high: <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
-//     low:  <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
-//     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//     Maintain:   <Checkbox
-//     style={{ marginRight: 20, }}
-//     onChange={ChangeMaintainDI_UPS_ALARM}
-//     checked={maintainDI_UPS_ALARM}
-// ></Checkbox>
-
-//    },
-
-
-//    {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
-//    name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
-
-//    modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
-
-//   value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
-//    high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
-//    low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
-//    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//    Maintain:   <Checkbox
-//    style={{ marginRight: 20, }}
-//    onChange={ChangeMaintainDI_SD_1}
-//    checked={maintainDI_SD_1}
-// ></Checkbox>
-
-//   },
-
-
-//   {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
-//   name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
-
-//   modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
-
-//  value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW}</span> , 
-//   high: <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
-//   low:  <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
-//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//   Maintain:   <Checkbox
-//   style={{ marginRight: 20, }}
-//   onChange={ChangeMaintainDI_SELECT_SW}
-//   checked={maintainDI_SELECT_SW}
-// ></Checkbox>
-
-//  },
-
-//  {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
-//    name: <span style={combineCss.CSSDI_RESET}>Reset Button</span> ,
-
-//    modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
-
-//   value: <span style={combineCss.CSSDI_RESET} > {DI_RESET}</span> , 
-//    high: <InputText style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
-//    low:  <InputText style={combineCss.CSSDI_RESET}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
-//    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//    Maintain:   <Checkbox
-//    style={{ marginRight: 20, }}
-//    onChange={ChangeMaintainDI_RESET}
-//    checked={maintainDI_RESET}
-// ></Checkbox>
-
-//   },
-
-
-//   {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
-//   name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
-
-//   modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
-
-//  value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO}</span> , 
-//   high: <InputText style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
-//   low:  <InputText style={combineCss.CSSEmergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
-//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//   Maintain:   <Checkbox
-//   style={{ marginRight: 20, }}
-//   onChange={ChangeMaintainEmergency_NO}
-//   checked={maintainEmergency_NO}
-// ></Checkbox>
-
-//  },
-
-
-
-
-
-
-// {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
-//   name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
-
-//   modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
-
-//  value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC}</span> , 
-//   high: <InputText style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
-//   low:  <InputText style={combineCss.CSSEmergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
-//   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//   Maintain:   <Checkbox
-//   style={{ marginRight: 20, }}
-//   onChange={ChangeMaintainEmergency_NC}
-//   checked={maintainEmergency_NC}
-// ></Checkbox>
-
-//  },
-
-
-//  {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
-//  name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
-
-//  modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
-
-// value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode}</span> , 
-//  high: <InputText style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
-//  low:  <InputText style={combineCss.CSSUPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
-//  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-//  Maintain:   <Checkbox
-//  style={{ marginRight: 20, }}
-//  onChange={ChangeMaintainUPS_Mode}
-//  checked={maintainUPS_Mode}
-// ></Checkbox>
-
-// },
-
-// {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-// name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
-
-// modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
-
-// value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01}</span> , 
-// high: <InputText style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
-// low:  <InputText style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
-// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-// Maintain:   <Checkbox
-// style={{ marginRight: 20, }}
-// onChange={ChangeMaintainDO_BC_01}
-// checked={maintainDO_BC_01}
-// ></Checkbox>
-
-// },
-
-
-
-
-// {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-// name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
-
-// modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
-
-// value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01}</span> , 
-// high: <InputText style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
-// low:  <InputText style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
-// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-// Maintain:   <Checkbox
-// style={{ marginRight: 20, }}
-// onChange={ChangeMaintainDO_HR_01}
-// checked={maintainDO_HR_01}
-// ></Checkbox>
-
-// },
-
-
-
-
-
-// {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
-// name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
-
-// modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
-
-// value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> , 
-// high: <InputText style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
-// low:  <InputText style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
-// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-// Maintain:   <Checkbox
-// style={{ marginRight: 20, }}
-// onChange={ChangeMaintainDO_SV_01}
-// checked={maintainDO_SV_01}
-// ></Checkbox>
-
-// },
-
-// {
-//      mainCategory: mainCategoryFC.PLC ,
-//     timeUpdate: <span style={combineCss.CSSDO_SV_02} >{PLC_STTValue}</span>,
-// name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID</span> ,
-
-// modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
-
-// value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02}</span> , 
-// high: <InputText style={combineCss.CSSDO_SV_02}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_02} onChange={handleInputChangeDO_SV_02} inputMode="decimal" />, 
-// low:  <InputText style={combineCss.CSSDO_SV_02}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_02} onChange={handleInputChange2DO_SV_02} inputMode="decimal" />,
-// update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-// Maintain:   <Checkbox
-// style={{ marginRight: 20, }}
-// onChange={ChangeMaintainDO_SV_02}
-// checked={maintainDO_SV_02}
-// ></Checkbox>
-
-// },
 
           ]
 
-          const combinedData = [...dataFC, ...dataFC01, ...dataFC02 , ...PLC];
 
-          const mainCategoryTemplate = (data: any) => {
-              return (
-                  <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
-                      <span >{data.mainCategory}</span>
-                  </div>
-              );
-          };
-          
+          const dataFC = [
+
+            {
+                mainCategory: mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
+             name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
+             modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
+            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status}</span> , 
+             high: <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainFC_Lithium_Battery_Status}
+             checked={maintainFC_Lithium_Battery_Status}
+         ></Checkbox>
+    
+            },
+    
+         
+            {
+                mainCategory:mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_Battery_Voltage} >{EVC_STT01Value}</span>,
+             name: <span style={combineCss.CSSFC_Battery_Voltage}>Battery Voltage</span> ,
+    
+             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
+    
+            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
+             high: <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainFC_Battery_Voltage}
+             checked={maintainFC_Battery_Voltage}
+         ></Checkbox>
+    
+            },
+
+            {
+                mainCategory:mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_System_Voltage} >{EVC_STT01Value}</span>,
+            name: <span style={combineCss.CSSFC_System_Voltage}>System Voltage</span> ,
+   
+            modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
+   
+           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
+            high: <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
+            low:  <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
+            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainFC_System_Voltage}
+            checked={maintainFC_System_Voltage}
+        ></Checkbox>
+   
+           },
+
+           {
+            mainCategory:mainCategoryFC.FC ,
+            timeUpdate: <span style={combineCss.CSSFC_Charger_Voltage} >{EVC_STT01Value}</span>,
+           name: <span style={combineCss.CSSFC_Charger_Voltage}>Charger Voltage</span> ,
+  
+           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
+  
+          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
+           high: <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainFC_Charger_Voltage}
+           checked={maintainFC_Charger_Voltage}
+       ></Checkbox>
+  
+          },
+
+        ]
+
+       
     
       //=========================================================================
 
@@ -6119,7 +5709,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         const newValue : any = event.target.value;
         setInputPSV_01(newValue);
     };
-    const configuration = [
+    const configurations = [
 
         {
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1001) (BarG)</span>,
@@ -6226,13 +5816,20 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     ];
 
        //=========================================================================
+       const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC, ...PLC];
 
+       const mainCategoryTemplate = (data: any) => {
+           return (
+               <div style={{fontWeight:600, fontSize:23,background:'#f8fafc'}}>
+                   <span >{data.mainCategory}</span>
+               </div>
+           );
+       };
+       
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',   borderRadius:10, marginTop:10 }}>
-        <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',   borderRadius:10, marginTop:10,  }}>
+ 
         <Toast ref={toast} />
 
         <ConfirmDialog />
@@ -6243,8 +5840,8 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
         
 
-    <DataTable size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}    >
+    <DataTable size={'small'}    value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" 
+                    sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}    >
       <Column field="timeUpdate" header="Time Update" />
 
   <Column field="modbus" header="Modbus" />
@@ -6259,13 +5856,13 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                <h4>Station - Configurations </h4>
+                <DataTable  value={configurations} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />
 
-                    <Column field="Update" header="Update" />
+                    <Column   field="Update" header="Update" />
                 </DataTable>
             </div>
 </div>

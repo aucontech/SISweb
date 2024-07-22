@@ -371,11 +371,11 @@ export default function SetAttribute() {
         PCV1: "Pressure Control Valve (PCV-1901)",
         PCV2: "Pressure Control Valve (PCV-1902)",
         IOT: "IOT getway phone number",
-        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
-        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+        EVC_01_Battery_Expiration_Date: "EVC-1901 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC-1901 Battery Installation Date",
 
-        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
-        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+        EVC_02_Battery_Expiration_Date: "EVC-1902 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC-1902 Battery Installation Date"
 
     }
 

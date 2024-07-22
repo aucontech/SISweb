@@ -139,19 +139,14 @@ export default function GraphicSogec() {
               { label: 'NITORI', command: () => NG_Click(<GraphicNITORI/>, 'NITORI') },
               { label: 'YOSHINO', command: () => NG_Click(<GraphicYOSHINO/>, 'YOSHINO') },
               { label: 'IGUACU', command: () => NG_Click(<GraphicIGUACU/>, 'IGUACU') },
-
               { label: 'ARAKAWA', command: () => NG_Click(<GraphicARAKAWA />, 'ARAKAWA') },
               { label: 'SPMCV', command: () => NG_Click(<GraphicSPMCV />, 'SPMCV') },
-
-
               { label: 'VREC', command: () => NG_Click(<GraphicVREC/>, 'VREC') },
-
               { label: 'OTSUKA', command: () => NG_Click(<DemoFlowOTS />, 'OTSUKA') },
 
             ]
           }
         ],
-       
       ]
     },
     {
@@ -165,8 +160,6 @@ export default function GraphicSogec() {
          
               { label: ' SNG BINH DUONG', command: () => SNG_Click(<Graphic_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
               { label: ' SNG HUNG YEN', command: () => SNG_Click(<Graphic_SNG_HUNGYEN/>, ' SNG HUNG YEN') },
-
-            
             ]
           }
         ],

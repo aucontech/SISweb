@@ -2417,7 +2417,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 
         UPS_MODE:
-            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
+            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4: Normal)",
         SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
         RESET: "RESET (0: OFF - 1: ON)",
         EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
@@ -3290,7 +3290,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
     return (
         <div >
-            <div style={{border:'1px solid gray', borderRadius:"10px 10px 0 0"}} >
+            <div  >
                 <div
                     style={{
                         background: "#64758B",

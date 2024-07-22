@@ -59,6 +59,8 @@ const Login: Page = () => {
                     currentUser.customerId.id === "630d27a0-44c4-11ef-ae4f-ffd5655df896"
                 ) {
                     router.push("/Graphic/MEIKO");
+
+                    
                 } else if (currentUser.authority === "TENANT_ADMIN") {
                     router.push("/Graphic");
                 }

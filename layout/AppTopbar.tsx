@@ -26,7 +26,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     };
 
     return (
-        <div className="layout-topbar">
+        <div  className="layout-topbar">
             <div className="topbar-start">
                 <button
                     ref={menubuttonRef}

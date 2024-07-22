@@ -3178,9 +3178,9 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
   };
          
   const mainCategoryFC = {
-    EVC01: 'FC-01 -  Parameter & Configuration',
-    EVC02: 'EVC-02 -  Parameter & Configuration',
-    PLC: 'PLC -  Parameter & Configuration'
+    EVC01: 'FC-1101 -  Parameters & Configurations',
+    EVC02: 'EVC-1102 -  Parameters & Configurations',
+    PLC: 'PLC -  Parameters & Configurations'
 };
 
 
@@ -3717,7 +3717,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 },
           ]
-          const combinedData = [...dataEVC01, ...dataEVC02, ];
+          const combinedData = [...dataEVC01,...dataEVC02, ];
 
           const mainCategoryTemplate = (data: any) => {
               return (
@@ -3798,16 +3798,16 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         setSelectedDate(dateObject);
       }, []);
 
-      const ConfigurationName ={
+      const ConfigurationsName ={
         PSV: "Pressure Safety Valve ( PSV-1901)" ,
         PCV1: "Pressure Control Valve (PCV-1901)",
         PCV2: "Pressure Control Valve (PCV-1902)",
         IOT: "IOT getway phone number",
-        EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
-        EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
+        EVC_01_Battery_Expiration_Date: "EVC-1101 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC-1101 Battery Installation Date",
 
-        EVC_02_Battery_Expiration_Date: "EVC 02 Battery Expiration Date",
-        EVC_02_Battery_Installation_Date: "EVC 02 Battery Installation Date"
+        EVC_02_Battery_Expiration_Date: "EVC-1102 Battery Expiration Date",
+        EVC_02_Battery_Installation_Date: "EVC-1102 Battery Installation Date"
 
     }
 
@@ -3817,9 +3817,9 @@ checked={maintainEVC_02_Vb_of_Last_Day}
             fontWeight: 400,
         },
     };
-    const Configuration = [
+    const Configurations = [
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1101) (BarG)</span>,
+            Name: <span style={combineCssAttribute.PCV}>PCV-1101 {namePCV_PSV.control} (BarG)</span>,
 
             Value: (
                 <InputText
@@ -3844,7 +3844,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1102) (BarG)</span>,
+            Name: <span style={combineCssAttribute.PCV}>PCV-1102 {namePCV_PSV.control} (BarG)</span>,
 
             Value: (
                 <InputText
@@ -3869,7 +3869,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-1101) (BarG)</span>,
+            Name: <span style={combineCssAttribute.PCV}>PSV-1101 {namePCV_PSV.safety} (BarG)</span>,
 
             Value: (
                 <InputText
@@ -3892,7 +3892,8 @@ checked={maintainEVC_02_Vb_of_Last_Day}
                 />
             ),
         },
-        { Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+        {
+             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
 
             Value: (
                 <InputText
@@ -3917,7 +3918,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_01_Battery_Installation_Date}
+                    {ConfigurationsName.EVC_01_Battery_Installation_Date}
                 </span>
             ),
           
@@ -3945,7 +3946,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_01_Battery_Expiration_Date}
+                    {ConfigurationsName.EVC_01_Battery_Expiration_Date}
                 </span>
             ),
           
@@ -3977,7 +3978,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_02_Battery_Installation_Date}
+                    {ConfigurationsName.EVC_02_Battery_Installation_Date}
                 </span>
             ),
           
@@ -4005,7 +4006,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
         {
             Name: (
                 <span style={combineCssTime.PCV}>
-                    {ConfigurationName.EVC_02_Battery_Expiration_Date}
+                    {ConfigurationsName.EVC_02_Battery_Expiration_Date}
                 </span>
             ),
           
@@ -4052,8 +4053,13 @@ checked={maintainEVC_02_Vb_of_Last_Day}
     <div style={{width:'100%' ,  borderRadius:5 }}>
 
 
-    <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}     >
+    <DataTable      size={"small"}
+                value={combinedData}
+                rowGroupMode="subheader"
+                groupRowsBy="mainCategory"
+                sortMode="single"
+                sortOrder={1}
+                rowGroupHeaderTemplate={mainCategoryTemplate}   >
   {/* <Column field="modbus" header="Modbus" /> */}
   <Column field="timeUpdate" header="Time Update" />
 
@@ -4069,8 +4075,8 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
+                <h4>Station - Configurations </h4>
+                <DataTable value={Configurations} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

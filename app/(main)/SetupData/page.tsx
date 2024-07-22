@@ -19,6 +19,7 @@ import SetUpdata_ARAKAWA from './ARAKAWA/SetUpdata_ARAKAWA';
 import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 import SetUpdata_VREC from './VREC/SetUpdata_VREC';
 import SetUpdata_LGDS from './LGDS/SetUpdata_LGDS';
+import SetUpdata_LGDSTest from './LGDS/SetUpdata_LGDSTest';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<SetUpdata_LGDS />);
@@ -117,6 +118,7 @@ export default function GraphicSogec() {
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
 
+              // { label: 'LGDS-Test', command: () => NG_Click(<SetUpdata_LGDSTest/>, 'LGDS-Test') },
 
 
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }

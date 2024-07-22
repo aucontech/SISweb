@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { id_YOSHINO,  } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_VREC,  } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -20,7 +20,7 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-export default function ScoreCard_Yoshino() {
+export default function ScoreCard_VREC() {
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
@@ -50,7 +50,7 @@ export default function ScoreCard_Yoshino() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_YOSHINO,
+                    entityId: id_VREC,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -186,7 +186,7 @@ export default function ScoreCard_Yoshino() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_YOSHINO}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_VREC}/values/attributes/SERVER_SCOPE`
             );
             const FC_Lithium_Battery_Status_High = res.data.find((item: any) => item.key === "FC_Lithium_Battery_Status_High");
             setFC_Lithium_Battery_Status_High(FC_Lithium_Battery_Status_High?.value || null);
@@ -2965,7 +2965,7 @@ useEffect(() => {
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            YOSHINO
+                            VREC
                         </div>
 
                        
@@ -2996,36 +2996,33 @@ useEffect(() => {
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
                     <Column field="name" header="FC Parameter"></Column>
 
-     
                     <Column
                             field="FC1901"
                             header={FC_STT01 === "0" ? (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1401</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
                                 </div>
                             ) : (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1801</p>
     
                                 </div>
                             )}
                         ></Column>
-                    <Column
+                        <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
-
                             field="FC1902"
                             header={FC_STT01 === "0" ? (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1402</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1802</p>
                                 </div>
                             ) : (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
+                                 {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
     
                                 </div>
                             )}
                         ></Column>
-
                 </DataTable>
                     <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>

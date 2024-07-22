@@ -2793,7 +2793,7 @@ export default function DemoFlowOTS() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1901
+                                EVC-1901
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2827,7 +2827,7 @@ export default function DemoFlowOTS() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1902
+                                EVC-1902
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i

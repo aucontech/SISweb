@@ -10,3 +10,8 @@
     background:#e5e5e5;
     color:black
 }
+.p-tabview .p-tabview-panels{
+    padding: 1.25rem 0px;
+    background: none;
+}
+
