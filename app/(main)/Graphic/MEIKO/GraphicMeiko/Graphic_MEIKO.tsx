@@ -2132,7 +2132,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}> Volumn :</p>
+                                <p style={{ color: colorNameValue }}> Volume :</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {Consumption_Flow}

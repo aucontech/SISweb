@@ -232,6 +232,8 @@ export default function SetUpdata_KOA() {
                   
                     };
                     const valueStateMap: ValueStateMap = {
+
+
                         FC_Conn_STT: setEVC_STT01Value,
                         PLC_Conn_STT: setPLC_STTValue,
                     };
@@ -2459,7 +2461,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          setInputValueFC_02_Yesterday_Values_Volume(newValue);
      };
  
-     const handleInputChange2VP303 = (event: any) => {
+     const handleInputChange2FC_02_Yesterday_Values_Volume = (event: any) => {
          const newValue2 = event.target.value;
          setInputValue2FC_02_Yesterday_Values_Volume(newValue2);
      };
@@ -5116,10 +5118,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC: 'FC -  Parameter & Configuration',
-    FC01: 'FC01 -  Parameter & Configuration',
-    FC02: 'FC02 -  Parameter & Configuration',
-    PLC: 'PLC -  Parameter & Configuration'
+    FC: 'FC -  Parameters & Configurations',
+    FC01: 'FC-1201 -  Parameters & Configurations',
+    FC02: 'FC-1202 -  Parameters & Configurations',
+    PLC: 'PLC -  Parameters & Configurations'
 };
 
 
@@ -5419,37 +5421,36 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 ]
 
 
-const dataFC02 = [
+const dataFC02 =  [
 
-  {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-  name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
+    {
+      
+       mainCategory: mainCategoryFC.FC02 ,
+      timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
+    name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>8615	 </span> ,
+    modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
 
- value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume}</span> , 
-  high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainFC_02_Accumulated_Values_Uncorrected_Volume}
-  checked={maintainFC_02_Accumulated_Values_Uncorrected_Volume}
+   value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+    high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainFC_02_Accumulated_Values_Uncorrected_Volume}
+    checked={maintainFC_02_Accumulated_Values_Uncorrected_Volume}
 ></Checkbox>
 
- },
-
- {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
+   },
+   {
+      
+       mainCategory: mainCategoryFC.FC02 ,
+      timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
    name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
 
-   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>8617	 </span> ,
+   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>7617	 </span> ,
 
-  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume}</span> , 
+  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
    high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Volume} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5460,17 +5461,58 @@ const dataFC02 = [
 ></Checkbox>
 
   },
+  {
+ 
+      mainCategory: mainCategoryFC.FC02 ,
+     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
+    name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
+
+    modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
+
+   value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
+    high: <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainFC_02_Current_Values_Uncorrected_Flow_Rate}
+    checked={maintainFC_02_Current_Values_Uncorrected_Flow_Rate}
+></Checkbox>
+
+   },
+
+  {
+      
+      mainCategory: mainCategoryFC.FC02 ,
+     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
+ name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
+
+ modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>7623	 </span> ,
+
+value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
+ high: <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
+ low:  <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
+ update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+ Maintain:   <Checkbox
+ style={{ marginRight: 20, }}
+ onChange={ChangeMaintainFC_02_Current_Values_Flow_Rate}
+ checked={maintainFC_02_Current_Values_Flow_Rate}
+></Checkbox>
+
+},
+
+
 
 
   {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
+      
+       mainCategory: mainCategoryFC.FC02 ,
+      timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>Input Pressure</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>7619	 </span> ,
 
- value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure}</span> , 
+ value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
   high: <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5481,19 +5523,15 @@ const dataFC02 = [
 ></Checkbox>
 
  },
-
-
-
-
  {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
+  
+   mainCategory: mainCategoryFC.FC02 ,
+  timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
  name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>Temperature</span> ,
 
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
+ modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>7621	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
  high: <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5505,57 +5543,18 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Cur
 
 },
 
+
+
+        
 {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
-  name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
-
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>8623	 </span> ,
-
- value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate}</span> , 
-  high: <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainFC_02_Current_Values_Flow_Rate}
-  checked={maintainFC_02_Current_Values_Flow_Rate}
-></Checkbox>
-
- },
-
-
- {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
- name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
-
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>8625	 </span> ,
-
-value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate}</span> , 
- high: <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
- style={{ marginRight: 20, }}
- onChange={ChangeMaintainFC_02_Current_Values_Uncorrected_Flow_Rate}
- checked={maintainFC_02_Current_Values_Uncorrected_Flow_Rate}
-></Checkbox>
-
-},
-
-
-{
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
+  
+   mainCategory: mainCategoryFC.FC02 ,
+  timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>Standard Volume Vb Today</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>8627	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>7627	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume}</span> , 
+value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume} {nameValue.Sm3}</span> , 
 high: <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Volume} onChange={handleInputChange2FC_02_Today_Values_Volume} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5568,72 +5567,101 @@ checked={maintainFC_02_Today_Values_Volume}
 },
 
 
+
+      {
+          
+           mainCategory: mainCategoryFC.FC02 ,
+          timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
+      name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
+ 
+      modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>7629	 </span> ,
+ 
+     value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+      high: <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
+      low:  <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
+      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+      Maintain:   <Checkbox
+      style={{ marginRight: 20, }}
+      onChange={ChangeMaintainFC_02_Today_Values_Uncorrected_Volume}
+      checked={maintainFC_02_Today_Values_Uncorrected_Volume}
+  ></Checkbox>
+ 
+     },
+
+  
+
+
+
+
 {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
+  
+   mainCategory: mainCategoryFC.FC02 ,
+  timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
+name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>8629	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>7631	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume}</span> , 
-high: <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
+value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
+high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Volume} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
-onChange={ChangeMaintainFC_02_Today_Values_Uncorrected_Volume}
-checked={maintainFC_02_Today_Values_Uncorrected_Volume}
+onChange={ChangeMaintainFC_02_Yesterday_Values_Volume}
+checked={maintainFC_02_Yesterday_Values_Volume}
 ></Checkbox>
 
 },
 
 
+{
+
+mainCategory: mainCategoryFC.FC02 ,
+timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
+name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
+
+modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
+
+value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
+low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
+update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainFC_02_Yesterday_Values_Uncorrected_Volume}
+checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
+></Checkbox>
+
+},
+
+]
 
 
-        
 
-            {
-                
-                 mainCategory: mainCategoryFC.FC02 ,
-                timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
-    
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>8631	 </span> ,
-    
-            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume}</span> , 
-             high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2VP303} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_02_Yesterday_Values_Volume}
-             checked={maintainFC_02_Yesterday_Values_Volume}
-         ></Checkbox>
-    
-            },
-    
-         
-            {
-                
-                 mainCategory: mainCategoryFC.FC02 ,
-                timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
-    
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>8633	 </span> ,
-    
-            value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume}</span> , 
-             high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_02_Yesterday_Values_Uncorrected_Volume}
-             checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
-         ></Checkbox>
-    
-            },
-        ]
+  const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
+  const DataDI_ZSO_2 = DI_ZSO_2 === "0" ? "OFF" : DI_ZSO_2 === "1" ? "ON" : null;
+
+  const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+  const DataDI_ZSC_2 = DI_ZSC_2 === "0" ? "ON" : DI_ZSC_2 === "1" ? "OFF" : null;
+
+  const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
+  const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
+  const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
+  const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
+  const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+  const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
+  const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
+
+  const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
+  const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null;
+  const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
+
+  const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
+  const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
+  const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
+  const DataDO_SV_02 = DO_SV_02 === "0" ? "OFF" : DO_SV_02 === "1" ? "ON" : null;
+
+
 
 
 
@@ -5646,7 +5674,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     
              modbus: <span style={combineCss.CSSGD1}>40002</span> ,
     
-            value: <span style={combineCss.CSSGD1} > {GD1}</span> , 
+            value: <span style={combineCss.CSSGD1} > {GD1} {nameValue.LEL}</span> , 
              high: <InputText style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1} onChange={handleInputChange2GD1} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5666,7 +5694,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     
              modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
     
-            value: <span style={combineCss.CSSGD2} > {GD2}</span> , 
+            value: <span style={combineCss.CSSGD2} > {GD2} {nameValue.LEL}</span> , 
              high: <InputText style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5685,7 +5713,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
    
             modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
    
-           value: <span style={combineCss.CSSPT1} > {PT1}</span> , 
+           value: <span style={combineCss.CSSPT1} > {PT1} {nameValue.BARG}</span> , 
             high: <InputText style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5705,7 +5733,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
   
            modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
   
-          value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1}</span> , 
+          value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1} {DataDI_ZSO_1}</span> , 
            high: <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSDI_ZSO_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5728,7 +5756,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
          modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
 
-        value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1}</span> , 
+        value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1} {DataDI_ZSC_1}</span> , 
          high: <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSDI_ZSC_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5748,7 +5776,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
         modbus: <span style={combineCss.CSSDI_ZSO_2}>	40011 </span> ,
 
-       value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2}</span> , 
+       value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2} {DataDI_ZSO_2}</span> , 
         high: <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_2} onChange={handleInputChangeDI_ZSO_2} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSDI_ZSO_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_2} onChange={handleInputChange2DI_ZSO_2} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5769,7 +5797,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
        modbus: <span style={combineCss.CSSDI_ZSC_2}>	40012 </span> ,
 
-      value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2}</span> , 
+      value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2} {DataDI_ZSC_2}</span> , 
        high: <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_2} onChange={handleInputChangeDI_ZSC_2} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSDI_ZSC_2}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_2} onChange={handleInputChange2DI_ZSC_2} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5789,7 +5817,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
       modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
 
-     value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1}</span> , 
+     value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1} {DataDI_MAP_1}</span> , 
       high: <InputText style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSDI_MAP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5807,7 +5835,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     
      modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
     
-    value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY}</span> , 
+    value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY} {DataDI_UPS_BATTERY}</span> , 
      high: <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
      low:  <InputText style={combineCss.CSSDI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5827,7 +5855,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
      modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
 
-    value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING}</span> , 
+    value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING} {DataDI_UPS_CHARGING}</span> , 
      high: <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
      low:  <InputText style={combineCss.CSSDI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5847,7 +5875,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
     modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
 
-   value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM}</span> , 
+   value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM} {DataDI_UPS_ALARM}</span> , 
     high: <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
     low:  <InputText style={combineCss.CSSDI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5867,7 +5895,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
    modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
 
-  value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1}</span> , 
+  value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1} {DataDI_SD_1}</span> , 
    high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5887,7 +5915,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
   modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
 
- value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW}</span> , 
+ value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW} {DataDI_SELECT_SW}</span> , 
   high: <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSDI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5906,7 +5934,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
    modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
 
-  value: <span style={combineCss.CSSDI_RESET} > {DI_RESET}</span> , 
+  value: <span style={combineCss.CSSDI_RESET} > {DI_RESET} {DataDI_RESET}</span> , 
    high: <InputText style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
    low:  <InputText style={combineCss.CSSDI_RESET}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5926,7 +5954,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
   modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
 
- value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO}</span> , 
+ value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO} {DataEmergency_NO}</span> , 
   high: <InputText style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEmergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5950,7 +5978,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
   modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
 
- value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC}</span> , 
+ value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC} {DataEmergency_NC}</span> , 
   high: <InputText style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
   low:  <InputText style={combineCss.CSSEmergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5970,7 +5998,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
  modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
 
-value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode}</span> , 
+value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode} {DataUPS_Mode}</span> , 
  high: <InputText style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
  low:  <InputText style={combineCss.CSSUPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5989,7 +6017,7 @@ name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
 
 modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
 
-value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01}</span> , 
+value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
 high: <InputText style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6011,7 +6039,7 @@ name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
 
 modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
 
-value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01}</span> , 
+value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
 high: <InputText style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6034,7 +6062,7 @@ name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
 
 modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
 
-value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01}</span> , 
+value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> , 
 high: <InputText style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6053,7 +6081,7 @@ name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID</span> ,
 
 modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
 
-value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02}</span> , 
+value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02} {DataDO_SV_02}</span> , 
 high: <InputText style={combineCss.CSSDO_SV_02}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_02} onChange={handleInputChangeDO_SV_02} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSDO_SV_02}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_02} onChange={handleInputChange2DO_SV_02} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -6067,7 +6095,7 @@ checked={maintainDO_SV_02}
 
           ]
 
-          const combinedData = [...dataFC, ...dataFC01, ...dataFC02 , ...PLC];
+          const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC, ...PLC];
 
           const mainCategoryTemplate = (data: any) => {
               return (
@@ -6108,7 +6136,7 @@ checked={maintainDO_SV_02}
         const newValue : any = event.target.value;
         setInputPSV_01(newValue);
     };
-    const Configuration = [
+    const Configurations = [
        
         {
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control}(PCV-1201) (BarG)</span>,
@@ -6229,8 +6257,13 @@ checked={maintainDO_SV_02}
 
         
 
-    <DataTable size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}    >
+    <DataTable        size={"small"}
+                value={combinedData}
+                rowGroupMode="subheader"
+                groupRowsBy="mainCategory"
+                sortMode="single"
+                sortOrder={1}
+                rowGroupHeaderTemplate={mainCategoryTemplate}   >
       <Column field="timeUpdate" header="Time Update" />
 
   <Column field="modbus" header="Modbus" />
@@ -6245,8 +6278,8 @@ checked={maintainDO_SV_02}
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
+                <h4>Station - Configurations </h4>
+                <DataTable value={Configurations} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

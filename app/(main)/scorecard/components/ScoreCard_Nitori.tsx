@@ -1420,11 +1420,9 @@ useEffect(() => {
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
-
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
-
         UPS_MODE:
-            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4:Normal)",
+            "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4: Normal)",
         SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
         RESET: "RESET (0: OFF - 1: ON)",
         EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
@@ -2042,7 +2040,7 @@ useEffect(() => {
 
         // {
         //     name: <span>{tagNamePLC.Smoker_Detected}</span>,
-        //     PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
+        //     PLC: <sp an style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
         // },
         {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
@@ -2088,7 +2086,7 @@ useEffect(() => {
 
     return (
         <div >
-            <div style={{border:'1px solid gray', borderRadius:"10px 10px 0 0"}} >
+            <div  >
                 <div
                     style={{
                         background: "#64758B",

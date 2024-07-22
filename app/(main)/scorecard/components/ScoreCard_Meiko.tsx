@@ -1608,7 +1608,6 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSTank_PT_301}> {Tank_PT_301} </span>,
         },
 
-
         {
             name: <span>Tank Level ( % )</span>,
             PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
@@ -1695,7 +1694,7 @@ useEffect(() => {
 
     return (
         <div >
-            <div style={{border:'1px solid gray', borderRadius:"10px 10px 0 0"}} >
+            <div  >
                 <div
                     style={{
                         background: "#64758B",
