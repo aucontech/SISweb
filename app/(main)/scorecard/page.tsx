@@ -21,7 +21,7 @@ const ScoreCard = () => {
 
                 <TabPanel header="CNG">Updating...</TabPanel>
 
-                <TabPanel header="PLG"> 
+                <TabPanel header="LPG"> 
                     <ScoreCard_Meiko />
                 </TabPanel>
             </TabView>
