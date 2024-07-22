@@ -56,10 +56,13 @@ const Login: Page = () => {
 
                 if (
                     currentUser.authority === "CUSTOMER_USER" &&
-                    currentUser.customerId.id === "630d27a0-44c4-11ef-ae4f-ffd5655df896"
+                    currentUser.customerId.id ===
+                        "630d27a0-44c4-11ef-ae4f-ffd5655df896"
                 ) {
                     router.push("/Graphic/MEIKO");
                 } else if (currentUser.authority === "TENANT_ADMIN") {
+                    router.push("/Graphic");
+                } else {
                     router.push("/Graphic");
                 }
             })
