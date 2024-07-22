@@ -7,8 +7,8 @@ const AppMenu = () => {
     const [model, setModel] = useState<MenuModel[]>([]);
     useEffect(() => {
         const user = readUser();
-       
-         if(user && user.authority === "CUSTOMER_USER" && user.customerId.id === "630d27a0-44c4-11ef-ae4f-ffd5655df896" ){
+
+        if (user && user.authority === "CUSTOMER_USER") {
             const modelData: MenuModel[] = [
                 {
                     label: "Station detail",
@@ -17,12 +17,11 @@ const AppMenu = () => {
                         {
                             label: "Graphics",
                             icon: "pi pi-fw pi-home",
-                            to: "/Graphic/MEIKO" ,
+                            to: "/Graphic/MEIKO",
                         },
                     ],
                 },
 
-                
                 {
                     label: "Alarms",
                     icon: "pi pi-home",
@@ -47,10 +46,7 @@ const AppMenu = () => {
                 },
             ];
             setModel(modelData);
-
-        }
-        
-        else {
+        } else {
             const modelData: MenuModel[] = [
                 {
                     label: "Dashboards",

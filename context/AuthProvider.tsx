@@ -14,6 +14,7 @@ import {
     persistToken,
 } from "@/service/localStorage";
 import { getCurrentUser, refreshTokenFun } from "@/api/auth.api";
+import { set } from "lodash";
 
 // Xác định kiểu cho User và AuthContext
 interface User {
@@ -55,6 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             //console.log(error);
             if (error?.response?.data?.errorCode !== 11) {
                 setIsAuthenticated(() => false);
+                setIsRedirectToLogin(() => true);
             } else {
                 await handleRefreshToken();
             }

@@ -60,9 +60,13 @@ const Login: Page = () => {
                         "630d27a0-44c4-11ef-ae4f-ffd5655df896"
                 ) {
                     router.push("/Graphic/MEIKO");
+                } else if (
+                    currentUser.authority === "CUSTOMER_USER" &&
+                    currentUser.customerId.id ===
+                        "5ca4f5f0-0b62-11ef-99cf-ada6de69e9d2"
+                ) {
+                    router.push("/OTSUKA");
                 } else if (currentUser.authority === "TENANT_ADMIN") {
-                    router.push("/Graphic");
-                } else {
                     router.push("/Graphic");
                 }
             })
