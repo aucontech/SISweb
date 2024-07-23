@@ -153,6 +153,30 @@ export const edgeZOVC = [
             ...styleHide,
         },
     },
+
+
+    {
+        id: "SDV_None2-SDV_Ball2",
+        source: "SDV_None2",
+        target: "SDV_Ball2",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleHide,
+        },
+    },
+    {
+        id: "SDV_Ball2-SDV_None2",
+        source: "SDV_Ball2",
+        target: "SDV_None2",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleHide,
+        },
+    },
     {
         id: "Tank_None-Tank_Ball",
         source: "Tank_None",
