@@ -1742,14 +1742,16 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="PLC"
-                            header={PLC_Conn_STT === "0" ? (
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+   
+                               </div>
+                              
+                            ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
                                    {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
-                                </div>
-                            ) : (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
-    
                                 </div>
                             )}
                         ></Column>

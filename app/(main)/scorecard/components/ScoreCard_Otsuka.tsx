@@ -3423,14 +3423,16 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                     
                     <Column
                             field="evc1901"
-                            header={Conn_STTValue === "0" ? (
+                            header={EVC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-1901</p>
+   
+                               </div>
+                               
+                            ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
                                    {DotRed}  <p style={{marginLeft:5}}>EVC-1901</p>
-                                </div>
-                            ) : (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                 {DotGreen} <p style={{marginLeft:5}}>EVC-1901</p>
-    
                                 </div>
                             )}
                         ></Column>
@@ -3438,15 +3440,17 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="evc1902"
-                            header={Conn_STTValue === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>EVC-1902</p>
-                                </div>
-                            ) : (
+                            header={EVC_STT01 === "1" ? (
+
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>EVC-1902</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-1902</p>
+   
+                               </div>
+                              
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>EVC-1902</p>
+                             </div>
                             )}
                         ></Column>
 
@@ -3457,15 +3461,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="PLC"
-                            header={PLC_Conn_STT === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
-                                </div>
-                            ) : (
+                            header={PLC_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
+                             </div>
                             )}
                         ></Column>
                     </DataTable>

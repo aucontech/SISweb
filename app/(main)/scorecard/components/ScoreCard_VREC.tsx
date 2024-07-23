@@ -2998,28 +2998,30 @@ useEffect(() => {
 
                     <Column
                             field="FC1901"
-                            header={FC_STT01 === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
-                                </div>
-                            ) : (
+                            header={FC_STT01 === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                                  {DotGreen} <p style={{marginLeft:5}}>FC-1801</p>
     
+                                </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
                                 </div>
                             )}
                         ></Column>
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
                             field="FC1902"
-                            header={FC_STT01 === "0" ? (
+                            header={FC_STT01 === "1" ? (
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
+   
+                               </div>
+                               
+                            ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
                                    {DotRed}  <p style={{marginLeft:5}}>FC-1802</p>
-                                </div>
-                            ) : (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
-    
                                 </div>
                             )}
                         ></Column>
@@ -3030,15 +3032,16 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="PLC"
-                            header={PLC_Conn_STT === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
-                                </div>
-                            ) : (
+                            header={PLC_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
+                             </div>
                             )}
                         ></Column>
                     </DataTable>
@@ -3049,15 +3052,16 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1"
-                            header={FC_STT01 === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC</p>
-                                </div>
-                            ) : (
+                            header={FC_STT01 === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>FC</p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC</p>
+                             </div>
                             )}
                         ></Column>
 
