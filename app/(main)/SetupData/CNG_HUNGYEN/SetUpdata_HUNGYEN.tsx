@@ -6840,7 +6840,10 @@ checked={maintainSD_3002}
 
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
                 <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
+                <DataTable value={Configuration} size={"small"} selectionMode="single"
+                
+                columnResizeMode="expand"
+                resizableColumns >
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />

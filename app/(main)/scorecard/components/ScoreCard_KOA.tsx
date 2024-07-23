@@ -2084,7 +2084,8 @@ useEffect(() => {
     // =================================================================================================================== 
     const tagNameFC = {
 
-        Lithinum_Battery_Status:'Lithinum Battery Status' ,
+        FC_Lithium_Battery_Status: "Lithium Battery Status (0:Yes - 1: On)",
+
         Battery_Voltage:'Battery Voltage ( Volt ) ',
         System_Voltage :'System Voltage ( Volt )',
         Charger_Voltage:'Charger Voltage ( Volt )',
@@ -2103,14 +2104,14 @@ useEffect(() => {
 
     const tagNamePLC = {
         PT01: "Output Pressure (BarG)",
-        GD1: "Gas Detector GD-1401 (%LEL)",
-        GD2: "Gas Detector GD-1402 (%LEL)",
-        ZSC1: "SDV-ZSC-1 (0: ON - 1: OFF)",
-        ZSO1: "SDV-ZSO-1 (0: OFF - 1: ON)",
+        GD1: "Gas Detector GD-1201 (%LEL)",
+        GD2: "Gas Detector GD-1202 (%LEL)",
+        ZSC1: "SDV-ZSC-1 (0: On - 1: Off)",
+        ZSO1: "SDV-ZSO-1 (0: Off - 1: On)",
 
 
-        ZSC2: "SDV-ZSC-2 (0: ON - 1: OFF)",
-        ZSO2: "SDV-ZSO-2 (0: OFF - 1: ON)",
+        ZSC2: "SDV-ZSC-2 (0: On - 1: Off)",
+        ZSO2: "SDV-ZSO-2 (0: Off - 1: On)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
@@ -2120,11 +2121,11 @@ useEffect(() => {
         UPS_MODE:
             "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4: Normal)",
         SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
-        RESET: "RESET (0: OFF - 1: ON)",
+        RESET: "RESET (0: Off - 1: On)",
         EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
         EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal )",
-        HORN: "HORN (0: OFF - 1: ON)",
-        BEACON: "BEACON (0: OFF - 1: ON)",
+        HORN: "HORN (0: Off - 1: On)",
+        BEACON: "BEACON (0: Off - 1: On)",
         MAP: "MAP (0: Normal - 1: Emergency)",
         DO_SV_01: "SDV SOLENOID (0: Off - 1: On)",
         DO_SV_02: "SDV SOLENOID (0: Off - 1: On)",
@@ -2139,6 +2140,8 @@ useEffect(() => {
     const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
+
+    const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null
 
     const DataCharging =
         DI_UPS_CHARGING === "0"
@@ -2952,8 +2955,8 @@ useEffect(() => {
 
           const dataFC1 = [
             {
-                name: <span>{tagNameFC.Lithinum_Battery_Status}</span>,
-                FC1: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
+                name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
+                FC1: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span>,
     
             },
             {
@@ -3215,15 +3218,17 @@ useEffect(() => {
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
                             field="FC1902"
-                            header={FC_STT01 === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1202</p>
-                                </div>
-                            ) : (
+                            header={FC_STT01 === "1" ? (
+
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1202</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1202</p>
+   
+                               </div>
+                              
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1202</p>
+                             </div>
                             )}
                         ></Column>
                 </DataTable>
@@ -3233,15 +3238,17 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="PLC"
-                            header={PLC_Conn_STT === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
-                                </div>
-                            ) : (
+                            header={PLC_Conn_STT === "1" ? (
+
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
-    
-                                </div>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
+                             </div>
                             )}
                         ></Column>
                     </DataTable>
@@ -3252,15 +3259,17 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1"
-                            header={FC_STT01 === "0" ? (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC</p>
-                                </div>
-                            ) : (
+                            header={FC_STT01 === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                  {DotGreen} <p style={{marginLeft:5}}>FC</p>
     
                                 </div>
+                            ) : (
+                                
+
+<div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+{DotRed}  <p style={{marginLeft:5}}>FC</p>
+</div>
                             )}
                         ></Column>
 

@@ -4880,8 +4880,8 @@ export default function GraphicNITORI() {
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: 'none',
+                background: 'none',
                 width: 10,
                 height: 1,
             },
