@@ -3204,14 +3204,16 @@ useEffect(() => {
 
                     <Column
                             field="FC1901"
-                            header={FC_STT01 === "0" ? (
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1201</p>
+   
+                               </div>
+                               
+                            ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
                                    {DotRed}  <p style={{marginLeft:5}}>FC-1201</p>
-                                </div>
-                            ) : (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC-1201</p>
-    
                                 </div>
                             )}
                         ></Column>

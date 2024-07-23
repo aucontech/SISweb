@@ -57,6 +57,7 @@ import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
 import AlarmKOA from "@/layout/AlarmBell/AlarmKOA";
+import BallValueSDV_2 from "../ReactFlow/BallValueSDV_2";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -246,8 +247,8 @@ export default function GraphicKOA() {
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
 
-                        DI_ZSC_2: setNC,
-                        DI_ZSO_2: setNO,
+                        DI_ZSC_2: setNC2,
+                        DI_ZSO_2: setNO2,
 
                         FC_Conn_STT: setFC_Conn_STT,
                         PLC_Conn_STT: setConn_STT,
@@ -2714,6 +2715,26 @@ export default function GraphicKOA() {
                 };
             }
 
+            if (node.id === "SDV_IMG2") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div>
+                                <div>
+                                    {NO2 === "1"
+                                        ? SVD_NO
+                                        : NC2 === "0"
+                                        ? SVD_NC
+                                        : null}
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
             if (node.id === "FIQ_1901") {
                 return {
                     ...node,
@@ -2787,21 +2808,24 @@ export default function GraphicKOA() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
               ArrowRight: { x: 600.6812903546922, y: 1023.2137288625802 },
               ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
               BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
+
+              BallValueSDV_2: {x: 413.0534879934596, y: 1129.0467878081538},
+
               BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
               BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
               BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
               BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
-              BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
+              BallValue06: { x: 68.14677001999206, y: 1130.2445342820436 },
               BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
               BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
               BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
@@ -2910,11 +2934,16 @@ export default function GraphicKOA() {
                   x: -1022.6221979715284,
                   y: 1306.0599379762566,
               },
-              SDV: { x: -1127.2804525595525, y: 948.8166088808405 },
+              SDV: { x: -1135.8287483522317, y: 949.6714384601082 },
+              SDV2: { x: 381.5165266701906, y: 940.554724326943 },
               SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
+              SDV_Ball2: { x: 430.36464803916624, y: 1159.8236963022298 },
               SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
+              SDV_IMG2: { x: 406.1481832222816, y: 990.390204545138 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+              SDV_Name_none2: { x: -535.6461839977737, y: 897.8410000476873 },
               SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
+              SDV_None2: { x: 432.9466067147644, y: 1040.4900272412854 },
               T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
               T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
               Tank: { x: -952.0719666857922, y: 984.2988432580569 },
@@ -3573,6 +3602,84 @@ export default function GraphicKOA() {
             },
         },
 
+        {
+            id: "SDV2",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 500,
+                        }}
+                    >
+                        SDV-1202
+                    </div>
+                ),
+            },
+            position: positions.SDV2,
+            zIndex: 99999,
+
+            style: {
+                background: "yellow",
+                border: "1px solid white",
+                width: 130,
+                height: 45,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "SDV_None2",
+            position: positions.SDV_None2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: line,
+                width: 30,
+                height: 1,
+            },
+        },
+        {
+            id: "SDV_Ball2",
+            position: positions.SDV_Ball2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 35,
+                height: 22,
+                opacity: 0.01,
+            },
+        },
+        {
+            id: "SDV_IMG2",
+            position: positions.SDV_IMG2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 0,
+                height: 0,
+            },
+        },
+
         //=================== Ball vavle ==================================
         {
             id: "BallValue01",
@@ -3823,6 +3930,28 @@ export default function GraphicKOA() {
                 label: (
                     <div>
                         <BallValueLast />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: background,
+                background: background,
+                width: 1,
+                height: 1,
+            },
+        },
+
+        {
+            id: "BallValueSDV_2",
+            position: positions.BallValueSDV_2,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueSDV_2 />
                     </div>
                 ),
             },
@@ -5645,6 +5774,26 @@ export default function GraphicKOA() {
                         ...prevPositions,
                         SDV_Ball: position,
                     }));
+                } else if (id === "SDV2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV2: position,
+                    }));
+                } else if (id === "SDV_None2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_None2: position,
+                    }));
+                } else if (id === "SDV_IMG2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG2: position,
+                    }));
+                } else if (id === "SDV_Ball2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_Ball2: position,
+                    }));
                 }
                 // ================================== end item ==================================
 
@@ -5776,6 +5925,11 @@ export default function GraphicKOA() {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         BallValueLast: position,
+                    }));
+                } else if (id === "BallValueSDV_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallValueSDV_2: position,
                     }));
                 }
                 // ============ ball vavle ===========================
@@ -6310,21 +6464,21 @@ export default function GraphicKOA() {
     const toggleEditing = () => {
         setEditingEnabled(!editingEnabled);
     };
-    useEffect(() => {
-        localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <audio ref={audioRef}>
+            {/* <audio ref={audioRef}>
                 <source
                     src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
                     type="audio/mpeg"
                 />
-            </audio>
-            <Button onClick={toggleEditing}>
+            </audio> */}
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />
@@ -6387,8 +6541,8 @@ export default function GraphicKOA() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
