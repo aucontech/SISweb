@@ -1,6 +1,11 @@
 import axios from "axios";
-import { readToken } from "@/service/localStorage";
-
+import {
+    readToken,
+    readRefreshToken,
+    persistToken,
+    persistRefreshToken,
+} from "@/service/localStorage";
+import { refreshToken as RefreshToken } from "./auth.api";
 export const httpApi = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_API}`,
     headers: {
@@ -22,45 +27,46 @@ httpApi.interceptors.request.use(
     }
 );
 
-// httpApi.interceptors.response.use(
-//     (response) => {
-//         // If the response is successful, just return it
-//         return response;
-//     },
-//     async (error) => {
-//         const originalRequest = error.config;
-//         const router = useRouter();
+httpApi.interceptors.response.use(
+    (response) => {
+        // If the response is successful, just return it
+        return response;
+    },
+    async (error) => {
+        const originalRequest = error.config;
+        console.log(error);
+        // Check if the error is due to a token expiration and we haven't already retried
+        if (
+            error?.response?.data?.errorCode === 11 &&
+            !originalRequest._retry
+        ) {
+            originalRequest._retry = true; // Mark it so we don't try to refresh the token again
+            const refreshToken: string | null = readRefreshToken();
+            if (refreshToken) {
+                try {
+                    const res = await RefreshToken({
+                        refreshToken,
+                    });
+                    let { data } = res;
+                    if (data) {
+                        persistToken(data.token);
+                        persistRefreshToken(data.refreshToken);
+                        originalRequest.headers[
+                            "X-Authorization"
+                        ] = `Bearer ${data.token}`;
+                    }
 
-//         // Check if the error is due to a token expiration and we haven't already retried
-//         if (error.response.status === 401 && !originalRequest._retry) {
-//             originalRequest._retry = true; // Mark it so we don't try to refresh the token again
-//             const refreshToken: string | null = readRefreshToken();
-//             if (refreshToken) {
-//                 try {
-//                     const res = await refreshTokenFun({
-//                         refreshToken,
-//                     });
-//                     if (res) {
-//                         persistToken(res.token);
-//                         persistRefreshToken(res.refreshToken);
-//                         originalRequest.headers[
-//                             "X-Authorization"
-//                         ] = `Bearer ${res.token}`;
-//                     }
-//                     // Update the header of the original request
-
-//                     // Retry the request with the new token
-//                     return httpApi(originalRequest);
-//                 } catch (refreshError) {
-//                     console.log(refreshError);
-//                     //deleteToken();
-//                     return Promise.reject(refreshError); // If token refresh fails, reject the promise
-//                 }
-//             } else {
-//                 return Promise.reject(error);
-//             }
-//         }
-//         // If the error is not due to token expiration or another request, just return it
-//         return Promise.reject(error);
-//     }
-// );
+                    return httpApi(originalRequest);
+                } catch (refreshError) {
+                    console.log(refreshError);
+                    //deleteToken();
+                    return Promise.reject(refreshError); // If token refresh fails, reject the promise
+                }
+            } else {
+                return Promise.reject(error);
+            }
+        }
+        // If the error is not due to token expiration or another request, just return it
+        return Promise.reject(error);
+    }
+);

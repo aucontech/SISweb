@@ -15,7 +15,7 @@ export const login = (loginPayload: LoginRequest): Promise<LoginResponse> => {
     return httpApi.post<LoginResponse>("/auth/login", { ...loginPayload });
 };
 
-export const refreshTokenFun = (
+export const refreshToken = (
     tokenPayload: RefreshTokenRequest
 ): Promise<any> => {
     return httpApi.post<any>("/auth/token", { ...tokenPayload });

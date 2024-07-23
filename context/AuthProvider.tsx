@@ -7,14 +7,8 @@ import React, {
     useEffect,
     ReactNode,
 } from "react";
-import {
-    readToken,
-    readRefreshToken,
-    persistRefreshToken,
-    persistToken,
-} from "@/service/localStorage";
-import { getCurrentUser, refreshTokenFun } from "@/api/auth.api";
-import { set } from "lodash";
+
+import { getCurrentUser } from "@/api/auth.api";
 
 // Xác định kiểu cho User và AuthContext
 interface User {
@@ -45,60 +39,35 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const authenticate = useCallback(async () => {
         setIsLoading(() => true);
-        const token = readToken();
         try {
             const resp = await getCurrentUser();
             if (resp.status === 200) {
                 setIsAuthenticated(() => true);
-                // setUser(resp.data.user);
+                setIsRedirectToLogin(() => false);
             }
         } catch (error: any) {
-            //console.log(error);
-            if (
-                error?.response?.data?.errorCode !== 11 ||
-                error?.response?.data?.errorCode === 10
-            ) {
+            if (error?.response?.data?.errorCode === 10) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
-            } else {
-                await handleRefreshToken();
             }
         } finally {
             setIsLoading(() => false);
         }
     }, []);
-    const handleRefreshToken = async () => {
-        try {
-            const refreshToken = readRefreshToken();
-            const newTokens = await refreshTokenFun({ refreshToken });
-            persistToken(newTokens?.data.token);
-            persistRefreshToken(newTokens?.data.refreshToken);
-            setIsAuthenticated(() => true);
-        } catch (error: any) {
-            console.log(error);
-            if (
-                error?.response?.data?.errorCode === 11 ||
-                error?.response?.data?.errorCode === 10
-            ) {
-                setIsAuthenticated(() => false);
-                setIsRedirectToLogin(() => true);
-            } else {
-                setIsAuthenticated(() => false);
-            }
-        }
-    };
 
     const _checkSession = useCallback(async () => {
         try {
-            const user = await getCurrentUser();
-            if (user) {
+            const userRes = await getCurrentUser();
+            if (userRes) {
                 if (!isAuthenticated) {
                     setIsAuthenticated(true);
                 }
-            } else {
             }
-        } catch (error) {
-            await handleRefreshToken();
+        } catch (error: any) {
+            if (error?.response?.data?.errorCode === 10) {
+                setIsAuthenticated(() => false);
+                setIsRedirectToLogin(() => true);
+            }
         }
     }, []);
 
