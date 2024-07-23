@@ -664,6 +664,8 @@ export default function ScoreCard_Otsuka() {
 
                         GD1: setGD1,
                         GD2: setGD2,
+                        GD3: setGD3,
+
                         PT1: setPT1,
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
@@ -944,6 +946,14 @@ export default function ScoreCard_Otsuka() {
                 (item: any) => item.key === "GD2_Maintain"
             );
 
+            const GD3_High = res.data.find((item: any) => item.key === "GD3_High");
+            setGD3_High(GD3_High?.value || null);
+            const GD3_Low = res.data.find((item: any) => item.key === "GD3_Low");
+            setGD3_Low(GD3_Low?.value || null);
+            const GD3_Maintain = res.data.find(
+                (item: any) => item.key === "GD3_Maintain"
+            );
+
             const PT1_High = res.data.find((item: any) => item.key === "PT1_High");
             setPT1_High(PT1_High?.value || null);
             const PT1_Low = res.data.find((item: any) => item.key === "PT1_Low");
@@ -1109,6 +1119,32 @@ export default function ScoreCard_Otsuka() {
             setMaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
 
             setMaintainEVC_01_Remain_Battery_Service_Life(MaintainEVC_01_Remain_Battery_Service_Life?.value || false);
+
+
+
+
+            setMaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
+
+            setMaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
+
+
+            setMaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
+
+
+            setMaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
+
+            setMaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
+
+
+            setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false);
+
+            setMaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
+
+            setMaintainEVC_02_Pressure(EVC_02_Pressure_Maintain?.value || false);
+
+            setMaintainEVC_02_Temperature(EVC_02_Temperature_Maintain?.value || false);
+
+            setMaintainEVC_02_Remain_Battery_Service_Life(MaintainEVC_02_Remain_Battery_Service_Life?.value || false);
 
 
            
@@ -1551,6 +1587,35 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
                    } 
                } 
            }, [GD2_High, GD2, GD2_Low,maintainGD2]);
+       
+
+  
+       // =================================================================================================================== 
+
+
+       const [GD3, setGD3] = useState<string | null>(null);
+       const [GD3_High, setGD3_High] = useState<number | null>(null);
+       const [GD3_Low, setGD3_Low] = useState<number | null>(null);
+       const [exceedThresholdGD3, setExceedThresholdGD3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainGD3, setMaintainGD3] = useState<boolean>(false);
+       
+       
+           useEffect(() => {
+               if (typeof GD3_High === 'string' && typeof GD3_Low === 'string' && GD3 !== null && maintainGD3 === false
+               ) {
+                   const highValue = parseFloat(GD3_High);
+                   const lowValue = parseFloat(GD3_Low);
+                   const GD3Value = parseFloat(GD3);
+           
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD3Value)) {
+                       if (highValue <= GD3Value || GD3Value <= lowValue) {
+                               setExceedThresholdGD3(true);
+                       } else {
+                          setExceedThresholdGD3(false);
+                       }
+                   } 
+               } 
+           }, [GD3_High, GD3, GD3_Low,maintainGD3]);
        
 
   
@@ -2408,6 +2473,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         PT01: "Output Pressure (BarG)",
         GD1: "Gas Detector GD-1901 (%LEL)",
         GD2: "Gas Detector GD-1902 (%LEL)",
+        GD3: "Gas Detector GD-1903 (%LEL)",
+
         ZSC: "SDV-ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
@@ -2457,8 +2524,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
             : UPS_Mode === "4"
             ? "Normal"
             : null;
-    const DataZSC_1 = DI_ZSO_1 === "0" ? " On" : DI_ZSO_1 === "1" ? "Off" : null;
-    const DataZSO_1 = DI_ZSC_1 === "0" ? " On" : DI_ZSC_1 === "1" ? "Off" : null;
+    const DataZSC_1 = DI_ZSC_1 === "0" ? "On" : DI_ZSC_1 === "1" ? "Off" : null;
+    const DataZSO_1 = DI_ZSO_1 === "0" ? "Off" : DI_ZSO_1 === "1" ? "On" : null;
 
     const DataDI_SELECT_SW =
         DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
@@ -2633,15 +2700,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                 },
 
                 CSSEVC_01_Vm_of_Current_Day : {
-                    color:exceedThresholdEVC_01_Vb_of_Current_Day && !maintainEVC_01_Vb_of_Current_Day
+                    color:exceedThresholdEVC_01_Vm_of_Current_Day && !maintainEVC_01_Vm_of_Current_Day
                     ? "#ff5656"
-                    : maintainEVC_01_Vb_of_Current_Day
+                    : maintainEVC_01_Vm_of_Current_Day
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdEVC_01_Vb_of_Current_Day || maintainEVC_01_Vb_of_Current_Day)
+                    fontWeight: (exceedThresholdEVC_01_Vm_of_Current_Day || maintainEVC_01_Vm_of_Current_Day)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdEVC_01_Vb_of_Current_Day || maintainEVC_01_Vb_of_Current_Day)
+                    fontSize: (exceedThresholdEVC_01_Vm_of_Current_Day || maintainEVC_01_Vm_of_Current_Day)
                     ? 18
                     : ""
                 },
@@ -2887,6 +2954,20 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                     ? 600
                     : "",
                     fontSize: (exceedThresholdGD2 || maintainGD2)
+                    ? 18
+                    : ""
+                },
+
+                CSSGD3 : {
+                    color:exceedThresholdGD3 && !maintainGD3
+                    ? "#ff5656"
+                    : maintainGD3
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdGD3 || maintainGD3)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdGD3 || maintainGD3)
                     ? 18
                     : ""
                 },
@@ -3210,6 +3291,10 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         {
             name: <span>{tagNamePLC.GD2}</span>,
             PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD3}</span>,
+            PLC: <span style={combineCss.CSSGD3}> {GD3}</span>,
         },
         {
             name: <span>{tagNamePLC.DO_SV1}</span>,

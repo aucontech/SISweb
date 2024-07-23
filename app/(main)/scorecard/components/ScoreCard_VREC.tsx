@@ -2896,10 +2896,10 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
         },
 
-        // {
-        //     name: <span>{tagNamePLC.Smoker_Detected}</span>,
-        //     PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
-        // },
+        {
+            name: <span>{tagNamePLC.Smoker_Detected}</span>,
+            PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
+        },
         {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
             PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,

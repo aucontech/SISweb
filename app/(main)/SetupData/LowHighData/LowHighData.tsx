@@ -5134,6 +5134,23 @@ const confirmUpChangeGatewayPhone = () => {
     ></Checkbox>
         },
         {
+            mainCategory: mainCategoryEVC.PLC,
+           
+           timeUpdate: <span style={combineCss.CSS_ZSO} >{PLC_STTValue}</span>,
+    modbus: <span style={combineCss.CSS_ZSO}>{modbusPLC.SDV_ZSO}</span> ,
+
+       name: <span style={combineCss.CSS_ZSO}>{paragraphContentsPLC.SDV_SZO} </span> ,
+       value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
+       high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
+       low:  <InputText style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowZSO_1} onChange={handleInputChangeLowZSO_1} inputMode="decimal" />,
+       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       Maintain:   <Checkbox
+       style={{ marginRight: 20, }}
+       onChange={ChangeMaintainZSO_1}
+       checked={maintainZSO_1}
+   ></Checkbox>
+       },
+        {
              mainCategory: mainCategoryEVC.PLC,
             
             timeUpdate: <span style={combineCss.CSS_ZSC} >{PLC_STTValue}</span>,
@@ -5151,23 +5168,7 @@ const confirmUpChangeGatewayPhone = () => {
     ></Checkbox>
         },
 
-        {
-             mainCategory: mainCategoryEVC.PLC,
-            
-            timeUpdate: <span style={combineCss.CSS_ZSO} >{PLC_STTValue}</span>,
-     modbus: <span style={combineCss.CSS_ZSO}>{modbusPLC.SDV_ZSO}</span> ,
-
-        name: <span style={combineCss.CSS_ZSO}>{paragraphContentsPLC.SDV_SZO} </span> ,
-        value: <span style={combineCss.CSS_ZSO} > {ZSO_1} {DataZSO_1}</span> , 
-        high: <InputText style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighZSO_1} onChange={handleInputChangeHighZSO_1} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowZSO_1} onChange={handleInputChangeLowZSO_1} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainZSO_1}
-        checked={maintainZSO_1}
-    ></Checkbox>
-        },
+     
 
         {
              mainCategory: mainCategoryEVC.PLC,

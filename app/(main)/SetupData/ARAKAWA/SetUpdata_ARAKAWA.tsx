@@ -721,30 +721,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
                 if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                    if (!audioPlayingEVC_01_Remain_Battery_Service_Life) {
-                        audioRef.current?.play();
-                        setAudioPlayingEVC_01_Remain_Battery_Service_Life(true);
                         setExceedThresholdEVC_01_Remain_Battery_Service_Life(true);
-                    }
                 } else {
-                    setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
                     setExceedThresholdEVC_01_Remain_Battery_Service_Life(false);
                 }
             } 
         } 
-    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life, audioPlayingEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
+    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
 
-    useEffect(() => {
-        if (audioPlayingEVC_01_Remain_Battery_Service_Life) {
-            const audioEnded = () => {
-                setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingEVC_01_Remain_Battery_Service_Life]);
+
 
     const handleInputChangeEVC_01_Remain_Battery_Service_Life = (event: any) => {
         const newValue = event.target.value;
@@ -790,30 +775,14 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
                      if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Temperature) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Temperature(true);
                              setExceedThresholdTemperature(true);
-                         }
                      } else {
-                        setAudioPlayingEVC_01_Temperature(false);
                          setExceedThresholdTemperature(false);
                      }
                  } 
              } 
-         }, [EVC_01_Temperature_High, EVC_01_Temperature, audioPlayingEVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
+         }, [EVC_01_Temperature_High, EVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
      
-         useEffect(() => {
-             if (audioPlayingEVC_01_Temperature) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Temperature(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Temperature]);
      
          const handleInputChangeEVC_01_Temperature = (event: any) => {
              const newValue = event.target.value;
@@ -860,30 +829,14 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
                      if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Pressure) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Pressure(true);
                              setExceedThresholdEVC_01_Pressure(true);
-                         }
                      } else {
-                        setAudioPlayingEVC_01_Pressure(false);
                         setExceedThresholdEVC_01_Pressure(false);
                      }
                  } 
              } 
-         }, [EVC_01_Pressure_High, EVC_01_Pressure, audioPlayingEVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
-     
-         useEffect(() => {
-             if (audioPlayingEVC_01_Pressure) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Pressure(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Pressure]);
+         }, [EVC_01_Pressure_High, EVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
+ 
      
          const handleInputChangeEVC_01_Pressure = (event: any) => {
              const newValue = event.target.value;
@@ -931,30 +884,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
                           if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Base_Condition(true);
                                   setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
                              setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
                           }
                       } 
                   } 
-              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, audioPlayingEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
+              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Base_Condition]);
+        
           
               const handleInputChangeEVC_01_Volume_at_Base_Condition = (event: any) => {
                   const newValue = event.target.value;
@@ -1001,30 +939,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
                           if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Measurement_Condition(true);
                                   setExceedThresholdEVC_01_Volume_at_Measurement_Condition(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
                              setExceedThresholdEVC_01_Volume_at_Measurement_Condition(false);
                           }
                       } 
                   } 
-              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition, audioPlayingEVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
+              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Measurement_Condition]);
+        
           
               const handleInputChangeEVC_01_Volume_at_Measurement_Condition = (event: any) => {
                   const newValue = event.target.value;
@@ -1070,30 +993,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
                           if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Flow_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Flow_at_Base_Condition(true);
                                   setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
                              setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
                           }
                       } 
                   } 
-              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, audioPlayingEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
+              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Flow_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Flow_at_Base_Condition]);
+  
           
               const handleInputChangeEVC_01_Flow_at_Base_Condition = (event: any) => {
                   const newValue = event.target.value;
@@ -1140,30 +1048,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
                           if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vm_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vm_of_Current_Day(true);
                                   setExceedThresholdEVC_01_Vm_of_Current_Day(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Vm_of_Current_Day(false);
                              setExceedThresholdEVC_01_Vm_of_Current_Day(false);
                           }
                       } 
                   } 
-              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, audioPlayingEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
+              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vm_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vm_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vm_of_Current_Day]);
+         
           
               const handleInputChangeEVC_01_Vm_of_Current_Day = (event: any) => {
                   const newValue = event.target.value;
@@ -1209,30 +1102,14 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
                           if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vb_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vb_of_Current_Day(true);
                                   setExceedThresholdEVC_01_Vb_of_Current_Day(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Vb_of_Current_Day(false);
                              setExceedThresholdEVC_01_Vb_of_Current_Day(false);
                           }
                       } 
                   } 
-              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, audioPlayingEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vb_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vb_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vb_of_Current_Day]);
+              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
+        
           
               const handleInputChangeEVC_01_Vb_of_Current_Day = (event: any) => {
                   const newValue = event.target.value;
@@ -1278,13 +1155,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Measurement_ConditionValue)) {
                           if (highValue <= EVC_01_Flow_at_Measurement_ConditionValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Flow_at_Measurement_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Flow_at_Measurement_Condition(true);
                                   setExceedThresholdEVC_01_Flow_at_Measurement_Condition(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Flow_at_Measurement_Condition(false);
                              setExceedThresholdEVC_01_Flow_at_Measurement_Condition(false);
                           }
                       } 
@@ -1347,13 +1219,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
                           if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vb_of_Last_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vb_of_Last_Day(true);
                                   setExceedThresholdEVC_01_Vb_of_Last_Day(true);
-                              }
                           } else {
-                             setAudioPlayingEVC_01_Vb_of_Last_Day(false);
                              setExceedThresholdEVC_01_Vb_of_Last_Day(false);
                           }
                       } 
@@ -1418,13 +1285,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
                     if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                        if (!audioPlayingEVC_01_Vm_of_Last_Day) {
-                            audioRef.current?.play();
-                            setAudioPlayingEVC_01_Vm_of_Last_Day(true);
                             setExceedThresholdEVC_01_Vm_of_Last_Day(true);
-                        }
                     } else {
-                       setAudioPlayingEVC_01_Vm_of_Last_Day(false);
                        setExceedThresholdEVC_01_Vm_of_Last_Day(false);
                     }
                 } 
@@ -1489,13 +1351,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
       
               if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1Value)) {
                   if (highValue <= GD1Value || GD1Value <= lowValue) {
-                      if (!audioPlayingGD1) {
-                          audioRef.current?.play();
-                          setAudioPlayingGD1(true);
                           setExceedThresholdGD1(true);
-                      }
                   } else {
-                     setAudioPlayingGD1(false);
                      setExceedThresholdGD1(false);
                   }
               } 
@@ -1560,13 +1417,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2Value)) {
                        if (highValue <= GD2Value || GD2Value <= lowValue) {
-                           if (!audioPlayingGD2) {
-                               audioRef.current?.play();
-                               setAudioPlayingGD2(true);
                                setExceedThresholdGD2(true);
-                           }
                        } else {
-                          setAudioPlayingGD2(false);
                           setExceedThresholdGD2(false);
                        }
                    } 
@@ -1630,13 +1482,8 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
                        if (highValue <= PT1Value || PT1Value <= lowValue) {
-                           if (!audioPlayingPT1) {
-                               audioRef.current?.play();
-                               setAudioPlayingPT1(true);
                                setExceedThresholdPT1(true);
-                           }
                        } else {
-                          setAudioPlayingPT1(false);
                           setExceedThresholdPT1(false);
                        }
                    } 
@@ -1699,30 +1546,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_1Value)) {
                        if (highValue <= DI_ZSO_1Value || DI_ZSO_1Value <= lowValue) {
-                           if (!audioPlayingDI_ZSO_1) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSO_1(true);
                                setExceedThresholdDI_ZSO_1(true);
-                           }
                        } else {
-                          setAudioPlayingDI_ZSO_1(false);
                           setExceedThresholdDI_ZSO_1(false);
                        }
                    } 
                } 
-           }, [DI_ZSO_1_High, DI_ZSO_1, audioPlayingDI_ZSO_1, DI_ZSO_1_Low,maintainDI_ZSO_1]);
+           }, [DI_ZSO_1_High, DI_ZSO_1, DI_ZSO_1_Low,maintainDI_ZSO_1]);
        
-           useEffect(() => {
-               if (audioPlayingDI_ZSO_1) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSO_1(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSO_1]);
+      
        
            const handleInputChangeDI_ZSO_1 = (event: any) => {
                const newValue = event.target.value;
@@ -1769,30 +1601,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_2Value)) {
                        if (highValue <= DI_ZSO_2Value || DI_ZSO_2Value <= lowValue) {
-                           if (!audioPlayingDI_ZSO_2) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSO_2(true);
                                setExceedThresholdDI_ZSO_2(true);
-                           }
                        } else {
-                          setAudioPlayingDI_ZSO_2(false);
                           setExceedThresholdDI_ZSO_2(false);
                        }
                    } 
                } 
-           }, [DI_ZSO_2_High, DI_ZSO_2, audioPlayingDI_ZSO_2, DI_ZSO_2_Low,maintainDI_ZSO_2]);
+           }, [DI_ZSO_2_High, DI_ZSO_2, DI_ZSO_2_Low,maintainDI_ZSO_2]);
        
-           useEffect(() => {
-               if (audioPlayingDI_ZSO_2) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSO_2(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSO_2]);
+
        
            const handleInputChangeDI_ZSO_2 = (event: any) => {
                const newValue = event.target.value;
@@ -1838,30 +1655,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_1Value)) {
                        if (highValue <= DI_ZSC_1Value || DI_ZSC_1Value <= lowValue) {
-                           if (!audioPlayingDI_ZSC_1) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSC_1(true);
                                setExceedThresholdDI_ZSC_1(true);
-                           }
                        } else {
-                          setAudioPlayingDI_ZSC_1(false);
                           setExceedThresholdDI_ZSC_1(false);
                        }
                    } 
                } 
-           }, [DI_ZSC_1_High, DI_ZSC_1, audioPlayingDI_ZSC_1, DI_ZSC_1_Low,maintainDI_ZSC_1]);
+           }, [DI_ZSC_1_High, DI_ZSC_1, DI_ZSC_1_Low,maintainDI_ZSC_1]);
        
-           useEffect(() => {
-               if (audioPlayingDI_ZSC_1) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSC_1(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSC_1]);
+         
        
            const handleInputChangeDI_ZSC_1 = (event: any) => {
                const newValue = event.target.value;
@@ -1908,30 +1710,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_2Value)) {
                        if (highValue <= DI_ZSC_2Value || DI_ZSC_2Value <= lowValue) {
-                           if (!audioPlayingDI_ZSC_2) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSC_2(true);
+                     
                                setExceedThresholdDI_ZSC_2(true);
-                           }
                        } else {
-                          setAudioPlayingDI_ZSC_2(false);
                           setExceedThresholdDI_ZSC_2(false);
                        }
                    } 
                } 
            }, [DI_ZSC_2_High, DI_ZSC_2, audioPlayingDI_ZSC_2, DI_ZSC_2_Low,maintainDI_ZSC_2]);
        
-           useEffect(() => {
-               if (audioPlayingDI_ZSC_2) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSC_2(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSC_2]);
        
            const handleInputChangeDI_ZSC_2 = (event: any) => {
                const newValue = event.target.value;
@@ -1960,7 +1747,6 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  // =================================================================================================================== 
 
  const [DI_MAP_1, setDI_MAP_1] = useState<string | null>(null);
- const [audioPlayingDI_MAP_1, setAudioPlayingDI_MAP_1] = useState(false);
  const [inputValueDI_MAP_1, setInputValueDI_MAP_1] = useState<any>();
  const [inputValue2DI_MAP_1, setInputValue2DI_MAP_1] = useState<any>();
  const [DI_MAP_1_High, setDI_MAP_1_High] = useState<number | null>(null);
@@ -1979,30 +1765,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      
              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_MAP_1Value)) {
                  if (highValue <= DI_MAP_1Value || DI_MAP_1Value <= lowValue) {
-                     if (!audioPlayingDI_MAP_1) {
-                         audioRef.current?.play();
-                         setAudioPlayingDI_MAP_1(true);
+                
                          setExceedThresholdDI_MAP_1(true);
-                     }
                  } else {
-                    setAudioPlayingDI_MAP_1(false);
                     setExceedThresholdDI_MAP_1(false);
                  }
              } 
          } 
-     }, [DI_MAP_1_High, DI_MAP_1, audioPlayingDI_MAP_1, DI_MAP_1_Low,maintainDI_MAP_1]);
+     }, [DI_MAP_1_High, DI_MAP_1, DI_MAP_1_Low,maintainDI_MAP_1]);
  
-     useEffect(() => {
-         if (audioPlayingDI_MAP_1) {
-             const audioEnded = () => {
-                setAudioPlayingDI_MAP_1(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingDI_MAP_1]);
+
  
      const handleInputChangeDI_MAP_1 = (event: any) => {
          const newValue = event.target.value;
@@ -2031,7 +1803,6 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      // =================================================================================================================== 
 
      const [DI_UPS_CHARGING, setDI_UPS_CHARGING] = useState<string | null>(null);
-     const [audioPlayingDI_UPS_CHARGING, setAudioPlayingDI_UPS_CHARGING] = useState(false);
      const [inputValueDI_UPS_CHARGING, setInputValueDI_UPS_CHARGING] = useState<any>();
      const [inputValue2DI_UPS_CHARGING, setInputValue2DI_UPS_CHARGING] = useState<any>();
      const [DI_UPS_CHARGING_High, setDI_UPS_CHARGING_High] = useState<number | null>(null);
@@ -2050,30 +1821,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_CHARGINGValue)) {
                      if (highValue <= DI_UPS_CHARGINGValue || DI_UPS_CHARGINGValue <= lowValue) {
-                         if (!audioPlayingDI_UPS_CHARGING) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_UPS_CHARGING(true);
                              setExceedThresholdDI_UPS_CHARGING(true);
-                         }
                      } else {
-                        setAudioPlayingDI_UPS_CHARGING(false);
                         setExceedThresholdDI_UPS_CHARGING(false);
                      }
                  } 
              } 
-         }, [DI_UPS_CHARGING_High, DI_UPS_CHARGING, audioPlayingDI_UPS_CHARGING, DI_UPS_CHARGING_Low,maintainDI_UPS_CHARGING]);
+         }, [DI_UPS_CHARGING_High, DI_UPS_CHARGING, DI_UPS_CHARGING_Low,maintainDI_UPS_CHARGING]);
      
-         useEffect(() => {
-             if (audioPlayingDI_UPS_CHARGING) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_UPS_CHARGING(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_UPS_CHARGING]);
+      
      
          const handleInputChangeDI_UPS_CHARGING = (event: any) => {
              const newValue = event.target.value;
@@ -2172,7 +1928,6 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
 
  const [DI_SD_1, setDI_SD_1] = useState<string | null>(null);
- const [audioPlayingDI_SD_1, setAudioPlayingDI_SD_1] = useState(false);
  const [inputValueDI_SD_1, setInputValueDI_SD_1] = useState<any>();
  const [inputValue2DI_SD_1, setInputValue2DI_SD_1] = useState<any>();
  const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
@@ -2191,30 +1946,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      
              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
                  if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                     if (!audioPlayingDI_SD_1) {
-                         audioRef.current?.play();
-                         setAudioPlayingDI_SD_1(true);
+         
                          setExceedThresholdDI_SD_1(true);
-                     }
                  } else {
-                    setAudioPlayingDI_SD_1(false);
                     setExceedThresholdDI_SD_1(false);
                  }
              } 
          } 
-     }, [DI_SD_1_High, DI_SD_1, audioPlayingDI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
+     }, [DI_SD_1_High, DI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
  
-     useEffect(() => {
-         if (audioPlayingDI_SD_1) {
-             const audioEnded = () => {
-                setAudioPlayingDI_SD_1(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingDI_SD_1]);
+ 
  
      const handleInputChangeDI_SD_1 = (event: any) => {
          const newValue = event.target.value;
@@ -2243,7 +1984,6 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      // =================================================================================================================== 
 
 const [DI_SELECT_SW, setDI_SELECT_SW] = useState<string | null>(null);
-const [audioPlayingDI_SELECT_SW, setAudioPlayingDI_SELECT_SW] = useState(false);
 const [inputValueDI_SELECT_SW, setInputValueDI_SELECT_SW] = useState<any>();
 const [inputValue2DI_SELECT_SW, setInputValue2DI_SELECT_SW] = useState<any>();
 const [DI_SELECT_SW_High, setDI_SELECT_SW_High] = useState<number | null>(null);
@@ -2262,30 +2002,16 @@ const [maintainDI_SELECT_SW, setMaintainDI_SELECT_SW] = useState<boolean>(false)
  
          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SELECT_SWValue)) {
              if (highValue <= DI_SELECT_SWValue || DI_SELECT_SWValue <= lowValue) {
-                 if (!audioPlayingDI_SELECT_SW) {
-                     audioRef.current?.play();
-                     setAudioPlayingDI_SELECT_SW(true);
+             
                      setExceedThresholdDI_SELECT_SW(true);
-                 }
              } else {
-                setAudioPlayingDI_SELECT_SW(false);
                 setExceedThresholdDI_SELECT_SW(false);
              }
          } 
      } 
- }, [DI_SELECT_SW_High, DI_SELECT_SW, audioPlayingDI_SELECT_SW, DI_SELECT_SW_Low,maintainDI_SELECT_SW]);
+ }, [DI_SELECT_SW_High, DI_SELECT_SW, DI_SELECT_SW_Low,maintainDI_SELECT_SW]);
 
- useEffect(() => {
-     if (audioPlayingDI_SELECT_SW) {
-         const audioEnded = () => {
-            setAudioPlayingDI_SELECT_SW(false);
-         };
-         audioRef.current?.addEventListener('ended', audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener('ended', audioEnded);
-         };
-     }
- }, [audioPlayingDI_SELECT_SW]);
+
 
  const handleInputChangeDI_SELECT_SW = (event: any) => {
      const newValue = event.target.value;
@@ -2332,30 +2058,16 @@ const [maintainDI_RESET, setMaintainDI_RESET] = useState<boolean>(false);
  
          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_RESETValue)) {
              if (highValue <= DI_RESETValue || DI_RESETValue <= lowValue) {
-                 if (!audioPlayingDI_RESET) {
-                     audioRef.current?.play();
-                     setAudioPlayingDI_RESET(true);
+              
                      setExceedThresholdDI_RESET(true);
-                 }
              } else {
-                setAudioPlayingDI_RESET(false);
                 setExceedThresholdDI_RESET(false);
              }
          } 
      } 
- }, [DI_RESET_High, DI_RESET, audioPlayingDI_RESET, DI_RESET_Low,maintainDI_RESET]);
+ }, [DI_RESET_High, DI_RESET, DI_RESET_Low,maintainDI_RESET]);
 
- useEffect(() => {
-     if (audioPlayingDI_RESET) {
-         const audioEnded = () => {
-            setAudioPlayingDI_RESET(false);
-         };
-         audioRef.current?.addEventListener('ended', audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener('ended', audioEnded);
-         };
-     }
- }, [audioPlayingDI_RESET]);
+
 
  const handleInputChangeDI_RESET = (event: any) => {
      const newValue = event.target.value;
@@ -2403,30 +2115,15 @@ useEffect(() => {
 
      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NOValue)) {
          if (highValue <= Emergency_NOValue || Emergency_NOValue <= lowValue) {
-             if (!audioPlayingEmergency_NO) {
-                 audioRef.current?.play();
-                 setAudioPlayingEmergency_NO(true);
                  setExceedThresholdEmergency_NO(true);
-             }
          } else {
-            setAudioPlayingEmergency_NO(false);
             setExceedThresholdEmergency_NO(false);
          }
      } 
  } 
-}, [Emergency_NO_High, Emergency_NO, audioPlayingEmergency_NO, Emergency_NO_Low,maintainEmergency_NO]);
+}, [Emergency_NO_High, Emergency_NO, Emergency_NO_Low,maintainEmergency_NO]);
 
-useEffect(() => {
- if (audioPlayingEmergency_NO) {
-     const audioEnded = () => {
-        setAudioPlayingEmergency_NO(false);
-     };
-     audioRef.current?.addEventListener('ended', audioEnded);
-     return () => {
-         audioRef.current?.removeEventListener('ended', audioEnded);
-     };
- }
-}, [audioPlayingEmergency_NO]);
+
 
 const handleInputChangeEmergency_NO = (event: any) => {
  const newValue = event.target.value;
@@ -2456,7 +2153,6 @@ const ChangeMaintainEmergency_NO = async () => {
      // =================================================================================================================== 
 
      const [DI_UPS_BATTERY, setDI_UPS_BATTERY] = useState<string | null>(null);
-     const [audioPlayingDI_UPS_BATTERY, setAudioPlayingDI_UPS_BATTERY] = useState(false);
      const [inputValueDI_UPS_BATTERY, setInputValueDI_UPS_BATTERY] = useState<any>();
      const [inputValue2DI_UPS_BATTERY, setInputValue2DI_UPS_BATTERY] = useState<any>();
      const [DI_UPS_BATTERY_High, setDI_UPS_BATTERY_High] = useState<number | null>(null);
@@ -2475,30 +2171,16 @@ const ChangeMaintainEmergency_NO = async () => {
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_BATTERYValue)) {
                      if (highValue <= DI_UPS_BATTERYValue || DI_UPS_BATTERYValue <= lowValue) {
-                         if (!audioPlayingDI_UPS_BATTERY) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_UPS_BATTERY(true);
+                   
                              setExceedThresholdDI_UPS_BATTERY(true);
-                         }
                      } else {
-                        setAudioPlayingDI_UPS_BATTERY(false);
                         setExceedThresholdDI_UPS_BATTERY(false);
                      }
                  } 
              } 
-         }, [DI_UPS_BATTERY_High, DI_UPS_BATTERY, audioPlayingDI_UPS_BATTERY, DI_UPS_BATTERY_Low,maintainDI_UPS_BATTERY]);
+         }, [DI_UPS_BATTERY_High, DI_UPS_BATTERY, DI_UPS_BATTERY_Low,maintainDI_UPS_BATTERY]);
      
-         useEffect(() => {
-             if (audioPlayingDI_UPS_BATTERY) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_UPS_BATTERY(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_UPS_BATTERY]);
+       
      
          const handleInputChangeDI_UPS_BATTERY = (event: any) => {
              const newValue = event.target.value;
@@ -2526,7 +2208,6 @@ const ChangeMaintainEmergency_NO = async () => {
      
      
      const [Emergency_NC, setEmergency_NC] = useState<string | null>(null);
-     const [audioPlayingEmergency_NC, setAudioPlayingEmergency_NC] = useState(false);
      const [inputValueEmergency_NC, setInputValueEmergency_NC] = useState<any>();
      const [inputValue2Emergency_NC, setInputValue2Emergency_NC] = useState<any>();
      const [Emergency_NC_High, setEmergency_NC_High] = useState<number | null>(null);
@@ -2545,30 +2226,16 @@ const ChangeMaintainEmergency_NO = async () => {
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NCValue)) {
                      if (highValue <= Emergency_NCValue || Emergency_NCValue <= lowValue) {
-                         if (!audioPlayingEmergency_NC) {
-                             audioRef.current?.play();
-                             setAudioPlayingEmergency_NC(true);
+                       
                              setExceedThresholdEmergency_NC(true);
-                         }
                      } else {
-                        setAudioPlayingEmergency_NC(false);
                         setExceedThresholdEmergency_NC(false);
                      }
                  } 
              } 
-         }, [Emergency_NC_High, Emergency_NC, audioPlayingEmergency_NC, Emergency_NC_Low,maintainEmergency_NC]);
+         }, [Emergency_NC_High, Emergency_NC, Emergency_NC_Low,maintainEmergency_NC]);
      
-         useEffect(() => {
-             if (audioPlayingEmergency_NC) {
-                 const audioEnded = () => {
-                    setAudioPlayingEmergency_NC(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEmergency_NC]);
+ 
      
          const handleInputChangeEmergency_NC = (event: any) => {
              const newValue = event.target.value;
@@ -2597,7 +2264,6 @@ const ChangeMaintainEmergency_NO = async () => {
          // =================================================================================================================== 
      
      const [UPS_Mode, setUPS_Mode] = useState<string | null>(null);
-     const [audioPlayingUPS_Mode, setAudioPlayingUPS_Mode] = useState(false);
      const [inputValueUPS_Mode, setInputValueUPS_Mode] = useState<any>();
      const [inputValue2UPS_Mode, setInputValue2UPS_Mode] = useState<any>();
      const [UPS_Mode_High, setUPS_Mode_High] = useState<number | null>(null);
@@ -2616,30 +2282,16 @@ const ChangeMaintainEmergency_NO = async () => {
      
              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UPS_ModeValue)) {
                  if (highValue <= UPS_ModeValue || UPS_ModeValue <= lowValue) {
-                     if (!audioPlayingUPS_Mode) {
-                         audioRef.current?.play();
-                         setAudioPlayingUPS_Mode(true);
+               
                          setExceedThresholdUPS_Mode(true);
-                     }
                  } else {
-                    setAudioPlayingUPS_Mode(false);
                     setExceedThresholdUPS_Mode(false);
                  }
              } 
          } 
-     }, [UPS_Mode_High, UPS_Mode, audioPlayingUPS_Mode, UPS_Mode_Low,maintainUPS_Mode]);
+     }, [UPS_Mode_High, UPS_Mode, UPS_Mode_Low,maintainUPS_Mode]);
      
-     useEffect(() => {
-         if (audioPlayingUPS_Mode) {
-             const audioEnded = () => {
-                setAudioPlayingUPS_Mode(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingUPS_Mode]);
+   
      
      const handleInputChangeUPS_Mode = (event: any) => {
          const newValue = event.target.value;
@@ -2685,30 +2337,16 @@ const ChangeMaintainEmergency_NO = async () => {
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_HR_01Value)) {
                      if (highValue <= DO_HR_01Value || DO_HR_01Value <= lowValue) {
-                         if (!audioPlayingDO_HR_01) {
-                             audioRef.current?.play();
-                             setAudioPlayingDO_HR_01(true);
+                       
                              setExceedThresholdDO_HR_01(true);
-                         }
                      } else {
-                        setAudioPlayingDO_HR_01(false);
                          setExceedThresholdDO_HR_01(false);
                      }
                  } 
              } 
-         }, [DO_HR_01_High, DO_HR_01, audioPlayingDO_HR_01, DO_HR_01_Low,maintainDO_HR_01]);
+         }, [DO_HR_01_High, DO_HR_01, DO_HR_01_Low,maintainDO_HR_01]);
      
-         useEffect(() => {
-             if (audioPlayingDO_HR_01) {
-                 const audioEnded = () => {
-                    setAudioPlayingDO_HR_01(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDO_HR_01]);
+
      
          const handleInputChangeDO_HR_01 = (event: any) => {
              const newValue = event.target.value;
@@ -2762,30 +2400,16 @@ const ChangeMaintainEmergency_NO = async () => {
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_BC_01Value)) {
                           if (highValue <= DO_BC_01Value || DO_BC_01Value <= lowValue) {
-                              if (!audioPlayingDO_BC_01) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingDO_BC_01(true);
+                         
                                   setExceedThresholdDO_BC_01(true);
-                              }
                           } else {
-                             setAudioPlayingDO_BC_01(false);
                              setExceedThresholdDO_BC_01(false);
                           }
                       } 
                   } 
-              }, [DO_BC_01_High, DO_BC_01, audioPlayingDO_BC_01, DO_BC_01_Low,maintainDO_BC_01]);
+              }, [DO_BC_01_High, DO_BC_01, DO_BC_01_Low,maintainDO_BC_01]);
           
-              useEffect(() => {
-                  if (audioPlayingDO_BC_01) {
-                      const audioEnded = () => {
-                         setAudioPlayingDO_BC_01(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingDO_BC_01]);
+          
           
               const handleInputChangeDO_BC_01 = (event: any) => {
                   const newValue = event.target.value;
@@ -2813,7 +2437,6 @@ const ChangeMaintainEmergency_NO = async () => {
 
 
           const [DO_SV_01, setDO_SV_01] = useState<string | null>(null);
-          const [audioPlayingDO_SV_01, setAudioPlayingDO_SV_01] = useState(false);
           const [inputValuDO_SV_01, setInputValuDO_SV_01] = useState<any>();
           const [inputValue2DO_SV_01, setInputValue2DO_SV_01] = useState<any>();
           const [DO_SV_01_High, setDO_SV_01_High] = useState<number | null>(null);
@@ -2832,30 +2455,16 @@ const ChangeMaintainEmergency_NO = async () => {
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV_01Value)) {
                           if (highValue <= DO_SV_01Value || DO_SV_01Value <= lowValue) {
-                              if (!audioPlayingDO_SV_01) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingDO_SV_01(true);
+                           
                                   setExceedThresholdDO_SV_01(true);
-                              }
                           } else {
-                             setAudioPlayingDO_SV_01(false);
                              setExceedThresholdDO_SV_01(false);
                           }
                       } 
                   } 
-              }, [DO_SV_01_High, DO_SV_01, audioPlayingDO_SV_01 , DO_SV_01_Low,maintainDO_SV_01]);
+              }, [DO_SV_01_High, DO_SV_01 , DO_SV_01_Low,maintainDO_SV_01]);
           
-              useEffect(() => {
-                  if (audioPlayingDO_SV_01) {
-                      const audioEnded = () => {
-                         setAudioPlayingDO_SV_01(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingDO_SV_01]);
+       
           
               const handleInputChangDO_BC_01 = (event: any) => {
                   const newValue = event.target.value;
@@ -4289,9 +3898,173 @@ checked={maintainDO_SV_01}
             fontWeight: 400,
         },
     };
-    const configuration = [
+    // const configuration = [
+    //     {
+    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1601) (BarG)</span>,
+
+    //         Value: (
+    //             <InputText
+    //                 style={combineCssAttribute.PCV}
+    //                 placeholder="High"
+    //                 step="0.1"
+    //                 type="Name"
+    //                 value={inputPCV_01}
+    //                 onChange={handleInputPCV_01}
+    //                 inputMode="decimal"
+    //             />
+    //         ),
+
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+    //                 style={{ marginTop: 5 }}
+    //                 label="Update"
+    //                 onClick={confirmUpData}
+    //             />
+    //         ),
+    //     },
+
+    //     {
+    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1602) (BarG)</span>,
+
+    //         Value: (
+    //             <InputText
+    //                 style={combineCssAttribute.PCV}
+    //                 placeholder="High"
+    //                 step="0.1"
+    //                 type="Name"
+    //                 value={inputPCV_02}
+    //                 onChange={handleInputPCV_02}
+    //                 inputMode="decimal"
+    //             />
+    //         ),
+
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+    //                 style={{ marginTop: 5 }}
+    //                 label="Update"
+    //                 onClick={confirmUpData}
+    //             />
+    //         ),
+    //     },
+
+    //     {
+    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PCV-1601) (BarG)</span>,
+
+    //         Value: (
+    //             <InputText
+    //                 style={combineCssAttribute.PCV}
+    //                 placeholder="High"
+    //                 step="0.1"
+    //                 type="Name"
+    //                 value={inputPSV_01}
+    //                 onChange={handleInputPSV_01}
+    //                 inputMode="decimal"
+    //             />
+    //         ),
+
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+    //                 style={{ marginTop: 5 }}
+    //                 label="Update"
+    //                 onClick={confirmUpData}
+    //             />
+    //         ),
+    //     },
+    //     {
+    //         Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+
+    //         Value: (
+    //             <InputText
+    //                 style={combineCssAttribute.PCV}
+    //                 placeholder="High"
+    //                 step="0.1"
+    //                 type="Name"
+    //                 value={inputGetwayPhone}
+    //                 onChange={handleInputChangeGetWayPhone}
+    //                 inputMode="decimal"
+    //             />
+    //         ),
+
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+    //                 style={{ marginTop: 5 }}
+    //                 label="Update"
+    //                 onClick={confirmUpData}
+    //             />
+    //         ),
+    //     },
+
+
+    //     {
+    //         Name: (
+    //             <span style={combineCssTime.PCV}>
+    //                 {ConfigurationName.EVC_01_Battery_Installation_Date}
+    //             </span>
+    //         ),
+          
+    //         Value: (
+    //             <Calendar
+    //                 style={combineCssTime.PCV}
+    //                 value={date2}
+    //                 onChange={handleDateChange}
+
+    //                 showTime={false}
+    //                 inputId="timeEVC_02"
+    //                 dateFormat="dd-mm-yy"
+    //             />
+    //         ),
+           
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+    //                 style={{ marginTop: 5 }}
+    //                 label="Update"
+    //                 onClick={confirmUpData}
+    //             />
+    //         ),
+    //     },
+    //     {
+    //         Name: (
+    //             <span style={combineCssTime.PCV}>
+    //                 {ConfigurationName.EVC_01_Battery_Expiration_Date}
+    //             </span>
+    //         ),
+          
+         
+    //         Value: (
+    //             <Calendar
+                
+    //                 style={combineCssTime.PCV}
+    //                 value={date}
+    //                 disabled
+
+    //                 showTime={false}
+    //                 inputId="timeEVC_01"
+    //                 dateFormat="dd-mm-yy"
+    //             />
+    //         ),
+    //         Update: (
+    //             <Button
+    //                 className="buttonUpdateSetData"
+
+    //                 disabled
+    //                 style={{ marginTop: 5,cursor:"no-drop" }}
+    //                 label="Update"
+    //             />
+    //         ),
+           
+    //     },
+
+    // ];
+
+
+        const configuration = [
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1601) (BarG)</span>,
+            Name: <p style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1601) (BarG)</p>,
 
             Value: (
                 <InputText
@@ -4316,7 +4089,7 @@ checked={maintainDO_SV_01}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1602) (BarG)</span>,
+            Name: <p style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1602) (BarG)</p>,
 
             Value: (
                 <InputText
@@ -4341,7 +4114,7 @@ checked={maintainDO_SV_01}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PCV-1601) (BarG)</span>,
+            Name: <p style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PCV-1601) (BarG)</p>,
 
             Value: (
                 <InputText
@@ -4365,7 +4138,7 @@ checked={maintainDO_SV_01}
             ),
         },
         {
-            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+            Name: <p style={combineCssAttribute.PCV}>IOT getway phone number </p>,
 
             Value: (
                 <InputText
@@ -4392,9 +4165,9 @@ checked={maintainDO_SV_01}
 
         {
             Name: (
-                <span style={combineCssTime.PCV}>
+                <p style={combineCssTime.PCV}>
                     {ConfigurationName.EVC_01_Battery_Installation_Date}
-                </span>
+                </p>
             ),
           
             Value: (
@@ -4420,9 +4193,9 @@ checked={maintainDO_SV_01}
         },
         {
             Name: (
-                <span style={combineCssTime.PCV}>
+                <p style={combineCssTime.PCV}>
                     {ConfigurationName.EVC_01_Battery_Expiration_Date}
-                </span>
+                </p>
             ),
           
          
@@ -4456,9 +4229,9 @@ checked={maintainDO_SV_01}
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, marginTop:10 }}>
-        <audio ref={audioRef}>
+        {/* <audio ref={audioRef}>
             <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
+        </audio> */}
         <Toast ref={toast} />
 
         <ConfirmDialog />
@@ -4466,9 +4239,12 @@ checked={maintainDO_SV_01}
 <h2>ARAKAWA</h2>
 
     <div style={{width:'100%' ,  borderRadius:5 }}>
-    <DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
+    <DataTable 
+       columnResizeMode="expand"
+       resizableColumns
+    
+    tableStyle={{ minWidth: '20rem' }} size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
                     sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
-  {/* <Column field="modbus" header="Modbus" /> */}
   <Column field="timeUpdate" header="Time Update" />
 
   <Column field="modbus" header="Modbus" />
@@ -4483,14 +4259,20 @@ checked={maintainDO_SV_01}
 
 </DataTable>
 
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
+
+
+<div  style={{ width:'100%', borderRadius: 5, marginTop:20 }}>
                 <h4>Station - configurations </h4>
-                <DataTable value={configuration} size={"small"} selectionMode="single" >
+                <DataTable value={configuration} size={"small"} 
+                     columnResizeMode="expand"
+                     resizableColumns   >
                     <Column field="Name" header="Name" />
+
 
                     <Column field="Value" header="Value" />
 
                     <Column field="Update" header="Update" />
+
                 </DataTable>
             </div>
 
