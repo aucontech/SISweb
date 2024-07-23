@@ -1199,11 +1199,11 @@ useEffect(() => {
         V2_Flow_Meter: `V2 Flow Meter ${nameValue.m3}`,
 
         Pipe_Temp:`Pipe Temp ${nameValue.C}`,
-        Pipe_Press:`Pipe Press  ( Bar )`,
+        Pipe_Press:`Pipe Press  (Bar)`,
 
         Tank_TT_301: `Tank TT 301  ${nameValue.C}`,
 
-        Tank_PT_301: `Tank PT 301 ( Bar )`,
+        Tank_PT_301: `Tank PT 301 (Bar)`,
 
         Tank_01_Level: `Tank_01_Level `,
 
@@ -1609,7 +1609,7 @@ useEffect(() => {
         },
 
         {
-            name: <span>Tank Level ( % )</span>,
+            name: <span>Tank Level (%)</span>,
             PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
         },
 
@@ -1617,12 +1617,12 @@ useEffect(() => {
 //===
 
         {
-            name: <span>Tank Mass ( Kg )</span>,
+            name: <span>Tank Mass (Kg)</span>,
             PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Mass}  </span>,
         },
      
         {
-            name: <span>Tank Volume ( L )</span>,
+            name: <span>Tank Volume (L)</span>,
             PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Volume}  </span>,
         },
       
