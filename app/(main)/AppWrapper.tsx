@@ -43,7 +43,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         } else {
             if (pathname === "/login") {
                 router.push("/Graphic");
-                if (user.authority === "CUSTOMER_USER") {
+                if (user && user?.authority === "CUSTOMER_USER") {
                     _fetchDataDevciesByCustomer()
                         .then((res) => {
                             let deviceIds = res.map((item: any) => item.id.id);
@@ -66,7 +66,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
             } else {
                 if (pathname === "/") {
                     router.push("/Graphic");
-                    if (user.authority === "CUSTOMER_USER") {
+                    if (user && user.authority === "CUSTOMER_USER") {
                         _fetchDataDevciesByCustomer()
                             .then((res) => {
                                 let deviceIds = res.map(
