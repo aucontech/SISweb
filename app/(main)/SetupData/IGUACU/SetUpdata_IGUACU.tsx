@@ -6064,11 +6064,11 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> ,
 
     const handleDateChange2 = (e: any) => {
         const selectedDate = e.value;
-        setTimeEVC_03(selectedDate.getTime());
+         setTimeEVC_04(selectedDate.getTime());
 
         const expirationDate = new Date(selectedDate);
         expirationDate.setMonth(expirationDate.getMonth() + 18);
-        setTimeEVC_04(expirationDate.getTime());
+        setTimeEVC_03(expirationDate.getTime());
     };
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -6269,11 +6269,11 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> ,
             Value: (
                 <Calendar
                     style={combineCssTime.PCV}
-                    value={date3}
+                    value={date4}
                     onChange={handleDateChange2}
 
                     showTime={false}
-                    inputId="timeEVC_02"
+                    inputId="timeEVC_04"
                     dateFormat="dd-mm-yy"
                 />
             ),
@@ -6299,11 +6299,11 @@ value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> ,
                 <Calendar
                 
                     style={combineCssTime.PCV}
-                    value={date4}
+                    value={date3}
                     disabled
 
                     showTime={false}
-                    inputId="timeEVC_01"
+                    inputId="timeEVC_03"
                     dateFormat="dd-mm-yy"
                 />
                 

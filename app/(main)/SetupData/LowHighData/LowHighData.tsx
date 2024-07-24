@@ -16,6 +16,7 @@ import SetAttribute from './SetAttribute';
 import { Calendar } from 'primereact/calendar';
 import SetAttribute1 from '../../OTSUKA/title-OTK';
 import { nameValue } from '../namValue';
+import SetAttributeTest from './SetAttributeTest';
 
 interface StateMap {
 
@@ -5150,6 +5151,7 @@ const confirmUpChangeGatewayPhone = () => {
        checked={maintainZSO_1}
    ></Checkbox>
        },
+       
         {
              mainCategory: mainCategoryEVC.PLC,
             
@@ -5256,6 +5258,11 @@ const confirmUpChangeGatewayPhone = () => {
 
 <SetAttribute/>
 </div>
+
+{/* <div style={{width:'100%' ,  borderRadius:5,   }}>
+
+<SetAttributeTest/>
+</div> */}
 
 <br />
 <br />

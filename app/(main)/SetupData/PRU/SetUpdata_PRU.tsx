@@ -7029,11 +7029,11 @@ checked={maintainSDV_6003}
 
     const handleDateChange2 = (e: any) => {
         const selectedDate = e.value;
-        setTimeEVC_03(selectedDate.getTime());
+         setTimeEVC_04(selectedDate.getTime());
 
         const expirationDate = new Date(selectedDate);
         expirationDate.setMonth(expirationDate.getMonth() + 18);
-        setTimeEVC_04(expirationDate.getTime());
+        setTimeEVC_03(expirationDate.getTime());
     };
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -7375,11 +7375,11 @@ checked={maintainSDV_6003}
             Value: (
                 <Calendar
                     style={combineCssTime.PCV}
-                    value={date3}
+                    value={date4}
                     onChange={handleDateChange2}
 
                     showTime={false}
-                    inputId="timeEVC_02"
+                    inputId="timeEVC_04"
                     dateFormat="dd-mm-yy"
                 />
             ),
@@ -7405,11 +7405,11 @@ checked={maintainSDV_6003}
                 <Calendar
                 
                     style={combineCssTime.PCV}
-                    value={date4}
+                    value={date3}
                     disabled
 
                     showTime={false}
-                    inputId="timeEVC_01"
+                    inputId="timeEVC_03"
                     dateFormat="dd-mm-yy"
                 />
                 

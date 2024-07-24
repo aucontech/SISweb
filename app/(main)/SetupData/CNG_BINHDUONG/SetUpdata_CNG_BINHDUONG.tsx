@@ -12,6 +12,7 @@ import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { namePCV_PSV, nameValue } from '../namValue';
+import { UserOperator, UserTechnican } from '../../userID/UserID';
 
 interface StateMap {
 
@@ -76,6 +77,29 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
     const [timeEVC_03,setTimeEVC_03] = useState<any>()
     const [timeEVC_04,setTimeEVC_04] = useState<any>()
+
+
+
+    const Authorization = localStorage.getItem('user');
+    const userData = Authorization ? JSON.parse(Authorization) : null;
+     const userId = userData?.id?.id;
+    
+    const AuthUpdate = userId === UserTechnican.A  ||
+    userId === UserTechnican.Q ||
+     userId ===  UserTechnican.N ||
+      userId === UserTechnican.T  ||
+       userId === UserTechnican.TN ||
+        userId === UserTechnican.DT ;
+    
+    
+    const AuthInput = userId !== UserTechnican.A  || 
+    userId !== UserTechnican.Q ||
+    userId !==  UserTechnican.N ||
+     userId !== UserTechnican.T  ||
+      userId !== UserTechnican.TN ||
+        userId !== UserTechnican.DT ||
+        userId !== UserOperator.VHPM3 ||
+        userId !== UserOperator.TTVHpm3 ; 
     useEffect(() => {
 
         ws.current = new WebSocket(url);
@@ -6433,11 +6457,11 @@ checked={maintainSD_2002}
     
         const handleDateChange2 = (e: any) => {
             const selectedDate = e.value;
-            setTimeEVC_03(selectedDate.getTime());
+             setTimeEVC_04(selectedDate.getTime());
     
             const expirationDate = new Date(selectedDate);
             expirationDate.setMonth(expirationDate.getMonth() + 18);
-            setTimeEVC_04(expirationDate.getTime());
+            setTimeEVC_03(expirationDate.getTime());
         };
         const [selectedDate, setSelectedDate] = useState(null);
     
@@ -6773,11 +6797,11 @@ checked={maintainSD_2002}
                 Value: (
                     <Calendar
                         style={combineCssTime.PCV}
-                        value={date3}
+                        value={date4}
                         onChange={handleDateChange2}
     
                         showTime={false}
-                        inputId="timeEVC_02"
+                        inputId="timeEVC_04"
                         dateFormat="dd-mm-yy"
                     />
                 ),
@@ -6803,11 +6827,11 @@ checked={maintainSD_2002}
                     <Calendar
                     
                         style={combineCssTime.PCV}
-                        value={date4}
+                        value={date3}
                         disabled
     
                         showTime={false}
-                        inputId="timeEVC_01"
+                        inputId="timeEVC_03"
                         dateFormat="dd-mm-yy"
                     />
                     
@@ -6868,7 +6892,7 @@ checked={maintainSD_2002}
 
                     <Column field="Value" header="Value" />
 
-                    <Column field="Update" header="Update" />
+                    {AuthUpdate ?  <Column field="Update" header="Update" />  : " "}
                 </DataTable>
             </div>
 <br />

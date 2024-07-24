@@ -17,15 +17,12 @@ export default function SetAttribute() {
     const toast = useRef<Toast>(null);
 
     const [upData, setUpData] = useState<any>([]);
-    const [upTS, setUpTS] = useState<any>([]);
     const [upData2, setUpData2] = useState<any>([]);
     const [upData3, setUpData3] = useState<any>([]);
     const [getWayPhoneOTSUKA,setGetWayPhoneOTSUKA] = useState<any>()
 
     const [timeEVC_01,setTimeEVC_01] = useState<any>()
     const [timeEVC_02,setTimeEVC_02] = useState<any>()
-
-
     const [timeEVC_03,setTimeEVC_03] = useState<any>()
     const [timeEVC_04,setTimeEVC_04] = useState<any>()
 
@@ -34,6 +31,10 @@ export default function SetAttribute() {
     const [inputValue2, setInputValue2] = useState<any>();
     const [inputValue3, setInputValue3] = useState<any>();
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
+
+
+
+
 
 
     const token = readToken();
@@ -279,6 +280,8 @@ export default function SetAttribute() {
             setUpData3(inputValue3);
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
+
+
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
@@ -301,7 +304,10 @@ export default function SetAttribute() {
         setInputValue3(upData3);
         setInputGetwayPhone(getWayPhoneOTSUKA)
 
-    }, [upData, upData2, upData3,getWayPhoneOTSUKA,timeEVC_01,timeEVC_02]);
+     
+
+
+    }, [upData, upData2, upData3,getWayPhoneOTSUKA,timeEVC_01,timeEVC_02, timeEVC_03,timeEVC_04 ]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
@@ -345,11 +351,11 @@ export default function SetAttribute() {
 
     const handleDateChange2 = (e: any) => {
         const selectedDate = e.value;
-        setTimeEVC_03(selectedDate.getTime());
+         setTimeEVC_04(selectedDate.getTime());
 
         const expirationDate = new Date(selectedDate);
         expirationDate.setMonth(expirationDate.getMonth() + 18);
-        setTimeEVC_04(expirationDate.getTime());
+        setTimeEVC_03(expirationDate.getTime());
     };
     const confirmUpData = () => {
         confirmDialog({
@@ -552,11 +558,11 @@ export default function SetAttribute() {
             Value: (
                 <Calendar
                     style={combineCss.PCV}
-                    value={date3}
+                    value={date4}
                     onChange={handleDateChange2}
 
                     showTime={false}
-                    inputId="timeEVC_02"
+                    inputId="timeEVC_04"
                     dateFormat="dd-mm-yy"
                 />
             ),
@@ -581,11 +587,11 @@ export default function SetAttribute() {
                 <Calendar
                 
                     style={combineCss.PCV}
-                    value={date4}
+                    value={date3}
                     disabled
 
                     showTime={false}
-                    inputId="timeEVC_01"
+                    inputId="timeEVC_03"
                     dateFormat="dd-mm-yy"
                 />
                 
@@ -602,19 +608,18 @@ export default function SetAttribute() {
            
         },
     ];
-    const [selectedDate, setSelectedDate] = useState(null);
+    // const [selectedDate, setSelectedDate] = useState<any>();
 
-    useEffect(() => {
-        // Chuyển đổi chuỗi "01-03-2024" thành đối tượng Date
-        const dateString = "01-03-2024";
-        const parts = dateString.split('-');
-        const year = parseInt(parts[2], 10);
-        const month = parseInt(parts[1], 10) - 1; // Tháng trong JavaScript bắt đầu từ 0
-        const day = parseInt(parts[0], 10);
-        const dateObject :any = new Date(year, month, day);
+    // useEffect(() => {
+    //     const dateString = selectedDate;
+    //     const parts = dateString.split('-');
+    //     const year = parseInt(parts[2], 10);
+    //     const month = parseInt(parts[1], 10) - 1; 
+    //     const day = parseInt(parts[0], 10);
+    //     const dateObject :any = new Date(year, month, day);
     
-        setSelectedDate(dateObject);
-      }, []);
+    //     setSelectedDate(dateObject);
+    //   }, []);
     return (
         <div>
             <Toast ref={toast} />
