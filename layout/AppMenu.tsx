@@ -88,6 +88,7 @@ const AppMenu = () => {
                                         to: "/Graphic/MEIKO",
                                     });
                                 }
+                                setModel(modelData);
                                 break;
                         }
                     }
