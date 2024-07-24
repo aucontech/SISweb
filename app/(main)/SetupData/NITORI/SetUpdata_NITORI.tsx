@@ -4512,66 +4512,7 @@ const Configuration = [
        
     },
 
-    {
-        Name: (
-            <span style={combineCssTime.PCV}>
-                {ConfigurationName.EVC_02_Battery_Installation_Date}
-            </span>
-        ),
-      
-        Value: (
-            <Calendar
-                style={combineCssTime.PCV}
-                value={date3}
-                onChange={handleDateChange2}
 
-                showTime={false}
-                inputId="timeEVC_02"
-                dateFormat="dd-mm-yy"
-            />
-        ),
-       
-        Update: (
-            <Button
-                className="buttonUpdateSetData"
-                style={{ marginTop: 5 }}
-                label="Update"
-                onClick={confirmUpData}
-            />
-        ),
-    },
-    {
-        Name: (
-            <span style={combineCssTime.PCV}>
-                {ConfigurationName.EVC_02_Battery_Expiration_Date}
-            </span>
-        ),
-      
-     
-        Value: (
-            <Calendar
-            
-                style={combineCssTime.PCV}
-                value={date4}
-                disabled
-
-                showTime={false}
-                inputId="timeEVC_01"
-                dateFormat="dd-mm-yy"
-            />
-            
-        ),
-        Update: (
-            <Button
-                className="buttonUpdateSetData"
-                
-                disabled
-                style={{ marginTop: 5,cursor:"no-drop" }}
-                label="Update"
-            />
-        ),
-       
-    },
 
 ];
 

@@ -10,6 +10,7 @@ export default function BallValue01() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
+    console.log('upData: ', upData);
     const [upTS, setUpTS] = useState<any>([]);
 
     const [data, setData] = useState([]);
@@ -124,7 +125,7 @@ export default function BallValue01() {
                     // onDataLine1({ value: updatedData});
 
                 }
-        fetchData();
+        // fetchData();
 
             };
         }
@@ -142,27 +143,27 @@ export default function BallValue01() {
         } catch (error) {}
     };
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-                );
-                setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
-                // onDataLine1(ballValue);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        useEffect(() => {
-            fetchData();
+    //     const fetchData = async () => {
+    //         try {
+    //             const res = await httpApi.get(
+    //                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+    //             );
+    //             setData(res.data);
+    //             const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
+    //             // onDataLine1(ballValue);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
+    //     useEffect(() => {
+    //         fetchData();
 
-    }, []);
+    // }, []);
 
 
     return (
         <div>
-            {data.map((item: any) => (
+            {/* {data.map((item: any) => (
                 <div key={item.key}>
                     {item.key === "BallValue_01" && (
                         <div
@@ -178,7 +179,14 @@ export default function BallValue01() {
                         </div>
                     )}
                 </div>
-            ))}
+            ))} */}
+
+            <div  onClick={handleButtonClick}
+>
+            {upData === "true" ? <div>{BallVavleOn}</div> : <div>{BallVavleOff}</div> }
+
+            </div>
+
         </div>
     );
 }

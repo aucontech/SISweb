@@ -1956,6 +1956,7 @@ useEffect(() => {
 
     // =================================================================================================================== 
     const tagNameFC = {
+        FC_Lithium_Battery_Status: "Lithium Battery Status (0:Yes - 1: No)",
 
         Lithinum_Battery_Status:'Lithinum Battery Status' ,
         Battery_Voltage:'Battery Voltage ( Volt ) ',
@@ -2764,7 +2765,7 @@ useEffect(() => {
 
           const dataFC1 = [
             {
-                name: <span>{tagNameFC.Lithinum_Battery_Status}</span>,
+                name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
                 FC1: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
     
             },
