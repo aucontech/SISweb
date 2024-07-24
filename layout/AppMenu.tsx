@@ -1,25 +1,36 @@
 import type { MenuModel } from "@/types";
 import AppSubMenu from "./AppSubMenu";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { readUser } from "@/service/localStorage";
-import Graphic_MEIKO from "@/app/(main)/Graphic/MEIKO/GraphicMeiko/Graphic_MEIKO";
+import { getDeviceByCustomer } from "@/api/device.api";
+import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+
 const AppMenu = () => {
     const [model, setModel] = useState<MenuModel[]>([]);
+    const _fetchDataDevciesByCustomer = useCallback(async () => {
+        try {
+            const user = readUser();
+            const response = await getDeviceByCustomer(user.customerId.id, {
+                page: 0,
+                pageSize: 100,
+            });
+            const data = response.data.data; // Assuming response structure has a data attribute
+            console.log(data);
+            return data; // Ensure this matches the structure you expect
+        } catch (err) {
+            console.log(err);
+            return []; // Return an empty array or handle the error as needed
+        }
+    }, []);
+
     useEffect(() => {
         const user = readUser();
-
         if (user && user.authority === "CUSTOMER_USER") {
-            const modelData: MenuModel[] = [
+            let modelData: MenuModel[] = [
                 {
                     label: "Station detail",
                     icon: "pi pi-home",
-                    items: [
-                        {
-                            label: "Graphics",
-                            icon: "pi pi-fw pi-home",
-                            to: "/Graphic/MEIKO",
-                        },
-                    ],
+                    items: [],
                 },
 
                 {
@@ -45,7 +56,45 @@ const AppMenu = () => {
                     ],
                 },
             ];
-            setModel(modelData);
+            _fetchDataDevciesByCustomer()
+                .then((res) => {
+                    let deviceIds = res.map((item: any) => item.id.id);
+                    if (deviceIds && deviceIds.length > 0) {
+                        switch (deviceIds[0]) {
+                            case OTSUKA_DEVICE_ID:
+                                if (
+                                    modelData &&
+                                    modelData.length > 0 &&
+                                    modelData[0].items
+                                ) {
+                                    modelData[0].items.push({
+                                        label: "Graphics",
+                                        icon: "pi pi-fw pi-image",
+                                        to: "/OTSUKA",
+                                    });
+                                }
+                                setModel(modelData);
+                                break;
+
+                            case MEIKO_DEVICE_ID:
+                                if (
+                                    modelData &&
+                                    modelData.length > 0 &&
+                                    modelData[0].items
+                                ) {
+                                    modelData[0].items.push({
+                                        label: "Graphics",
+                                        icon: "pi pi-fw pi-image",
+                                        to: "/Graphic/MEIKO",
+                                    });
+                                }
+                                break;
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         } else {
             const modelData: MenuModel[] = [
                 {
@@ -191,7 +240,7 @@ const AppMenu = () => {
             ];
             setModel(modelData);
         }
-    }, []);
+    }, [_fetchDataDevciesByCustomer]);
 
     return <AppSubMenu model={model} />;
 };

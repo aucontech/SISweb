@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
-import { useContext, useState, useRef, useEffect } from "react";
+import { useContext, useState, useRef, useEffect, useCallback } from "react";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
+import { getDeviceByCustomer } from "@/api/device.api";
 
 import { UIUtils } from "@/service/Utils";
 import { AuthContext } from "@/context/AuthProvider";
@@ -20,6 +21,7 @@ import {
 } from "@/service/localStorage";
 import Image from "next/image";
 import Link from "next/link";
+import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
 
 const Login: Page = () => {
     const authContext = useContext(AuthContext);
@@ -31,13 +33,28 @@ const Login: Page = () => {
     const dark = layoutConfig.colorScheme !== "dark";
     const router = useRouter();
 
+    const _fetchDataDevciesByCustomer = useCallback(async () => {
+        try {
+            const user = readUser();
+            const response = await getDeviceByCustomer(user.customerId.id, {
+                page: 0,
+                pageSize: 100,
+            });
+            const data = response.data.data; // Assuming response structure has a data attribute
+            console.log(data);
+            return data; // Ensure this matches the structure you expect
+        } catch (err) {
+            console.log(err);
+            return []; // Return an empty array or handle the error as needed
+        }
+    }, []);
     useEffect(() => {
         getCurrentUser()
-            .then((resp) => {
+            .then((resp: any) => {
                 persistUser(resp.data);
                 router.push("/Graphic");
             })
-            .catch((err) => {
+            .catch((err: any) => {
                 console.log(err);
             });
     }, []);
@@ -53,25 +70,30 @@ const Login: Page = () => {
             .then((resp) => {
                 const currentUser = resp.data;
                 persistUser(currentUser);
+                if (currentUser.authority === "CUSTOMER_USER") {
+                    _fetchDataDevciesByCustomer()
+                        .then((res) => {
+                            let deviceIds = res.map((item: any) => item.id.id);
+                            if (deviceIds && deviceIds.length > 0) {
+                                switch (deviceIds[0]) {
+                                    case OTSUKA_DEVICE_ID:
+                                        router.push("/OTSUKA");
+                                        break;
 
-                if (
-                    currentUser.authority === "CUSTOMER_USER" &&
-                    currentUser.customerId.id ===
-                        "630d27a0-44c4-11ef-ae4f-ffd5655df896"
-                ) {
-                    router.push("/Graphic/MEIKO");
-                } else if (
-                    currentUser.authority === "CUSTOMER_USER" &&
-                    currentUser.customerId.id ===
-                        "5ca4f5f0-0b62-11ef-99cf-ada6de69e9d2"
-                ) {
-                    router.push("/OTSUKA");
-                } else if (currentUser.authority === "TENANT_ADMIN") {
+                                    case MEIKO_DEVICE_ID:
+                                        router.push("/Graphic/MEIKO");
+                                        break;
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
                     router.push("/Graphic");
                 }
             })
             .catch((err) => {
-                console.log(err);
                 UIUtils.showError({
                     error: err?.message,
                     toast: toast.current,
