@@ -79,14 +79,12 @@ export default function SetUpdata_ARAKAWA() {
         userId !== UserOperator.VHPM3 &&
         userId !== UserOperator.TTVHpm3 ; 
 
-        const AuthUpdatePCV = userId === UserOperator.VHPM3  ||
-        userId === UserOperator.TTVHpm3 &&
-         userId === UserTechnican.A  &&
-        userId === UserTechnican.Q &&
-         userId ===  UserTechnican.N &&
-          userId === UserTechnican.T  &&
-           userId === UserTechnican.TN &&
-            userId === UserTechnican.DT ;
+        const AuthUpdatePCV = userId !== UserTechnican.A  &&
+        userId !== UserTechnican.Q &&
+         userId !==  UserTechnican.N &&
+          userId !== UserTechnican.T  &&
+           userId !== UserTechnican.TN &&
+            userId !== UserTechnican.DT ;
          
 
 
