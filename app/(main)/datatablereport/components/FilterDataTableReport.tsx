@@ -41,6 +41,7 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [editFilter, setEditFilter] = useState<any>(defFilter);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggTags, setSuggTags] = useState<any>([]);
+    const [suggAllTags, setSuggAllTags] = useState<any>([]);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
     const [unitAttribute, setUnitAttribute] = useState<any>({});
@@ -294,10 +295,9 @@ const FilterDataTableReport: React.FC<Props> = ({
                     let units = resp[1].data;
                     if (units && units.length > 0) {
                         let unitObj = units[0]["value"];
-
                         setUnitAttribute(unitObj);
                     }
-
+                    setSuggAllTags(keys);
                     setSuggTags(keys);
                 })
                 .catch((error) => {
@@ -373,7 +373,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                 <div className="card p-fluid">
                     <MultiSelect
                         value={editFilter?.tags?.map((tag: any) => tag.key)}
-                        options={suggTags}
+                        options={suggAllTags}
                         onChange={(e) => {
                             _handleAddMultiTagSetting(e.value);
                         }}
