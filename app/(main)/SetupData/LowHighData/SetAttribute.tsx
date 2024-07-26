@@ -41,7 +41,7 @@ export default function SetAttribute() {
     const AuthUpdate = userId === UserTechnican.A  ||
     userId === UserTechnican.Q ||
      userId ===  UserTechnican.N ||
-      userId === UserTechnican.T  ||
+      userId === UserTechnican.T  ||    
        userId === UserTechnican.TN ||
         userId === UserTechnican.DT ||
         userId === UserTechnican.KL ; 
