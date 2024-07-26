@@ -44,7 +44,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             if (resp.status === 200) {
                 setIsAuthenticated(() => true);
                 setIsRedirectToLogin(() => false);
-                console.log("aaaa", resp);
             }
         } catch (error: any) {
             if (error?.response?.data?.errorCode === 10) {

@@ -1,17 +1,27 @@
 import type { AppTopbarRef } from "@/types";
 import { Button } from "primereact/button";
 import { logout } from "@/api/auth.api";
-import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
+import {
+    forwardRef,
+    useContext,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import AppBreadcrumb from "./AppBreadCrumb";
 import { LayoutContext } from "./context/layoutcontext";
 import Alarmbell from "./AlarmBell/Alarmbell";
 import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
+
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const router = useRouter();
     const { onMenuToggle, showProfileSidebar, showConfigSidebar } =
         useContext(LayoutContext);
-    const menubuttonRef = useRef(null);
 
+    const menubuttonRef = useRef(null);
+    const [displayConfirmation, setDisplayConfirmation] = useState(false);
     const onConfigButtonClick = () => {
         showConfigSidebar();
     };
@@ -19,14 +29,37 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current,
     }));
+
     const handleLogOut = () => {
         logout().then(() => {
             router.push("/login");
         });
     };
+    const confirmationDialogFooter = (
+        <>
+            <Button
+                type="button"
+                label="No"
+                icon="pi pi-times"
+                onClick={() => setDisplayConfirmation(false)}
+                text
+            />
+            <Button
+                type="button"
+                label="Yes"
+                icon="pi pi-check"
+                onClick={() => {
+                    setDisplayConfirmation(false);
+                    handleLogOut();
+                }}
+                text
+                autoFocus
+            />
+        </>
+    );
 
     return (
-        <div  className="layout-topbar">
+        <div className="layout-topbar">
             <div className="topbar-start">
                 <button
                     ref={menubuttonRef}
@@ -73,12 +106,30 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                             rounded
                             severity="secondary"
                             className="flex-shrink-0 cursor-pointer flex mt-2 surface-border align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
-                            onClick={handleLogOut}
+                            onClick={() => setDisplayConfirmation(true)}
                         ></Button>
-                        {/* </a> */}
                     </li>
                 </ul>
             </div>
+            <Dialog
+                header="Confirmation"
+                visible={displayConfirmation}
+                onHide={() => setDisplayConfirmation(false)}
+                style={{ width: "350px" }}
+                modal
+                footer={confirmationDialogFooter}
+            >
+                <div className="flex align-items-center justify-content-center">
+                    <i
+                        className="pi pi-exclamation-triangle mr-3"
+                        style={{ fontSize: "2rem" }}
+                    />
+                    <span>
+                        Are you sure you want to terminate current working
+                        session?
+                    </span>
+                </div>
+            </Dialog>
         </div>
     );
 });
