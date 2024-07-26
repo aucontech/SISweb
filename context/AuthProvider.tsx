@@ -9,6 +9,7 @@ import React, {
 } from "react";
 
 import { getCurrentUser } from "@/api/auth.api";
+import { persistUser } from "@/service/localStorage";
 
 // Xác định kiểu cho User và AuthContext
 interface User {
@@ -44,6 +45,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             if (resp.status === 200) {
                 setIsAuthenticated(() => true);
                 setIsRedirectToLogin(() => false);
+                persistUser(resp.data);
+                setUser(() => resp.data);
             }
         } catch (error: any) {
             if (error?.response?.data?.errorCode === 10) {
@@ -82,6 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         authenticate();
     }, [authenticate]);
+    console.log("user", user);
     return (
         <AuthContext.Provider
             value={{
