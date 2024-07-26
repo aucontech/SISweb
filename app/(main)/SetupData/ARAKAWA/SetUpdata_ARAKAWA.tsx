@@ -2437,7 +2437,6 @@ const ChangeMaintainEmergency_NO = async () => {
                 const newMaintainDI_SELECT_SW = checked;
                 const newMaintainDI_RESET = checked;
                 const newMaintainDI_UPS_BATTERY = checked;
-
                 const newMaintainEmergency_NO = checked;
                 const newMaintainEmergency_NC = checked;
                 const newMaintainUPS_Mode = checked;
@@ -3190,7 +3189,13 @@ const ChangeMaintainEmergency_NO = async () => {
   };
          
   const mainCategoryFC = {
-    EVC: <span style={{display:'flex', justifyContent:'space-between'}}> EVC-1601 -  Parameters & configurations  </span>,
+    EVC: <span style={{display:'flex', justifyContent:'space-between'}}> EVC-1601 -  Parameters & configurations   {AuthInput ? " " : <Checkbox
+        
+    
+    style={{ marginRight: 183, marginTop:5 }}
+    onChange={handleCheckboxChange}
+    checked={maintainEVC_01_Remain_Battery_Service_Life}
+/> }</span>,
  
     PLC: <span> PLC -  Parameters & configurations  </span>
 };
