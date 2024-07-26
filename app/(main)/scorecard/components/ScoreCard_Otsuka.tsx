@@ -2456,7 +2456,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
     // =================================================================================================================== 
     const tagNameEVC = {
-        InputPressure: "Input Pressure (BarA)",
+        InputPressure: "Output Pressure (BarA)",
         Temperature: "Temperature (°C)",
         GVF: "Gross Volume Flow (m³/h)",
         SVF: "Standard Volume Flow (Sm³/h)",
@@ -2470,7 +2470,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
+        PT01: "Input Pressure (BarG)",
         GD1: "Gas Detector GD-1901 (%LEL)",
         GD2: "Gas Detector GD-1902 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
@@ -2479,7 +2479,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 

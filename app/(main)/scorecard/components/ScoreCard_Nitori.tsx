@@ -1419,7 +1419,7 @@ useEffect(() => {
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
         UPS_MODE:
             "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4: Normal)",

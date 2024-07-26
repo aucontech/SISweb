@@ -8,6 +8,7 @@
     cursor: pointer;
     width: 100px;
     transition: ease-in-out 0.3s;
+    text-align: center;
 
 }
 .buttonUpdateSetData:hover{

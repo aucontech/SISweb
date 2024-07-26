@@ -11,6 +11,7 @@ import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Calendar } from 'primereact/calendar';
+import { UserOperator, UserTechnican } from "../../userID/UserID";
 
 export default function SetAttribute() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -33,7 +34,45 @@ export default function SetAttribute() {
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
 
 
+    const Authorization = localStorage.getItem('user');
+    const userData = Authorization ? JSON.parse(Authorization) : null;
+     const userId = userData?.id?.id;
+    
+    const AuthUpdate = userId === UserTechnican.A  ||
+    userId === UserTechnican.Q ||
+     userId ===  UserTechnican.N ||
+      userId === UserTechnican.T  ||
+       userId === UserTechnican.TN ||
+        userId === UserTechnican.DT ||
+        userId === UserTechnican.KL ; 
+    
+    
+    const AuthInput = userId !== UserTechnican.A  && 
+    userId !== UserTechnican.Q &&
+    userId !==  UserTechnican.N &&
+     userId !== UserTechnican.T  &&
+      userId !== UserTechnican.TN &&
+        userId !== UserTechnican.DT &&
+        userId !== UserTechnican.KL &&
+        userId !== UserOperator.VHPM3 &&
+        userId !== UserOperator.TTVHpm3 ; 
 
+        const AuthUpdatePCV = userId !== UserTechnican.A  &&
+        userId !== UserTechnican.Q &&
+         userId !==  UserTechnican.N &&
+          userId !== UserTechnican.T  &&
+           userId !== UserTechnican.TN &&
+            userId !== UserTechnican.DT &&
+            userId !== UserTechnican.KL ;
+
+
+            const AuthInputHighLow = userId !== UserTechnican.A  && 
+            userId !== UserTechnican.Q &&
+            userId !==  UserTechnican.N &&
+             userId !== UserTechnican.T  &&
+              userId !== UserTechnican.TN &&
+                userId !== UserTechnican.DT &&
+                userId !== UserTechnican.KL ;
 
 
 
@@ -391,6 +430,7 @@ export default function SetAttribute() {
 
             Value: (
                 <InputText
+                disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
                     placeholder="High"
                     step="0.1"
@@ -402,7 +442,8 @@ export default function SetAttribute() {
             ),
 
             Update: (
-                <Button
+                <Button  
+                    disabled={AuthUpdatePCV}
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
                     label="Update"
@@ -416,6 +457,7 @@ export default function SetAttribute() {
 
             Value: (
                 <InputText
+                disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
                     placeholder="High"
                     step="0.1"
@@ -427,7 +469,8 @@ export default function SetAttribute() {
             ),
 
             Update: (
-                <Button
+                <Button  
+                    disabled={AuthUpdatePCV}
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
                     label="Update"
@@ -441,6 +484,7 @@ export default function SetAttribute() {
 
             Value: (
                 <InputText
+                disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
                     placeholder="High"
                     step="0.1"
@@ -452,7 +496,8 @@ export default function SetAttribute() {
             ),
 
             Update: (
-                <Button
+                <Button  
+                    disabled={AuthUpdatePCV}
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
                     label="Update"
@@ -466,6 +511,7 @@ export default function SetAttribute() {
 
             Value: (
                 <InputText
+                disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
                     placeholder="High"
                     step="0.1"
@@ -477,7 +523,8 @@ export default function SetAttribute() {
             ),
 
             Update: (
-                <Button
+                <Button  
+                    disabled={AuthUpdatePCV}
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
                     label="Update"
@@ -500,7 +547,7 @@ export default function SetAttribute() {
                     style={combineCss.PCV}
                     value={date2}
                     onChange={handleDateChange}
-
+                    disabled={AuthInput}
                     showTime={false}
                     inputId="timeEVC_02"
                     dateFormat="dd-mm-yy"
@@ -508,7 +555,7 @@ export default function SetAttribute() {
             ),
            
             Update: (
-                <Button
+                <Button  
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
                     label="Update"
@@ -560,7 +607,7 @@ export default function SetAttribute() {
                     style={combineCss.PCV}
                     value={date4}
                     onChange={handleDateChange2}
-
+                disabled={AuthInput}
                     showTime={false}
                     inputId="timeEVC_04"
                     dateFormat="dd-mm-yy"
@@ -631,7 +678,10 @@ export default function SetAttribute() {
 
                     <Column field="Value" header="Value" />
 
-                    <Column field="Update" header="Update" />
+                    {AuthInput ? " " : 
+                         <Column field="Update" header="Update" />  
+
+}
                 </DataTable>
             </div>
 
