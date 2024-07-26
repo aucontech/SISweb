@@ -1983,7 +1983,7 @@ useEffect(() => {
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 
@@ -2759,33 +2759,25 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
-        
           };
-
 
           const dataFC1 = [
             {
                 name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
                 FC1: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
-    
             },
             {
                 name: <span>{tagNameFC.Battery_Voltage}</span>,
                 FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{FC_Battery_Voltage}</span>,
-    
             },
             {
                 name: <span>{tagNameFC.System_Voltage}</span>,
                 FC1: <span style={combineCss.CSSFC_System_Voltage}>{FC_System_Voltage}</span>,
-    
             },
             {
                 name: <span>{tagNameFC.Charger_Voltage}</span>,
                 FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
-    
             },
-            
-          
         ];
 
     const dataFC = [
@@ -2793,13 +2785,11 @@ useEffect(() => {
             name: <span>{tagNameFC.InputPressure}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
             FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{FC_02_Current_Values_Static_Pressure}</span>,
-
         },
         {
             name: <span>{tagNameFC.Temperature}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
             FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{FC_02_Current_Values_Temperature}</span>,
-
         },
         {
             name: <span>{tagNameFC.SVF}</span>,
@@ -2897,10 +2887,7 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
         },
 
-        {
-            name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
-        },
+      
         {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
             PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,

@@ -1983,7 +1983,7 @@ useEffect(() => {
         ZSO: "SDV-ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
-        UPS_ALARM: "UPS ALARM (0: Normal - 1: Battery)",
+        UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 
@@ -2897,10 +2897,7 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
         },
 
-        {
-            name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
-        },
+     
         {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
             PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,

@@ -214,7 +214,6 @@ export default function SetUpdata_KOA() {
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
                         DI_UPS_ALARM: setDI_UPS_ALARM,
-                        DI_SD_1: setDI_SD_1,
                         DI_SELECT_SW: setDI_SELECT_SW,
                         DI_RESET: setDI_RESET,
                         Emergency_NO: setEmergency_NO,
@@ -666,13 +665,6 @@ export default function SetUpdata_KOA() {
                 (item: any) => item.key === "DI_UPS_ALARM_Maintain"
             );
 
-            const DI_SD_1_High = res.data.find((item: any) => item.key === "DI_SD_1_High");
-            setDI_SD_1_High(DI_SD_1_High?.value || null);
-            const DI_SD_1_Low = res.data.find((item: any) => item.key === "DI_SD_1_Low");
-            setDI_SD_1_Low(DI_SD_1_Low?.value || null);
-            const DI_SD_1_Maintain = res.data.find(
-                (item: any) => item.key === "DI_SD_1_Maintain"
-            );
 
             const DI_SELECT_SW_High = res.data.find((item: any) => item.key === "DI_SELECT_SW_High");
             setDI_SELECT_SW_High(DI_SELECT_SW_High?.value || null);
@@ -834,7 +826,7 @@ export default function SetUpdata_KOA() {
 
             setMaintainDI_SELECT_SW(DI_SELECT_SW_Maintain?.value || false);
 
-            setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
+        
 
             setMaintainDI_UPS_ALARM(DI_UPS_ALARM_Maintain?.value || false);
 
@@ -3252,76 +3244,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
      // =================================================================================================================== 
  
  
-     const [DI_SD_1, setDI_SD_1] = useState<string | null>(null);
-     const [audioPlayingDI_SD_1, setAudioPlayingDI_SD_1] = useState(false);
-     const [inputValueDI_SD_1, setInputValueDI_SD_1] = useState<any>();
-     const [inputValue2DI_SD_1, setInputValue2DI_SD_1] = useState<any>();
-     const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
-     const [DI_SD_1_Low, setDI_SD_1_Low] = useState<number | null>(null);
-     const [exceedThresholdDI_SD_1, setExceedThresholdDI_SD_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     
-     const [maintainDI_SD_1, setMaintainDI_SD_1] = useState<boolean>(false);
-     
-     
-         useEffect(() => {
-             if (typeof DI_SD_1_High === 'string' && typeof DI_SD_1_Low === 'string' && DI_SD_1 !== null && maintainDI_SD_1 === false
-             ) {
-                 const highValue = parseFloat(DI_SD_1_High);
-                 const lowValue = parseFloat(DI_SD_1_Low);
-                 const DI_SD_1Value = parseFloat(DI_SD_1);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
-                     if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                         if (!audioPlayingDI_SD_1) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_SD_1(true);
-                             setExceedThresholdDI_SD_1(true);
-                         }
-                     } else {
-                        setAudioPlayingDI_SD_1(false);
-                        setExceedThresholdDI_SD_1(false);
-                     }
-                 } 
-             } 
-         }, [DI_SD_1_High, DI_SD_1, audioPlayingDI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
-     
-         useEffect(() => {
-             if (audioPlayingDI_SD_1) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_SD_1(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_SD_1]);
-     
-         const handleInputChangeDI_SD_1 = (event: any) => {
-             const newValue = event.target.value;
-             setInputValueDI_SD_1(newValue);
-         };
-     
-         const handleInputChange2DI_SD_1 = (event: any) => {
-             const newValue2 = event.target.value;
-             setInputValue2DI_SD_1(newValue2);
-         };
-         const ChangeMaintainDI_SD_1 = async () => {
-             try {
-                 const newValue = !maintainDI_SD_1;
-                 await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
-                     { DI_SD_1_Maintain: newValue }
-                 );
-                 setMaintainDI_SD_1(newValue);
-                 
-             } catch (error) {}
-         };
- 
- 
-     // =================================================================================================================== 
- 
-         // =================================================================================================================== 
+             // =================================================================================================================== 
  
  const [DI_SELECT_SW, setDI_SELECT_SW] = useState<string | null>(null);
  const [audioPlayingDI_SELECT_SW, setAudioPlayingDI_SELECT_SW] = useState(false);
@@ -4181,7 +4104,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     DI_UPS_CHARGING_High: inputValueDI_UPS_CHARGING,DI_UPS_CHARGING_Low:inputValue2DI_UPS_CHARGING,
                     DI_UPS_ALARM_High: inputValueDI_UPS_ALARM,DI_UPS_ALARM_Low:inputValue2DI_UPS_ALARM,
 
-                    DI_SD_1_High: inputValueDI_SD_1,DI_SD_1_Low:inputValue2DI_SD_1,
+                  
                     DI_SELECT_SW_High: inputValueDI_SELECT_SW,DI_SELECT_SW_Low:inputValue2DI_SELECT_SW,
 
                     DI_RESET_High: inputValueDI_RESET,DI_RESET_Low:inputValue2DI_RESET,
@@ -4335,9 +4258,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             setDI_UPS_CHARGING_High(inputValueDI_UPS_CHARGING);
             setDI_UPS_CHARGING_Low(inputValue2DI_UPS_CHARGING);
 
-            setDI_SD_1_High(inputValueDI_SD_1);
-            setDI_SD_1_Low(inputValue2DI_SD_1);
-
+     
             setDI_SELECT_SW_High(inputValueDI_SELECT_SW);
             setDI_SELECT_SW_Low(inputValue2DI_SELECT_SW);
 
@@ -4517,8 +4438,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueDI_UPS_ALARM(DI_UPS_ALARM_High); 
         setInputValue2DI_UPS_ALARM(DI_UPS_ALARM_Low); 
 
-        setInputValueDI_SD_1(DI_SD_1_High); 
-        setInputValue2DI_SD_1(DI_SD_1_Low); 
 
         setInputValueDI_SELECT_SW(DI_SELECT_SW_High); 
         setInputValue2DI_SELECT_SW(DI_SELECT_SW_Low); 
@@ -4607,7 +4526,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            DI_UPS_CHARGING_High,DI_UPS_CHARGING_Low,
            DI_UPS_ALARM_High,DI_UPS_ALARM_Low,
 
-           DI_SD_1_High,DI_SD_1_Low,
+     
            DI_SELECT_SW_High,DI_SELECT_SW_Low,
 
            Emergency_NO_High,Emergency_NO_Low,
@@ -5050,16 +4969,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             fontWeight:400,
         },
 
-        CSSDI_SD_1 : {
-            color:exceedThresholdDI_SD_1 && !maintainDI_SD_1
-            ? "#ff5656"
-            : maintainDI_SD_1
-            ? "orange"
-            : "" ,
-            height:25,
-            fontWeight:400,
-        },
-
+    
 
         CSSDI_RESET : {
             color:exceedThresholdDI_RESET && !maintainDI_RESET
@@ -5648,7 +5558,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
   const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
   const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
   const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
-  const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+
   const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
   const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
@@ -5888,24 +5798,6 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
    },
 
 
-   {
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
-
-   modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
-
-  value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1} {DataDI_SD_1}</span> , 
-   high: <InputText style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
-   style={{ marginRight: 20, }}
-   onChange={ChangeMaintainDI_SD_1}
-   checked={maintainDI_SD_1}
-></Checkbox>
-
-  },
 
 
   {
