@@ -1,120 +1,209 @@
 "use client";
-import React, { useEffect, ReactNode, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, ReactNode } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthProvider";
-import { usePathname } from "next/navigation";
 import { readUser } from "@/service/localStorage";
 import { getDeviceByCustomer } from "@/api/device.api";
 import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+
 interface AppWrapperProps {
     children: ReactNode;
 }
+
+interface RouteConfig {
+    CUSTOMER_USER: {
+        DEFAULT_ROUTES: string[];
+        DEVICE_SPECIFIC: {
+            [key: string]: string[];
+        };
+    };
+    OTHER_USER: string[];
+}
+
+const ROUTE_CONFIG: RouteConfig = {
+    CUSTOMER_USER: {
+        DEFAULT_ROUTES: ["/Graphic", "/alarmsummarycustomer", "/user"],
+        DEVICE_SPECIFIC: {
+            [OTSUKA_DEVICE_ID]: ["/OTSUKA"],
+            [MEIKO_DEVICE_ID]: ["/Graphic/MEIKO"],
+        },
+    },
+    OTHER_USER: [
+        "/Graphic",
+        "/scorecard",
+        "/alarmsummary",
+        "/alarmhistory",
+        "/SetupData",
+        "/devices",
+        "/customerreport",
+        "/gcvalues",
+        "/datatablereport",
+        "/historicalchart",
+        "/filemanager",
+        "/user",
+    ],
+};
+
+type MiddlewareResult = {
+    success: boolean;
+    action?: "redirect";
+    payload?: string;
+};
+
+type Middleware = (
+    user: any,
+    pathname: string,
+    deviceId: string | null
+) => MiddlewareResult | Promise<MiddlewareResult>;
+
+type MiddlewareChain = Middleware[];
+
+const isAuthenticated: Middleware = (user) => ({
+    success: !!user,
+});
+
+const hasAccess: Middleware = (user, pathname, deviceId) => {
+    if (user && user.authority === "CUSTOMER_USER") {
+        const allowedRoutes = [
+            ...ROUTE_CONFIG.CUSTOMER_USER.DEFAULT_ROUTES,
+            ...(deviceId &&
+            deviceId in ROUTE_CONFIG.CUSTOMER_USER.DEVICE_SPECIFIC
+                ? ROUTE_CONFIG.CUSTOMER_USER.DEVICE_SPECIFIC[deviceId]
+                : []),
+        ];
+        return { success: allowedRoutes.includes(pathname) };
+    } else {
+        return { success: ROUTE_CONFIG.OTHER_USER.includes(pathname) };
+    }
+};
+
+const middlewareChain: MiddlewareChain = [isAuthenticated, hasAccess];
+
 const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
     const authContext = useContext(AuthContext);
+
     if (!authContext) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-    const { isAuthenticated, isLoading, isRedirectToLogin } = authContext;
+    const { isAuthenticated, isLoading, isRedirectToLogin, user } = authContext;
+    const getCustomerDefaultRoute = async (user: any): Promise<string> => {
+        if (user && user.authority === "CUSTOMER_USER") {
+            try {
+                const devices = await getDeviceByCustomer(user.customerId.id, {
+                    page: 0,
+                    pageSize: 100,
+                });
+                const deviceId =
+                    devices.data.data.length > 0
+                        ? devices.data.data[0].id.id
+                        : null;
 
-    const _fetchDataDevciesByCustomer = useCallback(async () => {
-        try {
-            const user = readUser();
-            const response = await getDeviceByCustomer(user.customerId.id, {
-                page: 0,
-                pageSize: 100,
-            });
-            const data = response.data.data; // Assuming response structure has a data attribute
-            console.log(data);
-            return data; // Ensure this matches the structure you expect
-        } catch (err) {
-            console.log(err);
-            return []; // Return an empty array or handle the error as needed
-        }
-    }, []);
-
-    useEffect(() => {
-        const user = readUser();
-        if (isRedirectToLogin && !isAuthenticated) {
-            router.push("/login");
-        } else {
-            if (pathname === "/login") {
-                router.push("/Graphic");
-                if (user && user?.authority === "CUSTOMER_USER") {
-                    _fetchDataDevciesByCustomer()
-                        .then((res) => {
-                            let deviceIds = res.map((item: any) => item.id.id);
-                            if (deviceIds && deviceIds.length > 0) {
-                                switch (deviceIds[0]) {
-                                    case OTSUKA_DEVICE_ID:
-                                        router.push("/OTSUKA");
-                                        break;
-
-                                    case MEIKO_DEVICE_ID:
-                                        router.push("/Graphic/MEIKO");
-                                        break;
-                                }
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
+                if (
+                    deviceId &&
+                    deviceId in ROUTE_CONFIG.CUSTOMER_USER.DEVICE_SPECIFIC
+                ) {
+                    return ROUTE_CONFIG.CUSTOMER_USER.DEVICE_SPECIFIC[
+                        deviceId
+                    ][0];
                 }
-            } else {
-                if (pathname === "/") {
-                    router.push("/Graphic");
-                    if (user && user.authority === "CUSTOMER_USER") {
-                        _fetchDataDevciesByCustomer()
-                            .then((res) => {
-                                let deviceIds = res.map(
-                                    (item: any) => item.id.id
-                                );
-                                if (deviceIds && deviceIds.length > 0) {
-                                    switch (deviceIds[0]) {
-                                        case OTSUKA_DEVICE_ID:
-                                            router.push("/OTSUKA");
-                                            break;
-
-                                        case MEIKO_DEVICE_ID:
-                                            router.push("/Graphic/MEIKO");
-                                            break;
-                                    }
-                                }
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                            });
-                    }
-                } else {
-                    router.push(pathname);
-                }
+            } catch (error) {
+                console.error("Error fetching device:", error);
             }
         }
-    }, [isAuthenticated, pathname, isRedirectToLogin]);
-
-    const spinnerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
+        return ROUTE_CONFIG.CUSTOMER_USER.DEFAULT_ROUTES[0];
     };
 
-    return (
-        <>
-            {isLoading ? (
-                <div style={spinnerStyle}>
-                    <ProgressSpinner
-                        style={{ width: "50px", height: "50px" }}
-                    />
-                </div>
-            ) : (
-                children
-            )}
-        </>
-    );
+    const runMiddleware = async (
+        user: any,
+        pathname: string,
+        deviceId: string | null
+    ): Promise<MiddlewareResult> => {
+        for (const middleware of middlewareChain) {
+            const result = await middleware(user, pathname, deviceId);
+            if (!result.success) {
+                return result;
+            }
+        }
+        return { success: true };
+    };
+
+    const handleRouting = async (
+        user: any,
+        isDefaultRouting: boolean = false
+    ) => {
+        if (!user) return;
+
+        let deviceId = null;
+        if (user.authority === "CUSTOMER_USER") {
+            try {
+                const devices = await getDeviceByCustomer(user.customerId.id, {
+                    page: 0,
+                    pageSize: 100,
+                });
+                deviceId =
+                    devices.data.data.length > 0
+                        ? devices.data.data[0].id.id
+                        : null;
+            } catch (error) {
+                console.error("Error fetching device:", error);
+            }
+        }
+
+        if (isDefaultRouting) {
+            const defaultRoute = await getCustomerDefaultRoute(user);
+            router.push(defaultRoute);
+        } else {
+            const middlewareResult = await runMiddleware(
+                user,
+                pathname,
+                deviceId
+            );
+            if (!middlewareResult.success) {
+                const defaultRoute = await getCustomerDefaultRoute(user);
+                router.push(defaultRoute);
+            }
+        }
+    };
+
+    useEffect(() => {
+        // const userStored = readUser();
+        if (!isAuthenticated) {
+            if (
+                isRedirectToLogin ||
+                pathname === "/login" ||
+                pathname === "/"
+            ) {
+                router.push("/login");
+            }
+        } else {
+            if (pathname === "/" || pathname === "/login") {
+                handleRouting(user, true);
+            } else {
+                handleRouting(user);
+            }
+        }
+    }, [isAuthenticated, pathname, isRedirectToLogin, user]);
+
+    if (isLoading) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                }}
+            >
+                <ProgressSpinner style={{ width: "50px", height: "50px" }} />
+            </div>
+        );
+    }
+
+    return <>{children}</>;
 };
 
 export default AppWrapper;

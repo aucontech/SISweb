@@ -51,8 +51,30 @@ const Login: Page = () => {
     useEffect(() => {
         getCurrentUser()
             .then((resp: any) => {
-                persistUser(resp.data);
-                router.push("/Graphic");
+                let currentUser = resp.data;
+                persistUser(currentUser);
+                if (currentUser && currentUser.authority === "CUSTOMER_USER") {
+                    _fetchDataDevciesByCustomer()
+                        .then((res) => {
+                            let deviceIds = res.map((item: any) => item.id.id);
+                            if (deviceIds && deviceIds.length > 0) {
+                                switch (deviceIds[0]) {
+                                    case OTSUKA_DEVICE_ID:
+                                        router.push("/OTSUKA");
+                                        break;
+
+                                    case MEIKO_DEVICE_ID:
+                                        router.push("/Graphic/MEIKO");
+                                        break;
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    router.push("/Graphic");
+                }
             })
             .catch((err: any) => {
                 console.log(err);
@@ -70,7 +92,7 @@ const Login: Page = () => {
             .then((resp) => {
                 const currentUser = resp.data;
                 persistUser(currentUser);
-                if (currentUser.authority === "CUSTOMER_USER") {
+                if (currentUser && currentUser.authority === "CUSTOMER_USER") {
                     _fetchDataDevciesByCustomer()
                         .then((res) => {
                             let deviceIds = res.map((item: any) => item.id.id);
