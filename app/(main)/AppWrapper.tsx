@@ -89,9 +89,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     if (!authContext) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-
     const { isAuthenticated, isLoading, isRedirectToLogin, user } = authContext;
-    console.log("user", user);
     const getCustomerDefaultRoute = async (user: any): Promise<string> => {
         if (user && user.authority === "CUSTOMER_USER") {
             try {
@@ -159,7 +157,6 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
             const defaultRoute = await getCustomerDefaultRoute(user);
             router.push(defaultRoute);
         } else {
-            console.log("run middleware");
             const middlewareResult = await runMiddleware(
                 user,
                 pathname,
@@ -167,17 +164,13 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
             );
             if (!middlewareResult.success) {
                 const defaultRoute = await getCustomerDefaultRoute(user);
-
                 router.push(defaultRoute);
             }
         }
     };
 
     useEffect(() => {
-        console.log("pathname", pathname);
-        console.log("user", user);
-        console.log("isAuthenticated", isAuthenticated);
-        const userStored = readUser();
+        // const userStored = readUser();
         if (!isAuthenticated) {
             if (
                 isRedirectToLogin ||
@@ -188,14 +181,12 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
             }
         } else {
             if (pathname === "/" || pathname === "/login") {
-                console.log("redirect to default route", user);
-                handleRouting(userStored, true);
+                handleRouting(user, true);
             } else {
-                handleRouting(userStored);
+                handleRouting(user);
             }
-            // Nếu pathname là "/login" và user đã authenticated, không làm gì cả
         }
-    }, [isAuthenticated, pathname, isRedirectToLogin]);
+    }, [isAuthenticated, pathname, isRedirectToLogin, user]);
 
     if (isLoading) {
         return (

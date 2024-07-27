@@ -124,10 +124,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                         className="pi pi-exclamation-triangle mr-3"
                         style={{ fontSize: "2rem" }}
                     />
-                    <span>
-                        Are you sure you want to terminate current working
-                        session?
-                    </span>
+                    <span>Are you sure you want to log out?</span>
                 </div>
             </Dialog>
         </div>
