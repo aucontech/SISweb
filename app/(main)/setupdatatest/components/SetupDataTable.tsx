@@ -3,6 +3,7 @@ import { useToken } from "@/hook/useToken";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { debounce } from "lodash";
 type DataItem = {
     [key: string]: any;
 };
@@ -94,10 +95,32 @@ const SetupDataTable: React.FC<Props> = ({
                                     },
                                 ],
                                 latestValues: tags
-                                    ? tags.map((tag) => ({
-                                          type: "TIME_SERIES",
-                                          key: tag.key,
-                                      }))
+                                    ? [
+                                          ...tags.map((tag) => ({
+                                              type: "TIME_SERIES",
+                                              key: tag.key,
+                                          })),
+                                          ...tags.map((tag) => ({
+                                              type: "ATTRIBUTE",
+                                              key: `${tag.key}_Modbus`,
+                                          })),
+                                          ...tags.map((tag) => ({
+                                              type: "ATTRIBUTE",
+                                              key: `${tag.key}_Low`,
+                                          })),
+                                          ...tags.map((tag) => ({
+                                              type: "ATTRIBUTE",
+                                              key: `${tag.key}_High`,
+                                          })),
+                                          ...tags.map((tag) => ({
+                                              type: "ATTRIBUTE",
+                                              key: `${tag.key}_Maintain`,
+                                          })),
+                                          ...tags.map((tag) => ({
+                                              type: "ATTRIBUTE",
+                                              key: `${tag.key}_ModBus`,
+                                          })),
+                                      ]
                                     : [],
                             },
                             cmdId: 1,
@@ -115,15 +138,26 @@ const SetupDataTable: React.FC<Props> = ({
                 if (data.cmdId === 1 && data.data) {
                     console.log("Data received: ", data);
                     const timeSeries = data.data.data[0].latest.TIME_SERIES;
-
+                    const attributes = data.data.data[0].latest.ATTRIBUTE;
                     setData((prevData) =>
                         prevData.map((item) => {
                             const seriesData = timeSeries[item.key];
+                            const lowData = attributes[`${item.key}_Low`];
+                            const highData = attributes[`${item.key}_High`];
+                            const modBusData = attributes[`${item.key}_Modbus`];
+                            const isMaintainData =
+                                attributes[`${item.key}_Maintain`];
                             if (seriesData) {
                                 return {
                                     ...item,
                                     updateTime: seriesData.ts,
                                     value: seriesData.value,
+                                    low: lowData.value,
+                                    high: highData.value,
+                                    modBus: modBusData.value,
+                                    isMaintain:
+                                        isMaintainData.value.toLowerCase() ===
+                                        "true",
                                 };
                             }
                             return item;
@@ -136,10 +170,20 @@ const SetupDataTable: React.FC<Props> = ({
                                 cmdId: 1,
                                 latestCmd: {
                                     keys: tags
-                                        ? tags.map((tag) => ({
-                                              type: "TIME_SERIES",
-                                              key: tag.key,
-                                          }))
+                                        ? [
+                                              ...tags.map((tag) => ({
+                                                  type: "TIME_SERIES",
+                                                  key: tag.key,
+                                              })),
+                                              ...tags.map((tag) => ({
+                                                  type: "ATTRIBUTE",
+                                                  key: `${tag.key}_Modbus`,
+                                              })),
+                                              ...tags.map((tag) => ({
+                                                  type: "ATTRIBUTE",
+                                                  key: `${tag.key}_Low`,
+                                              })),
+                                          ]
                                         : [],
                                 },
                             },
@@ -150,18 +194,31 @@ const SetupDataTable: React.FC<Props> = ({
                     sendData(JSON.stringify(data2));
                 } else if (data.cmdId === 1 && data.update) {
                     const timeSeries = data.update[0].latest.TIME_SERIES;
-
+                    const attributes = data.update[0].latest.ATTRIBUTE;
                     setData((prevData) =>
                         prevData.map((item) => {
-                            const seriesData = timeSeries[item.key];
-                            if (seriesData) {
-                                return {
-                                    ...item,
-                                    updateTime: seriesData.ts,
-                                    value: seriesData.value,
-                                };
-                            }
-                            return item;
+                            const seriesData =
+                                timeSeries && timeSeries[item.key];
+                            const lowData =
+                                attributes && attributes[`${item.key}_Low`];
+                            const highData =
+                                attributes && attributes[`${item.key}_High`];
+                            const modbusData =
+                                attributes && attributes[`${item.key}_Modbus`];
+                            const isMaintainData =
+                                attributes &&
+                                attributes[`${item.key}_Maintain`];
+                            return {
+                                ...item,
+                                updateTime: seriesData?.ts || item.updateTime,
+                                value: seriesData?.value ?? item.value,
+                                low: lowData?.value ?? item.low,
+                                high: highData?.value ?? item.high,
+                                modbus: modbusData?.value ?? item.modBus,
+                                isMaintain:
+                                    isMaintainData?.value.toLowerCase() ===
+                                        "true" || item.isMaintain,
+                            };
                         })
                     );
                 }
@@ -188,15 +245,66 @@ const SetupDataTable: React.FC<Props> = ({
             }
         };
     }, [connectWebSocket, token]);
+    console.log(data);
+    const handleValueChange = debounce((rowKey, field, newValue) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.key === rowKey
+                    ? { ...item, [field]: Number(newValue) }
+                    : item
+            )
+        );
+    }, 100); // 300ms debounce
     return (
         <>
             <h2>{title}</h2>
+
             <DataTable value={data} loading={loading}>
                 {headers?.map((header) => (
                     <Column
                         key={header.key}
                         field={header.key}
                         header={header.headername}
+                        body={(rowData) => {
+                            if (
+                                ["low", "high", "modBus"].includes(header.key)
+                            ) {
+                                return (
+                                    <input
+                                        type="number"
+                                        value={rowData[header.key] || ""}
+                                        onChange={(e) => {
+                                            const newValue = e.target.value;
+                                            if (
+                                                !isNaN(newValue) &&
+                                                newValue !== ""
+                                            ) {
+                                                handleValueChange(
+                                                    rowData.key,
+                                                    header.key,
+                                                    newValue
+                                                );
+                                            }
+                                        }}
+                                    />
+                                );
+                            } else if (header.key === "isMaintain") {
+                                return (
+                                    <input
+                                        type="checkbox"
+                                        checked={rowData.isMaintain || false}
+                                        onChange={(e) => {
+                                            // Handle checkbox change here if needed
+                                            console.log(
+                                                "Checkbox changed:",
+                                                e.target.checked
+                                            );
+                                        }}
+                                    />
+                                );
+                            }
+                            return rowData[header.key];
+                        }}
                     />
                 ))}
             </DataTable>
