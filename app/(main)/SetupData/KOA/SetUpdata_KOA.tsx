@@ -4251,7 +4251,20 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 handleMainTainAll(isChecked);
             };
             
-         
+            const maintainHeader = (
+                <div>
+        
+                    {!AuthInput && (
+                        <Checkbox
+                            style={{ marginRight: 5 }}
+                            onChange={handleCheckboxChange}
+                            checked={maintainFC_Lithium_Battery_Status}
+                        />
+                    )} 
+                    Maintain
+        
+                </div>
+            );
          
          // =================================================================================================================== 
          
@@ -5263,13 +5276,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
   const mainCategoryFC = {
     FC: 'FC -  Parameters & Configurations',
-    FC01: <span style={{display:'flex', justifyContent:'space-between'}} > FC-1201 -  Parameters & Configurations  {AuthInput ? " " : <Checkbox
-        
-    
-    style={{ marginRight: 183, marginTop:5 }}
-    onChange={handleCheckboxChange}
-    checked={maintainFC_01_Accumulated_Values_Volume}
-/> }</span>,
+    FC01: <span style={{display:'flex', justifyContent:'space-between'}} > FC-1201 -  Parameters & Configurations  </span>,
     FC02: 'FC-1202 -  Parameters & Configurations',
     PLC: 'PLC -  Parameters & Configurations'
 };
@@ -6410,7 +6417,7 @@ checked={maintainDO_SV_02}
   <Column  field="high" header="High" />
   <Column field="low" header="Low" />
 
-  {AuthInput ? " " :  <Column field="Maintain" header= " MainTain " />
+  {AuthInput ? " " :  <Column field="Maintain" header={maintainHeader} />
 }
       {AuthInput ? " " : <Column field="update" header="Update" />}
 
