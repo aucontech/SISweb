@@ -5,10 +5,12 @@ const tags: TagItem[] = [
     {
         tagname: "temperature",
         key: "EVC_01_Pressure",
+        unit: "C",
     },
     {
         tagname: "temperature 02",
         key: "EVC_02_Pressure",
+        unit: "C",
     },
 ];
 const headers: HeaderItem[] = [

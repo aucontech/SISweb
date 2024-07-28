@@ -9,6 +9,11 @@ type DataItem = {
 };
 type DataArray = DataItem[];
 
+export interface UnitObject {
+    0: string;
+    1: string;
+}
+
 export interface HeaderItem {
     headername: string;
     key: string;
@@ -16,6 +21,7 @@ export interface HeaderItem {
 export interface TagItem {
     tagname: string;
     key: string;
+    unit: string | UnitObject;
 }
 
 interface Props {
@@ -42,6 +48,7 @@ const SetupDataTable: React.FC<Props> = ({
         const formattedData = tags.map((tag) => ({
             key: tag.key,
             name: tag.tagname,
+            unit: tag.unit,
         }));
 
         setData(formattedData);
@@ -302,6 +309,20 @@ const SetupDataTable: React.FC<Props> = ({
                                         }}
                                     />
                                 );
+                            } else if (header.key === "value") {
+                                if (typeof rowData.unit === "string") {
+                                    // Nếu unit là string, hiển thị value và unit
+                                    return `${rowData.value} (${rowData.unit})`;
+                                } else if (typeof rowData.unit === "object") {
+                                    // Nếu unit là object, chỉ hiển thị unit tương ứng với value (0 hoặc 1)
+                                    const unitValue =
+                                        rowData.value === 0
+                                            ? rowData.unit[0]
+                                            : rowData.unit[1];
+                                    return unitValue;
+                                }
+                                // Trường hợp khác, chỉ hiển thị value
+                                return rowData.value;
                             }
                             return rowData[header.key];
                         }}
