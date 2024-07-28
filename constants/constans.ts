@@ -13,3 +13,5 @@ export const LGDS_DEVICE_ID = "28cf2a80-a3ce-11ee-9ca1-8f006c3fce43";
 export const CNGPM3_DEVICE_ID = "28cedc60-a3ce-11ee-9ca1-8f006c3fce43";
 export const MEIKO_DEVICE_ID = "28e76d70-a3ce-11ee-9ca1-8f006c3fce43";
 export const SNG_ACECOOK_DEVICE_ID = "28e375d0-a3ce-11ee-9ca1-8f006c3fce43";
+export const SNGHY_DEVICE_ID = "28f1a6a0-a3ce-11ee-9ca1-8f006c3fce43";
+export const SNG_PM3_DEVICEC_ID = "28f1a6a1-a3ce-11ee-9ca1-8f006c3fce43";
