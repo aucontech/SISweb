@@ -12,6 +12,16 @@ const tags: TagItem[] = [
         key: "EVC_02_Pressure",
         unit: "C",
     },
+
+    {
+        tagname: "UPS mode",
+        key: "UPS_Mode",
+        unit: {
+            0: "Normal",
+            1: "Bypass",
+            2: "Battery",
+        },
+    },
 ];
 const headers: HeaderItem[] = [
     {
@@ -57,6 +67,11 @@ const page = () => {
                 headers={headers}
                 tags={tags}
                 title="EVC-1901 - Parameters & Configurations"
+            ></SetupDataTable>
+            <SetupDataTable
+                headers={headers}
+                tags={tags}
+                title="EVC-1902 - Parameters & Configurations"
             ></SetupDataTable>
         </div>
     );

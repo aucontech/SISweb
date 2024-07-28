@@ -4,6 +4,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
+import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
+import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 type DataItem = {
     [key: string]: any;
 };
@@ -12,6 +14,8 @@ type DataArray = DataItem[];
 export interface UnitObject {
     0: string;
     1: string;
+    3: string;
+    4: string;
 }
 
 export interface HeaderItem {
@@ -140,7 +144,6 @@ const SetupDataTable: React.FC<Props> = ({
             };
 
             ws.current.onmessage = (evt: any) => {
-                console.log(JSON.parse(evt.data));
                 let data = JSON.parse(evt.data);
                 if (data.cmdId === 1 && data.data) {
                     console.log("Data received: ", data);
@@ -190,6 +193,18 @@ const SetupDataTable: React.FC<Props> = ({
                                                   type: "ATTRIBUTE",
                                                   key: `${tag.key}_Low`,
                                               })),
+                                              ...tags.map((tag) => ({
+                                                  type: "ATTRIBUTE",
+                                                  key: `${tag.key}_High`,
+                                              })),
+                                              ...tags.map((tag) => ({
+                                                  type: "ATTRIBUTE",
+                                                  key: `${tag.key}_Maintain`,
+                                              })),
+                                              ...tags.map((tag) => ({
+                                                  type: "ATTRIBUTE",
+                                                  key: `${tag.key}_ModBus`,
+                                              })),
                                           ]
                                         : [],
                                 },
@@ -202,6 +217,7 @@ const SetupDataTable: React.FC<Props> = ({
                 } else if (data.cmdId === 1 && data.update) {
                     const timeSeries = data.update[0].latest.TIME_SERIES;
                     const attributes = data.update[0].latest.ATTRIBUTE;
+                    console.log("Data received updated: ", data);
                     setData((prevData) =>
                         prevData.map((item) => {
                             const seriesData =
@@ -224,7 +240,7 @@ const SetupDataTable: React.FC<Props> = ({
                                 modbus: modbusData?.value ?? item.modBus,
                                 isMaintain:
                                     isMaintainData?.value.toLowerCase() ===
-                                        "true" || item.isMaintain,
+                                        "true" || false,
                             };
                         })
                     );
@@ -262,11 +278,69 @@ const SetupDataTable: React.FC<Props> = ({
             )
         );
     }, 100); // 300ms debounce
+    const rowClass = (data: any) => {
+        if (data.isMaintain) {
+            return "text-yellow-500"; // Ưu tiên isMaintain
+        }
+        if (data.value >= data.high || data.value <= data.low) {
+            return "text-red-500"; // Text màu đỏ
+        }
+        return "";
+    };
+    const getTextColorClass = (rowData: any) => {
+        if (rowData.isMaintain) {
+            return "text-yellow-500"; // Ưu tiên isMaintain
+        }
+        if (rowData.value >= rowData.high || rowData.value <= rowData.low) {
+            return "text-red-500"; // Text màu đỏ
+        }
+        return "";
+    };
+    const handleUpdate = (rowData: any) => {
+        console.log("Update clicked for row:", rowData);
+
+        let attributes: { [key: string]: any } = {};
+
+        if (rowData.modBus !== null && rowData.modBus !== "") {
+            attributes[`${rowData.key}_Modbus`] = rowData.modBus;
+        }
+
+        if (rowData.low !== null && rowData.low !== "") {
+            attributes[`${rowData.key}_Low`] = rowData.low;
+        }
+
+        if (rowData.high !== null && rowData.high !== "") {
+            attributes[`${rowData.key}_High`] = rowData.high;
+        }
+
+        // isMaintain là boolean nên chúng ta chỉ cần kiểm tra nó không phải undefined
+        if (rowData.isMaintain !== undefined) {
+            attributes[`${rowData.key}_Maintain`] = rowData.isMaintain;
+        }
+
+        console.log("Attributes to update:", attributes);
+
+        // Nếu có bất kỳ thuộc tính nào để cập nhật, gọi API
+        if (Object.keys(attributes).length > 0) {
+            saveOrUpdateSeverAttributesByDevice(OTSUKA_DEVICE_ID, attributes)
+                .then((response) => {
+                    console.log("Update successful:", response);
+                    // Thêm xử lý sau khi cập nhật thành công (ví dụ: hiển thị thông báo)
+                })
+                .catch((error) => {
+                    console.error("Update failed:", error);
+                    // Thêm xử lý lỗi (ví dụ: hiển thị thông báo lỗi)
+                });
+        } else {
+            console.log("No attributes to update");
+            // Có thể thêm thông báo cho người dùng biết không có gì để cập nhật
+        }
+    };
     return (
         <>
             <h2>{title}</h2>
 
-            <DataTable value={data} loading={loading}>
+            <DataTable rowClassName={rowClass} value={data} loading={loading}>
                 {headers?.map((header) => (
                     <Column
                         key={header.key}
@@ -293,6 +367,7 @@ const SetupDataTable: React.FC<Props> = ({
                                                 );
                                             }
                                         }}
+                                        className={getTextColorClass(rowData)}
                                     />
                                 );
                             } else if (header.key === "isMaintain") {
@@ -301,30 +376,49 @@ const SetupDataTable: React.FC<Props> = ({
                                         type="checkbox"
                                         checked={rowData.isMaintain || false}
                                         onChange={(e) => {
-                                            // Handle checkbox change here if needed
-                                            console.log(
-                                                "Checkbox changed:",
+                                            handleValueChange(
+                                                rowData.key,
+                                                header.key,
                                                 e.target.checked
                                             );
                                         }}
                                     />
                                 );
                             } else if (header.key === "value") {
+                                let content;
                                 if (typeof rowData.unit === "string") {
-                                    // Nếu unit là string, hiển thị value và unit
-                                    return `${rowData.value} (${rowData.unit})`;
+                                    content = `${rowData.value} (${rowData.unit})`;
                                 } else if (typeof rowData.unit === "object") {
-                                    // Nếu unit là object, chỉ hiển thị unit tương ứng với value (0 hoặc 1)
                                     const unitValue =
                                         rowData.value === 0
                                             ? rowData.unit[0]
                                             : rowData.unit[1];
-                                    return unitValue;
+                                    content = `${unitValue} (${rowData.value})`;
+                                } else {
+                                    content = rowData.value;
                                 }
-                                // Trường hợp khác, chỉ hiển thị value
-                                return rowData.value;
+                                return (
+                                    <span
+                                        className={getTextColorClass(rowData)}
+                                    >
+                                        {content}
+                                    </span>
+                                );
+                            } else if (header.key === "update") {
+                                return (
+                                    <button
+                                        onClick={() => handleUpdate(rowData)}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    >
+                                        Update
+                                    </button>
+                                );
                             }
-                            return rowData[header.key];
+                            return (
+                                <span className={getTextColorClass(rowData)}>
+                                    {rowData[header.key]}
+                                </span>
+                            );
                         }}
                     />
                 ))}
