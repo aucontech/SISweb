@@ -1,6 +1,10 @@
+"use client";
+import { useEffect, useState } from "react";
 import SetupDataTable from "./components/SetupDataTable";
 import { TagItem } from "./components/SetupDataTable";
 import { HeaderItem } from "./components/SetupDataTable";
+import { getSeverAttributesByDeviceandKeys } from "@/api/telemetry.api";
+import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 const tags: TagItem[] = [
     {
         tagname: "temperature",
@@ -25,8 +29,8 @@ const tags: TagItem[] = [
 ];
 const headers: HeaderItem[] = [
     {
-        headername: "Time Update",
-        key: "updateTime",
+        headername: "Updated Time",
+        key: "updatedTime",
     },
     {
         headername: "Modbus",
@@ -60,19 +64,36 @@ const headers: HeaderItem[] = [
 ];
 
 const page = () => {
+    const [infosSetupdata, setInfosSetupdata] = useState<any[]>([]);
+    const _fetchInfoSetupData = async () => {
+        const data = await getSeverAttributesByDeviceandKeys(
+            OTSUKA_DEVICE_ID,
+            "setupdata"
+        );
+        console.log(data);
+        setInfosSetupdata(data.data[0].value);
+    };
+
+    useEffect(() => {
+        console.log("SetupDataTest");
+        _fetchInfoSetupData();
+    }, []);
+    console.log(infosSetupdata);
     return (
         <div>
             <h1>SetupDataTest</h1>
-            <SetupDataTable
-                headers={headers}
-                tags={tags}
-                title="EVC-1901 - Parameters & Configurations"
-            ></SetupDataTable>
-            <SetupDataTable
-                headers={headers}
-                tags={tags}
-                title="EVC-1902 - Parameters & Configurations"
-            ></SetupDataTable>
+            {/* foreach through infosetupdata */}
+            {infosSetupdata &&
+                infosSetupdata.map((info: any, index: number) => {
+                    return (
+                        <SetupDataTable
+                            headers={info.headers}
+                            tags={info.tags}
+                            title={info.title}
+                            key={index}
+                        ></SetupDataTable>
+                    );
+                })}
         </div>
     );
 };

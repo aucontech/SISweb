@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
 import { OTSUKA_DEVICE_ID } from "@/constants/constans";
+import { Utils } from "@/service/Utils";
 type DataItem = {
     [key: string]: any;
 };
@@ -47,6 +48,7 @@ const SetupDataTable: React.FC<Props> = ({
     const ws = useRef<WebSocket | null>(null);
     const token = useToken();
     const [data, setData] = useState<HeaderKeys<typeof headers>[]>([]);
+    const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         const formattedData = tags.map((tag) => ({
@@ -63,6 +65,7 @@ const SetupDataTable: React.FC<Props> = ({
             ws.current.send(data);
         }
     }, []);
+
     const connectWebSocket = useCallback(
         (token: string) => {
             ws.current = new WebSocket(
@@ -127,10 +130,6 @@ const SetupDataTable: React.FC<Props> = ({
                                               type: "ATTRIBUTE",
                                               key: `${tag.key}_Maintain`,
                                           })),
-                                          ...tags.map((tag) => ({
-                                              type: "ATTRIBUTE",
-                                              key: `${tag.key}_ModBus`,
-                                          })),
                                       ]
                                     : [],
                             },
@@ -160,7 +159,7 @@ const SetupDataTable: React.FC<Props> = ({
                             if (seriesData) {
                                 return {
                                     ...item,
-                                    updateTime: seriesData.ts,
+                                    updatedTime: seriesData.ts,
                                     value: seriesData.value,
                                     low: lowData.value,
                                     high: highData.value,
@@ -233,7 +232,7 @@ const SetupDataTable: React.FC<Props> = ({
                                 attributes[`${item.key}_Maintain`];
                             return {
                                 ...item,
-                                updateTime: seriesData?.ts || item.updateTime,
+                                updatedTime: seriesData?.ts || item.updatedTime,
                                 value: seriesData?.value ?? item.value,
                                 low: lowData?.value ?? item.low,
                                 high: highData?.value ?? item.high,
@@ -270,6 +269,21 @@ const SetupDataTable: React.FC<Props> = ({
     }, [connectWebSocket, token]);
     console.log(data);
     const handleValueChange = debounce((rowKey, field, newValue) => {
+        if (field === "isMaintain") {
+            let attribute = {
+                [`${rowKey}_Maintain`]: newValue,
+            };
+            saveOrUpdateSeverAttributesByDevice(OTSUKA_DEVICE_ID, attribute)
+                .then((response) => {
+                    console.log("Update successful:", response);
+                    // Thêm xử lý sau khi cập nhật thành công (ví dụ: hiển thị thông báo)
+                })
+                .catch((error) => {
+                    console.error("Update failed:", error);
+                    // Thêm xử lý lỗi (ví dụ: hiển thị thông báo lỗi)
+                });
+            return;
+        }
         setData((prevData) =>
             prevData.map((item) =>
                 item.key === rowKey
@@ -282,7 +296,10 @@ const SetupDataTable: React.FC<Props> = ({
         if (data.isMaintain) {
             return "text-yellow-500"; // Ưu tiên isMaintain
         }
-        if (data.value >= data.high || data.value <= data.low) {
+        if (
+            Number(data.value) >= Number(data.high) ||
+            Number(data.value) <= Number(data.low)
+        ) {
             return "text-red-500"; // Text màu đỏ
         }
         return "";
@@ -306,17 +323,17 @@ const SetupDataTable: React.FC<Props> = ({
         }
 
         if (rowData.low !== null && rowData.low !== "") {
-            attributes[`${rowData.key}_Low`] = rowData.low;
+            attributes[`${rowData.key}_Low`] = Number(rowData.low);
         }
 
         if (rowData.high !== null && rowData.high !== "") {
-            attributes[`${rowData.key}_High`] = rowData.high;
+            attributes[`${rowData.key}_High`] = Number(rowData.high);
         }
 
         // isMaintain là boolean nên chúng ta chỉ cần kiểm tra nó không phải undefined
-        if (rowData.isMaintain !== undefined) {
-            attributes[`${rowData.key}_Maintain`] = rowData.isMaintain;
-        }
+        // if (rowData.isMaintain !== undefined) {
+        //     attributes[`${rowData.key}_Maintain`] = rowData.isMaintain;
+        // }
 
         console.log("Attributes to update:", attributes);
 
@@ -336,6 +353,8 @@ const SetupDataTable: React.FC<Props> = ({
             // Có thể thêm thông báo cho người dùng biết không có gì để cập nhật
         }
     };
+    console.log("data", data);
+
     return (
         <>
             <h2>{title}</h2>
@@ -345,7 +364,7 @@ const SetupDataTable: React.FC<Props> = ({
                     <Column
                         key={header.key}
                         field={header.key}
-                        header={header.headername}
+                        //header={header.headername}
                         body={(rowData) => {
                             if (
                                 ["low", "high", "modBus"].includes(header.key)
@@ -356,16 +375,11 @@ const SetupDataTable: React.FC<Props> = ({
                                         value={rowData[header.key] || ""}
                                         onChange={(e) => {
                                             const newValue = e.target.value;
-                                            if (
-                                                !isNaN(newValue) &&
-                                                newValue !== ""
-                                            ) {
-                                                handleValueChange(
-                                                    rowData.key,
-                                                    header.key,
-                                                    newValue
-                                                );
-                                            }
+                                            handleValueChange(
+                                                rowData.key,
+                                                header.key,
+                                                newValue
+                                            );
                                         }}
                                         className={getTextColorClass(rowData)}
                                     />
@@ -393,7 +407,7 @@ const SetupDataTable: React.FC<Props> = ({
                                         rowData.value === 0
                                             ? rowData.unit[0]
                                             : rowData.unit[1];
-                                    content = `${unitValue} (${rowData.value})`;
+                                    content = `${rowData.value} ( ${unitValue})`;
                                 } else {
                                     content = rowData.value;
                                 }
@@ -413,6 +427,16 @@ const SetupDataTable: React.FC<Props> = ({
                                         Update
                                     </button>
                                 );
+                            } else if (header.key === "updatedTime") {
+                                return (
+                                    <span
+                                        className={getTextColorClass(rowData)}
+                                    >
+                                        {Utils.formatUnixTimeToString(
+                                            rowData.updatedTime
+                                        )}
+                                    </span>
+                                );
                             }
                             return (
                                 <span className={getTextColorClass(rowData)}>
@@ -420,6 +444,7 @@ const SetupDataTable: React.FC<Props> = ({
                                 </span>
                             );
                         }}
+                        header={header.headername}
                     />
                 ))}
             </DataTable>

@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { cp } from "fs";
 import _ from "lodash";
 const showError = ({
     error,
@@ -111,6 +112,9 @@ const formateJsTime = (time: any, formatStr: string) => {
 };
 
 const formatUnixTimeToString = (unixTime: any, fmt?: any) => {
+    if (!unixTime) {
+        return;
+    }
     const date = new Date(unixTime);
     if (fmt) {
         return format(date, fmt);
