@@ -43,6 +43,7 @@ const ROUTE_CONFIG: RouteConfig = {
         "/historicalchart",
         "/filemanager",
         "/user",
+        "/setupdatatest",
     ],
 };
 

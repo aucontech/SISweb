@@ -117,7 +117,7 @@ const Login: Page = () => {
             })
             .catch((err) => {
                 UIUtils.showError({
-                    error: err?.message,
+                    error: err?.response?.data?.message,
                     toast: toast.current,
                 });
             });
