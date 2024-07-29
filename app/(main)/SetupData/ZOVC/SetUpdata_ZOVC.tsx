@@ -291,6 +291,9 @@ export default function SetUpdata_ZOVC() {
 
 
                         EVC_02_Vb_of_Last_Day:setEVC_02_Vb_of_Last_Day,
+
+
+                        
                         FC_01_Current_Values_Uncorrected_Flow_Rate:setFC_01_Current_Values_Uncorrected_Flow_Rate,
                         FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
                         FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { readToken } from "@/service/localStorage";
-import "./AlarmBellCssBlink.css";
 import { id_SNG_HungYen } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
 export default function AlarmSNG_HUNGYEN() {
@@ -141,11 +140,11 @@ export default function AlarmSNG_HUNGYEN() {
             ws.current.onmessage = (evt) => {
                 const dataReceived = JSON.parse(evt.data);
                 if (dataReceived.data) {
-                    if (dataReceived.data.cmdId === 1) {
+                    if (dataReceived.cmdId === 1) {
                         const criticalElements = dataReceived.data.totalElements || 0;
                         setCriticalElements(criticalElements);
                     }
-                    if (dataReceived.data.cmdId === 2) {
+                    if (dataReceived.cmdId === 2) {
                         const majorElements = dataReceived.data.totalElements || 0;
                         setMajorElements(majorElements);
                     }
@@ -202,13 +201,13 @@ export default function AlarmSNG_HUNGYEN() {
                             marginBottom: 10,
                         }}
                     >
-                        Critical Alarming
+                       Alarming
                     </div>
                 )}
             </div>
             <div style={{marginLeft:10}}>
                 {majorElements === 0 ? (
-                   " "
+                 ' '
                 ) : (
                     <div
                         style={{
@@ -226,7 +225,7 @@ export default function AlarmSNG_HUNGYEN() {
                             marginBottom: 10,
                         }}
                     >
-                        Major Alarming
+                       Maintained
                     </div>
                 )}
             </div>

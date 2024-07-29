@@ -2470,7 +2470,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         VbLastDay: "Standard Volume Vb Yesterday (Sm³)",
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
-        ReBattery: "Remainning Battery (Months)",
+        ReBattery: "Remain Battery Service Life (Months)",
     };
 
     const tagNamePLC = {
@@ -2479,8 +2479,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         GD2: "Gas Detector GD-1902 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
 
-        ZSC: "SDV-ZSC (0: ON - 1: OFF)",
-        ZSO: "SDV-ZSO (0: OFF - 1: ON)",
+        ZSC: "SDV-1901 ZSC (0: ON - 1: OFF)",
+        ZSO: "SDV-1901 ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
