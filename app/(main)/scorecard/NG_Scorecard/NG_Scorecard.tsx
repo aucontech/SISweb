@@ -13,22 +13,17 @@ export default function NG_Scorecard() {
   return (
 
     <div style={{display:'grid', gridTemplateColumns:'auto auto', gap:"1.25rem"}}> 
+
+
     {/* <ScoreCard_ZOCV/> */}
         <ScoreCard_KOA/>
         <ScoreCard_Yoshino/>
         <ScoreCard_Nitori/>
         <ScoreCard_VREC/>
         <ScoreCard_IGUACU/>
-
         <ScoreCard_SPMCV/>
-
-      <ScoreCard_Arakawa/>
+        <ScoreCard_Arakawa/>
         <ScoreCard_Otsuka/>
-
-
-
-
-
 
     </div>
   
