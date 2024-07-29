@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         authenticate();
     }, [authenticate]);
-    console.log("user", user);
+    // console.log("user", user);
     return (
         <AuthContext.Provider
             value={{

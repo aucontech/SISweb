@@ -372,7 +372,11 @@ const FilterDataTableReport: React.FC<Props> = ({
             >
                 <div className="card p-fluid">
                     <MultiSelect
-                        value={editFilter?.tags?.map((tag: any) => tag.key)}
+                        value={
+                            editFilter.tags && editFilter.tags.length > 0
+                                ? editFilter.tags.map((tag: any) => tag.key)
+                                : []
+                        }
                         options={suggAllTags}
                         onChange={(e) => {
                             _handleAddMultiTagSetting(e.value);
