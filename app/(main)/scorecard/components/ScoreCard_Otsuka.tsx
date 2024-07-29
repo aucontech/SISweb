@@ -574,6 +574,8 @@ export default function ScoreCard_Otsuka() {
 
 
     const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
+    const [EVC_STT02, setEVC_STT02] = useState<any | null>(null);
+
     const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
@@ -687,6 +689,8 @@ export default function ScoreCard_Otsuka() {
 
 
                         EVC_01_Conn_STT: setEVC_STT01,
+                        EVC_02_Conn_STT: setEVC_STT02,
+
                         PLC_Conn_STT: setPLC_Conn_STT,
 
                     };
@@ -3440,7 +3444,7 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="evc1902"
-                            header={EVC_STT01 === "1" ? (
+                            header={EVC_STT02 === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>EVC-1902</p>

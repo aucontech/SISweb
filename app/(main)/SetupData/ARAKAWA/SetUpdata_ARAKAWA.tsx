@@ -4245,9 +4245,7 @@ checked={maintainDO_SV_01}
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, marginTop:10 }}>
-        {/* <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio> */}
+   
         <Toast ref={toast} />
 
         <ConfirmDialog />
@@ -4256,9 +4254,10 @@ checked={maintainDO_SV_01}
 
     <div style={{width:'100%' ,  borderRadius:5 }}>
     <DataTable 
-        size={'small'}      resizableColumns
-        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory" 
-        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}    >
+                rowGroupMode="subheader"
+                size={'small'}      resizableColumns
+        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory"  
+        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate} >
   <Column field="timeUpdate" header="Time Update" />
 
   <Column field="modbus" header="Modbus" />
