@@ -26,7 +26,6 @@ import {
     ZOCV_DEVICE_ID,
     LGDS_DEVICE_ID,
     CNGPM3_DEVICE_ID,
-    SNG_ACECOOK_DEVICE_ID,
 } from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
 interface Notification {
@@ -109,7 +108,6 @@ export default function Alarmbell() {
                                         ZOCV_DEVICE_ID,
                                         LGDS_DEVICE_ID,
                                         CNGPM3_DEVICE_ID,
-                                        SNG_ACECOOK_DEVICE_ID,
                                     ],
                                 },
                                 pageLink: {

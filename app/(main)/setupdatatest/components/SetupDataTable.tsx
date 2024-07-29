@@ -293,6 +293,7 @@ const SetupDataTable: React.FC<Props> = ({
         );
     }, 100); // 300ms debounce
     const rowClass = (data: any) => {
+        console.log("data", data);
         if (data.isMaintain) {
             return "text-yellow-500"; // Ưu tiên isMaintain
         }
@@ -300,6 +301,7 @@ const SetupDataTable: React.FC<Props> = ({
             Number(data.value) >= Number(data.high) ||
             Number(data.value) <= Number(data.low)
         ) {
+            console.log("data red", data);
             return "text-red-500"; // Text màu đỏ
         }
         return "";
@@ -308,7 +310,10 @@ const SetupDataTable: React.FC<Props> = ({
         if (rowData.isMaintain) {
             return "text-yellow-500"; // Ưu tiên isMaintain
         }
-        if (rowData.value >= rowData.high || rowData.value <= rowData.low) {
+        if (
+            Number(rowData.value) >= Number(rowData.high) ||
+            Number(rowData.value) <= Number(rowData.low)
+        ) {
             return "text-red-500"; // Text màu đỏ
         }
         return "";
@@ -407,7 +412,7 @@ const SetupDataTable: React.FC<Props> = ({
                                         rowData.value === 0
                                             ? rowData.unit[0]
                                             : rowData.unit[1];
-                                    content = `${rowData.value} ( ${unitValue})`;
+                                    content = `${rowData.value} (${unitValue})`;
                                 } else {
                                     content = rowData.value;
                                 }
