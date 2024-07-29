@@ -56,6 +56,7 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
+import AlarmZOCV from "@/layout/AlarmBell/AlarmZOCV";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -5497,7 +5498,7 @@ export default function GraphicZOCV() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        <AlarmZOCV />
                     </div>
                 ),
             },

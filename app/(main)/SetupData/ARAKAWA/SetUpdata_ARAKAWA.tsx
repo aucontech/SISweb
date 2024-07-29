@@ -11,7 +11,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
-import { namePCV_PSV, nameValue } from '../namValue';
+import { PLC_ARAKAWA, TagName, namePCV_PSV, nameValue } from '../namValue';
 import { UserOperator, UserTechnican } from '../../userID/UserID';
 
 interface StateMap {
@@ -2437,7 +2437,6 @@ const ChangeMaintainEmergency_NO = async () => {
                 const newMaintainDI_SELECT_SW = checked;
                 const newMaintainDI_RESET = checked;
                 const newMaintainDI_UPS_BATTERY = checked;
-
                 const newMaintainEmergency_NO = checked;
                 const newMaintainEmergency_NC = checked;
                 const newMaintainUPS_Mode = checked;
@@ -2523,7 +2522,6 @@ const ChangeMaintainEmergency_NO = async () => {
         const handleCheckboxChange = (e:any) => {
             const isChecked = e.checked;
 
-            setMaintainEVC_01_Temperature(isChecked);
             handleMainTainAll(isChecked);
         };
     
@@ -3205,7 +3203,7 @@ const ChangeMaintainEmergency_NO = async () => {
             {
                 mainCategory:mainCategoryFC.EVC,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life </span> ,
+             name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{TagName.EVC_01_Remain_Battery_Service_Life}</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
     
@@ -3226,7 +3224,7 @@ const ChangeMaintainEmergency_NO = async () => {
             {
                 mainCategory:mainCategoryFC.EVC,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSEVC_01_Temperature}>Temperature</span> ,
+             name: <span style={combineCss.CSSEVC_01_Temperature}>{TagName.EVC_01_Temperature}</span> ,
     
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
     
@@ -3246,7 +3244,7 @@ const ChangeMaintainEmergency_NO = async () => {
             {
                 mainCategory:mainCategoryFC.EVC,
                 timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{EVC_STT01Value}</span>,
-            name: <span style={combineCss.CSSEVC_01_Pressure}>Pressure</span> ,
+            name: <span style={combineCss.CSSEVC_01_Pressure}>{TagName.Input_Pressure}</span> ,
    
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
    
@@ -3266,7 +3264,7 @@ const ChangeMaintainEmergency_NO = async () => {
            {
             mainCategory:mainCategoryFC.EVC,
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{EVC_STT01Value}</span>,
-           name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}> Volume at Base Condition</span> ,
+           name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{TagName.SVA}</span> ,
   
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
   
@@ -3286,7 +3284,7 @@ const ChangeMaintainEmergency_NO = async () => {
           {
             mainCategory:mainCategoryFC.EVC,
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
-          name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
+          name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{TagName.GVA}</span> ,
  
           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
  
@@ -3305,7 +3303,7 @@ const ChangeMaintainEmergency_NO = async () => {
          {
             mainCategory:mainCategoryFC.EVC,
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{EVC_STT01Value}</span>,
-         name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
+         name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{TagName.SVF}</span> ,
 
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
 
@@ -3326,7 +3324,7 @@ const ChangeMaintainEmergency_NO = async () => {
         {
             mainCategory:mainCategoryFC.EVC,
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
+        name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{TagName.GVF}</span> ,
 
         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
 
@@ -3345,7 +3343,7 @@ const ChangeMaintainEmergency_NO = async () => {
        {
         mainCategory:mainCategoryFC.EVC,
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
+       name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{TagName.Vb_Today}</span> ,
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
 
@@ -3365,7 +3363,7 @@ const ChangeMaintainEmergency_NO = async () => {
         {
             mainCategory:mainCategoryFC.EVC,
             timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
+        name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{TagName.Vm_Today}</span> ,
 
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
 
@@ -3386,7 +3384,7 @@ const ChangeMaintainEmergency_NO = async () => {
        {
         mainCategory:mainCategoryFC.EVC,
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>Vb of Last Day</span> ,
+       name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{TagName.Vb_Yesterday}</span> ,
 
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
 
@@ -3407,7 +3405,7 @@ const ChangeMaintainEmergency_NO = async () => {
       {
         mainCategory:mainCategoryFC.EVC,
         timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
-      name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
+      name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{TagName.Vm_Yesterday}</span> ,
 
       modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
 
@@ -3452,7 +3450,7 @@ const ChangeMaintainEmergency_NO = async () => {
         {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSGD1}>Gas Detector GD-1601</span> ,
+         name: <span style={combineCss.CSSGD1}>{PLC_ARAKAWA.GD1}</span> ,
 
          modbus: <span style={combineCss.CSSGD1}>40002</span> ,
 
@@ -3473,7 +3471,7 @@ const ChangeMaintainEmergency_NO = async () => {
         {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSGD2}>Gas Detector GD-1602</span> ,
+         name: <span style={combineCss.CSSGD2}> {PLC_ARAKAWA.GD2} </span> ,
 
          modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
 
@@ -3493,7 +3491,7 @@ const ChangeMaintainEmergency_NO = async () => {
         {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
-        name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
+        name: <span style={combineCss.CSSPT1}> {TagName.Output_Pressure}</span> ,
 
         modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
 
@@ -3514,7 +3512,7 @@ const ChangeMaintainEmergency_NO = async () => {
        {
          mainCategory: mainCategoryFC.PLC ,
         timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
-       name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO</span> ,
+       name: <span style={combineCss.CSSDI_ZSO_1}>{PLC_ARAKAWA.DI_ZSO_1}</span> ,
 
        modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
 
@@ -3538,7 +3536,7 @@ const ChangeMaintainEmergency_NO = async () => {
      {
          mainCategory: mainCategoryFC.PLC ,
         timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC</span> ,
+     name: <span style={combineCss.CSSDI_ZSC_1}>{PLC_ARAKAWA.DI_ZSC_1}</span> ,
 
      modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
 
@@ -3562,7 +3560,7 @@ const ChangeMaintainEmergency_NO = async () => {
   {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
+  name: <span style={combineCss.CSSDI_MAP_1}>{TagName.DI_MAP_1}</span> ,
 
   modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
 
@@ -3581,7 +3579,7 @@ const ChangeMaintainEmergency_NO = async () => {
  {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
+ name: <span style={combineCss.CSSDI_UPS_BATTERY}>{TagName.UPS_BATTERY}</span> ,
 
  modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
 
@@ -3602,7 +3600,7 @@ value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY} {DataDI_UPS
  {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
+ name: <span style={combineCss.CSSDI_UPS_CHARGING}>{TagName.UPS_CHARGING}</span> ,
 
  modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
 
@@ -3623,7 +3621,7 @@ value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING} {DataDI_U
 {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
+name: <span style={combineCss.CSSDI_UPS_ALARM}>{TagName.UPS_ALARM}</span> ,
 
 modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
 
@@ -3641,31 +3639,13 @@ checked={maintainDI_UPS_ALARM}
 },
 
 
-{
- mainCategory: mainCategoryFC.PLC ,
-timeUpdate: <span style={combineCss.CSSDI_SD_1} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDI_SD_1}>Smoker Detected</span> ,
 
-modbus: <span style={combineCss.CSSDI_SD_1}>40017	 </span> ,
-
-value: <span style={combineCss.CSSDI_SD_1} > {DI_SD_1} {DataDI_SD_1}</span> , 
-high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_SD_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_SD_1} onChange={handleInputChangeDI_SD_1} inputMode="decimal" />, 
-low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_SD_1}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SD_1} onChange={handleInputChange2DI_SD_1} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} disabled={AuthUpdatePCV} label='Update' />,
-Maintain:   <Checkbox
-disabled={AuthInput} 
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDI_SD_1}
-checked={maintainDI_SD_1}
-></Checkbox>
-
-},
 
 
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
+name: <span style={combineCss.CSSDI_SELECT_SW}>{TagName.SELECT_SW}</span> ,
 
 modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
 
@@ -3685,7 +3665,7 @@ checked={maintainDI_SELECT_SW}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDI_RESET}>Reset Button</span> ,
+name: <span style={combineCss.CSSDI_RESET}>{TagName.RESET}</span> ,
 
 modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
 
@@ -3706,7 +3686,7 @@ checked={maintainDI_RESET}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
+name: <span style={combineCss.CSSEmergency_NO}>{TagName.EMER_NO}</span> ,
 
 modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
 
@@ -3726,7 +3706,7 @@ checked={maintainEmergency_NO}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
+name: <span style={combineCss.CSSEmergency_NC}>{TagName.EMER_NC}</span> ,
 
 modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
 
@@ -3747,7 +3727,7 @@ checked={maintainEmergency_NC}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
+name: <span style={combineCss.CSSUPS_Mode}>{TagName.UPS_MODE}</span> ,
 
 modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
 
@@ -3767,7 +3747,7 @@ checked={maintainUPS_Mode}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
+name: <span style={combineCss.CSSDO_BC_01}>{TagName.HR_1}</span> ,
 
 modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
 
@@ -3790,7 +3770,7 @@ checked={maintainDO_BC_01}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
+name: <span style={combineCss.CSSDO_HR_01}>{TagName.BC_1}</span> ,
 
 modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
 
@@ -3814,7 +3794,7 @@ checked={maintainDO_HR_01}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
+name: <span style={combineCss.CSSDO_SV_01}>{PLC_ARAKAWA.SV_1}</span> ,
 
 modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
 
@@ -4246,6 +4226,21 @@ checked={maintainDO_SV_01}
 
     ];
 
+    const maintainHeader = (
+        <div>
+
+            {!AuthInput && (
+                <Checkbox
+                    style={{ marginRight: 5 }}
+                    onChange={handleCheckboxChange}
+                    checked={maintainEVC_01_Remain_Battery_Service_Life}
+                />
+            )} 
+            Maintain
+
+        </div>
+    );
+
        //=========================================================================
 
   return (
@@ -4261,11 +4256,9 @@ checked={maintainDO_SV_01}
 
     <div style={{width:'100%' ,  borderRadius:5 }}>
     <DataTable 
-       columnResizeMode="expand"
-       resizableColumns
-    
-    tableStyle={{ minWidth: '20rem' }} size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
+        size={'small'}      resizableColumns
+        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory" 
+        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}    >
   <Column field="timeUpdate" header="Time Update" />
 
   <Column field="modbus" header="Modbus" />
@@ -4278,7 +4271,7 @@ checked={maintainDO_SV_01}
   <Column field="low" header="Low" />
 
 
-{AuthInput ? " " :  <Column field="Maintain" header= " MainTain " />
+{AuthInput ? " " :  <Column field="Maintain" header={maintainHeader} />
 }
       {AuthInput ? " " : <Column field="update" header="Update" />}
 

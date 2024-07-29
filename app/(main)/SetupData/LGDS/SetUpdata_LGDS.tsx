@@ -10,7 +10,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
-import { namePCV_PSV, nameValue } from '../namValue';
+import { PLC_LGDS, TagName, namePCV_PSV, nameValue } from '../namValue';
 
 interface StateMap {
 
@@ -5139,12 +5139,49 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
   
 
         const dataFC01 =  [
-
+            {
+            
+                mainCategory: mainCategoryFC.FC01 ,
+               timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
+           name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{TagName.Input_Pressure}</span> ,
+   
+           modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
+   
+          value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
+           high: <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
+           low:  <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
+           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainFC_01_Current_Values_Static_Pressure}
+           checked={maintainFC_01_Current_Values_Static_Pressure}
+       ></Checkbox>
+   
+          },
+          {
+           
+            mainCategory: mainCategoryFC.FC01 ,
+           timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{EVC_STT01Value}</span>,
+          name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{TagName.EVC_01_Temperature}</span> ,
+   
+          modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
+   
+         value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
+          high: <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
+          low:  <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
+          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          Maintain:   <Checkbox
+          style={{ marginRight: 20, }}
+          onChange={ChangeMaintainFC_01_Current_Values_Temperature}
+          checked={maintainFC_01_Current_Values_Temperature}
+      ></Checkbox>
+   
+         },
           {
             
              mainCategory: mainCategoryFC.FC01 ,
             timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-          name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
+          name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{TagName.GVA}</span> ,
  
           modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
  
@@ -5163,7 +5200,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             
              mainCategory: mainCategoryFC.FC01 ,
             timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
-         name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
+         name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{TagName.SVA}</span> ,
 
          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
 
@@ -5180,50 +5217,13 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         },
 
   
-        {
-            
-             mainCategory: mainCategoryFC.FC01 ,
-            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>Input Pressure</span> ,
-
-        modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
-
-       value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
-        high: <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
-        style={{ marginRight: 20, }}
-        onChange={ChangeMaintainFC_01_Current_Values_Static_Pressure}
-        checked={maintainFC_01_Current_Values_Static_Pressure}
-    ></Checkbox>
-
-       },
-       {
-        
-         mainCategory: mainCategoryFC.FC01 ,
-        timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>Temperature</span> ,
-
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
-
-      value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
-       high: <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
-       style={{ marginRight: 20, }}
-       onChange={ChangeMaintainFC_01_Current_Values_Temperature}
-       checked={maintainFC_01_Current_Values_Temperature}
-   ></Checkbox>
-
-      },
+       
 
         {
             
              mainCategory: mainCategoryFC.FC01 ,
             timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
-        name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
+        name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{TagName.SVF}</span> ,
 
         modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
 
@@ -5244,7 +5244,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
-       name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
+       name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
 
@@ -5265,7 +5265,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{EVC_STT01Value}</span>,
-      name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>Standard Volume Vb Today</span> ,
+      name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
       modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
 
@@ -5287,7 +5287,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 
                  mainCategory: mainCategoryFC.FC01 ,
                 timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-            name: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
+            name: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{TagName.Vm_Today}</span> ,
        
             modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
        
@@ -5312,7 +5312,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
-    name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
+    name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{TagName.Vb_Yesterday}</span> ,
 
     modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
 
@@ -5333,7 +5333,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
      mainCategory: mainCategoryFC.FC01 ,
     timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-   name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
+   name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{TagName.Vm_Yesterday}</span> ,
 
    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
 
@@ -5354,11 +5354,53 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 const dataFC02 = [
 
+    {
+    
+        mainCategory: mainCategoryFC.FC02 ,
+       timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
+     name: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{TagName.Input_Pressure}</span> ,
+   
+     modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
+   
+    value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
+     high: <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
+     low:  <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
+     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+     Maintain:   <Checkbox
+     style={{ marginRight: 20, }}
+     onChange={ChangeMaintainFC_02_Current_Values_Static_Pressure}
+     checked={maintainFC_02_Current_Values_Static_Pressure}
+   ></Checkbox>
+   
+    },
+   
+   
+   
+   
+    {
+       
+        mainCategory: mainCategoryFC.FC02 ,
+       timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
+    name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{TagName.EVC_01_Temperature}</span> ,
+   
+    modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
+   
+   value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
+    high: <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
+    low:  <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
+    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainFC_02_Current_Values_Temperature}
+    checked={maintainFC_02_Current_Values_Temperature}
+   ></Checkbox>
+   
+   },
   {
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-  name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
+  name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{TagName.GVA}</span> ,
 
   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>8615	 </span> ,
 
@@ -5378,7 +5420,7 @@ const dataFC02 = [
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
-   name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
+   name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{TagName.SVA}</span> ,
 
    modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>8617	 </span> ,
 
@@ -5395,54 +5437,12 @@ const dataFC02 = [
   },
 
 
-  {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
-  name: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>Input Pressure</span> ,
-
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
-
- value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
-  high: <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
-  style={{ marginRight: 20, }}
-  onChange={ChangeMaintainFC_02_Current_Values_Static_Pressure}
-  checked={maintainFC_02_Current_Values_Static_Pressure}
-></Checkbox>
-
- },
-
-
-
-
- {
-    
-     mainCategory: mainCategoryFC.FC02 ,
-    timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
- name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>Temperature</span> ,
-
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
-
-value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
- high: <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
- style={{ marginRight: 20, }}
- onChange={ChangeMaintainFC_02_Current_Values_Temperature}
- checked={maintainFC_02_Current_Values_Temperature}
-></Checkbox>
-
-},
 
 {
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
-  name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
+  name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{TagName.SVF}</span> ,
 
   modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>8623	 </span> ,
 
@@ -5463,7 +5463,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Cur
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
- name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
+ name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
  modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>8625	 </span> ,
 
@@ -5484,7 +5484,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > 
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
-name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>Standard Volume Vb Today</span> ,
+name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>8627	 </span> ,
 
@@ -5505,7 +5505,7 @@ checked={maintainFC_02_Today_Values_Volume}
     
      mainCategory: mainCategoryFC.FC02 ,
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
+name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{TagName.Vm_Today}</span> ,
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>8629	 </span> ,
 
@@ -5530,7 +5530,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 
                  mainCategory: mainCategoryFC.FC02 ,
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
+             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{TagName.Vb_Yesterday}</span> ,
     
              modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>8631	 </span> ,
     
@@ -5551,7 +5551,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 
                  mainCategory: mainCategoryFC.FC02 ,
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
+             name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{TagName.Vm_Yesterday}</span> ,
     
              modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>8633	 </span> ,
     
@@ -5575,7 +5575,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             {
                  mainCategory: mainCategoryFC.PLC ,
                 timeUpdate: <span style={combineCss.CSSPT_1003} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSPT_1003}>Gas Detector GD-1601</span> ,
+             name: <span style={combineCss.CSSPT_1003}>{PLC_LGDS.GD1}</span> ,
     
              modbus: <span style={combineCss.CSSPT_1003}>40002</span> ,
     
@@ -5826,6 +5826,10 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
            );
        };
        
+
+       const header = {
+        maintain : `Maintain ${<></>}`
+       }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',   borderRadius:10, marginTop:10,  }}>

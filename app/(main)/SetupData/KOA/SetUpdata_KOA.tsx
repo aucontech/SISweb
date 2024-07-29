@@ -4061,7 +4061,210 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
          
               // =================================================================================================================== 
-         
+
+
+
+              const handleMainTainAll = async (checked:any) => {
+                try {
+
+                    const newMaintainFC_Lithium_Battery_Status = checked;
+                    const newMaintainFC_Battery_Voltage = checked;
+                    const newMaintainFC_System_Voltage = checked;
+                    const newMaintainFC_Charger_Voltage = checked;
+
+
+
+                    const newMaintainFC_01_Accumulated_Values_Uncorrected_Volume = checked;
+                    const newMaintainFC_01_Accumulated_Values_Volume = checked;
+                    const newMaintainFC_01_Current_Values_Static_Pressure = checked;
+                    const newMaintainFC_01_Current_Values_Temperature = checked;
+                    const newMaintainFC_01_Current_Values_Flow_Rate = checked;
+                    const newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate = checked;
+                    const newMaintainFC_01_Today_Values_Volume = checked;
+                    const newMaintainFC_01_Today_Values_Uncorrected_Volume = checked;
+                    const newMaintainFC_01_Yesterday_Values_Volume = checked;
+                    const newMaintainFC_01_Yesterday_Values_Uncorrected_Volume = checked;
+
+                    const newMaintainFC_02_Accumulated_Values_Uncorrected_Volume = checked;
+                    const newMaintainFC_02_Accumulated_Values_Volume = checked;
+                    const newMaintainFC_02_Current_Values_Static_Pressure = checked;
+                    const newMaintainFC_02_Current_Values_Temperature = checked;
+                    const newMaintainFC_02_Current_Values_Flow_Rate = checked;
+                    const newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate = checked;
+                    const newMaintainFC_02_Today_Values_Volume = checked;
+                    const newMaintainFC_02_Today_Values_Uncorrected_Volume = checked;
+                    const newMaintainFC_02_Yesterday_Values_Volume = checked;
+                    const newMaintainFC_02_Yesterday_Values_Uncorrected_Volume = checked;
+            
+                
+            
+                    const newMaintainGD1 = checked;
+                    const newMaintainGD2 = checked;
+                    const newMaintainPT1 = checked;
+                    const newMaintainDI_ZSO_1 = checked;
+                    const newMaintainDI_ZSC_1 = checked;
+                    const newMaintainDI_ZSO_2 = checked;
+                    const newMaintainDI_ZSC_2 = checked;
+                    const newMaintainDI_MAP_1 = checked;
+                    const newMaintainDI_UPS_CHARGING = checked;
+                    const newMaintainDI_UPS_ALARM = checked;
+                    const newMaintainDI_SELECT_SW = checked;
+                    const newMaintainDI_RESET = checked;
+                    const newMaintainDI_UPS_BATTERY = checked;
+                    const newMaintainEmergency_NO = checked;
+                    const newMaintainEmergency_NC = checked;
+                    const newMaintainUPS_Mode = checked;
+                    const newMaintainDO_HR_01 = checked;
+                    const newMaintainDO_BC_01 = checked;
+                    const newMaintainDO_SV_01 = checked;
+                    const newMaintainDO_SV_02 = checked;
+            
+                    await httpApi.post(
+                        `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
+
+
+
+
+                        {
+                            
+                        FC_Lithium_Battery_Status_Maintain: newMaintainFC_Lithium_Battery_Status,
+                        FC_Battery_Voltage_Maintain: newMaintainFC_Battery_Voltage,
+
+                         FC_System_Voltage_Maintain: newMaintainFC_System_Voltage,
+                         FC_Charger_Voltage_Maintain: newMaintainFC_Charger_Voltage,
+                            
+                            FC_01_Accumulated_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Accumulated_Values_Uncorrected_Volume,
+                           FC_01_Accumulated_Values_Volume_Maintain: newMaintainFC_01_Accumulated_Values_Volume,
+                           FC_01_Current_Values_Static_Pressure_Maintain: newMaintainFC_01_Current_Values_Static_Pressure,
+                           FC_01_Current_Values_Temperature_Maintain: newMaintainFC_01_Current_Values_Temperature,
+                           FC_01_Current_Values_Flow_Rate_Maintain: newMaintainFC_01_Current_Values_Flow_Rate,
+                           FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain: newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+                           FC_01_Today_Values_Volume_Maintain: newMaintainFC_01_Today_Values_Volume,
+                           FC_01_Today_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Today_Values_Uncorrected_Volume,
+                           FC_01_Yesterday_Values_Volume_Maintain: newMaintainFC_01_Yesterday_Values_Volume,
+                           FC_01_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Yesterday_Values_Uncorrected_Volume,
+
+                           FC_02_Accumulated_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Accumulated_Values_Uncorrected_Volume,
+                           FC_02_Accumulated_Values_Volume_Maintain: newMaintainFC_02_Accumulated_Values_Volume,
+                           FC_02_Current_Values_Static_Pressure_Maintain: newMaintainFC_02_Current_Values_Static_Pressure,
+                           FC_02_Current_Values_Temperature_Maintain: newMaintainFC_02_Current_Values_Temperature,
+                           FC_02_Current_Values_Flow_Rate_Maintain: newMaintainFC_02_Current_Values_Flow_Rate,
+                           FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain: newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+                           FC_02_Today_Values_Volume_Maintain: newMaintainFC_02_Today_Values_Volume,
+                           FC_02_Today_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Today_Values_Uncorrected_Volume,
+                           FC_02_Yesterday_Values_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Volume,
+                           FC_02_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Uncorrected_Volume,
+            
+            
+                     
+            
+                           GD1_Maintain: newMaintainGD1,
+                           GD2_Maintain: newMaintainGD2,
+            
+                           PT1_Maintain: newMaintainPT1,
+                          DI_ZSO_1_Maintain: newMaintainDI_ZSO_1,
+                          DI_ZSC_1_Maintain: newMaintainDI_ZSC_1,
+
+                           DI_ZSO_2_Maintain: newMaintainDI_ZSO_2,
+                           DI_ZSC_2_Maintain: newMaintainDI_ZSC_2,
+                           DI_MAP_1_Maintain: newMaintainDI_MAP_1,
+                           DI_UPS_CHARGING_Maintain: newMaintainDI_UPS_CHARGING,
+                           DI_UPS_ALARM_Maintain: newMaintainDI_UPS_ALARM,
+                           DI_SELECT_SW_Maintain: newMaintainDI_SELECT_SW,
+                           DI_RESET_Maintain: newMaintainDI_RESET,
+                           DI_UPS_BATTERY_Maintain: newMaintainDI_UPS_BATTERY,
+            
+                           Emergency_NO_Maintain: newMaintainEmergency_NO,
+                           Emergency_NC_Maintain: newMaintainEmergency_NC,
+                           UPS_Mode_Maintain: newMaintainUPS_Mode,
+                           DO_HR_01_Maintain: newMaintainDO_HR_01,
+                           DO_BC_01_Maintain: newMaintainDO_BC_01,
+                           DO_SV_01_Maintain: newMaintainDO_SV_01,
+
+                           DO_SV_02_Maintain: newMaintainDO_SV_02,
+            
+                         }
+                    );
+
+                    setMaintainFC_Lithium_Battery_Status(newMaintainFC_Lithium_Battery_Status);
+                    setMaintainFC_Battery_Voltage(newMaintainFC_Battery_Voltage);
+
+                    setMaintainFC_System_Voltage(newMaintainFC_System_Voltage);
+                    setMaintainFC_Charger_Voltage(newMaintainFC_Charger_Voltage);
+
+                    setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(newMaintainFC_01_Accumulated_Values_Uncorrected_Volume);
+                    setMaintainFC_01_Accumulated_Values_Volume(newMaintainFC_01_Accumulated_Values_Volume);
+                    setMaintainFC_01_Current_Values_Static_Pressure(newMaintainFC_01_Current_Values_Static_Pressure);
+                    setMaintainFC_01_Current_Values_Temperature(newMaintainFC_01_Current_Values_Temperature);
+                    setMaintainFC_01_Current_Values_Flow_Rate(newMaintainFC_01_Current_Values_Flow_Rate);
+                    setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate);
+                    setMaintainFC_01_Today_Values_Volume(newMaintainFC_01_Today_Values_Volume);
+                    setMaintainFC_01_Today_Values_Uncorrected_Volume(newMaintainFC_01_Today_Values_Uncorrected_Volume);
+                    setMaintainFC_01_Yesterday_Values_Volume(newMaintainFC_01_Yesterday_Values_Volume);
+                    setMaintainFC_01_Yesterday_Values_Uncorrected_Volume(newMaintainFC_01_Yesterday_Values_Uncorrected_Volume);
+            
+                    setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(newMaintainFC_02_Accumulated_Values_Uncorrected_Volume);
+                    setMaintainFC_02_Accumulated_Values_Volume(newMaintainFC_02_Accumulated_Values_Volume);
+                    setMaintainFC_02_Current_Values_Static_Pressure(newMaintainFC_02_Current_Values_Static_Pressure);
+                    setMaintainFC_02_Current_Values_Temperature(newMaintainFC_02_Current_Values_Temperature);
+                    setMaintainFC_02_Current_Values_Flow_Rate(newMaintainFC_02_Current_Values_Flow_Rate);
+                    setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate);
+                    setMaintainFC_02_Today_Values_Volume(newMaintainFC_02_Today_Values_Volume);
+                    setMaintainFC_02_Today_Values_Uncorrected_Volume(newMaintainFC_02_Today_Values_Uncorrected_Volume);
+                    setMaintainFC_02_Yesterday_Values_Volume(newMaintainFC_02_Yesterday_Values_Volume);
+                    setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newMaintainFC_02_Yesterday_Values_Uncorrected_Volume);
+                    
+            
+                    setMaintainGD1(newMaintainGD1);
+                    setMaintainGD2(newMaintainGD2);
+            
+                    setMaintainPT1(newMaintainPT1);
+                    setMaintainDI_ZSO_1(newMaintainDI_ZSO_1);
+                    setMaintainDI_ZSC_1(newMaintainDI_ZSC_1);
+
+                    setMaintainDI_ZSO_2(newMaintainDI_ZSO_2);
+                    setMaintainDI_ZSC_2(newMaintainDI_ZSC_2);
+                    setMaintainDI_MAP_1(newMaintainDI_MAP_1);
+                    setMaintainDI_UPS_CHARGING(newMaintainDI_UPS_CHARGING);
+                    setMaintainDI_UPS_ALARM(newMaintainDI_UPS_ALARM);
+                    setMaintainDI_SELECT_SW(newMaintainDI_SELECT_SW);
+                    setMaintainDI_RESET(newMaintainDI_RESET);
+                    setMaintainDI_UPS_BATTERY(newMaintainDI_UPS_BATTERY);
+            
+                    setMaintainEmergency_NO(newMaintainEmergency_NO);
+                    setMaintainEmergency_NC(newMaintainEmergency_NC);
+                    setMaintainUPS_Mode(newMaintainUPS_Mode);
+                    setMaintainDO_HR_01(newMaintainDO_HR_01);
+                    setMaintainDO_BC_01(newMaintainDO_BC_01);
+                    setMaintainDO_SV_01(newMaintainDO_SV_01);
+                    setMaintainDO_SV_02(newMaintainDO_SV_02);
+            
+            
+                } catch (error) {
+                    console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+                }
+            };
+            
+            const handleCheckboxChange = (e:any) => {
+                const isChecked = e.checked;
+            
+                handleMainTainAll(isChecked);
+            };
+            
+            const maintainHeader = (
+                <div>
+        
+                    {!AuthInput && (
+                        <Checkbox
+                            style={{ marginRight: 5 }}
+                            onChange={handleCheckboxChange}
+                            checked={maintainFC_Lithium_Battery_Status}
+                        />
+                    )} 
+                    Maintain
+        
+                </div>
+            );
          
          // =================================================================================================================== 
          
@@ -5073,7 +5276,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
   const mainCategoryFC = {
     FC: 'FC -  Parameters & Configurations',
-    FC01: 'FC-1201 -  Parameters & Configurations',
+    FC01: <span style={{display:'flex', justifyContent:'space-between'}} > FC-1201 -  Parameters & Configurations  </span>,
     FC02: 'FC-1202 -  Parameters & Configurations',
     PLC: 'PLC -  Parameters & Configurations'
 };
@@ -5994,7 +6197,7 @@ checked={maintainDO_HR_01}
 {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID</span> ,
+name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID 01</span> ,
 
 modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
 
@@ -6013,7 +6216,7 @@ checked={maintainDO_SV_01}
 {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDO_SV_02} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID</span> ,
+name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID 02</span> ,
 
 modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
 
@@ -6214,7 +6417,7 @@ checked={maintainDO_SV_02}
   <Column  field="high" header="High" />
   <Column field="low" header="Low" />
 
-  {AuthInput ? " " :  <Column field="Maintain" header= " MainTain " />
+  {AuthInput ? " " :  <Column field="Maintain" header={maintainHeader} />
 }
       {AuthInput ? " " : <Column field="update" header="Update" />}
 

@@ -2084,7 +2084,7 @@ useEffect(() => {
     // =================================================================================================================== 
     const tagNameFC = {
 
-        FC_Lithium_Battery_Status: "Lithium Battery Status (0:Yes - 1: No)",
+        FC_Lithium_Battery_Status: "Lithium Battery Status (0: Yes - 1: No)",
 
         Battery_Voltage:'Battery Voltage ( Volt ) ',
         System_Voltage :'System Voltage ( Volt )',

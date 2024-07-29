@@ -4,6 +4,9 @@ import ScoreCard_Nitori from '../components/ScoreCard_Nitori'
 import ScoreCard_Yoshino from '../components/ScoreCard_Yoshino'
 import ScoreCard_VREC from '../components/ScoreCard_VREC'
 import ScoreCard_KOA from '../components/ScoreCard_KOA'
+import ScoreCard_Arakawa from '../components/ScoreCard_Arakawa'
+import ScoreCard_SPMCV from '../components/ScoreCard_SPMCV'
+import ScoreCard_IGUACU from '../components/ScoreCard_IGUACU'
 
 export default function NG_Scorecard() {
   return (
@@ -13,8 +16,11 @@ export default function NG_Scorecard() {
         <ScoreCard_Yoshino/>
         <ScoreCard_Nitori/>
         <ScoreCard_VREC/>
+        <ScoreCard_IGUACU/>
 
+        <ScoreCard_SPMCV/>
 
+      <ScoreCard_Arakawa/>
         <ScoreCard_Otsuka/>
 
 
