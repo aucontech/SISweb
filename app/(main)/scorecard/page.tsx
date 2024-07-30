@@ -6,6 +6,7 @@ import ScoreCard_Meiko from "./components/ScoreCard_Meiko";
 import ScoreCard_Nitori from "./components/ScoreCard_Nitori";
 import ScoreCard_Otsuka from "./components/ScoreCard_Otsuka";
 import ScoreCard_Yoshino from "./components/ScoreCard_Yoshino";
+import SNG_Scorecard from "./SNG_Scorecard/SNG_Scorecard";
 
 const ScoreCard = () => {
     return (

@@ -5283,84 +5283,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
 
-        const dataFC = [
-
-            {
-                mainCategory: mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
-             modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} </span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_Lithium_Battery_Status}
-             checked={maintainFC_Lithium_Battery_Status}
-         ></Checkbox>
     
-            },
-    
-         
-            {
-                mainCategory:mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_Battery_Voltage} >{EVC_STT01Value}</span>,
-             name: <span style={combineCss.CSSFC_Battery_Voltage}>Battery Voltage</span> ,
-    
-             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
-    
-            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox
-             style={{ marginRight: 20, }}
-             onChange={ChangeMaintainFC_Battery_Voltage}
-             checked={maintainFC_Battery_Voltage}
-         ></Checkbox>
-    
-            },
-
-            {
-                mainCategory:mainCategoryFC.FC ,
-                timeUpdate: <span style={combineCss.CSSFC_System_Voltage} >{EVC_STT01Value}</span>,
-            name: <span style={combineCss.CSSFC_System_Voltage}>System Voltage</span> ,
-   
-            modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
-   
-           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
-            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
-            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
-            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-            Maintain:   <Checkbox
-            style={{ marginRight: 20, }}
-            onChange={ChangeMaintainFC_System_Voltage}
-            checked={maintainFC_System_Voltage}
-        ></Checkbox>
-   
-           },
-
-           {
-            mainCategory:mainCategoryFC.FC ,
-            timeUpdate: <span style={combineCss.CSSFC_Charger_Voltage} >{EVC_STT01Value}</span>,
-           name: <span style={combineCss.CSSFC_Charger_Voltage}>Charger Voltage</span> ,
-  
-           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
-  
-          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
-           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
-           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
-           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-           Maintain:   <Checkbox
-           style={{ marginRight: 20, }}
-           onChange={ChangeMaintainFC_Charger_Voltage}
-           checked={maintainFC_Charger_Voltage}
-       ></Checkbox>
-  
-          },
-
-        ]
 
         const dataFC01 =  [
             {
@@ -5818,6 +5741,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
   const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
   const DataDO_SV_02 = DO_SV_02 === "0" ? "OFF" : DO_SV_02 === "1" ? "ON" : null;
 
+  const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
 
 
 
@@ -5829,7 +5753,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSGD1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD1}>Gas Detector GD-1201</span> ,
     
-             modbus: <span style={combineCss.CSSGD1}>40002</span> ,
+             modbus: <span style={combineCss.CSSGD1}>DB5F106</span> ,
     
             value: <span style={combineCss.CSSGD1} > {GD1} {nameValue.LEL}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
@@ -5849,7 +5773,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSGD2} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD2}>Gas Detector GD-1202</span> ,
     
-             modbus: <span style={combineCss.CSSGD2}>40004	 </span> ,
+             modbus: <span style={combineCss.CSSGD2}>DB5F110	 </span> ,
     
             value: <span style={combineCss.CSSGD2} > {GD2} {nameValue.LEL}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
@@ -5866,9 +5790,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
             {
                  mainCategory: mainCategoryFC.PLC ,
                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSPT1}>Output Pressure</span> ,
+            name: <span style={combineCss.CSSPT1}>Output Pressure PT-1203</span> ,
    
-            modbus: <span style={combineCss.CSSPT1}>40006	 </span> ,
+            modbus: <span style={combineCss.CSSPT1}>DB5F114	 </span> ,
    
            value: <span style={combineCss.CSSPT1} > {PT1} {nameValue.BARG}</span> , 
             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
@@ -5886,9 +5810,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
            {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSDI_ZSO_1} >{PLC_STTValue}</span>,
-           name: <span style={combineCss.CSSDI_ZSO_1}>SDV_ZSO 1</span> ,
+           name: <span style={combineCss.CSSDI_ZSO_1}>SDV-1201 ZSO</span> ,
   
-           modbus: <span style={combineCss.CSSDI_ZSO_1}>40009	 </span> ,
+           modbus: <span style={combineCss.CSSDI_ZSO_1}>DB5W16	 </span> ,
   
           value: <span style={combineCss.CSSDI_ZSO_1} > {DI_ZSO_1} {DataDI_ZSO_1}</span> , 
            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_ZSO_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
@@ -5909,9 +5833,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
          {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSDI_ZSC_1} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSDI_ZSC_1}>SDV-ZSC 1</span> ,
+         name: <span style={combineCss.CSSDI_ZSC_1}>SDV-1201 ZSC</span> ,
 
-         modbus: <span style={combineCss.CSSDI_ZSC_1}>40010	 </span> ,
+         modbus: <span style={combineCss.CSSDI_ZSC_1}>DB5W18	 </span> ,
 
         value: <span style={combineCss.CSSDI_ZSC_1} > {DI_ZSC_1} {DataDI_ZSC_1}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_ZSC_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
@@ -5929,9 +5853,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
         {
              mainCategory: mainCategoryFC.PLC ,
             timeUpdate: <span style={combineCss.CSSDI_ZSO_2} >{PLC_STTValue}</span>,
-        name: <span style={combineCss.CSSDI_ZSO_2}>SDV_ZSO 2</span> ,
+        name: <span style={combineCss.CSSDI_ZSO_2}>SDV-1202 ZSO</span> ,
 
-        modbus: <span style={combineCss.CSSDI_ZSO_2}>	40011 </span> ,
+        modbus: <span style={combineCss.CSSDI_ZSO_2}>	DB5W20 </span> ,
 
        value: <span style={combineCss.CSSDI_ZSO_2} > {DI_ZSO_2} {DataDI_ZSO_2}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_ZSO_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_2} onChange={handleInputChangeDI_ZSO_2} inputMode="decimal" />, 
@@ -5950,9 +5874,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
        {
          mainCategory: mainCategoryFC.PLC ,
         timeUpdate: <span style={combineCss.CSSDI_ZSC_2} >{PLC_STTValue}</span>,
-       name: <span style={combineCss.CSSDI_ZSC_2}>SDV-ZSC 2</span> ,
+       name: <span style={combineCss.CSSDI_ZSC_2}>SDV-1202 ZSC</span> ,
 
-       modbus: <span style={combineCss.CSSDI_ZSC_2}>	40012 </span> ,
+       modbus: <span style={combineCss.CSSDI_ZSC_2}> DB5W22 </span> ,
 
       value: <span style={combineCss.CSSDI_ZSC_2} > {DI_ZSC_2} {DataDI_ZSC_2}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_ZSC_2}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_2} onChange={handleInputChangeDI_ZSC_2} inputMode="decimal" />, 
@@ -5970,9 +5894,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
       {
          mainCategory: mainCategoryFC.PLC ,
         timeUpdate: <span style={combineCss.CSSDI_MAP_1} >{PLC_STTValue}</span>,
-      name: <span style={combineCss.CSSDI_MAP_1}>Manual Alarm Call Point</span> ,
+      name: <span style={combineCss.CSSDI_MAP_1}>MAP</span> ,
 
-      modbus: <span style={combineCss.CSSDI_MAP_1}>40013 </span> ,
+      modbus: <span style={combineCss.CSSDI_MAP_1}>DB5W24 </span> ,
 
      value: <span style={combineCss.CSSDI_MAP_1} > {DI_MAP_1} {DataDI_MAP_1}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_MAP_1}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
@@ -5990,7 +5914,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
         timeUpdate: <span style={combineCss.CSSDI_UPS_BATTERY} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_UPS_BATTERY}>UPS BATTERY</span> ,
     
-     modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>40014	 </span> ,
+     modbus: <span style={combineCss.CSSDI_UPS_BATTERY}>DB5W26	 </span> ,
     
     value: <span style={combineCss.CSSDI_UPS_BATTERY} > {DI_UPS_BATTERY} {DataDI_UPS_BATTERY}</span> , 
      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
@@ -6010,7 +5934,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
         timeUpdate: <span style={combineCss.CSSDI_UPS_CHARGING} >{PLC_STTValue}</span>,
      name: <span style={combineCss.CSSDI_UPS_CHARGING}>UPS CHARGING</span> ,
 
-     modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>40015	 </span> ,
+     modbus: <span style={combineCss.CSSDI_UPS_CHARGING}>DB5W28	 </span> ,
 
     value: <span style={combineCss.CSSDI_UPS_CHARGING} > {DI_UPS_CHARGING} {DataDI_UPS_CHARGING}</span> , 
      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
@@ -6030,7 +5954,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
         timeUpdate: <span style={combineCss.CSSDI_UPS_ALARM} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSDI_UPS_ALARM}>UPS ALARM</span> ,
 
-    modbus: <span style={combineCss.CSSDI_UPS_ALARM}>40016	 </span> ,
+    modbus: <span style={combineCss.CSSDI_UPS_ALARM}>DB5W30	 </span> ,
 
    value: <span style={combineCss.CSSDI_UPS_ALARM} > {DI_UPS_ALARM} {DataDI_UPS_ALARM}</span> , 
     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
@@ -6050,9 +5974,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
   {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_SELECT_SW} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSDI_SELECT_SW}>Select Switch</span> ,
+  name: <span style={combineCss.CSSDI_SELECT_SW}>SELECT SW</span> ,
 
-  modbus: <span style={combineCss.CSSDI_SELECT_SW}>40018	 </span> ,
+  modbus: <span style={combineCss.CSSDI_SELECT_SW}>DB5W34	 </span> ,
 
  value: <span style={combineCss.CSSDI_SELECT_SW} > {DI_SELECT_SW} {DataDI_SELECT_SW}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
@@ -6069,9 +5993,9 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
  {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDI_RESET} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSDI_RESET}>Reset Button</span> ,
+   name: <span style={combineCss.CSSDI_RESET}>RESET</span> ,
 
-   modbus: <span style={combineCss.CSSDI_RESET}>40019	 </span> ,
+   modbus: <span style={combineCss.CSSDI_RESET}>DB5W36	 </span> ,
 
   value: <span style={combineCss.CSSDI_RESET} > {DI_RESET} {DataDI_RESET}</span> , 
    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDI_RESET}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
@@ -6091,7 +6015,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
     timeUpdate: <span style={combineCss.CSSEmergency_NO} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSEmergency_NO}>Emergency Stop NO</span> ,
 
-  modbus: <span style={combineCss.CSSEmergency_NO}>40020	 </span> ,
+  modbus: <span style={combineCss.CSSEmergency_NO}>DB5W38</span> ,
 
  value: <span style={combineCss.CSSEmergency_NO} > {Emergency_NO} {DataEmergency_NO}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEmergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
@@ -6115,7 +6039,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
     timeUpdate: <span style={combineCss.CSSEmergency_NC} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSEmergency_NC}>Emergency Stop NC</span> ,
 
-  modbus: <span style={combineCss.CSSEmergency_NC}>40021	 </span> ,
+  modbus: <span style={combineCss.CSSEmergency_NC}>DB5W40	 </span> ,
 
  value: <span style={combineCss.CSSEmergency_NC} > {Emergency_NC} {DataEmergency_NC}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEmergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
@@ -6135,7 +6059,7 @@ checked={maintainFC_02_Yesterday_Values_Uncorrected_Volume}
     timeUpdate: <span style={combineCss.CSSUPS_Mode} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSUPS_Mode}>UPS MODE</span> ,
 
- modbus: <span style={combineCss.CSSUPS_Mode}>40022	 </span> ,
+ modbus: <span style={combineCss.CSSUPS_Mode}>DB5W42	 </span> ,
 
 value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode} {DataUPS_Mode}</span> , 
  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSUPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
@@ -6154,7 +6078,7 @@ value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode} {DataUPS_Mode}</span> ,
     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
 
-modbus: <span style={combineCss.CSSDO_BC_01}>40026	 </span> ,
+modbus: <span style={combineCss.CSSDO_BC_01}>DB5W50	 </span> ,
 
 value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
@@ -6176,7 +6100,7 @@ checked={maintainDO_BC_01}
     timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
 
-modbus: <span style={combineCss.CSSDO_HR_01}>40027	 </span> ,
+modbus: <span style={combineCss.CSSDO_HR_01}>DB5W52	 </span> ,
 
 value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
@@ -6197,9 +6121,9 @@ checked={maintainDO_HR_01}
 {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDO_SV_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_01}>SDV-SOLENOID 01</span> ,
+name: <span style={combineCss.CSSDO_SV_01}>SDV-1201 SOLENOID</span> ,
 
-modbus: <span style={combineCss.CSSDO_SV_01}>40028	 </span> ,
+modbus: <span style={combineCss.CSSDO_SV_01}>DB5W54	 </span> ,
 
 value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
@@ -6216,9 +6140,9 @@ checked={maintainDO_SV_01}
 {
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDO_SV_02} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_SV_02}> SDV-SOLENOID 02</span> ,
+name: <span style={combineCss.CSSDO_SV_02}>SDV-1202 SOLENOID</span> ,
 
-modbus: <span style={combineCss.CSSDO_SV_02}>40029	 </span> ,
+modbus: <span style={combineCss.CSSDO_SV_02}>DB5W56	 </span> ,
 
 value: <span style={combineCss.CSSDO_SV_02} > {DO_SV_02} {DataDO_SV_02}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_SV_02}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_02} onChange={handleInputChangeDO_SV_02} inputMode="decimal" />, 
@@ -6233,6 +6157,86 @@ checked={maintainDO_SV_02}
 },
 
           ]
+
+
+          const dataFC = [
+
+            {
+                mainCategory: mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
+             name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
+             modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
+            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span> , 
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainFC_Lithium_Battery_Status}
+             checked={maintainFC_Lithium_Battery_Status}
+         ></Checkbox>
+    
+            },
+    
+         
+            {
+                mainCategory:mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_Battery_Voltage} >{EVC_STT01Value}</span>,
+             name: <span style={combineCss.CSSFC_Battery_Voltage}>Battery Voltage</span> ,
+    
+             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
+    
+            value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainFC_Battery_Voltage}
+             checked={maintainFC_Battery_Voltage}
+         ></Checkbox>
+    
+            },
+
+            {
+                mainCategory:mainCategoryFC.FC ,
+                timeUpdate: <span style={combineCss.CSSFC_System_Voltage} >{EVC_STT01Value}</span>,
+            name: <span style={combineCss.CSSFC_System_Voltage}>System Voltage</span> ,
+   
+            modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
+   
+           value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainFC_System_Voltage}
+            checked={maintainFC_System_Voltage}
+        ></Checkbox>
+   
+           },
+
+           {
+            mainCategory:mainCategoryFC.FC ,
+            timeUpdate: <span style={combineCss.CSSFC_Charger_Voltage} >{EVC_STT01Value}</span>,
+           name: <span style={combineCss.CSSFC_Charger_Voltage}>Charger Voltage</span> ,
+  
+           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
+  
+          value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
+           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
+           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+           Maintain:   <Checkbox
+           style={{ marginRight: 20, }}
+           onChange={ChangeMaintainFC_Charger_Voltage}
+           checked={maintainFC_Charger_Voltage}
+       ></Checkbox>
+  
+          },
+
+        ]
 
           const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC, ...PLC];
 
