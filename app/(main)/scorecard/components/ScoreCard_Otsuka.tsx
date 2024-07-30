@@ -2548,8 +2548,6 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
             ? " Normal"
             : null;
 
-
-
             const combineCss = {
 
 
