@@ -2251,7 +2251,6 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               }, [EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_Low,maintainEVC_02_Volume_at_Base_Condition]);
           
 
-     
           // =================================================================================================================== 
 
 
@@ -2474,14 +2473,14 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     };
 
     const tagNamePLC = {
-        PT01: "Input Pressure (BarG)",
+        PT01: "Input Pressure PT-1903 (BarG)",
         GD1: "Gas Detector GD-1901 (%LEL)",
         GD2: "Gas Detector GD-1902 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
 
         ZSC: "SDV-1901 ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-1901 ZSO (0: OFF - 1: ON)",
-        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_BATTERY: "UPS BATTERY (0: Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
@@ -2496,12 +2495,12 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         HORN: "HORN (0: OFF - 1: ON)",
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
-        DO_SV1: "SDV SOLENOID (0: Off - 1: On)",
+        DO_SV1: "SDV-1901 SOLENOID (0: OFF - 1: ON)",
 
     };
 
-    const DataRESET = DI_RESET === "0" ? "Off" : DI_RESET === "1" ? "On" : null;
-    const DataDO_SV1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null;
+    const DataRESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON" : null;
+    const DataDO_SV1 = DO_SV1 === "0" ? "OFF" : DO_SV1 === "1" ? "ON" : null;
     const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
@@ -2528,14 +2527,14 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
             : UPS_Mode === "4"
             ? "Normal"
             : null;
-    const DataZSC_1 = DI_ZSC_1 === "0" ? "On" : DI_ZSC_1 === "1" ? "Off" : null;
-    const DataZSO_1 = DI_ZSO_1 === "0" ? "Off" : DI_ZSO_1 === "1" ? "On" : null;
+    const DataZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+    const DataZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
 
     const DataDI_SELECT_SW =
         DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
-    const DataHorn = DO_HR_01 === "0" ? "Off" : DO_HR_01 === "1" ? "On" : null;
+    const DataHorn = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
     const DataBeacon =
-        DO_BC_01 === "0" ? "Off" : DO_BC_01 === "1" ? "On" : null;
+        DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
     const DataEmergency_NO =
         Emergency_NO === "0"
             ? " Normal"

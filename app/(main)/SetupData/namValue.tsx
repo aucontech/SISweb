@@ -42,12 +42,15 @@ export const TagName = {
     UPS_ALARM:"UPS ALARM",
     SELECT_SW:"SELECT SW",
     RESET:"RESET",
-    EMER_NO:"Emergency Stop_NO",
-    EMER_NC:"Emergency Stop_NC",
+    EMER_NO:"Emergency Stop NO",
+    EMER_NC:"Emergency Stop NC",
     UPS_MODE:"UPS MODE",
     HR_1:"HORN",
     BC_1:"BEACON",
-    DI_MAP_1:"MAP"
+    DI_MAP_1:"MAP",
+    EVC_01_Conn_STT:"EVC Connection Status",
+    EVC_02_Conn_STT:"EVC Connection Status",
+    PLC_Conn_STT:"PLC Connection Status"
 }
 
 export const PLC_ARAKAWA ={
@@ -72,6 +75,6 @@ export const PLC_OTSUKA ={
     GD1:"Gas Detector GD-1901",
     GD2:"Gas Detector GD-1902",
     GD3:"Gas Detector GD-1903",
-
+    PT1:"Input Pressure PT-1903",
     SV_1:"SDV-1901 SOLENOID"
 }

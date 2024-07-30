@@ -209,8 +209,11 @@ export default function LowHighData() {
                         DI_ZSC_1: setDI_ZSC_1,
                         DI_ZSO_1: setDI_ZSO_1,
                         DO_SV1:setDO_SV1,
-                        DO_BC_01:setDO_BC_01
+                        DO_BC_01:setDO_BC_01,
 
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                        PLC_Conn_STT: setPLC_Conn_STT,
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -3437,8 +3440,161 @@ const [maintainDO_BC_01, setMaintainDO_BC_01] = useState<boolean>(false);
 
 //===========================================================================================
 
+//===========================================================================================
+
+const [EVC_01_Conn_STT,setEVC_01_Conn_STT] = useState<string | null>(null);
+const [inputHighEVC_01_Conn_STT, setInputHighEVC_01_Conn_STT] = useState<any>();
+const [inputLowEVC_01_Conn_STT, setInputLowEVC_01_Conn_STT] = useState<any>();
+const [HighEVC_01_Conn_STT, setHighEVC_01_Conn_STT] = useState<number | null>(null);
+const [LowEVC_01_Conn_STT, setLowEVC_01_Conn_STT] = useState<number | null>(null);
+const [AlarmEVC_01_Conn_STT, setAlarmEVC_01_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEVC_01_Conn_STT, setMaintainEVC_01_Conn_STT] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighEVC_01_Conn_STT === 'string' && typeof LowEVC_01_Conn_STT === 'string' && EVC_01_Conn_STT !== null && maintainEVC_01_Conn_STT === false) {
+            const highValue = parseFloat(HighEVC_01_Conn_STT);
+            const lowValue = parseFloat(LowEVC_01_Conn_STT);
+            const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Conn_STTValue)) {
+                if (highValue <= EVC_01_Conn_STTValue || EVC_01_Conn_STTValue <= lowValue) {
+                        setAlarmEVC_01_Conn_STT(true);
+                } else {
+                    setAlarmEVC_01_Conn_STT(false);
+                }
+            } 
+        } 
+    }, [HighEVC_01_Conn_STT, EVC_01_Conn_STT, LowEVC_01_Conn_STT,maintainEVC_01_Conn_STT]);
 
 
+
+    const handleInputChangeHighEVC_01_Conn_STT = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighEVC_01_Conn_STT(newValue);
+    };
+
+    const handleInputChangeLowEVC_01_Conn_STT = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowEVC_01_Conn_STT(newValue2);
+    };
+    const ChangeMaintainEVC_01_Conn_STT = async () => {
+        try {
+            const newValue = !maintainEVC_01_Conn_STT;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { EVC_01_Conn_STT_Maintain: newValue }
+            );
+            setMaintainEVC_01_Conn_STT(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [EVC_02_Conn_STT,setEVC_02_Conn_STT] = useState<string | null>(null);
+const [inputHighEVC_02_Conn_STT, setInputHighEVC_02_Conn_STT] = useState<any>();
+const [inputLowEVC_02_Conn_STT, setInputLowEVC_02_Conn_STT] = useState<any>();
+const [HighEVC_02_Conn_STT, setHighEVC_02_Conn_STT] = useState<number | null>(null);
+const [LowEVC_02_Conn_STT, setLowEVC_02_Conn_STT] = useState<number | null>(null);
+const [AlarmEVC_02_Conn_STT, setAlarmEVC_02_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEVC_02_Conn_STT, setMaintainEVC_02_Conn_STT] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighEVC_02_Conn_STT === 'string' && typeof LowEVC_02_Conn_STT === 'string' && EVC_02_Conn_STT !== null && maintainEVC_02_Conn_STT === false) {
+            const highValue = parseFloat(HighEVC_02_Conn_STT);
+            const lowValue = parseFloat(LowEVC_02_Conn_STT);
+            const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Conn_STTValue)) {
+                if (highValue <= EVC_02_Conn_STTValue || EVC_02_Conn_STTValue <= lowValue) {
+                        setAlarmEVC_02_Conn_STT(true);
+                } else {
+                    setAlarmEVC_02_Conn_STT(false);
+                }
+            } 
+        } 
+    }, [HighEVC_02_Conn_STT, EVC_02_Conn_STT, LowEVC_02_Conn_STT,maintainEVC_02_Conn_STT]);
+
+
+
+    const handleInputChangeHighEVC_02_Conn_STT = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighEVC_02_Conn_STT(newValue);
+    };
+
+    const handleInputChangeLowEVC_02_Conn_STT = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowEVC_02_Conn_STT(newValue2);
+    };
+    const ChangeMaintainEVC_02_Conn_STT = async () => {
+        try {
+            const newValue = !maintainEVC_02_Conn_STT;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { EVC_02_Conn_STT_Maintain: newValue }
+            );
+            setMaintainEVC_02_Conn_STT(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+//===========================================================================================
+
+//===========================================================================================
+
+const [PLC_Conn_STT,setPLC_Conn_STT] = useState<string | null>(null);
+const [inputHighPLC_Conn_STT, setInputHighPLC_Conn_STT] = useState<any>();
+const [inputLowPLC_Conn_STT, setInputLowPLC_Conn_STT] = useState<any>();
+const [HighPLC_Conn_STT, setHighPLC_Conn_STT] = useState<number | null>(null);
+const [LowPLC_Conn_STT, setLowPLC_Conn_STT] = useState<number | null>(null);
+const [AlarmPLC_Conn_STT, setAlarmPLC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof HighPLC_Conn_STT === 'string' && typeof LowPLC_Conn_STT === 'string' && PLC_Conn_STT !== null && maintainPLC_Conn_STT === false) {
+            const highValue = parseFloat(HighPLC_Conn_STT);
+            const lowValue = parseFloat(LowPLC_Conn_STT);
+            const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PLC_Conn_STTValue)) {
+                if (highValue <= PLC_Conn_STTValue || PLC_Conn_STTValue <= lowValue) {
+                        setAlarmPLC_Conn_STT(true);
+                } else {
+                    setAlarmPLC_Conn_STT(false);
+                }
+            } 
+        } 
+    }, [HighPLC_Conn_STT, PLC_Conn_STT, LowPLC_Conn_STT,maintainPLC_Conn_STT]);
+
+
+
+    const handleInputChangeHighPLC_Conn_STT = (event: any) => {
+        const newValue = event.target.value;
+        setInputHighPLC_Conn_STT(newValue);
+    };
+
+    const handleInputChangeLowPLC_Conn_STT = (event: any) => {
+        const newValue2 = event.target.value;
+        setInputLowPLC_Conn_STT(newValue2);
+    };
+    const ChangeMaintainPLC_Conn_STT = async () => {
+        try {
+            const newValue = !maintainPLC_Conn_STT;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+                { PLC_Conn_STT_Maintain: newValue }
+            );
+            setMaintainPLC_Conn_STT(newValue);
+            
+            
+        } catch (error) {}
+    };
+
+//===========================================================================================
 const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue : any = event.target.value;
     setGetWayPhoneOTSUKA(newValue);
@@ -3527,6 +3683,10 @@ const handleMainTainAll = async (checked:any) => {
         const newMaintainDO_HR_01 = checked;
         const newMaintainDO_BC_01 = checked;
         const newMaintainDO_SV_01 = checked;
+        const newMaintainPLC_Conn_STT = checked;
+        const newMaintainEVC_01_Conn_STT = checked;
+        const newMaintainEVC_02_Conn_STT = checked;
+
 
         await httpApi.post(
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
@@ -3575,6 +3735,9 @@ const handleMainTainAll = async (checked:any) => {
                DO_HR_01_Maintain: newMaintainDO_HR_01,
                DO_BC_01_Maintain: newMaintainDO_BC_01,
                DO_SV_01_Maintain: newMaintainDO_SV_01,
+               PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
+               EVC_01_Conn_STT_Maintain: newMaintainEVC_01_Conn_STT,
+               EVC_02_Conn_STT_Maintain: newMaintainEVC_02_Conn_STT,
 
 
              }
@@ -3625,7 +3788,9 @@ const handleMainTainAll = async (checked:any) => {
         setMaintainDO_HR_01(newMaintainDO_HR_01);
         setMaintainDO_BC_01(newMaintainDO_BC_01);
 
-
+        setMaintainEVC_01_Conn_STT(newMaintainEVC_01_Conn_STT);
+        setMaintainEVC_02_Conn_STT(newMaintainEVC_02_Conn_STT);
+        setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
 
 
     } catch (error) {
@@ -3653,6 +3818,7 @@ const handleMainTainEVC01 = async (checked:any) => {
         const newMaintainEVC_01_Flow_at_Measurement_Condition = checked;
         const newMaintainEVC_01_Vb_of_Last_Day = checked;
         const newMaintainEVC_01_Vm_of_Last_Day = checked;
+        const newMaintainEVC_01_Conn_STT = checked;
 
    
 
@@ -3669,6 +3835,7 @@ const handleMainTainEVC01 = async (checked:any) => {
                EVC_01_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_01_Flow_at_Measurement_Condition,
                EVC_01_Vb_of_Last_Day_Maintain: newMaintainEVC_01_Vb_of_Last_Day,
                EVC_01_Vm_of_Last_Day_Maintain: newMaintainEVC_01_Vm_of_Last_Day,
+               EVC_01_Conn_STT_Maintain: newMaintainEVC_01_Conn_STT,
 
 
              }
@@ -3684,6 +3851,7 @@ const handleMainTainEVC01 = async (checked:any) => {
         setMaintainEVC_01_Flow_at_Measurement_Condition(newMaintainEVC_01_Flow_at_Measurement_Condition);
         setMaintainEVC_01_Vb_of_Last_Day(newMaintainEVC_01_Vb_of_Last_Day);
         setMaintainEVC_01_Vm_of_Last_Day(newMaintainEVC_01_Vm_of_Last_Day);
+        setMaintainEVC_01_Conn_STT(newMaintainEVC_01_Conn_STT);
 
        
     } catch (error) {
@@ -3711,6 +3879,7 @@ const handleMainTainEVC02 = async (checked:any) => {
         const newMaintainEVC_02_Flow_at_Measurement_Condition = checked;
         const newMaintainEVC_02_Vb_of_Last_Day = checked;
         const newMaintainEVC_02_Vm_of_Last_Day = checked;
+        const newMaintainEVC_02_Conn_STT = checked;
 
    
 
@@ -3727,6 +3896,7 @@ const handleMainTainEVC02 = async (checked:any) => {
                EVC_02_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_02_Flow_at_Measurement_Condition,
                EVC_02_Vb_of_Last_Day_Maintain: newMaintainEVC_02_Vb_of_Last_Day,
                EVC_02_Vm_of_Last_Day_Maintain: newMaintainEVC_02_Vm_of_Last_Day,
+               EVC_02_Conn_STT_Maintain: newMaintainEVC_02_Conn_STT,
 
 
              }
@@ -3742,6 +3912,7 @@ const handleMainTainEVC02 = async (checked:any) => {
         setMaintainEVC_02_Flow_at_Measurement_Condition(newMaintainEVC_02_Flow_at_Measurement_Condition);
         setMaintainEVC_02_Vb_of_Last_Day(newMaintainEVC_02_Vb_of_Last_Day);
         setMaintainEVC_02_Vm_of_Last_Day(newMaintainEVC_02_Vm_of_Last_Day);
+        setMaintainEVC_02_Conn_STT(newMaintainEVC_02_Conn_STT);
 
        
     } catch (error) {
@@ -3780,6 +3951,7 @@ const handleMainTainPLC = async (checked:any) => {
         const newMaintainDO_HR_01 = checked;
         const newMaintainDO_BC_01 = checked;
         const newMaintainDO_SV_01 = checked;
+        const newMaintainPLC_Conn_STT = checked;
 
    
 
@@ -3805,6 +3977,7 @@ const handleMainTainPLC = async (checked:any) => {
                 DO_HR_01_Maintain: newMaintainDO_HR_01,
                 DO_BC_01_Maintain: newMaintainDO_BC_01,
                 DO_SV_01_Maintain: newMaintainDO_SV_01,
+                PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
 
 
              }
@@ -3829,6 +4002,7 @@ const handleMainTainPLC = async (checked:any) => {
         setMaintainUPS_Mode(newMaintainUPS_Mode);
         setMaintainDO_HR_01(newMaintainDO_HR_01);
         setMaintainDO_BC_01(newMaintainDO_BC_01);
+        setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
 
 
        
@@ -3979,6 +4153,18 @@ const handleCheckboxChangePLC = (e:any) => {
         setInputHighDO_BC_01(HighDO_BC_01)
         setInputLowDO_BC_01(LowDO_BC_01)
 
+
+
+        setInputHighEVC_01_Conn_STT(HighEVC_01_Conn_STT)
+        setInputLowEVC_01_Conn_STT(LowEVC_01_Conn_STT)
+
+        setInputHighEVC_02_Conn_STT(HighEVC_02_Conn_STT)
+        setInputLowEVC_02_Conn_STT(LowEVC_02_Conn_STT)
+
+
+        setInputHighPLC_Conn_STT(HighPLC_Conn_STT)
+        setInputLowPLC_Conn_STT(LowPLC_Conn_STT)
+
     }, [highEVC_01_PressureValue, lowEVC_01_PressureValue,
          highEVC_02_PressurePressureValue, lowEVC_02_PressurePressureValue ,
          highPT1PressureValue, lowPT1PressureValue, 
@@ -4031,6 +4217,11 @@ const handleCheckboxChangePLC = (e:any) => {
          HighDI_ZSO_1, LowDI_ZSO_1 ,
          HighDO_SV1, LowDO_SV1 ,
          HighDO_BC_01, LowDO_BC_01 ,
+
+
+         HighEVC_01_Conn_STT, LowEVC_01_Conn_STT ,
+         HighEVC_02_Conn_STT, LowEVC_02_Conn_STT ,
+         HighPLC_Conn_STT, LowPLC_Conn_STT ,
 
          getWayPhoneOTSUKA
          
@@ -4093,11 +4284,17 @@ const handleCheckboxChangePLC = (e:any) => {
 
                     DI_MAP_1_High:inputHighDI_MAP_1, DI_MAP_1_Low:inputLowDI_MAP_1,
 
-                    DI_DI_ZSC_1_High:inputHighDI_ZSC_1, DI_DI_ZSC_1_Low:inputLowDI_ZSC_1,
-                    DI_DI_ZSO_1_High:inputHighDI_ZSO_1, DI_DI_ZSO_1_Low:inputLowDI_ZSO_1,
+                   DI_ZSC_1_High:inputHighDI_ZSC_1, DI_ZSC_1_Low:inputLowDI_ZSC_1,
+                   DI_ZSO_1_High:inputHighDI_ZSO_1, DI_ZSO_1_Low:inputLowDI_ZSO_1,
 
                     DO_SV_01_High:inputHighDO_SV1, DO_SV_01_Low:inputLowDO_SV1,
                     DO_BC_01_High:inputHighDO_BC_01, DO_BC_01_Low:inputLowDO_BC_01,
+
+
+                    EVC_01_Conn_STT_High:inputHighEVC_01_Conn_STT, EVC_01_Conn_STT_Low:inputLowEVC_01_Conn_STT,
+
+                   EVC_02_Conn_STT_High:inputHighEVC_02_Conn_STT,EVC_02_Conn_STT_Low:inputLowEVC_02_Conn_STT,
+                    PLC_Conn_STT_High:inputHighPLC_Conn_STT, PLC_Conn_STT_Low:inputLowPLC_Conn_STT,
 
 
             IOT_Gateway_Phone:inputGetwayPhone
@@ -4232,6 +4429,18 @@ const handleCheckboxChangePLC = (e:any) => {
 
             setHighDO_BC_01(inputHighDO_BC_01);
             setLowDO_BC_01(inputLowDO_BC_01);
+
+
+
+            setHighEVC_02_Conn_STT(inputHighEVC_02_Conn_STT);
+            setLowEVC_02_Conn_STT(inputLowEVC_02_Conn_STT);
+
+
+            setHighEVC_01_Conn_STT(inputHighEVC_01_Conn_STT);
+            setLowEVC_01_Conn_STT(inputLowEVC_01_Conn_STT);
+
+            setHighPLC_Conn_STT(inputHighPLC_Conn_STT);
+            setLowPLC_Conn_STT(inputLowPLC_Conn_STT);
 
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
@@ -4684,6 +4893,40 @@ const handleCheckboxChangePLC = (e:any) => {
                 fontWeight:400,
                 
             },
+
+
+
+            CSS_EVC_01_Conn_STT: {
+                color:AlarmEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
+                ? "#ff5656"
+                : maintainEVC_01_Conn_STT
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400,
+                
+            },
+              CSS_PLC_Conn_STT: {
+                color:AlarmPLC_Conn_STT && !maintainPLC_Conn_STT
+                ? "#ff5656"
+                : maintainPLC_Conn_STT
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400,
+                
+            },
+
+            CSS_EVC_02_Conn_STT: {
+                color:AlarmEVC_02_Conn_STT && !maintainEVC_02_Conn_STT
+                ? "#ff5656"
+                : maintainEVC_02_Conn_STT
+                ? "orange"
+                : "" ,
+                height:25,
+                fontWeight:400,
+                
+            },
       };
       const EVC_01_Flow_at_Base_Conditionformat = EVC_01_Flow_at_Base_Condition !== null ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2) : "";
       const EVC_01_Flow_at_Measurement_Conditionformat = EVC_01_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_01_Flow_at_Measurement_Condition).toFixed(2) : "";
@@ -4712,7 +4955,9 @@ const handleCheckboxChangePLC = (e:any) => {
         VB_Yesterday:"40018",
         VM_TODAY:"40016",
         VM_Yesterday:"40020",
-        ReBattery:"40001"
+        ReBattery:"40001",
+        EVC_01_Conn_STT:"Status",
+        EVC_02_Conn_STT:"Status"
 
     }
 
@@ -4734,26 +4979,46 @@ const handleCheckboxChangePLC = (e:any) => {
     }
 
     const modbusPLC = {
-        PT1:"40006",
-        GD1:"40002",
-        GD2:"40004",
-        GD3:"40030",
+        PT1:"DB5F114",
+        GD1:"DB5F106",
+        GD2:"DB5F110",
+        GD3:"DB5F118",
         
-        SDV_ZSO:"40008",
-        SDV_ZSC:"40010",
-        DI_MAP_1:"40013",
-        UPS_BATTERY:"40014",
-        UPS_CHARGING:"40015",
-        UPS_ALARM:"40016",
-        DI_SELECT_SW:"40018",
-        RESET:"40019",
-        Emergency_Stop_NO:"40020",
-        Emergency_Stop_NC:"40021",
-        UPS_MODE:"40017",
-        SDV_SOLENOID:"40028",
-        HORN:"40026",
-        DO_BC_01:"40027"
+        SDV_ZSO:"DB5W16",
+        SDV_ZSC:"DB5W18",
+        DI_MAP_1:"DB5W24",
+        UPS_BATTERY:"DB5W26",
+        UPS_CHARGING:"DB5W28",
+        UPS_ALARM:"DB5W30",
+        DI_SELECT_SW:"DB5W34",
+        RESET:"DB5W36",
+        Emergency_Stop_NO:"DB5W38",
+        Emergency_Stop_NC:"DB5W40",
+        UPS_MODE:"DB5W42",
+        SDV_SOLENOID:"DB5W54",
+        HORN:"DB5W50",
+        DO_BC_01:"DB5W52",
+        PLC_Conn_STT:"Status"
     }
+    const DataCharging = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null
+    const DataBattery = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null
+    const DataAlarm = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null
+    const DataMode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
+    const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null
+    const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null
+    const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null
+    const DataReset = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON" : null
+    const DataHorn = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null
+    const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null
+    const DataSV_1 = DO_SV1 === "0" ? "OFF" : DO_SV1 === "1" ? "ON" : null
+    const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null
+    const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null
+    const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null
+
+ 
+    const DataEVC_01_Conn_STT = EVC_01_Conn_STT === "0" ? "Not init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null
+    const DataEVC_02_Conn_STT = EVC_02_Conn_STT === "0" ? "Not init" : EVC_02_Conn_STT === "1" ? "COM OK" : EVC_02_Conn_STT === "2" ? "Error" : null
+    const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
 
     const mainCategoryEVC = {
        
@@ -5074,6 +5339,33 @@ const handleCheckboxChangePLC = (e:any) => {
 
         },
 
+        { 
+            mainCategory: mainCategoryEVC.EVC01,
+            
+            timeUpdate: <span style={combineCss.CSS_EVC_01_Conn_STT} >{EVC_STT01Value}</span>,
+        modbus: <span style={combineCss.CSS_EVC_01_Conn_STT}>{modbusEVC1.EVC_01_Conn_STT}</span> ,
+
+        name: <span style={combineCss.CSS_EVC_01_Conn_STT}> {TagName.EVC_01_Conn_STT} </span> ,
+
+        value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {EVC_01_Conn_STT} {DataEVC_01_Conn_STT}</span>, 
+        high: <InputText  
+ disabled={AuthInputHighLow}
+        
+        style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Conn_STT} onChange={handleInputChangeHighEVC_01_Conn_STT} inputMode="decimal" />, 
+        low:  <InputText  
+ disabled={AuthInputHighLow}
+        
+        style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Conn_STT} onChange={handleInputChangeLowEVC_01_Conn_STT} inputMode="decimal" />,
+        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainEVC_01_Conn_STT}
+        checked={maintainEVC_01_Conn_STT}
+    ></Checkbox>
+
+        },
+
+   
 
       ]
 
@@ -5385,24 +5677,38 @@ disabled={AuthInputHighLow}
     ></Checkbox>
 
        },
+       { 
+        mainCategory: mainCategoryEVC.EVC02,
+        
+        timeUpdate: <span style={combineCss.CSS_EVC_02_Conn_STT} >{EVC_STT01Value}</span>,
+    modbus: <span style={combineCss.CSS_EVC_02_Conn_STT}>{modbusEVC1.EVC_02_Conn_STT}</span> ,
 
+    name: <span style={combineCss.CSS_EVC_02_Conn_STT}> {TagName.EVC_02_Conn_STT} </span> ,
+
+    value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {EVC_02_Conn_STT} {DataEVC_02_Conn_STT}</span>, 
+    high: <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Conn_STT} onChange={handleInputChangeHighEVC_02_Conn_STT} inputMode="decimal" />, 
+    low:  <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Conn_STT} onChange={handleInputChangeLowEVC_02_Conn_STT} inputMode="decimal" />,
+    update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangeMaintainEVC_02_Conn_STT}
+    checked={maintainEVC_02_Conn_STT}
+></Checkbox>
+
+    },
+
+ 
        
       ]
 
-      const DataCharging = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null
-      const DataBattery = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null
-      const DataAlarm = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null
-      const DataMode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
-      const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "On" : DI_ZSC_1 === "1" ? "Off" : null
-      const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "Off" : DI_ZSO_1 === "1" ? "On" : null
-      const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null
-      const DataReset = DI_RESET === "0" ? "Off" : DI_RESET === "1" ? "On" : null
-      const DataHorn = DO_HR_01 === "0" ? "Off" : DO_HR_01 === "1" ? "On" : null
-      const DataDO_BC_01 = DO_BC_01 === "0" ? "Off" : DO_BC_01 === "1" ? "On" : null
-      const DataSV_1 = DO_SV1 === "0" ? "Off" : DO_SV1 === "1" ? "On" : null
-      const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null
-      const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null
-      const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null
+
+
 
 
       const PT1format =
@@ -5411,7 +5717,7 @@ disabled={AuthInputHighLow}
 
       const paragraphContentsPLC = {
 
-        EVC_02_Pressure:"Input Pressure",
+        EVC_02_Pressure:"Input Pressure PT-1903",
         GD1:"Gas Detector GD-1901",
         GD2:"Gas Detector GD-1902",
         GD3:"Gas Detector GD-1903",
@@ -5515,7 +5821,7 @@ disabled={AuthInputHighLow}
             timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
         modbus: <span style={combineCss.CSSPT1}>{modbusPLC.PT1}</span> ,
 
-        name: <span style={combineCss.CSSPT1}>{TagName.Input_Pressure}</span> ,
+        name: <span style={combineCss.CSSPT1}>{PLC_OTSUKA.PT1}</span> ,
         value: <span style={combineCss.CSSPT1} > {PT1format} {nameValue.BARG}</span> , 
          high: <InputText  
  disabled={AuthInput}
@@ -5540,7 +5846,7 @@ disabled={AuthInputHighLow}
            timeUpdate: <span style={combineCss.CSS_ZSO} >{PLC_STTValue}</span>,
     modbus: <span style={combineCss.CSS_ZSO}>{modbusPLC.SDV_ZSO}</span> ,
 
-       name: <span style={combineCss.CSS_ZSO}>{paragraphContentsPLC.SDV_SZO} </span> ,
+       name: <span style={combineCss.CSS_ZSO}>{PLC_OTSUKA.DI_ZSO_1} </span> ,
        value: <span style={combineCss.CSS_ZSO} > {DI_ZSO_1} {DataDI_ZSO_1}</span> , 
        high: <InputText  
  disabled={AuthInput}
@@ -5564,7 +5870,7 @@ disabled={AuthInputHighLow}
             timeUpdate: <span style={combineCss.CSS_ZSC} >{PLC_STTValue}</span>,
      modbus: <span style={combineCss.CSS_ZSC}>{modbusPLC.SDV_ZSC}</span> ,
 
-        name: <span style={combineCss.CSS_ZSC}>{paragraphContentsPLC.SDV_SZC} </span> ,
+        name: <span style={combineCss.CSS_ZSC}>{PLC_OTSUKA.DI_ZSC_1} </span> ,
         value: <span style={combineCss.CSS_ZSC} > {DI_ZSC_1} {DataDI_ZSC_1}</span> , 
         high: <InputText  
  disabled={AuthInput}
@@ -5847,10 +6153,6 @@ disabled={AuthInput}
     ></Checkbox>
         },
       
-     
-
-    
-
         {
              mainCategory: mainCategoryEVC.PLC,
             
@@ -5873,6 +6175,31 @@ disabled={AuthInput}
         onChange={ChangeMaintainDO_BC_01}
         checked={maintainDO_BC_01}
     ></Checkbox>
+        },
+        { 
+            mainCategory: mainCategoryEVC.PLC,
+            
+            timeUpdate: <span style={combineCss.CSS_PLC_Conn_STT} >{EVC_STT01Value}</span>,
+        modbus: <span style={combineCss.CSS_PLC_Conn_STT}>{modbusPLC.PLC_Conn_STT}</span> ,
+    
+        name: <span style={combineCss.CSS_PLC_Conn_STT}> {TagName.PLC_Conn_STT} </span> ,
+    
+        value: <span style={combineCss.CSS_PLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span>, 
+        high: <InputText  
+    disabled={AuthInputHighLow}
+        
+        style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighPLC_Conn_STT} onChange={handleInputChangeHighPLC_Conn_STT} inputMode="decimal" />, 
+        low:  <InputText  
+    disabled={AuthInputHighLow}
+        
+        style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowPLC_Conn_STT} onChange={handleInputChangeLowPLC_Conn_STT} inputMode="decimal" />,
+        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+        Maintain:   <Checkbox
+        style={{ marginRight: 20, }}
+        onChange={ChangeMaintainPLC_Conn_STT}
+        checked={maintainPLC_Conn_STT}
+    ></Checkbox>
+    
         },
       ]
 
@@ -5945,7 +6272,6 @@ disabled={AuthInput}
 
 <SetAttributeTest/>
 </div> */}
-
 <br />
 <br />
         
