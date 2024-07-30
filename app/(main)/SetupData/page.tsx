@@ -121,7 +121,7 @@ export default function GraphicSogec() {
 
               // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
 
-              { label: 'LGDS-Test', command: () => NG_Click(<SetUpdata_LGDSTest/>, 'LGDS-Test') },
+              // { label: 'LGDS-Test', command: () => NG_Click(<SetUpdata_LGDSTest/>, 'LGDS-Test') },
 
 
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
