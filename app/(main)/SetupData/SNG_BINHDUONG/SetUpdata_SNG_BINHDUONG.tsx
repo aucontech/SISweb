@@ -5066,7 +5066,7 @@ const ChangeMaintainGD1_STATUS = async () => {
 
             
             timeUpdate: <span style={combineCss.CSSWB_1001} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSWB_1001}>Wobbe Index</span> ,
+         name: <span style={combineCss.CSSWB_1001}>Wobbe Index WB-1001</span> ,
 
          modbus: <span style={combineCss.CSSWB_1001}>40011	 </span> ,
 
@@ -5303,7 +5303,7 @@ const ChangeMaintainGD1_STATUS = async () => {
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD1_STATUS} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSGD1_STATUS}>Status Gas Detector-2002</span> ,
+  name: <span style={combineCss.CSSGD1_STATUS}>GD-2002 Status</span> ,
 
   modbus: <span style={combineCss.CSSGD1_STATUS}>40033	 </span> ,
 
@@ -5326,7 +5326,7 @@ const ChangeMaintainGD1_STATUS = async () => {
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD2_STATUS} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSGD2_STATUS}>Status Gas Detector-2003</span> ,
+ name: <span style={combineCss.CSSGD2_STATUS}>GD-2003 Status</span> ,
 
  modbus: <span style={combineCss.CSSGD2_STATUS}>40035	 </span> ,
 
@@ -5346,7 +5346,7 @@ value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> ,
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD3_STATUS} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSGD3_STATUS}>Status Gas Detector-2004</span> ,
+  name: <span style={combineCss.CSSGD3_STATUS}>GD-2004 Status</span> ,
 
   modbus: <span style={combineCss.CSSGD3_STATUS}>40037	 </span> ,
 
@@ -5367,7 +5367,7 @@ value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> ,
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD4_STATUS} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSGD4_STATUS}>Status Gas Detector-2005</span> ,
+ name: <span style={combineCss.CSSGD4_STATUS}>GD-2005 Status</span> ,
 
  modbus: <span style={combineCss.CSSGD4_STATUS}>40039	 </span> ,
 
@@ -5388,7 +5388,7 @@ value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS}</span> ,
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD5_STATUS} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSGD5_STATUS}>Status Gas Detector-2006</span> ,
+name: <span style={combineCss.CSSGD5_STATUS}>GD-2006 Status</span> ,
 
 modbus: <span style={combineCss.CSSGD5_STATUS}>40041	 </span> ,
 
@@ -5467,7 +5467,7 @@ checked={maintainSD}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSVAPORIZER_1} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSVAPORIZER_1}>Vaporizer 1</span> ,
+             name: <span style={combineCss.CSSVAPORIZER_1}>VAPORIZER 1</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	 </span> ,
     
@@ -5487,7 +5487,7 @@ checked={maintainSD}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSVAPORIZER_2} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSVAPORIZER_2}>Vaporizer 2</span> ,
+             name: <span style={combineCss.CSSVAPORIZER_2}>VAPORIZER 2</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_2}>40051</span> ,
     
@@ -5508,7 +5508,7 @@ checked={maintainSD}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSVAPORIZER_3} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSVAPORIZER_3}>Vaporizer 3</span> ,
+             name: <span style={combineCss.CSSVAPORIZER_3}>VAPORIZER 3</span> ,
     
              modbus: <span style={combineCss.CSSVAPORIZER_3}>40053	 </span> ,
     
@@ -5528,7 +5528,7 @@ checked={maintainSD}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSVAPORIZER_4} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSVAPORIZER_4}>Vaporizer 4</span> ,
+            name: <span style={combineCss.CSSVAPORIZER_4}>VAPORIZER 4</span> ,
    
             modbus: <span style={combineCss.CSSVAPORIZER_4}>40055	 </span> ,
    
@@ -5550,7 +5550,7 @@ checked={maintainSD}
 
             
             timeUpdate: <span style={combineCss.CSSCOOLING_V} >{PLC_STTValue}</span>,
-           name: <span style={combineCss.CSSCOOLING_V}>Cooling V</span> ,
+           name: <span style={combineCss.CSSCOOLING_V}>COOLING V</span> ,
   
            modbus: <span style={combineCss.CSSCOOLING_V}>40057	 </span> ,
   
@@ -5620,7 +5620,7 @@ checked={maintainSD}
 
         
         timeUpdate: <span style={combineCss.CSSPERCENT_AIR} >{PLC_STTValue}</span>,
-       name: <span style={combineCss.CSSPERCENT_AIR}>% Air</span> ,
+       name: <span style={combineCss.CSSPERCENT_AIR}>% AIR</span> ,
 
        modbus: <span style={combineCss.CSSPERCENT_AIR}>40063	 </span> ,
 
@@ -5662,7 +5662,7 @@ checked={maintainSD}
 
         
         timeUpdate: <span style={combineCss.CSSRATIO_MODE} >{PLC_STTValue}</span>,
-     name: <span style={combineCss.CSSRATIO_MODE}>Ratio Mode</span> ,
+     name: <span style={combineCss.CSSRATIO_MODE}>RATIO Mode</span> ,
     
      modbus: <span style={combineCss.CSSRATIO_MODE}>40067	 </span> ,
     
