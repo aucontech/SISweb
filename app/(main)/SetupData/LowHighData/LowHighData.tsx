@@ -660,13 +660,13 @@ setMaintainDO_HR_01(MaintainDIHorn?.value || false);
 
 //=====================================================================================
 
-const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_High");
+const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_0_01_High");
 setHighDO_SV1(HighSOLENOID?.value || null);
-const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_Low");
+const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_0_01_Low");
 setLowDO_SV1(LowSOLENOID?.value || null);
 
 const MaintainSOLENOID = res.data.find(
-    (item: any) => item.key === "DO_SV_01_Maintain"
+    (item: any) => item.key === "DO_SV_0_01_Maintain"
 );
 setMaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================
@@ -3260,7 +3260,7 @@ const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
             const newValue = !maintainDO_SV1;
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DO_SV_01_Maintain: newValue }
+                { DO_SV_0_01_Maintain: newValue }
             );
             setMaintainDO_SV1(newValue);
             
@@ -3721,7 +3721,7 @@ const handleMainTainAll = async (checked:any) => {
         const newMaintainUPS_Mode = checked;
         const newMaintainDO_HR_01 = checked;
         const newMaintainDO_BC_01 = checked;
-        const newMaintainDO_SV_01 = checked;
+        const newMaintainDO_SV_0_01 = checked;
         const newMaintainPLC_Conn_STT = checked;
         const newMaintainEVC_01_Conn_STT = checked;
         const newMaintainEVC_02_Conn_STT = checked;
@@ -3773,7 +3773,7 @@ const handleMainTainAll = async (checked:any) => {
                UPS_Mode_Maintain: newMaintainUPS_Mode,
                DO_HR_01_Maintain: newMaintainDO_HR_01,
                DO_BC_01_Maintain: newMaintainDO_BC_01,
-               DO_SV_01_Maintain: newMaintainDO_SV_01,
+               DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
                PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
                EVC_01_Conn_STT_Maintain: newMaintainEVC_01_Conn_STT,
                EVC_02_Conn_STT_Maintain: newMaintainEVC_02_Conn_STT,
@@ -3989,7 +3989,7 @@ const handleMainTainPLC = async (checked:any) => {
         const newMaintainUPS_Mode = checked;
         const newMaintainDO_HR_01 = checked;
         const newMaintainDO_BC_01 = checked;
-        const newMaintainDO_SV_01 = checked;
+        const newMaintainDO_SV_0_01 = checked;
         const newMaintainPLC_Conn_STT = checked;
 
    
@@ -4015,7 +4015,7 @@ const handleMainTainPLC = async (checked:any) => {
                 UPS_Mode_Maintain: newMaintainUPS_Mode,
                 DO_HR_01_Maintain: newMaintainDO_HR_01,
                 DO_BC_01_Maintain: newMaintainDO_BC_01,
-                DO_SV_01_Maintain: newMaintainDO_SV_01,
+                DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
                 PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
 
 
@@ -4326,7 +4326,7 @@ const handleCheckboxChangePLC = (e:any) => {
                    DI_ZSC_1_High:inputHighDI_ZSC_1, DI_ZSC_1_Low:inputLowDI_ZSC_1,
                    DI_ZSO_1_High:inputHighDI_ZSO_1, DI_ZSO_1_Low:inputLowDI_ZSO_1,
 
-                    DO_SV_01_High:inputHighDO_SV1, DO_SV_01_Low:inputLowDO_SV1,
+                    DO_SV_0_01_High:inputHighDO_SV1, DO_SV_0_01_Low:inputLowDO_SV1,
                     DO_BC_01_High:inputHighDO_BC_01, DO_BC_01_Low:inputLowDO_BC_01,
 
 
@@ -4987,7 +4987,7 @@ const handleCheckboxChangePLC = (e:any) => {
         GVA: "40008",
 
         PT: "40004",
-        TT: "40002",
+        TT: "40850",
 
 
         VB_TODAY:"40014",
@@ -5014,7 +5014,7 @@ const handleCheckboxChangePLC = (e:any) => {
         VB_Yesterday:"40866",
         VM_TODAY:"40864",
         VM_Yesterday:"40868",
-        ReBattery:"40001"
+        ReBattery:"40002"
     }
 
     const modbusPLC = {
@@ -5042,7 +5042,7 @@ const handleCheckboxChangePLC = (e:any) => {
     const DataCharging = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null
     const DataBattery = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null
     const DataAlarm = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null
-    const DataMode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
+    const DataMode = UPS_Mode === "0" ? "N/A" : UPS_Mode === "1" ? "UPS Running" : UPS_Mode === "2" ? "Charging" : UPS_Mode === "3" ? "No Battery" : UPS_Mode === "4" ? "Normal" : null
     const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null
     const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null
     const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null
