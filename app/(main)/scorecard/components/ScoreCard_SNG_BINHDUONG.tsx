@@ -2083,9 +2083,9 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
 
 
         VAPORIZER_4: "VAPORIZER 4 (0: Stop - 1: Run)",
-        COOLING_V: " COOLING V (%)",
+        COOLING_V: " COOLING V  (0: Stop - 1: Run)",
 
-        FCV_2001: "FCV-2001 (0: Stop - 1: Run)",
+        FCV_2001: "FCV-2001 (%)",
     
         PERCENT_LPG:"% LPG (%)",
         PERCENT_AIR:"% AIR (%)",
