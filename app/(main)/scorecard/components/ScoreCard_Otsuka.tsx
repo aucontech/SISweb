@@ -1091,9 +1091,10 @@ export default function ScoreCard_Otsuka() {
 
  // =================================================================================================================== 
 
-
-
+ 
+            setMaintainGD3(GD3_Maintain.value || false);
             
+            setMaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
 
             setMaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
 
