@@ -30,7 +30,6 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
     const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
@@ -156,7 +155,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
                         SG_Calorimeter: setSG_Calorimeter,
 
                         
-                        EVC_01_Conn_STT: setEVC_STT01,
+                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
 
 
@@ -164,7 +163,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
                     };
                     const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setFC_Conn_STTValue,
+                        TD_4072_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
@@ -282,9 +281,6 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "GD_2003_Maintain"
             );
 
-        
-
-       
             const GD_2005_High = res.data.find((item: any) => item.key === "GD_2005_High");
             setGD_2005_High(GD_2005_High?.value || null);
             const GD_2005_Low = res.data.find((item: any) => item.key === "GD_2005_Low");
@@ -578,10 +574,32 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "SG_Calorimeter_Maintain"
             );
 
+
+
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
+            const TD_4072_Conn_STT_High = res.data.find((item: any) => item.key === "TD_4072_Conn_STT_High");
+            setTD_4072_Conn_STT_High(TD_4072_Conn_STT_High?.value || null);
+            const TD_4072_Conn_STT_Low = res.data.find((item: any) => item.key === "TD_4072_Conn_STT_Low");
+            setTD_4072_Conn_STT_Low(TD_4072_Conn_STT_Low?.value || null);
+            const TD_4072_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "TD_4072_Conn_STT_Maintain"
+            );
+
+
  // =================================================================================================================== 
 
 
+ setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
+
+ setMaintainTD_4072_Conn_STT(TD_4072_Conn_STT_Maintain?.value || false);
             
 
  setMaintainESD(ESD_Maintain?.value || false);
@@ -2034,6 +2052,74 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
 
 
 // =================================================================================================================== 
+
+const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdPLC_Conn_STT, setExceedThresholdPLC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+
+
+ useEffect(() => {
+     if (typeof PLC_Conn_STT_High === 'string' && typeof PLC_Conn_STT_Low === 'string' && PLC_Conn_STT !== null && maintainPLC_Conn_STT === false
+     ) {
+         const highValue = parseFloat(PLC_Conn_STT_High);
+         const lowValue = parseFloat(PLC_Conn_STT_Low);
+         const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT);
+ 
+         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PLC_Conn_STTValue)) {
+             if (highValue <= PLC_Conn_STTValue || PLC_Conn_STTValue <= lowValue) {
+            
+                     setExceedThresholdPLC_Conn_STT(true);
+             } else {
+                setExceedThresholdPLC_Conn_STT(false);
+             }
+         } 
+     } 
+ }, [PLC_Conn_STT_High, PLC_Conn_STT, PLC_Conn_STT_Low,maintainPLC_Conn_STT]);
+
+
+
+
+// =================================================================================================================== 
+
+
+const [TD_4072_Conn_STT, setTD_4072_Conn_STT] = useState<string | null>(null);
+
+const [TD_4072_Conn_STT_High, setTD_4072_Conn_STT_High] = useState<number | null>(null);
+const [TD_4072_Conn_STT_Low, setTD_4072_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdTD_4072_Conn_STT, setExceedThresholdTD_4072_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainTD_4072_Conn_STT, setMaintainTD_4072_Conn_STT] = useState<boolean>(false);
+
+
+ useEffect(() => {
+     if (typeof TD_4072_Conn_STT_High === 'string' && typeof TD_4072_Conn_STT_Low === 'string' && TD_4072_Conn_STT !== null && maintainTD_4072_Conn_STT === false
+     ) {
+         const highValue = parseFloat(TD_4072_Conn_STT_High);
+         const lowValue = parseFloat(TD_4072_Conn_STT_Low);
+         const TD_4072_Conn_STTValue = parseFloat(TD_4072_Conn_STT);
+ 
+         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TD_4072_Conn_STTValue)) {
+             if (highValue <= TD_4072_Conn_STTValue || TD_4072_Conn_STTValue <= lowValue) {
+            
+                     setExceedThresholdTD_4072_Conn_STT(true);
+             } else {
+                setExceedThresholdTD_4072_Conn_STT(false);
+             }
+         } 
+     } 
+ }, [TD_4072_Conn_STT_High, TD_4072_Conn_STT, TD_4072_Conn_STT_Low,maintainTD_4072_Conn_STT]);
+
+
+
+
+// =================================================================================================================== 
+
+// =================================================================================================================== 
+       
        
 
      //======================================================================================================================
@@ -2100,6 +2186,10 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
         CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
         SG_Calorimeter: "SG Calorimeter (rel)",
 
+        PLC_Conn_STT:"PLC Connection Status (0: Not Init - 1: COM OK - 2: Error)",
+        TD_4072_Conn_STT:"Calorimeter Connection Status (0: Not Init - 1: COM OK - 2: Error)",
+
+
     };
 
         const DataTT_2003  = TT_2003 === "0" ? "Stop" : TT_2003 === "1" ? "Run" : null;
@@ -2139,7 +2229,9 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
         const DataFCV_MODE  = FCV_MODE === "0" ? "Manual" : FCV_MODE === "1" ? "Auto" : null;
         const DataRATIO_MODE  = RATIO_MODE === "0" ? "Manual" : RATIO_MODE === "1" ? "Auto" : null;
    
+        const DataTD_4072_Conn_STT  = TD_4072_Conn_STT === "0" ? "Not Init" : TD_4072_Conn_STT === "1" ? "COM OK" : TD_4072_Conn_STT === "2" ? "Error" : null;
    
+        const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;
 
             const combineCss = {
 
@@ -2773,6 +2865,35 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
             ? 18
             : ""
         },
+
+
+        CSSPLC_Conn_STT : {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+            ? 18
+            : ""
+        },
+
+        CSSTD_4072_Conn_STT : {
+            color:exceedThresholdTD_4072_Conn_STT && !maintainTD_4072_Conn_STT
+            ? "#ff5656"
+            : maintainTD_4072_Conn_STT
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdTD_4072_Conn_STT || maintainTD_4072_Conn_STT)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdTD_4072_Conn_STT || maintainTD_4072_Conn_STT)
+            ? 18
+            : ""
+        },
         
           };
 
@@ -2970,9 +3091,15 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
         },
     
      
- 
+       
 
 
+
+
+
+    ];
+
+    const TD_CON_STT = [
         {
             name: <span>{tagNamePLC.WIS_Calorimeter}</span>,
             PLC: <span style={combineCss.CSSWIS_Calorimeter}> {WIS_Calorimeter} </span>,
@@ -2987,8 +3114,12 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
             name: <span>{tagNamePLC.SG_Calorimeter}</span>,
             PLC: <span style={combineCss.CSSSG_Calorimeter}> {SG_Calorimeter}</span>,
         },
+
+     
+
       
-    ];
+
+    ]
 
     return (
         <div >
@@ -3021,18 +3152,23 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
             
                     <div
                         style={{
-                            display: "flex",
                             alignItems: "center",
                             padding: "0px 5px 5px 5px",
-                            justifyContent: "space-between",
 
                         }}
                     >
-                       
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
+                        <div style={{  fontWeight: 500 , display:'flex', justifyContent:'flex-end'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
+
                         </div>
+                        <div style={{  fontWeight: 500 , display:'flex',justifyContent:'flex-end'}}>
+                           <p style={{fontWeight:700}}>Calorimeter</p> : {FC_Conn_STTValue}
+
+                        </div>
+
+                      
                     </div>
+
                 </div>
                     <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
@@ -3054,13 +3190,29 @@ const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(fa
                             )}
                         ></Column>
                     </DataTable>
-                
+                    <DataTable value={TD_CON_STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Calorimeter Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="PLC"
+                            header={TD_4072_Conn_STT === "1" ? (
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>Calorimeter Value</p>
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>Calorimeter Value</p>
+                             </div>
+                            )}
+                        ></Column>
+                    </DataTable>
             </div>
 
             {/* <div>
                 <SetAttribute1/>
             </div> */}
-
         </div>
     );
 }

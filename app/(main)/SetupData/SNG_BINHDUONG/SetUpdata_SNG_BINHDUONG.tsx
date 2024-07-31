@@ -266,6 +266,10 @@ export default function SetUpdata_SNG_BINHDUONG() {
                         WIS_Calorimeter: setWIS_Calorimeter,
                         CVS_Calorimeter: setCVS_Calorimeter,
                         SG_Calorimeter :setSG_Calorimeter,
+
+
+                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                   
                     };
                     const valueStateMap: ValueStateMap = {
@@ -732,8 +736,29 @@ export default function SetUpdata_SNG_BINHDUONG() {
                 (item: any) => item.key === "SG_Calorimeter_Maintain"
             );
 
+
+            const TD_4072_Conn_STT_High = res.data.find((item: any) => item.key === "TD_4072_Conn_STT_High");
+            setTD_4072_Conn_STT_High(TD_4072_Conn_STT_High?.value || null);
+            const TD_4072_Conn_STT_Low = res.data.find((item: any) => item.key === "TD_4072_Conn_STT_Low");
+            setTD_4072_Conn_STT_Low(TD_4072_Conn_STT_Low?.value || null);
+            const TD_4072_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "TD_4072_Conn_STT_Maintain"
+            );
+
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
          
  // =================================================================================================================== 
+ setMaintainTD_4072_Conn_STT(TD_4072_Conn_STT_Maintain?.value || false);
+
+ setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
+
  setMaintainWIS_Calorimeter(WIS_Calorimeter_Maintain?.value || false);
 
  setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
@@ -1082,71 +1107,44 @@ const [maintainPT_2004, setMaintainPT_2004] = useState<boolean>(false);
 
 
 
-          const [TT_2004, setTT_2004] = useState<string | null>(null);
-          const [audioPlayingTT_2004, setAudioPlayingTT_2004] = useState(false);
-          const [inputValueTT_2004, setInputValueTT_2004] = useState<any>();
-          const [inputValue2TT_2004, setInputValue2TT_2004] = useState<any>();
-          const [TT_2004_High, setTT_2004_High] = useState<number | null>(null);
-          const [TT_2004_Low, setTT_2004_Low] = useState<number | null>(null);
-          const [exceedThresholdTT_2004, setExceedThresholdTT_2004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          
-          const [maintainTT_2004, setMaintainTT_2004] = useState<boolean>(false);
-          
-          
-              useEffect(() => {
-                  if (typeof TT_2004_High === 'string' && typeof TT_2004_Low === 'string' && TT_2004 !== null && maintainTT_2004 === false
-                  ) {
-                      const highValue = parseFloat(TT_2004_High);
-                      const lowValue = parseFloat(TT_2004_Low);
-                      const TT_2004Value = parseFloat(TT_2004);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2004Value)) {
-                          if (highValue <= TT_2004Value || TT_2004Value <= lowValue) {
-                              if (!audioPlayingTT_2004) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingTT_2004(true);
-                                  setExceedThresholdTT_2004(true);
-                              }
-                          } else {
-                             setAudioPlayingTT_2004(false);
-                             setExceedThresholdTT_2004(false);
-                          }
-                      } 
-                  } 
-              }, [TT_2004_High, TT_2004, audioPlayingTT_2004, TT_2004_Low,maintainTT_2004]);
-          
-              useEffect(() => {
-                  if (audioPlayingTT_2004) {
-                      const audioEnded = () => {
-                         setAudioPlayingTT_2004(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingTT_2004]);
-          
-              const handleInputChangeTT_2004 = (event: any) => {
-                  const newValue = event.target.value;
-                  setInputValueTT_2004(newValue);
-              };
-          
-              const handleInputChange2TT_2004 = (event: any) => {
-                  const newValue2 = event.target.value;
-                  setInputValue2TT_2004(newValue2);
-              };
-              const ChangeMaintainTT_2004 = async () => {
-                  try {
-                      const newValue = !maintainTT_2004;
-                      await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
-                          { TT_2004_Maintain: newValue }
-                      );
-                      setMaintainTT_2004(newValue);
-                      
-                  } catch (error) {}
-              };
+     const [TT_2004, setTT_2004] = useState<string | null>(null);
+     const [inputValueTT_2004, setInputValueTT_2004] = useState<any>();
+     const [inputValue2TT_2004, setInputValue2TT_2004] = useState<any>();
+     const [TT_2004_High, setTT_2004_High] = useState<number | null>(null);
+     const [TT_2004_Low, setTT_2004_Low] = useState<number | null>(null);
+     const [exceedThresholdTT_2004, setExceedThresholdTT_2004] = useState(false); 
+     const [maintainTT_2004, setMaintainTT_2004] = useState<boolean>(false);
+ 
+     useEffect(() => {
+         const TT_2004Value = parseFloat(TT_2004 as any);
+         const highValue = TT_2004_High ?? NaN;
+         const lowValue = TT_2004_Low ?? NaN;
+ 
+         if (!isNaN(TT_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2004) {
+             setExceedThresholdTT_2004(TT_2004Value >= highValue || TT_2004Value <= lowValue);
+         }
+     }, [TT_2004, TT_2004_High, TT_2004_Low, maintainTT_2004]);
+ 
+     const handleInputChangeTT_2004 = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setInputValueTT_2004(event.target.value);
+     };
+ 
+     const handleInputChange2TT_2004 = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setInputValue2TT_2004(event.target.value);
+     };
+ 
+     const ChangeMaintainTT_2004 = async () => {
+         try {
+             const newValue = !maintainTT_2004;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
+                 { TT_2004_Maintain: newValue }
+             );
+             setMaintainTT_2004(newValue);
+         } catch (error) {
+             console.error(error);
+         }
+     };
      
      
           // =================================================================================================================== 
@@ -1158,7 +1156,7 @@ const [maintainPT_2004, setMaintainPT_2004] = useState<boolean>(false);
           const [inputValue2TG_2005, setInputValue2TG_2005] = useState<any>();
           const [TG_2005_High, setTG_2005_High] = useState<number | null>(null);
           const [TG_2005_Low, setTG_2005_Low] = useState<number | null>(null);
-          const [exceedThresholdTG_2005, setExceedThresholdTG_2005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdTG_2005, setExceedThresholdTG_2005] = useState(false); 
           
           const [maintainTG_2005, setMaintainTG_2005] = useState<boolean>(false);
           
@@ -3983,6 +3981,158 @@ const ChangeMaintainGD1_STATUS = async () => {
                         
                         
                              // =================================================================================================================== 
+
+
+
+                                
+                   // =================================================================================================================== 
+    
+    
+    
+                   const [TD_4072_Conn_STT, setTD_4072_Conn_STT] = useState<string | null>(null);
+                   const [audioPlayingTD_4072_Conn_STT, setAudioPlayingTD_4072_Conn_STT] = useState(false);
+                   const [inputValueTD_4072_Conn_STT, setInputValueTD_4072_Conn_STT] = useState<any>();
+                   const [inputValue2TD_4072_Conn_STT, setInputValue2TD_4072_Conn_STT] = useState<any>();
+                   const [TD_4072_Conn_STT_High, setTD_4072_Conn_STT_High] = useState<number | null>(null);
+                   const [TD_4072_Conn_STT_Low, setTD_4072_Conn_STT_Low] = useState<number | null>(null);
+                   const [exceedThresholdTD_4072_Conn_STT, setExceedThresholdTD_4072_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                   
+                   const [maintainTD_4072_Conn_STT, setMaintainTD_4072_Conn_STT] = useState<boolean>(false);
+                   
+                   
+                       useEffect(() => {
+                           if (typeof TD_4072_Conn_STT_High === 'string' && typeof TD_4072_Conn_STT_Low === 'string' && TD_4072_Conn_STT !== null && maintainTD_4072_Conn_STT === false
+                           ) {
+                               const highValue = parseFloat(TD_4072_Conn_STT_High);
+                               const lowValue = parseFloat(TD_4072_Conn_STT_Low);
+                               const TD_4072_Conn_STTValue = parseFloat(TD_4072_Conn_STT);
+                       
+                               if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TD_4072_Conn_STTValue)) {
+                                   if (highValue <= TD_4072_Conn_STTValue || TD_4072_Conn_STTValue <= lowValue) {
+                                       if (!audioPlayingTD_4072_Conn_STT) {
+                                           audioRef.current?.play();
+                                           setAudioPlayingTD_4072_Conn_STT(true);
+                                           setExceedThresholdTD_4072_Conn_STT(true);
+                                       }
+                                   } else {
+                                      setAudioPlayingTD_4072_Conn_STT(false);
+                                      setExceedThresholdTD_4072_Conn_STT(false);
+                                   }
+                               } 
+                           } 
+                       }, [TD_4072_Conn_STT_High, TD_4072_Conn_STT, audioPlayingTD_4072_Conn_STT, TD_4072_Conn_STT_Low,maintainTD_4072_Conn_STT]);
+                   
+                       useEffect(() => {
+                           if (audioPlayingTD_4072_Conn_STT) {
+                               const audioEnded = () => {
+                                  setAudioPlayingTD_4072_Conn_STT(false);
+                               };
+                               audioRef.current?.addEventListener('ended', audioEnded);
+                               return () => {
+                                   audioRef.current?.removeEventListener('ended', audioEnded);
+                               };
+                           }
+                       }, [audioPlayingTD_4072_Conn_STT]);
+                   
+                       const handleInputChangeTD_4072_Conn_STT = (event: any) => {
+                           const newValue = event.target.value;
+                           setInputValueTD_4072_Conn_STT(newValue);
+                       };
+                   
+                       const handleInputChange2TD_4072_Conn_STT = (event: any) => {
+                           const newValue2 = event.target.value;
+                           setInputValue2TD_4072_Conn_STT(newValue2);
+                       };
+                       const ChangeMaintainTD_4072_Conn_STT = async () => {
+                           try {
+                               const newValue = !maintainTD_4072_Conn_STT;
+                               await httpApi.post(
+                                   `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
+                                   { TD_4072_Conn_STT_Maintain: newValue }
+                               );
+                               setMaintainTD_4072_Conn_STT(newValue);
+                               
+                           } catch (error) {}
+                       };
+              
+              
+                   // =================================================================================================================== 
+
+
+
+
+                             // =================================================================================================================== 
+    
+    
+    
+                             const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+                             const [audioPlayingPLC_Conn_STT, setAudioPlayingPLC_Conn_STT] = useState(false);
+                             const [inputValuePLC_Conn_STT, setInputValuePLC_Conn_STT] = useState<any>();
+                             const [inputValue2PLC_Conn_STT, setInputValue2PLC_Conn_STT] = useState<any>();
+                             const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+                             const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+                             const [exceedThresholdPLC_Conn_STT, setExceedThresholdPLC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                             
+                             const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+                             
+                             
+                                 useEffect(() => {
+                                     if (typeof PLC_Conn_STT_High === 'string' && typeof PLC_Conn_STT_Low === 'string' && PLC_Conn_STT !== null && maintainPLC_Conn_STT === false
+                                     ) {
+                                         const highValue = parseFloat(PLC_Conn_STT_High);
+                                         const lowValue = parseFloat(PLC_Conn_STT_Low);
+                                         const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT);
+                                 
+                                         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PLC_Conn_STTValue)) {
+                                             if (highValue <= PLC_Conn_STTValue || PLC_Conn_STTValue <= lowValue) {
+                                                 if (!audioPlayingPLC_Conn_STT) {
+                                                     audioRef.current?.play();
+                                                     setAudioPlayingPLC_Conn_STT(true);
+                                                     setExceedThresholdPLC_Conn_STT(true);
+                                                 }
+                                             } else {
+                                                setAudioPlayingPLC_Conn_STT(false);
+                                                setExceedThresholdPLC_Conn_STT(false);
+                                             }
+                                         } 
+                                     } 
+                                 }, [PLC_Conn_STT_High, PLC_Conn_STT, audioPlayingPLC_Conn_STT, PLC_Conn_STT_Low,maintainPLC_Conn_STT]);
+                             
+                                 useEffect(() => {
+                                     if (audioPlayingPLC_Conn_STT) {
+                                         const audioEnded = () => {
+                                            setAudioPlayingPLC_Conn_STT(false);
+                                         };
+                                         audioRef.current?.addEventListener('ended', audioEnded);
+                                         return () => {
+                                             audioRef.current?.removeEventListener('ended', audioEnded);
+                                         };
+                                     }
+                                 }, [audioPlayingPLC_Conn_STT]);
+                             
+                                 const handleInputChangePLC_Conn_STT = (event: any) => {
+                                     const newValue = event.target.value;
+                                     setInputValuePLC_Conn_STT(newValue);
+                                 };
+                             
+                                 const handleInputChange2PLC_Conn_STT = (event: any) => {
+                                     const newValue2 = event.target.value;
+                                     setInputValue2PLC_Conn_STT(newValue2);
+                                 };
+                                 const ChangeMaintainPLC_Conn_STT = async () => {
+                                     try {
+                                         const newValue = !maintainPLC_Conn_STT;
+                                         await httpApi.post(
+                                             `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
+                                             { PLC_Conn_STT_Maintain: newValue }
+                                         );
+                                         setMaintainPLC_Conn_STT(newValue);
+                                         
+                                     } catch (error) {}
+                                 };
+                        
+                        
+                             // =================================================================================================================== 
          // =================================================================================================================== 
          
 
@@ -3997,7 +4147,9 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
                 {
+                    TD_4072_Conn_STT_High: inputValueTD_4072_Conn_STT,TD_4072_Conn_STT_Low:inputValue2TD_4072_Conn_STT,
 
+                    PLC_Conn_STT_High: inputValuePLC_Conn_STT,PLC_Conn_STT_Low:inputValue2PLC_Conn_STT,
 
                     WIS_Calorimeter_High: inputValueWIS_Calorimeter,WIS_Calorimeter_Low:inputValue2WIS_Calorimeter,
                     CVS_Calorimeter_High: inputValueCVS_Calorimeter,CVS_Calorimeter_Low:inputValue2CVS_Calorimeter,
@@ -4084,11 +4236,20 @@ const ChangeMaintainGD1_STATUS = async () => {
                 }
             );
      
+      
+
             setGetWayPhoneOTSUKA(inputGetwayPhone);
             setPCV_02(inputPCV_02)
             setPCV_01(inputPCV_01)
             setHR_BC_High(inputValueHR_BC);
             setHR_BC_Low(inputValue2HR_BC);
+
+
+            setPLC_Conn_STT_High(inputValuePLC_Conn_STT);
+            setPLC_Conn_STT_Low(inputValue2PLC_Conn_STT);
+
+            setTD_4072_Conn_STT_High(inputValueTD_4072_Conn_STT);
+            setTD_4072_Conn_STT_Low(inputValue2TD_4072_Conn_STT);
 
             setSD_High(inputValueSD);
             setSD_Low(inputValue2SD);
@@ -4259,7 +4420,7 @@ const ChangeMaintainGD1_STATUS = async () => {
     }
 
     useEffect(() => {
-
+  
         setInputGetwayPhone(getWayPhoneOTSUKA)
         setInputPCV_01(PCV_01)
         setInputPCV_02(PCV_02)
@@ -4272,8 +4433,11 @@ const ChangeMaintainGD1_STATUS = async () => {
         setInputValueESD_2001(ESD_2001_High); 
         setInputValue2ESD_2001(ESD_2001_Low); 
 
+        setInputValueTD_4072_Conn_STT(TD_4072_Conn_STT_High); 
+        setInputValue2TD_4072_Conn_STT(TD_4072_Conn_STT_Low); 
 
-
+        setInputValuePLC_Conn_STT(PLC_Conn_STT_High); 
+        setInputValue2PLC_Conn_STT(PLC_Conn_STT_Low); 
 
         setInputValuePT_2004(PT_2004_High); 
         setInputValue2PT_2004(PT_2004_Low); 
@@ -4433,7 +4597,9 @@ const ChangeMaintainGD1_STATUS = async () => {
    
 
     }, [
-        
+        TD_4072_Conn_STT_High, TD_4072_Conn_STT_Low 
+        ,PLC_Conn_STT_High, PLC_Conn_STT_Low ,
+
         HR_BC_High, HR_BC_Low 
         ,SD_High, SD_Low ,
 
@@ -4567,6 +4733,8 @@ const ChangeMaintainGD1_STATUS = async () => {
                 const newMaintainCVS_Calorimeter = checked;
                 const newMaintainSG_Calorimeter = checked;
         
+                const newMaintainTD_4072_Conn_STT = checked;
+                const newMaintainPLC_Conn_STT = checked;
         
                 await httpApi.post(
                     `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
@@ -4617,7 +4785,8 @@ const ChangeMaintainGD1_STATUS = async () => {
                        CVS_Calorimeter_Maintain: newMaintainCVS_Calorimeter,
                        SG_Calorimeter_Maintain: newMaintainSG_Calorimeter,
         
-        
+                       TD_4072_Conn_STT_Maintain: newMaintainTD_4072_Conn_STT,
+                       PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
                      }
                 );
                 setMaintainPT_2004(newMaintainPT_2004);
@@ -4669,7 +4838,8 @@ const ChangeMaintainGD1_STATUS = async () => {
                 setMaintainSG_Calorimeter(newMaintainSG_Calorimeter);
                 setMaintainCVS_Calorimeter(newMaintainCVS_Calorimeter);
         
-        
+                setMaintainTD_4072_Conn_STT(newMaintainTD_4072_Conn_STT);
+                setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
             } catch (error) {
                 console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
             }
@@ -4699,6 +4869,200 @@ const ChangeMaintainGD1_STATUS = async () => {
 
 
 
+        const handleMainTainPLC = async (checked:any) => {
+            try {
+                const newMaintainPT_2004 = checked;
+                const newMaintainPT_2005 = checked;
+                const newMaintainTT_2003 = checked;
+                const newMaintainTT_2004 = checked;
+                const newMaintainWB_1001 = checked;
+                const newMaintainTG_2005 = checked;
+                const newMaintainGD_2002 = checked;
+                const newMaintainGD_2003 = checked;
+                const newMaintainGD_2004 = checked;
+                const newMaintainGD_2005 = checked;
+                const newMaintainGD_2006 = checked;
+        
+                const newMaintainTM_2002_SNG = checked;
+                const newMaintainTM_2003_SNG = checked;
+                const newMaintainTOTAL_SNG = checked;
+                const newMaintainSDV_2004 = checked;
+                const newMaintainSDV_2003 = checked;
+                const newMaintainGD1_STATUS = checked;
+                const newMaintainGD2_STATUS = checked;
+                const newMaintainGD3_STATUS = checked;
+                const newMaintainGD4_STATUS = checked;
+                const newMaintainGD5_STATUS = checked;
+        
+                const newMaintainESD = checked;
+                const newMaintainHR_BC = checked;
+                const newMaintainSD = checked;
+        
+                const newMaintainVAPORIZER_1 = checked;
+                const newMaintainVAPORIZER_2 = checked;
+                const newMaintainVAPORIZER_3 = checked;
+                const newMaintainVAPORIZER_4 = checked;
+                const newMaintainCOOLING_V = checked;
+                const newMaintainFCV_2001 = checked;
+                const newMaintainPERCENT_LPG = checked;
+                const newMaintainPERCENT_AIR = checked;
+                const newMaintainHV_1001 = checked;
+                const newMaintainRATIO_MODE = checked;
+        
+                const newMaintainFCV_MODE = checked;
+                const newMaintainTOTAL_CNG = checked;
+                const newMaintainTM2002_CNG = checked;
+                const newMaintainTM2003_CNG = checked;
+                const newMaintainWB_Setpoint = checked;
+            
+                const newMaintainPLC_Conn_STT = checked;
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
+                    { PT_2004_Maintain: newMaintainPT_2004,
+                       PT_2005_Maintain: newMaintainPT_2005,
+                       TT_2003_Maintain: newMaintainTT_2003,
+                       TT_2004_Maintain: newMaintainTT_2004,
+                       WB_1001_Maintain: newMaintainWB_1001,
+                       TG_2005_Maintain: newMaintainTG_2005,
+                       GD_2002_Maintain: newMaintainGD_2002,
+                       GD_2003_Maintain: newMaintainGD_2003,
+                       GD_2004_Maintain: newMaintainGD_2004,
+                       GD_2005_Maintain: newMaintainGD_2005,
+                       GD_2006_Maintain: newMaintainGD_2006,
+        
+        
+                       TM_2002_SNG_Maintain: newMaintainTM_2002_SNG,
+                       TM_2003_SNG_Maintain: newMaintainTM_2003_SNG,
+                       TOTAL_SNG_Maintain: newMaintainTOTAL_SNG,
+                       SDV_2004_Maintain: newMaintainSDV_2004,
+                       SDV_2003_Maintain: newMaintainSDV_2003,
+                       GD1_STATUS_Maintain: newMaintainGD1_STATUS,
+                       GD2_STATUS_Maintain: newMaintainGD2_STATUS,
+                       GD3_STATUS_Maintain: newMaintainGD3_STATUS,
+                       GD4_STATUS_Maintain: newMaintainGD4_STATUS,
+                       GD5_STATUS_Maintain: newMaintainGD5_STATUS,
+        
+                       ESD_Maintain: newMaintainESD,
+                       HR_BC_Maintain: newMaintainHR_BC,
+                       SD_Maintain: newMaintainSD,
+                       VAPORIZER_1_Maintain: newMaintainVAPORIZER_1,
+                       VAPORIZER_2_Maintain: newMaintainVAPORIZER_2,
+                       VAPORIZER_3_Maintain: newMaintainVAPORIZER_3,
+                       VAPORIZER_4_Maintain: newMaintainVAPORIZER_4,
+                       COOLING_V_Maintain: newMaintainCOOLING_V,
+                       FCV_2001_Maintain: newMaintainFCV_2001,
+                       PERCENT_LPG_Maintain: newMaintainPERCENT_LPG,
+                       PERCENT_AIR_Maintain: newMaintainPERCENT_AIR,
+                       HV_1001_Maintain: newMaintainHV_1001,
+                       RATIO_MODE_Maintain: newMaintainRATIO_MODE,
+        
+                       FCV_MODE_Maintain: newMaintainFCV_MODE,
+                       TOTAL_CNG_Maintain: newMaintainTOTAL_CNG,
+                       TM2002_CNG_Maintain: newMaintainTM2002_CNG,
+                       TM2003_CNG_Maintain: newMaintainTM2003_CNG,
+                       WB_Setpoint_Maintain: newMaintainWB_Setpoint,
+                   
+                       PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
+                     }
+                );
+                setMaintainPT_2004(newMaintainPT_2004);
+                setMaintainPT_2005(newMaintainPT_2005);
+                setMaintainTT_2003(newMaintainTT_2003);
+                setMaintainTT_2004(newMaintainTT_2004);
+                setMaintainWB_1001(newMaintainWB_1001);
+                setMaintainTG_2005(newMaintainTG_2005);
+                setMaintainGD_2002(newMaintainGD_2002);
+                setMaintainGD_2003(newMaintainGD_2003);
+                setMaintainGD_2004(newMaintainGD_2004);
+                setMaintainGD_2005(newMaintainGD_2005);
+                setMaintainGD_2006(newMaintainGD_2006);
+        
+                setMaintainTM_2002_SNG(newMaintainTM_2002_SNG);
+                setMaintainTM_2003_SNG(newMaintainTM_2003_SNG);
+                setMaintainTOTAL_SNG(newMaintainTOTAL_SNG);
+                setMaintainSDV_2004(newMaintainSDV_2004);
+                setMaintainSDV_2003(newMaintainSDV_2003);
+                setMaintainGD1_STATUS(newMaintainGD1_STATUS);
+                setMaintainGD2_STATUS(newMaintainGD2_STATUS);
+                setMaintainGD3_STATUS(newMaintainGD3_STATUS);
+                setMaintainGD4_STATUS(newMaintainGD4_STATUS);
+                setMaintainGD5_STATUS(newMaintainGD5_STATUS);
+                
+        
+                setMaintainESD(newMaintainESD);
+                setMaintainHR_BC(newMaintainHR_BC);
+                setMaintainSD(newMaintainSD);
+        
+                setMaintainVAPORIZER_1(newMaintainVAPORIZER_1);
+                setMaintainVAPORIZER_2(newMaintainVAPORIZER_2);
+                setMaintainVAPORIZER_3(newMaintainVAPORIZER_3);
+                setMaintainVAPORIZER_4(newMaintainVAPORIZER_4);
+                setMaintainCOOLING_V(newMaintainCOOLING_V);
+                setMaintainFCV_2001(newMaintainFCV_2001);
+                setMaintainPERCENT_LPG(newMaintainPERCENT_LPG);
+                setMaintainPERCENT_AIR(newMaintainPERCENT_AIR);
+                setMaintainHV_1001(newMaintainHV_1001);
+                setMaintainRATIO_MODE(newMaintainRATIO_MODE);
+        
+                setMaintainFCV_MODE(newMaintainFCV_MODE);
+                setMaintainTOTAL_CNG(newMaintainTOTAL_CNG);
+                setMaintainTM2002_CNG(newMaintainTM2002_CNG);
+                setMaintainTM2003_CNG(newMaintainTM2003_CNG);
+                setMaintainWB_Setpoint(newMaintainWB_Setpoint);
+           
+        
+                setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+        
+        const handleCheckboxChangePLC = (e:any) => {
+            const isChecked = e.checked;
+        
+            handleMainTainPLC(isChecked);
+        };
+
+        const handleMainTainTD = async (checked:any) => {
+            try {
+             
+                const newMaintainWIS_Calorimeter = checked;
+                const newMaintainCVS_Calorimeter = checked;
+                const newMaintainSG_Calorimeter = checked;
+        
+                const newMaintainTD_4072_Conn_STT = checked;
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
+                    { 
+                       WIS_Calorimeter_Maintain: newMaintainWIS_Calorimeter,
+                       CVS_Calorimeter_Maintain: newMaintainCVS_Calorimeter,
+                       SG_Calorimeter_Maintain: newMaintainSG_Calorimeter,
+        
+                       TD_4072_Conn_STT_Maintain: newMaintainTD_4072_Conn_STT,
+                     }
+                );
+        
+                setMaintainWIS_Calorimeter(newMaintainWIS_Calorimeter);
+        
+                setMaintainSG_Calorimeter(newMaintainSG_Calorimeter);
+                setMaintainCVS_Calorimeter(newMaintainCVS_Calorimeter);
+        
+                setMaintainTD_4072_Conn_STT(newMaintainTD_4072_Conn_STT);
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+        
+        const handleCheckboxChangeTD = (e:any) => {
+            const isChecked = e.checked;
+        
+            handleMainTainTD(isChecked);
+        };
+
+
+
 
         const DataGD5_STATUS  = GD5_STATUS === "0" ? "Normal" : GD5_STATUS === "1" ? "Alarm" : null;
         const DataGD4_STATUS  = GD4_STATUS === "0" ? "Normal" : GD4_STATUS === "1" ? "Alarm" : null;
@@ -4725,7 +5089,9 @@ const ChangeMaintainGD1_STATUS = async () => {
         const DataFCV_MODE  = FCV_MODE === "0" ? "Manual" : FCV_MODE === "1" ? "Auto" : null;
         const DataRATIO_MODE  = RATIO_MODE === "0" ? "Manual" : RATIO_MODE === "1" ? "Auto" : null;
    
-    
+        const DataTD_4072_Conn_STT  = TD_4072_Conn_STT === "0" ? "Not Init" : TD_4072_Conn_STT === "1" ? "COM OK" : TD_4072_Conn_STT === "2" ? "Error" : null;
+   
+        const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;
         
     const combineCss = {
 
@@ -5201,13 +5567,48 @@ const ChangeMaintainGD1_STATUS = async () => {
             height:25,
             fontWeight:400,
         },
+
+
+
+        CSSTD_4072_Conn_STT : {
+            color:exceedThresholdTD_4072_Conn_STT && !maintainTD_4072_Conn_STT
+            ? "#ff5656"
+            : maintainTD_4072_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
+
+
+        CSSPLC_Conn_STT : {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
   };
          
     
   const mainCategoryFC = {
     EVC01: 'EVC01 -  Parameter & Configuration',
-    EVC02: 'EVC02 -  Parameter & Configuration',
-    PLC: 'PLC -  Parameter & Configuration'
+    Calorimeter: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> Calorimeter -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+    <Checkbox
+        style={{ marginRight: 5 }}
+        onChange={handleCheckboxChangeTD}
+        checked={maintainTD_4072_Conn_STT}
+    />
+<p style={{fontSize:15}}>Maintain PLC</p>  </div> )}  </span>   ,
+    PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+    <Checkbox
+        style={{ marginRight: 5 }}
+        onChange={handleCheckboxChangePLC}
+        checked={maintainPLC_Conn_STT}
+    />
+<p style={{fontSize:15}}>Maintain Calorimeter </p>  </div> )}  </span> ,
 };
 
           const PLC01 = [
@@ -6316,81 +6717,26 @@ disabled={AuthInputHighLow}
   {
     mainCategory: mainCategoryFC.PLC,
 
-timeUpdate: <span style={combineCss.CSSWIS_Calorimeter} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSWIS_Calorimeter}>WIS Calorimeter</span> ,
+timeUpdate: <span style={combineCss.CSSPLC_Conn_STT} >{PLC_STTValue}</span>,
+name: <span style={combineCss.CSSPLC_Conn_STT}>PLC Connection Status</span> ,
 
-modbus: <span style={combineCss.CSSWIS_Calorimeter}>40001	 </span> ,
+modbus: <span style={combineCss.CSSPLC_Conn_STT}>Status</span> ,
 
-value: <span style={combineCss.CSSWIS_Calorimeter} > {WIS_Calorimeter}  (MJ/Sm³)</span> , 
+value: <span style={combineCss.CSSPLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
-style={combineCss.CSSWIS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueWIS_Calorimeter} onChange={handleInputChangeWIS_Calorimeter} inputMode="decimal" />, 
+style={combineCss.CSSPLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
 low:  <InputText 
 disabled={AuthInputHighLow}
 
-style={combineCss.CSSWIS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2WIS_Calorimeter} onChange={handleInputChange2WIS_Calorimeter} inputMode="decimal" />,
+style={combineCss.CSSPLC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox  
 disabled={AuthInput} 
 style={{ marginRight: 20, }}
-onChange={ChangeMaintainWIS_Calorimeter}
-checked={maintainWIS_Calorimeter}
-></Checkbox>
-
-},
-
-
-{
-    mainCategory: mainCategoryFC.PLC,
-
-timeUpdate: <span style={combineCss.CSSCVS_Calorimeter} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSCVS_Calorimeter}>CVS Calorimeter</span> ,
-
-modbus: <span style={combineCss.CSSCVS_Calorimeter}>40002	 </span> ,
-
-value: <span style={combineCss.CSSCVS_Calorimeter} > {CVS_Calorimeter}  (MJ/Sm³)</span> , 
-high: <InputText 
-disabled={AuthInputHighLow}
-
-style={combineCss.CSSCVS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueCVS_Calorimeter} onChange={handleInputChangeCVS_Calorimeter} inputMode="decimal" />, 
-low:  <InputText 
-disabled={AuthInputHighLow}
-
-style={combineCss.CSSCVS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2CVS_Calorimeter} onChange={handleInputChange2CVS_Calorimeter} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox  
-disabled={AuthInput} 
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainCVS_Calorimeter}
-checked={maintainCVS_Calorimeter}
-></Checkbox>
-
-},
-
-{
-    mainCategory: mainCategoryFC.PLC,
-
-timeUpdate: <span style={combineCss.CSSSG_Calorimeter} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSSG_Calorimeter}>SG Calorimeter</span> ,
-
-modbus: <span style={combineCss.CSSSG_Calorimeter}>40003	 </span> ,
-
-value: <span style={combineCss.CSSSG_Calorimeter} > {SG_Calorimeter} (rel)</span> , 
-high: <InputText 
-disabled={AuthInputHighLow}
-
-style={combineCss.CSSSG_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueSG_Calorimeter} onChange={handleInputChangeSG_Calorimeter} inputMode="decimal" />, 
-low:  <InputText 
-disabled={AuthInputHighLow}
-
-style={combineCss.CSSSG_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2SG_Calorimeter} onChange={handleInputChange2SG_Calorimeter} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox  
-disabled={AuthInput} 
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainSG_Calorimeter}
-checked={maintainSG_Calorimeter}
+onChange={ChangeMaintainPLC_Conn_STT}
+checked={maintainPLC_Conn_STT}
 ></Checkbox>
 
 },
@@ -6399,7 +6745,121 @@ checked={maintainSG_Calorimeter}
 
           ]
 
-          const combinedData = [ ...PLC01];
+
+          const Calorimeter = [
+
+            {
+                mainCategory: mainCategoryFC.Calorimeter,
+            
+            timeUpdate: <span style={combineCss.CSSWIS_Calorimeter} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSWIS_Calorimeter}>WIS Calorimeter</span> ,
+            
+            modbus: <span style={combineCss.CSSWIS_Calorimeter}>40001	 </span> ,
+            
+            value: <span style={combineCss.CSSWIS_Calorimeter} > {WIS_Calorimeter}  (MJ/Sm³)</span> , 
+            high: <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSWIS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueWIS_Calorimeter} onChange={handleInputChangeWIS_Calorimeter} inputMode="decimal" />, 
+            low:  <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSWIS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2WIS_Calorimeter} onChange={handleInputChange2WIS_Calorimeter} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainWIS_Calorimeter}
+            checked={maintainWIS_Calorimeter}
+            ></Checkbox>
+            
+            },
+            
+            
+            {
+                mainCategory: mainCategoryFC.Calorimeter,
+            
+            timeUpdate: <span style={combineCss.CSSCVS_Calorimeter} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSCVS_Calorimeter}>CVS Calorimeter</span> ,
+            
+            modbus: <span style={combineCss.CSSCVS_Calorimeter}>40002	 </span> ,
+            
+            value: <span style={combineCss.CSSCVS_Calorimeter} > {CVS_Calorimeter}  (MJ/Sm³)</span> , 
+            high: <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSCVS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueCVS_Calorimeter} onChange={handleInputChangeCVS_Calorimeter} inputMode="decimal" />, 
+            low:  <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSCVS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2CVS_Calorimeter} onChange={handleInputChange2CVS_Calorimeter} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainCVS_Calorimeter}
+            checked={maintainCVS_Calorimeter}
+            ></Checkbox>
+            
+            },
+            
+            {
+                mainCategory: mainCategoryFC.Calorimeter,
+            
+            timeUpdate: <span style={combineCss.CSSSG_Calorimeter} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSSG_Calorimeter}>SG Calorimeter</span> ,
+            
+            modbus: <span style={combineCss.CSSSG_Calorimeter}>40003	 </span> ,
+            
+            value: <span style={combineCss.CSSSG_Calorimeter} > {SG_Calorimeter} (rel)</span> , 
+            high: <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSSG_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueSG_Calorimeter} onChange={handleInputChangeSG_Calorimeter} inputMode="decimal" />, 
+            low:  <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSSG_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2SG_Calorimeter} onChange={handleInputChange2SG_Calorimeter} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainSG_Calorimeter}
+            checked={maintainSG_Calorimeter}
+            ></Checkbox>
+            
+            },
+
+            {
+                mainCategory: mainCategoryFC.Calorimeter,
+            
+            timeUpdate: <span style={combineCss.CSSTD_4072_Conn_STT} >{PLC_STTValue}</span>,
+            name: <span style={combineCss.CSSTD_4072_Conn_STT}>Calorimeter Connection Status</span> ,
+            
+            modbus: <span style={combineCss.CSSTD_4072_Conn_STT}>Status	 </span> ,
+            
+            value: <span style={combineCss.CSSTD_4072_Conn_STT} > {TD_4072_Conn_STT} {DataTD_4072_Conn_STT}</span> , 
+            high: <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSTD_4072_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueTD_4072_Conn_STT} onChange={handleInputChangeTD_4072_Conn_STT} inputMode="decimal" />, 
+            low:  <InputText 
+            disabled={AuthInputHighLow}
+            
+            style={combineCss.CSSTD_4072_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2TD_4072_Conn_STT} onChange={handleInputChange2TD_4072_Conn_STT} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainTD_4072_Conn_STT}
+            checked={maintainTD_4072_Conn_STT}
+            ></Checkbox>
+            
+            },
+            
+          ]
+
+          const combinedData = [ ...PLC01,...Calorimeter];
 
           const mainCategoryTemplate = (data: any) => {
               return (
@@ -6540,8 +7000,10 @@ checked={maintainSG_Calorimeter}
 
         
 
-<DataTable  size={'small'} selectionMode="single"   value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" sortField="mainCategory"
-                    sortOrder={1} scrollable  rowGroupHeaderTemplate={mainCategoryTemplate}   >
+<DataTable rowGroupMode="subheader"
+                size={'small'}      resizableColumns
+        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory"  
+        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
 {/* <Column field="modbus" header="Modbus" /> */}
 <Column field="timeUpdate" header="Time Update" />
 

@@ -1,5 +1,5 @@
 export const nameValue = {
-    month:'  (Month)' ,
+    month:'  (Months)' ,
     C:' (˚C)',
     Bara:' (BarA)',
     Sm3:' (Sm³)',

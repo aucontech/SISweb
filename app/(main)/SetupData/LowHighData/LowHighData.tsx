@@ -3758,8 +3758,8 @@ const handleMainTainAll = async (checked:any) => {
                GD2_Maintain: newMaintainGD2,
                GD3_Maintain: newMaintainGD3,
                PT1_Maintain: newMaintainPT1,
-               DI_DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
-               DI_DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
+            DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
+               DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
                DI_MAP_1_Maintain: newMaintainDI_MAP_1,
                DI_UPS_CHARGING_Maintain: newMaintainDI_UPS_CHARGING,
                DI_UPS_ALARM_Maintain: newMaintainDI_UPS_ALARM,
@@ -4000,8 +4000,8 @@ const handleMainTainPLC = async (checked:any) => {
                 GD2_Maintain: newMaintainGD2,
                 GD3_Maintain: newMaintainGD3,
                 PT1_Maintain: newMaintainPT1,
-                DI_DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
-                DI_DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
+                DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
+                DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
                 DI_MAP_1_Maintain: newMaintainDI_MAP_1,
                 DI_UPS_CHARGING_Maintain: newMaintainDI_UPS_CHARGING,
                 DI_UPS_ALARM_Maintain: newMaintainDI_UPS_ALARM,
@@ -5697,7 +5697,7 @@ disabled={AuthInputHighLow}
             timeUpdate: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day} >{EVC_STT02Value}</span>,
         modbus: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day}>{modbusEVC2.VM_Yesterday}</span> ,
 
-        name: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day}> {TagName.Vm_Today}</span> ,
+        name: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day}> {TagName.Vm_Yesterday}</span> ,
 
         value: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day} > {VmLastdayformat2} {nameValue.m3}</span>, 
         high: <InputText  
@@ -6284,7 +6284,7 @@ disabled={AuthInput}
                     sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
 
       <Column field="timeUpdate" header="Time Update" />
-      <Column field="modbus" header="Modbus" />
+      <Column field="modbus" header="Address" />
 
       <Column field="name" header="Name" />
 
