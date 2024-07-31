@@ -4685,7 +4685,8 @@ const ChangeMaintainGD1_STATUS = async () => {
             <div>
     
                 {!AuthInput && (
-                    <Checkbox
+                    <Checkbox  
+                    disabled={AuthInput} 
                         style={{ marginRight: 5 }}
                         onChange={handleCheckboxChange}
                         checked={maintainPT_2005}
@@ -5229,8 +5230,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSPT_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2004} onChange={handleInputChange2PT_2004} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPT_2004}
              checked={maintainPT_2004}
@@ -5256,8 +5258,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSPT_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2005} onChange={handleInputChange2PT_2005} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPT_2005}
              checked={maintainPT_2005}
@@ -5282,8 +5285,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
             
             style={combineCss.CSSTT_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2003} onChange={handleInputChange2TT_2003} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainTT_2003}
             checked={maintainTT_2003}
@@ -5309,8 +5313,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
            
            style={combineCss.CSSTT_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2004} onChange={handleInputChange2TT_2004} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-           Maintain:   <Checkbox
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+           Maintain:   <Checkbox  
+           disabled={AuthInput} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainTT_2004}
            checked={maintainTT_2004}
@@ -5336,8 +5341,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
           
           style={combineCss.CSSTG_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2TG_2005} onChange={handleInputChange2TG_2005} inputMode="decimal" />,
-          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-          Maintain:   <Checkbox
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+          Maintain:   <Checkbox  
+          disabled={AuthInput} 
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainTG_2005}
           checked={maintainTG_2005}
@@ -5362,8 +5368,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
          
          style={combineCss.CSSWB_1001}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_1001} onChange={handleInputChange2WB_1001} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-         Maintain:   <Checkbox
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+         Maintain:   <Checkbox  
+         disabled={AuthInput} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainWB_1001}
          checked={maintainWB_1001}
@@ -5390,8 +5397,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
         
         style={combineCss.CSSGD_2002}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2002} onChange={handleInputChange2GD_2002} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+        Maintain:   <Checkbox  
+        disabled={AuthInput} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainGD_2002}
         checked={maintainGD_2002}
@@ -5416,8 +5424,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
        
        style={combineCss.CSSGD_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2003} onChange={handleInputChange2GD_2003} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
+       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+       Maintain:   <Checkbox  
+       disabled={AuthInput} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainGD_2003}
        checked={maintainGD_2003}
@@ -5443,8 +5452,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
         
         style={combineCss.CSSGD_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2004} onChange={handleInputChange2GD_2004} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+        Maintain:   <Checkbox  
+        disabled={AuthInput} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainGD_2004}
         checked={maintainGD_2004}
@@ -5471,8 +5481,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
        
        style={combineCss.CSSGD_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2005} onChange={handleInputChange2GD_2005} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
+       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+       Maintain:   <Checkbox  
+       disabled={AuthInput} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainGD_2005}
        checked={maintainGD_2005}
@@ -5499,8 +5510,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
       
       style={combineCss.CSSGD_2006}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2006} onChange={handleInputChange2GD_2006} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-      Maintain:   <Checkbox
+      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+      Maintain:   <Checkbox  
+      disabled={AuthInput} 
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainGD_2006}
       checked={maintainGD_2006}
@@ -5526,8 +5538,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
             
             style={combineCss.CSSTM_2002_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2002_SNG} onChange={handleInputChange2TM_2002_SNG} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainTM_2002_SNG}
             checked={maintainTM_2002_SNG}
@@ -5558,8 +5571,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
     
     style={combineCss.CSSTM_2003_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2003_SNG} onChange={handleInputChange2TM_2003_SNG} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
+    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+    Maintain:   <Checkbox  
+    disabled={AuthInput} 
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainTM_2003_SNG}
     checked={maintainTM_2003_SNG}
@@ -5585,8 +5599,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
    
    style={combineCss.CSSTOTAL_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_SNG} onChange={handleInputChange2TOTAL_SNG} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+   Maintain:   <Checkbox  
+   disabled={AuthInput} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainTOTAL_SNG}
    checked={maintainTOTAL_SNG}
@@ -5612,8 +5627,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
   
   style={combineCss.CSSSDV_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_2004} onChange={handleInputChange2SDV_2004} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+  Maintain:   <Checkbox  
+  disabled={AuthInput} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainSDV_2004}
   checked={maintainSDV_2004}
@@ -5638,8 +5654,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
    
    style={combineCss.CSSSDV_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_2003} onChange={handleInputChange2SDV_2003} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+   Maintain:   <Checkbox  
+   disabled={AuthInput} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainSDV_2003}
    checked={maintainSDV_2003}
@@ -5665,8 +5682,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
   
   style={combineCss.CSSGD1_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1_STATUS} onChange={handleInputChange2GD1_STATUS} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+  Maintain:   <Checkbox  
+  disabled={AuthInput} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainGD1_STATUS}
   checked={maintainGD1_STATUS}
@@ -5694,8 +5712,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
  
  style={combineCss.CSSGD2_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2_STATUS} onChange={handleInputChange2GD2_STATUS} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
+ update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+ Maintain:   <Checkbox  
+ disabled={AuthInput} 
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainGD2_STATUS}
  checked={maintainGD2_STATUS}
@@ -5720,8 +5739,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
   
   style={combineCss.CSSGD3_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD3_STATUS} onChange={handleInputChange2GD3_STATUS} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+  Maintain:   <Checkbox  
+  disabled={AuthInput} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainGD3_STATUS}
   checked={maintainGD3_STATUS}
@@ -5747,8 +5767,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
  
  style={combineCss.CSSGD4_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD4_STATUS} onChange={handleInputChange2GD4_STATUS} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
- Maintain:   <Checkbox
+ update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+ Maintain:   <Checkbox  
+ disabled={AuthInput} 
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainGD4_STATUS}
  checked={maintainGD4_STATUS}
@@ -5774,8 +5795,9 @@ low:  <InputText
 disabled={AuthInputHighLow}
 
 style={combineCss.CSSGD5_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD5_STATUS} onChange={handleInputChange2GD5_STATUS} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox  
+disabled={AuthInput} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainGD5_STATUS}
 checked={maintainGD5_STATUS}
@@ -5800,8 +5822,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSESD}   placeholder='Low' step="0.1" type='number' value={inputValue2ESD} onChange={handleInputChange2VP303} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainESD}
              checked={maintainESD}
@@ -5825,8 +5848,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
             
             style={combineCss.CSSHR_BC}   placeholder='Low' step="0.1" type='number' value={inputValue2HR_BC} onChange={handleInputChange2HR_BC} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainHR_BC}
             checked={maintainHR_BC}
@@ -5851,8 +5875,9 @@ low:  <InputText
 disabled={AuthInputHighLow}
 
 style={combineCss.CSSSD}   placeholder='Low' step="0.1" type='number' value={inputValue2SD} onChange={handleInputChange2SD} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox  
+disabled={AuthInput} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainSD}
 checked={maintainSD}
@@ -5877,8 +5902,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSVAPORIZER_1}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_1} onChange={handleInputChange2VAPORIZER_1} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_1}
              checked={maintainVAPORIZER_1}
@@ -5903,8 +5929,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSVAPORIZER_2}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_2} onChange={handleInputChange2VAPORIZER_2} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_2}
              checked={maintainVAPORIZER_2}
@@ -5930,8 +5957,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
              
              style={combineCss.CSSVAPORIZER_3}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_3} onChange={handleInputChange2VAPORIZER_3} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-             Maintain:   <Checkbox
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+             Maintain:   <Checkbox  
+             disabled={AuthInput} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_3}
              checked={maintainVAPORIZER_3}
@@ -5956,8 +5984,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
             
             style={combineCss.CSSVAPORIZER_4}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_4} onChange={handleInputChange2VAPORIZER_4} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-            Maintain:   <Checkbox
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox  
+            disabled={AuthInput} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainVAPORIZER_4}
             checked={maintainVAPORIZER_4}
@@ -5984,8 +6013,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
            
            style={combineCss.CSSCOOLING_V}   placeholder='Low' step="0.1" type='number' value={inputValue2COOLING_V} onChange={handleInputChange2COOLING_V} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-           Maintain:   <Checkbox
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+           Maintain:   <Checkbox  
+           disabled={AuthInput} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainCOOLING_V}
            checked={maintainCOOLING_V}
@@ -6015,8 +6045,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
          
          style={combineCss.CSSFCV_2001}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_2001} onChange={handleInputChange2FCV_2001} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-         Maintain:   <Checkbox
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+         Maintain:   <Checkbox  
+         disabled={AuthInput} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainFCV_2001}
          checked={maintainFCV_2001}
@@ -6043,8 +6074,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
         
         style={combineCss.CSSPERCENT_LPG}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_LPG} onChange={handleInputChange2PERCENT_LPG} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-        Maintain:   <Checkbox
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+        Maintain:   <Checkbox  
+        disabled={AuthInput} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainPERCENT_LPG}
         checked={maintainPERCENT_LPG}
@@ -6072,8 +6104,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
        
        style={combineCss.CSSPERCENT_AIR}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_AIR} onChange={handleInputChange2PERCENT_AIR} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-       Maintain:   <Checkbox
+       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+       Maintain:   <Checkbox  
+       disabled={AuthInput} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainPERCENT_AIR}
        checked={maintainPERCENT_AIR}
@@ -6100,8 +6133,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
       
       style={combineCss.CSSHV_1001}   placeholder='Low' step="0.1" type='number' value={inputValue2HV_1001} onChange={handleInputChange2HV_1001} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-      Maintain:   <Checkbox
+      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+      Maintain:   <Checkbox  
+      disabled={AuthInput} 
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainHV_1001}
       checked={maintainHV_1001}
@@ -6126,8 +6160,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
      
      style={combineCss.CSSRATIO_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2RATIO_MODE} onChange={handleInputChange2RATIO_MODE} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
+     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+     Maintain:   <Checkbox  
+     disabled={AuthInput} 
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainRATIO_MODE}
      checked={maintainRATIO_MODE}
@@ -6154,8 +6189,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
      
      style={combineCss.CSSFCV_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_MODE} onChange={handleInputChange2FCV_MODE} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-     Maintain:   <Checkbox
+     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+     Maintain:   <Checkbox  
+     disabled={AuthInput} 
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainFCV_MODE}
      checked={maintainFCV_MODE}
@@ -6182,8 +6218,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
     
     style={combineCss.CSSTOTAL_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_CNG} onChange={handleInputChange2TOTAL_CNG} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-    Maintain:   <Checkbox
+    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+    Maintain:   <Checkbox  
+    disabled={AuthInput} 
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainTOTAL_CNG}
     checked={maintainTOTAL_CNG}
@@ -6209,8 +6246,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
    
    style={combineCss.CSSTM2002_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM2002_CNG} onChange={handleInputChange2TM2002_CNG} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+   Maintain:   <Checkbox  
+   disabled={AuthInput} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainTM2002_CNG}
    checked={maintainTM2002_CNG}
@@ -6236,8 +6274,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
   
   style={combineCss.CSSTM2003_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM2003_CNG} onChange={handleInputChange2TM2003_CNG} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-  Maintain:   <Checkbox
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+  Maintain:   <Checkbox  
+  disabled={AuthInput} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainTM2003_CNG}
   checked={maintainTM2003_CNG}
@@ -6262,8 +6301,9 @@ disabled={AuthInputHighLow}
 disabled={AuthInputHighLow}
    
    style={combineCss.CSSWB_Setpoint}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_Setpoint} onChange={handleInputChange2WB_Setpoint} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-   Maintain:   <Checkbox
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+   Maintain:   <Checkbox  
+   disabled={AuthInput} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainWB_Setpoint}
    checked={maintainWB_Setpoint}
@@ -6290,8 +6330,9 @@ low:  <InputText
 disabled={AuthInputHighLow}
 
 style={combineCss.CSSWIS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2WIS_Calorimeter} onChange={handleInputChange2WIS_Calorimeter} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox  
+disabled={AuthInput} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainWIS_Calorimeter}
 checked={maintainWIS_Calorimeter}
@@ -6317,8 +6358,9 @@ low:  <InputText
 disabled={AuthInputHighLow}
 
 style={combineCss.CSSCVS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2CVS_Calorimeter} onChange={handleInputChange2CVS_Calorimeter} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox  
+disabled={AuthInput} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainCVS_Calorimeter}
 checked={maintainCVS_Calorimeter}
@@ -6343,8 +6385,9 @@ low:  <InputText
 disabled={AuthInputHighLow}
 
 style={combineCss.CSSSG_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2SG_Calorimeter} onChange={handleInputChange2SG_Calorimeter} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox  
+disabled={AuthInput} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainSG_Calorimeter}
 checked={maintainSG_Calorimeter}
