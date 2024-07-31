@@ -6,18 +6,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
 import { OTSUKA_DEVICE_ID } from "@/constants/constans";
-import { Utils } from "@/service/Utils";
+import { format, parse } from "date-fns";
 type DataItem = {
     [key: string]: any;
 };
 type DataArray = DataItem[];
 
-export interface UnitObject {
-    0: string;
-    1: string;
-    3: string;
-    4: string;
-}
+// export interface UnitObject {
+//     0: string;
+//     1: string;
+//     3: string;
+//     4: string;
+// }
 
 export interface HeaderItem {
     headername: string;
@@ -26,7 +26,7 @@ export interface HeaderItem {
 export interface TagItem {
     tagname: string;
     key: string;
-    unit: string | UnitObject;
+    // unit: string | UnitObject;
 }
 
 interface Props {
@@ -54,7 +54,6 @@ const StationConfig: React.FC<Props> = ({
         const formattedData = tags.map((tag) => ({
             key: tag.key,
             name: tag.tagname,
-            unit: tag.unit,
         }));
 
         setData(formattedData);
@@ -298,10 +297,19 @@ const StationConfig: React.FC<Props> = ({
         console.log("Update clicked for row:", rowData);
 
         let attributes: { [key: string]: any } = {};
-        attributes = {
-            key: rowData.key,
-            value: rowData.value,
-        };
+
+        if (rowData.key.toLowerCase().includes("date")) {
+            // Ép kiểu về số cho các trường date
+            attributes = {
+                key: rowData.key,
+                value: Number(rowData.value),
+            };
+        } else {
+            attributes = {
+                key: rowData.key,
+                value: rowData.value,
+            };
+        }
 
         //attributes = {[`${rowData.key}_Modbus`]: rowData.modBus,
         console.log("Attributes to update:", attributes);
@@ -335,30 +343,66 @@ const StationConfig: React.FC<Props> = ({
                         field={header.key}
                         //header={header.headername}
                         body={(rowData) => {
-                            if (
-                                ["low", "high", "modBus"].includes(header.key)
-                            ) {
-                                return (
-                                    <input
-                                        type="number"
-                                        value={rowData[header.key] || ""}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            handleValueChange(
-                                                rowData.key,
-                                                header.key,
-                                                newValue
-                                            );
-                                        }}
-                                        // className={getTextColorClass(rowData)}
-                                    />
-                                );
-                            } else if (header.key === "value") {
-                                let content;
-                                if (typeof rowData.unit === "string") {
-                                    content = `${rowData.value}`;
+                            if (["value"].includes(header.key)) {
+                                const isExpirationField = rowData.key
+                                    .toLowerCase()
+                                    .includes("expiration");
+                                const isDateField = rowData.key
+                                    .toLowerCase()
+                                    .includes("date");
+
+                                if (isDateField) {
+                                    const dateValue = rowData[header.key]
+                                        ? format(
+                                              new Date(
+                                                  Number(rowData[header.key])
+                                              ),
+                                              "yyyy-MM-dd"
+                                          )
+                                        : "";
+                                    return (
+                                        <input
+                                            type="date"
+                                            value={dateValue}
+                                            onChange={(e) => {
+                                                if (!isExpirationField) {
+                                                    const selectedDate = parse(
+                                                        e.target.value,
+                                                        "yyyy-MM-dd",
+                                                        new Date()
+                                                    );
+                                                    const newValue =
+                                                        selectedDate.getTime(); // Chuyển đổi thành Unix milliseconds
+                                                    handleValueChange(
+                                                        rowData.key,
+                                                        header.key,
+                                                        newValue
+                                                    );
+                                                }
+                                            }}
+                                            disabled={isExpirationField}
+                                        />
+                                    );
+                                } else {
+                                    return (
+                                        <input
+                                            type="number"
+                                            value={rowData[header.key] || ""}
+                                            onChange={(e) => {
+                                                if (!isExpirationField) {
+                                                    const newValue =
+                                                        e.target.value;
+                                                    handleValueChange(
+                                                        rowData.key,
+                                                        header.key,
+                                                        newValue
+                                                    );
+                                                }
+                                            }}
+                                            disabled={isExpirationField}
+                                        />
+                                    );
                                 }
-                                return <span>{content}</span>;
                             } else if (header.key === "update") {
                                 return (
                                     <button
@@ -367,14 +411,6 @@ const StationConfig: React.FC<Props> = ({
                                     >
                                         Update
                                     </button>
-                                );
-                            } else if (header.key === "updatedTime") {
-                                return (
-                                    <span>
-                                        {Utils.formatUnixTimeToString(
-                                            rowData.updatedTime
-                                        )}
-                                    </span>
                                 );
                             }
                             return <span>{rowData[header.key]}</span>;

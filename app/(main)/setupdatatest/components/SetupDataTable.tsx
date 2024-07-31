@@ -408,10 +408,13 @@ const SetupDataTable: React.FC<Props> = ({
                                 if (typeof rowData.unit === "string") {
                                     content = `${rowData.value} (${rowData.unit})`;
                                 } else if (typeof rowData.unit === "object") {
-                                    const unitValue =
-                                        rowData.value === 0
-                                            ? rowData.unit[0]
-                                            : rowData.unit[1];
+                                    const unitValue = rowData.unit[
+                                        rowData.value
+                                    ]
+                                        ? rowData.unit[rowData.value]
+                                        : "";
+
+                                    console.log("row", rowData);
                                     content = `${rowData.value} (${unitValue})`;
                                 } else {
                                     content = rowData.value;
