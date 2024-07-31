@@ -224,8 +224,38 @@ export default function ScoreCard_Meiko() {
             const GD_102_High_Maintain = res.data.find(
                 (item: any) => item.key === "GD_102_High_Maintain"
             );
+            const GD_101_High_High = res.data.find((item: any) => item.key === "GD_101_High_High");
+            setGD_101_High_High(GD_101_High_High?.value || null);
+            const GD_101_High_Low = res.data.find((item: any) => item.key === "GD_101_High_Low");
+            setGD_101_High_Low(GD_101_High_Low?.value || null);
+            const GD_101_High_Maintain = res.data.find(
+                (item: any) => item.key === "GD_101_High_Maintain"
+            );
 
 
+
+            
+            const GD_103_Low_High = res.data.find((item: any) => item.key === "GD_103_Low_High");
+            setGD_103_Low_High(GD_103_Low_High?.value || null);
+            const GD_103_Low_Low = res.data.find((item: any) => item.key === "GD_103_Low_Low");
+            setGD_103_Low_Low(GD_103_Low_Low?.value || null);
+            const GD_103_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_103_Low_Maintain"
+            );
+            const GD_102_Low_High = res.data.find((item: any) => item.key === "GD_102_Low_High");
+            setGD_102_Low_High(GD_102_Low_High?.value || null);
+            const GD_102_Low_Low = res.data.find((item: any) => item.key === "GD_102_Low_Low");
+            setGD_102_Low_Low(GD_102_Low_Low?.value || null);
+            const GD_102_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_102_Low_Maintain"
+            );
+            const GD_101_Low_High = res.data.find((item: any) => item.key === "GD_101_Low_High");
+            setGD_101_Low_High(GD_101_Low_High?.value || null);
+            const GD_101_Low_Low = res.data.find((item: any) => item.key === "GD_101_Low_Low");
+            setGD_101_Low_Low(GD_101_Low_Low?.value || null);
+            const GD_101_Low_Maintain = res.data.find(
+                (item: any) => item.key === "GD_101_Low_Maintain"
+            );
 
             const SDV_301_High = res.data.find((item: any) => item.key === "SDV_301_High");
             setSDV_301_High(SDV_301_High?.value || null);
@@ -235,24 +265,6 @@ export default function ScoreCard_Meiko() {
                 (item: any) => item.key === "SDV_301_Maintain"
             );
 
-            const GD_103_Low_High = res.data.find((item: any) => item.key === "GD_103_Low_High");
-            setGD_103_Low_High(GD_103_Low_High?.value || null);
-            const GD_103_Low_Low = res.data.find((item: any) => item.key === "GD_103_Low_Low");
-            setGD_103_Low_Low(GD_103_Low_Low?.value || null);
-            const GD_103_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_103_Low_Maintain"
-            );
-
-            const GD_101_Low_High = res.data.find((item: any) => item.key === "GD_101_Low_High");
-            setGD_101_Low_High(GD_101_Low_High?.value || null);
-            const GD_101_Low_Low = res.data.find((item: any) => item.key === "GD_101_Low_Low");
-            setGD_101_Low_Low(GD_101_Low_Low?.value || null);
-            const GD_101_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_101_Low_Maintain"
-            );
-
-        
-
             const SDV_302_High = res.data.find((item: any) => item.key === "SDV_302_High");
             setSDV_302_High(SDV_302_High?.value || null);
             const SDV_302_Low = res.data.find((item: any) => item.key === "SDV_302_Low");
@@ -260,6 +272,9 @@ export default function ScoreCard_Meiko() {
             const SDV_302_Maintain = res.data.find(
                 (item: any) => item.key === "SDV_302_Maintain"
             );
+
+
+
             const V1_Flow_Meter_High = res.data.find((item: any) => item.key === "V1_Flow_Meter_High");
             setV1_Flow_Meter_High(V1_Flow_Meter_High?.value || null);
             const V1_Flow_Meter_Low = res.data.find((item: any) => item.key === "V1_Flow_Meter_Low");
@@ -277,14 +292,7 @@ export default function ScoreCard_Meiko() {
             );
 
 
-            const GD_101_High_High = res.data.find((item: any) => item.key === "GD_101_High_High");
-            setGD_101_High_High(GD_101_High_High?.value || null);
-            const GD_101_High_Low = res.data.find((item: any) => item.key === "GD_101_High_Low");
-            setGD_101_High_Low(GD_101_High_Low?.value || null);
-            const GD_101_High_Maintain = res.data.find(
-                (item: any) => item.key === "GD_101_High_Maintain"
-            );
-
+           
             const V2_Flow_Meter_High = res.data.find((item: any) => item.key === "V2_Flow_Meter_High");
             setV2_Flow_Meter_High(V2_Flow_Meter_High?.value || null);
             const V2_Flow_Meter_Low = res.data.find((item: any) => item.key === "V2_Flow_Meter_Low");
@@ -293,13 +301,7 @@ export default function ScoreCard_Meiko() {
                 (item: any) => item.key === "V2_Flow_Meter_Maintain"
             );
 
-            const GD_102_Low_High = res.data.find((item: any) => item.key === "GD_102_Low_High");
-            setGD_102_Low_High(GD_102_Low_High?.value || null);
-            const GD_102_Low_Low = res.data.find((item: any) => item.key === "GD_102_Low_Low");
-            setGD_102_Low_Low(GD_102_Low_Low?.value || null);
-            const GD_102_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_102_Low_Maintain"
-            );
+        
 
             const Tank_TT_301_High = res.data.find((item: any) => item.key === "Tank_TT_301_High");
             setTank_TT_301_High(Tank_TT_301_High?.value || null);
@@ -393,35 +395,36 @@ export default function ScoreCard_Meiko() {
 
             setMaintainGD_103_High(GD_103_High_Maintain?.value || false);
 
+            setMaintainGD_102_High(GD_102_High_Maintain?.value || false);
+            setMaintainGD_101_High(GD_101_High_Maintain?.value || false);
+
+            setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
 
             setMaintainGD_102_Low(GD_102_Low_Maintain?.value || false);
+
+            setMaintainGD_101_Low(GD_101_Low_Maintain?.value || false);
+            setMaintainSDV_302(SDV_302_Maintain?.value || false);
+
+
+
+            setMaintainSDV_301(SDV_301_Maintain?.value || false);
+
 
             setMaintainV1_Flow_Meter(V1_Flow_Meter_Maintain?.value || false);
             
             setMaintainV2_Flow_Meter(V2_Flow_Meter_Maintain?.value || false);
             
-            setMaintainGD_101_High(GD_101_High_Maintain?.value || false);
 
             
             setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
 
 
 
-            setMaintainSDV_302(SDV_302_Maintain?.value || false);
-
-
-            setMaintainGD_101_Low(GD_101_Low_Maintain?.value || false);
-
-
-            setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
-
-            setMaintainSDV_301(SDV_301_Maintain?.value || false);
+           
 
 
 
 
-
-            setMaintainGD_102_High(GD_102_High_Maintain?.value || false);
 
             setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
 
@@ -440,8 +443,10 @@ export default function ScoreCard_Meiko() {
 
             setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
 
+            setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
 
-            setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
+
+            setMaintainPipe_Press(Pipe_Press_Maintain?.value || false);
            
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -598,8 +603,123 @@ export default function ScoreCard_Meiko() {
   
        // =================================================================================================================== 
 
+ // =================================================================================================================== 
+
+ const [GD_101_High, setGD_101_High] = useState<string | null>(null);
+    
+ const [GD_101_High_High, setGD_101_High_High] = useState<number | null>(null);
+ const [GD_101_High_Low, setGD_101_High_Low] = useState<number | null>(null);
+ const [exceedThresholdGD_101_High, setExceedThresholdGD_101_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ 
+ const [maintainGD_101_High, setMaintainGD_101_High] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof GD_101_High_High === 'string' && typeof GD_101_High_Low === 'string' && GD_101_High !== null && maintainGD_101_High === false
+         ) {
+             const highValue = parseFloat(GD_101_High_High);
+             const lowValue = parseFloat(GD_101_High_Low);
+             const GD_101_HighValue = parseFloat(GD_101_High);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_HighValue)) {
+                 if (highValue <= GD_101_HighValue || GD_101_HighValue <= lowValue) {
+                         setExceedThresholdGD_101_High(true);
+                 } else {
+                    setExceedThresholdGD_101_High(false);
+                 }
+             } 
+         } 
+     }, [GD_101_High_High, GD_101_High, GD_101_High_Low,maintainGD_101_High]);
+ 
 
 
+     // =================================================================================================================== 
+
+     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
+     const [GD_103_Low_High, setGD_103_Low_High] = useState<number | null>(null);
+     const [GD_103_Low_Low, setGD_103_Low_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_103_Low, setExceedThresholdGD_103_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
+             ) {
+                 const highValue = parseFloat(GD_103_Low_High);
+                 const lowValue = parseFloat(GD_103_Low_Low);
+                 const GD_103_LowValue = parseFloat(GD_103_Low);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
+                     if (highValue <= GD_103_LowValue || GD_103_LowValue <= lowValue) {
+                             setExceedThresholdGD_103_Low(true);
+                     } else {
+                        setExceedThresholdGD_103_Low(false);
+                     }
+                 } 
+             } 
+         }, [GD_103_Low_High, GD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
+     
+   
+ 
+     // =================================================================================================================== 
+            // =================================================================================================================== 
+     
+            const [GD_102_Low, setGD_102_Low] = useState<string | null>(null);
+            const [GD_102_Low_High, setGD_102_Low_High] = useState<number | null>(null);
+            const [GD_102_Low_Low, setGD_102_Low_Low] = useState<number | null>(null);
+            const [exceedThresholdGD_102_Low, setExceedThresholdGD_102_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+            
+            const [maintainGD_102_Low, setMaintainGD_102_Low] = useState<boolean>(false);
+            
+            
+            useEffect(() => {
+                if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
+                ) {
+                    const highValue = parseFloat(GD_102_Low_High);
+                    const lowValue = parseFloat(GD_102_Low_Low);
+                    const GD_102_LowValue = parseFloat(GD_102_Low);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
+                        if (highValue <= GD_102_LowValue || GD_102_LowValue <= lowValue) {
+                                setExceedThresholdGD_102_Low(true);
+                        } else {
+                           setExceedThresholdGD_102_Low(false);
+                        }
+                    } 
+                } 
+            }, [GD_102_Low_High, GD_102_Low, , GD_102_Low_Low,maintainGD_102_Low]);
+            
+         // =================================================================================================================== 
+
+         const [GD_101_Low, setGD_101_Low] = useState<string | null>(null);
+
+         const [GD_101_Low_High, setGD_101_Low_High] = useState<number | null>(null);
+         const [GD_101_Low_Low, setGD_101_Low_Low] = useState<number | null>(null);
+         const [exceedThresholdGD_101_Low, setExceedThresholdGD_101_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
+                 ) {
+                     const highValue = parseFloat(GD_101_Low_High);
+                     const lowValue = parseFloat(GD_101_Low_Low);
+                     const GD_101_LowValue = parseFloat(GD_101_Low);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
+                         if (highValue <= GD_101_LowValue || GD_101_LowValue <= lowValue) {
+                                 setExceedThresholdGD_101_Low(true);
+                         } else {
+                            setExceedThresholdGD_101_Low(false);
+                         }
+                     } 
+                 } 
+             }, [GD_101_Low_High, GD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
+         
+        
+        
+        
+         // =================================================================================================================== 
 
  // =================================================================================================================== 
 
@@ -631,67 +751,10 @@ export default function ScoreCard_Meiko() {
 
  // =================================================================================================================== 
 
+
      // =================================================================================================================== 
 
-     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
-     const [GD_103_Low_High, setGD_103_Low_High] = useState<number | null>(null);
-     const [GD_103_Low_Low, setGD_103_Low_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_103_Low, setExceedThresholdGD_103_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
-     
-     
-         useEffect(() => {
-             if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
-             ) {
-                 const highValue = parseFloat(GD_103_Low_High);
-                 const lowValue = parseFloat(GD_103_Low_Low);
-                 const GD_103_LowValue = parseFloat(GD_103_Low);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
-                     if (highValue <= GD_103_LowValue || GD_103_LowValue <= lowValue) {
-                             setExceedThresholdGD_103_Low(true);
-                     } else {
-                        setExceedThresholdGD_103_Low(false);
-                     }
-                 } 
-             } 
-         }, [GD_103_Low_High, GD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
-     
-   
- 
-     // =================================================================================================================== 
 
-         // =================================================================================================================== 
-
- const [GD_101_Low, setGD_101_Low] = useState<string | null>(null);
-
- const [GD_101_Low_High, setGD_101_Low_High] = useState<number | null>(null);
- const [GD_101_Low_Low, setGD_101_Low_Low] = useState<number | null>(null);
- const [exceedThresholdGD_101_Low, setExceedThresholdGD_101_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
- 
- 
-     useEffect(() => {
-         if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
-         ) {
-             const highValue = parseFloat(GD_101_Low_High);
-             const lowValue = parseFloat(GD_101_Low_Low);
-             const GD_101_LowValue = parseFloat(GD_101_Low);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
-                 if (highValue <= GD_101_LowValue || GD_101_LowValue <= lowValue) {
-                         setExceedThresholdGD_101_Low(true);
-                 } else {
-                    setExceedThresholdGD_101_Low(false);
-                 }
-             } 
-         } 
-     }, [GD_101_Low_High, GD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
- 
-
-
-
- // =================================================================================================================== 
 
 
      // =================================================================================================================== 
@@ -764,34 +827,7 @@ useEffect(() => {
 // =================================================================================================================== 
 
 
-     // =================================================================================================================== 
-
-     const [GD_101_High, setGD_101_High] = useState<string | null>(null);
     
-     const [GD_101_High_High, setGD_101_High_High] = useState<number | null>(null);
-     const [GD_101_High_Low, setGD_101_High_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_101_High, setExceedThresholdGD_101_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     
-     const [maintainGD_101_High, setMaintainGD_101_High] = useState<boolean>(false);
-     
-     
-         useEffect(() => {
-             if (typeof GD_101_High_High === 'string' && typeof GD_101_High_Low === 'string' && GD_101_High !== null && maintainGD_101_High === false
-             ) {
-                 const highValue = parseFloat(GD_101_High_High);
-                 const lowValue = parseFloat(GD_101_High_Low);
-                 const GD_101_HighValue = parseFloat(GD_101_High);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_HighValue)) {
-                     if (highValue <= GD_101_HighValue || GD_101_HighValue <= lowValue) {
-                             setExceedThresholdGD_101_High(true);
-                     } else {
-                        setExceedThresholdGD_101_High(false);
-                     }
-                 } 
-             } 
-         }, [GD_101_High_High, GD_101_High, GD_101_High_Low,maintainGD_101_High]);
-     
  
      
      
@@ -827,34 +863,7 @@ useEffect(() => {
      
      
      // =================================================================================================================== 
-     
-         // =================================================================================================================== 
-     
-     const [GD_102_Low, setGD_102_Low] = useState<string | null>(null);
-     const [GD_102_Low_High, setGD_102_Low_High] = useState<number | null>(null);
-     const [GD_102_Low_Low, setGD_102_Low_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_102_Low, setExceedThresholdGD_102_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     
-     const [maintainGD_102_Low, setMaintainGD_102_Low] = useState<boolean>(false);
-     
-     
-     useEffect(() => {
-         if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
-         ) {
-             const highValue = parseFloat(GD_102_Low_High);
-             const lowValue = parseFloat(GD_102_Low_Low);
-             const GD_102_LowValue = parseFloat(GD_102_Low);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
-                 if (highValue <= GD_102_LowValue || GD_102_LowValue <= lowValue) {
-                         setExceedThresholdGD_102_Low(true);
-                 } else {
-                    setExceedThresholdGD_102_Low(false);
-                 }
-             } 
-         } 
-     }, [GD_102_Low_High, GD_102_Low, , GD_102_Low_Low,maintainGD_102_Low]);
-     
+
 
       // =================================================================================================================== 
 
@@ -1189,7 +1198,6 @@ useEffect(() => {
 
         GD_103_Low: "GD 103 Low (0: Normal - 1: Alarm)",
         GD_102_Low: "GD 102 Low (0: Normal - 1: Alarm)",
-
         GD_101_Low: "GD 101 Low (0: Normal - 1: Alarm)",
 
         SDV_302: "SDV 302 (0: Off - 1: On)",
@@ -1298,7 +1306,20 @@ useEffect(() => {
                 },
         
         
-             
+                CSSGD_101_High : {
+                    color:exceedThresholdGD_101_High && !maintainGD_101_High
+                    ? "#ff5656"
+                    : maintainGD_101_High
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdGD_101_High || maintainGD_101_High)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdGD_101_High || maintainGD_101_High)
+                    ? 18
+                    : ""
+                },
+        
         
         
                 CSSGD_102_High : {
@@ -1316,19 +1337,7 @@ useEffect(() => {
                 },
            
         
-                CSSSDV_301 : {
-                    color:exceedThresholdSDV_301 && !maintainSDV_301
-                    ? "#ff5656"
-                    : maintainSDV_301
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdSDV_301 || maintainSDV_301)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdSDV_301 || maintainSDV_301)
-                    ? 18
-                    : ""
-                },
+             
         
                 CSSGD_103_Low : {
                     color:exceedThresholdGD_103_Low && !maintainGD_103_Low
@@ -1357,6 +1366,21 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+
+                CSSGD_102_Low : {
+                    color:exceedThresholdGD_102_Low && !maintainGD_102_Low
+                    ? "#ff5656"
+                    : maintainGD_102_Low
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdGD_102_Low || maintainGD_102_Low)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdGD_102_Low || maintainGD_102_Low)
+                    ? 18
+                    : ""
+                },
         
                 CSSSDV_302 : {
                     color:exceedThresholdSDV_302 && !maintainSDV_302
@@ -1373,7 +1397,19 @@ useEffect(() => {
                 },
         
           
-        
+                CSSSDV_301 : {
+                    color:exceedThresholdSDV_301 && !maintainSDV_301
+                    ? "#ff5656"
+                    : maintainSDV_301
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdSDV_301 || maintainSDV_301)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdSDV_301 || maintainSDV_301)
+                    ? 18
+                    : ""
+                },
         
                 CSSV1_Flow_Meter : {
                     color:exceedThresholdV1_Flow_Meter && !maintainV1_Flow_Meter
@@ -1406,19 +1442,6 @@ useEffect(() => {
         
         
         
-                CSSGD_101_High : {
-                    color:exceedThresholdGD_101_High && !maintainGD_101_High
-                    ? "#ff5656"
-                    : maintainGD_101_High
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdGD_101_High || maintainGD_101_High)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdGD_101_High || maintainGD_101_High)
-                    ? 18
-                    : ""
-                },
         
         
                 CSSPipe_Temp : {
@@ -1448,19 +1471,7 @@ useEffect(() => {
                     : ""
                 },
         
-                CSSGD_102_Low : {
-                    color:exceedThresholdGD_102_Low && !maintainGD_102_Low
-                    ? "#ff5656"
-                    : maintainGD_102_Low
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdGD_102_Low || maintainGD_102_Low)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdGD_102_Low || maintainGD_102_Low)
-                    ? 18
-                    : ""
-                },
+          
         
                 CSSTank_01_Volume : {
                     color:exceedThresholdTank_01_Volume && !maintainTank_01_Volume

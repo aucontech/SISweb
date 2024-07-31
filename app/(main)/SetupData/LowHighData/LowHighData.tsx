@@ -729,6 +729,45 @@ setMaintainDO_BC_01(MaintainDO_BC_01?.value || false);
 
 //=====================================================================================
 
+const HighEVC_01_Conn_STT = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_High");
+setHighEVC_01_Conn_STT(HighEVC_01_Conn_STT?.value || null);
+const LowEVC_01_Conn_STT = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_Low");
+setLowEVC_01_Conn_STT(LowEVC_01_Conn_STT?.value || null);
+
+const MaintainEVC_01_Conn_STT = res.data.find(
+    (item: any) => item.key === "EVC_01_Conn_STT_Maintain"
+);
+setMaintainEVC_01_Conn_STT(MaintainEVC_01_Conn_STT?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighEVC_02_Conn_STT = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_High");
+setHighEVC_02_Conn_STT(HighEVC_02_Conn_STT?.value || null);
+const LowEVC_02_Conn_STT = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_Low");
+setLowEVC_02_Conn_STT(LowEVC_02_Conn_STT?.value || null);
+
+const MaintainEVC_02_Conn_STT = res.data.find(
+    (item: any) => item.key === "EVC_02_Conn_STT_Maintain"
+);
+setMaintainEVC_02_Conn_STT(MaintainEVC_02_Conn_STT?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
+const HighPLC_Conn_STT = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+setHighPLC_Conn_STT(HighPLC_Conn_STT?.value || null);
+const LowPLC_Conn_STT = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+setLowPLC_Conn_STT(LowPLC_Conn_STT?.value || null);
+
+const MaintainPLC_Conn_STT = res.data.find(
+    (item: any) => item.key === "PLC_Conn_STT_Maintain"
+);
+setMaintainPLC_Conn_STT(MaintainPLC_Conn_STT?.value || false);
+//=====================================================================================
+
+//=====================================================================================
+
 } catch (error) {
             console.error("Error fetching data:", error);
         }

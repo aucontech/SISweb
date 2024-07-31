@@ -94,42 +94,73 @@ export default function ScoreCard_SNG_BINHDUONG() {
                         PT_2005: setPT_2005,
                         TT_2003: setTT_2003,
                         TT_2004: setTT_2004,
-                        GD_102_High: setGD_102_High,
+                        WB_1001: setWB_1001,
                         TG_2005: setTG_2005,
 
-                        GD_103_Low: setGD_103_Low,
-                        GD_101_Low: setGD_101_Low,
-                        GD_102_Low: setGD_102_Low,
+                        GD_2002: setGD_2002,
+                        GD_2003: setGD_2003,
+                        GD_2004: setGD_2004,
 
-                        SDV_301: setSDV_301,
-                        SDV_302: setSDV_302,
-
-
-                        V1_Flow_Meter: setV1_Flow_Meter,
-                        V2_Flow_Meter: setV2_Flow_Meter,
+                        GD_2005: setGD_2005,
+                        GD_2006: setGD_2006,
 
 
-                        Pipe_Temp: setPipe_Temp,
-                        Pipe_Press: setPipe_Press,
+                        TM_2002_SNG: setTM_2002_SNG,
+                    
+                        TM_2003_SNG: setTM_2003_SNG,
 
 
-                        Tank_TT_301: setTank_TT_301,
-                        Tank_PT_301: setTank_PT_301,
+                        TOTAL_SNG: setTOTAL_SNG,
+                        SDV_2004: setSDV_2004,
 
 
-                        Tank_01_Volume: setTank_01_Volume,
 
 
-                        Tank_01_Mass: setTank_01_Mass,
-                        Tank_01_Level: setTank_01_Level,
+                        SDV_2003: setSDV_2003,
                         Flow_Meter_Total: setFlow_Meter_Total,
+                        
+                        GD1_STATUS: setGD1_STATUS,
+                        GD2_STATUS: setGD2_STATUS,
+                        GD3_STATUS: setGD3_STATUS,
+                        GD4_STATUS: setGD4_STATUS,
+                        GD5_STATUS: setGD5_STATUS,
 
-                        Consumption_Flow: setConsumption_Flow,
-                        Flow_Velocity: setFlow_Velocity,
+
+                        ESD: setESD,
+                        HR_BC: setHR_BC,
+                        SD: setSD,
+                        VAPORIZER_1: setVAPORIZER_1,
+                        VAPORIZER_2: setVAPORIZER_2,
+                        VAPORIZER_3: setVAPORIZER_3,
+
+                        VAPORIZER_4: setVAPORIZER_4,
+                        COOLING_V: setCOOLING_V,
+                        FCV_2001: setFCV_2001,
+
+
+
+
+                        PERCENT_LPG: setPERCENT_LPG,
+                        PERCENT_AIR: setPERCENT_AIR,
+                        HV_1001: setHV_1001,
+                        RATIO_MODE: setRATIO_MODE,
+                        FCV_MODE: setFCV_MODE,
+                        TOTAL_CNG: setTOTAL_CNG,
+
+                        TM2002_CNG: setTM2002_CNG,
+                        TM2003_CNG: setTM2003_CNG,
+                        WB_Setpoint: setWB_Setpoint,
+                        WIS_Calorimeter: setWIS_Calorimeter,
+                        CVS_Calorimeter: setCVS_Calorimeter,
+
+                        SG_Calorimeter: setSG_Calorimeter,
 
                         
                         EVC_01_Conn_STT: setEVC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
+
+
+
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -217,63 +248,57 @@ export default function ScoreCard_SNG_BINHDUONG() {
             );
 
 
-            const GD_102_High_High = res.data.find((item: any) => item.key === "GD_102_High_High");
-            setGD_102_High_High(GD_102_High_High?.value || null);
-            const GD_102_High_Low = res.data.find((item: any) => item.key === "GD_102_High_Low");
-            setGD_102_High_Low(GD_102_High_Low?.value || null);
-            const GD_102_High_Maintain = res.data.find(
-                (item: any) => item.key === "GD_102_High_Maintain"
+            const WB_1001_High = res.data.find((item: any) => item.key === "WB_1001_High");
+            setWB_1001_High(WB_1001_High?.value || null);
+            const WB_1001_Low = res.data.find((item: any) => item.key === "WB_1001_Low");
+            setWB_1001_Low(WB_1001_Low?.value || null);
+            const WB_1001_Maintain = res.data.find(
+                (item: any) => item.key === "WB_1001_Maintain"
             );
 
 
 
-            const SDV_301_High = res.data.find((item: any) => item.key === "SDV_301_High");
-            setSDV_301_High(SDV_301_High?.value || null);
-            const SDV_301_Low = res.data.find((item: any) => item.key === "SDV_301_Low");
-            setSDV_301_Low(SDV_301_Low?.value || null);
-            const SDV_301_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_301_Maintain"
+            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
+            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
+            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
+            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
+            const GD5_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD5_STATUS_Maintain"
             );
 
-            const GD_103_Low_High = res.data.find((item: any) => item.key === "GD_103_Low_High");
-            setGD_103_Low_High(GD_103_Low_High?.value || null);
-            const GD_103_Low_Low = res.data.find((item: any) => item.key === "GD_103_Low_Low");
-            setGD_103_Low_Low(GD_103_Low_Low?.value || null);
-            const GD_103_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_103_Low_Maintain"
+            const GD_2002_High = res.data.find((item: any) => item.key === "GD_2002_High");
+            setGD_2002_High(GD_2002_High?.value || null);
+            const GD_2002_Low = res.data.find((item: any) => item.key === "GD_2002_Low");
+            setGD_2002_Low(GD_2002_Low?.value || null);
+            const GD_2002_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2002_Maintain"
             );
 
-            const GD_101_Low_High = res.data.find((item: any) => item.key === "GD_101_Low_High");
-            setGD_101_Low_High(GD_101_Low_High?.value || null);
-            const GD_101_Low_Low = res.data.find((item: any) => item.key === "GD_101_Low_Low");
-            setGD_101_Low_Low(GD_101_Low_Low?.value || null);
-            const GD_101_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_101_Low_Maintain"
+            const GD_2003_High = res.data.find((item: any) => item.key === "GD_2003_High");
+            setGD_2003_High(GD_2003_High?.value || null);
+            const GD_2003_Low = res.data.find((item: any) => item.key === "GD_2003_Low");
+            setGD_2003_Low(GD_2003_Low?.value || null);
+            const GD_2003_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2003_Maintain"
             );
 
         
 
-            const SDV_302_High = res.data.find((item: any) => item.key === "SDV_302_High");
-            setSDV_302_High(SDV_302_High?.value || null);
-            const SDV_302_Low = res.data.find((item: any) => item.key === "SDV_302_Low");
-            setSDV_302_Low(SDV_302_Low?.value || null);
-            const SDV_302_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_302_Maintain"
-            );
-            const V1_Flow_Meter_High = res.data.find((item: any) => item.key === "V1_Flow_Meter_High");
-            setV1_Flow_Meter_High(V1_Flow_Meter_High?.value || null);
-            const V1_Flow_Meter_Low = res.data.find((item: any) => item.key === "V1_Flow_Meter_Low");
-            setV1_Flow_Meter_Low(V1_Flow_Meter_Low?.value || null);
-            const V1_Flow_Meter_Maintain = res.data.find(
-                (item: any) => item.key === "V1_Flow_Meter_Maintain"
+       
+            const GD_2005_High = res.data.find((item: any) => item.key === "GD_2005_High");
+            setGD_2005_High(GD_2005_High?.value || null);
+            const GD_2005_Low = res.data.find((item: any) => item.key === "GD_2005_Low");
+            setGD_2005_Low(GD_2005_Low?.value || null);
+            const GD_2005_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2005_Maintain"
             );
 
-            const Pipe_Temp_High = res.data.find((item: any) => item.key === "Pipe_Temp_High");
-            setPipe_Temp_High(Pipe_Temp_High?.value || null);
-            const Pipe_Temp_Low = res.data.find((item: any) => item.key === "Pipe_Temp_Low");
-            setPipe_Temp_Low(Pipe_Temp_Low?.value || null);
-            const Pipe_Temp_Maintain = res.data.find(
-                (item: any) => item.key === "Pipe_Temp_Maintain"
+            const TM_2002_SNG_High = res.data.find((item: any) => item.key === "TM_2002_SNG_High");
+            setTM_2002_SNG_High(TM_2002_SNG_High?.value || null);
+            const TM_2002_SNG_Low = res.data.find((item: any) => item.key === "TM_2002_SNG_Low");
+            setTM_2002_SNG_Low(TM_2002_SNG_Low?.value || null);
+            const TM_2002_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2002_SNG_Maintain"
             );
 
 
@@ -285,66 +310,66 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "TG_2005_Maintain"
             );
 
-            const V2_Flow_Meter_High = res.data.find((item: any) => item.key === "V2_Flow_Meter_High");
-            setV2_Flow_Meter_High(V2_Flow_Meter_High?.value || null);
-            const V2_Flow_Meter_Low = res.data.find((item: any) => item.key === "V2_Flow_Meter_Low");
-            setV2_Flow_Meter_Low(V2_Flow_Meter_Low?.value || null);
-            const V2_Flow_Meter_Maintain = res.data.find(
-                (item: any) => item.key === "V2_Flow_Meter_Maintain"
+            const GD_2006_High = res.data.find((item: any) => item.key === "GD_2006_High");
+            setGD_2006_High(GD_2006_High?.value || null);
+            const GD_2006_Low = res.data.find((item: any) => item.key === "GD_2006_Low");
+            setGD_2006_Low(GD_2006_Low?.value || null);
+            const GD_2006_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2006_Maintain"
             );
 
-            const GD_102_Low_High = res.data.find((item: any) => item.key === "GD_102_Low_High");
-            setGD_102_Low_High(GD_102_Low_High?.value || null);
-            const GD_102_Low_Low = res.data.find((item: any) => item.key === "GD_102_Low_Low");
-            setGD_102_Low_Low(GD_102_Low_Low?.value || null);
-            const GD_102_Low_Maintain = res.data.find(
-                (item: any) => item.key === "GD_102_Low_Maintain"
+            const GD_2004_High = res.data.find((item: any) => item.key === "GD_2004_High");
+            setGD_2004_High(GD_2004_High?.value || null);
+            const GD_2004_Low = res.data.find((item: any) => item.key === "GD_2004_Low");
+            setGD_2004_Low(GD_2004_Low?.value || null);
+            const GD_2004_Maintain = res.data.find(
+                (item: any) => item.key === "GD_2004_Maintain"
             );
 
-            const Tank_TT_301_High = res.data.find((item: any) => item.key === "Tank_TT_301_High");
-            setTank_TT_301_High(Tank_TT_301_High?.value || null);
-            const Tank_TT_301_Low = res.data.find((item: any) => item.key === "Tank_TT_301_Low");
-            setTank_TT_301_Low(Tank_TT_301_Low?.value || null);
-            const Tank_TT_301_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_TT_301_Maintain"
+            const TOTAL_SNG_High = res.data.find((item: any) => item.key === "TOTAL_SNG_High");
+            setTOTAL_SNG_High(TOTAL_SNG_High?.value || null);
+            const TOTAL_SNG_Low = res.data.find((item: any) => item.key === "TOTAL_SNG_Low");
+            setTOTAL_SNG_Low(TOTAL_SNG_Low?.value || null);
+            const TOTAL_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TOTAL_SNG_Maintain"
             );
-            const Tank_PT_301_High = res.data.find((item: any) => item.key === "Tank_PT_301_High");
-            setTank_PT_301_High(Tank_PT_301_High?.value || null);
-            const Tank_PT_301_Low = res.data.find((item: any) => item.key === "Tank_PT_301_Low");
-            setTank_PT_301_Low(Tank_PT_301_Low?.value || null);
-            const Tank_PT_301_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_PT_301_Maintain"
-            );
-
-            const Tank_01_Volume_High = res.data.find((item: any) => item.key === "Tank_01_Volume_High");
-            setTank_01_Volume_High(Tank_01_Volume_High?.value || null);
-            const Tank_01_Volume_Low = res.data.find((item: any) => item.key === "Tank_01_Volume_Low");
-            setTank_01_Volume_Low(Tank_01_Volume_Low?.value || null);
-            const Tank_01_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_01_Volume_Maintain"
-            );
-            const Pipe_Press_High = res.data.find((item: any) => item.key === "Pipe_Press_High");
-            setPipe_Press_High(Pipe_Press_High?.value || null);
-            const Pipe_Press_Low = res.data.find((item: any) => item.key === "Pipe_Press_Low");
-            setPipe_Press_Low(Pipe_Press_Low?.value || null);
-            const Pipe_Press_Maintain = res.data.find(
-                (item: any) => item.key === "Pipe_Press_Maintain"
+            const SDV_2004_High = res.data.find((item: any) => item.key === "SDV_2004_High");
+            setSDV_2004_High(SDV_2004_High?.value || null);
+            const SDV_2004_Low = res.data.find((item: any) => item.key === "SDV_2004_Low");
+            setSDV_2004_Low(SDV_2004_Low?.value || null);
+            const SDV_2004_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_2004_Maintain"
             );
 
-            const Tank_01_Mass_High = res.data.find((item: any) => item.key === "Tank_01_Mass_High");
-            setTank_01_Mass_High(Tank_01_Mass_High?.value || null);
-            const Tank_01_Mass_Low = res.data.find((item: any) => item.key === "Tank_01_Mass_Low");
-            setTank_01_Mass_Low(Tank_01_Mass_Low?.value || null);
-            const Tank_01_Mass_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_01_Mass_Maintain"
+            const GD2_STATUS_High = res.data.find((item: any) => item.key === "GD2_STATUS_High");
+            setGD2_STATUS_High(GD2_STATUS_High?.value || null);
+            const GD2_STATUS_Low = res.data.find((item: any) => item.key === "GD2_STATUS_Low");
+            setGD2_STATUS_Low(GD2_STATUS_Low?.value || null);
+            const GD2_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD2_STATUS_Maintain"
+            );
+            const TM_2003_SNG_High = res.data.find((item: any) => item.key === "TM_2003_SNG_High");
+            setTM_2003_SNG_High(TM_2003_SNG_High?.value || null);
+            const TM_2003_SNG_Low = res.data.find((item: any) => item.key === "TM_2003_SNG_Low");
+            setTM_2003_SNG_Low(TM_2003_SNG_Low?.value || null);
+            const TM_2003_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2003_SNG_Maintain"
             );
 
-            const Tank_01_Level_High = res.data.find((item: any) => item.key === "Tank_01_Level_High");
-            setTank_01_Level_High(Tank_01_Level_High?.value || null);
-            const Tank_01_Level_Low = res.data.find((item: any) => item.key === "Tank_01_Level_Low");
-            setTank_01_Level_Low(Tank_01_Level_Low?.value || null);
-            const Tank_01_Level_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_01_Level_Maintain"
+            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
+            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
+            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
+            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
+            const GD1_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD1_STATUS_Maintain"
+            );
+
+            const SDV_2003_High = res.data.find((item: any) => item.key === "SDV_2003_High");
+            setSDV_2003_High(SDV_2003_High?.value || null);
+            const SDV_2003_Low = res.data.find((item: any) => item.key === "SDV_2003_Low");
+            setSDV_2003_Low(SDV_2003_Low?.value || null);
+            const SDV_2003_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_2003_Maintain"
             );
 
             const Flow_Meter_Total_High = res.data.find((item: any) => item.key === "Flow_Meter_Total_High");
@@ -352,24 +377,205 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const Flow_Meter_Total_Low = res.data.find((item: any) => item.key === "Flow_Meter_Total_Low");
             setFlow_Meter_Total_Low(Flow_Meter_Total_Low?.value || null);
             const Flow_Meter_Total_Maintain = res.data.find(
-                (item: any) => item.key === "Tank_01_Level_Maintain"
+                (item: any) => item.key === "SDV_2003_Maintain"
             );
 
 
-            const Flow_Velocity_High = res.data.find((item: any) => item.key === "Flow_Velocity_High");
-            setFlow_Velocity_High(Flow_Velocity_High?.value || null);
-            const Flow_Velocity_Low = res.data.find((item: any) => item.key === "Flow_Velocity_Low");
-            setFlow_Velocity_Low(Flow_Velocity_Low?.value || null);
-            const Flow_Velocity_Maintain = res.data.find(
-                (item: any) => item.key === "Flow_Velocity_Maintain"
+            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
+            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
+            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
+            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
+            const GD4_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD4_STATUS_Maintain"
             );
 
-            const Consumption_Flow_High = res.data.find((item: any) => item.key === "Consumption_Flow_High");
-            setConsumption_Flow_High(Consumption_Flow_High?.value || null);
-            const Consumption_Flow_Low = res.data.find((item: any) => item.key === "Consumption_Flow_Low");
-            setConsumption_Flow_Low(Consumption_Flow_Low?.value || null);
-            const Consumption_Flow_Maintain = res.data.find(
-                (item: any) => item.key === "Consumption_Flow_Maintain"
+            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
+            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
+            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
+            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
+            const GD3_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD3_STATUS_Maintain"
+            );
+
+
+            const ESD_High = res.data.find((item: any) => item.key === "ESD_High");
+            setESD_High(ESD_High?.value || null);
+            const ESD_Low = res.data.find((item: any) => item.key === "ESD_Low");
+            setESD_Low(ESD_Low?.value || null);
+            const ESD_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_Maintain"
+            );
+
+
+            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
+            setHR_BC_High(HR_BC_High?.value || null);
+            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
+            setHR_BC_Low(HR_BC_Low?.value || null);
+            const HR_BC_Maintain = res.data.find(
+                (item: any) => item.key === "HR_BC_Maintain"
+            );
+
+            const SD_High = res.data.find((item: any) => item.key === "SD_High");
+            setSD_High(SD_High?.value || null);
+            const SD_Low = res.data.find((item: any) => item.key === "SD_Low");
+            setSD_Low(SD_Low?.value || null);
+            const SD_Maintain = res.data.find(
+                (item: any) => item.key === "SD_Maintain"
+            );
+
+
+
+            const VAPORIZER_1_High = res.data.find((item: any) => item.key === "VAPORIZER_1_High");
+            setVAPORIZER_1_High(VAPORIZER_1_High?.value || null);
+            const VAPORIZER_1_Low = res.data.find((item: any) => item.key === "VAPORIZER_1_Low");
+            setVAPORIZER_1_Low(VAPORIZER_1_Low?.value || null);
+            const VAPORIZER_1_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_1_Maintain"
+            );
+
+
+            const VAPORIZER_2_High = res.data.find((item: any) => item.key === "VAPORIZER_2_High");
+            setVAPORIZER_2_High(VAPORIZER_2_High?.value || null);
+            const VAPORIZER_2_Low = res.data.find((item: any) => item.key === "VAPORIZER_2_Low");
+            setVAPORIZER_2_Low(VAPORIZER_2_Low?.value || null);
+            const VAPORIZER_2_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_2_Maintain"
+            );
+
+            const VAPORIZER_3_High = res.data.find((item: any) => item.key === "VAPORIZER_3_High");
+            setVAPORIZER_3_High(VAPORIZER_3_High?.value || null);
+            const VAPORIZER_3_Low = res.data.find((item: any) => item.key === "VAPORIZER_3_Low");
+            setVAPORIZER_3_Low(VAPORIZER_3_Low?.value || null);
+            const VAPORIZER_3_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_3_Maintain"
+            );
+
+
+            const VAPORIZER_4_High = res.data.find((item: any) => item.key === "VAPORIZER_4_High");
+            setVAPORIZER_4_High(VAPORIZER_4_High?.value || null);
+            const VAPORIZER_4_Low = res.data.find((item: any) => item.key === "VAPORIZER_4_Low");
+            setVAPORIZER_4_Low(VAPORIZER_4_Low?.value || null);
+            const VAPORIZER_4_Maintain = res.data.find(
+                (item: any) => item.key === "VAPORIZER_4_Maintain"
+            );
+
+
+            const COOLING_V_High = res.data.find((item: any) => item.key === "COOLING_V_High");
+            setCOOLING_V_High(COOLING_V_High?.value || null);
+            const COOLING_V_Low = res.data.find((item: any) => item.key === "COOLING_V_Low");
+            setCOOLING_V_Low(COOLING_V_Low?.value || null);
+            const COOLING_V_Maintain = res.data.find(
+                (item: any) => item.key === "COOLING_V_Maintain"
+            );
+
+            const FCV_2001_High = res.data.find((item: any) => item.key === "FCV_2001_High");
+            setFCV_2001_High(FCV_2001_High?.value || null);
+            const FCV_2001_Low = res.data.find((item: any) => item.key === "FCV_2001_Low");
+            setFCV_2001_Low(FCV_2001_Low?.value || null);
+            const FCV_2001_Maintain = res.data.find(
+                (item: any) => item.key === "FCV_2001_Maintain"
+            );
+
+
+
+
+
+        const PERCENT_LPG_High = res.data.find((item: any) => item.key === "PERCENT_LPG_High");
+            setPERCENT_LPG_High(PERCENT_LPG_High?.value || null);
+            const PERCENT_LPG_Low = res.data.find((item: any) => item.key === "PERCENT_LPG_Low");
+            setPERCENT_LPG_Low(PERCENT_LPG_Low?.value || null);
+            const PERCENT_LPG_Maintain = res.data.find(
+                (item: any) => item.key === "PERCENT_LPG_Maintain"
+            );
+
+
+            const PERCENT_AIR_High = res.data.find((item: any) => item.key === "PERCENT_AIR_High");
+            setPERCENT_AIR_High(PERCENT_AIR_High?.value || null);
+            const PERCENT_AIR_Low = res.data.find((item: any) => item.key === "PERCENT_AIR_Low");
+            setPERCENT_AIR_Low(PERCENT_AIR_Low?.value || null);
+            const PERCENT_AIR_Maintain = res.data.find(
+                (item: any) => item.key === "PERCENT_AIR_Maintain"
+            );
+
+            const HV_1001_High = res.data.find((item: any) => item.key === "HV_1001_High");
+            setHV_1001_High(HV_1001_High?.value || null);
+            const HV_1001_Low = res.data.find((item: any) => item.key === "HV_1001_Low");
+            setHV_1001_Low(HV_1001_Low?.value || null);
+            const HV_1001_Maintain = res.data.find(
+                (item: any) => item.key === "HV_1001_Maintain"
+            );
+
+            const RATIO_MODE_High = res.data.find((item: any) => item.key === "RATIO_MODE_High");
+            setRATIO_MODE_High(RATIO_MODE_High?.value || null);
+            const RATIO_MODE_Low = res.data.find((item: any) => item.key === "RATIO_MODE_Low");
+            setRATIO_MODE_Low(RATIO_MODE_Low?.value || null);
+            const RATIO_MODE_Maintain = res.data.find(
+                (item: any) => item.key === "RATIO_MODE_Maintain"
+            );
+
+
+            const FCV_MODE_High = res.data.find((item: any) => item.key === "FCV_MODE_High");
+            setFCV_MODE_High(FCV_MODE_High?.value || null);
+            const FCV_MODE_Low = res.data.find((item: any) => item.key === "FCV_MODE_Low");
+            setFCV_MODE_Low(FCV_MODE_Low?.value || null);
+            const FCV_MODE_Maintain = res.data.find(
+                (item: any) => item.key === "FCV_MODE_Maintain"
+            );
+            const TOTAL_CNG_High = res.data.find((item: any) => item.key === "TOTAL_CNG_High");
+            setTOTAL_CNG_High(TOTAL_CNG_High?.value || null);
+            const TOTAL_CNG_Low = res.data.find((item: any) => item.key === "TOTAL_CNG_Low");
+            setTOTAL_CNG_Low(TOTAL_CNG_Low?.value || null);
+            const TOTAL_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TOTAL_CNG_Maintain"
+            );
+
+
+
+            
+            const TM2002_CNG_High = res.data.find((item: any) => item.key === "TM2002_CNG_High");
+            setTM2002_CNG_High(TM2002_CNG_High?.value || null);
+            const TM2002_CNG_Low = res.data.find((item: any) => item.key === "TM2002_CNG_Low");
+            setTM2002_CNG_Low(TM2002_CNG_Low?.value || null);
+            const TM2002_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM2002_CNG_Maintain"
+            );
+            const WB_Setpoint_High = res.data.find((item: any) => item.key === "WB_Setpoint_High");
+            setWB_Setpoint_High(WB_Setpoint_High?.value || null);
+            const WB_Setpoint_Low = res.data.find((item: any) => item.key === "WB_Setpoint_Low");
+            setWB_Setpoint_Low(WB_Setpoint_Low?.value || null);
+            const WB_Setpoint_Maintain = res.data.find(
+                (item: any) => item.key === "WB_Setpoint_Maintain"
+            );
+            const TM2003_CNG_High = res.data.find((item: any) => item.key === "TM2003_CNG_High");
+            setTM2003_CNG_High(TM2003_CNG_High?.value || null);
+            const TM2003_CNG_Low = res.data.find((item: any) => item.key === "TM2003_CNG_Low");
+            setTM2003_CNG_Low(TM2003_CNG_Low?.value || null);
+            const TM2003_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM2003_CNG_Maintain"
+            );
+
+            const WIS_Calorimeter_High = res.data.find((item: any) => item.key === "WIS_Calorimeter_High");
+            setWIS_Calorimeter_High(WIS_Calorimeter_High?.value || null);
+            const WIS_Calorimeter_Low = res.data.find((item: any) => item.key === "WIS_Calorimeter_Low");
+            setWIS_Calorimeter_Low(WIS_Calorimeter_Low?.value || null);
+            const WIS_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "WIS_Calorimeter_Maintain"
+            );
+
+            const CVS_Calorimeter_High = res.data.find((item: any) => item.key === "CVS_Calorimeter_High");
+            setCVS_Calorimeter_High(CVS_Calorimeter_High?.value || null);
+            const CVS_Calorimeter_Low = res.data.find((item: any) => item.key === "CVS_Calorimeter_Low");
+            setCVS_Calorimeter_Low(CVS_Calorimeter_Low?.value || null);
+            const CVS_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "CVS_Calorimeter_Maintain"
+            );
+
+            const SG_Calorimeter_High = res.data.find((item: any) => item.key === "SG_Calorimeter_High");
+            setSG_Calorimeter_High(SG_Calorimeter_High?.value || null);
+            const SG_Calorimeter_Low = res.data.find((item: any) => item.key === "SG_Calorimeter_Low");
+            setSG_Calorimeter_Low(SG_Calorimeter_Low?.value || null);
+            const SG_Calorimeter_Maintain = res.data.find(
+                (item: any) => item.key === "SG_Calorimeter_Maintain"
             );
 
  // =================================================================================================================== 
@@ -378,8 +584,58 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
             
 
+ setMaintainESD(ESD_Maintain?.value || false);
 
 
+ setMaintainHR_BC(HR_BC_Maintain?.value || false);
+
+
+ setMaintainSD(SD_Maintain?.value || false);
+
+ setMaintainVAPORIZER_1(VAPORIZER_1_Maintain?.value || false);
+
+
+ setMaintainVAPORIZER_2(VAPORIZER_2_Maintain?.value || false);
+
+
+ setMaintainVAPORIZER_3(VAPORIZER_3_Maintain?.value || false);
+
+ setMaintainVAPORIZER_4(VAPORIZER_4_Maintain?.value || false);
+
+
+ setMaintainCOOLING_V(COOLING_V_Maintain?.value || false);
+
+
+ setMaintainFCV_2001(FCV_2001_Maintain?.value || false);
+
+
+
+ setMaintainPERCENT_LPG(PERCENT_LPG_Maintain?.value || false);
+
+
+ setMaintainPERCENT_AIR(PERCENT_AIR_Maintain?.value || false);
+
+
+ setMaintainHV_1001(HV_1001_Maintain?.value || false);
+
+
+ setMaintainRATIO_MODE(RATIO_MODE_Maintain?.value || false);
+
+ setMaintainFCV_MODE(FCV_MODE_Maintain?.value || false);
+ setMaintainTOTAL_CNG(TOTAL_CNG_Maintain?.value || false);
+
+ setMaintainTM2002_CNG(TM2002_CNG_Maintain?.value || false);
+
+ setMaintainWB_Setpoint(WB_Setpoint_Maintain?.value || false);
+
+ setMaintainTM2003_CNG(TM2003_CNG_Maintain?.value || false);
+ setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
+
+
+
+ setMaintainWIS_Calorimeter(WIS_Calorimeter_Maintain?.value || false);
+
+ 
            
 
             setMaintainPT_2004(PT_2004_Maintain?.value || false);
@@ -394,61 +650,329 @@ export default function ScoreCard_SNG_BINHDUONG() {
             setMaintainTT_2004(TT_2004_Maintain?.value || false);
 
 
-            setMaintainGD_102_Low(GD_102_Low_Maintain?.value || false);
+            setMaintainGD_2004(GD_2004_Maintain?.value || false);
 
-            setMaintainV1_Flow_Meter(V1_Flow_Meter_Maintain?.value || false);
+            setMaintainGD_2005(GD_2005_Maintain?.value || false);
             
-            setMaintainV2_Flow_Meter(V2_Flow_Meter_Maintain?.value || false);
+            setMaintainGD_2006(GD_2006_Maintain?.value || false);
             
             setMaintainTG_2005(TG_2005_Maintain?.value || false);
 
             
-            setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
+            setMaintainTM_2002_SNG(TM_2002_SNG_Maintain?.value || false);
+            setMaintainTM_2003_SNG(TM_2003_SNG_Maintain?.value || false);
 
 
 
-            setMaintainSDV_302(SDV_302_Maintain?.value || false);
+            setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
 
 
-            setMaintainGD_101_Low(GD_101_Low_Maintain?.value || false);
+            setMaintainGD_2003(GD_2003_Maintain?.value || false);
 
 
-            setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
-
-            setMaintainSDV_301(SDV_301_Maintain?.value || false);
+            setMaintainGD_2002(GD_2002_Maintain?.value || false);
 
 
+            setMaintainGD5_STATUS(GD5_STATUS_Maintain?.value || false);
 
 
 
-            setMaintainGD_102_High(GD_102_High_Maintain?.value || false);
-
-            setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
 
 
-            setMaintainTank_PT_301(Tank_PT_301_Maintain?.value || false);
+            setMaintainWB_1001(WB_1001_Maintain?.value || false);
+
+            setMaintainTOTAL_SNG(TOTAL_SNG_Maintain?.value || false);
 
 
-            setMaintainTank_01_Volume(Tank_01_Volume_Maintain?.value || false);
+            setMaintainSDV_2004(SDV_2004_Maintain?.value || false);
 
-            setMaintainTank_01_Mass(Tank_01_Mass_Maintain?.value || false);
 
-            setMaintainTank_01_Level(Tank_01_Level_Maintain?.value || false);
+            setMaintainGD2_STATUS(GD2_STATUS_Maintain?.value || false);
+
+            setMaintainGD1_STATUS(GD1_STATUS_Maintain?.value || false);
+
+            setMaintainSDV_2003(SDV_2003_Maintain?.value || false);
 
             setMaintainFlow_Meter_Total(Flow_Meter_Total_Maintain?.value || false);
 
 
-            setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
+            setMaintainGD3_STATUS(GD3_STATUS_Maintain?.value || false);
 
 
-            setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
+            setMaintainGD4_STATUS(GD4_STATUS_Maintain?.value || false);
+
+ setMaintainSG_Calorimeter(SG_Calorimeter_Maintain?.value || false);
+
            
             } catch (error) {
             console.error("Error fetching data:", error);
             }
         };
 // =================================================================================================================== 
+         // =================================================================================================================== 
+     
+         const [FCV_2001, setFCV_2001] = useState<string | null>(null);
+         const [FCV_2001_High, setFCV_2001_High] = useState<number | null>(null);
+         const [FCV_2001_Low, setFCV_2001_Low] = useState<number | null>(null);
+         const [exceedThresholdFCV_2001, setExceedThresholdFCV_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         
+         const [maintainFCV_2001, setMaintainFCV_2001] = useState<boolean>(false);
+         
+         
+         useEffect(() => {
+             if (typeof FCV_2001_High === 'string' && typeof FCV_2001_Low === 'string' && FCV_2001 !== null && maintainFCV_2001 === false
+             ) {
+                 const highValue = parseFloat(FCV_2001_High);
+                 const lowValue = parseFloat(FCV_2001_Low);
+                 const FCV_2001Value = parseFloat(FCV_2001);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FCV_2001Value)) {
+                     if (highValue <= FCV_2001Value || FCV_2001Value <= lowValue) {
+                             setExceedThresholdFCV_2001(true);
+                     } else {
+                        setExceedThresholdFCV_2001(false);
+                     }
+                 } 
+             } 
+         }, [FCV_2001_High, FCV_2001, , FCV_2001_Low,maintainFCV_2001]);
+         
+    
+     // =================================================================================================================== 
 
+     const [VAPORIZER_4, setVAPORIZER_4] = useState<string | null>(null);
+     const [VAPORIZER_4_High, setVAPORIZER_4_High] = useState<number | null>(null);
+     const [VAPORIZER_4_Low, setVAPORIZER_4_Low] = useState<number | null>(null);
+     const [exceedThresholdVAPORIZER_4, setExceedThresholdVAPORIZER_4] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainVAPORIZER_4, setMaintainVAPORIZER_4] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof VAPORIZER_4_High === 'string' && typeof VAPORIZER_4_Low === 'string' && VAPORIZER_4 !== null && maintainVAPORIZER_4 === false
+             ) {
+                 const highValue = parseFloat(VAPORIZER_4_High);
+                 const lowValue = parseFloat(VAPORIZER_4_Low);
+                 const VAPORIZER_4Value = parseFloat(VAPORIZER_4);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_4Value)) {
+                     if (highValue <= VAPORIZER_4Value || VAPORIZER_4Value <= lowValue) {
+                             setExceedThresholdVAPORIZER_4(true);
+                     } else {
+                        setExceedThresholdVAPORIZER_4(false);
+                     }
+                 } 
+             } 
+         }, [VAPORIZER_4_High, VAPORIZER_4, VAPORIZER_4_Low,maintainVAPORIZER_4]);
+     
+   
+ 
+     // =================================================================================================================== 
+
+         // =================================================================================================================== 
+
+ const [COOLING_V, setCOOLING_V] = useState<string | null>(null);
+
+ const [COOLING_V_High, setCOOLING_V_High] = useState<number | null>(null);
+ const [COOLING_V_Low, setCOOLING_V_Low] = useState<number | null>(null);
+ const [exceedThresholdCOOLING_V, setExceedThresholdCOOLING_V] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainCOOLING_V, setMaintainCOOLING_V] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof COOLING_V_High === 'string' && typeof COOLING_V_Low === 'string' && COOLING_V !== null && maintainCOOLING_V === false
+         ) {
+             const highValue = parseFloat(COOLING_V_High);
+             const lowValue = parseFloat(COOLING_V_Low);
+             const COOLING_VValue = parseFloat(COOLING_V);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(COOLING_VValue)) {
+                 if (highValue <= COOLING_VValue || COOLING_VValue <= lowValue) {
+                         setExceedThresholdCOOLING_V(true);
+                 } else {
+                    setExceedThresholdCOOLING_V(false);
+                 }
+             } 
+         } 
+     }, [COOLING_V_High, COOLING_V, COOLING_V_Low,maintainCOOLING_V]);
+ 
+
+
+
+ // =================================================================================================================== 
+
+
+const [VAPORIZER_1, setVAPORIZER_1] = useState<string | null>(null);
+const [VAPORIZER_1_High, setVAPORIZER_1_High] = useState<number | null>(null);
+const [VAPORIZER_1_Low, setVAPORIZER_1_Low] = useState<number | null>(null);
+const [exceedThresholdVAPORIZER_1, setExceedThresholdVAPORIZER_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVAPORIZER_1, setMaintainVAPORIZER_1] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (typeof VAPORIZER_1_High === 'string' && typeof VAPORIZER_1_Low === 'string' && VAPORIZER_1 !== null && maintainVAPORIZER_1 === false
+        ) {
+            const highValue = parseFloat(VAPORIZER_1_High);
+            const lowValue = parseFloat(VAPORIZER_1_Low);
+            const VAPORIZER_1Value = parseFloat(VAPORIZER_1);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_1Value)) {
+                if (highValue <= VAPORIZER_1Value || VAPORIZER_1Value <= lowValue) {
+                        setExceedThresholdVAPORIZER_1(true);
+                } else {
+                   setExceedThresholdVAPORIZER_1(false);
+                }
+            } 
+        } 
+    }, [VAPORIZER_1_High, VAPORIZER_1, VAPORIZER_1_Low,maintainVAPORIZER_1]);
+
+
+
+
+// =================================================================================================================== 
+
+const [VAPORIZER_2, setVAPORIZER_2] = useState<string | null>(null);
+const [VAPORIZER_2_High, setVAPORIZER_2_High] = useState<number | null>(null);
+const [VAPORIZER_2_Low, setVAPORIZER_2_Low] = useState<number | null>(null);
+const [exceedThresholdVAPORIZER_2, setExceedThresholdVAPORIZER_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainVAPORIZER_2, setMaintainVAPORIZER_2] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (typeof VAPORIZER_2_High === 'string' && typeof VAPORIZER_2_Low === 'string' && VAPORIZER_2 !== null && maintainVAPORIZER_2 === false
+        ) {
+            const highValue = parseFloat(VAPORIZER_2_High);
+            const lowValue = parseFloat(VAPORIZER_2_Low);
+            const VAPORIZER_2Value = parseFloat(VAPORIZER_2);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_2Value)) {
+                if (highValue <= VAPORIZER_2Value || VAPORIZER_2Value <= lowValue) {
+                        setExceedThresholdVAPORIZER_2(true);
+                } else {
+                   setExceedThresholdVAPORIZER_2(false);
+                }
+            } 
+        } 
+    }, [VAPORIZER_2_High, VAPORIZER_2, VAPORIZER_2_Low,maintainVAPORIZER_2]);
+
+
+
+// =================================================================================================================== 
+
+
+     // =================================================================================================================== 
+
+     const [VAPORIZER_3, setVAPORIZER_3] = useState<string | null>(null);
+    
+     const [VAPORIZER_3_High, setVAPORIZER_3_High] = useState<number | null>(null);
+     const [VAPORIZER_3_Low, setVAPORIZER_3_Low] = useState<number | null>(null);
+     const [exceedThresholdVAPORIZER_3, setExceedThresholdVAPORIZER_3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainVAPORIZER_3, setMaintainVAPORIZER_3] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof VAPORIZER_3_High === 'string' && typeof VAPORIZER_3_Low === 'string' && VAPORIZER_3 !== null && maintainVAPORIZER_3 === false
+             ) {
+                 const highValue = parseFloat(VAPORIZER_3_High);
+                 const lowValue = parseFloat(VAPORIZER_3_Low);
+                 const VAPORIZER_3Value = parseFloat(VAPORIZER_3);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VAPORIZER_3Value)) {
+                     if (highValue <= VAPORIZER_3Value || VAPORIZER_3Value <= lowValue) {
+                             setExceedThresholdVAPORIZER_3(true);
+                     } else {
+                        setExceedThresholdVAPORIZER_3(false);
+                     }
+                 } 
+             } 
+         }, [VAPORIZER_3_High, VAPORIZER_3, VAPORIZER_3_Low,maintainVAPORIZER_3]);
+     
+   // =================================================================================================================== 
+ 
+ 
+   const [ESD, setESD] = useState<string | null>(null);
+   const [ESD_High, setESD_High] = useState<number | null>(null);
+   const [ESD_Low, setESD_Low] = useState<number | null>(null);
+   const [exceedThresholdESD, setExceedThresholdESD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+   const [maintainESD, setMaintainESD] = useState<boolean>(false);
+   
+   
+       useEffect(() => {
+           if (typeof ESD_High === 'string' && typeof ESD_Low === 'string' && ESD !== null && maintainESD === false
+           ) {
+               const highValue = parseFloat(ESD_High);
+               const lowValue = parseFloat(ESD_Low);
+               const ESDValue = parseFloat(ESD);
+       
+               if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ESDValue)) {
+                   if (highValue <= ESDValue || ESDValue <= lowValue) {
+                           setExceedThresholdESD(true);
+                   } else {
+                      setExceedThresholdESD(false);
+                   }
+               } 
+           } 
+       }, [ESD_High, ESD, ESD_Low,maintainESD]);
+ 
+ 
+   // =================================================================================================================== 
+ 
+ 
+ 
+        const [HR_BC, setHR_BC] = useState<string | null>(null);
+        const [HR_BC_High, setHR_BC_High] = useState<number | null>(null);
+        const [HR_BC_Low, setHR_BC_Low] = useState<number | null>(null);
+        const [exceedThresholdHR_BC, setExceedThresholdHR_BC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [maintainHR_BC, setMaintainHR_BC] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof HR_BC_High === 'string' && typeof HR_BC_Low === 'string' && HR_BC !== null && maintainHR_BC === false
+                ) {
+                    const highValue = parseFloat(HR_BC_High);
+                    const lowValue = parseFloat(HR_BC_Low);
+                    const HR_BCValue = parseFloat(HR_BC);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HR_BCValue)) {
+                        if (highValue <= HR_BCValue || HR_BCValue <= lowValue) {
+                                setExceedThresholdHR_BC(true);
+                        } else {
+                           setExceedThresholdHR_BC(false);
+                        }
+                    } 
+                } 
+            }, [HR_BC_High, HR_BC, HR_BC_Low,maintainHR_BC]);
+        
+ 
+   
+        // =================================================================================================================== 
+ 
+ 
+        const [SD, setSD] = useState<string | null>(null);
+ 
+        const [SD_High, setSD_High] = useState<number | null>(null);
+        const [SD_Low, setSD_Low] = useState<number | null>(null);
+        const [exceedThresholdSD, setExceedThresholdSD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        
+        const [maintainSD, setMaintainSD] = useState<boolean>(false);
+        
+        
+            useEffect(() => {
+                if (typeof SD_High === 'string' && typeof SD_Low === 'string' && SD !== null && maintainSD === false
+                ) {
+                    const highValue = parseFloat(SD_High);
+                    const lowValue = parseFloat(SD_Low);
+                    const SDValue = parseFloat(SD);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDValue)) {
+                        if (highValue <= SDValue || SDValue <= lowValue) {
+                                setExceedThresholdSD(true);
+                        } else {
+                           setExceedThresholdSD(false);
+                        }
+                    } 
+                } 
+            }, [SD_High, SD , SD_Low,maintainSD]);
+        
 
   // =================================================================================================================== 
  
@@ -570,29 +1094,29 @@ export default function ScoreCard_SNG_BINHDUONG() {
   
        // =================================================================================================================== 
 
-       const [GD_102_High, setGD_102_High] = useState<string | null>(null);
-       const [GD_102_High_High, setGD_102_High_High] = useState<number | null>(null);
-       const [GD_102_High_Low, setGD_102_High_Low] = useState<number | null>(null);
-       const [exceedThresholdGD_102_High, setExceedThresholdGD_102_High] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-       const [maintainGD_102_High, setMaintainGD_102_High] = useState<boolean>(false);
+       const [WB_1001, setWB_1001] = useState<string | null>(null);
+       const [WB_1001_High, setWB_1001_High] = useState<number | null>(null);
+       const [WB_1001_Low, setWB_1001_Low] = useState<number | null>(null);
+       const [exceedThresholdWB_1001, setExceedThresholdWB_1001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainWB_1001, setMaintainWB_1001] = useState<boolean>(false);
        
        
            useEffect(() => {
-               if (typeof GD_102_High_High === 'string' && typeof GD_102_High_Low === 'string' && GD_102_High !== null && maintainGD_102_High === false
+               if (typeof WB_1001_High === 'string' && typeof WB_1001_Low === 'string' && WB_1001 !== null && maintainWB_1001 === false
                ) {
-                   const highValue = parseFloat(GD_102_High_High);
-                   const lowValue = parseFloat(GD_102_High_Low);
-                   const GD_102_HighValue = parseFloat(GD_102_High);
+                   const highValue = parseFloat(WB_1001_High);
+                   const lowValue = parseFloat(WB_1001_Low);
+                   const WB_1001Value = parseFloat(WB_1001);
            
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_HighValue)) {
-                       if (highValue <= GD_102_HighValue || GD_102_HighValue <= lowValue) {
-                               setExceedThresholdGD_102_High(true);
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WB_1001Value)) {
+                       if (highValue <= WB_1001Value || WB_1001Value <= lowValue) {
+                               setExceedThresholdWB_1001(true);
                        } else {
-                          setExceedThresholdGD_102_High(false);
+                          setExceedThresholdWB_1001(false);
                        }
                    } 
                } 
-           }, [GD_102_High_High, GD_102_High, GD_102_High_Low,maintainGD_102_High]);
+           }, [WB_1001_High, WB_1001, WB_1001_Low,maintainWB_1001]);
        
  
   
@@ -603,29 +1127,29 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
  // =================================================================================================================== 
 
- const [SDV_301, setSDV_301] = useState<string | null>(null);
- const [SDV_301_High, setSDV_301_High] = useState<number | null>(null);
- const [SDV_301_Low, setSDV_301_Low] = useState<number | null>(null);
- const [exceedThresholdSDV_301, setExceedThresholdSDV_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [maintainSDV_301, setMaintainSDV_301] = useState<boolean>(false);
+ const [GD5_STATUS, setGD5_STATUS] = useState<string | null>(null);
+ const [GD5_STATUS_High, setGD5_STATUS_High] = useState<number | null>(null);
+ const [GD5_STATUS_Low, setGD5_STATUS_Low] = useState<number | null>(null);
+ const [exceedThresholdGD5_STATUS, setExceedThresholdGD5_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainGD5_STATUS, setMaintainGD5_STATUS] = useState<boolean>(false);
  
  
      useEffect(() => {
-         if (typeof SDV_301_High === 'string' && typeof SDV_301_Low === 'string' && SDV_301 !== null && maintainSDV_301 === false
+         if (typeof GD5_STATUS_High === 'string' && typeof GD5_STATUS_Low === 'string' && GD5_STATUS !== null && maintainGD5_STATUS === false
          ) {
-             const highValue = parseFloat(SDV_301_High);
-             const lowValue = parseFloat(SDV_301_Low);
-             const SDV_301Value = parseFloat(SDV_301);
+             const highValue = parseFloat(GD5_STATUS_High);
+             const lowValue = parseFloat(GD5_STATUS_Low);
+             const GD5_STATUSValue = parseFloat(GD5_STATUS);
      
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_301Value)) {
-                 if (highValue <= SDV_301Value || SDV_301Value <= lowValue) {
-                         setExceedThresholdSDV_301(true);
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD5_STATUSValue)) {
+                 if (highValue <= GD5_STATUSValue || GD5_STATUSValue <= lowValue) {
+                         setExceedThresholdGD5_STATUS(true);
                  } else {
-                    setExceedThresholdSDV_301(false);
+                    setExceedThresholdGD5_STATUS(false);
                  }
              } 
          } 
-     }, [SDV_301_High, SDV_301, SDV_301_Low,maintainSDV_301]);
+     }, [GD5_STATUS_High, GD5_STATUS, GD5_STATUS_Low,maintainGD5_STATUS]);
  
 
 
@@ -633,29 +1157,29 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
      // =================================================================================================================== 
 
-     const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
-     const [GD_103_Low_High, setGD_103_Low_High] = useState<number | null>(null);
-     const [GD_103_Low_Low, setGD_103_Low_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_103_Low, setExceedThresholdGD_103_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
+     const [GD_2002, setGD_2002] = useState<string | null>(null);
+     const [GD_2002_High, setGD_2002_High] = useState<number | null>(null);
+     const [GD_2002_Low, setGD_2002_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_2002, setExceedThresholdGD_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainGD_2002, setMaintainGD_2002] = useState<boolean>(false);
      
      
          useEffect(() => {
-             if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
+             if (typeof GD_2002_High === 'string' && typeof GD_2002_Low === 'string' && GD_2002 !== null && maintainGD_2002 === false
              ) {
-                 const highValue = parseFloat(GD_103_Low_High);
-                 const lowValue = parseFloat(GD_103_Low_Low);
-                 const GD_103_LowValue = parseFloat(GD_103_Low);
+                 const highValue = parseFloat(GD_2002_High);
+                 const lowValue = parseFloat(GD_2002_Low);
+                 const GD_2002Value = parseFloat(GD_2002);
          
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
-                     if (highValue <= GD_103_LowValue || GD_103_LowValue <= lowValue) {
-                             setExceedThresholdGD_103_Low(true);
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2002Value)) {
+                     if (highValue <= GD_2002Value || GD_2002Value <= lowValue) {
+                             setExceedThresholdGD_2002(true);
                      } else {
-                        setExceedThresholdGD_103_Low(false);
+                        setExceedThresholdGD_2002(false);
                      }
                  } 
              } 
-         }, [GD_103_Low_High, GD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
+         }, [GD_2002_High, GD_2002, GD_2002_Low,maintainGD_2002]);
      
    
  
@@ -663,30 +1187,30 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
          // =================================================================================================================== 
 
- const [GD_101_Low, setGD_101_Low] = useState<string | null>(null);
+ const [GD_2003, setGD_2003] = useState<string | null>(null);
 
- const [GD_101_Low_High, setGD_101_Low_High] = useState<number | null>(null);
- const [GD_101_Low_Low, setGD_101_Low_Low] = useState<number | null>(null);
- const [exceedThresholdGD_101_Low, setExceedThresholdGD_101_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
+ const [GD_2003_High, setGD_2003_High] = useState<number | null>(null);
+ const [GD_2003_Low, setGD_2003_Low] = useState<number | null>(null);
+ const [exceedThresholdGD_2003, setExceedThresholdGD_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainGD_2003, setMaintainGD_2003] = useState<boolean>(false);
  
  
      useEffect(() => {
-         if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
+         if (typeof GD_2003_High === 'string' && typeof GD_2003_Low === 'string' && GD_2003 !== null && maintainGD_2003 === false
          ) {
-             const highValue = parseFloat(GD_101_Low_High);
-             const lowValue = parseFloat(GD_101_Low_Low);
-             const GD_101_LowValue = parseFloat(GD_101_Low);
+             const highValue = parseFloat(GD_2003_High);
+             const lowValue = parseFloat(GD_2003_Low);
+             const GD_2003Value = parseFloat(GD_2003);
      
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
-                 if (highValue <= GD_101_LowValue || GD_101_LowValue <= lowValue) {
-                         setExceedThresholdGD_101_Low(true);
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2003Value)) {
+                 if (highValue <= GD_2003Value || GD_2003Value <= lowValue) {
+                         setExceedThresholdGD_2003(true);
                  } else {
-                    setExceedThresholdGD_101_Low(false);
+                    setExceedThresholdGD_2003(false);
                  }
              } 
          } 
-     }, [GD_101_Low_High, GD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
+     }, [GD_2003_High, GD_2003, GD_2003_Low,maintainGD_2003]);
  
 
 
@@ -694,69 +1218,36 @@ export default function ScoreCard_SNG_BINHDUONG() {
  // =================================================================================================================== 
 
 
-     // =================================================================================================================== 
-
-const [SDV_302, setSDV_302] = useState<string | null>(null);
-
-const [SDV_302_High, setSDV_302_High] = useState<number | null>(null);
-const [SDV_302_Low, setSDV_302_Low] = useState<number | null>(null);
-const [exceedThresholdSDV_302, setExceedThresholdSDV_302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-const [maintainSDV_302, setMaintainSDV_302] = useState<boolean>(false);
-
-
- useEffect(() => {
-     if (typeof SDV_302_High === 'string' && typeof SDV_302_Low === 'string' && SDV_302 !== null && maintainSDV_302 === false
-     ) {
-         const highValue = parseFloat(SDV_302_High);
-         const lowValue = parseFloat(SDV_302_Low);
-         const SDV_302Value = parseFloat(SDV_302);
  
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_302Value)) {
-             if (highValue <= SDV_302Value || SDV_302Value <= lowValue) {
-            
-                     setExceedThresholdSDV_302(true);
-             } else {
-                setExceedThresholdSDV_302(false);
-             }
-         } 
-     } 
- }, [SDV_302_High, SDV_302, SDV_302_Low,maintainSDV_302]);
-
-
-
-
-// =================================================================================================================== 
-
 
 
 
  // =================================================================================================================== 
 
-const [Pipe_Temp, setPipe_Temp] = useState<string | null>(null);
+const [TM_2002_SNG, setTM_2002_SNG] = useState<string | null>(null);
 
-const [Pipe_Temp_High, setPipe_Temp_High] = useState<number | null>(null);
-const [Pipe_Temp_Low, setPipe_Temp_Low] = useState<number | null>(null);
-const [exceedThresholdPipe_Temp, setExceedThresholdPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
+const [TM_2002_SNG_High, setTM_2002_SNG_High] = useState<number | null>(null);
+const [TM_2002_SNG_Low, setTM_2002_SNG_Low] = useState<number | null>(null);
+const [exceedThresholdTM_2002_SNG, setExceedThresholdTM_2002_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainTM_2002_SNG, setMaintainTM_2002_SNG] = useState<boolean>(false);
 
 
 useEffect(() => {
- if (typeof Pipe_Temp_High === 'string' && typeof Pipe_Temp_Low === 'string' && Pipe_Temp !== null && maintainPipe_Temp === false
+ if (typeof TM_2002_SNG_High === 'string' && typeof TM_2002_SNG_Low === 'string' && TM_2002_SNG !== null && maintainTM_2002_SNG === false
  ) {
-     const highValue = parseFloat(Pipe_Temp_High);
-     const lowValue = parseFloat(Pipe_Temp_Low);
-     const Pipe_TempValue = parseFloat(Pipe_Temp);
+     const highValue = parseFloat(TM_2002_SNG_High);
+     const lowValue = parseFloat(TM_2002_SNG_Low);
+     const TM_2002_SNGValue = parseFloat(TM_2002_SNG);
 
-     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_TempValue)) {
-         if (highValue <= Pipe_TempValue || Pipe_TempValue <= lowValue) {
-                 setExceedThresholdPipe_Temp(true);
+     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM_2002_SNGValue)) {
+         if (highValue <= TM_2002_SNGValue || TM_2002_SNGValue <= lowValue) {
+                 setExceedThresholdTM_2002_SNG(true);
          } else {
-            setExceedThresholdPipe_Temp(false);
+            setExceedThresholdTM_2002_SNG(false);
          }
      } 
  } 
-}, [Pipe_Temp_High, Pipe_Temp, Pipe_Temp_Low,maintainPipe_Temp]);
+}, [TM_2002_SNG_High, TM_2002_SNG, TM_2002_SNG_Low,maintainTM_2002_SNG]);
 
 
 
@@ -798,30 +1289,30 @@ useEffect(() => {
      // =================================================================================================================== 
      
      
-     const [V2_Flow_Meter, setV2_Flow_Meter] = useState<string | null>(null);
-     const [V2_Flow_Meter_High, setV2_Flow_Meter_High] = useState<number | null>(null);
-     const [V2_Flow_Meter_Low, setV2_Flow_Meter_Low] = useState<number | null>(null);
-     const [exceedThresholdV2_Flow_Meter, setExceedThresholdV2_Flow_Meter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     const [maintainV2_Flow_Meter, setMaintainV2_Flow_Meter] = useState<boolean>(false);
+     const [GD_2006, setGD_2006] = useState<string | null>(null);
+     const [GD_2006_High, setGD_2006_High] = useState<number | null>(null);
+     const [GD_2006_Low, setGD_2006_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_2006, setExceedThresholdGD_2006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainGD_2006, setMaintainGD_2006] = useState<boolean>(false);
      
      
          useEffect(() => {
-             if (typeof V2_Flow_Meter_High === 'string' && typeof V2_Flow_Meter_Low === 'string' && V2_Flow_Meter !== null && maintainV2_Flow_Meter === false
+             if (typeof GD_2006_High === 'string' && typeof GD_2006_Low === 'string' && GD_2006 !== null && maintainGD_2006 === false
              ) {
-                 const highValue = parseFloat(V2_Flow_Meter_High);
-                 const lowValue = parseFloat(V2_Flow_Meter_Low);
-                 const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter);
+                 const highValue = parseFloat(GD_2006_High);
+                 const lowValue = parseFloat(GD_2006_Low);
+                 const GD_2006Value = parseFloat(GD_2006);
          
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V2_Flow_MeterValue)) {
-                     if (highValue <= V2_Flow_MeterValue || V2_Flow_MeterValue <= lowValue) {
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2006Value)) {
+                     if (highValue <= GD_2006Value || GD_2006Value <= lowValue) {
                          
-                             setExceedThresholdV2_Flow_Meter(true);
+                             setExceedThresholdGD_2006(true);
                      } else {
-                        setExceedThresholdV2_Flow_Meter(false);
+                        setExceedThresholdGD_2006(false);
                      }
                  } 
              } 
-         }, [V2_Flow_Meter_High, V2_Flow_Meter, , V2_Flow_Meter_Low,maintainV2_Flow_Meter]);
+         }, [GD_2006_High, GD_2006, , GD_2006_Low,maintainGD_2006]);
      
      
      
@@ -830,91 +1321,91 @@ useEffect(() => {
      
          // =================================================================================================================== 
      
-     const [GD_102_Low, setGD_102_Low] = useState<string | null>(null);
-     const [GD_102_Low_High, setGD_102_Low_High] = useState<number | null>(null);
-     const [GD_102_Low_Low, setGD_102_Low_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_102_Low, setExceedThresholdGD_102_Low] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [GD_2004, setGD_2004] = useState<string | null>(null);
+     const [GD_2004_High, setGD_2004_High] = useState<number | null>(null);
+     const [GD_2004_Low, setGD_2004_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_2004, setExceedThresholdGD_2004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainGD_102_Low, setMaintainGD_102_Low] = useState<boolean>(false);
+     const [maintainGD_2004, setMaintainGD_2004] = useState<boolean>(false);
      
      
      useEffect(() => {
-         if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
+         if (typeof GD_2004_High === 'string' && typeof GD_2004_Low === 'string' && GD_2004 !== null && maintainGD_2004 === false
          ) {
-             const highValue = parseFloat(GD_102_Low_High);
-             const lowValue = parseFloat(GD_102_Low_Low);
-             const GD_102_LowValue = parseFloat(GD_102_Low);
+             const highValue = parseFloat(GD_2004_High);
+             const lowValue = parseFloat(GD_2004_Low);
+             const GD_2004Value = parseFloat(GD_2004);
      
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
-                 if (highValue <= GD_102_LowValue || GD_102_LowValue <= lowValue) {
-                         setExceedThresholdGD_102_Low(true);
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2004Value)) {
+                 if (highValue <= GD_2004Value || GD_2004Value <= lowValue) {
+                         setExceedThresholdGD_2004(true);
                  } else {
-                    setExceedThresholdGD_102_Low(false);
+                    setExceedThresholdGD_2004(false);
                  }
              } 
          } 
-     }, [GD_102_Low_High, GD_102_Low, , GD_102_Low_Low,maintainGD_102_Low]);
+     }, [GD_2004_High, GD_2004, , GD_2004_Low,maintainGD_2004]);
      
 
       // =================================================================================================================== 
 
 
-     const [Tank_TT_301, setTank_TT_301] = useState<string | null>(null);
+     const [TOTAL_SNG, setTOTAL_SNG] = useState<string | null>(null);
 
-     const [Tank_TT_301_High, setTank_TT_301_High] = useState<number | null>(null);
-     const [Tank_TT_301_Low, setTank_TT_301_Low] = useState<number | null>(null);
-     const [exceedThresholdTank_TT_301, setExceedThresholdTank_TT_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [TOTAL_SNG_High, setTOTAL_SNG_High] = useState<number | null>(null);
+     const [TOTAL_SNG_Low, setTOTAL_SNG_Low] = useState<number | null>(null);
+     const [exceedThresholdTOTAL_SNG, setExceedThresholdTOTAL_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
+     const [maintainTOTAL_SNG, setMaintainTOTAL_SNG] = useState<boolean>(false);
      
      
          useEffect(() => {
-             if (typeof Tank_TT_301_High === 'string' && typeof Tank_TT_301_Low === 'string' && Tank_TT_301 !== null && maintainTank_TT_301 === false
+             if (typeof TOTAL_SNG_High === 'string' && typeof TOTAL_SNG_Low === 'string' && TOTAL_SNG !== null && maintainTOTAL_SNG === false
              ) {
-                 const highValue = parseFloat(Tank_TT_301_High);
-                 const lowValue = parseFloat(Tank_TT_301_Low);
-                 const Tank_TT_301Value = parseFloat(Tank_TT_301);
+                 const highValue = parseFloat(TOTAL_SNG_High);
+                 const lowValue = parseFloat(TOTAL_SNG_Low);
+                 const TOTAL_SNGValue = parseFloat(TOTAL_SNG);
          
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_TT_301Value)) {
-                     if (highValue <= Tank_TT_301Value || Tank_TT_301Value <= lowValue) {
-                             setExceedThresholdTank_TT_301(true);
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TOTAL_SNGValue)) {
+                     if (highValue <= TOTAL_SNGValue || TOTAL_SNGValue <= lowValue) {
+                             setExceedThresholdTOTAL_SNG(true);
                      } else {
-                         setExceedThresholdTank_TT_301(false);
+                         setExceedThresholdTOTAL_SNG(false);
                      }
                  } 
              } 
-         }, [Tank_TT_301_High, Tank_TT_301, Tank_TT_301_Low,maintainTank_TT_301]);
+         }, [TOTAL_SNG_High, TOTAL_SNG, TOTAL_SNG_Low,maintainTOTAL_SNG]);
      
       
 
      // =================================================================================================================== 
 
 
-     const [V1_Flow_Meter, setV1_Flow_Meter] = useState<string | null>(null);
+     const [GD_2005, setGD_2005] = useState<string | null>(null);
 
-     const [V1_Flow_Meter_High, setV1_Flow_Meter_High] = useState<number | null>(null);
-     const [V1_Flow_Meter_Low, setV1_Flow_Meter_Low] = useState<number | null>(null);
-     const [exceedThresholdV1_Flow_Meter, setExceedThresholdV1_Flow_Meter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [GD_2005_High, setGD_2005_High] = useState<number | null>(null);
+     const [GD_2005_Low, setGD_2005_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_2005, setExceedThresholdGD_2005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainV1_Flow_Meter, setMaintainV1_Flow_Meter] = useState<boolean>(false);
+     const [maintainGD_2005, setMaintainGD_2005] = useState<boolean>(false);
      
      
       useEffect(() => {
-          if (typeof V1_Flow_Meter_High === 'string' && typeof V1_Flow_Meter_Low === 'string' && V1_Flow_Meter !== null && maintainV1_Flow_Meter === false
+          if (typeof GD_2005_High === 'string' && typeof GD_2005_Low === 'string' && GD_2005 !== null && maintainGD_2005 === false
           ) {
-              const highValue = parseFloat(V1_Flow_Meter_High);
-              const lowValue = parseFloat(V1_Flow_Meter_Low);
-              const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter);
+              const highValue = parseFloat(GD_2005_High);
+              const lowValue = parseFloat(GD_2005_Low);
+              const GD_2005Value = parseFloat(GD_2005);
       
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V1_Flow_MeterValue)) {
-                  if (highValue <= V1_Flow_MeterValue || V1_Flow_MeterValue <= lowValue) {
-                          setExceedThresholdV1_Flow_Meter(true);
+              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2005Value)) {
+                  if (highValue <= GD_2005Value || GD_2005Value <= lowValue) {
+                          setExceedThresholdGD_2005(true);
                   } else {
-                     setExceedThresholdV1_Flow_Meter(false);
+                     setExceedThresholdGD_2005(false);
                   }
               } 
           } 
-      }, [V1_Flow_Meter_High, V1_Flow_Meter, V1_Flow_Meter_Low,maintainV1_Flow_Meter]);
+      }, [GD_2005_High, GD_2005, GD_2005_Low,maintainGD_2005]);
      
    
      
@@ -925,119 +1416,119 @@ useEffect(() => {
 
 
 
-          const [Tank_PT_301, setTank_PT_301] = useState<string | null>(null);
+          const [SDV_2004, setSDV_2004] = useState<string | null>(null);
   
-          const [Tank_PT_301_High, setTank_PT_301_High] = useState<number | null>(null);
-          const [Tank_PT_301_Low, setTank_PT_301_Low] = useState<number | null>(null);
-          const [exceedThresholdTank_PT_301, setExceedThresholdTank_PT_301] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainTank_PT_301, setMaintainTank_PT_301] = useState<boolean>(false);
+          const [SDV_2004_High, setSDV_2004_High] = useState<number | null>(null);
+          const [SDV_2004_Low, setSDV_2004_Low] = useState<number | null>(null);
+          const [exceedThresholdSDV_2004, setExceedThresholdSDV_2004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainSDV_2004, setMaintainSDV_2004] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof Tank_PT_301_High === 'string' && typeof Tank_PT_301_Low === 'string' && Tank_PT_301 !== null && maintainTank_PT_301 === false
+                  if (typeof SDV_2004_High === 'string' && typeof SDV_2004_Low === 'string' && SDV_2004 !== null && maintainSDV_2004 === false
                   ) {
-                      const highValue = parseFloat(Tank_PT_301_High);
-                      const lowValue = parseFloat(Tank_PT_301_Low);
-                      const Tank_PT_301Value = parseFloat(Tank_PT_301);
+                      const highValue = parseFloat(SDV_2004_High);
+                      const lowValue = parseFloat(SDV_2004_Low);
+                      const SDV_2004Value = parseFloat(SDV_2004);
               
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_PT_301Value)) {
-                          if (highValue <= Tank_PT_301Value || Tank_PT_301Value <= lowValue) {
-                                  setExceedThresholdTank_PT_301(true);
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_2004Value)) {
+                          if (highValue <= SDV_2004Value || SDV_2004Value <= lowValue) {
+                                  setExceedThresholdSDV_2004(true);
                           } else {
-                             setExceedThresholdTank_PT_301(false);
+                             setExceedThresholdSDV_2004(false);
                           }
                       } 
                   } 
-              }, [Tank_PT_301_High, Tank_PT_301, Tank_PT_301_Low,maintainTank_PT_301]);
+              }, [SDV_2004_High, SDV_2004, SDV_2004_Low,maintainSDV_2004]);
           
            
      
           // =================================================================================================================== 
 
 
-          const [Tank_01_Volume, setTank_01_Volume] = useState<string | null>(null);
+          const [GD2_STATUS, setGD2_STATUS] = useState<string | null>(null);
  
-          const [Tank_01_Volume_High, setTank_01_Volume_High] = useState<number | null>(null);
-          const [Tank_01_Volume_Low, setTank_01_Volume_Low] = useState<number | null>(null);
-          const [exceedThresholdTank_01_Volume, setExceedThresholdTank_01_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [GD2_STATUS_High, setGD2_STATUS_High] = useState<number | null>(null);
+          const [GD2_STATUS_Low, setGD2_STATUS_Low] = useState<number | null>(null);
+          const [exceedThresholdGD2_STATUS, setExceedThresholdGD2_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainTank_01_Volume, setMaintainTank_01_Volume] = useState<boolean>(false);
+          const [maintainGD2_STATUS, setMaintainGD2_STATUS] = useState<boolean>(false);
           
           
               useEffect(() => {
-                  if (typeof Tank_01_Volume_High === 'string' && typeof Tank_01_Volume_Low === 'string' && Tank_01_Volume !== null && maintainTank_01_Volume === false
+                  if (typeof GD2_STATUS_High === 'string' && typeof GD2_STATUS_Low === 'string' && GD2_STATUS !== null && maintainGD2_STATUS === false
                   ) {
-                      const highValue = parseFloat(Tank_01_Volume_High);
-                      const lowValue = parseFloat(Tank_01_Volume_Low);
-                      const Tank_01_VolumeValue = parseFloat(Tank_01_Volume);
+                      const highValue = parseFloat(GD2_STATUS_High);
+                      const lowValue = parseFloat(GD2_STATUS_Low);
+                      const GD2_STATUSValue = parseFloat(GD2_STATUS);
               
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_VolumeValue)) {
-                          if (highValue <= Tank_01_VolumeValue || Tank_01_VolumeValue <= lowValue) {
-                                  setExceedThresholdTank_01_Volume(true);
+                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2_STATUSValue)) {
+                          if (highValue <= GD2_STATUSValue || GD2_STATUSValue <= lowValue) {
+                                  setExceedThresholdGD2_STATUS(true);
                           } else {
-                             setExceedThresholdTank_01_Volume(false);
+                             setExceedThresholdGD2_STATUS(false);
                           }
                       } 
                   } 
-              }, [Tank_01_Volume_High, Tank_01_Volume , Tank_01_Volume_Low,maintainTank_01_Volume]);
+              }, [GD2_STATUS_High, GD2_STATUS , GD2_STATUS_Low,maintainGD2_STATUS]);
           
        
     
          
          // =================================================================================================================== 
 
-         const [Pipe_Press, setPipe_Press] = useState<string | null>(null);
+         const [TM_2003_SNG, setTM_2003_SNG] = useState<string | null>(null);
 
-        const [Pipe_Press_High, setPipe_Press_High] = useState<number | null>(null);
-        const [Pipe_Press_Low, setPipe_Press_Low] = useState<number | null>(null);
-        const [exceedThresholdPipe_Press, setExceedThresholdPipe_Press] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-        const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
+        const [TM_2003_SNG_High, setTM_2003_SNG_High] = useState<number | null>(null);
+        const [TM_2003_SNG_Low, setTM_2003_SNG_Low] = useState<number | null>(null);
+        const [exceedThresholdTM_2003_SNG, setExceedThresholdTM_2003_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [maintainTM_2003_SNG, setMaintainTM_2003_SNG] = useState<boolean>(false);
  
  
      useEffect(() => {
-         if (typeof Pipe_Press_High === 'string' && typeof Pipe_Press_Low === 'string' && Pipe_Press !== null && maintainPipe_Press === false
+         if (typeof TM_2003_SNG_High === 'string' && typeof TM_2003_SNG_Low === 'string' && TM_2003_SNG !== null && maintainTM_2003_SNG === false
          ) {
-             const highValue = parseFloat(Pipe_Press_High);
-             const lowValue = parseFloat(Pipe_Press_Low);
-             const Pipe_PressValue = parseFloat(Pipe_Press);
+             const highValue = parseFloat(TM_2003_SNG_High);
+             const lowValue = parseFloat(TM_2003_SNG_Low);
+             const TM_2003_SNGValue = parseFloat(TM_2003_SNG);
      
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_PressValue)) {
-                 if (highValue <= Pipe_PressValue || Pipe_PressValue <= lowValue) {
-                         setExceedThresholdPipe_Press(true);
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM_2003_SNGValue)) {
+                 if (highValue <= TM_2003_SNGValue || TM_2003_SNGValue <= lowValue) {
+                         setExceedThresholdTM_2003_SNG(true);
                  } else {
-                    setExceedThresholdPipe_Press(false);
+                    setExceedThresholdTM_2003_SNG(false);
                  }
              } 
          } 
-     }, [Pipe_Press_High, Pipe_Press, Pipe_Press_Low,maintainPipe_Press]);
+     }, [TM_2003_SNG_High, TM_2003_SNG, TM_2003_SNG_Low,maintainTM_2003_SNG]);
          // =================================================================================================================== 
         
         
-        const [Tank_01_Mass, setTank_01_Mass] = useState<string | null>(null);
+        const [GD1_STATUS, setGD1_STATUS] = useState<string | null>(null);
 
-        const [Tank_01_Mass_High, setTank_01_Mass_High] = useState<number | null>(null);
-        const [Tank_01_Mass_Low, setTank_01_Mass_Low] = useState<number | null>(null);
-        const [exceedThresholdTank_01_Mass, setExceedThresholdTank_01_Mass] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [GD1_STATUS_High, setGD1_STATUS_High] = useState<number | null>(null);
+        const [GD1_STATUS_Low, setGD1_STATUS_Low] = useState<number | null>(null);
+        const [exceedThresholdGD1_STATUS, setExceedThresholdGD1_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
-        const [maintainTank_01_Mass, setMaintainTank_01_Mass] = useState<boolean>(false);
+        const [maintainGD1_STATUS, setMaintainGD1_STATUS] = useState<boolean>(false);
         
         
             useEffect(() => {
-                if (typeof Tank_01_Mass_High === 'string' && typeof Tank_01_Mass_Low === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
+                if (typeof GD1_STATUS_High === 'string' && typeof GD1_STATUS_Low === 'string' && GD1_STATUS !== null && maintainGD1_STATUS === false
                 ) {
-                    const highValue = parseFloat(Tank_01_Mass_High);
-                    const lowValue = parseFloat(Tank_01_Mass_Low);
-                    const Tank_01_MassValue = parseFloat(Tank_01_Mass);
+                    const highValue = parseFloat(GD1_STATUS_High);
+                    const lowValue = parseFloat(GD1_STATUS_Low);
+                    const GD1_STATUSValue = parseFloat(GD1_STATUS);
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_MassValue)) {
-                        if (highValue <= Tank_01_MassValue || Tank_01_MassValue <= lowValue) {
-                                setExceedThresholdTank_01_Mass(true);
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1_STATUSValue)) {
+                        if (highValue <= GD1_STATUSValue || GD1_STATUSValue <= lowValue) {
+                                setExceedThresholdGD1_STATUS(true);
                         } else {
-                           setExceedThresholdTank_01_Mass(false);
+                           setExceedThresholdGD1_STATUS(false);
                         }
                     } 
                 } 
-            }, [Tank_01_Mass_High, Tank_01_Mass, Tank_01_Mass_Low,maintainTank_01_Mass]);
+            }, [GD1_STATUS_High, GD1_STATUS, GD1_STATUS_Low,maintainGD1_STATUS]);
         
          
         
@@ -1046,31 +1537,31 @@ useEffect(() => {
         
             // =================================================================================================================== 
         
-        const [Tank_01_Level, setTank_01_Level] = useState<string | null>(null);
+        const [SDV_2003, setSDV_2003] = useState<string | null>(null);
    
-        const [Tank_01_Level_High, setTank_01_Level_High] = useState<number | null>(null);
-        const [Tank_01_Level_Low, setTank_01_Level_Low] = useState<number | null>(null);
-        const [exceedThresholdTank_01_Level, setExceedThresholdTank_01_Level] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [SDV_2003_High, setSDV_2003_High] = useState<number | null>(null);
+        const [SDV_2003_Low, setSDV_2003_Low] = useState<number | null>(null);
+        const [exceedThresholdSDV_2003, setExceedThresholdSDV_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
         
-        const [maintainTank_01_Level, setMaintainTank_01_Level] = useState<boolean>(false);
+        const [maintainSDV_2003, setMaintainSDV_2003] = useState<boolean>(false);
         
         
         useEffect(() => {
-            if (typeof Tank_01_Level_High === 'string' && typeof Tank_01_Level_Low === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
+            if (typeof SDV_2003_High === 'string' && typeof SDV_2003_Low === 'string' && SDV_2003 !== null && maintainSDV_2003 === false
             ) {
-                const highValue = parseFloat(Tank_01_Level_High);
-                const lowValue = parseFloat(Tank_01_Level_Low);
-                const Tank_01_LevelValue = parseFloat(Tank_01_Level);
+                const highValue = parseFloat(SDV_2003_High);
+                const lowValue = parseFloat(SDV_2003_Low);
+                const SDV_2003Value = parseFloat(SDV_2003);
         
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_LevelValue)) {
-                    if (highValue <= Tank_01_LevelValue || Tank_01_LevelValue <= lowValue) {
-                            setExceedThresholdTank_01_Level(true);
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_2003Value)) {
+                    if (highValue <= SDV_2003Value || SDV_2003Value <= lowValue) {
+                            setExceedThresholdSDV_2003(true);
                     } else {
-                       setExceedThresholdTank_01_Level(false);
+                       setExceedThresholdSDV_2003(false);
                     }
                 } 
             } 
-        }, [Tank_01_Level_High, Tank_01_Level, Tank_01_Level_Low,maintainTank_01_Level]);
+        }, [SDV_2003_High, SDV_2003, SDV_2003_Low,maintainSDV_2003]);
         
  
         // =================================================================================================================== 
@@ -1112,30 +1603,30 @@ useEffect(() => {
 
                   // =================================================================================================================== 
         
-                  const [Consumption_Flow, setConsumption_Flow] = useState<string | null>(null);
-                  const [Consumption_Flow_High, setConsumption_Flow_High] = useState<number | null>(null);
-                  const [Consumption_Flow_Low, setConsumption_Flow_Low] = useState<number | null>(null);
-                  const [exceedThresholdConsumption_Flow, setExceedThresholdConsumption_Flow] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                  const [GD3_STATUS, setGD3_STATUS] = useState<string | null>(null);
+                  const [GD3_STATUS_High, setGD3_STATUS_High] = useState<number | null>(null);
+                  const [GD3_STATUS_Low, setGD3_STATUS_Low] = useState<number | null>(null);
+                  const [exceedThresholdGD3_STATUS, setExceedThresholdGD3_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
                   
-                  const [maintainConsumption_Flow, setMaintainConsumption_Flow] = useState<boolean>(false);
+                  const [maintainGD3_STATUS, setMaintainGD3_STATUS] = useState<boolean>(false);
                   
                   
                   useEffect(() => {
-                      if (typeof Consumption_Flow_High === 'string' && typeof Consumption_Flow_Low === 'string' && Consumption_Flow !== null && maintainConsumption_Flow === false
+                      if (typeof GD3_STATUS_High === 'string' && typeof GD3_STATUS_Low === 'string' && GD3_STATUS !== null && maintainGD3_STATUS === false
                       ) {
-                          const highValue = parseFloat(Consumption_Flow_High);
-                          const lowValue = parseFloat(Consumption_Flow_Low);
-                          const Consumption_FlowValue = parseFloat(Consumption_Flow);
+                          const highValue = parseFloat(GD3_STATUS_High);
+                          const lowValue = parseFloat(GD3_STATUS_Low);
+                          const GD3_STATUSValue = parseFloat(GD3_STATUS);
                   
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Consumption_FlowValue)) {
-                              if (highValue <= Consumption_FlowValue || Consumption_FlowValue <= lowValue) {
-                                      setExceedThresholdConsumption_Flow(true);
+                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD3_STATUSValue)) {
+                              if (highValue <= GD3_STATUSValue || GD3_STATUSValue <= lowValue) {
+                                      setExceedThresholdGD3_STATUS(true);
                               } else {
-                                 setExceedThresholdConsumption_Flow(false);
+                                 setExceedThresholdGD3_STATUS(false);
                               }
                           } 
                       } 
-                  }, [Consumption_Flow_High, Consumption_Flow, Consumption_Flow_Low,maintainConsumption_Flow]);
+                  }, [GD3_STATUS_High, GD3_STATUS, GD3_STATUS_Low,maintainGD3_STATUS]);
                   
       
                   
@@ -1144,76 +1635,470 @@ useEffect(() => {
 
                          // =================================================================================================================== 
         
-                         const [Flow_Velocity, setFlow_Velocity] = useState<string | null>(null);
+                         const [GD4_STATUS, setGD4_STATUS] = useState<string | null>(null);
                 
-                         const [Flow_Velocity_High, setFlow_Velocity_High] = useState<number | null>(null);
-                         const [Flow_Velocity_Low, setFlow_Velocity_Low] = useState<number | null>(null);
-                         const [exceedThresholdFlow_Velocity, setExceedThresholdFlow_Velocity] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                         const [GD4_STATUS_High, setGD4_STATUS_High] = useState<number | null>(null);
+                         const [GD4_STATUS_Low, setGD4_STATUS_Low] = useState<number | null>(null);
+                         const [exceedThresholdGD4_STATUS, setExceedThresholdGD4_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
                          
-                         const [maintainFlow_Velocity, setMaintainFlow_Velocity] = useState<boolean>(false);
+                         const [maintainGD4_STATUS, setMaintainGD4_STATUS] = useState<boolean>(false);
                          
                          
                          useEffect(() => {
-                             if (typeof Flow_Velocity_High === 'string' && typeof Flow_Velocity_Low === 'string' && Flow_Velocity !== null && maintainFlow_Velocity === false
+                             if (typeof GD4_STATUS_High === 'string' && typeof GD4_STATUS_Low === 'string' && GD4_STATUS !== null && maintainGD4_STATUS === false
                              ) {
-                                 const highValue = parseFloat(Flow_Velocity_High);
-                                 const lowValue = parseFloat(Flow_Velocity_Low);
-                                 const Flow_VelocityValue = parseFloat(Flow_Velocity);
+                                 const highValue = parseFloat(GD4_STATUS_High);
+                                 const lowValue = parseFloat(GD4_STATUS_Low);
+                                 const GD4_STATUSValue = parseFloat(GD4_STATUS);
                          
-                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_VelocityValue)) {
-                                     if (highValue <= Flow_VelocityValue || Flow_VelocityValue <= lowValue) {
-                                             setExceedThresholdFlow_Velocity(true);
+                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD4_STATUSValue)) {
+                                     if (highValue <= GD4_STATUSValue || GD4_STATUSValue <= lowValue) {
+                                             setExceedThresholdGD4_STATUS(true);
                                      } else {
-                                        setExceedThresholdFlow_Velocity(false);
+                                        setExceedThresholdGD4_STATUS(false);
                                      }
                                  } 
                              } 
-                         }, [Flow_Velocity_High, Flow_Velocity, Flow_Velocity_Low,maintainFlow_Velocity]);
+                         }, [GD4_STATUS_High, GD4_STATUS, GD4_STATUS_Low,maintainGD4_STATUS]);
                          
                      
                          
                          
                          // =================================================================================================================== 
+
+ 
+  // =================================================================================================================== 
+ 
+ 
+  const [PERCENT_LPG, setPERCENT_LPG] = useState<string | null>(null);
+  const [PERCENT_LPG_High, setPERCENT_LPG_High] = useState<number | null>(null);
+  const [PERCENT_LPG_Low, setPERCENT_LPG_Low] = useState<number | null>(null);
+  const [exceedThresholdPERCENT_LPG, setExceedThresholdPERCENT_LPG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+  const [maintainPERCENT_LPG, setMaintainPERCENT_LPG] = useState<boolean>(false);
   
+  
+      useEffect(() => {
+          if (typeof PERCENT_LPG_High === 'string' && typeof PERCENT_LPG_Low === 'string' && PERCENT_LPG !== null && maintainPERCENT_LPG === false
+          ) {
+              const highValue = parseFloat(PERCENT_LPG_High);
+              const lowValue = parseFloat(PERCENT_LPG_Low);
+              const PERCENT_LPGValue = parseFloat(PERCENT_LPG);
+      
+              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PERCENT_LPGValue)) {
+                  if (highValue <= PERCENT_LPGValue || PERCENT_LPGValue <= lowValue) {
+                          setExceedThresholdPERCENT_LPG(true);
+                  } else {
+                     setExceedThresholdPERCENT_LPG(false);
+                  }
+              } 
+          } 
+      }, [PERCENT_LPG_High, PERCENT_LPG, PERCENT_LPG_Low,maintainPERCENT_LPG]);
+
+
+  // =================================================================================================================== 
+
+
+
+       const [PERCENT_AIR, setPERCENT_AIR] = useState<string | null>(null);
+       const [PERCENT_AIR_High, setPERCENT_AIR_High] = useState<number | null>(null);
+       const [PERCENT_AIR_Low, setPERCENT_AIR_Low] = useState<number | null>(null);
+       const [exceedThresholdPERCENT_AIR, setExceedThresholdPERCENT_AIR] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainPERCENT_AIR, setMaintainPERCENT_AIR] = useState<boolean>(false);
+       
+       
+           useEffect(() => {
+               if (typeof PERCENT_AIR_High === 'string' && typeof PERCENT_AIR_Low === 'string' && PERCENT_AIR !== null && maintainPERCENT_AIR === false
+               ) {
+                   const highValue = parseFloat(PERCENT_AIR_High);
+                   const lowValue = parseFloat(PERCENT_AIR_Low);
+                   const PERCENT_AIRValue = parseFloat(PERCENT_AIR);
+           
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PERCENT_AIRValue)) {
+                       if (highValue <= PERCENT_AIRValue || PERCENT_AIRValue <= lowValue) {
+                               setExceedThresholdPERCENT_AIR(true);
+                       } else {
+                          setExceedThresholdPERCENT_AIR(false);
+                       }
+                   } 
+               } 
+           }, [PERCENT_AIR_High, PERCENT_AIR, PERCENT_AIR_Low,maintainPERCENT_AIR]);
+       
+
+  
+       // =================================================================================================================== 
+
+
+       const [HV_1001, setHV_1001] = useState<string | null>(null);
+
+       const [HV_1001_High, setHV_1001_High] = useState<number | null>(null);
+       const [HV_1001_Low, setHV_1001_Low] = useState<number | null>(null);
+       const [exceedThresholdHV_1001, setExceedThresholdHV_1001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       
+       const [maintainHV_1001, setMaintainHV_1001] = useState<boolean>(false);
+       
+       
+           useEffect(() => {
+               if (typeof HV_1001_High === 'string' && typeof HV_1001_Low === 'string' && HV_1001 !== null && maintainHV_1001 === false
+               ) {
+                   const highValue = parseFloat(HV_1001_High);
+                   const lowValue = parseFloat(HV_1001_Low);
+                   const HV_1001Value = parseFloat(HV_1001);
+           
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HV_1001Value)) {
+                       if (highValue <= HV_1001Value || HV_1001Value <= lowValue) {
+                               setExceedThresholdHV_1001(true);
+                       } else {
+                          setExceedThresholdHV_1001(false);
+                       }
+                   } 
+               } 
+           }, [HV_1001_High, HV_1001 , HV_1001_Low,maintainHV_1001]);
+       
+
+  
+       // =================================================================================================================== 
+
+       const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
+       const [RATIO_MODE_High, setRATIO_MODE_High] = useState<number | null>(null);
+       const [RATIO_MODE_Low, setRATIO_MODE_Low] = useState<number | null>(null);
+       const [exceedThresholdRATIO_MODE, setExceedThresholdRATIO_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainRATIO_MODE, setMaintainRATIO_MODE] = useState<boolean>(false);
+       
+       
+           useEffect(() => {
+               if (typeof RATIO_MODE_High === 'string' && typeof RATIO_MODE_Low === 'string' && RATIO_MODE !== null && maintainRATIO_MODE === false
+               ) {
+                   const highValue = parseFloat(RATIO_MODE_High);
+                   const lowValue = parseFloat(RATIO_MODE_Low);
+                   const RATIO_MODEValue = parseFloat(RATIO_MODE);
+           
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(RATIO_MODEValue)) {
+                       if (highValue <= RATIO_MODEValue || RATIO_MODEValue <= lowValue) {
+                               setExceedThresholdRATIO_MODE(true);
+                       } else {
+                          setExceedThresholdRATIO_MODE(false);
+                       }
+                   } 
+               } 
+           }, [RATIO_MODE_High, RATIO_MODE, RATIO_MODE_Low,maintainRATIO_MODE]);
+       
+
+  
+  
+       // =================================================================================================================== 
+
+       const [FCV_MODE, setFCV_MODE] = useState<string | null>(null);
+       const [FCV_MODE_High, setFCV_MODE_High] = useState<number | null>(null);
+       const [FCV_MODE_Low, setFCV_MODE_Low] = useState<number | null>(null);
+       const [exceedThresholdFCV_MODE, setExceedThresholdFCV_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainFCV_MODE, setMaintainFCV_MODE] = useState<boolean>(false);
+       
+       
+           useEffect(() => {
+               if (typeof FCV_MODE_High === 'string' && typeof FCV_MODE_Low === 'string' && FCV_MODE !== null && maintainFCV_MODE === false
+               ) {
+                   const highValue = parseFloat(FCV_MODE_High);
+                   const lowValue = parseFloat(FCV_MODE_Low);
+                   const FCV_MODEValue = parseFloat(FCV_MODE);
+           
+                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FCV_MODEValue)) {
+                       if (highValue <= FCV_MODEValue || FCV_MODEValue <= lowValue) {
+                               setExceedThresholdFCV_MODE(true);
+                       } else {
+                          setExceedThresholdFCV_MODE(false);
+                       }
+                   } 
+               } 
+           }, [FCV_MODE_High, FCV_MODE, FCV_MODE_Low,maintainFCV_MODE]);
+       
+ 
+  
+       // =================================================================================================================== 
+
+ // =================================================================================================================== 
+
+ const [TOTAL_CNG, setTOTAL_CNG] = useState<string | null>(null);
+    
+ const [TOTAL_CNG_High, setTOTAL_CNG_High] = useState<number | null>(null);
+ const [TOTAL_CNG_Low, setTOTAL_CNG_Low] = useState<number | null>(null);
+ const [exceedThresholdTOTAL_CNG, setExceedThresholdTOTAL_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ 
+ const [maintainTOTAL_CNG, setMaintainTOTAL_CNG] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof TOTAL_CNG_High === 'string' && typeof TOTAL_CNG_Low === 'string' && TOTAL_CNG !== null && maintainTOTAL_CNG === false
+         ) {
+             const highValue = parseFloat(TOTAL_CNG_High);
+             const lowValue = parseFloat(TOTAL_CNG_Low);
+             const TOTAL_CNGValue = parseFloat(TOTAL_CNG);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TOTAL_CNGValue)) {
+                 if (highValue <= TOTAL_CNGValue || TOTAL_CNGValue <= lowValue) {
+                         setExceedThresholdTOTAL_CNG(true);
+                 } else {
+                    setExceedThresholdTOTAL_CNG(false);
+                 }
+             } 
+         } 
+     }, [TOTAL_CNG_High, TOTAL_CNG, TOTAL_CNG_Low,maintainTOTAL_CNG]);
+ 
+
+
+     // =================================================================================================================== 
+
+     const [TM2002_CNG, setTM2002_CNG] = useState<string | null>(null);
+     const [TM2002_CNG_High, setTM2002_CNG_High] = useState<number | null>(null);
+     const [TM2002_CNG_Low, setTM2002_CNG_Low] = useState<number | null>(null);
+     const [exceedThresholdTM2002_CNG, setExceedThresholdTM2002_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainTM2002_CNG, setMaintainTM2002_CNG] = useState<boolean>(false);
+     
+     
+         useEffect(() => {
+             if (typeof TM2002_CNG_High === 'string' && typeof TM2002_CNG_Low === 'string' && TM2002_CNG !== null && maintainTM2002_CNG === false
+             ) {
+                 const highValue = parseFloat(TM2002_CNG_High);
+                 const lowValue = parseFloat(TM2002_CNG_Low);
+                 const TM2002_CNGValue = parseFloat(TM2002_CNG);
+         
+                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM2002_CNGValue)) {
+                     if (highValue <= TM2002_CNGValue || TM2002_CNGValue <= lowValue) {
+                             setExceedThresholdTM2002_CNG(true);
+                     } else {
+                        setExceedThresholdTM2002_CNG(false);
+                     }
+                 } 
+             } 
+         }, [TM2002_CNG_High, TM2002_CNG, TM2002_CNG_Low,maintainTM2002_CNG]);
+     
+   
+ 
+     // =================================================================================================================== 
+            // =================================================================================================================== 
+     
+            const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
+            const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(null);
+            const [WB_Setpoint_Low, setWB_Setpoint_Low] = useState<number | null>(null);
+            const [exceedThresholdWB_Setpoint, setExceedThresholdWB_Setpoint] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+            
+            const [maintainWB_Setpoint, setMaintainWB_Setpoint] = useState<boolean>(false);
+            
+            
+            useEffect(() => {
+                if (typeof WB_Setpoint_High === 'string' && typeof WB_Setpoint_Low === 'string' && WB_Setpoint !== null && maintainWB_Setpoint === false
+                ) {
+                    const highValue = parseFloat(WB_Setpoint_High);
+                    const lowValue = parseFloat(WB_Setpoint_Low);
+                    const WB_SetpointValue = parseFloat(WB_Setpoint);
+            
+                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WB_SetpointValue)) {
+                        if (highValue <= WB_SetpointValue || WB_SetpointValue <= lowValue) {
+                                setExceedThresholdWB_Setpoint(true);
+                        } else {
+                           setExceedThresholdWB_Setpoint(false);
+                        }
+                    } 
+                } 
+            }, [WB_Setpoint_High, WB_Setpoint, , WB_Setpoint_Low,maintainWB_Setpoint]);
+            
+         // =================================================================================================================== 
+
+         const [TM2003_CNG, setTM2003_CNG] = useState<string | null>(null);
+
+         const [TM2003_CNG_High, setTM2003_CNG_High] = useState<number | null>(null);
+         const [TM2003_CNG_Low, setTM2003_CNG_Low] = useState<number | null>(null);
+         const [exceedThresholdTM2003_CNG, setExceedThresholdTM2003_CNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         const [maintainTM2003_CNG, setMaintainTM2003_CNG] = useState<boolean>(false);
+         
+         
+             useEffect(() => {
+                 if (typeof TM2003_CNG_High === 'string' && typeof TM2003_CNG_Low === 'string' && TM2003_CNG !== null && maintainTM2003_CNG === false
+                 ) {
+                     const highValue = parseFloat(TM2003_CNG_High);
+                     const lowValue = parseFloat(TM2003_CNG_Low);
+                     const TM2003_CNGValue = parseFloat(TM2003_CNG);
+             
+                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TM2003_CNGValue)) {
+                         if (highValue <= TM2003_CNGValue || TM2003_CNGValue <= lowValue) {
+                                 setExceedThresholdTM2003_CNG(true);
+                         } else {
+                            setExceedThresholdTM2003_CNG(false);
+                         }
+                     } 
+                 } 
+             }, [TM2003_CNG_High, TM2003_CNG, TM2003_CNG_Low,maintainTM2003_CNG]);
+         
+        
+        
+        
+         // =================================================================================================================== 
+
+ // =================================================================================================================== 
+
+ const [WIS_Calorimeter, setWIS_Calorimeter] = useState<string | null>(null);
+ const [WIS_Calorimeter_High, setWIS_Calorimeter_High] = useState<number | null>(null);
+ const [WIS_Calorimeter_Low, setWIS_Calorimeter_Low] = useState<number | null>(null);
+ const [exceedThresholdWIS_Calorimeter, setExceedThresholdWIS_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainWIS_Calorimeter, setMaintainWIS_Calorimeter] = useState<boolean>(false);
+ 
+ 
+     useEffect(() => {
+         if (typeof WIS_Calorimeter_High === 'string' && typeof WIS_Calorimeter_Low === 'string' && WIS_Calorimeter !== null && maintainWIS_Calorimeter === false
+         ) {
+             const highValue = parseFloat(WIS_Calorimeter_High);
+             const lowValue = parseFloat(WIS_Calorimeter_Low);
+             const WIS_CalorimeterValue = parseFloat(WIS_Calorimeter);
+     
+             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WIS_CalorimeterValue)) {
+                 if (highValue <= WIS_CalorimeterValue || WIS_CalorimeterValue <= lowValue) {
+                         setExceedThresholdWIS_Calorimeter(true);
+                 } else {
+                    setExceedThresholdWIS_Calorimeter(false);
+                 }
+             } 
+         } 
+     }, [WIS_Calorimeter_High, WIS_Calorimeter, WIS_Calorimeter_Low,maintainWIS_Calorimeter]);
+ 
+
+
+ // =================================================================================================================== 
+
+
+     // =================================================================================================================== 
+
+
+
+
+     // =================================================================================================================== 
+
+const [CVS_Calorimeter, setCVS_Calorimeter] = useState<string | null>(null);
+
+const [CVS_Calorimeter_High, setCVS_Calorimeter_High] = useState<number | null>(null);
+const [CVS_Calorimeter_Low, setCVS_Calorimeter_Low] = useState<number | null>(null);
+const [exceedThresholdCVS_Calorimeter, setExceedThresholdCVS_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainCVS_Calorimeter, setMaintainCVS_Calorimeter] = useState<boolean>(false);
+
+
+ useEffect(() => {
+     if (typeof CVS_Calorimeter_High === 'string' && typeof CVS_Calorimeter_Low === 'string' && CVS_Calorimeter !== null && maintainCVS_Calorimeter === false
+     ) {
+         const highValue = parseFloat(CVS_Calorimeter_High);
+         const lowValue = parseFloat(CVS_Calorimeter_Low);
+         const CVS_CalorimeterValue = parseFloat(CVS_Calorimeter);
+ 
+         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(CVS_CalorimeterValue)) {
+             if (highValue <= CVS_CalorimeterValue || CVS_CalorimeterValue <= lowValue) {
+            
+                     setExceedThresholdCVS_Calorimeter(true);
+             } else {
+                setExceedThresholdCVS_Calorimeter(false);
+             }
+         } 
+     } 
+ }, [CVS_Calorimeter_High, CVS_Calorimeter, CVS_Calorimeter_Low,maintainCVS_Calorimeter]);
+
+
+
+
+// =================================================================================================================== 
+   
+const [SG_Calorimeter, setSG_Calorimeter] = useState<string | null>(null);
+
+const [SG_Calorimeter_High, setSG_Calorimeter_High] = useState<number | null>(null);
+const [SG_Calorimeter_Low, setSG_Calorimeter_Low] = useState<number | null>(null);
+const [exceedThresholdSG_Calorimeter, setExceedThresholdSG_Calorimeter] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainSG_Calorimeter, setMaintainSG_Calorimeter] = useState<boolean>(false);
+
+
+ useEffect(() => {
+     if (typeof SG_Calorimeter_High === 'string' && typeof SG_Calorimeter_Low === 'string' && SG_Calorimeter !== null && maintainSG_Calorimeter === false
+     ) {
+         const highValue = parseFloat(SG_Calorimeter_High);
+         const lowValue = parseFloat(SG_Calorimeter_Low);
+         const SG_CalorimeterValue = parseFloat(SG_Calorimeter);
+ 
+         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SG_CalorimeterValue)) {
+             if (highValue <= SG_CalorimeterValue || SG_CalorimeterValue <= lowValue) {
+            
+                     setExceedThresholdSG_Calorimeter(true);
+             } else {
+                setExceedThresholdSG_Calorimeter(false);
+             }
+         } 
+     } 
+ }, [SG_Calorimeter_High, SG_Calorimeter, SG_Calorimeter_Low,maintainSG_Calorimeter]);
+
+
+
+
+// =================================================================================================================== 
+       
 
      //======================================================================================================================
 
     const tagNamePLC = {
         PT_2005: "Pressure Transmitter PT-2005 (BarG)",
         PT_2004: "Pressure Transmitter PT-2004 (BarG)",
-        TT_2004: "Temperature Transmitter TT-2003 (˚C)",
-        TT_2003: "Temperature Transmitter TT-2004 (˚C) ",
+        TT_2003: "Temperature Transmitter TT-2003 (˚C)",
+        TT_2004: "Temperature Transmitter TT-2004 (˚C) ",
         TG_2005: "TG-2005 (˚C)",
 
-        GD_102_High: "GD 102 High (0: Normal - 1: Alarm)",
+        WB_1001: "Wobbe Index WB-1001 (MJ/M3)",
+
+      
 
 
-        GD_103_Low: "GD 103 Low (0: Normal - 1: Alarm)",
-        GD_102_Low: "GD 102 Low (0: Normal - 1: Alarm)",
+        GD_2002: "Gas Detector GD-2002 (%LEL)",
+        GD_2003: "Gas Detector GD-2003 (%LEL)",
+        GD_2004: "Gas Detector GD-2004 (%LEL)",
+        GD_2005: `Gas Detector GD-2005 (%LEL)`,
+        GD_2006: `Gas Detector GD-2006 (%LEL)`,
 
-        GD_101_Low: "GD 101 Low (0: Normal - 1: Alarm)",
+        TM_2002_SNG:`Tubine Meter TM2002-SNG`,
+        TM_2003_SNG:`Tubine Meter TM2003-SNG`,
+        TOTAL_SNG: `Total SNG`,
 
-        SDV_302: "SDV 302 (0: Off - 1: On)",
-        SDV_301: "SDV 301 (0: Off - 1: On)",
+        SDV_2004:"Shutdown Valve SDV-2004 (0: Close - 1: Open)",
+        SDV_2003:"Shutdown Valve SDV-2003 (0: Close - 1: Open)",
 
-        V1_Flow_Meter: `V1 Flow Meter ${nameValue.m3}`,
-        V2_Flow_Meter: `V2 Flow Meter ${nameValue.m3}`,
+        
+        
 
-        Pipe_Temp:`Pipe Temp ${nameValue.C}`,
-        Pipe_Press:`Pipe Press  (Bar)`,
 
-        Tank_TT_301: `Tank TT 301  ${nameValue.C}`,
+        GD1_STATUS:"GD-2002 Status (0: Normal - 1: Alarm)",
+        GD2_STATUS:"GD-2003 Status (0: Normal - 1: Alarm)",
+        GD3_STATUS:"GD-2004 Status (0: Normal - 1: Alarm)",
+        GD4_STATUS:"GD-2005 Status (0: Normal - 1: Alarm)",
+        GD5_STATUS:"GD-2006 Status (0: Normal - 1: Alarm)",
 
-        Tank_PT_301: `Tank PT 301 (Bar)`,
 
-        Tank_01_Level: `Tank_01_Level `,
+        SD: "Emergency Shutdown (0: Normal - 1: Smoker Detected) ",
+        HR_BC: "Horn And Beacon (0: OFF - 1: ON)",
+        ESD: "Emergency Shutdown (0: No Active - 1: Active)",
+        VAPORIZER_3: "VAPORIZER 3 (0: Stop - 1: Run)",
+        VAPORIZER_2: "VAPORIZER 2 (0: Stop - 1: Run)",
+        VAPORIZER_1: "VAPORIZER 1 (0: Stop - 1: Run)",
 
-        HORN: `HORN (0: OFF - 1: ON)`,
-        Tank_01_Volume: `SDV SOLENOID (0: Off - 1: On)`,
 
-        Consumption_Flow: `Consumption Flow ${nameValue.m3}`,
-        Flow_Velocity:`Flow Velocity ${nameValue.m3h}`
+        VAPORIZER_4: "VAPORIZER 4 (0: Stop - 1: Run)",
+        COOLING_V: " COOLING V  (0: Stop - 1: Run)",
 
+        FCV_2001: "FCV-2001 (%)",
+    
+        PERCENT_LPG:"% LPG (%)",
+        PERCENT_AIR:"% AIR (%)",
+        HV_1001:"Heat Value HV-1001 (MJ/Sm³)",
+        RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
+        FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
+        TOTAL_CNG: "Total CNG",
+        TM2002_CNG: "Tubine Meter TM2002-CNG",
+        TM2003_CNG: "Tubine Meter TM2003-CNG",
+        WB_Setpoint: "Wobbe Index Setpoint (MJ/Sm³)",
+        WIS_Calorimeter: "WIS Calorimeter (MJ/Sm³)", 
+        CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
+        SG_Calorimeter: "SG Calorimeter (rel)",
 
     };
 
@@ -1222,25 +2107,42 @@ useEffect(() => {
         const DataPT_2004  = PT_2004 === "0" ? "Stop" : PT_2004 === "1" ? "Run" : null;
 
         const DataTG_2005  = TG_2005 === "0" ? "Normal" : TG_2005 === "1" ? "Alarm" : null;
-        const DataGD_102_High  = GD_102_High === "0" ? "Normal" : GD_102_High === "1" ? "Alarm" : null;
+        const DataWB_1001  = WB_1001 === "0" ? "Normal" : WB_1001 === "1" ? "Alarm" : null;
         const DataTT_2004  = TT_2004 === "0" ? "Normal" : TT_2004 === "1" ? "Alarm" : null;
 
-        const DataGD_101_Low  = GD_101_Low === "0" ? "Normal" : GD_101_Low === "1" ? "Alarm" : null;
-        const DataGD_102_Low  = GD_102_Low === "0" ? "Normal" : GD_102_Low === "1" ? "Alarm" : null;
-        const DataGD_103_Low  = GD_103_Low === "0" ? "Normal" : GD_103_Low === "1" ? "Alarm" : null;
+        const DataGD_2003  = GD_2003 === "0" ? "Normal" : GD_2003 === "1" ? "Alarm" : null;
+        const DataGD_2004  = GD_2004 === "0" ? "Normal" : GD_2004 === "1" ? "Alarm" : null;
+        const DataGD_2002  = GD_2002 === "0" ? "Normal" : GD_2002 === "1" ? "Alarm" : null;
 
-        const DataSDV_301  = SDV_301 === "0" ? "Off" : SDV_301 === "1" ? "On" : null;
-        const DataSDV_302  = SDV_302 === "0" ? "Off" : SDV_302 === "1" ? "On" : null;
+        const DataGD5_STATUS  = GD5_STATUS === "0" ? "Normal" : GD5_STATUS === "1" ? "Alarm" : null;
+        const DataGD4_STATUS  = GD4_STATUS === "0" ? "Normal" : GD4_STATUS === "1" ? "Alarm" : null;
+        const DataGD3_STATUS  = GD3_STATUS === "0" ? "Normal" : GD3_STATUS === "1" ? "Alarm" : null;
+        const DataGD2_STATUS  = GD2_STATUS === "0" ? "Normal" : GD2_STATUS === "1" ? "Alarm" : null;
+        const DataGD1_STATUS  = GD1_STATUS === "0" ? "Normal" : GD1_STATUS === "1" ? "Alarm" : null;
 
+        const DataSDV_2004  = SDV_2004 === "0" ? "Close" : SDV_2004 === "1" ? "Open" : null;
+        const DataSDV_2003  = SDV_2003 === "0" ? "Close" : SDV_2003 === "1" ? "Open" : null;
+
+        const DataSD  = SD === "0" ? "Normal" : SD === "1" ? "Smoker Detected" : null;
+        const DataHR_BC  = HR_BC === "0" ? "OFF" : HR_BC === "1" ? "ON" : null;
+        const DataESD  = ESD === "0" ? "No Active" : ESD === "1" ? "Active" : null;
+
+        const DataVAPORIZER_3  = VAPORIZER_3 === "0" ? "Stop" : VAPORIZER_3 === "1" ? "Run" : null;
+        const DataVAPORIZER_2  = VAPORIZER_2 === "0" ? "Stop" : VAPORIZER_2 === "1" ? "Run" : null;
+        const DataVAPORIZER_1  = VAPORIZER_1 === "0" ? "Stop" : VAPORIZER_1 === "1" ? "Run" : null;
+        const DataVAPORIZER_4  = VAPORIZER_4 === "0" ? "Stop" : VAPORIZER_4 === "1" ? "Run" : null;
+
+        const DataCOOLING_V  = COOLING_V === "0" ? "Stop" : COOLING_V === "1" ? "Run" : null;
+
+
+
+        const DataFCV_MODE  = FCV_MODE === "0" ? "Manual" : FCV_MODE === "1" ? "Auto" : null;
+        const DataRATIO_MODE  = RATIO_MODE === "0" ? "Manual" : RATIO_MODE === "1" ? "Auto" : null;
+   
+   
 
             const combineCss = {
 
-
-
-
-
-            
-        
                 CSSPT_2004 : {
                     color:exceedThresholdPT_2004 && !maintainPT_2004
                     ? "#ff5656"
@@ -1254,7 +2156,6 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
-        
         
                 CSSPT_2005 : {
                     color:exceedThresholdPT_2005 && !maintainPT_2005
@@ -1302,104 +2203,91 @@ useEffect(() => {
              
         
         
-                CSSGD_102_High : {
-                    color:exceedThresholdGD_102_High && !maintainGD_102_High
+                CSSWB_1001 : {
+                    color:exceedThresholdWB_1001 && !maintainWB_1001
                     ? "#ff5656"
-                    : maintainGD_102_High
+                    : maintainWB_1001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_102_High || maintainGD_102_High)
+                    fontWeight: (exceedThresholdWB_1001 || maintainWB_1001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_102_High || maintainGD_102_High)
+                    fontSize: (exceedThresholdWB_1001 || maintainWB_1001)
                     ? 18
                     : ""
                 },
            
         
-                CSSSDV_301 : {
-                    color:exceedThresholdSDV_301 && !maintainSDV_301
+                CSSGD5_STATUS : {
+                    color:exceedThresholdGD5_STATUS && !maintainGD5_STATUS
                     ? "#ff5656"
-                    : maintainSDV_301
+                    : maintainGD5_STATUS
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSDV_301 || maintainSDV_301)
+                    fontWeight: (exceedThresholdGD5_STATUS || maintainGD5_STATUS)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSDV_301 || maintainSDV_301)
+                    fontSize: (exceedThresholdGD5_STATUS || maintainGD5_STATUS)
                     ? 18
                     : ""
                 },
         
-                CSSGD_103_Low : {
-                    color:exceedThresholdGD_103_Low && !maintainGD_103_Low
+                CSSGD_2002 : {
+                    color:exceedThresholdGD_2002 && !maintainGD_2002
                     ? "#ff5656"
-                    : maintainGD_103_Low
+                    : maintainGD_2002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_103_Low || maintainGD_103_Low)
+                    fontWeight: (exceedThresholdGD_2002 || maintainGD_2002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_103_Low || maintainGD_103_Low)
+                    fontSize: (exceedThresholdGD_2002 || maintainGD_2002)
                     ? 18
                     : ""
                 },
         
-                CSSGD_101_Low : {
-                    color:exceedThresholdGD_101_Low && !maintainGD_101_Low
+                CSSGD_2003 : {
+                    color:exceedThresholdGD_2003 && !maintainGD_2003
                     ? "#ff5656"
-                    : maintainGD_101_Low
+                    : maintainGD_2003
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_101_Low || maintainGD_101_Low)
+                    fontWeight: (exceedThresholdGD_2003 || maintainGD_2003)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_101_Low || maintainGD_101_Low)
+                    fontSize: (exceedThresholdGD_2003 || maintainGD_2003)
                     ? 18
                     : ""
                 },
         
-                CSSSDV_302 : {
-                    color:exceedThresholdSDV_302 && !maintainSDV_302
-                    ? "#ff5656"
-                    : maintainSDV_302
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdSDV_302 || maintainSDV_302)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdSDV_302 || maintainSDV_302)
-                    ? 18
-                    : ""
-                },
         
           
         
         
-                CSSV1_Flow_Meter : {
-                    color:exceedThresholdV1_Flow_Meter && !maintainV1_Flow_Meter
+                CSSGD_2005 : {
+                    color:exceedThresholdGD_2005 && !maintainGD_2005
                     ? "#ff5656"
-                    : maintainV1_Flow_Meter
+                    : maintainGD_2005
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdV1_Flow_Meter || maintainV1_Flow_Meter)
+                    fontWeight: (exceedThresholdGD_2005 || maintainGD_2005)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdV1_Flow_Meter || maintainV1_Flow_Meter)
+                    fontSize: (exceedThresholdGD_2005 || maintainGD_2005)
                     ? 18
                     : ""
                 },
         
-                CSSV2_Flow_Meter : {
-                    color:exceedThresholdV2_Flow_Meter && !maintainV2_Flow_Meter
+                CSSGD_2006 : {
+                    color:exceedThresholdGD_2006 && !maintainGD_2006
                     ? "#ff5656"
-                    : maintainV2_Flow_Meter
+                    : maintainGD_2006
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdV2_Flow_Meter || maintainV2_Flow_Meter)
+                    fontWeight: (exceedThresholdGD_2006 || maintainGD_2006)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdV2_Flow_Meter || maintainV2_Flow_Meter)
+                    fontSize: (exceedThresholdGD_2006 || maintainGD_2006)
                     ? 18
                     : ""
                 },
@@ -1422,113 +2310,113 @@ useEffect(() => {
                 },
         
         
-                CSSPipe_Temp : {
-                         color:exceedThresholdPipe_Temp && !maintainPipe_Temp
+                CSSTM_2002_SNG : {
+                         color:exceedThresholdTM_2002_SNG && !maintainTM_2002_SNG
                     ? "#ff5656"
-                    : maintainPipe_Temp
+                    : maintainTM_2002_SNG
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPipe_Temp || maintainPipe_Temp)
+                    fontWeight: (exceedThresholdTM_2002_SNG || maintainTM_2002_SNG)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPipe_Temp || maintainPipe_Temp)
+                    fontSize: (exceedThresholdTM_2002_SNG || maintainTM_2002_SNG)
                     ? 18
                     : ""
                 },
-                CSSPipe_Press : {
-                    color:exceedThresholdPipe_Press && !maintainPipe_Press
+                CSSTM_2003_SNG : {
+                    color:exceedThresholdTM_2003_SNG && !maintainTM_2003_SNG
                     ? "#ff5656"
-                    : maintainPipe_Press
+                    : maintainTM_2003_SNG
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPipe_Press || maintainPipe_Press)
+                    fontWeight: (exceedThresholdTM_2003_SNG || maintainTM_2003_SNG)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPipe_Press || maintainPipe_Press)
-                    ? 18
-                    : ""
-                },
-        
-                CSSGD_102_Low : {
-                    color:exceedThresholdGD_102_Low && !maintainGD_102_Low
-                    ? "#ff5656"
-                    : maintainGD_102_Low
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdGD_102_Low || maintainGD_102_Low)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdGD_102_Low || maintainGD_102_Low)
+                    fontSize: (exceedThresholdTM_2003_SNG || maintainTM_2003_SNG)
                     ? 18
                     : ""
                 },
         
-                CSSTank_01_Volume : {
-                    color:exceedThresholdTank_01_Volume && !maintainTank_01_Volume
+                CSSGD_2004 : {
+                    color:exceedThresholdGD_2004 && !maintainGD_2004
                     ? "#ff5656"
-                    : maintainTank_01_Volume
+                    : maintainGD_2004
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTank_01_Volume || maintainTank_01_Volume)
+                    fontWeight: (exceedThresholdGD_2004 || maintainGD_2004)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTank_01_Volume || maintainTank_01_Volume)
+                    fontSize: (exceedThresholdGD_2004 || maintainGD_2004)
                     ? 18
                     : ""
                 },
-                CSSTank_TT_301 : {
-                    color:exceedThresholdTank_TT_301 && !maintainTank_TT_301
+        
+                CSSGD2_STATUS : {
+                    color:exceedThresholdGD2_STATUS && !maintainGD2_STATUS
                     ? "#ff5656"
-                    : maintainTank_TT_301
+                    : maintainGD2_STATUS
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTank_TT_301 || maintainTank_TT_301)
+                    fontWeight: (exceedThresholdGD2_STATUS || maintainGD2_STATUS)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTank_TT_301 || maintainTank_TT_301)
+                    fontSize: (exceedThresholdGD2_STATUS || maintainGD2_STATUS)
                     ? 18
                     : ""
                 },
-                CSSTank_PT_301 : {
-                    color:exceedThresholdTank_PT_301 && !maintainTank_PT_301
+                CSSTOTAL_SNG : {
+                    color:exceedThresholdTOTAL_SNG && !maintainTOTAL_SNG
                     ? "#ff5656"
-                    : maintainTank_PT_301
+                    : maintainTOTAL_SNG
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTank_PT_301 || maintainTank_PT_301)
+                    fontWeight: (exceedThresholdTOTAL_SNG || maintainTOTAL_SNG)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTank_PT_301 || maintainTank_PT_301)
+                    fontSize: (exceedThresholdTOTAL_SNG || maintainTOTAL_SNG)
+                    ? 18
+                    : ""
+                },
+                CSSSDV_2004 : {
+                    color:exceedThresholdSDV_2004 && !maintainSDV_2004
+                    ? "#ff5656"
+                    : maintainSDV_2004
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdSDV_2004 || maintainSDV_2004)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdSDV_2004 || maintainSDV_2004)
                     ? 18
                     : ""
                 },
 
 
 
-                CSSTank_01_Mass : {
-                    color:exceedThresholdTank_01_Mass && !maintainTank_01_Mass
+                CSSGD1_STATUS : {
+                    color:exceedThresholdGD1_STATUS && !maintainGD1_STATUS
                ? "#ff5656"
-               : maintainTank_01_Mass
+               : maintainGD1_STATUS
                ? "orange"
                : "" ,
-               fontWeight: (exceedThresholdTank_01_Mass || maintainTank_01_Mass)
+               fontWeight: (exceedThresholdGD1_STATUS || maintainGD1_STATUS)
                ? 600
                : "",
-               fontSize: (exceedThresholdTank_01_Mass || maintainTank_01_Mass)
+               fontSize: (exceedThresholdGD1_STATUS || maintainGD1_STATUS)
                ? 18
                : ""
            },
    
-           CSSTank_01_Level : {
-               color:exceedThresholdTank_01_Level && !maintainTank_01_Level
+           CSSSDV_2003 : {
+               color:exceedThresholdSDV_2003 && !maintainSDV_2003
                ? "#ff5656"
-               : maintainTank_01_Level
+               : maintainSDV_2003
                ? "orange"
                : "" ,
-               fontWeight: (exceedThresholdTank_01_Level || maintainTank_01_Level)
+               fontWeight: (exceedThresholdSDV_2003 || maintainSDV_2003)
                ? 600
                : "",
-               fontSize: (exceedThresholdTank_01_Level || maintainTank_01_Level)
+               fontSize: (exceedThresholdSDV_2003 || maintainSDV_2003)
                ? 18
                : ""
            },
@@ -1546,33 +2434,345 @@ useEffect(() => {
                ? 18
                : ""
            },
-           CSSConsumption_Flow : {
-               color:exceedThresholdConsumption_Flow && !maintainConsumption_Flow
+           CSSGD3_STATUS : {
+               color:exceedThresholdGD3_STATUS && !maintainGD3_STATUS
                ? "#ff5656"
-               : maintainConsumption_Flow
+               : maintainGD3_STATUS
                ? "orange"
                : "" ,
-               fontWeight: (exceedThresholdConsumption_Flow || maintainConsumption_Flow)
+               fontWeight: (exceedThresholdGD3_STATUS || maintainGD3_STATUS)
                ? 600
                : "",
-               fontSize: (exceedThresholdConsumption_Flow || maintainConsumption_Flow)
+               fontSize: (exceedThresholdGD3_STATUS || maintainGD3_STATUS)
                ? 18
                : ""
            },
-           CSSFlow_Velocity : {
-               color:exceedThresholdFlow_Velocity && !maintainFlow_Velocity
+           CSSGD4_STATUS : {
+               color:exceedThresholdGD4_STATUS && !maintainGD4_STATUS
                ? "#ff5656"
-               : maintainFlow_Velocity
+               : maintainGD4_STATUS
                ? "orange"
                : "" ,
-               fontWeight: (exceedThresholdFlow_Velocity || maintainFlow_Velocity)
+               fontWeight: (exceedThresholdGD4_STATUS || maintainGD4_STATUS)
                ? 600
                : "",
-               fontSize: (exceedThresholdFlow_Velocity || maintainFlow_Velocity)
+               fontSize: (exceedThresholdGD4_STATUS || maintainGD4_STATUS)
                ? 18
                : ""
            },
    
+           CSSESD : {
+            color:exceedThresholdESD && !maintainESD
+            ? "#ff5656"
+            : maintainESD
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdESD || maintainESD)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdESD || maintainESD)
+            ? 18
+            : ""
+        },
+
+
+        CSSHR_BC : {
+            color:exceedThresholdHR_BC && !maintainHR_BC
+            ? "#ff5656"
+            : maintainHR_BC
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdHR_BC || maintainHR_BC)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdHR_BC || maintainHR_BC)
+            ? 18
+            : ""
+        },
+
+
+        CSSSD : {
+            color:exceedThresholdSD && !maintainSD
+            ? "#ff5656"
+            : maintainSD
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdSD || maintainSD)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdSD || maintainSD)
+            ? 18
+            : ""
+        },
+        CSSVAPORIZER_1 : {
+            color:exceedThresholdVAPORIZER_1 && !maintainVAPORIZER_1
+            ? "#ff5656"
+            : maintainVAPORIZER_1
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdVAPORIZER_1 || maintainVAPORIZER_1)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdVAPORIZER_1 || maintainVAPORIZER_1)
+            ? 18
+            : ""
+        },
+
+
+        CSSVAPORIZER_3 : {
+            color:exceedThresholdVAPORIZER_3 && !maintainVAPORIZER_3
+            ? "#ff5656"
+            : maintainVAPORIZER_3
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdVAPORIZER_3 || maintainVAPORIZER_3)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdVAPORIZER_3 || maintainVAPORIZER_3)
+            ? 18
+            : ""
+        },
+
+
+
+        CSSVAPORIZER_2 : {
+            color:exceedThresholdVAPORIZER_2 && !maintainVAPORIZER_2
+            ? "#ff5656"
+            : maintainVAPORIZER_2
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdVAPORIZER_2 || maintainVAPORIZER_2)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdVAPORIZER_2 || maintainVAPORIZER_2)
+            ? 18
+            : ""
+        },
+   
+
+     
+
+        CSSVAPORIZER_4 : {
+            color:exceedThresholdVAPORIZER_4 && !maintainVAPORIZER_4
+            ? "#ff5656"
+            : maintainVAPORIZER_4
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdVAPORIZER_4 || maintainVAPORIZER_4)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdVAPORIZER_4 || maintainVAPORIZER_4)
+            ? 18
+            : ""
+        },
+
+        CSSCOOLING_V : {
+            color:exceedThresholdCOOLING_V && !maintainCOOLING_V
+            ? "#ff5656"
+            : maintainCOOLING_V
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdCOOLING_V || maintainCOOLING_V)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdCOOLING_V || maintainCOOLING_V)
+            ? 18
+            : ""
+        },
+
+
+        CSSFCV_2001 : {
+            color:exceedThresholdFCV_2001 && !maintainFCV_2001
+            ? "#ff5656"
+            : maintainFCV_2001
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdFCV_2001 || maintainFCV_2001)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdFCV_2001 || maintainFCV_2001)
+            ? 18
+            : ""
+        },
+
+
+        
+        CSSPERCENT_LPG : {
+            color:exceedThresholdPERCENT_LPG && !maintainPERCENT_LPG
+            ? "#ff5656"
+            : maintainPERCENT_LPG
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdPERCENT_LPG || maintainPERCENT_LPG)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdPERCENT_LPG || maintainPERCENT_LPG)
+            ? 18
+            : ""
+        },
+
+
+        CSSPERCENT_AIR : {
+            color:exceedThresholdPERCENT_AIR && !maintainPERCENT_AIR
+            ? "#ff5656"
+            : maintainPERCENT_AIR
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdPERCENT_AIR || maintainPERCENT_AIR)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdPERCENT_AIR || maintainPERCENT_AIR)
+            ? 18
+            : ""
+        },
+
+
+        CSSHV_1001 : {
+            color:exceedThresholdHV_1001 && !maintainHV_1001
+            ? "#ff5656"
+            : maintainHV_1001
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdHV_1001 || maintainHV_1001)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdHV_1001 || maintainHV_1001)
+            ? 18
+            : ""
+        },
+        CSSRATIO_MODE : {
+            color:exceedThresholdRATIO_MODE && !maintainRATIO_MODE
+            ? "#ff5656"
+            : maintainRATIO_MODE
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdRATIO_MODE || maintainRATIO_MODE)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdRATIO_MODE || maintainRATIO_MODE)
+            ? 18
+            : ""
+        },
+
+
+        CSSTOTAL_CNG : {
+            color:exceedThresholdTOTAL_CNG && !maintainTOTAL_CNG
+            ? "#ff5656"
+            : maintainTOTAL_CNG
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdTOTAL_CNG || maintainTOTAL_CNG)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdTOTAL_CNG || maintainTOTAL_CNG)
+            ? 18
+            : ""
+        },
+
+
+
+        CSSFCV_MODE : {
+            color:exceedThresholdFCV_MODE && !maintainFCV_MODE
+            ? "#ff5656"
+            : maintainFCV_MODE
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdFCV_MODE || maintainFCV_MODE)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdFCV_MODE || maintainFCV_MODE)
+            ? 18
+            : ""
+        },
+   
+
+     
+
+        CSSTM2002_CNG : {
+            color:exceedThresholdTM2002_CNG && !maintainTM2002_CNG
+            ? "#ff5656"
+            : maintainTM2002_CNG
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            ? 18
+            : ""
+        },
+
+        CSSTM2003_CNG : {
+            color:exceedThresholdTM2003_CNG && !maintainTM2003_CNG
+            ? "#ff5656"
+            : maintainTM2003_CNG
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            ? 18
+            : ""
+        },
+
+
+        CSSWB_Setpoint : {
+            color:exceedThresholdWB_Setpoint && !maintainWB_Setpoint
+            ? "#ff5656"
+            : maintainWB_Setpoint
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdWB_Setpoint || maintainWB_Setpoint)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdWB_Setpoint || maintainWB_Setpoint)
+            ? 18
+            : ""
+        },
+
+        CSSCVS_Calorimeter : {
+            color:exceedThresholdCVS_Calorimeter && !maintainCVS_Calorimeter
+            ? "#ff5656"
+            : maintainCVS_Calorimeter
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdCVS_Calorimeter || maintainCVS_Calorimeter)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdCVS_Calorimeter || maintainCVS_Calorimeter)
+            ? 18
+            : ""
+        },
+
+  
+        CSSWIS_Calorimeter : {
+            color:exceedThresholdWIS_Calorimeter && !maintainWIS_Calorimeter
+            ? "#ff5656"
+            : maintainWIS_Calorimeter
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdWIS_Calorimeter || maintainWIS_Calorimeter)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdWIS_Calorimeter || maintainWIS_Calorimeter)
+            ? 18
+            : ""
+        },
+
+        CSSSG_Calorimeter : {
+            color:exceedThresholdSG_Calorimeter && !maintainSG_Calorimeter
+            ? "#ff5656"
+            : maintainSG_Calorimeter
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdSG_Calorimeter || maintainSG_Calorimeter)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdSG_Calorimeter || maintainSG_Calorimeter)
+            ? 18
+            : ""
+        },
         
           };
 
@@ -1592,7 +2792,7 @@ useEffect(() => {
      
         {
             name: <span>{tagNamePLC.TT_2004}</span>,
-            PLC: <span style={combineCss.CSSGD_102_High}>{GD_102_High} {DataGD_102_High}</span>,
+            PLC: <span style={combineCss.CSSTT_2004}>{TT_2004} {DataTT_2004}</span>,
         },
         {
             name: <span>{tagNamePLC.TT_2003}</span>,
@@ -1604,97 +2804,188 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSTG_2005}> {TG_2005} {DataTG_2005}</span>,
         },
       
-
         {
-            name: <span>{tagNamePLC.V1_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{V1_Flow_Meter} </span>,
+            name: <span>{tagNamePLC.WB_1001}</span>,
+            PLC: <span style={combineCss.CSSWB_1001}>{WB_1001} {DataWB_1001}</span>,
         },
         {
-            name: <span>{tagNamePLC.V2_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {V2_Flow_Meter} </span>,
+            name: <span>{tagNamePLC.GD_2002}</span>,
+            PLC: <span style={combineCss.CSSGD_2002}> {GD_2002} {DataGD_2002}</span>,
+        },
+           
+        {
+            name: <span>{tagNamePLC.GD_2003}</span>,
+            PLC: <span style={combineCss.CSSGD_2003}>{GD_2003} {DataGD_2003}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD_2004}</span>,
+            PLC: <span style={combineCss.CSSGD_2004}> {GD_2004} {DataGD_2004}</span>,
+        },
+      
+      
+        {
+            name: <span>{tagNamePLC.GD_2005}</span>,
+            PLC: <span style={combineCss.CSSGD_2005}>{GD_2005} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD_2006}</span>,
+            PLC: <span style={combineCss.CSSGD_2006}> {GD_2006} </span>,
         },
 
 
         {
-            name: <span>{tagNamePLC.Pipe_Temp}</span>,
-            PLC: <span style={combineCss.CSSPipe_Temp}>{Pipe_Temp} </span>,
+            name: <span>{tagNamePLC.TM_2002_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_2002_SNG}>{TM_2002_SNG} </span>,
         },
      
         {
-            name: <span>{tagNamePLC.Pipe_Press}</span>,
-            PLC: <span style={combineCss.CSSPipe_Press}>{Pipe_Press}</span>,
+            name: <span>{tagNamePLC.TM_2003_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_2003_SNG}>{TM_2003_SNG}</span>,
         },
         {
-            name: <span>{tagNamePLC.Tank_TT_301}</span>,
-            PLC: <span style={combineCss.CSSTank_TT_301}>{Tank_TT_301}  </span>,
+            name: <span>{tagNamePLC.TOTAL_SNG}</span>,
+            PLC: <span style={combineCss.CSSTOTAL_SNG}>{TOTAL_SNG}  </span>,
         },
         {
-            name: <span>{tagNamePLC.Tank_PT_301}</span>,
-            PLC: <span style={combineCss.CSSTank_PT_301}> {Tank_PT_301} </span>,
+            name: <span>{tagNamePLC.SDV_2004}</span>,
+            PLC: <span style={combineCss.CSSSDV_2004}> {SDV_2004}  {DataSDV_2004}</span>,
         },
 
         {
-            name: <span>Tank Level (%)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
+            name: <span>{tagNamePLC.SDV_2003}</span>,
+            PLC: <span style={combineCss.CSSSDV_2003}>{SDV_2003} {DataSDV_2003}</span>,
         },
 
-    
 //===
 
         {
-            name: <span>Tank Mass (Kg)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Mass}  </span>,
+            name: <span>{tagNamePLC.GD1_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD1_STATUS}>{GD1_STATUS}  {DataGD1_STATUS}</span>,
         },
      
         {
-            name: <span>Tank Volume (L)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Volume}  </span>,
+            name: <span>{tagNamePLC.GD2_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD2_STATUS}>{GD2_STATUS}  {DataGD2_STATUS}</span>,
         },
       
 
 
         {
-            name: <span>{tagNamePLC.Consumption_Flow}</span>,
-            PLC: <span style={combineCss.CSSConsumption_Flow}>{Consumption_Flow} </span>,
+            name: <span>{tagNamePLC.GD3_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD3_STATUS}>{GD3_STATUS}  {DataGD3_STATUS}</span>,
         },
         {
-            name: <span>{tagNamePLC.Flow_Velocity}</span>,
-            PLC: <span style={combineCss.CSSFlow_Velocity}> {Flow_Velocity} </span>,
+            name: <span>{tagNamePLC.GD4_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD4_STATUS}> {GD4_STATUS}  {DataGD4_STATUS}</span>,
+        },
+     
+ 
+
+        {
+            name: <span>{tagNamePLC.GD5_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD5_STATUS}> {GD5_STATUS} {DataGD5_STATUS}</span>,
+        },
+        
+        {
+            name: <span>{tagNamePLC.SD}</span>,
+            PLC: <span style={combineCss.CSSSD}> {SD} {DataSD}</span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.HR_BC}</span>,
+            PLC: <span style={combineCss.CSSHR_BC}> {HR_BC} {DataHR_BC}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.ESD}</span>,
+            PLC: <span style={combineCss.CSSESD}>{} {ESD} {DataESD}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.VAPORIZER_2}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_1}>{VAPORIZER_1} {DataVAPORIZER_1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.VAPORIZER_1}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_2}>{VAPORIZER_2} {DataVAPORIZER_2}</span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.VAPORIZER_3}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_3}> {VAPORIZER_3} {DataVAPORIZER_3}</span>,
+        },
+     
+        {
+            name: <span>{tagNamePLC.VAPORIZER_4}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_4}> {VAPORIZER_4} {DataVAPORIZER_4}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.COOLING_V}</span>,
+            PLC: <span style={combineCss.CSSCOOLING_V}>{COOLING_V} {DataCOOLING_V}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.FCV_2001}</span>,
+            PLC: <span style={combineCss.CSSFCV_2001}> {FCV_2001} </span>,
         },
      
      
+
+     
+        {
+            name: <span>{tagNamePLC.PERCENT_LPG}</span>,
+            PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {PERCENT_LPG} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.PERCENT_AIR}</span>,
+            PLC: <span style={combineCss.CSSPERCENT_AIR}> {PERCENT_AIR} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.HV_1001}</span>,
+            PLC: <span style={combineCss.CSSHV_1001}> {HV_1001} </span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.TOTAL_CNG}</span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.RATIO_MODE}</span>,
+            PLC: <span style={combineCss.CSSFCV_MODE}>{FCV_MODE} {DataFCV_MODE}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.FCV_MODE}</span>,
+            PLC: <span style={combineCss.CSSRATIO_MODE}>{RATIO_MODE} {DataRATIO_MODE}</span>,
+        },
+      
+        {
+            name: <span>{tagNamePLC.TM2002_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM2002_CNG}> {TM2002_CNG} </span>,
+        },
+
+        {
+            name: <span>{tagNamePLC.TM2003_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM2003_CNG}>{TM2003_CNG} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.WB_Setpoint}</span>,
+            PLC: <span style={combineCss.CSSWB_Setpoint}> {WB_Setpoint}</span>,
+        },
     
-        {
-            name: <span>{tagNamePLC.GD_102_High}</span>,
-            PLC: <span style={combineCss.CSSTT_2004}>{TT_2004} {DataTT_2004}</span>,
-        },
-      
-      
-        {
-            name: <span>{tagNamePLC.GD_101_Low}</span>,
-            PLC: <span style={combineCss.CSSGD_101_Low}>{GD_101_Low} {DataGD_101_Low}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD_102_Low}</span>,
-            PLC: <span style={combineCss.CSSGD_102_Low}> {GD_102_Low} {DataGD_102_Low}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD_103_Low}</span>,
-            PLC: <span style={combineCss.CSSGD_103_Low}> {GD_103_Low} {DataGD_103_Low}</span>,
-        },
-
      
  
 
 
         {
-            name: <span>{tagNamePLC.SDV_301}</span>,
-            PLC: <span style={combineCss.CSSSDV_301}> {SDV_301} {DataSDV_301}</span>,
+            name: <span>{tagNamePLC.WIS_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {WIS_Calorimeter} </span>,
         },
         
         {
-            name: <span>{tagNamePLC.SDV_302}</span>,
-            PLC: <span style={combineCss.CSSSDV_302}>{SDV_302} {DataSDV_302}</span>,
+            name: <span>{tagNamePLC.CVS_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSCVS_Calorimeter}>{CVS_Calorimeter} </span>,
+        },
+
+        {
+            name: <span>{tagNamePLC.SG_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSSG_Calorimeter}> {SG_Calorimeter}</span>,
         },
       
     ];
@@ -1721,7 +3012,7 @@ useEffect(() => {
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            MEIKO
+                            SNG BINH DUONG
                         </div>
 
                         

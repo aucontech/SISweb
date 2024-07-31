@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "primereact/button";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -73,7 +73,7 @@ export const borderBox = "#aad4ff";
 
 export const colorNameValue = "black";
 export const colorData = "green";
-export const backgroundGraphic = '#036E9B';
+export const backgroundGraphic = "#036E9B";
 export const colorIMG_none = "#000";
 export const line = "#ffaa00";
 
@@ -801,7 +801,6 @@ export default function DemoFlowOTS() {
     const [LowSVF1, setLowSVF1] = useState<number | null>(null);
     const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-
     const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
 
     useEffect(() => {
@@ -1334,8 +1333,6 @@ export default function DemoFlowOTS() {
         }
     }, [audioSVA2]);
 
-
-
     //================================ SVA2 FIQ 1901 ======================================================
 
     //================================ GVA2 FIQ 1901 ======================================================
@@ -1513,32 +1510,31 @@ export default function DemoFlowOTS() {
                 (item: any) => item.key === "GD3_Low"
             );
             setLowGD03(LowGD03?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighSVF1 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setHighSVF1(HighSVF1?.value || null);
 
             const LowSVF1 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setLowSVF1(LowSVF1?.value || null);
-//========================================================================
- 
+            //========================================================================
 
             const HighGVF1 = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setHighGVF1(HighGVF1?.value || null);
 
             const LowGVF1 = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setLowGVF1(LowGVF1?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighSVA1 = res.data.find(
                 (item: any) =>
@@ -1551,7 +1547,7 @@ export default function DemoFlowOTS() {
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
             setLowSVA1(LowSVA1?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighGVA1 = res.data.find(
                 (item: any) =>
@@ -1564,31 +1560,31 @@ export default function DemoFlowOTS() {
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
             setLowGVA1(LowGVA1?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighSVF2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
             setHighSVF2(HighSVF2?.value || null);
 
             const LowSVF2 = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_02_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
             setLowSVF2(LowSVF2?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
             setHighGVF2(HighGVF2?.value || null);
 
             const LowGVF2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
             setLowGVF2(LowGVF2?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighSVA2 = res.data.find(
                 (item: any) =>
@@ -1601,18 +1597,20 @@ export default function DemoFlowOTS() {
                     item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
             setLowSVA2(LowSVA2?.value || null);
-//========================================================================
+            //========================================================================
 
             const HighGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High"
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
             setHighGVA2(HighGVA2?.value || null);
 
             const LowGVA2 = res.data.find(
-                (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
             setLowGVA2(LowGVA2?.value || null);
-//========================================================================
+            //========================================================================
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
@@ -2766,11 +2764,12 @@ export default function DemoFlowOTS() {
                         label: (
                             <div>
                                 <div>
-                                {NO === "1" ? SVD_NO : NO === "0" ? SVD_NC : null}
-                                     
+                                    {NO === "1"
+                                        ? SVD_NO
+                                        : NO === "0"
+                                        ? SVD_NC
+                                        : null}
                                 </div>
-
-                          
                             </div>
                         ),
                     },
@@ -2850,12 +2849,12 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-                const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+              // const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
@@ -2870,8 +2869,8 @@ export default function DemoFlowOTS() {
               BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
               BallValue10: { x: 44.70166109368827, y: 1204.159292175339 },
               BallValueCenter: {
-                  x: -165.80710887361258,
-                  y: 1006.8595594996316,
+                  x: -167.30710887361258,
+                  y: 1007.8595594996316,
               },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
@@ -2882,8 +2881,8 @@ export default function DemoFlowOTS() {
                   y: 1039.286470841561,
               },
               BallValueCenter_None2: {
-                  x: -133.78263324371193,
-                  y: 1038.6243048935844,
+                  x: -136.78263324371193,
+                  y: 1039.1243048935844,
               },
               BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
               BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
@@ -2976,7 +2975,7 @@ export default function DemoFlowOTS() {
               SDV_IMG: { x: -1114.8297195331543, y: 995.274284574213 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
               SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
-              T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
+              T_juntion_11: { x: -71.88782403918049, y: 826.0462087381112 },
               T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
               Tank: { x: -956.2937582378859, y: 985.6718473953865 },
               Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
@@ -2999,7 +2998,7 @@ export default function DemoFlowOTS() {
               animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
               animation_line11: { x: -36.25094554550509, y: 845.4101876460927 },
               animation_line12: {
-                  x: -133.2992075354374,
+                  x: -134.7992075354374,
                   y: 1038.0566391817506,
               },
               animation_line13: {
@@ -6470,13 +6469,7 @@ export default function DemoFlowOTS() {
 
     return (
         <>
-            {/* <audio ref={audioRef}>
-                <source
-                    src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
-                    type="audio/mpeg"
-                />
-            </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 

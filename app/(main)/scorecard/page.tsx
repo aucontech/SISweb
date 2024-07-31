@@ -18,7 +18,7 @@ const ScoreCard = () => {
                     <NG_Scorecard />
                 </TabPanel>
                     
-                <TabPanel header="SNG">Updating...</TabPanel>
+                <TabPanel header="SNG"><SNG_Scorecard/></TabPanel>
 
                 <TabPanel header="CNG">Updating...</TabPanel>
 
