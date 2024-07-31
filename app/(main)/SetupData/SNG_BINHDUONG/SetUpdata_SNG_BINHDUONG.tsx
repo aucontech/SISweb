@@ -4847,9 +4847,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSGD1_STATUS} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSGD1_STATUS}>GD-2002 Status</span> ,
 
-  modbus: <span style={combineCss.CSSGD1_STATUS}>40033	{DataGD1_STATUS}</span> ,
+  modbus: <span style={combineCss.CSSGD1_STATUS}>40033	</span> ,
 
- value: <span style={combineCss.CSSGD1_STATUS} > {GD1_STATUS}</span> , 
+ value: <span style={combineCss.CSSGD1_STATUS} > {GD1_STATUS} {DataGD1_STATUS}</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -4877,9 +4877,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSGD2_STATUS} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSGD2_STATUS}>GD-2003 Status</span> ,
 
- modbus: <span style={combineCss.CSSGD2_STATUS}>40035 {DataGD2_STATUS}</span> ,
+ modbus: <span style={combineCss.CSSGD2_STATUS}>40035 </span> ,
 
-value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS}</span> , 
+value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS} {DataGD2_STATUS}</span> , 
  high: <InputText 
 disabled={AuthInputHighLow}
  
@@ -4904,9 +4904,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSGD3_STATUS} >{PLC_STTValue}</span>,
   name: <span style={combineCss.CSSGD3_STATUS}>GD-2004 Status</span> ,
 
-  modbus: <span style={combineCss.CSSGD3_STATUS}>40037	{DataGD3_STATUS}</span> ,
+  modbus: <span style={combineCss.CSSGD3_STATUS}>40037	</span> ,
 
- value: <span style={combineCss.CSSGD3_STATUS} > {GD3_STATUS}</span> , 
+ value: <span style={combineCss.CSSGD3_STATUS} > {GD3_STATUS} {DataGD3_STATUS}</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -4932,9 +4932,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSGD4_STATUS} >{PLC_STTValue}</span>,
  name: <span style={combineCss.CSSGD4_STATUS}>GD-2005 Status</span> ,
 
- modbus: <span style={combineCss.CSSGD4_STATUS}>40039 {DataGD4_STATUS}</span> ,
+ modbus: <span style={combineCss.CSSGD4_STATUS}>40039 </span> ,
 
-value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS}</span> , 
+value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS} {DataGD4_STATUS}</span> , 
  high: <InputText 
 disabled={AuthInputHighLow}
  
@@ -4960,9 +4960,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSGD5_STATUS} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSGD5_STATUS}>GD-2006 Status</span> ,
 
-modbus: <span style={combineCss.CSSGD5_STATUS}>40041 {DataGD5_STATUS}</span> ,
+modbus: <span style={combineCss.CSSGD5_STATUS}>40041 </span> ,
 
-value: <span style={combineCss.CSSGD5_STATUS} > {GD5_STATUS}</span> , 
+value: <span style={combineCss.CSSGD5_STATUS} > {GD5_STATUS} {DataGD5_STATUS}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
@@ -4987,9 +4987,9 @@ checked={maintainGD5_STATUS}
                 timeUpdate: <span style={combineCss.CSSESD} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSESD}>Emergency Shutdown</span> ,
     
-             modbus: <span style={combineCss.CSSESD}>40043	{DataESD}</span> ,
+             modbus: <span style={combineCss.CSSESD}>40043	</span> ,
     
-            value: <span style={combineCss.CSSESD} > {ESD}</span> , 
+            value: <span style={combineCss.CSSESD} > {ESD} {DataESD}</span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -5040,9 +5040,9 @@ disabled={AuthInputHighLow}
     timeUpdate: <span style={combineCss.CSSSD} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSSD}> Smoker Detector</span> ,
 
-modbus: <span style={combineCss.CSSSD}>40047	{DataSD}</span> ,
+modbus: <span style={combineCss.CSSSD}>40047	</span> ,
 
-value: <span style={combineCss.CSSSD} > {SD}</span> , 
+value: <span style={combineCss.CSSSD} > {SD} {DataSD}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
@@ -5067,9 +5067,9 @@ checked={maintainSD}
                 timeUpdate: <span style={combineCss.CSSVAPORIZER_1} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVAPORIZER_1}>VAPORIZER 1</span> ,
     
-             modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	{DataVAPORIZER_1} </span> ,
+             modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	</span> ,
     
-            value: <span style={combineCss.CSSVAPORIZER_1} > {VAPORIZER_1}</span> , 
+            value: <span style={combineCss.CSSVAPORIZER_1} > {VAPORIZER_1} {DataVAPORIZER_1} </span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
