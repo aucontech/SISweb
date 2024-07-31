@@ -6,18 +6,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
 import { OTSUKA_DEVICE_ID } from "@/constants/constans";
-import { Utils } from "@/service/Utils";
+import { format, parse } from "date-fns";
 type DataItem = {
     [key: string]: any;
 };
 type DataArray = DataItem[];
 
-export interface UnitObject {
-    0: string;
-    1: string;
-    3: string;
-    4: string;
-}
+// export interface UnitObject {
+//     0: string;
+//     1: string;
+//     3: string;
+//     4: string;
+// }
 
 export interface HeaderItem {
     headername: string;
@@ -26,7 +26,7 @@ export interface HeaderItem {
 export interface TagItem {
     tagname: string;
     key: string;
-    unit: string | UnitObject;
+    // unit: string | UnitObject;
 }
 
 interface Props {
@@ -38,7 +38,7 @@ interface Props {
 type HeaderKeys<T extends HeaderItem[]> = {
     [K in T[number]["key"]]: any;
 } & { key: string };
-const SetupDataTable: React.FC<Props> = ({
+const StationConfig: React.FC<Props> = ({
     title,
     stationName,
     headers,
@@ -54,7 +54,6 @@ const SetupDataTable: React.FC<Props> = ({
         const formattedData = tags.map((tag) => ({
             key: tag.key,
             name: tag.tagname,
-            unit: tag.unit,
         }));
 
         setData(formattedData);
@@ -111,7 +110,7 @@ const SetupDataTable: React.FC<Props> = ({
                                 latestValues: tags
                                     ? [
                                           ...tags.map((tag) => ({
-                                              type: "TIME_SERIES",
+                                              type: "ATTRIBUTE",
                                               key: tag.key,
                                           })),
                                           ...tags.map((tag) => ({
@@ -146,27 +145,18 @@ const SetupDataTable: React.FC<Props> = ({
                 let data = JSON.parse(evt.data);
                 if (data.cmdId === 1 && data.data) {
                     console.log("Data received: ", data);
-                    const timeSeries = data.data.data[0].latest.TIME_SERIES;
+
                     const attributes = data.data.data[0].latest.ATTRIBUTE;
+                    console.log("Data received: ", data);
                     setData((prevData) =>
                         prevData.map((item) => {
-                            const seriesData = timeSeries[item.key];
-                            const lowData = attributes[`${item.key}_Low`];
-                            const highData = attributes[`${item.key}_High`];
-                            const modBusData = attributes[`${item.key}_Modbus`];
-                            const isMaintainData =
-                                attributes[`${item.key}_Maintain`];
+                            const seriesData = attributes[item.key];
+
                             if (seriesData) {
                                 return {
                                     ...item,
                                     updatedTime: seriesData.ts,
                                     value: seriesData.value,
-                                    low: lowData.value,
-                                    high: highData.value,
-                                    modBus: modBusData.value,
-                                    isMaintain:
-                                        isMaintainData.value.toLowerCase() ===
-                                        "true",
                                 };
                             }
                             return item;
@@ -181,7 +171,7 @@ const SetupDataTable: React.FC<Props> = ({
                                     keys: tags
                                         ? [
                                               ...tags.map((tag) => ({
-                                                  type: "TIME_SERIES",
+                                                  type: "ATTRIBUTE",
                                                   key: tag.key,
                                               })),
                                               ...tags.map((tag) => ({
@@ -214,32 +204,17 @@ const SetupDataTable: React.FC<Props> = ({
 
                     sendData(JSON.stringify(data2));
                 } else if (data.cmdId === 1 && data.update) {
-                    const timeSeries = data.update[0].latest.TIME_SERIES;
                     const attributes = data.update[0].latest.ATTRIBUTE;
                     console.log("Data received updated: ", data);
                     setData((prevData) =>
                         prevData.map((item) => {
                             const seriesData =
-                                timeSeries && timeSeries[item.key];
-                            const lowData =
-                                attributes && attributes[`${item.key}_Low`];
-                            const highData =
-                                attributes && attributes[`${item.key}_High`];
-                            const modbusData =
-                                attributes && attributes[`${item.key}_Modbus`];
-                            const isMaintainData =
-                                attributes &&
-                                attributes[`${item.key}_Maintain`];
+                                attributes && attributes[item.key];
+
                             return {
                                 ...item,
                                 updatedTime: seriesData?.ts || item.updatedTime,
                                 value: seriesData?.value ?? item.value,
-                                low: lowData?.value ?? item.low,
-                                high: highData?.value ?? item.high,
-                                modbus: modbusData?.value ?? item.modBus,
-                                isMaintain:
-                                    isMaintainData?.value.toLowerCase() ===
-                                        "true" || false,
                             };
                         })
                     );
@@ -292,57 +267,54 @@ const SetupDataTable: React.FC<Props> = ({
             )
         );
     }, 100); // 300ms debounce
-    const rowClass = (data: any) => {
-        console.log("data", data);
-        if (data.isMaintain) {
-            return "text-yellow-500"; // Ưu tiên isMaintain
-        }
-        if (
-            Number(data.value) >= Number(data.high) ||
-            Number(data.value) <= Number(data.low)
-        ) {
-            console.log("data red", data);
-            return "text-red-500"; // Text màu đỏ
-        }
-        return "";
-    };
-    const getTextColorClass = (rowData: any) => {
-        if (rowData.isMaintain) {
-            return "text-yellow-500"; // Ưu tiên isMaintain
-        }
-        if (
-            Number(rowData.value) >= Number(rowData.high) ||
-            Number(rowData.value) <= Number(rowData.low)
-        ) {
-            return "text-red-500"; // Text màu đỏ
-        }
-        return "";
-    };
+    // const rowClass = (data: any) => {
+    //     console.log("data", data);
+    //     if (data.isMaintain) {
+    //         return "text-yellow-500"; // Ưu tiên isMaintain
+    //     }
+    //     if (
+    //         Number(data.value) >= Number(data.high) ||
+    //         Number(data.value) <= Number(data.low)
+    //     ) {
+    //         console.log("data red", data);
+    //         return "text-red-500"; // Text màu đỏ
+    //     }
+    //     return "";
+    // };
+    // const getTextColorClass = (rowData: any) => {
+    //     if (rowData.isMaintain) {
+    //         return "text-yellow-500"; // Ưu tiên isMaintain
+    //     }
+    //     if (
+    //         Number(rowData.value) >= Number(rowData.high) ||
+    //         Number(rowData.value) <= Number(rowData.low)
+    //     ) {
+    //         return "text-red-500"; // Text màu đỏ
+    //     }
+    //     return "";
+    // };
     const handleUpdate = (rowData: any) => {
         console.log("Update clicked for row:", rowData);
 
         let attributes: { [key: string]: any } = {};
 
-        if (rowData.modBus !== null && rowData.modBus !== "") {
-            attributes[`${rowData.key}_Modbus`] = rowData.modBus;
+        if (rowData.key.toLowerCase().includes("date")) {
+            // Ép kiểu về số cho các trường date
+            attributes = {
+                key: rowData.key,
+                value: Number(rowData.value),
+            };
+        } else {
+            attributes = {
+                key: rowData.key,
+                value: rowData.value,
+            };
         }
 
-        if (rowData.low !== null && rowData.low !== "") {
-            attributes[`${rowData.key}_Low`] = Number(rowData.low);
-        }
-
-        if (rowData.high !== null && rowData.high !== "") {
-            attributes[`${rowData.key}_High`] = Number(rowData.high);
-        }
-
-        // isMaintain là boolean nên chúng ta chỉ cần kiểm tra nó không phải undefined
-        // if (rowData.isMaintain !== undefined) {
-        //     attributes[`${rowData.key}_Maintain`] = rowData.isMaintain;
-        // }
-
+        //attributes = {[`${rowData.key}_Modbus`]: rowData.modBus,
         console.log("Attributes to update:", attributes);
 
-        // Nếu có bất kỳ thuộc tính nào để cập nhật, gọi API
+        //Nếu có bất kỳ thuộc tính nào để cập nhật, gọi API
         if (Object.keys(attributes).length > 0) {
             saveOrUpdateSeverAttributesByDevice(OTSUKA_DEVICE_ID, attributes)
                 .then((response) => {
@@ -364,68 +336,73 @@ const SetupDataTable: React.FC<Props> = ({
         <>
             <h2>{title}</h2>
 
-            <DataTable rowClassName={rowClass} value={data} loading={loading}>
+            <DataTable value={data} loading={loading}>
                 {headers?.map((header) => (
                     <Column
                         key={header.key}
                         field={header.key}
                         //header={header.headername}
                         body={(rowData) => {
-                            if (
-                                ["low", "high", "modBus"].includes(header.key)
-                            ) {
-                                return (
-                                    <input
-                                        type="number"
-                                        value={rowData[header.key] || ""}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            handleValueChange(
-                                                rowData.key,
-                                                header.key,
-                                                newValue
-                                            );
-                                        }}
-                                        className={getTextColorClass(rowData)}
-                                    />
-                                );
-                            } else if (header.key === "isMaintain") {
-                                return (
-                                    <input
-                                        type="checkbox"
-                                        checked={rowData.isMaintain || false}
-                                        onChange={(e) => {
-                                            handleValueChange(
-                                                rowData.key,
-                                                header.key,
-                                                e.target.checked
-                                            );
-                                        }}
-                                    />
-                                );
-                            } else if (header.key === "value") {
-                                let content;
-                                if (typeof rowData.unit === "string") {
-                                    content = `${rowData.value} (${rowData.unit})`;
-                                } else if (typeof rowData.unit === "object") {
-                                    const unitValue = rowData.unit[
-                                        rowData.value
-                                    ]
-                                        ? rowData.unit[rowData.value]
-                                        : "";
+                            if (["value"].includes(header.key)) {
+                                const isExpirationField = rowData.key
+                                    .toLowerCase()
+                                    .includes("expiration");
+                                const isDateField = rowData.key
+                                    .toLowerCase()
+                                    .includes("date");
 
-                                    console.log("row", rowData);
-                                    content = `${rowData.value} (${unitValue})`;
+                                if (isDateField) {
+                                    const dateValue = rowData[header.key]
+                                        ? format(
+                                              new Date(
+                                                  Number(rowData[header.key])
+                                              ),
+                                              "yyyy-MM-dd"
+                                          )
+                                        : "";
+                                    return (
+                                        <input
+                                            type="date"
+                                            value={dateValue}
+                                            onChange={(e) => {
+                                                if (!isExpirationField) {
+                                                    const selectedDate = parse(
+                                                        e.target.value,
+                                                        "yyyy-MM-dd",
+                                                        new Date()
+                                                    );
+                                                    const newValue =
+                                                        selectedDate.getTime(); // Chuyển đổi thành Unix milliseconds
+                                                    handleValueChange(
+                                                        rowData.key,
+                                                        header.key,
+                                                        newValue
+                                                    );
+                                                }
+                                            }}
+                                            disabled={isExpirationField}
+                                        />
+                                    );
                                 } else {
-                                    content = rowData.value;
+                                    return (
+                                        <input
+                                            type="number"
+                                            value={rowData[header.key] || ""}
+                                            onChange={(e) => {
+                                                if (!isExpirationField) {
+                                                    const newValue =
+                                                        e.target.value;
+                                                    handleValueChange(
+                                                        rowData.key,
+                                                        header.key,
+                                                        newValue
+                                                    );
+                                                }
+                                            }}
+                                            disabled={isExpirationField}
+                                        />
+                                    );
                                 }
-                                return (
-                                    <span
-                                        className={getTextColorClass(rowData)}
-                                    >
-                                        {content}
-                                    </span>
-                                );
                             } else if (header.key === "update") {
                                 return (
                                     <button
@@ -435,22 +412,8 @@ const SetupDataTable: React.FC<Props> = ({
                                         Update
                                     </button>
                                 );
-                            } else if (header.key === "updatedTime") {
-                                return (
-                                    <span
-                                        className={getTextColorClass(rowData)}
-                                    >
-                                        {Utils.formatUnixTimeToString(
-                                            rowData.updatedTime
-                                        )}
-                                    </span>
-                                );
                             }
-                            return (
-                                <span className={getTextColorClass(rowData)}>
-                                    {rowData[header.key]}
-                                </span>
-                            );
+                            return <span>{rowData[header.key]}</span>;
                         }}
                         header={header.headername}
                     />
@@ -459,4 +422,4 @@ const SetupDataTable: React.FC<Props> = ({
         </>
     );
 };
-export default SetupDataTable;
+export default StationConfig;

@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import SetupDataTable from "./components/SetupDataTable";
-import { TagItem } from "./components/SetupDataTable";
-import { HeaderItem } from "./components/SetupDataTable";
+
 import { getSeverAttributesByDeviceandKeys } from "@/api/telemetry.api";
 import { OTSUKA_DEVICE_ID } from "@/constants/constans";
+import StationConfig from "./components/StationConfig";
 // const tags: TagItem[] = [
 //     {
 //         tagname: "temperature",
@@ -65,6 +65,7 @@ import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 
 const SetupDataTest = () => {
     const [infosSetupdata, setInfosSetupdata] = useState<any[]>([]);
+    const [stationConfig, setStationConfig] = useState<any[]>([]);
     const _fetchInfoSetupData = async () => {
         const data = await getSeverAttributesByDeviceandKeys(
             OTSUKA_DEVICE_ID,
@@ -72,6 +73,7 @@ const SetupDataTest = () => {
         );
         console.log(data);
         setInfosSetupdata(data?.data[0]?.value?.setupevcfcplc);
+        setStationConfig(data?.data[0]?.value?.stationconfig);
     };
 
     useEffect(() => {
@@ -93,6 +95,18 @@ const SetupDataTest = () => {
                             title={info.title}
                             key={index}
                         ></SetupDataTable>
+                    );
+                })}
+            {stationConfig &&
+                stationConfig.length > 0 &&
+                stationConfig.map((info: any, index: number) => {
+                    return (
+                        <StationConfig
+                            headers={info.headers}
+                            tags={info.tags}
+                            title={info.title}
+                            key={index}
+                        ></StationConfig>
                     );
                 })}
         </div>
