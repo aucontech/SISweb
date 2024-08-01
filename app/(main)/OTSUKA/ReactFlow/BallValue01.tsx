@@ -143,23 +143,22 @@ export default function BallValue01() {
         } catch (error) {}
     };
 
-    //     const fetchData = async () => {
-    //         try {
-    //             const res = await httpApi.get(
-    //                 "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
-    //             );
-    //             setData(res.data);
-    //             const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
-    //             // onDataLine1(ballValue);
-    //         } catch (error) {
-    //             console.error("Error fetching data:", error);
-    //         }
-    //     };
-    //     useEffect(() => {
-    //         fetchData();
+        const fetchData = async () => {
+            try {
+                const res = await httpApi.get(
+                    "/plugins/telemetry/DEVICE/28f7e830-a3ce-11ee-9ca1-8f006c3fce43/values/attributes/SERVER_SCOPE"
+                );
+                setData(res.data);
+                const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
+                // onDataLine1(ballValue);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        useEffect(() => {
+            fetchData();
 
-    // }, []);
-
+    }, []);
 
     return (
         <div>

@@ -56,8 +56,7 @@ export default function LowHighData() {
     const [timeEVC_04,setTimeEVC_04] = useState<any>()
 
 
-    const [inputValue, setInputValue] = useState<any>();
-    const [inputValue2, setInputValue2] = useState<any>();
+
     const [inputValue3, setInputValue3] = useState<any>();
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
 
@@ -275,10 +274,10 @@ export default function LowHighData() {
             const lowEVC_01_Pressure = res.data.find((item: any) => item.key === "EVC_01_Pressure_Low");
             setLowEVC_01_PressureValue(lowEVC_01_Pressure?.value || null);
 
-            const highEVC_02_PressurePressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_High");
-            setHighEVC_02_PressurePressureValue(highEVC_02_PressurePressureItem?.value || null);
-            const lowEVC_02_PressurePressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_Low");
-            setLowEVC_02_PressurePressureValue(lowEVC_02_PressurePressureItem?.value || null);
+            const highEVC_02_PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_High");
+            setHighEVC_02_PressureValue(highEVC_02_PressureItem?.value || null);
+            const lowEVC_02_PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_Low");
+            setLowEVC_02_PressureValue(lowEVC_02_PressureItem?.value || null);
 
             const highPT1PressureItem = res.data.find((item: any) => item.key === "PT1_High");
             setHighPT1PressureValue(highPT1PressureItem?.value || null);
@@ -824,12 +823,12 @@ const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(
 
     const handleInputChange = (event: any) => {
         const newValue = event.target.value;
-        setInputValue(newValue);
+        setInputValueEVC_01_Pressure(newValue);
     };
 
     const handleInputChange2 = (event: any) => {
         const newValue2 = event.target.value;
-        setInputValue2(newValue2);
+        setInputValue2EVC_01_Pressure(newValue2);
     };
     const ChangeMaintainEVC_01_Pressure = async () => {
         try {
@@ -850,18 +849,18 @@ const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(
 
 const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
 const [inputValueEVC_02_PressureHigh, setInputValueEVC_02_PressureHigh] = useState<any>();
-const [inputValueEK1Low, setInputValueEVC_02_PressureLow] = useState<any>();
-const [highEVC_02_PressurePressureValue, setHighEVC_02_PressurePressureValue] = useState<number | null>(null);
-const [lowEVC_02_PressurePressureValue, setLowEVC_02_PressurePressureValue] = useState<number | null>(null);
+const [inputValueEVC_02_PressureLow, setInputValueEVC_02_PressureLow] = useState<any>();
+const [highEVC_02_PressureValue, setHighEVC_02_PressureValue] = useState<number | null>(null);
+const [lowEVC_02_PressureValue, setLowEVC_02_PressureValue] = useState<number | null>(null);
 const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
 
 
 
     useEffect(() => {
-        if (typeof highEVC_02_PressurePressureValue === 'string' && typeof lowEVC_02_PressurePressureValue === 'string' && EVC_02_Pressure !== null && maintainEVC_02_Pressure === false) {
-            const highValue = parseFloat(highEVC_02_PressurePressureValue);
-            const lowValue = parseFloat(lowEVC_02_PressurePressureValue);
+        if (typeof highEVC_02_PressureValue === 'string' && typeof lowEVC_02_PressureValue === 'string' && EVC_02_Pressure !== null && maintainEVC_02_Pressure === false) {
+            const highValue = parseFloat(highEVC_02_PressureValue);
+            const lowValue = parseFloat(lowEVC_02_PressureValue);
             const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_PressureValue)) {
@@ -872,7 +871,7 @@ const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(
                 }
             } 
         } 
-    }, [highEVC_02_PressurePressureValue, EVC_02_Pressure, lowEVC_02_PressurePressureValue, maintainEVC_02_Pressure]);
+    }, [highEVC_02_PressureValue, EVC_02_Pressure, lowEVC_02_PressureValue, maintainEVC_02_Pressure]);
 
     const handleInputChangeEVC_02_PressureHigh = (event: any) => {
         const newValue = event.target.value;
@@ -4068,14 +4067,13 @@ const handleCheckboxChangePLC = (e:any) => {
     useEffect(() => {
         setInputGetwayPhone(getWayPhoneOTSUKA)
 
-        setInputValue(highEVC_01_PressureValue); 
-        setInputValue2(lowEVC_01_PressureValue); 
+      
 
         setInputValueEVC_01_Pressure(highEVC_01_PressureValue); 
         setInputValue2EVC_01_Pressure(lowEVC_01_PressureValue); 
 
-        setInputValueEVC_02_PressureHigh(highEVC_02_PressurePressureValue); 
-        setInputValueEVC_02_PressureLow(lowEVC_02_PressurePressureValue); 
+        setInputValueEVC_02_PressureHigh(highEVC_02_PressureValue); 
+        setInputValueEVC_02_PressureLow(lowEVC_02_PressureValue); 
 
         setInputValuePT1High(highPT1PressureValue); 
         setInputValuePT1Low(lowPT1PressureValue);    
@@ -4205,7 +4203,7 @@ const handleCheckboxChangePLC = (e:any) => {
         setInputLowPLC_Conn_STT(LowPLC_Conn_STT)
 
     }, [highEVC_01_PressureValue, lowEVC_01_PressureValue,
-         highEVC_02_PressurePressureValue, lowEVC_02_PressurePressureValue ,
+         highEVC_02_PressureValue, lowEVC_02_PressureValue ,
          highPT1PressureValue, lowPT1PressureValue, 
          HighGD1, LowGD1,
          HighGD2, LowGD2,
@@ -4270,8 +4268,10 @@ const handleCheckboxChangePLC = (e:any) => {
         try {
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Pressure_High: inputValue,EVC_01_Pressure_Low:inputValue2,
-                    EVC_02_Pressure_High: inputValueEVC_02_PressureHigh, EVC_02_Pressure_Low:inputValueEK1Low,
+                { 
+
+                    EVC_01_Pressure_High: inputValueEVC_01_Pressure, EVC_01_Pressure_Low:inputValue2EVC_01_Pressure,
+                    EVC_02_Pressure_High: inputValueEVC_02_PressureHigh, EVC_02_Pressure_Low:inputValueEVC_02_PressureLow,
                     PT1_High:inputValuePT1High, PT1_Low:inputValuePT1Low,
                 
                     GD1_High:inputHighGD1, GD1_Low:inputLowGD1,
@@ -4341,11 +4341,11 @@ const handleCheckboxChangePLC = (e:any) => {
                 }
             );
 
-            setHighEVC_01_PressureValue(inputValue);
-            setLowEVC_01_PressureValue(inputValue2);
+            setHighEVC_01_PressureValue(inputValueEVC_01_Pressure);
+            setLowEVC_01_PressureValue(inputValue2EVC_01_Pressure);
 
-            setHighEVC_02_PressurePressureValue(inputValueEVC_02_PressureHigh);
-            setLowEVC_02_PressurePressureValue(inputValueEK1Low);
+            setHighEVC_02_PressureValue(inputValueEVC_02_PressureHigh);
+            setLowEVC_02_PressureValue(inputValueEVC_02_PressureLow);
 
             setHighPT1PressureValue(inputValuePT1High);
             setLowPT1PressureValue(inputValuePT1Low);
@@ -4981,6 +4981,27 @@ const handleCheckboxChangePLC = (e:any) => {
     const modbusEVC1 = {
 
         
+  
+
+        SVF: "40858",
+        GVF: "40860",
+        SVA: "40854",
+        GVA: "40856",
+
+        PT: "40852",
+        TT: "40850",
+
+        VB_TODAY:"40862",
+        VB_Yesterday:"40866",
+        VM_TODAY:"40864",
+        VM_Yesterday:"40868",
+        ReBattery:"40002",
+        EVC_01_Conn_STT:"Status",
+        EVC_02_Conn_STT:"Status"
+
+    }
+
+    const modbusEVC2 = {
         SVF: "40010",
         GVF: "40012",
         SVA: "40006",
@@ -4995,26 +5016,7 @@ const handleCheckboxChangePLC = (e:any) => {
         VM_TODAY:"40016",
         VM_Yesterday:"40020",
         ReBattery:"40001",
-        EVC_01_Conn_STT:"Status",
-        EVC_02_Conn_STT:"Status"
-
-    }
-
-    const modbusEVC2 = {
-
-        SVF: "40858",
-        GVF: "40860",
-        SVA: "40854",
-        GVA: "40856",
-
-        PT: "40852",
-        TT: "40850",
-
-        VB_TODAY:"40862",
-        VB_Yesterday:"40866",
-        VM_TODAY:"40864",
-        VM_Yesterday:"40868",
-        ReBattery:"40002"
+      
     }
 
     const modbusPLC = {
@@ -5055,9 +5057,9 @@ const handleCheckboxChangePLC = (e:any) => {
     const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null
 
  
-    const DataEVC_01_Conn_STT = EVC_01_Conn_STT === "0" ? "Not init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null
-    const DataEVC_02_Conn_STT = EVC_02_Conn_STT === "0" ? "Not init" : EVC_02_Conn_STT === "1" ? "COM OK" : EVC_02_Conn_STT === "2" ? "Error" : null
-    const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
+    const DataEVC_01_Conn_STT = EVC_01_Conn_STT === "0" ? "Not Init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null
+    const DataEVC_02_Conn_STT = EVC_02_Conn_STT === "0" ? "Not Init" : EVC_02_Conn_STT === "1" ? "COM OK" : EVC_02_Conn_STT === "2" ? "Error" : null
+    const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
 
     const mainCategoryEVC = {
        
@@ -5490,7 +5492,7 @@ disabled={AuthInputHighLow}
     low:  <InputText  
 disabled={AuthInputHighLow}
     
-    style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEK1Low} onChange={handleInputChangeEVC_02_PressureLow} inputMode="decimal" />,
+    style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_PressureLow} onChange={handleInputChangeEVC_02_PressureLow} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
@@ -6280,8 +6282,10 @@ disabled={AuthInput}
       
         <div style={{width:'100%' ,  borderRadius:5 }}>
 
-        <DataTable  size={'small'}    value={combinedData} rowGroupMode="subheader" groupRowsBy="mainCategory" sortMode="single" 
-                    sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
+        <DataTable rowGroupMode="subheader"
+                size={'small'}      resizableColumns
+        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory"  
+        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
 
       <Column field="timeUpdate" header="Time Update" />
       <Column field="modbus" header="Address" />

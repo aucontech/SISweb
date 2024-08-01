@@ -1,11 +1,11 @@
 import { httpApi } from "@/api/http.api";
-import { id_CNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
+import { id_SNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 import React, { useEffect, useRef, useState } from "react";
 import { GetTelemetry_PRU, PostTelemetry_PRU } from "../Graphic_SNG_BINHDUONG/Api_PRU";
 import { BallVavleOff, BallVavleOn } from "../Graphic_SNG_BINHDUONG/iconSVG";
 import { readToken } from "@/service/localStorage";
 
-// export default function BallValue02({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
+// export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
 
 export default function BallValue02() {
 
@@ -42,7 +42,7 @@ export default function BallValue02() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_CNG_BinhDuong,
+                                id: id_SNG_BinhDuong,
                             },
                         },
                         pageLink: {
@@ -110,8 +110,6 @@ export default function BallValue02() {
                         dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_02
                             .ts;
                     setUpTS(ballTS);
-                    // onDataLine1({ value: ballValue});
-
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
@@ -123,12 +121,12 @@ export default function BallValue02() {
                         dataReceived.update[0].latest.ATTRIBUTE.BallValue_02.ts;
 
                     setUpData(updatedData);
-                    // onDataLine1({ value: updatedData});
-
+                    setUpTS(updateTS);
                 }
         fetchData();
 
             };
+
         }
     }, []);
 
@@ -136,32 +134,25 @@ export default function BallValue02() {
         try {
             const newValue = !sensorData;
             await httpApi.post(
-               PostTelemetry_PRU,
+                `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
                 { BallValue_02: newValue }
             );
             setSensorData(newValue);
-            
         } catch (error) {}
     };
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                   GetTelemetry_PRU
-                );
-                setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_02")?.value;
-                // onDataLine1(ballValue);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        useEffect(() => {
-            fetchData();
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(
+                `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/values/attributes/SERVER_SCOPE`
+            );
+            setData(res.data);
+        } catch (error) {}
+    };
 
+    useEffect(() => {
+        fetchData();
     }, []);
-
-
     return (
         <div>
             {data.map((item: any) => (
@@ -176,7 +167,20 @@ export default function BallValue02() {
                         onClick={handleButtonClick}
 
                          >
-                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
+                            
+                                {item.value.toString() === "false" ? (
+                                    <div style={{   }}>
+
+                                            {BallVavleOn}
+
+                                    </div>
+                                ) : (
+                                    <div style={{    }}>
+
+                                               {BallVavleOff}
+
+                                    </div>
+                                )}
                         </div>
                     )}
                 </div>
