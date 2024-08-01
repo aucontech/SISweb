@@ -358,9 +358,8 @@ export default function SetUpdata_CNG_BINHDUONG() {
                         HEATER_2: setHEATER_2,
 
                         BOILER: setBOILER,
+
                         GD_STATUS: setGD_STATUS,
-
-
                         HR_BC: setHR_BC,
                         SD: setSD,
                         ESD_2001: setESD_2001,
@@ -980,6 +979,7 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
             setMaintainSD_2002(SD_2002_Maintain?.value || false);
 
+            setMaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
 
 
             setMaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
@@ -1061,7 +1061,6 @@ export default function SetUpdata_CNG_BINHDUONG() {
             setMaintainTT_2001(TT_2001_Maintain?.value || false);
 
 
-            setMaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
 
             
             setMaintainBOILER(BOILER_Maintain?.value || false);

@@ -189,7 +189,6 @@ export default function SetUpdata_HUNGYEN_SNG() {
                         GD3_STATUS: setGD3_STATUS,
                         GD4_STATUS: setGD4_STATUS,
                         GD5_STATUS:setGD5_STATUS,
-                        EVC_02_Vm_of_Last_Day:setEVC_02_Vm_of_Last_Day,
 
 
                         ESD: setESD,

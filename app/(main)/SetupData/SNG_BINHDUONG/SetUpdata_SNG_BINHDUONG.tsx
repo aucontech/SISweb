@@ -361,32 +361,7 @@ export default function SetUpdata_SNG_BINHDUONG() {
 
          
 
-            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
-            setHR_BC_High(HR_BC_High?.value || null);
-            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
-            setHR_BC_Low(HR_BC_Low?.value || null);
-            const HR_BC_Maintain = res.data.find(
-                (item: any) => item.key === "HR_BC_Maintain"
-            );
-
-            const SD_High = res.data.find((item: any) => item.key === "SD_High");
-            setSD_High(SD_High?.value || null);
-            const SD_Low = res.data.find((item: any) => item.key === "SD_Low");
-            setSD_Low(SD_Low?.value || null);
-            const SD_Maintain = res.data.find(
-                (item: any) => item.key === "SD_Maintain"
-            );
-
-
-            const ESD_2001_High = res.data.find((item: any) => item.key === "ESD_2001_High");
-            setESD_2001_High(ESD_2001_High?.value || null);
-            const ESD_2001_Low = res.data.find((item: any) => item.key === "ESD_2001_Low");
-            setESD_2001_Low(ESD_2001_Low?.value || null);
-            const ESD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "ESD_2001_Maintain"
-            );
-
-     
+        
 
 
     
@@ -735,7 +710,32 @@ export default function SetUpdata_SNG_BINHDUONG() {
             const SG_Calorimeter_Maintain = res.data.find(
                 (item: any) => item.key === "SG_Calorimeter_Maintain"
             );
+            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
+            setHR_BC_High(HR_BC_High?.value || null);
+            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
+            setHR_BC_Low(HR_BC_Low?.value || null);
+            const HR_BC_Maintain = res.data.find(
+                (item: any) => item.key === "HR_BC_Maintain"
+            );
 
+            const SD_High = res.data.find((item: any) => item.key === "SD_High");
+            setSD_High(SD_High?.value || null);
+            const SD_Low = res.data.find((item: any) => item.key === "SD_Low");
+            setSD_Low(SD_Low?.value || null);
+            const SD_Maintain = res.data.find(
+                (item: any) => item.key === "SD_Maintain"
+            );
+
+
+            const ESD_2001_High = res.data.find((item: any) => item.key === "ESD_2001_High");
+            setESD_2001_High(ESD_2001_High?.value || null);
+            const ESD_2001_Low = res.data.find((item: any) => item.key === "ESD_2001_Low");
+            setESD_2001_Low(ESD_2001_Low?.value || null);
+            const ESD_2001_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_2001_Maintain"
+            );
+
+     
 
             const TD_4072_Conn_STT_High = res.data.find((item: any) => item.key === "TD_4072_Conn_STT_High");
             setTD_4072_Conn_STT_High(TD_4072_Conn_STT_High?.value || null);
@@ -755,22 +755,7 @@ export default function SetUpdata_SNG_BINHDUONG() {
 
          
  // =================================================================================================================== 
- setMaintainTD_4072_Conn_STT(TD_4072_Conn_STT_Maintain?.value || false);
 
- setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
-
- setMaintainWIS_Calorimeter(WIS_Calorimeter_Maintain?.value || false);
-
- setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
-
- setMaintainSG_Calorimeter(SG_Calorimeter_Maintain?.value || false);
-
-
-            setMaintainHR_BC(HR_BC_Maintain?.value || false);
-
-            setMaintainSD(SD_Maintain?.value || false);
-
-            setMaintainESD_2001(ESD_2001_Maintain?.value || false);
 
 
       
@@ -805,6 +790,7 @@ export default function SetUpdata_SNG_BINHDUONG() {
             setMaintainGD_2006(GD_2006_Maintain?.value || false);
 
 
+            setMaintainTT_2004(TT_2004_Maintain?.value || false);
 
 
 
@@ -829,7 +815,6 @@ export default function SetUpdata_SNG_BINHDUONG() {
 
             setMaintainTG_2005(TG_2005_Maintain?.value || false);
 
-            setMaintainTT_2004(TT_2004_Maintain?.value || false);
 
             setMaintainTT_2003(TT_2003_Maintain?.value || false);
 
@@ -885,7 +870,24 @@ export default function SetUpdata_SNG_BINHDUONG() {
             setMaintainFCV_2001(FCV_2001_Maintain?.value || false);
 
 
+  
+            setMaintainWIS_Calorimeter(WIS_Calorimeter_Maintain?.value || false);
+           
+            setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
+           
+            setMaintainSG_Calorimeter(SG_Calorimeter_Maintain?.value || false);
+           
+           
+                       setMaintainHR_BC(HR_BC_Maintain?.value || false);
+           
+                       setMaintainSD(SD_Maintain?.value || false);
+           
+                       setMaintainESD_2001(ESD_2001_Maintain?.value || false);
 
+                       setMaintainTD_4072_Conn_STT(TD_4072_Conn_STT_Maintain?.value || false);
+
+                       setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
+                      
 
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -2763,7 +2765,7 @@ const ChangeMaintainSDV_2003 = async () => {
               
                    // =================================================================================================================== 
 
-                   
+                
 
 
                              // =================================================================================================================== 
@@ -2923,53 +2925,37 @@ const ChangeMaintainSDV_2003 = async () => {
 
                 {
                     TD_4072_Conn_STT_High: inputValueTD_4072_Conn_STT,TD_4072_Conn_STT_Low:inputValue2TD_4072_Conn_STT,
-
                     PLC_Conn_STT_High: inputValuePLC_Conn_STT,PLC_Conn_STT_Low:inputValue2PLC_Conn_STT,
-
                     WIS_Calorimeter_High: inputValueWIS_Calorimeter,WIS_Calorimeter_Low:inputValue2WIS_Calorimeter,
                     CVS_Calorimeter_High: inputValueCVS_Calorimeter,CVS_Calorimeter_Low:inputValue2CVS_Calorimeter,
                     SG_Calorimeter_High: inputValueSG_Calorimeter,SG_Calorimeter_Low:inputValue2SG_Calorimeter,
-                    
                     HR_BC_High: inputValueHR_BC,HR_BC_Low:inputValue2HR_BC,
                     SD_High: inputValueSD,SD_Low:inputValue2SD,
-
-
                     ESD_2001_High: inputValueESD_2001,ESD_2001_Low:inputValue2ESD_2001,
-              
                     PT_2005_High: inputValuePT_2005,PT_2005_Low:inputValue2PT_2005,
                     TT_2003_High: inputValueTT_2003,TT_2003_Low:inputValue2TT_2003,
+
+
                     PT_2004_High: inputValuePT_2004,PT_2004_Low:inputValue2PT_2004,
-
-
                     TT_2004_High: inputValueTT_2004,TT_2004_Low:inputValue2TT_2004,
                     TG_2005_High: inputValueTG_2005,TG_2005_Low:inputValue2TG_2005,
                     WB_1001_High: inputValueWB_1001,WB_1001_Low:inputValue2WB_1001,
-
                     GD_2002_High: inputValueGD_2002,GD_2002_Low:inputValue2GD_2002,
                     GD_2003_High: inputValueGD_2003,GD_2003_Low:inputValue2GD_2003,
                     GD_2004_High: inputValueGD_2004,GD_2004_Low:inputValue2GD_2004,
-
-
                     GD_2006_High: inputValueGD_2006,GD_2006_Low:inputValue2GD_2006,
                     GD_2005_High: inputValueGD_2005,GD_2005_Low:inputValue2GD_2005,
-
-
                     TM_2002_SNG_High: inputValueTM_2002_SNG,TM_2002_SNG_Low:inputValue2TM_2002_SNG,
-                    TM_2003_SNG_High: inputValueTM_2003_SNG,TM_2003_SNG_Low:inputValue2TM_2003_SNG,
 
+                    TM_2003_SNG_High: inputValueTM_2003_SNG,TM_2003_SNG_Low:inputValue2TM_2003_SNG,
                     TOTAL_SNG_High: inputValueTOTAL_SNG,TOTAL_SNG_Low:inputValue2TOTAL_SNG,
                     SDV_2004_High: inputValueSDV_2004,SDV_2004_Low:inputValue2SDV_2004,
-
                     SDV_2003_High: inputValueSDV_2003,SDV_2003_Low:inputValue2SDV_2003,
                     GD1_STATUS_High: inputValueGD1_STATUS,GD1_STATUS_Low:inputValue2GD1_STATUS,
-
-
                     GD2_STATUS_High: inputValueGD2_STATUS,GD2_STATUS_Low:inputValue2GD2_STATUS,
                     GD3_STATUS_High: inputValueGD3_STATUS,GD3_STATUS_Low:inputValue2GD3_STATUS,
                     GD4_STATUS_High: inputValueGD4_STATUS,GD4_STATUS_Low:inputValue2GD4_STATUS,
-
                     GD5_STATUS_High: inputValueGD5_STATUS,GD5_STATUS_Low:inputValue2GD5_STATUS,
-
                     EVC_02_Vm_of_Last_Day_High: inputValueEVC_02_Vm_of_Last_Day,EVC_02_Vm_of_Last_Day_Low:inputValue2EVC_02_Vm_of_Last_Day,
 
 
@@ -2981,33 +2967,23 @@ const ChangeMaintainSDV_2003 = async () => {
                     VAPORIZER_1_High: inputValueVAPORIZER_1,VAPORIZER_1_Low:inputValue2VAPORIZER_1,
                     VAPORIZER_2_High: inputValueVAPORIZER_2,VAPORIZER_2_Low:inputValue2VAPORIZER_2,
                     ESD_High: inputValueESD,ESD_Low:inputValue2ESD,
-
-
                     VAPORIZER_3_High: inputValueVAPORIZER_3,VAPORIZER_3_Low:inputValue2VAPORIZER_3,
                     VAPORIZER_4_High: inputValueVAPORIZER_4,VAPORIZER_4_Low:inputValue2VAPORIZER_4,
                     COOLING_V_High: inputValueCOOLING_V,COOLING_V_Low:inputValue2COOLING_V,
-
                     FCV_2001_High: inputValueFCV_2001,FCV_2001_Low:inputValue2FCV_2001,
                     PERCENT_LPG_High: inputValuePERCENT_LPG,PERCENT_LPG_Low:inputValue2PERCENT_LPG,
-
-
                     HV_1001_High: inputValueHV_1001,HV_1001_Low:inputValue2HV_1001,
                     PERCENT_AIR_High: inputValuePERCENT_AIR,PERCENT_AIR_Low:inputValue2PERCENT_AIR,
 
 
                     FCV_MODE_High: inputValueFCV_MODE,FCV_MODE_Low:inputValue2FCV_MODE,
                     TOTAL_CNG_High: inputValueTOTAL_CNG,TOTAL_CNG_Low:inputValue2TOTAL_CNG,
-
                     TM2002_CNG_High: inputValueTM2002_CNG,TM2002_CNG_Low:inputValue2TM2002_CNG,
                     TM2003_CNG_High: inputValueTM2003_CNG,TM2003_CNG_Low:inputValue2TM2003_CNG,
-
                     WB_Setpoint_High: inputValueWB_Setpoint,WB_Setpoint_Low:inputValue2WB_Setpoint,
-
-
                     RATIO_MODE_High: inputValueRATIO_MODE,RATIO_MODE_Low:inputValue2RATIO_MODE,
                     IOT_Gateway_Phone: inputGetwayPhone,
-                    PCV_01: inputPCV_01,
-                    PCV_02: inputPCV_02,
+                  
                 }
             );
      
@@ -4393,7 +4369,7 @@ const ChangeMaintainSDV_2003 = async () => {
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSPT_2004} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSPT_2004}>Pressure Transmitter PT-2005</span> ,
+             name: <span style={combineCss.CSSPT_2004}>Pressure Transmitter PT-2004</span> ,
     
              modbus: <span style={combineCss.CSSPT_2004}>40001	 </span> ,
     
@@ -4421,7 +4397,7 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSPT_2005} >{PLC_STTValue}</span>,
-             name: <span style={combineCss.CSSPT_2005}>Pressure Transmitter PT-2006</span> ,
+             name: <span style={combineCss.CSSPT_2005}>Pressure Transmitter PT-2005</span> ,
     
              modbus: <span style={combineCss.CSSPT_2005}>40003	 </span> ,
     
@@ -4701,11 +4677,11 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSTM_2002_SNG} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSTM_2002_SNG}>Tubine Meter TM2002-SNG</span> ,
+            name: <span style={combineCss.CSSTM_2002_SNG}>Tubine Meter TM2002-SNG </span> ,
        
             modbus: <span style={combineCss.CSSTM_2002_SNG}>40023	 </span> ,
        
-           value: <span style={combineCss.CSSTM_2002_SNG} > {TM_2002_SNG}</span> , 
+           value: <span style={combineCss.CSSTM_2002_SNG} > {TM_2002_SNG} (Sm³/h)</span> , 
             high: <InputText 
 disabled={AuthInputHighLow}
             
@@ -4734,11 +4710,11 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSTM_2003_SNG} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSTM_2003_SNG}>Tubine Meter TM2003-SNG</span> ,
+    name: <span style={combineCss.CSSTM_2003_SNG}>Tubine Meter TM2003-SNG </span> ,
 
     modbus: <span style={combineCss.CSSTM_2003_SNG}>40025	 </span> ,
 
-   value: <span style={combineCss.CSSTM_2003_SNG} > {TM_2003_SNG}</span> , 
+   value: <span style={combineCss.CSSTM_2003_SNG} > {TM_2003_SNG} (Sm³/h)</span> , 
     high: <InputText 
 disabled={AuthInputHighLow}
     
@@ -4762,11 +4738,11 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSTOTAL_SNG} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSTOTAL_SNG}>Total SNG</span> ,
+   name: <span style={combineCss.CSSTOTAL_SNG}>Total SNG </span> ,
 
    modbus: <span style={combineCss.CSSTOTAL_SNG}>40027	 </span> ,
 
-  value: <span style={combineCss.CSSTOTAL_SNG} > {TOTAL_SNG}</span> , 
+  value: <span style={combineCss.CSSTOTAL_SNG} > {TOTAL_SNG} (Sm³)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -5653,9 +5629,6 @@ checked={maintainPLC_Conn_STT}
         },
     };
   
-
-  
- 
     const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue : any = event.target.value;
         setInputGetwayPhone(newValue);
@@ -5680,8 +5653,7 @@ checked={maintainPLC_Conn_STT}
 
                     style={combineCssAttribute.PCV}
                     placeholder="High"
-                    step="0.1"
-                    type="Name"
+                    step="0.1" type='number'
                     value={inputPCV_01}
                     onChange={handleInputPCV_01}
                     inputMode="decimal"
@@ -5709,7 +5681,7 @@ checked={maintainPLC_Conn_STT}
                     style={combineCssAttribute.PCV}
                     placeholder="High"
                     step="0.1"
-                    type="Name"
+                    type='number'
                     value={inputPCV_02}
                     onChange={handleInputPCV_02}
                     inputMode="decimal"
@@ -5727,7 +5699,7 @@ checked={maintainPLC_Conn_STT}
             ),
         },
         {
-            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+            Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
 
             Value: (
                 <InputText 
@@ -5736,8 +5708,7 @@ checked={maintainPLC_Conn_STT}
 
                     style={combineCssAttribute.PCV}
                     placeholder="High"
-                    step="0.1"
-                    type="Name"
+                    step="0.1" type='number'
                     value={inputGetwayPhone}
                     onChange={handleInputChangeGetWayPhone}
                     inputMode="decimal"

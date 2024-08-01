@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { id_SNG_BinhDuong, id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_SNG_HungYen, id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -21,7 +21,7 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-export default function ScoreCard_SNG_BINHDUONG() {
+export default function ScoreCard_SNG_HUNGYEN() {
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
@@ -50,7 +50,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_SNG_BinhDuong,
+                    entityId: id_SNG_HungYen,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -89,33 +89,33 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
 
-                        PT_2004: setPT_2004,
-                        PT_2005: setPT_2005,
-                        TT_2003: setTT_2003,
-                        TT_2004: setTT_2004,
-                        WB_1001: setWB_1001,
-                        TG_2005: setTG_2005,
+                        PT_3006: setPT_3006,
+                        PT_3005: setPT_3005,
+                        TT_3003: setTT_3003,
+                        TT_3004: setTT_3004,
+                        WB_3001: setWB_3001,
+                        TG_3005: setTG_3005,
 
-                        GD_2002: setGD_2002,
-                        GD_2003: setGD_2003,
-                        GD_2004: setGD_2004,
+                        GD_3002: setGD_3002,
+                        GD_3003: setGD_3003,
+                        GD_3004: setGD_3004,
 
-                        GD_2005: setGD_2005,
-                        GD_2006: setGD_2006,
+                        GD_3005: setGD_3005,
+                        GD_3006: setGD_3006,
 
 
-                        TM_2002_SNG: setTM_2002_SNG,
+                        TM_3002_SNG: setTM_3002_SNG,
                     
-                        TM_2003_SNG: setTM_2003_SNG,
+                        TM_3003_SNG: setTM_3003_SNG,
 
 
                         TOTAL_SNG: setTOTAL_SNG,
-                        SDV_2004: setSDV_2004,
+                        SDV_3004: setSDV_3004,
 
 
 
 
-                        SDV_2003: setSDV_2003,
+                        SDV_3003: setSDV_3003,
                         
                         GD1_STATUS: setGD1_STATUS,
                         GD2_STATUS: setGD2_STATUS,
@@ -133,20 +133,20 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
                         VAPORIZER_4: setVAPORIZER_4,
                         COOLING_V: setCOOLING_V,
-                        FCV_2001: setFCV_2001,
+                        FCV_3001: setFCV_3001,
 
 
 
 
                         PERCENT_LPG: setPERCENT_LPG,
                         PERCENT_AIR: setPERCENT_AIR,
-                        HV_1001: setHV_1001,
+                        HV_3001: setHV_3001,
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
                         TOTAL_CNG: setTOTAL_CNG,
 
-                        TM2002_CNG: setTM2002_CNG,
-                        TM2003_CNG: setTM2003_CNG,
+                        TM3002_CNG: setTM3002_CNG,
+                        TM3003_CNG: setTM3003_CNG,
                         WB_Setpoint: setWB_Setpoint,
                         WIS_Calorimeter: setWIS_Calorimeter,
                         CVS_Calorimeter: setCVS_Calorimeter,
@@ -204,7 +204,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/values/attributes/SERVER_SCOPE`
             );
 
 
@@ -212,46 +212,46 @@ export default function ScoreCard_SNG_BINHDUONG() {
     
           
 
-            const PT_2004_High = res.data.find((item: any) => item.key === "PT_2004_High");
-            setPT_2004_High(PT_2004_High?.value || null);
-            const PT_2004_Low = res.data.find((item: any) => item.key === "PT_2004_Low");
-            setPT_2004_Low(PT_2004_Low?.value || null);
-            const PT_2004_Maintain = res.data.find(
-                (item: any) => item.key === "PT_2004_Maintain"
+            const PT_3006_High = res.data.find((item: any) => item.key === "PT_3006_High");
+            setPT_3006_High(PT_3006_High?.value || null);
+            const PT_3006_Low = res.data.find((item: any) => item.key === "PT_3006_Low");
+            setPT_3006_Low(PT_3006_Low?.value || null);
+            const PT_3006_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3006_Maintain"
             );
 
 
-            const PT_2005_High = res.data.find((item: any) => item.key === "PT_2005_High");
-            setPT_2005_High(PT_2005_High?.value || null);
-            const PT_2005_Low = res.data.find((item: any) => item.key === "PT_2005_Low");
-            setPT_2005_Low(PT_2005_Low?.value || null);
-            const PT_2005_Maintain = res.data.find(
-                (item: any) => item.key === "PT_2005_Maintain"
+            const PT_3005_High = res.data.find((item: any) => item.key === "PT_3005_High");
+            setPT_3005_High(PT_3005_High?.value || null);
+            const PT_3005_Low = res.data.find((item: any) => item.key === "PT_3005_Low");
+            setPT_3005_Low(PT_3005_Low?.value || null);
+            const PT_3005_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3005_Maintain"
             );
 
-            const TT_2003_High = res.data.find((item: any) => item.key === "TT_2003_High");
-            setTT_2003_High(TT_2003_High?.value || null);
-            const TT_2003_Low = res.data.find((item: any) => item.key === "TT_2003_Low");
-            setTT_2003_Low(TT_2003_Low?.value || null);
-            const TT_2003_Maintain = res.data.find(
-                (item: any) => item.key === "TT_2003_Maintain"
+            const TT_3003_High = res.data.find((item: any) => item.key === "TT_3003_High");
+            setTT_3003_High(TT_3003_High?.value || null);
+            const TT_3003_Low = res.data.find((item: any) => item.key === "TT_3003_Low");
+            setTT_3003_Low(TT_3003_Low?.value || null);
+            const TT_3003_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3003_Maintain"
             );
 
-            const TT_2004_High = res.data.find((item: any) => item.key === "TT_2004_High");
-            setTT_2004_High(TT_2004_High?.value || null);
-            const TT_2004_Low = res.data.find((item: any) => item.key === "TT_2004_Low");
-            setTT_2004_Low(TT_2004_Low?.value || null);
-            const TT_2004_Maintain = res.data.find(
-                (item: any) => item.key === "TT_2004_Maintain"
+            const TT_3004_High = res.data.find((item: any) => item.key === "TT_3004_High");
+            setTT_3004_High(TT_3004_High?.value || null);
+            const TT_3004_Low = res.data.find((item: any) => item.key === "TT_3004_Low");
+            setTT_3004_Low(TT_3004_Low?.value || null);
+            const TT_3004_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3004_Maintain"
             );
 
 
-            const WB_1001_High = res.data.find((item: any) => item.key === "WB_1001_High");
-            setWB_1001_High(WB_1001_High?.value || null);
-            const WB_1001_Low = res.data.find((item: any) => item.key === "WB_1001_Low");
-            setWB_1001_Low(WB_1001_Low?.value || null);
-            const WB_1001_Maintain = res.data.find(
-                (item: any) => item.key === "WB_1001_Maintain"
+            const WB_3001_High = res.data.find((item: any) => item.key === "WB_3001_High");
+            setWB_3001_High(WB_3001_High?.value || null);
+            const WB_3001_Low = res.data.find((item: any) => item.key === "WB_3001_Low");
+            setWB_3001_Low(WB_3001_Low?.value || null);
+            const WB_3001_Maintain = res.data.find(
+                (item: any) => item.key === "WB_3001_Maintain"
             );
 
 
@@ -264,61 +264,61 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "GD5_STATUS_Maintain"
             );
 
-            const GD_2002_High = res.data.find((item: any) => item.key === "GD_2002_High");
-            setGD_2002_High(GD_2002_High?.value || null);
-            const GD_2002_Low = res.data.find((item: any) => item.key === "GD_2002_Low");
-            setGD_2002_Low(GD_2002_Low?.value || null);
-            const GD_2002_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2002_Maintain"
+            const GD_3002_High = res.data.find((item: any) => item.key === "GD_3002_High");
+            setGD_3002_High(GD_3002_High?.value || null);
+            const GD_3002_Low = res.data.find((item: any) => item.key === "GD_3002_Low");
+            setGD_3002_Low(GD_3002_Low?.value || null);
+            const GD_3002_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3002_Maintain"
             );
 
-            const GD_2003_High = res.data.find((item: any) => item.key === "GD_2003_High");
-            setGD_2003_High(GD_2003_High?.value || null);
-            const GD_2003_Low = res.data.find((item: any) => item.key === "GD_2003_Low");
-            setGD_2003_Low(GD_2003_Low?.value || null);
-            const GD_2003_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2003_Maintain"
+            const GD_3003_High = res.data.find((item: any) => item.key === "GD_3003_High");
+            setGD_3003_High(GD_3003_High?.value || null);
+            const GD_3003_Low = res.data.find((item: any) => item.key === "GD_3003_Low");
+            setGD_3003_Low(GD_3003_Low?.value || null);
+            const GD_3003_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3003_Maintain"
             );
 
-            const GD_2005_High = res.data.find((item: any) => item.key === "GD_2005_High");
-            setGD_2005_High(GD_2005_High?.value || null);
-            const GD_2005_Low = res.data.find((item: any) => item.key === "GD_2005_Low");
-            setGD_2005_Low(GD_2005_Low?.value || null);
-            const GD_2005_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2005_Maintain"
+            const GD_3005_High = res.data.find((item: any) => item.key === "GD_3005_High");
+            setGD_3005_High(GD_3005_High?.value || null);
+            const GD_3005_Low = res.data.find((item: any) => item.key === "GD_3005_Low");
+            setGD_3005_Low(GD_3005_Low?.value || null);
+            const GD_3005_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3005_Maintain"
             );
 
-            const TM_2002_SNG_High = res.data.find((item: any) => item.key === "TM_2002_SNG_High");
-            setTM_2002_SNG_High(TM_2002_SNG_High?.value || null);
-            const TM_2002_SNG_Low = res.data.find((item: any) => item.key === "TM_2002_SNG_Low");
-            setTM_2002_SNG_Low(TM_2002_SNG_Low?.value || null);
-            const TM_2002_SNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM_2002_SNG_Maintain"
+            const TM_3002_SNG_High = res.data.find((item: any) => item.key === "TM_3002_SNG_High");
+            setTM_3002_SNG_High(TM_3002_SNG_High?.value || null);
+            const TM_3002_SNG_Low = res.data.find((item: any) => item.key === "TM_3002_SNG_Low");
+            setTM_3002_SNG_Low(TM_3002_SNG_Low?.value || null);
+            const TM_3002_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_3002_SNG_Maintain"
             );
 
 
-            const TG_2005_High = res.data.find((item: any) => item.key === "TG_2005_High");
-            setTG_2005_High(TG_2005_High?.value || null);
-            const TG_2005_Low = res.data.find((item: any) => item.key === "TG_2005_Low");
-            setTG_2005_Low(TG_2005_Low?.value || null);
-            const TG_2005_Maintain = res.data.find(
-                (item: any) => item.key === "TG_2005_Maintain"
+            const TG_3005_High = res.data.find((item: any) => item.key === "TG_3005_High");
+            setTG_3005_High(TG_3005_High?.value || null);
+            const TG_3005_Low = res.data.find((item: any) => item.key === "TG_3005_Low");
+            setTG_3005_Low(TG_3005_Low?.value || null);
+            const TG_3005_Maintain = res.data.find(
+                (item: any) => item.key === "TG_3005_Maintain"
             );
 
-            const GD_2006_High = res.data.find((item: any) => item.key === "GD_2006_High");
-            setGD_2006_High(GD_2006_High?.value || null);
-            const GD_2006_Low = res.data.find((item: any) => item.key === "GD_2006_Low");
-            setGD_2006_Low(GD_2006_Low?.value || null);
-            const GD_2006_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2006_Maintain"
+            const GD_3006_High = res.data.find((item: any) => item.key === "GD_3006_High");
+            setGD_3006_High(GD_3006_High?.value || null);
+            const GD_3006_Low = res.data.find((item: any) => item.key === "GD_3006_Low");
+            setGD_3006_Low(GD_3006_Low?.value || null);
+            const GD_3006_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3006_Maintain"
             );
 
-            const GD_2004_High = res.data.find((item: any) => item.key === "GD_2004_High");
-            setGD_2004_High(GD_2004_High?.value || null);
-            const GD_2004_Low = res.data.find((item: any) => item.key === "GD_2004_Low");
-            setGD_2004_Low(GD_2004_Low?.value || null);
-            const GD_2004_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2004_Maintain"
+            const GD_3004_High = res.data.find((item: any) => item.key === "GD_3004_High");
+            setGD_3004_High(GD_3004_High?.value || null);
+            const GD_3004_Low = res.data.find((item: any) => item.key === "GD_3004_Low");
+            setGD_3004_Low(GD_3004_Low?.value || null);
+            const GD_3004_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3004_Maintain"
             );
 
             const TOTAL_SNG_High = res.data.find((item: any) => item.key === "TOTAL_SNG_High");
@@ -328,12 +328,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const TOTAL_SNG_Maintain = res.data.find(
                 (item: any) => item.key === "TOTAL_SNG_Maintain"
             );
-            const SDV_2004_High = res.data.find((item: any) => item.key === "SDV_2004_High");
-            setSDV_2004_High(SDV_2004_High?.value || null);
-            const SDV_2004_Low = res.data.find((item: any) => item.key === "SDV_2004_Low");
-            setSDV_2004_Low(SDV_2004_Low?.value || null);
-            const SDV_2004_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2004_Maintain"
+            const SDV_3004_High = res.data.find((item: any) => item.key === "SDV_3004_High");
+            setSDV_3004_High(SDV_3004_High?.value || null);
+            const SDV_3004_Low = res.data.find((item: any) => item.key === "SDV_3004_Low");
+            setSDV_3004_Low(SDV_3004_Low?.value || null);
+            const SDV_3004_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3004_Maintain"
             );
 
             const GD2_STATUS_High = res.data.find((item: any) => item.key === "GD2_STATUS_High");
@@ -343,12 +343,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const GD2_STATUS_Maintain = res.data.find(
                 (item: any) => item.key === "GD2_STATUS_Maintain"
             );
-            const TM_2003_SNG_High = res.data.find((item: any) => item.key === "TM_2003_SNG_High");
-            setTM_2003_SNG_High(TM_2003_SNG_High?.value || null);
-            const TM_2003_SNG_Low = res.data.find((item: any) => item.key === "TM_2003_SNG_Low");
-            setTM_2003_SNG_Low(TM_2003_SNG_Low?.value || null);
-            const TM_2003_SNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM_2003_SNG_Maintain"
+            const TM_3003_SNG_High = res.data.find((item: any) => item.key === "TM_3003_SNG_High");
+            setTM_3003_SNG_High(TM_3003_SNG_High?.value || null);
+            const TM_3003_SNG_Low = res.data.find((item: any) => item.key === "TM_3003_SNG_Low");
+            setTM_3003_SNG_Low(TM_3003_SNG_Low?.value || null);
+            const TM_3003_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_3003_SNG_Maintain"
             );
 
             const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
@@ -359,12 +359,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "GD1_STATUS_Maintain"
             );
 
-            const SDV_2003_High = res.data.find((item: any) => item.key === "SDV_2003_High");
-            setSDV_2003_High(SDV_2003_High?.value || null);
-            const SDV_2003_Low = res.data.find((item: any) => item.key === "SDV_2003_Low");
-            setSDV_2003_Low(SDV_2003_Low?.value || null);
-            const SDV_2003_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2003_Maintain"
+            const SDV_3003_High = res.data.find((item: any) => item.key === "SDV_3003_High");
+            setSDV_3003_High(SDV_3003_High?.value || null);
+            const SDV_3003_Low = res.data.find((item: any) => item.key === "SDV_3003_Low");
+            setSDV_3003_Low(SDV_3003_Low?.value || null);
+            const SDV_3003_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3003_Maintain"
             );
 
      
@@ -456,12 +456,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "COOLING_V_Maintain"
             );
 
-            const FCV_2001_High = res.data.find((item: any) => item.key === "FCV_2001_High");
-            setFCV_2001_High(FCV_2001_High?.value || null);
-            const FCV_2001_Low = res.data.find((item: any) => item.key === "FCV_2001_Low");
-            setFCV_2001_Low(FCV_2001_Low?.value || null);
-            const FCV_2001_Maintain = res.data.find(
-                (item: any) => item.key === "FCV_2001_Maintain"
+            const FCV_3001_High = res.data.find((item: any) => item.key === "FCV_3001_High");
+            setFCV_3001_High(FCV_3001_High?.value || null);
+            const FCV_3001_Low = res.data.find((item: any) => item.key === "FCV_3001_Low");
+            setFCV_3001_Low(FCV_3001_Low?.value || null);
+            const FCV_3001_Maintain = res.data.find(
+                (item: any) => item.key === "FCV_3001_Maintain"
             );
 
 
@@ -485,12 +485,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "PERCENT_AIR_Maintain"
             );
 
-            const HV_1001_High = res.data.find((item: any) => item.key === "HV_1001_High");
-            setHV_1001_High(HV_1001_High?.value || null);
-            const HV_1001_Low = res.data.find((item: any) => item.key === "HV_1001_Low");
-            setHV_1001_Low(HV_1001_Low?.value || null);
-            const HV_1001_Maintain = res.data.find(
-                (item: any) => item.key === "HV_1001_Maintain"
+            const HV_3001_High = res.data.find((item: any) => item.key === "HV_3001_High");
+            setHV_3001_High(HV_3001_High?.value || null);
+            const HV_3001_Low = res.data.find((item: any) => item.key === "HV_3001_Low");
+            setHV_3001_Low(HV_3001_Low?.value || null);
+            const HV_3001_Maintain = res.data.find(
+                (item: any) => item.key === "HV_3001_Maintain"
             );
 
             const RATIO_MODE_High = res.data.find((item: any) => item.key === "RATIO_MODE_High");
@@ -520,12 +520,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
             
-            const TM2002_CNG_High = res.data.find((item: any) => item.key === "TM2002_CNG_High");
-            setTM2002_CNG_High(TM2002_CNG_High?.value || null);
-            const TM2002_CNG_Low = res.data.find((item: any) => item.key === "TM2002_CNG_Low");
-            setTM2002_CNG_Low(TM2002_CNG_Low?.value || null);
-            const TM2002_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2002_CNG_Maintain"
+            const TM3002_CNG_High = res.data.find((item: any) => item.key === "TM3002_CNG_High");
+            setTM3002_CNG_High(TM3002_CNG_High?.value || null);
+            const TM3002_CNG_Low = res.data.find((item: any) => item.key === "TM3002_CNG_Low");
+            setTM3002_CNG_Low(TM3002_CNG_Low?.value || null);
+            const TM3002_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM3002_CNG_Maintain"
             );
             const WB_Setpoint_High = res.data.find((item: any) => item.key === "WB_Setpoint_High");
             setWB_Setpoint_High(WB_Setpoint_High?.value || null);
@@ -534,12 +534,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const WB_Setpoint_Maintain = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_Maintain"
             );
-            const TM2003_CNG_High = res.data.find((item: any) => item.key === "TM2003_CNG_High");
-            setTM2003_CNG_High(TM2003_CNG_High?.value || null);
-            const TM2003_CNG_Low = res.data.find((item: any) => item.key === "TM2003_CNG_Low");
-            setTM2003_CNG_Low(TM2003_CNG_Low?.value || null);
-            const TM2003_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2003_CNG_Maintain"
+            const TM3003_CNG_High = res.data.find((item: any) => item.key === "TM3003_CNG_High");
+            setTM3003_CNG_High(TM3003_CNG_High?.value || null);
+            const TM3003_CNG_Low = res.data.find((item: any) => item.key === "TM3003_CNG_Low");
+            setTM3003_CNG_Low(TM3003_CNG_Low?.value || null);
+            const TM3003_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM3003_CNG_Maintain"
             );
 
             const WIS_Calorimeter_High = res.data.find((item: any) => item.key === "WIS_Calorimeter_High");
@@ -616,7 +616,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
  setMaintainCOOLING_V(COOLING_V_Maintain?.value || false);
 
 
- setMaintainFCV_2001(FCV_2001_Maintain?.value || false);
+ setMaintainFCV_3001(FCV_3001_Maintain?.value || false);
 
 
 
@@ -626,7 +626,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
  setMaintainPERCENT_AIR(PERCENT_AIR_Maintain?.value || false);
 
 
- setMaintainHV_1001(HV_1001_Maintain?.value || false);
+ setMaintainHV_3001(HV_3001_Maintain?.value || false);
 
 
  setMaintainRATIO_MODE(RATIO_MODE_Maintain?.value || false);
@@ -634,11 +634,11 @@ export default function ScoreCard_SNG_BINHDUONG() {
  setMaintainFCV_MODE(FCV_MODE_Maintain?.value || false);
  setMaintainTOTAL_CNG(TOTAL_CNG_Maintain?.value || false);
 
- setMaintainTM2002_CNG(TM2002_CNG_Maintain?.value || false);
+ setMaintainTM3002_CNG(TM3002_CNG_Maintain?.value || false);
 
  setMaintainWB_Setpoint(WB_Setpoint_Maintain?.value || false);
 
- setMaintainTM2003_CNG(TM2003_CNG_Maintain?.value || false);
+ setMaintainTM3003_CNG(TM3003_CNG_Maintain?.value || false);
  setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
 
 
@@ -648,39 +648,39 @@ export default function ScoreCard_SNG_BINHDUONG() {
  
            
 
-            setMaintainPT_2004(PT_2004_Maintain?.value || false);
+            setMaintainPT_3006(PT_3006_Maintain?.value || false);
 
 
-            setMaintainPT_2005(PT_2005_Maintain?.value || false);
+            setMaintainPT_3005(PT_3005_Maintain?.value || false);
 
 
-            setMaintainTT_2003(TT_2003_Maintain?.value || false);
+            setMaintainTT_3003(TT_3003_Maintain?.value || false);
 
 
-            setMaintainTT_2004(TT_2004_Maintain?.value || false);
+            setMaintainTT_3004(TT_3004_Maintain?.value || false);
 
 
-            setMaintainGD_2004(GD_2004_Maintain?.value || false);
+            setMaintainGD_3004(GD_3004_Maintain?.value || false);
 
-            setMaintainGD_2005(GD_2005_Maintain?.value || false);
+            setMaintainGD_3005(GD_3005_Maintain?.value || false);
             
-            setMaintainGD_2006(GD_2006_Maintain?.value || false);
+            setMaintainGD_3006(GD_3006_Maintain?.value || false);
             
-            setMaintainTG_2005(TG_2005_Maintain?.value || false);
+            setMaintainTG_3005(TG_3005_Maintain?.value || false);
 
             
-            setMaintainTM_2002_SNG(TM_2002_SNG_Maintain?.value || false);
-            setMaintainTM_2003_SNG(TM_2003_SNG_Maintain?.value || false);
+            setMaintainTM_3002_SNG(TM_3002_SNG_Maintain?.value || false);
+            setMaintainTM_3003_SNG(TM_3003_SNG_Maintain?.value || false);
 
 
 
             setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
 
 
-            setMaintainGD_2003(GD_2003_Maintain?.value || false);
+            setMaintainGD_3003(GD_3003_Maintain?.value || false);
 
 
-            setMaintainGD_2002(GD_2002_Maintain?.value || false);
+            setMaintainGD_3002(GD_3002_Maintain?.value || false);
 
 
             setMaintainGD5_STATUS(GD5_STATUS_Maintain?.value || false);
@@ -689,19 +689,19 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
 
-            setMaintainWB_1001(WB_1001_Maintain?.value || false);
+            setMaintainWB_3001(WB_3001_Maintain?.value || false);
 
             setMaintainTOTAL_SNG(TOTAL_SNG_Maintain?.value || false);
 
 
-            setMaintainSDV_2004(SDV_2004_Maintain?.value || false);
+            setMaintainSDV_3004(SDV_3004_Maintain?.value || false);
 
 
             setMaintainGD2_STATUS(GD2_STATUS_Maintain?.value || false);
 
             setMaintainGD1_STATUS(GD1_STATUS_Maintain?.value || false);
 
-            setMaintainSDV_2003(SDV_2003_Maintain?.value || false);
+            setMaintainSDV_3003(SDV_3003_Maintain?.value || false);
 
 
 
@@ -721,318 +721,470 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
         
 
-const [TT_2004, setTT_2004] = useState<string | null>(null);
-const [TT_2004_High, setTT_2004_High] = useState<number | null>(null);
-const [TT_2004_Low, setTT_2004_Low] = useState<number | null>(null);
-const [exceedThresholdTT_2004, setExceedThresholdTT_2004] = useState(false); 
-const [maintainTT_2004, setMaintainTT_2004] = useState<boolean>(false);
+const [TT_3004, setTT_3004] = useState<string | null>(null);
+const [TT_3004_High, setTT_3004_High] = useState<number | null>(null);
+const [TT_3004_Low, setTT_3004_Low] = useState<number | null>(null);
+const [exceedThresholdTT_3004, setExceedThresholdTT_3004] = useState(false); 
+const [maintainTT_3004, setMaintainTT_3004] = useState<boolean>(false);
 
 useEffect(() => {
-    const TT_2004Value = parseFloat(TT_2004 as any);
-    const highValue = TT_2004_High ?? NaN;
-    const lowValue = TT_2004_Low ?? NaN;
+    const TT_3004Value = parseFloat(TT_3004 as any);
+    const highValue = TT_3004_High ?? NaN;
+    const lowValue = TT_3004_Low ?? NaN;
 
-    if (!isNaN(TT_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2004) {
-        setExceedThresholdTT_2004(TT_2004Value >= highValue || TT_2004Value <= lowValue);
+    if (!isNaN(TT_3004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3004) {
+        setExceedThresholdTT_3004(TT_3004Value >= highValue || TT_3004Value <= lowValue);
     }
-}, [TT_2004, TT_2004_High, TT_2004_Low, maintainTT_2004]);
+}, [TT_3004, TT_3004_High, TT_3004_Low, maintainTT_3004]);
 
 
 
 
 
-const [PT_2004, setPT_2004] = useState<string | null>(null);
-const [PT_2004_High, setPT_2004_High] = useState<number | null>(null);
-const [PT_2004_Low, setPT_2004_Low] = useState<number | null>(null);
-const [exceedThresholdPT_2004, setExceedThresholdPT_2004] = useState(false); 
-const [maintainPT_2004, setMaintainPT_2004] = useState<boolean>(false);
-
-useEffect(() => {
-const PT_2004Value = parseFloat(PT_2004 as any);
-const highValue = PT_2004_High ?? NaN;
-const lowValue = PT_2004_Low ?? NaN;
-
-if (!isNaN(PT_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2004) {
- setExceedThresholdPT_2004(PT_2004Value >= highValue || PT_2004Value <= lowValue);
-}
-}, [PT_2004, PT_2004_High, PT_2004_Low, maintainPT_2004]);
-
-
-
-
-
-
-
-// =================================================================================================================== 
-
-const [PT_2005, setPT_2005] = useState<string | null>(null);
-const [PT_2005_High, setPT_2005_High] = useState<number | null>(null);
-const [PT_2005_Low, setPT_2005_Low] = useState<number | null>(null);
-const [exceedThresholdPT_2005, setExceedThresholdPT_2005] = useState(false); 
-const [maintainPT_2005, setMaintainPT_2005] = useState<boolean>(false);
-
-useEffect(() => {
- const PT_2005Value = parseFloat(PT_2005 as any);
- const highValue = PT_2005_High ?? NaN;
- const lowValue = PT_2005_Low ?? NaN;
-
- if (!isNaN(PT_2005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2005) {
-     setExceedThresholdPT_2005(PT_2005Value >= highValue || PT_2005Value <= lowValue);
- }
-}, [PT_2005, PT_2005_High, PT_2005_Low, maintainPT_2005,
-
-
-
-
-
-
-]);
-
-
-
-
-
-
-// =================================================================================================================== 
-
-
-const [TT_2003, setTT_2003] = useState<string | null>(null);
-const [TT_2003_High, setTT_2003_High] = useState<number | null>(null);
-const [TT_2003_Low, setTT_2003_Low] = useState<number | null>(null);
-const [exceedThresholdTT_2003, setExceedThresholdTT_2003] = useState(false); 
-const [maintainTT_2003, setMaintainTT_2003] = useState<boolean>(false);
-
-useEffect(() => {
- const TT_2003Value = parseFloat(TT_2003 as any);
- const highValue = TT_2003_High ?? NaN;
- const lowValue = TT_2003_Low ?? NaN;
-
- if (!isNaN(TT_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2003) {
-     setExceedThresholdTT_2003(TT_2003Value >= highValue || TT_2003Value <= lowValue);
- }
-}, [TT_2003, TT_2003_High, TT_2003_Low, maintainTT_2003]);
-
-
-
-
-
-
-
-  // =================================================================================================================== 
-
-
-  const [TG_2005, setTG_2005] = useState<string | null>(null);
-const [TG_2005_High, setTG_2005_High] = useState<number | null>(null);
-const [TG_2005_Low, setTG_2005_Low] = useState<number | null>(null);
-const [exceedThresholdTG_2005, setExceedThresholdTG_2005] = useState(false); 
-const [maintainTG_2005, setMaintainTG_2005] = useState<boolean>(false);
-
-useEffect(() => {
- const TG_2005Value = parseFloat(TG_2005 as any);
- const highValue = TG_2005_High ?? NaN;
- const lowValue = TG_2005_Low ?? NaN;
-
- if (!isNaN(TG_2005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTG_2005) {
-     setExceedThresholdTG_2005(TG_2005Value >= highValue || TG_2005Value <= lowValue);
- }
-}, [TG_2005, TG_2005_High, TG_2005_Low, maintainTG_2005]);
-
-
-
-
-
-
-
-  // =================================================================================================================== 
-  const [WB_1001, setWB_1001] = useState<string | null>(null);
-  const [WB_1001_High, setWB_1001_High] = useState<number | null>(null);
-  const [WB_1001_Low, setWB_1001_Low] = useState<number | null>(null);
-  const [exceedThresholdWB_1001, setExceedThresholdWB_1001] = useState(false); 
-  const [maintainWB_1001, setMaintainWB_1001] = useState<boolean>(false);
- 
-  useEffect(() => {
-      const WB_1001Value = parseFloat(WB_1001 as any);
-      const highValue = WB_1001_High ?? NaN;
-      const lowValue = WB_1001_Low ?? NaN;
- 
-      if (!isNaN(WB_1001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_1001) {
-          setExceedThresholdWB_1001(WB_1001Value >= highValue || WB_1001Value <= lowValue);
-      }
-  }, [WB_1001, WB_1001_High, WB_1001_Low, maintainWB_1001]);
- 
-  
- 
-  
-
-  
-  
-  // =================================================================================================================== 
-
-  const [GD_2004, setGD_2004] = useState<string | null>(null);
-  const [GD_2004_High, setGD_2004_High] = useState<number | null>(null);
-  const [GD_2004_Low, setGD_2004_Low] = useState<number | null>(null);
-  const [exceedThresholdGD_2004, setExceedThresholdGD_2004] = useState(false); 
-  const [maintainGD_2004, setMaintainGD_2004] = useState<boolean>(false);
- 
-  useEffect(() => {
-      const GD_2004Value = parseFloat(GD_2004 as any);
-      const highValue = GD_2004_High ?? NaN;
-      const lowValue = GD_2004_Low ?? NaN;
- 
-      if (!isNaN(GD_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2004) {
-          setExceedThresholdGD_2004(GD_2004Value >= highValue || GD_2004Value <= lowValue);
-      }
-  }, [GD_2004, GD_2004_High, GD_2004_Low, maintainGD_2004]);
- 
-  
- 
-  
- 
-
-  
-  // =================================================================================================================== 
-
-  const [GD_2003, setGD_2003] = useState<string | null>(null);
-  const [GD_2003_High, setGD_2003_High] = useState<number | null>(null);
-  const [GD_2003_Low, setGD_2003_Low] = useState<number | null>(null);
-  const [exceedThresholdGD_2003, setExceedThresholdGD_2003] = useState(false); 
-  const [maintainGD_2003, setMaintainGD_2003] = useState<boolean>(false);
- 
-  useEffect(() => {
-      const GD_2003Value = parseFloat(GD_2003 as any);
-      const highValue = GD_2003_High ?? NaN;
-      const lowValue = GD_2003_Low ?? NaN;
- 
-      if (!isNaN(GD_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2003) {
-          setExceedThresholdGD_2003(GD_2003Value >= highValue || GD_2003Value <= lowValue);
-      }
-  }, [GD_2003, GD_2003_High, GD_2003_Low, maintainGD_2003]);
- 
-  
- 
-  
- 
-
-
-
-  // =================================================================================================================== 
-
-  const [GD_2002, setGD_2002] = useState<string | null>(null);
-  const [GD_2002_High, setGD_2002_High] = useState<number | null>(null);
-  const [GD_2002_Low, setGD_2002_Low] = useState<number | null>(null);
-  const [exceedThresholdGD_2002, setExceedThresholdGD_2002] = useState(false); 
-  const [maintainGD_2002, setMaintainGD_2002] = useState<boolean>(false);
- 
-  useEffect(() => {
-      const GD_2002Value = parseFloat(GD_2002 as any);
-      const highValue = GD_2002_High ?? NaN;
-      const lowValue = GD_2002_Low ?? NaN;
- 
-      if (!isNaN(GD_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2002) {
-          setExceedThresholdGD_2002(GD_2002Value >= highValue || GD_2002Value <= lowValue);
-      }
-  }, [GD_2002, GD_2002_High, GD_2002_Low, maintainGD_2002]);
- 
-  
- 
-  
- 
-
-
-  // =================================================================================================================== 
-
-  const [GD_2005, setGD_2005] = useState<string | null>(null);
-  const [GD_2005_High, setGD_2005_High] = useState<number | null>(null);
-  const [GD_2005_Low, setGD_2005_Low] = useState<number | null>(null);
-  const [exceedThresholdGD_2005, setExceedThresholdGD_2005] = useState(false); 
-  const [maintainGD_2005, setMaintainGD_2005] = useState<boolean>(false);
- 
-  useEffect(() => {
-      const GD_2005Value = parseFloat(GD_2005 as any);
-      const highValue = GD_2005_High ?? NaN;
-      const lowValue = GD_2005_Low ?? NaN;
- 
-      if (!isNaN(GD_2005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2005) {
-          setExceedThresholdGD_2005(GD_2005Value >= highValue || GD_2005Value <= lowValue);
-      }
-  }, [GD_2005, GD_2005_High, GD_2005_Low, maintainGD_2005]);
- 
-
-
-  // =================================================================================================================== 
-
-// =================================================================================================================== 
-
-const [GD_2006, setGD_2006] = useState<string | null>(null);
-const [GD_2006_High, setGD_2006_High] = useState<number | null>(null);
-const [GD_2006_Low, setGD_2006_Low] = useState<number | null>(null);
-const [exceedThresholdGD_2006, setExceedThresholdGD_2006] = useState(false); 
-const [maintainGD_2006, setMaintainGD_2006] = useState<boolean>(false);
-
-useEffect(() => {
-const GD_2006Value = parseFloat(GD_2006 as any);
-const highValue = GD_2006_High ?? NaN;
-const lowValue = GD_2006_Low ?? NaN;
-
-if (!isNaN(GD_2006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2006) {
-    setExceedThresholdGD_2006(GD_2006Value >= highValue || GD_2006Value <= lowValue);
-}
-}, [GD_2006, GD_2006_High, GD_2006_Low, maintainGD_2006]);
-
-
-
-
-
-
-// =================================================================================================================== 
-
-// =================================================================================================================== 
-
-const [TM_2002_SNG, setTM_2002_SNG] = useState<string | null>(null);
-const [TM_2002_SNG_High, setTM_2002_SNG_High] = useState<number | null>(null);
-const [TM_2002_SNG_Low, setTM_2002_SNG_Low] = useState<number | null>(null);
-const [exceedThresholdTM_2002_SNG, setExceedThresholdTM_2002_SNG] = useState(false); 
-const [maintainTM_2002_SNG, setMaintainTM_2002_SNG] = useState<boolean>(false);
-
-useEffect(() => {
-    const TM_2002_SNGValue = parseFloat(TM_2002_SNG as any);
-    const highValue = TM_2002_SNG_High ?? NaN;
-    const lowValue = TM_2002_SNG_Low ?? NaN;
-
-    if (!isNaN(TM_2002_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2002_SNG) {
-        setExceedThresholdTM_2002_SNG(TM_2002_SNGValue >= highValue || TM_2002_SNGValue <= lowValue);
+const ChangeMaintainTT_3004 = async () => {
+    try {
+        const newValue = !maintainTT_3004;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { TT_3004_Maintain: newValue }
+        );
+        setMaintainTT_3004(newValue);
+    } catch (error) {
+        console.error(error);
     }
-}, [TM_2002_SNG, TM_2002_SNG_High, TM_2002_SNG_Low, maintainTM_2002_SNG]);
+};
+
+
+const [PT_3006, setPT_3006] = useState<string | null>(null);
+const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
+const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
+const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false); 
+const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
+
+useEffect(() => {
+const PT_3006Value = parseFloat(PT_3006 as any);
+const highValue = PT_3006_High ?? NaN;
+const lowValue = PT_3006_Low ?? NaN;
+
+if (!isNaN(PT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3006) {
+ setExceedThresholdPT_3006(PT_3006Value >= highValue || PT_3006Value <= lowValue);
+}
+}, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006]);
 
 
 
 
 
+const ChangeMaintainPT_3006 = async () => {
+try {
+ const newValue = !maintainPT_3006;
+ await httpApi.post(
+     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+     { PT_3006_Maintain: newValue }
+ );
+ setMaintainPT_3006(newValue);
+} catch (error) {
+ console.error(error);
+}
+};
+
+
+// =================================================================================================================== 
+
+const [PT_3005, setPT_3005] = useState<string | null>(null);
+const [PT_3005_High, setPT_3005_High] = useState<number | null>(null);
+const [PT_3005_Low, setPT_3005_Low] = useState<number | null>(null);
+const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false); 
+const [maintainPT_3005, setMaintainPT_3005] = useState<boolean>(false);
+
+useEffect(() => {
+ const PT_3005Value = parseFloat(PT_3005 as any);
+ const highValue = PT_3005_High ?? NaN;
+ const lowValue = PT_3005_Low ?? NaN;
+
+ if (!isNaN(PT_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3005) {
+     setExceedThresholdPT_3005(PT_3005Value >= highValue || PT_3005Value <= lowValue);
+ }
+}, [PT_3005, PT_3005_High, PT_3005_Low, maintainPT_3005]);
+
+
+
+
+
+const ChangeMaintainPT_3005 = async () => {
+ try {
+     const newValue = !maintainPT_3005;
+     await httpApi.post(
+         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+         { PT_3005_Maintain: newValue }
+     );
+     setMaintainPT_3005(newValue);
+ } catch (error) {
+     console.error(error);
+ }
+};
+
+// =================================================================================================================== 
+
+
+const [TT_3003, setTT_3003] = useState<string | null>(null);
+const [TT_3003_High, setTT_3003_High] = useState<number | null>(null);
+const [TT_3003_Low, setTT_3003_Low] = useState<number | null>(null);
+const [exceedThresholdTT_3003, setExceedThresholdTT_3003] = useState(false); 
+const [maintainTT_3003, setMaintainTT_3003] = useState<boolean>(false);
+
+useEffect(() => {
+ const TT_3003Value = parseFloat(TT_3003 as any);
+ const highValue = TT_3003_High ?? NaN;
+ const lowValue = TT_3003_Low ?? NaN;
+
+ if (!isNaN(TT_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3003) {
+     setExceedThresholdTT_3003(TT_3003Value >= highValue || TT_3003Value <= lowValue);
+ }
+}, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
+
+
+
+
+
+const ChangeMaintainTT_3003 = async () => {
+ try {
+     const newValue = !maintainTT_3003;
+     await httpApi.post(
+         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+         { TT_3003_Maintain: newValue }
+     );
+     setMaintainTT_3003(newValue);
+ } catch (error) {
+     console.error(error);
+ }
+};
+
+
+  // =================================================================================================================== 
+
+
+  const [TG_3005, setTG_3005] = useState<string | null>(null);
+const [TG_3005_High, setTG_3005_High] = useState<number | null>(null);
+const [TG_3005_Low, setTG_3005_Low] = useState<number | null>(null);
+const [exceedThresholdTG_3005, setExceedThresholdTG_3005] = useState(false); 
+const [maintainTG_3005, setMaintainTG_3005] = useState<boolean>(false);
+
+useEffect(() => {
+ const TG_3005Value = parseFloat(TG_3005 as any);
+ const highValue = TG_3005_High ?? NaN;
+ const lowValue = TG_3005_Low ?? NaN;
+
+ if (!isNaN(TG_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTG_3005) {
+     setExceedThresholdTG_3005(TG_3005Value >= highValue || TG_3005Value <= lowValue);
+ }
+}, [TG_3005, TG_3005_High, TG_3005_Low, maintainTG_3005]);
+
+
+
+
+
+const ChangeMaintainTG_3005 = async () => {
+ try {
+     const newValue = !maintainTG_3005;
+     await httpApi.post(
+         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+         { TG_3005_Maintain: newValue }
+     );
+     setMaintainTG_3005(newValue);
+ } catch (error) {
+     console.error(error);
+ }
+};
+
+
+  // =================================================================================================================== 
+  const [WB_3001, setWB_3001] = useState<string | null>(null);
+  const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
+  const [WB_3001_Low, setWB_3001_Low] = useState<number | null>(null);
+  const [exceedThresholdWB_3001, setExceedThresholdWB_3001] = useState(false); 
+  const [maintainWB_3001, setMaintainWB_3001] = useState<boolean>(false);
+ 
+  useEffect(() => {
+      const WB_3001Value = parseFloat(WB_3001 as any);
+      const highValue = WB_3001_High ?? NaN;
+      const lowValue = WB_3001_Low ?? NaN;
+ 
+      if (!isNaN(WB_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_3001) {
+          setExceedThresholdWB_3001(WB_3001Value >= highValue || WB_3001Value <= lowValue);
+      }
+  }, [WB_3001, WB_3001_High, WB_3001_Low, maintainWB_3001]);
+ 
+  
+ 
+  
+ 
+  const ChangeMaintainWB_3001 = async () => {
+      try {
+          const newValue = !maintainWB_3001;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { WB_3001_Maintain: newValue }
+          );
+          setMaintainWB_3001(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+  
+  
+  // =================================================================================================================== 
+
+  const [GD_3004, setGD_3004] = useState<string | null>(null);
+  const [GD_3004_High, setGD_3004_High] = useState<number | null>(null);
+  const [GD_3004_Low, setGD_3004_Low] = useState<number | null>(null);
+  const [exceedThresholdGD_3004, setExceedThresholdGD_3004] = useState(false); 
+  const [maintainGD_3004, setMaintainGD_3004] = useState<boolean>(false);
+ 
+  useEffect(() => {
+      const GD_3004Value = parseFloat(GD_3004 as any);
+      const highValue = GD_3004_High ?? NaN;
+      const lowValue = GD_3004_Low ?? NaN;
+ 
+      if (!isNaN(GD_3004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3004) {
+          setExceedThresholdGD_3004(GD_3004Value >= highValue || GD_3004Value <= lowValue);
+      }
+  }, [GD_3004, GD_3004_High, GD_3004_Low, maintainGD_3004]);
+ 
+  
+ 
+  
+ 
+  const ChangeMaintainGD_3004 = async () => {
+      try {
+          const newValue = !maintainGD_3004;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { GD_3004_Maintain: newValue }
+          );
+          setMaintainGD_3004(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+
+  
+  // =================================================================================================================== 
+
+  const [GD_3003, setGD_3003] = useState<string | null>(null);
+  const [GD_3003_High, setGD_3003_High] = useState<number | null>(null);
+  const [GD_3003_Low, setGD_3003_Low] = useState<number | null>(null);
+  const [exceedThresholdGD_3003, setExceedThresholdGD_3003] = useState(false); 
+  const [maintainGD_3003, setMaintainGD_3003] = useState<boolean>(false);
+ 
+  useEffect(() => {
+      const GD_3003Value = parseFloat(GD_3003 as any);
+      const highValue = GD_3003_High ?? NaN;
+      const lowValue = GD_3003_Low ?? NaN;
+ 
+      if (!isNaN(GD_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3003) {
+          setExceedThresholdGD_3003(GD_3003Value >= highValue || GD_3003Value <= lowValue);
+      }
+  }, [GD_3003, GD_3003_High, GD_3003_Low, maintainGD_3003]);
+ 
+  
+ 
+  
+ 
+  const ChangeMaintainGD_3003 = async () => {
+      try {
+          const newValue = !maintainGD_3003;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { GD_3003_Maintain: newValue }
+          );
+          setMaintainGD_3003(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+
+
+  // =================================================================================================================== 
+
+  const [GD_3002, setGD_3002] = useState<string | null>(null);
+  const [GD_3002_High, setGD_3002_High] = useState<number | null>(null);
+  const [GD_3002_Low, setGD_3002_Low] = useState<number | null>(null);
+  const [exceedThresholdGD_3002, setExceedThresholdGD_3002] = useState(false); 
+  const [maintainGD_3002, setMaintainGD_3002] = useState<boolean>(false);
+ 
+  useEffect(() => {
+      const GD_3002Value = parseFloat(GD_3002 as any);
+      const highValue = GD_3002_High ?? NaN;
+      const lowValue = GD_3002_Low ?? NaN;
+ 
+      if (!isNaN(GD_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3002) {
+          setExceedThresholdGD_3002(GD_3002Value >= highValue || GD_3002Value <= lowValue);
+      }
+  }, [GD_3002, GD_3002_High, GD_3002_Low, maintainGD_3002]);
+ 
+  
+ 
+  
+ 
+  const ChangeMaintainGD_3002 = async () => {
+      try {
+          const newValue = !maintainGD_3002;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { GD_3002_Maintain: newValue }
+          );
+          setMaintainGD_3002(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+
+  // =================================================================================================================== 
+
+  const [GD_3005, setGD_3005] = useState<string | null>(null);
+  const [GD_3005_High, setGD_3005_High] = useState<number | null>(null);
+  const [GD_3005_Low, setGD_3005_Low] = useState<number | null>(null);
+  const [exceedThresholdGD_3005, setExceedThresholdGD_3005] = useState(false); 
+  const [maintainGD_3005, setMaintainGD_3005] = useState<boolean>(false);
+ 
+  useEffect(() => {
+      const GD_3005Value = parseFloat(GD_3005 as any);
+      const highValue = GD_3005_High ?? NaN;
+      const lowValue = GD_3005_Low ?? NaN;
+ 
+      if (!isNaN(GD_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3005) {
+          setExceedThresholdGD_3005(GD_3005Value >= highValue || GD_3005Value <= lowValue);
+      }
+  }, [GD_3005, GD_3005_High, GD_3005_Low, maintainGD_3005]);
+ 
+  
+ 
+  
+ 
+  const ChangeMaintainGD_3005 = async () => {
+      try {
+          const newValue = !maintainGD_3005;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { GD_3005_Maintain: newValue }
+          );
+          setMaintainGD_3005(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+
+  // =================================================================================================================== 
+
+// =================================================================================================================== 
+
+const [GD_3006, setGD_3006] = useState<string | null>(null);
+const [GD_3006_High, setGD_3006_High] = useState<number | null>(null);
+const [GD_3006_Low, setGD_3006_Low] = useState<number | null>(null);
+const [exceedThresholdGD_3006, setExceedThresholdGD_3006] = useState(false); 
+const [maintainGD_3006, setMaintainGD_3006] = useState<boolean>(false);
+
+useEffect(() => {
+const GD_3006Value = parseFloat(GD_3006 as any);
+const highValue = GD_3006_High ?? NaN;
+const lowValue = GD_3006_Low ?? NaN;
+
+if (!isNaN(GD_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3006) {
+    setExceedThresholdGD_3006(GD_3006Value >= highValue || GD_3006Value <= lowValue);
+}
+}, [GD_3006, GD_3006_High, GD_3006_Low, maintainGD_3006]);
+
+
+
+
+
+const ChangeMaintainGD_3006 = async () => {
+try {
+    const newValue = !maintainGD_3006;
+    await httpApi.post(
+        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+        { GD_3006_Maintain: newValue }
+    );
+    setMaintainGD_3006(newValue);
+} catch (error) {
+    console.error(error);
+}
+};
+
+// =================================================================================================================== 
+
+// =================================================================================================================== 
+
+const [TM_3002_SNG, setTM_3002_SNG] = useState<string | null>(null);
+const [TM_3002_SNG_High, setTM_3002_SNG_High] = useState<number | null>(null);
+const [TM_3002_SNG_Low, setTM_3002_SNG_Low] = useState<number | null>(null);
+const [exceedThresholdTM_3002_SNG, setExceedThresholdTM_3002_SNG] = useState(false); 
+const [maintainTM_3002_SNG, setMaintainTM_3002_SNG] = useState<boolean>(false);
+
+useEffect(() => {
+    const TM_3002_SNGValue = parseFloat(TM_3002_SNG as any);
+    const highValue = TM_3002_SNG_High ?? NaN;
+    const lowValue = TM_3002_SNG_Low ?? NaN;
+
+    if (!isNaN(TM_3002_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_3002_SNG) {
+        setExceedThresholdTM_3002_SNG(TM_3002_SNGValue >= highValue || TM_3002_SNGValue <= lowValue);
+    }
+}, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
+
+
+
+
+
+const ChangeMaintainTM_3002_SNG = async () => {
+    try {
+        const newValue = !maintainTM_3002_SNG;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { TM_3002_SNG_Maintain: newValue }
+        );
+        setMaintainTM_3002_SNG(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 // =================================================================================================================== 
 
     // =================================================================================================================== 
 
-    const [TM_2003_SNG, setTM_2003_SNG] = useState<string | null>(null);
-    const [TM_2003_SNG_High, setTM_2003_SNG_High] = useState<number | null>(null);
-    const [TM_2003_SNG_Low, setTM_2003_SNG_Low] = useState<number | null>(null);
-    const [exceedThresholdTM_2003_SNG, setExceedThresholdTM_2003_SNG] = useState(false); 
-    const [maintainTM_2003_SNG, setMaintainTM_2003_SNG] = useState<boolean>(false);
+    const [TM_3003_SNG, setTM_3003_SNG] = useState<string | null>(null);
+    const [TM_3003_SNG_High, setTM_3003_SNG_High] = useState<number | null>(null);
+    const [TM_3003_SNG_Low, setTM_3003_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_3003_SNG, setExceedThresholdTM_3003_SNG] = useState(false); 
+    const [maintainTM_3003_SNG, setMaintainTM_3003_SNG] = useState<boolean>(false);
    
     useEffect(() => {
-        const TM_2003_SNGValue = parseFloat(TM_2003_SNG as any);
-        const highValue = TM_2003_SNG_High ?? NaN;
-        const lowValue = TM_2003_SNG_Low ?? NaN;
+        const TM_3003_SNGValue = parseFloat(TM_3003_SNG as any);
+        const highValue = TM_3003_SNG_High ?? NaN;
+        const lowValue = TM_3003_SNG_Low ?? NaN;
    
-        if (!isNaN(TM_2003_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2003_SNG) {
-            setExceedThresholdTM_2003_SNG(TM_2003_SNGValue >= highValue || TM_2003_SNGValue <= lowValue);
+        if (!isNaN(TM_3003_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_3003_SNG) {
+            setExceedThresholdTM_3003_SNG(TM_3003_SNGValue >= highValue || TM_3003_SNGValue <= lowValue);
         }
-    }, [TM_2003_SNG, TM_2003_SNG_High, TM_2003_SNG_Low, maintainTM_2003_SNG]);
+    }, [TM_3003_SNG, TM_3003_SNG_High, TM_3003_SNG_Low, maintainTM_3003_SNG]);
    
     
    
     
-
+   
+    const ChangeMaintainTM_3003_SNG = async () => {
+        try {
+            const newValue = !maintainTM_3003_SNG;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { TM_3003_SNG_Maintain: newValue }
+            );
+            setMaintainTM_3003_SNG(newValue);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
 
 // =================================================================================================================== 
@@ -1056,52 +1208,96 @@ if (!isNaN(TOTAL_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintain
 
 
 
-// =================================================================================================================== 
-
-// =================================================================================================================== 
-
-const [SDV_2004, setSDV_2004] = useState<string | null>(null);
-const [SDV_2004_High, setSDV_2004_High] = useState<number | null>(null);
-const [SDV_2004_Low, setSDV_2004_Low] = useState<number | null>(null);
-const [exceedThresholdSDV_2004, setExceedThresholdSDV_2004] = useState(false); 
-const [maintainSDV_2004, setMaintainSDV_2004] = useState<boolean>(false);
-
-useEffect(() => {
-    const SDV_2004Value = parseFloat(SDV_2004 as any);
-    const highValue = SDV_2004_High ?? NaN;
-    const lowValue = SDV_2004_Low ?? NaN;
-
-    if (!isNaN(SDV_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2004) {
-        setExceedThresholdSDV_2004(SDV_2004Value >= highValue || SDV_2004Value <= lowValue);
-    }
-}, [SDV_2004, SDV_2004_High, SDV_2004_Low, maintainSDV_2004]);
 
 
-
-
-
-
-
-// =================================================================================================================== 
-
-
-const [SDV_2003, setSDV_2003] = useState<string | null>(null);
-const [SDV_2003_High, setSDV_2003_High] = useState<number | null>(null);
-const [SDV_2003_Low, setSDV_2003_Low] = useState<number | null>(null);
-const [exceedThresholdSDV_2003, setExceedThresholdSDV_2003] = useState(false); 
-const [maintainSDV_2003, setMaintainSDV_2003] = useState<boolean>(false);
-
-useEffect(() => {
-const SDV_2003Value = parseFloat(SDV_2003 as any);
-const highValue = SDV_2003_High ?? NaN;
-const lowValue = SDV_2003_Low ?? NaN;
-
-if (!isNaN(SDV_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2003) {
-setExceedThresholdSDV_2003(SDV_2003Value >= highValue || SDV_2003Value <= lowValue);
+const ChangeMaintainTOTAL_SNG = async () => {
+try {
+    const newValue = !maintainTOTAL_SNG;
+    await httpApi.post(
+        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+        { TOTAL_SNG_Maintain: newValue }
+    );
+    setMaintainTOTAL_SNG(newValue);
+} catch (error) {
+    console.error(error);
 }
-}, [SDV_2003, SDV_2003_High, SDV_2003_Low, maintainSDV_2003]);
+};
 
 
+
+// =================================================================================================================== 
+
+// =================================================================================================================== 
+
+const [SDV_3004, setSDV_3004] = useState<string | null>(null);
+const [SDV_3004_High, setSDV_3004_High] = useState<number | null>(null);
+const [SDV_3004_Low, setSDV_3004_Low] = useState<number | null>(null);
+const [exceedThresholdSDV_3004, setExceedThresholdSDV_3004] = useState(false); 
+const [maintainSDV_3004, setMaintainSDV_3004] = useState<boolean>(false);
+
+useEffect(() => {
+    const SDV_3004Value = parseFloat(SDV_3004 as any);
+    const highValue = SDV_3004_High ?? NaN;
+    const lowValue = SDV_3004_Low ?? NaN;
+
+    if (!isNaN(SDV_3004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_3004) {
+        setExceedThresholdSDV_3004(SDV_3004Value >= highValue || SDV_3004Value <= lowValue);
+    }
+}, [SDV_3004, SDV_3004_High, SDV_3004_Low, maintainSDV_3004]);
+
+
+
+
+
+const ChangeMaintainSDV_3004 = async () => {
+    try {
+        const newValue = !maintainSDV_3004;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { SDV_3004_Maintain: newValue }
+        );
+        setMaintainSDV_3004(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+// =================================================================================================================== 
+
+
+const [SDV_3003, setSDV_3003] = useState<string | null>(null);
+const [SDV_3003_High, setSDV_3003_High] = useState<number | null>(null);
+const [SDV_3003_Low, setSDV_3003_Low] = useState<number | null>(null);
+const [exceedThresholdSDV_3003, setExceedThresholdSDV_3003] = useState(false); 
+const [maintainSDV_3003, setMaintainSDV_3003] = useState<boolean>(false);
+
+useEffect(() => {
+const SDV_3003Value = parseFloat(SDV_3003 as any);
+const highValue = SDV_3003_High ?? NaN;
+const lowValue = SDV_3003_Low ?? NaN;
+
+if (!isNaN(SDV_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_3003) {
+setExceedThresholdSDV_3003(SDV_3003Value >= highValue || SDV_3003Value <= lowValue);
+}
+}, [SDV_3003, SDV_3003_High, SDV_3003_Low, maintainSDV_3003]);
+
+
+
+
+
+const ChangeMaintainSDV_3003 = async () => {
+try {
+const newValue = !maintainSDV_3003;
+await httpApi.post(
+    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+    { SDV_3003_Maintain: newValue }
+);
+setMaintainSDV_3003(newValue);
+} catch (error) {
+console.error(error);
+}
+};
 
 // =================================================================================================================== 
 
@@ -1126,6 +1322,19 @@ if (!isNaN(GD1_STATUSValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
 
 
+
+const ChangeMaintainGD1_STATUS = async () => {
+try {
+    const newValue = !maintainGD1_STATUS;
+    await httpApi.post(
+        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+        { GD1_STATUS_Maintain: newValue }
+    );
+    setMaintainGD1_STATUS(newValue);
+} catch (error) {
+    console.error(error);
+}
+};
 
 
 
@@ -1154,6 +1363,21 @@ useEffect(() => {
 
 
 
+const ChangeMaintainGD2_STATUS = async () => {
+    try {
+        const newValue = !maintainGD2_STATUS;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { GD2_STATUS_Maintain: newValue }
+        );
+        setMaintainGD2_STATUS(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
 // =================================================================================================================== 
 
 
@@ -1177,7 +1401,18 @@ useEffect(() => {
 
 
 
-
+const ChangeMaintainGD3_STATUS = async () => {
+    try {
+        const newValue = !maintainGD3_STATUS;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+            { GD3_STATUS_Maintain: newValue }
+        );
+        setMaintainGD3_STATUS(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
 // =================================================================================================================== 
@@ -1204,7 +1439,19 @@ useEffect(() => {
     
     
     
-
+    const ChangeMaintainGD4_STATUS = async () => {
+        try {
+            const newValue = !maintainGD4_STATUS;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { GD4_STATUS_Maintain: newValue }
+            );
+            setMaintainGD4_STATUS(newValue);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
 
 
 // =================================================================================================================== 
@@ -1232,7 +1479,20 @@ useEffect(() => {
     
     
     
-
+    
+    const ChangeMaintainGD5_STATUS = async () => {
+        try {
+            const newValue = !maintainGD5_STATUS;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { GD5_STATUS_Maintain: newValue }
+            );
+            setMaintainGD5_STATUS(newValue);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
     
     
     // =================================================================================================================== 
@@ -1261,7 +1521,18 @@ useEffect(() => {
     
     
     
-    
+    const ChangeMaintainEVC_02_Vm_of_Last_Day = async () => {
+        try {
+            const newValue = !maintainEVC_02_Vm_of_Last_Day;
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                { EVC_02_Vm_of_Last_Day_Maintain: newValue }
+            );
+            setMaintainEVC_02_Vm_of_Last_Day(newValue);
+        } catch (error) {
+            console.error(error);
+        }
+    };
     
     
     
@@ -1289,7 +1560,18 @@ if (!isNaN(ESDValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD) {
 
 
 
-
+const ChangeMaintainESD = async () => {
+try {
+ const newValue = !maintainESD;
+ await httpApi.post(
+     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+     { ESD_Maintain: newValue }
+ );
+ setMaintainESD(newValue);
+} catch (error) {
+ console.error(error);
+}
+};
 // =================================================================================================================== 
 const [VAPORIZER_1, setVAPORIZER_1] = useState<string | null>(null);
 const [VAPORIZER_1_High, setVAPORIZER_1_High] = useState<number | null>(null);
@@ -1311,7 +1593,18 @@ useEffect(() => {
 
 
 
-
+const ChangeMaintainVAPORIZER_1 = async () => {
+  try {
+      const newValue = !maintainVAPORIZER_1;
+      await httpApi.post(
+          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+          { VAPORIZER_1_Maintain: newValue }
+      );
+      setMaintainVAPORIZER_1(newValue);
+  } catch (error) {
+      console.error(error);
+  }
+};
 
 
 // =================================================================================================================== 
@@ -1337,7 +1630,18 @@ useEffect(() => {
 
 
 
-
+const ChangeMaintainVAPORIZER_2 = async () => {
+  try {
+      const newValue = !maintainVAPORIZER_2;
+      await httpApi.post(
+          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+          { VAPORIZER_2_Maintain: newValue }
+      );
+      setMaintainVAPORIZER_2(newValue);
+  } catch (error) {
+      console.error(error);
+  }
+};
 
 
 // =================================================================================================================== 
@@ -1364,6 +1668,18 @@ useEffect(() => {
 
 
 
+const ChangeMaintainVAPORIZER_3 = async () => {
+  try {
+      const newValue = !maintainVAPORIZER_3;
+      await httpApi.post(
+          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+          { VAPORIZER_3_Maintain: newValue }
+      );
+      setMaintainVAPORIZER_3(newValue);
+  } catch (error) {
+      console.error(error);
+  }
+};
 
 
 
@@ -1389,6 +1705,20 @@ useEffect(() => {
    
    
    
+   
+   const ChangeMaintainVAPORIZER_4 = async () => {
+       try {
+           const newValue = !maintainVAPORIZER_4;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { VAPORIZER_4_Maintain: newValue }
+           );
+           setMaintainVAPORIZER_4(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
+
 
    
    // =================================================================================================================== 
@@ -1409,6 +1739,22 @@ useEffect(() => {
        }
    }, [COOLING_V, COOLING_V_High, COOLING_V_Low, maintainCOOLING_V]);
    
+   
+   
+   
+   
+   const ChangeMaintainCOOLING_V = async () => {
+       try {
+           const newValue = !maintainCOOLING_V;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { COOLING_V_Maintain: newValue }
+           );
+           setMaintainCOOLING_V(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
 
    
    // =================================================================================================================== 
@@ -1433,29 +1779,55 @@ useEffect(() => {
    
    
    
-
+   
+   const ChangeMaintainPERCENT_LPG = async () => {
+       try {
+           const newValue = !maintainPERCENT_LPG;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { PERCENT_LPG_Maintain: newValue }
+           );
+           setMaintainPERCENT_LPG(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
 
    
    // =================================================================================================================== 
 
-   const [FCV_2001, setFCV_2001] = useState<string | null>(null);
-   const [FCV_2001_High, setFCV_2001_High] = useState<number | null>(null);
-   const [FCV_2001_Low, setFCV_2001_Low] = useState<number | null>(null);
-   const [exceedThresholdFCV_2001, setExceedThresholdFCV_2001] = useState(false); 
-   const [maintainFCV_2001, setMaintainFCV_2001] = useState<boolean>(false);
+   const [FCV_3001, setFCV_3001] = useState<string | null>(null);
+   const [FCV_3001_High, setFCV_3001_High] = useState<number | null>(null);
+   const [FCV_3001_Low, setFCV_3001_Low] = useState<number | null>(null);
+   const [exceedThresholdFCV_3001, setExceedThresholdFCV_3001] = useState(false); 
+   const [maintainFCV_3001, setMaintainFCV_3001] = useState<boolean>(false);
    
    useEffect(() => {
-       const FCV_2001Value = parseFloat(FCV_2001 as any);
-       const highValue = FCV_2001_High ?? NaN;
-       const lowValue = FCV_2001_Low ?? NaN;
+       const FCV_3001Value = parseFloat(FCV_3001 as any);
+       const highValue = FCV_3001_High ?? NaN;
+       const lowValue = FCV_3001_Low ?? NaN;
    
-       if (!isNaN(FCV_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_2001) {
-           setExceedThresholdFCV_2001(FCV_2001Value >= highValue || FCV_2001Value <= lowValue);
+       if (!isNaN(FCV_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_3001) {
+           setExceedThresholdFCV_3001(FCV_3001Value >= highValue || FCV_3001Value <= lowValue);
        }
-   }, [FCV_2001, FCV_2001_High, FCV_2001_Low, maintainFCV_2001]);
+   }, [FCV_3001, FCV_3001_High, FCV_3001_Low, maintainFCV_3001]);
    
    
-
+   
+   
+   
+   const ChangeMaintainFCV_3001 = async () => {
+       try {
+           const newValue = !maintainFCV_3001;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { FCV_3001_Maintain: newValue }
+           );
+           setMaintainFCV_3001(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
 
    // =================================================================================================================== 
 
@@ -1475,29 +1847,60 @@ useEffect(() => {
        }
    }, [PERCENT_AIR, PERCENT_AIR_High, PERCENT_AIR_Low, maintainPERCENT_AIR]);
    
- 
+   
+   
+   
+   
+   const ChangeMaintainPERCENT_AIR = async () => {
+       try {
+           const newValue = !maintainPERCENT_AIR;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { PERCENT_AIR_Maintain: newValue }
+           );
+           setMaintainPERCENT_AIR(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
 
 
    // =================================================================================================================== 
    
 // =================================================================================================================== 
 
-const [HV_1001, setHV_1001] = useState<string | null>(null);
-   const [HV_1001_High, setHV_1001_High] = useState<number | null>(null);
-   const [HV_1001_Low, setHV_1001_Low] = useState<number | null>(null);
-   const [exceedThresholdHV_1001, setExceedThresholdHV_1001] = useState(false); 
-   const [maintainHV_1001, setMaintainHV_1001] = useState<boolean>(false);
+const [HV_3001, setHV_3001] = useState<string | null>(null);
+   const [HV_3001_High, setHV_3001_High] = useState<number | null>(null);
+   const [HV_3001_Low, setHV_3001_Low] = useState<number | null>(null);
+   const [exceedThresholdHV_3001, setExceedThresholdHV_3001] = useState(false); 
+   const [maintainHV_3001, setMaintainHV_3001] = useState<boolean>(false);
    
    useEffect(() => {
-       const HV_1001Value = parseFloat(HV_1001 as any);
-       const highValue = HV_1001_High ?? NaN;
-       const lowValue = HV_1001_Low ?? NaN;
+       const HV_3001Value = parseFloat(HV_3001 as any);
+       const highValue = HV_3001_High ?? NaN;
+       const lowValue = HV_3001_Low ?? NaN;
    
-       if (!isNaN(HV_1001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHV_1001) {
-           setExceedThresholdHV_1001(HV_1001Value >= highValue || HV_1001Value <= lowValue);
+       if (!isNaN(HV_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHV_3001) {
+           setExceedThresholdHV_3001(HV_3001Value >= highValue || HV_3001Value <= lowValue);
        }
-   }, [HV_1001, HV_1001_High, HV_1001_Low, maintainHV_1001]);
+   }, [HV_3001, HV_3001_High, HV_3001_Low, maintainHV_3001]);
    
+   
+   
+   
+   
+   const ChangeMaintainHV_3001 = async () => {
+       try {
+           const newValue = !maintainHV_3001;
+           await httpApi.post(
+               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+               { HV_3001_Maintain: newValue }
+           );
+           setMaintainHV_3001(newValue);
+       } catch (error) {
+           console.error(error);
+       }
+   };
 
 
 
@@ -1520,6 +1923,23 @@ const [HV_1001, setHV_1001] = useState<string | null>(null);
          setExceedThresholdFCV_MODE(FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue);
      }
  }, [FCV_MODE, FCV_MODE_High, FCV_MODE_Low, maintainFCV_MODE]);
+ 
+ 
+ 
+ 
+ 
+ const ChangeMaintainFCV_MODE = async () => {
+     try {
+         const newValue = !maintainFCV_MODE;
+         await httpApi.post(
+             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+             { FCV_MODE_Maintain: newValue }
+         );
+         setMaintainFCV_MODE(newValue);
+     } catch (error) {
+         console.error(error);
+     }
+ };
 
 
 
@@ -1546,51 +1966,94 @@ const [HV_1001, setHV_1001] = useState<string | null>(null);
      
      
      
-    
+     
+     const ChangeMaintainTOTAL_CNG = async () => {
+         try {
+             const newValue = !maintainTOTAL_CNG;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                 { TOTAL_CNG_Maintain: newValue }
+             );
+             setMaintainTOTAL_CNG(newValue);
+         } catch (error) {
+             console.error(error);
+         }
+     };
+
 // =================================================================================================================== 
 
 
 
-const [TM2002_CNG, setTM2002_CNG] = useState<string | null>(null);
-const [TM2002_CNG_High, setTM2002_CNG_High] = useState<number | null>(null);
-const [TM2002_CNG_Low, setTM2002_CNG_Low] = useState<number | null>(null);
-const [exceedThresholdTM2002_CNG, setExceedThresholdTM2002_CNG] = useState(false); 
-const [maintainTM2002_CNG, setMaintainTM2002_CNG] = useState<boolean>(false);
+const [TM3002_CNG, setTM3002_CNG] = useState<string | null>(null);
+const [TM3002_CNG_High, setTM3002_CNG_High] = useState<number | null>(null);
+const [TM3002_CNG_Low, setTM3002_CNG_Low] = useState<number | null>(null);
+const [exceedThresholdTM3002_CNG, setExceedThresholdTM3002_CNG] = useState(false); 
+const [maintainTM3002_CNG, setMaintainTM3002_CNG] = useState<boolean>(false);
 
 useEffect(() => {
- const TM2002_CNGValue = parseFloat(TM2002_CNG as any);
- const highValue = TM2002_CNG_High ?? NaN;
- const lowValue = TM2002_CNG_Low ?? NaN;
+ const TM3002_CNGValue = parseFloat(TM3002_CNG as any);
+ const highValue = TM3002_CNG_High ?? NaN;
+ const lowValue = TM3002_CNG_Low ?? NaN;
 
- if (!isNaN(TM2002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2002_CNG) {
-     setExceedThresholdTM2002_CNG(TM2002_CNGValue >= highValue || TM2002_CNGValue <= lowValue);
+ if (!isNaN(TM3002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM3002_CNG) {
+     setExceedThresholdTM3002_CNG(TM3002_CNGValue >= highValue || TM3002_CNGValue <= lowValue);
  }
-}, [TM2002_CNG, TM2002_CNG_High, TM2002_CNG_Low, maintainTM2002_CNG]);
+}, [TM3002_CNG, TM3002_CNG_High, TM3002_CNG_Low, maintainTM3002_CNG]);
 
 
+
+
+
+const ChangeMaintainTM3002_CNG = async () => {
+ try {
+     const newValue = !maintainTM3002_CNG;
+     await httpApi.post(
+         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+         { TM3002_CNG_Maintain: newValue }
+     );
+     setMaintainTM3002_CNG(newValue);
+ } catch (error) {
+     console.error(error);
+ }
+};
 
 
 // =================================================================================================================== 
 
  // =================================================================================================================== 
 
- const [TM2003_CNG, setTM2003_CNG] = useState<string | null>(null);
- const [TM2003_CNG_High, setTM2003_CNG_High] = useState<number | null>(null);
- const [TM2003_CNG_Low, setTM2003_CNG_Low] = useState<number | null>(null);
- const [exceedThresholdTM2003_CNG, setExceedThresholdTM2003_CNG] = useState(false); 
- const [maintainTM2003_CNG, setMaintainTM2003_CNG] = useState<boolean>(false);
+ const [TM3003_CNG, setTM3003_CNG] = useState<string | null>(null);
+ const [TM3003_CNG_High, setTM3003_CNG_High] = useState<number | null>(null);
+ const [TM3003_CNG_Low, setTM3003_CNG_Low] = useState<number | null>(null);
+ const [exceedThresholdTM3003_CNG, setExceedThresholdTM3003_CNG] = useState(false); 
+ const [maintainTM3003_CNG, setMaintainTM3003_CNG] = useState<boolean>(false);
  
  useEffect(() => {
-     const TM2003_CNGValue = parseFloat(TM2003_CNG as any);
-     const highValue = TM2003_CNG_High ?? NaN;
-     const lowValue = TM2003_CNG_Low ?? NaN;
+     const TM3003_CNGValue = parseFloat(TM3003_CNG as any);
+     const highValue = TM3003_CNG_High ?? NaN;
+     const lowValue = TM3003_CNG_Low ?? NaN;
  
-     if (!isNaN(TM2003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2003_CNG) {
-         setExceedThresholdTM2003_CNG(TM2003_CNGValue >= highValue || TM2003_CNGValue <= lowValue);
+     if (!isNaN(TM3003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM3003_CNG) {
+         setExceedThresholdTM3003_CNG(TM3003_CNGValue >= highValue || TM3003_CNGValue <= lowValue);
      }
- }, [TM2003_CNG, TM2003_CNG_High, TM2003_CNG_Low, maintainTM2003_CNG]);
+ }, [TM3003_CNG, TM3003_CNG_High, TM3003_CNG_Low, maintainTM3003_CNG]);
  
  
+ 
+ 
+ 
+ const ChangeMaintainTM3003_CNG = async () => {
+     try {
+         const newValue = !maintainTM3003_CNG;
+         await httpApi.post(
+             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+             { TM3003_CNG_Maintain: newValue }
+         );
+         setMaintainTM3003_CNG(newValue);
+     } catch (error) {
+         console.error(error);
+     }
+ };
 
 
 // =================================================================================================================== 
@@ -1613,6 +2076,21 @@ if (!isNaN(WB_SetpointValue) && !isNaN(highValue) && !isNaN(lowValue) && !mainta
 }, [WB_Setpoint, WB_Setpoint_High, WB_Setpoint_Low, maintainWB_Setpoint]);
 
 
+
+
+
+const ChangeMaintainWB_Setpoint = async () => {
+try {
+ const newValue = !maintainWB_Setpoint;
+ await httpApi.post(
+     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+     { WB_Setpoint_Maintain: newValue }
+ );
+ setMaintainWB_Setpoint(newValue);
+} catch (error) {
+ console.error(error);
+}
+};
 
 
 // =================================================================================================================== 
@@ -1639,6 +2117,23 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 }, [RATIO_MODE, RATIO_MODE_High, RATIO_MODE_Low, maintainRATIO_MODE]);
 
 
+
+
+
+const ChangeMaintainRATIO_MODE = async () => {
+try {
+ const newValue = !maintainRATIO_MODE;
+ await httpApi.post(
+     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+     { RATIO_MODE_Maintain: newValue }
+ );
+ setMaintainRATIO_MODE(newValue);
+} catch (error) {
+ console.error(error);
+}
+};
+
+ 
  
  // =================================================================================================================== 
  
@@ -1665,7 +2160,22 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
   }, [HR_BC, HR_BC_High, HR_BC_Low, maintainHR_BC]);
   
   
-
+  
+  
+  
+  const ChangeMaintainHR_BC = async () => {
+      try {
+          const newValue = !maintainHR_BC;
+          await httpApi.post(
+              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+              { HR_BC_Maintain: newValue }
+          );
+          setMaintainHR_BC(newValue);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+  
  // =================================================================================================================== 
 
 
@@ -1686,29 +2196,59 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      }
  }, [SD, SD_High, SD_Low, maintainSD]);
  
-
+ 
+ 
+ 
+ 
+ const ChangeMaintainSD = async () => {
+     try {
+         const newValue = !maintainSD;
+         await httpApi.post(
+             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+             { SD_Maintain: newValue }
+         );
+         setMaintainSD(newValue);
+     } catch (error) {
+         console.error(error);
+     }
+ };
 
  // =================================================================================================================== 
 
  
 
- const [ESD_2001, setESD_2001] = useState<string | null>(null);
- const [ESD_2001_High, setESD_2001_High] = useState<number | null>(null);
- const [ESD_2001_Low, setESD_2001_Low] = useState<number | null>(null);
- const [exceedThresholdESD_2001, setExceedThresholdESD_2001] = useState(false); 
- const [maintainESD_2001, setMaintainESD_2001] = useState<boolean>(false);
+ const [ESD_3001, setESD_3001] = useState<string | null>(null);
+ const [ESD_3001_High, setESD_3001_High] = useState<number | null>(null);
+ const [ESD_3001_Low, setESD_3001_Low] = useState<number | null>(null);
+ const [exceedThresholdESD_3001, setExceedThresholdESD_3001] = useState(false); 
+ const [maintainESD_3001, setMaintainESD_3001] = useState<boolean>(false);
  
  useEffect(() => {
-     const ESD_2001Value = parseFloat(ESD_2001 as any);
-     const highValue = ESD_2001_High ?? NaN;
-     const lowValue = ESD_2001_Low ?? NaN;
+     const ESD_3001Value = parseFloat(ESD_3001 as any);
+     const highValue = ESD_3001_High ?? NaN;
+     const lowValue = ESD_3001_Low ?? NaN;
  
-     if (!isNaN(ESD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD_2001) {
-         setExceedThresholdESD_2001(ESD_2001Value >= highValue || ESD_2001Value <= lowValue);
+     if (!isNaN(ESD_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD_3001) {
+         setExceedThresholdESD_3001(ESD_3001Value >= highValue || ESD_3001Value <= lowValue);
      }
- }, [ESD_2001, ESD_2001_High, ESD_2001_Low, maintainESD_2001]);
+ }, [ESD_3001, ESD_3001_High, ESD_3001_Low, maintainESD_3001]);
  
-
+ 
+ 
+ 
+ 
+ const ChangeMaintainESD_3001 = async () => {
+     try {
+         const newValue = !maintainESD_3001;
+         await httpApi.post(
+             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+             { ESD_3001_Maintain: newValue }
+         );
+         setMaintainESD_3001(newValue);
+     } catch (error) {
+         console.error(error);
+     }
+ };
  
       // =================================================================================================================== 
       
@@ -1732,7 +2272,22 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
          }
      }, [WIS_Calorimeter, WIS_Calorimeter_High, WIS_Calorimeter_Low, maintainWIS_Calorimeter]);
      
-
+     
+     
+     
+     
+     const ChangeMaintainWIS_Calorimeter = async () => {
+         try {
+             const newValue = !maintainWIS_Calorimeter;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                 { WIS_Calorimeter_Maintain: newValue }
+             );
+             setMaintainWIS_Calorimeter(newValue);
+         } catch (error) {
+             console.error(error);
+         }
+     };
 
      // =================================================================================================================== 
            // =================================================================================================================== 
@@ -1757,7 +2312,21 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
            }, [CVS_Calorimeter, CVS_Calorimeter_High, CVS_Calorimeter_Low, maintainCVS_Calorimeter]);
            
            
-
+           
+           
+           
+           const ChangeMaintainCVS_Calorimeter = async () => {
+               try {
+                   const newValue = !maintainCVS_Calorimeter;
+                   await httpApi.post(
+                       `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                       { CVS_Calorimeter_Maintain: newValue }
+                   );
+                   setMaintainCVS_Calorimeter(newValue);
+               } catch (error) {
+                   console.error(error);
+               }
+           };
       
       
            // =================================================================================================================== 
@@ -1784,7 +2353,22 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                          }
                      }, [SG_Calorimeter, SG_Calorimeter_High, SG_Calorimeter_Low, maintainSG_Calorimeter]);
                      
-   
+                     
+                     
+                     
+                     
+                     const ChangeMaintainSG_Calorimeter = async () => {
+                         try {
+                             const newValue = !maintainSG_Calorimeter;
+                             await httpApi.post(
+                                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                                 { SG_Calorimeter_Maintain: newValue }
+                             );
+                             setMaintainSG_Calorimeter(newValue);
+                         } catch (error) {
+                             console.error(error);
+                         }
+                     };
                 
                 
                      // =================================================================================================================== 
@@ -1814,7 +2398,22 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
            }, [TD_4072_Conn_STT, TD_4072_Conn_STT_High, TD_4072_Conn_STT_Low, maintainTD_4072_Conn_STT]);
            
            
-
+           
+           
+           
+           const ChangeMaintainTD_4072_Conn_STT = async () => {
+               try {
+                   const newValue = !maintainTD_4072_Conn_STT;
+                   await httpApi.post(
+                       `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                       { TD_4072_Conn_STT_Maintain: newValue }
+                   );
+                   setMaintainTD_4072_Conn_STT(newValue);
+               } catch (error) {
+                   console.error(error);
+               }
+           };
+      
       
            // =================================================================================================================== 
 
@@ -1841,7 +2440,22 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                      }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
                      
                      
-
+                     
+                     
+                     
+                     const ChangeMaintainPLC_Conn_STT = async () => {
+                         try {
+                             const newValue = !maintainPLC_Conn_STT;
+                             await httpApi.post(
+                                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
+                                 { PLC_Conn_STT_Maintain: newValue }
+                             );
+                             setMaintainPLC_Conn_STT(newValue);
+                         } catch (error) {
+                             console.error(error);
+                         }
+                     };
+                
                 
                      // =================================================================================================================== 
  // =================================================================================================================== 
@@ -1853,39 +2467,39 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      //======================================================================================================================
 
     const tagNamePLC = {
-        PT_2005: "Pressure Transmitter PT-2005 (BarG)",
-        PT_2004: "Pressure Transmitter PT-2004 (BarG)",
-        TT_2003: "Temperature Transmitter TT-2003 (˚C)",
-        TT_2004: "Temperature Transmitter TT-2004 (˚C) ",
-        TG_2005: "TG-2005 (˚C)",
+        PT_3005: "Pressure Transmitter PT-3005 (BarG)",
+        PT_3006: "Pressure Transmitter PT-3006 (BarG)",
+        TT_3003: "Temperature Transmitter TT-3003 (˚C)",
+        TT_3004: "Temperature Transmitter TT-3004 (˚C) ",
+        TG_3005: "TG-2005 (˚C)",
 
-        WB_1001: "Wobbe Index WB-1001 (MJ/M3)",
+        WB_3001: "Wobbe Index WB-1001 (MJ/M3)",
 
       
 
 
-        GD_2002: "Gas Detector GD-2002 (%LEL)",
-        GD_2003: "Gas Detector GD-2003 (%LEL)",
-        GD_2004: "Gas Detector GD-2004 (%LEL)",
-        GD_2005: `Gas Detector GD-2005 (%LEL)`,
-        GD_2006: `Gas Detector GD-2006 (%LEL)`,
+        GD_3002: "Gas Detector GD-3002 (%LEL)",
+        GD_3003: "Gas Detector GD-3003 (%LEL)",
+        GD_3004: "Gas Detector GD-3004 (%LEL)",
+        GD_3005: `Gas Detector GD-3005 (%LEL)`,
+        GD_3006: `Gas Detector GD-3006 (%LEL)`,
 
-        TM_2002_SNG:`Tubine Meter TM2002-SNG`,
-        TM_2003_SNG:`Tubine Meter TM2003-SNG`,
+        TM_3002_SNG:`Tubine Meter TM3002-SNG`,
+        TM_3003_SNG:`Tubine Meter TM3003-SNG`,
         TOTAL_SNG: `Total SNG`,
 
-        SDV_2004:"Shutdown Valve SDV-2004 (0: Close - 1: Open)",
-        SDV_2003:"Shutdown Valve SDV-2003 (0: Close - 1: Open)",
+        SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
+        SDV_3003:"Shutdown Valve SDV-3003 (0: Close - 1: Open)",
 
         
         
 
 
-        GD1_STATUS:"GD-2002 Status (0: Normal - 1: Alarm)",
-        GD2_STATUS:"GD-2003 Status (0: Normal - 1: Alarm)",
-        GD3_STATUS:"GD-2004 Status (0: Normal - 1: Alarm)",
-        GD4_STATUS:"GD-2005 Status (0: Normal - 1: Alarm)",
-        GD5_STATUS:"GD-2006 Status (0: Normal - 1: Alarm)",
+        GD1_STATUS:"GD-3002 Status (0: Normal - 1: Alarm)",
+        GD2_STATUS:"GD-3003 Status (0: Normal - 1: Alarm)",
+        GD3_STATUS:"GD-3004 Status (0: Normal - 1: Alarm)",
+        GD4_STATUS:"GD-3005 Status (0: Normal - 1: Alarm)",
+        GD5_STATUS:"GD-3006 Status (0: Normal - 1: Alarm)",
 
 
         SD: "Emergency Shutdown (0: Normal - 1: Smoker Detected) ",
@@ -1899,16 +2513,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         VAPORIZER_4: "VAPORIZER 4 (0: Stop - 1: Run)",
         COOLING_V: " COOLING V  (0: Stop - 1: Run)",
 
-        FCV_2001: "FCV-2001 (%)",
+        FCV_3001: "FCV-3001 (%)",
     
         PERCENT_LPG:"% LPG (%)",
         PERCENT_AIR:"% AIR (%)",
-        HV_1001:"Heat Value HV-1001 (MJ/Sm³)",
+        HV_3001:"Heat Value HV-1001 (MJ/Sm³)",
         RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
         FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
-        TOTAL_CNG: "Total CNG (Sm³)",
-        TM2002_CNG: "Tubine Meter TM2002-CNG (Sm³/h)",
-        TM2003_CNG: "Tubine Meter TM2003-CNG (Sm³/h)",
+        TOTAL_CNG: "Total CNG",
+        TM3002_CNG: "Tubine Meter TM3002-CNG",
+        TM3003_CNG: "Tubine Meter TM3003-CNG",
         WB_Setpoint: "Wobbe Index Setpoint (MJ/Sm³)",
         WIS_Calorimeter: "WIS Calorimeter (MJ/Sm³)", 
         CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
@@ -1920,17 +2534,17 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
     };
 
-        const DataTT_2003  = TT_2003 === "0" ? "Stop" : TT_2003 === "1" ? "Run" : null;
-        const DataPT_2005  = PT_2005 === "0" ? "Stop" : PT_2005 === "1" ? "Run" : null;
-        const DataPT_2004  = PT_2004 === "0" ? "Stop" : PT_2004 === "1" ? "Run" : null;
+        const DataTT_3003  = TT_3003 === "0" ? "Stop" : TT_3003 === "1" ? "Run" : null;
+        const DataPT_3005  = PT_3005 === "0" ? "Stop" : PT_3005 === "1" ? "Run" : null;
+        const DataPT_3006  = PT_3006 === "0" ? "Stop" : PT_3006 === "1" ? "Run" : null;
 
-        const DataTG_2005  = TG_2005 === "0" ? "Normal" : TG_2005 === "1" ? "Alarm" : null;
-        const DataWB_1001  = WB_1001 === "0" ? "Normal" : WB_1001 === "1" ? "Alarm" : null;
-        const DataTT_2004  = TT_2004 === "0" ? "Normal" : TT_2004 === "1" ? "Alarm" : null;
+        const DataTG_3005  = TG_3005 === "0" ? "Normal" : TG_3005 === "1" ? "Alarm" : null;
+        const DataWB_3001  = WB_3001 === "0" ? "Normal" : WB_3001 === "1" ? "Alarm" : null;
+        const DataTT_3004  = TT_3004 === "0" ? "Normal" : TT_3004 === "1" ? "Alarm" : null;
 
-        const DataGD_2003  = GD_2003 === "0" ? "Normal" : GD_2003 === "1" ? "Alarm" : null;
-        const DataGD_2004  = GD_2004 === "0" ? "Normal" : GD_2004 === "1" ? "Alarm" : null;
-        const DataGD_2002  = GD_2002 === "0" ? "Normal" : GD_2002 === "1" ? "Alarm" : null;
+        const DataGD_3003  = GD_3003 === "0" ? "Normal" : GD_3003 === "1" ? "Alarm" : null;
+        const DataGD_3004  = GD_3004 === "0" ? "Normal" : GD_3004 === "1" ? "Alarm" : null;
+        const DataGD_3002  = GD_3002 === "0" ? "Normal" : GD_3002 === "1" ? "Alarm" : null;
 
         const DataGD5_STATUS  = GD5_STATUS === "0" ? "Normal" : GD5_STATUS === "1" ? "Alarm" : null;
         const DataGD4_STATUS  = GD4_STATUS === "0" ? "Normal" : GD4_STATUS === "1" ? "Alarm" : null;
@@ -1938,8 +2552,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         const DataGD2_STATUS  = GD2_STATUS === "0" ? "Normal" : GD2_STATUS === "1" ? "Alarm" : null;
         const DataGD1_STATUS  = GD1_STATUS === "0" ? "Normal" : GD1_STATUS === "1" ? "Alarm" : null;
 
-        const DataSDV_2004  = SDV_2004 === "0" ? "Close" : SDV_2004 === "1" ? "Open" : null;
-        const DataSDV_2003  = SDV_2003 === "0" ? "Close" : SDV_2003 === "1" ? "Open" : null;
+        const DataSDV_3004  = SDV_3004 === "0" ? "Close" : SDV_3004 === "1" ? "Open" : null;
+        const DataSDV_3003  = SDV_3003 === "0" ? "Close" : SDV_3003 === "1" ? "Open" : null;
 
         const DataSD  = SD === "0" ? "Normal" : SD === "1" ? "Smoker Detected" : null;
         const DataHR_BC  = HR_BC === "0" ? "OFF" : HR_BC === "1" ? "ON" : null;
@@ -1963,58 +2577,58 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
             const combineCss = {
 
-                CSSPT_2004 : {
-                    color:exceedThresholdPT_2004 && !maintainPT_2004
+                CSSPT_3006 : {
+                    color:exceedThresholdPT_3006 && !maintainPT_3006
                     ? "#ff5656"
-                    : maintainPT_2004
+                    : maintainPT_3006
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPT_2004 || maintainPT_2004)
+                    fontWeight: (exceedThresholdPT_3006 || maintainPT_3006)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPT_2004 || maintainPT_2004)
+                    fontSize: (exceedThresholdPT_3006 || maintainPT_3006)
                     ? 18
                     : ""
                 },
         
-                CSSPT_2005 : {
-                    color:exceedThresholdPT_2005 && !maintainPT_2005
+                CSSPT_3005 : {
+                    color:exceedThresholdPT_3005 && !maintainPT_3005
                     ? "#ff5656"
-                    : maintainPT_2005
+                    : maintainPT_3005
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPT_2005 || maintainPT_2005)
+                    fontWeight: (exceedThresholdPT_3005 || maintainPT_3005)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPT_2005 || maintainPT_2005)
+                    fontSize: (exceedThresholdPT_3005 || maintainPT_3005)
                     ? 18
                     : ""
                 },
         
         
-                CSSTT_2003 : {
-                    color:exceedThresholdTT_2003 && !maintainTT_2003
+                CSSTT_3003 : {
+                    color:exceedThresholdTT_3003 && !maintainTT_3003
                     ? "#ff5656"
-                    : maintainTT_2003
+                    : maintainTT_3003
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTT_2003 || maintainTT_2003)
+                    fontWeight: (exceedThresholdTT_3003 || maintainTT_3003)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTT_2003 || maintainTT_2003)
+                    fontSize: (exceedThresholdTT_3003 || maintainTT_3003)
                     ? 18
                     : ""
                 },
-                CSSTT_2004 : {
-                    color:exceedThresholdTT_2004 && !maintainTT_2004
+                CSSTT_3004 : {
+                    color:exceedThresholdTT_3004 && !maintainTT_3004
                     ? "#ff5656"
-                    : maintainTT_2004
+                    : maintainTT_3004
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTT_2004 || maintainTT_2004)
+                    fontWeight: (exceedThresholdTT_3004 || maintainTT_3004)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTT_2004 || maintainTT_2004)
+                    fontSize: (exceedThresholdTT_3004 || maintainTT_3004)
                     ? 18
                     : ""
                 },
@@ -2023,16 +2637,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
              
         
         
-                CSSWB_1001 : {
-                    color:exceedThresholdWB_1001 && !maintainWB_1001
+                CSSWB_3001 : {
+                    color:exceedThresholdWB_3001 && !maintainWB_3001
                     ? "#ff5656"
-                    : maintainWB_1001
+                    : maintainWB_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdWB_1001 || maintainWB_1001)
+                    fontWeight: (exceedThresholdWB_3001 || maintainWB_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdWB_1001 || maintainWB_1001)
+                    fontSize: (exceedThresholdWB_3001 || maintainWB_3001)
                     ? 18
                     : ""
                 },
@@ -2052,30 +2666,30 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     : ""
                 },
         
-                CSSGD_2002 : {
-                    color:exceedThresholdGD_2002 && !maintainGD_2002
+                CSSGD_3002 : {
+                    color:exceedThresholdGD_3002 && !maintainGD_3002
                     ? "#ff5656"
-                    : maintainGD_2002
+                    : maintainGD_3002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2002 || maintainGD_2002)
+                    fontWeight: (exceedThresholdGD_3002 || maintainGD_3002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2002 || maintainGD_2002)
+                    fontSize: (exceedThresholdGD_3002 || maintainGD_3002)
                     ? 18
                     : ""
                 },
         
-                CSSGD_2003 : {
-                    color:exceedThresholdGD_2003 && !maintainGD_2003
+                CSSGD_3003 : {
+                    color:exceedThresholdGD_3003 && !maintainGD_3003
                     ? "#ff5656"
-                    : maintainGD_2003
+                    : maintainGD_3003
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2003 || maintainGD_2003)
+                    fontWeight: (exceedThresholdGD_3003 || maintainGD_3003)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2003 || maintainGD_2003)
+                    fontSize: (exceedThresholdGD_3003 || maintainGD_3003)
                     ? 18
                     : ""
                 },
@@ -2084,89 +2698,89 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
           
         
         
-                CSSGD_2005 : {
-                    color:exceedThresholdGD_2005 && !maintainGD_2005
+                CSSGD_3005 : {
+                    color:exceedThresholdGD_3005 && !maintainGD_3005
                     ? "#ff5656"
-                    : maintainGD_2005
+                    : maintainGD_3005
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2005 || maintainGD_2005)
+                    fontWeight: (exceedThresholdGD_3005 || maintainGD_3005)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2005 || maintainGD_2005)
+                    fontSize: (exceedThresholdGD_3005 || maintainGD_3005)
                     ? 18
                     : ""
                 },
         
-                CSSGD_2006 : {
-                    color:exceedThresholdGD_2006 && !maintainGD_2006
+                CSSGD_3006 : {
+                    color:exceedThresholdGD_3006 && !maintainGD_3006
                     ? "#ff5656"
-                    : maintainGD_2006
+                    : maintainGD_3006
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2006 || maintainGD_2006)
+                    fontWeight: (exceedThresholdGD_3006 || maintainGD_3006)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2006 || maintainGD_2006)
-                    ? 18
-                    : ""
-                },
-        
-        
-        
-        
-                CSSTG_2005 : {
-                    color:exceedThresholdTG_2005 && !maintainTG_2005
-                    ? "#ff5656"
-                    : maintainTG_2005
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdTG_2005 || maintainTG_2005)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdTG_2005 || maintainTG_2005)
+                    fontSize: (exceedThresholdGD_3006 || maintainGD_3006)
                     ? 18
                     : ""
                 },
         
         
-                CSSTM_2002_SNG : {
-                         color:exceedThresholdTM_2002_SNG && !maintainTM_2002_SNG
+        
+        
+                CSSTG_3005 : {
+                    color:exceedThresholdTG_3005 && !maintainTG_3005
                     ? "#ff5656"
-                    : maintainTM_2002_SNG
+                    : maintainTG_3005
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTM_2002_SNG || maintainTM_2002_SNG)
+                    fontWeight: (exceedThresholdTG_3005 || maintainTG_3005)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTM_2002_SNG || maintainTM_2002_SNG)
-                    ? 18
-                    : ""
-                },
-                CSSTM_2003_SNG : {
-                    color:exceedThresholdTM_2003_SNG && !maintainTM_2003_SNG
-                    ? "#ff5656"
-                    : maintainTM_2003_SNG
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdTM_2003_SNG || maintainTM_2003_SNG)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdTM_2003_SNG || maintainTM_2003_SNG)
+                    fontSize: (exceedThresholdTG_3005 || maintainTG_3005)
                     ? 18
                     : ""
                 },
         
-                CSSGD_2004 : {
-                    color:exceedThresholdGD_2004 && !maintainGD_2004
+        
+                CSSTM_3002_SNG : {
+                         color:exceedThresholdTM_3002_SNG && !maintainTM_3002_SNG
                     ? "#ff5656"
-                    : maintainGD_2004
+                    : maintainTM_3002_SNG
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2004 || maintainGD_2004)
+                    fontWeight: (exceedThresholdTM_3002_SNG || maintainTM_3002_SNG)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2004 || maintainGD_2004)
+                    fontSize: (exceedThresholdTM_3002_SNG || maintainTM_3002_SNG)
+                    ? 18
+                    : ""
+                },
+                CSSTM_3003_SNG : {
+                    color:exceedThresholdTM_3003_SNG && !maintainTM_3003_SNG
+                    ? "#ff5656"
+                    : maintainTM_3003_SNG
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdTM_3003_SNG || maintainTM_3003_SNG)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdTM_3003_SNG || maintainTM_3003_SNG)
+                    ? 18
+                    : ""
+                },
+        
+                CSSGD_3004 : {
+                    color:exceedThresholdGD_3004 && !maintainGD_3004
+                    ? "#ff5656"
+                    : maintainGD_3004
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdGD_3004 || maintainGD_3004)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdGD_3004 || maintainGD_3004)
                     ? 18
                     : ""
                 },
@@ -2197,16 +2811,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     ? 18
                     : ""
                 },
-                CSSSDV_2004 : {
-                    color:exceedThresholdSDV_2004 && !maintainSDV_2004
+                CSSSDV_3004 : {
+                    color:exceedThresholdSDV_3004 && !maintainSDV_3004
                     ? "#ff5656"
-                    : maintainSDV_2004
+                    : maintainSDV_3004
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSDV_2004 || maintainSDV_2004)
+                    fontWeight: (exceedThresholdSDV_3004 || maintainSDV_3004)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSDV_2004 || maintainSDV_2004)
+                    fontSize: (exceedThresholdSDV_3004 || maintainSDV_3004)
                     ? 18
                     : ""
                 },
@@ -2227,16 +2841,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                : ""
            },
    
-           CSSSDV_2003 : {
-               color:exceedThresholdSDV_2003 && !maintainSDV_2003
+           CSSSDV_3003 : {
+               color:exceedThresholdSDV_3003 && !maintainSDV_3003
                ? "#ff5656"
-               : maintainSDV_2003
+               : maintainSDV_3003
                ? "orange"
                : "" ,
-               fontWeight: (exceedThresholdSDV_2003 || maintainSDV_2003)
+               fontWeight: (exceedThresholdSDV_3003 || maintainSDV_3003)
                ? 600
                : "",
-               fontSize: (exceedThresholdSDV_2003 || maintainSDV_2003)
+               fontSize: (exceedThresholdSDV_3003 || maintainSDV_3003)
                ? 18
                : ""
            },
@@ -2389,16 +3003,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         },
 
 
-        CSSFCV_2001 : {
-            color:exceedThresholdFCV_2001 && !maintainFCV_2001
+        CSSFCV_3001 : {
+            color:exceedThresholdFCV_3001 && !maintainFCV_3001
             ? "#ff5656"
-            : maintainFCV_2001
+            : maintainFCV_3001
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdFCV_2001 || maintainFCV_2001)
+            fontWeight: (exceedThresholdFCV_3001 || maintainFCV_3001)
             ? 600
             : "",
-            fontSize: (exceedThresholdFCV_2001 || maintainFCV_2001)
+            fontSize: (exceedThresholdFCV_3001 || maintainFCV_3001)
             ? 18
             : ""
         },
@@ -2435,16 +3049,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         },
 
 
-        CSSHV_1001 : {
-            color:exceedThresholdHV_1001 && !maintainHV_1001
+        CSSHV_3001 : {
+            color:exceedThresholdHV_3001 && !maintainHV_3001
             ? "#ff5656"
-            : maintainHV_1001
+            : maintainHV_3001
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdHV_1001 || maintainHV_1001)
+            fontWeight: (exceedThresholdHV_3001 || maintainHV_3001)
             ? 600
             : "",
-            fontSize: (exceedThresholdHV_1001 || maintainHV_1001)
+            fontSize: (exceedThresholdHV_3001 || maintainHV_3001)
             ? 18
             : ""
         },
@@ -2496,30 +3110,30 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
      
 
-        CSSTM2002_CNG : {
-            color:exceedThresholdTM2002_CNG && !maintainTM2002_CNG
+        CSSTM3002_CNG : {
+            color:exceedThresholdTM3002_CNG && !maintainTM3002_CNG
             ? "#ff5656"
-            : maintainTM2002_CNG
+            : maintainTM3002_CNG
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            fontWeight: (exceedThresholdTM3002_CNG || maintainTM3002_CNG)
             ? 600
             : "",
-            fontSize: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            fontSize: (exceedThresholdTM3002_CNG || maintainTM3002_CNG)
             ? 18
             : ""
         },
 
-        CSSTM2003_CNG : {
-            color:exceedThresholdTM2003_CNG && !maintainTM2003_CNG
+        CSSTM3003_CNG : {
+            color:exceedThresholdTM3003_CNG && !maintainTM3003_CNG
             ? "#ff5656"
-            : maintainTM2003_CNG
+            : maintainTM3003_CNG
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            fontWeight: (exceedThresholdTM3003_CNG || maintainTM3003_CNG)
             ? 600
             : "",
-            fontSize: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            fontSize: (exceedThresholdTM3003_CNG || maintainTM3003_CNG)
             ? 18
             : ""
         },
@@ -2618,79 +3232,79 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
     const dataPLC = [
         {
-            name: <span>{tagNamePLC.PT_2004}</span>,
-            PLC: <span style={combineCss.CSSPT_2004}>{} {PT_2004} {DataPT_2004}</span>,
+            name: <span>{tagNamePLC.PT_3006}</span>,
+            PLC: <span style={combineCss.CSSPT_3006}>{} {PT_3006} {DataPT_3006}</span>,
         },
 
         {
-            name: <span>{tagNamePLC.PT_2005}</span>,
-            PLC: <span style={combineCss.CSSPT_2005}> {PT_2005} {DataPT_2005}</span>,
+            name: <span>{tagNamePLC.PT_3005}</span>,
+            PLC: <span style={combineCss.CSSPT_3005}> {PT_3005} {DataPT_3005}</span>,
         },
      
         {
-            name: <span>{tagNamePLC.TT_2004}</span>,
-            PLC: <span style={combineCss.CSSTT_2004}>{TT_2004} {DataTT_2004}</span>,
+            name: <span>{tagNamePLC.TT_3004}</span>,
+            PLC: <span style={combineCss.CSSTT_3004}>{TT_3004} {DataTT_3004}</span>,
         },
         {
-            name: <span>{tagNamePLC.TT_2003}</span>,
-            PLC: <span style={combineCss.CSSTT_2003}> {TT_2003} {DataTT_2003}</span>,
+            name: <span>{tagNamePLC.TT_3003}</span>,
+            PLC: <span style={combineCss.CSSTT_3003}> {TT_3003} {DataTT_3003}</span>,
         },
    
         {
-            name: <span>{tagNamePLC.TG_2005}</span>,
-            PLC: <span style={combineCss.CSSTG_2005}> {TG_2005} {DataTG_2005}</span>,
+            name: <span>{tagNamePLC.TG_3005}</span>,
+            PLC: <span style={combineCss.CSSTG_3005}> {TG_3005} {DataTG_3005}</span>,
         },
       
         {
-            name: <span>{tagNamePLC.WB_1001}</span>,
-            PLC: <span style={combineCss.CSSWB_1001}>{WB_1001} {DataWB_1001}</span>,
+            name: <span>{tagNamePLC.WB_3001}</span>,
+            PLC: <span style={combineCss.CSSWB_3001}>{WB_3001} {DataWB_3001}</span>,
         },
         {
-            name: <span>{tagNamePLC.GD_2002}</span>,
-            PLC: <span style={combineCss.CSSGD_2002}> {GD_2002} {DataGD_2002}</span>,
+            name: <span>{tagNamePLC.GD_3002}</span>,
+            PLC: <span style={combineCss.CSSGD_3002}> {GD_3002} {DataGD_3002}</span>,
         },
            
         {
-            name: <span>{tagNamePLC.GD_2003}</span>,
-            PLC: <span style={combineCss.CSSGD_2003}>{GD_2003} {DataGD_2003}</span>,
+            name: <span>{tagNamePLC.GD_3003}</span>,
+            PLC: <span style={combineCss.CSSGD_3003}>{GD_3003} {DataGD_3003}</span>,
         },
         {
-            name: <span>{tagNamePLC.GD_2004}</span>,
-            PLC: <span style={combineCss.CSSGD_2004}> {GD_2004} {DataGD_2004}</span>,
+            name: <span>{tagNamePLC.GD_3004}</span>,
+            PLC: <span style={combineCss.CSSGD_3004}> {GD_3004} {DataGD_3004}</span>,
         },
       
       
         {
-            name: <span>{tagNamePLC.GD_2005}</span>,
-            PLC: <span style={combineCss.CSSGD_2005}>{GD_2005} </span>,
+            name: <span>{tagNamePLC.GD_3005}</span>,
+            PLC: <span style={combineCss.CSSGD_3005}>{GD_3005} </span>,
         },
         {
-            name: <span>{tagNamePLC.GD_2006}</span>,
-            PLC: <span style={combineCss.CSSGD_2006}> {GD_2006} </span>,
+            name: <span>{tagNamePLC.GD_3006}</span>,
+            PLC: <span style={combineCss.CSSGD_3006}> {GD_3006} </span>,
         },
 
 
         {
-            name: <span>{tagNamePLC.TM_2002_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2002_SNG}>{TM_2002_SNG} </span>,
+            name: <span>{tagNamePLC.TM_3002_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_3002_SNG}>{TM_3002_SNG} </span>,
         },
      
         {
-            name: <span>{tagNamePLC.TM_2003_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2003_SNG}>{TM_2003_SNG}</span>,
+            name: <span>{tagNamePLC.TM_3003_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_3003_SNG}>{TM_3003_SNG}</span>,
         },
         {
             name: <span>{tagNamePLC.TOTAL_SNG}</span>,
             PLC: <span style={combineCss.CSSTOTAL_SNG}>{TOTAL_SNG}  </span>,
         },
         {
-            name: <span>{tagNamePLC.SDV_2004}</span>,
-            PLC: <span style={combineCss.CSSSDV_2004}> {SDV_2004}  {DataSDV_2004}</span>,
+            name: <span>{tagNamePLC.SDV_3004}</span>,
+            PLC: <span style={combineCss.CSSSDV_3004}> {SDV_3004}  {DataSDV_3004}</span>,
         },
 
         {
-            name: <span>{tagNamePLC.SDV_2003}</span>,
-            PLC: <span style={combineCss.CSSSDV_2003}>{SDV_2003} {DataSDV_2003}</span>,
+            name: <span>{tagNamePLC.SDV_3003}</span>,
+            PLC: <span style={combineCss.CSSSDV_3003}>{SDV_3003} {DataSDV_3003}</span>,
         },
 
 //===
@@ -2759,8 +3373,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSCOOLING_V}>{COOLING_V} {DataCOOLING_V}</span>,
         },
         {
-            name: <span>{tagNamePLC.FCV_2001}</span>,
-            PLC: <span style={combineCss.CSSFCV_2001}> {FCV_2001} </span>,
+            name: <span>{tagNamePLC.FCV_3001}</span>,
+            PLC: <span style={combineCss.CSSFCV_3001}> {FCV_3001} </span>,
         },
      
      
@@ -2775,8 +3389,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSPERCENT_AIR}> {PERCENT_AIR} </span>,
         },
         {
-            name: <span>{tagNamePLC.HV_1001}</span>,
-            PLC: <span style={combineCss.CSSHV_1001}> {HV_1001} </span>,
+            name: <span>{tagNamePLC.HV_3001}</span>,
+            PLC: <span style={combineCss.CSSHV_3001}> {HV_3001} </span>,
         },
    
         {
@@ -2793,13 +3407,13 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         },
       
         {
-            name: <span>{tagNamePLC.TM2002_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM2002_CNG}> {TM2002_CNG} </span>,
+            name: <span>{tagNamePLC.TM3002_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM3002_CNG}> {TM3002_CNG} </span>,
         },
 
         {
-            name: <span>{tagNamePLC.TM2003_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM2003_CNG}>{TM2003_CNG} </span>,
+            name: <span>{tagNamePLC.TM3003_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM3003_CNG}>{TM3003_CNG} </span>,
         },
         {
             name: <span>{tagNamePLC.WB_Setpoint}</span>,
@@ -2859,7 +3473,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            SNG BINH DUONG
+                            SNG HUNG YEN
                         </div>
 
                         
