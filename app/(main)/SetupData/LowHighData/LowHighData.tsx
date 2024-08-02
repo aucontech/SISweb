@@ -1400,7 +1400,7 @@ const ChangemaintainEVC_01_Temperature = async () => {
     }
 };
 
-
+//=============================================================================================================
 const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(null);
 const [inputValueEVC_02_Temperature, setinputValueEVC_02_Temperature] = useState<any>();
 const [inputValue2EVC_02_Temperature, setinputValue2EVC_02_Temperature] = useState<any>();
@@ -1440,6 +1440,7 @@ const ChangemaintainEVC_02_Temperature = async () => {
     }
 };
 
+//=============================================================================================================
 
 const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
 const [inputValueEVC_01_Remain_Battery_Service_Life, setinputValueEVC_01_Remain_Battery_Service_Life] = useState<any>();
@@ -2987,8 +2988,8 @@ const handleCheckboxChangePLC = (e:any) => {
         setInputValueEVC_01_Pressure(EVC_01_Pressure_High); 
         setInputValue2EVC_01_Pressure(EVC_01_Pressure_Low); 
 
-        setInputValueEVC_01_Pressure(EVC_02_Pressure_High); 
-        setInputValue2EVC_01_Pressure(EVC_02_Pressure_Low); 
+        setInputValueEVC_02_Pressure(EVC_02_Pressure_High); 
+        setInputValue2EVC_02_Pressure(EVC_02_Pressure_Low); 
 
         setInputValuePT1(PT1_High); 
         setInputValue2PT1(PT1_Low);    
