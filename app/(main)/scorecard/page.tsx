@@ -7,6 +7,7 @@ import ScoreCard_Nitori from "./components/ScoreCard_Nitori";
 import ScoreCard_Otsuka from "./components/ScoreCard_Otsuka";
 import ScoreCard_Yoshino from "./components/ScoreCard_Yoshino";
 import SNG_Scorecard from "./SNG_Scorecard/SNG_Scorecard";
+import CNG_Scorecard from "./CNG_Scorecard/CNG_Scorecard";
 
 const ScoreCard = () => {
     return (
@@ -20,7 +21,7 @@ const ScoreCard = () => {
                     
                 <TabPanel header="SNG"><SNG_Scorecard/></TabPanel>
 
-                <TabPanel header="CNG">Updating...</TabPanel>
+                <TabPanel header="CNG"><CNG_Scorecard/></TabPanel>
 
                 <TabPanel header="LPG"> 
                     <ScoreCard_Meiko />

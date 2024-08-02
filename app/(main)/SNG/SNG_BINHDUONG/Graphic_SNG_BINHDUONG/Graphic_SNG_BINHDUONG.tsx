@@ -82,47 +82,12 @@ export default function Graphic_SNG_BINHDUONG() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const toast = useRef<Toast>(null);
-    const [VP_301, setVP_301] = useState<string | null>(null);
-
-    const [PT_2004, setPT_2004] = useState<string | null>(null);
-    const [PT_2005, setPT_2005] = useState<string | null>(null);
-    const [TM_2002_SNG, setTM_2002_SNG] = useState<string | null>(null);
-    const [TM_2003_SNG, setTM_2003_SNG] = useState<string | null>(null);
-    const [TT_2003, setTT_2003] = useState<string | null>(null);
-    const [TT_2004, setTT_2004] = useState<string | null>(null);
-
-    const [Pipe_Press, setPipe_Press] = useState<string | null>(null);
-    const [Pipe_Temp, setPipe_Temp] = useState<any>();
-
-    const [FCV_2001, setFCV_2001] = useState<string | null>(null);
+ 
 
     const [SDV, setSDV] = useState<string | null>(null);
 
-    const [WB_1001, setWB_1001] = useState<string | null>(null);
-    const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
-    const [HV_1001, setHV_1001] = useState<string | null>(null);
-    const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
-    const [FCV_MODE, setFCV_MODE] = useState<string | null>(null);
 
-    const [VP_302, setVP_302] = useState<string | null>(null);
-    const [VP_303, setVP_303] = useState<string | null>(null);
-    const [SDV_301, setSDV_301] = useState<string | null>(null);
-    const [SDV_302, setSDV_302] = useState<string | null>(null);
-    const [GD_101_High, setGD_101_High] = useState<any | null>(null);
-    const [GD_101_Low, setGD_101_Low] = useState<any | null>(null);
-    const [GD_102_High, setGD_102_High] = useState<string | null>(null);
-    const [GD_102_Low, setGD_102_Low] = useState<string | null>(null);
-    const [GD_103_High, setGD_103_High] = useState<string | null>(null);
-    const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
-
-    const [Consumption_Flow, setConsumption_Flow] = useState<string | null>(
-        null
-    );
-    const [Flow_Velocity, setFlow_Velocity] = useState<string | null>(null);
-
-    const [V2_Flow_Meter, setV2_Flow_Meter] = useState<any>();
-    const [V1_Flow_Meter, setV1_Flow_Meter] = useState<any>();
-    const [Flow_Meter_Total, setFlow_Meter_Total] = useState<any>();
+ 
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
 
     const [PLC_STTValue, setPLC_STTValue] = useState<any>();
@@ -253,27 +218,7 @@ export default function Graphic_SNG_BINHDUONG() {
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
 
-                        VP_302: setVP_302,
-                        VP_303: setVP_303,
-
-                        SDV_301: setSDV_301,
-                        SDV_302: setSDV_302,
-
-                        Pipe_Temp: setPipe_Temp,
-                        Pipe_Press: setPipe_Press,
-                        GD_101_High: setGD_101_High,
-                        GD_101_Low: setGD_101_Low,
-                        GD_102_High: setGD_102_High,
-                        GD_102_Low: setGD_102_Low,
-                        GD_103_High: setGD_103_High,
-                        GD_103_Low: setGD_103_Low,
-
-                        Flow_Meter_Total: setFlow_Meter_Total,
-                        Consumption_Flow: setConsumption_Flow,
-                        Flow_Velocity: setFlow_Velocity,
-
-                        V1_Flow_Meter: setV1_Flow_Meter,
-                        V2_Flow_Meter: setV2_Flow_Meter,
+            
                         PLC_Conn_STT: setPLC_STT,
 
                         PERCENT_AIR: setAIR,
@@ -347,9 +292,9 @@ export default function Graphic_SNG_BINHDUONG() {
         TT: "TT",
     };
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
         BAR: "Bara",
         CC: "°C",
@@ -363,29 +308,29 @@ export default function Graphic_SNG_BINHDUONG() {
                 `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/values/attributes/SERVER_SCOPE`
             );
 
-            const HighPT_2004 = res.data.find(
+            const PT_2004_High = res.data.find(
                 (item: any) => item.key === "PT_2004_High"
             );
-            setHighPT_2004(HighPT_2004?.value || null);
-            const LowPT_2004 = res.data.find(
+            setPT_2004_High(PT_2004_High?.value || null);
+            const PT_2004_Low = res.data.find(
                 (item: any) => item.key === "PT_2004_Low"
             );
-            setLowPT_2004(LowPT_2004?.value || null);
+            setPT_2004_Low(PT_2004_Low?.value || null);
 
-            const MaintainPT_2004 = res.data.find(
+            const maintainPT_2004 = res.data.find(
                 (item: any) => item.key === "PT_2004_Maintain"
             );
-            setMaintainPT_2004(MaintainPT_2004?.value || false);
+            setMaintainPT_2004(maintainPT_2004?.value || false);
             //===========================================================================================
 
-            const HighPT_2005 = res.data.find(
+            const PT_2005_High = res.data.find(
                 (item: any) => item.key === "PT_2005_High"
             );
-            setHighPT_2005(HighPT_2005?.value || null);
-            const LowPT_2005 = res.data.find(
+            setPT_2005_High(PT_2005_High?.value || null);
+            const PT_2005_Low = res.data.find(
                 (item: any) => item.key === "PT_2005_Low"
             );
-            setLowPT_2005(LowPT_2005?.value || null);
+            setPT_2005_Low(PT_2005_Low?.value || null);
 
             const MaintainPT_2005 = res.data.find(
                 (item: any) => item.key === "PT_2005_Maintain"
@@ -396,11 +341,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighTM_2002_SNG = res.data.find(
                 (item: any) => item.key === "TM_2002_SNG_High"
             );
-            setHighTM_2002_SNG(HighTM_2002_SNG?.value || null);
+            setTM_2002_SNG_High(HighTM_2002_SNG?.value || null);
             const LowTM_2002_SNG = res.data.find(
                 (item: any) => item.key === "TM_2002_SNG_Low"
             );
-            setLowTM_2002_SNG(LowTM_2002_SNG?.value || null);
+            setTM_2002_SNG_Low(LowTM_2002_SNG?.value || null);
 
             const TM_2002_SNG_Maintain = res.data.find(
                 (item: any) => item.key === "TM_2002_SNG_Maintain"
@@ -412,12 +357,12 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighTM_2003_SNG = res.data.find(
                 (item: any) => item.key === "TM_2003_SNG_High"
             );
-            setHighTM_2003_SNG(HighTM_2003_SNG?.value || null);
+            setTM_2003_SNG_High(HighTM_2003_SNG?.value || null);
 
             const LowTM_2003_SNG = res.data.find(
                 (item: any) => item.key === "TM_2003_SNG_Low"
             );
-            setLowTM_2003_SNG(LowTM_2003_SNG?.value || null);
+            setTM_2003_SNG_Low(LowTM_2003_SNG?.value || null);
 
             const TM_2003_SNG_Maintain = res.data.find(
                 (item: any) => item.key === "TM_2003_SNG_Maintain"
@@ -425,15 +370,15 @@ export default function Graphic_SNG_BINHDUONG() {
             setMaintainTM_2003_SNG(TM_2003_SNG_Maintain?.value || false);
             //===========================================================================================
 
-            const HighTT_2003 = res.data.find(
+            const TT_2003_High = res.data.find(
                 (item: any) => item.key === "TT_2003_High"
             );
-            setHighTT_2003(HighTT_2003?.value || null);
+            setTT_2003_High(TT_2003_High?.value || null);
 
             const LowTT_2003 = res.data.find(
                 (item: any) => item.key === "TT_2003_Low"
             );
-            setLowTT_2003(LowTT_2003?.value || null);
+            setTT_2003_Low(LowTT_2003?.value || null);
 
             const TT_2003_Maintain = res.data.find(
                 (item: any) => item.key === "TT_2003_Maintain"
@@ -442,14 +387,14 @@ export default function Graphic_SNG_BINHDUONG() {
 
             //===========================================================================================
 
-            const HighTT_2004 = res.data.find(
+            const TT_2004_High = res.data.find(
                 (item: any) => item.key === "TT_2004_High"
             );
-            setHighTT_2004(HighTT_2004?.value || null);
-            const LowTT_2004 = res.data.find(
+            setTT_2004_High(TT_2004_High?.value || null);
+            const TT_2004_Low = res.data.find(
                 (item: any) => item.key === "TT_2004_Low"
             );
-            setLowTT_2004(LowTT_2004?.value || null);
+            setTT_2004_Low(TT_2004_Low?.value || null);
 
             const MaintainTT_2004 = res.data.find(
                 (item: any) => item.key === "TT_2004_Maintain"
@@ -460,11 +405,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighFCV_2001 = res.data.find(
                 (item: any) => item.key === "FCV_2001_High"
             );
-            setHighFCV_2001(HighFCV_2001?.value || null);
+            setFCV_2001_High(HighFCV_2001?.value || null);
             const LowFCV_2001 = res.data.find(
                 (item: any) => item.key === "FCV_2001_Low"
             );
-            setLowFCV_2001(LowFCV_2001?.value || null);
+            setFCV_2001_Low(LowFCV_2001?.value || null);
 
             const MaintainFCV_2001 = res.data.find(
                 (item: any) => item.key === "FCV_2001_Maintain"
@@ -475,11 +420,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighWB_1001 = res.data.find(
                 (item: any) => item.key === "WB_1001_High"
             );
-            setHighWB_1001(HighWB_1001?.value || null);
+            setWB_1001_High(HighWB_1001?.value || null);
             const LowWB_1001 = res.data.find(
                 (item: any) => item.key === "WB_1001_Low"
             );
-            setLowWB_1001(LowWB_1001?.value || null);
+            setWB_1001_Low(LowWB_1001?.value || null);
 
             const MaintainWB_1001 = res.data.find(
                 (item: any) => item.key === "WB_1001_Maintain"
@@ -489,11 +434,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighWB_Setpoint = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_High"
             );
-            setHighWB_Setpoint(HighWB_Setpoint?.value || null);
+            setWB_Setpoint_High(HighWB_Setpoint?.value || null);
             const LowWB_Setpoint = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_Low"
             );
-            setLowWB_Setpoint(LowWB_Setpoint?.value || null);
+            setWB_Setpoint_Low(LowWB_Setpoint?.value || null);
 
             const MaintainWB_Setpoint = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_Maintain"
@@ -504,11 +449,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighHV_1001 = res.data.find(
                 (item: any) => item.key === "HV_1001_High"
             );
-            setHighHV_1001(HighHV_1001?.value || null);
+            setHV_1001_High(HighHV_1001?.value || null);
             const LowHV_1001 = res.data.find(
                 (item: any) => item.key === "HV_1001_Low"
             );
-            setLowHV_1001(LowHV_1001?.value || null);
+            setHV_1001_Low(LowHV_1001?.value || null);
 
             const MaintainHV_1001 = res.data.find(
                 (item: any) => item.key === "HV_1001_Maintain"
@@ -519,11 +464,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighRATIO_MODE = res.data.find(
                 (item: any) => item.key === "RATIO_MODE_High"
             );
-            setHighRATIO_MODE(HighRATIO_MODE?.value || null);
+            setRATIO_MODE_High(HighRATIO_MODE?.value || null);
             const LowRATIO_MODE = res.data.find(
                 (item: any) => item.key === "RATIO_MODE_Low"
             );
-            setLowRATIO_MODE(LowRATIO_MODE?.value || null);
+            setRATIO_MODE_Low(LowRATIO_MODE?.value || null);
 
             const MaintainRATIO_MODE = res.data.find(
                 (item: any) => item.key === "RATIO_MODE_Maintain"
@@ -534,11 +479,11 @@ export default function Graphic_SNG_BINHDUONG() {
             const HighFCV_MODE = res.data.find(
                 (item: any) => item.key === "FCV_MODE_High"
             );
-            setHighFCV_MODE(HighFCV_MODE?.value || null);
+            setFCV_MODE_High(HighFCV_MODE?.value || null);
             const LowFCV_MODE = res.data.find(
                 (item: any) => item.key === "FCV_MODE_Low"
             );
-            setLowFCV_MODE(LowFCV_MODE?.value || null);
+            setFCV_MODE_Low(LowFCV_MODE?.value || null);
 
             const MaintainFCV_MODE = res.data.find(
                 (item: any) => item.key === "FCV_MODE_Maintain"
@@ -546,983 +491,251 @@ export default function Graphic_SNG_BINHDUONG() {
             setMaintainFCV_MODE(MaintainFCV_MODE?.value || false);
             //===========================================================================================
 
-            const HighFlow_Velocity = res.data.find(
-                (item: any) => item.key === "Flow_Velocity_High"
-            );
-            setHighFlow_Velocity(HighFlow_Velocity?.value || null);
 
-            const LowFlow_Velocity = res.data.find(
-                (item: any) => item.key === "Flow_Velocity_Low"
-            );
-            setLowFlow_Velocity(LowFlow_Velocity?.value || null);
-
-            const Flow_Velocity_Maintain = res.data.find(
-                (item: any) => item.key === "Flow_Velocity_Maintain"
-            );
-            setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
-            //===========================================================================================
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
 
-    const [audioPT_2004, setaudioPT_2004] = useState(false);
-    const [HighPT_2004, setHighPT_2004] = useState<number | null>(null);
-    const [LowPT_2004, setLowPT_2004] = useState<number | null>(null);
-    const [audioColorPT_2004, setaudioColorPT_2004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [PT_2004, setPT_2004] = useState<string | null>(null);
+    const [PT_2004_High, setPT_2004_High] = useState<number | null>(null);
+    const [PT_2004_Low, setPT_2004_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2004, setExceedThresholdPT_2004] = useState(false); 
     const [maintainPT_2004, setMaintainPT_2004] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighPT_2004 === "string" &&
-            typeof LowPT_2004 === "string" &&
-            PT_2004 !== null &&
-            maintainPT_2004 === false
-        ) {
-            const highValue = parseFloat(HighPT_2004);
-            const lowValue = parseFloat(LowPT_2004);
-            const PT_2004Value = parseFloat(PT_2004);
+    const PT_2004Value = parseFloat(PT_2004 as any);
+    const highValue = PT_2004_High ?? NaN;
+    const lowValue = PT_2004_Low ?? NaN;
+    
+    if (!isNaN(PT_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2004) {
+     setExceedThresholdPT_2004(PT_2004Value >= highValue || PT_2004Value <= lowValue);
+    }
+    }, [PT_2004, PT_2004_High, PT_2004_Low, maintainPT_2004]);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2004Value)) {
-                if (highValue < PT_2004Value || PT_2004Value < lowValue) {
-                    if (!audioPT_2004) {
-                        audioRef.current?.play();
-                        setaudioPT_2004(true);
-                        setaudioColorPT_2004(true);
-                    }
-                } else {
-                    setaudioPT_2004(false);
-                    setaudioColorPT_2004(false);
-                }
-            }
-        }
-    }, [HighPT_2004, PT_2004, audioPT_2004, LowPT_2004, maintainPT_2004]);
+    //======================================================================================
 
-    useEffect(() => {
-        if (audioPT_2004) {
-            const audioEnded = () => {
-                setaudioPT_2004(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT_2004]);
 
-    //================================ PT_2004======================================================
-
-    //================================ PT_2005================================
-
-    const [audioPT_2005, setaudioPT_2005] = useState(false);
-    const [HighPT_2005, setHighPT_2005] = useState<number | null>(null);
-    const [LowPT_2005, setLowPT_2005] = useState<number | null>(null);
-    const [audioColorPT_2005, setaudioColorPT_2005] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [PT_2005, setPT_2005] = useState<string | null>(null);
+    const [PT_2005_High, setPT_2005_High] = useState<number | null>(null);
+    const [PT_2005_Low, setPT_2005_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2005, setExceedThresholdPT_2005] = useState(false); 
     const [maintainPT_2005, setMaintainPT_2005] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighPT_2005 === "string" &&
-            typeof LowPT_2005 === "string" &&
-            PT_2005 !== null &&
-            maintainPT_2005 === false
-        ) {
-            const highValue = parseFloat(HighPT_2005);
-            const lowValue = parseFloat(LowPT_2005);
-            const PT_2005Value = parseFloat(PT_2005);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2005Value)) {
-                if (highValue < PT_2005Value || PT_2005Value < lowValue) {
-                    if (!audioPT_2005) {
-                        audioRef.current?.play();
-                        setaudioPT_2005(true);
-                        setaudioColorPT_2005(true);
-                    }
-                } else {
-                    setaudioPT_2005(false);
-                    setaudioColorPT_2005(false);
-                }
-            }
-        }
-    }, [HighPT_2005, PT_2005, audioPT_2005, LowPT_2005, maintainPT_2005]);
-
-    useEffect(() => {
-        if (audioPT_2005) {
-            const audioEnded = () => {
-                setaudioPT_2005(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT_2005]);
-
-    //================================ PT_2005 ======================================================
-
-    //================================ TM_2002_SNG================================
-
-    const [audioTM_2002_SNG, setaudioTM_2002_SNG] = useState(false);
-    const [HighTM_2002_SNG, setHighTM_2002_SNG] = useState<number | null>(null);
-    const [LowTM_2002_SNG, setLowTM_2002_SNG] = useState<number | null>(null);
-    const [audioColorTM_2002_SNG, setaudioColorTM_2002_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainTM_2002_SNG, setMaintainTM_2002_SNG] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighTM_2002_SNG === "string" &&
-            typeof LowTM_2002_SNG === "string" &&
-            TM_2002_SNG !== null &&
-            maintainTM_2002_SNG === false
-        ) {
-            const highValue = parseFloat(HighTM_2002_SNG);
-            const lowValue = parseFloat(LowTM_2002_SNG);
-            const TM_2002_SNGValue = parseFloat(TM_2002_SNG);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(TM_2002_SNGValue)
-            ) {
-                if (
-                    highValue < TM_2002_SNGValue ||
-                    TM_2002_SNGValue < lowValue
-                ) {
-                    if (!audioTM_2002_SNG) {
-                        audioRef.current?.play();
-                        setaudioTM_2002_SNG(true);
-                        setaudioColorTM_2002_SNG(true);
-                    }
-                } else {
-                    setaudioTM_2002_SNG(false);
-                    setaudioColorTM_2002_SNG(false);
-                }
-            }
-        }
-    }, [
-        HighTM_2002_SNG,
-        TM_2002_SNG,
-        audioTM_2002_SNG,
-        LowTM_2002_SNG,
-        maintainTM_2002_SNG,
+     const PT_2005Value = parseFloat(PT_2005 as any);
+     const highValue = PT_2005_High ?? NaN;
+     const lowValue = PT_2005_Low ?? NaN;
+    
+     if (!isNaN(PT_2005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2005) {
+         setExceedThresholdPT_2005(PT_2005Value >= highValue || PT_2005Value <= lowValue);
+     }
+    }, [PT_2005, PT_2005_High, PT_2005_Low, maintainPT_2005,
+    
+    
     ]);
+        //================================ TT_2003================================
 
-    useEffect(() => {
-        if (audioTM_2002_SNG) {
-            const audioEnded = () => {
-                setaudioTM_2002_SNG(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioTM_2002_SNG]);
 
-    //================================ TM_2002_SNG ======================================================
-
-    //================================ TM_2003_SNG================================
-
-    const [audioTM_2003_SNG, setaudioTM_2003_SNG] = useState(false);
-    const [HighTM_2003_SNG, setHighTM_2003_SNG] = useState<number | null>(null);
-    const [LowTM_2003_SNG, setLowTM_2003_SNG] = useState<number | null>(null);
-    const [audioColorTM_2003_SNG, setaudioColorTM_2003_SNG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainTM_2003_SNG, setMaintainTM_2003_SNG] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighTM_2003_SNG === "string" &&
-            typeof LowTM_2003_SNG === "string" &&
-            TM_2003_SNG !== null &&
-            maintainTM_2003_SNG === false
-        ) {
-            const highValue = parseFloat(HighTM_2003_SNG);
-            const lowValue = parseFloat(LowTM_2003_SNG);
-            const TM_2003_SNGValue = parseFloat(TM_2003_SNG);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(TM_2003_SNGValue)
-            ) {
-                if (
-                    highValue < TM_2003_SNGValue ||
-                    TM_2003_SNGValue < lowValue
-                ) {
-                    if (!audioTM_2003_SNG) {
-                        audioRef.current?.play();
-                        setaudioTM_2003_SNG(true);
-                        setaudioColorTM_2003_SNG(true);
-                    }
-                } else {
-                    setaudioTM_2003_SNG(false);
-                    setaudioColorTM_2003_SNG(false);
-                }
-            }
-        }
-    }, [
-        HighTM_2003_SNG,
-        TM_2003_SNG,
-        audioTM_2003_SNG,
-        LowTM_2003_SNG,
-        maintainTM_2003_SNG,
-    ]);
-
-    useEffect(() => {
-        if (audioTM_2003_SNG) {
-            const audioEnded = () => {
-                setaudioTM_2003_SNG(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioTM_2003_SNG]);
-
-    //================================ TM_2003_SNG ======================================================
-
-    //================================ VP_301================================
-
-    //================================ VP_301 ======================================================
-
-    //================================ TT_2003================================
-
-    const [audioTT_2003, setaudioTT_2003] = useState(false);
-    const [HighTT_2003, setHighTT_2003] = useState<number | null>(null);
-    const [LowTT_2003, setLowTT_2003] = useState<number | null>(null);
-    const [audioColorTT_2003, setaudioColorTT_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainTT_2003, setMaintainTT_2003] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighTT_2003 === "string" &&
-            typeof LowTT_2003 === "string" &&
-            TT_2003 !== null &&
-            maintainTT_2003 === false
-        ) {
-            const highValue = parseFloat(HighTT_2003);
-            const lowValue = parseFloat(LowTT_2003);
-            const TT_2003Value = parseFloat(TT_2003);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2003Value)) {
-                if (highValue < TT_2003Value || TT_2003Value < lowValue) {
-                    if (!audioTT_2003) {
-                        audioRef.current?.play();
-                        setaudioTT_2003(true);
-                        setaudioColorTT_2003(true);
-                    }
-                } else {
-                    setaudioTT_2003(false);
-                    setaudioColorTT_2003(false);
-                }
-            }
-        }
-    }, [HighTT_2003, TT_2003, audioTT_2003, LowTT_2003, maintainTT_2003]);
-
-    useEffect(() => {
-        if (audioTT_2003) {
-            const audioEnded = () => {
-                setaudioTT_2003(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioTT_2003]);
-
-    //================================ TT_2003 ======================================================
-
-    //================================ Pipe_Temp================================
-
-    const [audioPipe_Temp, setaudioPipe_Temp] = useState(false);
-    const [HighPipe_Temp, setHighPipe_Temp] = useState<number | null>(null);
-    const [LowPipe_Temp, setLowPipe_Temp] = useState<number | null>(null);
-    const [audioColorPipe_Temp, setaudioColorPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighPipe_Temp === "string" &&
-            typeof LowPipe_Temp === "string" &&
-            Pipe_Temp !== null &&
-            maintainPipe_Temp === false
-        ) {
-            const highValue = parseFloat(HighPipe_Temp);
-            const lowValue = parseFloat(LowPipe_Temp);
-            const Pipe_TempValue = parseFloat(Pipe_Temp);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(Pipe_TempValue)
-            ) {
-                if (highValue < Pipe_TempValue || Pipe_TempValue < lowValue) {
-                    if (!audioPipe_Temp) {
-                        audioRef.current?.play();
-                        setaudioPipe_Temp(true);
-                        setaudioColorPipe_Temp(true);
-                    }
-                } else {
-                    setaudioPipe_Temp(false);
-                    setaudioColorPipe_Temp(false);
-                }
-            }
-        }
-    }, [
-        HighPipe_Temp,
-        Pipe_Temp,
-        audioPipe_Temp,
-        LowPipe_Temp,
-        maintainPipe_Temp,
-    ]);
-
-    useEffect(() => {
-        if (audioPipe_Temp) {
-            const audioEnded = () => {
-                setaudioPipe_Temp(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPipe_Temp]);
-
-    //================================ Pipe_Temp ======================================================
-    //================================ Pipe_Press================================
-
-    const [audioPipe_Press, setaudioPipe_Press] = useState(false);
-    const [HighPipe_Press, setHighPipe_Press] = useState<number | null>(null);
-    const [LowPipe_Press, setLowPipe_Press] = useState<number | null>(null);
-    const [audioColorPipe_Press, setaudioColorPipe_Press] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPipe_Press, setMaintainPipe_Press] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighPipe_Press === "string" &&
-            typeof LowPipe_Press === "string" &&
-            Pipe_Press !== null &&
-            maintainPipe_Press === false
-        ) {
-            const highValue = parseFloat(HighPipe_Press);
-            const lowValue = parseFloat(LowPipe_Press);
-            const Pipe_PressValue = parseFloat(Pipe_Press);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(Pipe_PressValue)
-            ) {
-                if (highValue < Pipe_PressValue || Pipe_PressValue < lowValue) {
-                    if (!audioPipe_Press) {
-                        audioRef.current?.play();
-                        setaudioPipe_Press(true);
-                        setaudioColorPipe_Press(true);
-                    }
-                } else {
-                    setaudioPipe_Press(false);
-                    setaudioColorPipe_Press(false);
-                }
-            }
-        }
-    }, [
-        HighPipe_Press,
-        Pipe_Press,
-        audioPipe_Press,
-        LowPipe_Press,
-        maintainPipe_Press,
-    ]);
-
-    useEffect(() => {
-        if (audioPipe_Press) {
-            const audioEnded = () => {
-                setaudioPipe_Press(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPipe_Press]);
-
-    //================================ Pipe_Press ======================================================
-
-    //================================ Pipe_Press================================
-
-    const [audioFlow_Meter_Total, setaudioFlow_Meter_Total] = useState(false);
-    const [HighFlow_Meter_Total, setHighFlow_Meter_Total] = useState<
-        number | null
-    >(null);
-    const [LowFlow_Meter_Total, setLowFlow_Meter_Total] = useState<
-        number | null
-    >(null);
-    const [audioColorFlow_Meter_Total, setaudioColorFlow_Meter_Total] =
-        useState(false);
-
-    const [maintainFlow_Meter_Total, setMaintainFlow_Meter_Total] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighFlow_Meter_Total === "string" &&
-            typeof LowFlow_Meter_Total === "string" &&
-            Flow_Meter_Total !== null &&
-            maintainFlow_Meter_Total === false
-        ) {
-            const highValue = parseFloat(HighFlow_Meter_Total);
-            const lowValue = parseFloat(LowFlow_Meter_Total);
-            const Flow_Meter_TotalValue = parseFloat(Flow_Meter_Total);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(Flow_Meter_TotalValue)
-            ) {
-                if (
-                    highValue < Flow_Meter_TotalValue ||
-                    Flow_Meter_TotalValue < lowValue
-                ) {
-                    if (!audioFlow_Meter_Total) {
-                        audioRef.current?.play();
-                        setaudioFlow_Meter_Total(true);
-                        setaudioColorFlow_Meter_Total(true);
-                    }
-                } else {
-                    setaudioFlow_Meter_Total(false);
-                    setaudioColorFlow_Meter_Total(false);
-                }
-            }
-        }
-    }, [
-        HighFlow_Meter_Total,
-        Flow_Meter_Total,
-        audioFlow_Meter_Total,
-        LowFlow_Meter_Total,
-        maintainFlow_Meter_Total,
-    ]);
-
-    useEffect(() => {
-        if (audioFlow_Meter_Total) {
-            const audioEnded = () => {
-                setaudioFlow_Meter_Total(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioFlow_Meter_Total]);
+        const [TT_2003, setTT_2003] = useState<string | null>(null);
+        const [TT_2003_High, setTT_2003_High] = useState<number | null>(null);
+        const [TT_2003_Low, setTT_2003_Low] = useState<number | null>(null);
+        const [exceedThresholdTT_2003, setExceedThresholdTT_2003] = useState(false); 
+        const [maintainTT_2003, setMaintainTT_2003] = useState<boolean>(false);
+        
+        useEffect(() => {
+         const TT_2003Value = parseFloat(TT_2003 as any);
+         const highValue = TT_2003_High ?? NaN;
+         const lowValue = TT_2003_Low ?? NaN;
+        
+         if (!isNaN(TT_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2003) {
+             setExceedThresholdTT_2003(TT_2003Value >= highValue || TT_2003Value <= lowValue);
+         }
+        }, [TT_2003, TT_2003_High, TT_2003_Low, maintainTT_2003]);
+        
 
     //================================ Flow_Meter_Total ======================================================
 
-    //================================ Pipe_Press================================
 
-    const [audioConsumption_Flow, setaudioConsumption_Flow] = useState(false);
-    const [HighConsumption_Flow, setHighConsumption_Flow] = useState<
-        number | null
-    >(null);
-    const [LowConsumption_Flow, setLowConsumption_Flow] = useState<
-        number | null
-    >(null);
-    const [audioColorConsumption_Flow, setaudioColorConsumption_Flow] =
-        useState(false);
-
-    const [maintainConsumption_Flow, setMaintainConsumption_Flow] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighConsumption_Flow === "string" &&
-            typeof LowConsumption_Flow === "string" &&
-            Consumption_Flow !== null &&
-            maintainConsumption_Flow === false
-        ) {
-            const highValue = parseFloat(HighConsumption_Flow);
-            const lowValue = parseFloat(LowConsumption_Flow);
-            const Consumption_FlowValue = parseFloat(Consumption_Flow);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(Consumption_FlowValue)
-            ) {
-                if (
-                    highValue < Consumption_FlowValue ||
-                    Consumption_FlowValue < lowValue
-                ) {
-                    if (!audioConsumption_Flow) {
-                        audioRef.current?.play();
-                        setaudioConsumption_Flow(true);
-                        setaudioColorConsumption_Flow(true);
-                    }
-                } else {
-                    setaudioConsumption_Flow(false);
-                    setaudioColorConsumption_Flow(false);
-                }
-            }
-        }
-    }, [
-        HighConsumption_Flow,
-        Consumption_Flow,
-        audioConsumption_Flow,
-        LowConsumption_Flow,
-        maintainConsumption_Flow,
-    ]);
-
-    useEffect(() => {
-        if (audioConsumption_Flow) {
-            const audioEnded = () => {
-                setaudioConsumption_Flow(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioConsumption_Flow]);
-
-    //================================ Flow_Meter_Total ======================================================
-
-    //================================ Pipe_Press================================
-
-    const [audioFlow_Velocity, setaudioFlow_Velocity] = useState(false);
-    const [HighFlow_Velocity, setHighFlow_Velocity] = useState<number | null>(
-        null
-    );
-    const [LowFlow_Velocity, setLowFlow_Velocity] = useState<number | null>(
-        null
-    );
-    const [audioColorFlow_Velocity, setaudioColorFlow_Velocity] =
-        useState(false);
-
-    const [maintainFlow_Velocity, setMaintainFlow_Velocity] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighFlow_Velocity === "string" &&
-            typeof LowFlow_Velocity === "string" &&
-            Flow_Velocity !== null &&
-            maintainFlow_Velocity === false
-        ) {
-            const highValue = parseFloat(HighFlow_Velocity);
-            const lowValue = parseFloat(LowFlow_Velocity);
-            const Flow_VelocityValue = parseFloat(Flow_Velocity);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(Flow_VelocityValue)
-            ) {
-                if (
-                    highValue < Flow_VelocityValue ||
-                    Flow_VelocityValue < lowValue
-                ) {
-                    if (!audioFlow_Velocity) {
-                        audioRef.current?.play();
-                        setaudioFlow_Velocity(true);
-                        setaudioColorFlow_Velocity(true);
-                    }
-                } else {
-                    setaudioFlow_Velocity(false);
-                    setaudioColorFlow_Velocity(false);
-                }
-            }
-        }
-    }, [
-        HighFlow_Velocity,
-        Flow_Velocity,
-        audioFlow_Velocity,
-        LowFlow_Velocity,
-        maintainFlow_Velocity,
-    ]);
-
-    useEffect(() => {
-        if (audioFlow_Velocity) {
-            const audioEnded = () => {
-                setaudioFlow_Velocity(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioFlow_Velocity]);
-
-    //================================ Flow_Meter_Total ======================================================
-
-    const [audioTT_2004, setaudioTT_2004] = useState(false);
-    const [HighTT_2004, setHighTT_2004] = useState<number | null>(null);
-    const [LowTT_2004, setLowTT_2004] = useState<number | null>(null);
-    const [audioColorTT_2004, setaudioColorTT_2004] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [TT_2004, setTT_2004] = useState<string | null>(null);
+    const [TT_2004_High, setTT_2004_High] = useState<number | null>(null);
+    const [TT_2004_Low, setTT_2004_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_2004, setExceedThresholdTT_2004] = useState(false); 
     const [maintainTT_2004, setMaintainTT_2004] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighTT_2004 === "string" &&
-            typeof LowTT_2004 === "string" &&
-            TT_2004 !== null &&
-            maintainTT_2004 === false
-        ) {
-            const highValue = parseFloat(HighTT_2004);
-            const lowValue = parseFloat(LowTT_2004);
-            const TT_2004Value = parseFloat(TT_2004);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2004Value)) {
-                if (highValue < TT_2004Value || TT_2004Value < lowValue) {
-                    if (!audioTT_2004) {
-                        audioRef.current?.play();
-                        setaudioTT_2004(true);
-                        setaudioColorTT_2004(true);
-                    }
-                } else {
-                    setaudioTT_2004(false);
-                    setaudioColorTT_2004(false);
-                }
-            }
+        const TT_2004Value = parseFloat(TT_2004 as any);
+        const highValue = TT_2004_High ?? NaN;
+        const lowValue = TT_2004_Low ?? NaN;
+    
+        if (!isNaN(TT_2004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2004) {
+            setExceedThresholdTT_2004(TT_2004Value >= highValue || TT_2004Value <= lowValue);
         }
-    }, [HighTT_2004, TT_2004, audioTT_2004, LowTT_2004, maintainTT_2004]);
+    }, [TT_2004, TT_2004_High, TT_2004_Low, maintainTT_2004]);
+    
+    
+     //======================================================================================
 
+
+// =================================================================================================================== 
+
+const [TM_2002_SNG, setTM_2002_SNG] = useState<string | null>(null);
+const [TM_2002_SNG_High, setTM_2002_SNG_High] = useState<number | null>(null);
+const [TM_2002_SNG_Low, setTM_2002_SNG_Low] = useState<number | null>(null);
+const [exceedThresholdTM_2002_SNG, setExceedThresholdTM_2002_SNG] = useState(false); 
+const [maintainTM_2002_SNG, setMaintainTM_2002_SNG] = useState<boolean>(false);
+
+useEffect(() => {
+    const TM_2002_SNGValue = parseFloat(TM_2002_SNG as any);
+    const highValue = TM_2002_SNG_High ?? NaN;
+    const lowValue = TM_2002_SNG_Low ?? NaN;
+
+    if (!isNaN(TM_2002_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2002_SNG) {
+        setExceedThresholdTM_2002_SNG(TM_2002_SNGValue >= highValue || TM_2002_SNGValue <= lowValue);
+    }
+}, [TM_2002_SNG, TM_2002_SNG_High, TM_2002_SNG_Low, maintainTM_2002_SNG]);
+
+
+
+
+
+
+// =================================================================================================================== 
+
+    // =================================================================================================================== 
+
+    const [TM_2003_SNG, setTM_2003_SNG] = useState<string | null>(null);
+    const [TM_2003_SNG_High, setTM_2003_SNG_High] = useState<number | null>(null);
+    const [TM_2003_SNG_Low, setTM_2003_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_2003_SNG, setExceedThresholdTM_2003_SNG] = useState(false); 
+    const [maintainTM_2003_SNG, setMaintainTM_2003_SNG] = useState<boolean>(false);
+   
     useEffect(() => {
-        if (audioTT_2004) {
-            const audioEnded = () => {
-                setaudioTT_2004(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
+        const TM_2003_SNGValue = parseFloat(TM_2003_SNG as any);
+        const highValue = TM_2003_SNG_High ?? NaN;
+        const lowValue = TM_2003_SNG_Low ?? NaN;
+   
+        if (!isNaN(TM_2003_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2003_SNG) {
+            setExceedThresholdTM_2003_SNG(TM_2003_SNGValue >= highValue || TM_2003_SNGValue <= lowValue);
         }
-    }, [audioTT_2004]);
+    }, [TM_2003_SNG, TM_2003_SNG_High, TM_2003_SNG_Low, maintainTM_2003_SNG]);
+   
+    
+   
+
 
     //================================ TT_2004======================================================
-
-    const [audioFCV_2001, setaudioFCV_2001] = useState(false);
-    const [HighFCV_2001, setHighFCV_2001] = useState<number | null>(null);
-    const [LowFCV_2001, setLowFCV_2001] = useState<number | null>(null);
-    const [audioColorFCV_2001, setaudioColorFCV_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [FCV_2001, setFCV_2001] = useState<string | null>(null);
+    const [FCV_2001_High, setFCV_2001_High] = useState<number | null>(null);
+    const [FCV_2001_Low, setFCV_2001_Low] = useState<number | null>(null);
+    const [exceedThresholdFCV_2001, setExceedThresholdFCV_2001] = useState(false); 
     const [maintainFCV_2001, setMaintainFCV_2001] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighFCV_2001 === "string" &&
-            typeof LowFCV_2001 === "string" &&
-            FCV_2001 !== null &&
-            maintainFCV_2001 === false
-        ) {
-            const highValue = parseFloat(HighFCV_2001);
-            const lowValue = parseFloat(LowFCV_2001);
-            const FCV_2001Value = parseFloat(FCV_2001);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(FCV_2001Value)
-            ) {
-                if (highValue < FCV_2001Value || FCV_2001Value < lowValue) {
-                    if (!audioFCV_2001) {
-                        audioRef.current?.play();
-                        setaudioFCV_2001(true);
-                        setaudioColorFCV_2001(true);
-                    }
-                } else {
-                    setaudioFCV_2001(false);
-                    setaudioColorFCV_2001(false);
-                }
-            }
+        const FCV_2001Value = parseFloat(FCV_2001 as any);
+        const highValue = FCV_2001_High ?? NaN;
+        const lowValue = FCV_2001_Low ?? NaN;
+    
+        if (!isNaN(FCV_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_2001) {
+            setExceedThresholdFCV_2001(FCV_2001Value >= highValue || FCV_2001Value <= lowValue);
         }
-    }, [HighFCV_2001, FCV_2001, audioFCV_2001, LowFCV_2001, maintainFCV_2001]);
-
-    useEffect(() => {
-        if (audioFCV_2001) {
-            const audioEnded = () => {
-                setaudioFCV_2001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioFCV_2001]);
-
+    }, [FCV_2001, FCV_2001_High, FCV_2001_Low, maintainFCV_2001]);
+    
     //================================ FCV_2001======================================================
 
     //================================ WB_1001================================
-
-    const [audioWB_1001, setaudioWB_1001] = useState(false);
-    const [HighWB_1001, setHighWB_1001] = useState<number | null>(null);
-    const [LowWB_1001, setLowWB_1001] = useState<number | null>(null);
-    const [audioColorWB_1001, setaudioColorWB_1001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [WB_1001, setWB_1001] = useState<string | null>(null);
+    const [WB_1001_High, setWB_1001_High] = useState<number | null>(null);
+    const [WB_1001_Low, setWB_1001_Low] = useState<number | null>(null);
+    const [exceedThresholdWB_1001, setExceedThresholdWB_1001] = useState(false); 
     const [maintainWB_1001, setMaintainWB_1001] = useState<boolean>(false);
-
+   
     useEffect(() => {
-        if (
-            typeof HighWB_1001 === "string" &&
-            typeof LowWB_1001 === "string" &&
-            WB_1001 !== null &&
-            maintainWB_1001 === false
-        ) {
-            const highValue = parseFloat(HighWB_1001);
-            const lowValue = parseFloat(LowWB_1001);
-            const WB_1001Value = parseFloat(WB_1001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(WB_1001Value)) {
-                if (highValue < WB_1001Value || WB_1001Value < lowValue) {
-                    if (!audioWB_1001) {
-                        audioRef.current?.play();
-                        setaudioWB_1001(true);
-                        setaudioColorWB_1001(true);
-                    }
-                } else {
-                    setaudioWB_1001(false);
-                    setaudioColorWB_1001(false);
-                }
-            }
+        const WB_1001Value = parseFloat(WB_1001 as any);
+        const highValue = WB_1001_High ?? NaN;
+        const lowValue = WB_1001_Low ?? NaN;
+   
+        if (!isNaN(WB_1001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_1001) {
+            setExceedThresholdWB_1001(WB_1001Value >= highValue || WB_1001Value <= lowValue);
         }
-    }, [HighWB_1001, WB_1001, audioWB_1001, LowWB_1001, maintainWB_1001]);
-
-    useEffect(() => {
-        if (audioWB_1001) {
-            const audioEnded = () => {
-                setaudioWB_1001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioWB_1001]);
+    }, [WB_1001, WB_1001_High, WB_1001_Low, maintainWB_1001]);
+   
+    
+   
 
     //================================ WB_1001 ======================================================
 
-    const [audioWB_Setpoint, setaudioWB_Setpoint] = useState(false);
-    const [HighWB_Setpoint, setHighWB_Setpoint] = useState<number | null>(null);
-    const [LowWB_Setpoint, setLowWB_Setpoint] = useState<number | null>(null);
-    const [audioColorWB_Setpoint, setaudioColorWB_Setpoint] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainWB_Setpoint, setMaintainWB_Setpoint] =
-        useState<boolean>(false);
-
+    const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
+    const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(null);
+    const [WB_Setpoint_Low, setWB_Setpoint_Low] = useState<number | null>(null);
+    const [exceedThresholdWB_Setpoint, setExceedThresholdWB_Setpoint] = useState(false); 
+    const [maintainWB_Setpoint, setMaintainWB_Setpoint] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighWB_Setpoint === "string" &&
-            typeof LowWB_Setpoint === "string" &&
-            WB_Setpoint !== null &&
-            maintainWB_Setpoint === false
-        ) {
-            const highValue = parseFloat(HighWB_Setpoint);
-            const lowValue = parseFloat(LowWB_Setpoint);
-            const WB_SetpointValue = parseFloat(WB_Setpoint);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(WB_SetpointValue)
-            ) {
-                if (
-                    highValue < WB_SetpointValue ||
-                    WB_SetpointValue < lowValue
-                ) {
-                    if (!audioWB_Setpoint) {
-                        audioRef.current?.play();
-                        setaudioWB_Setpoint(true);
-                        setaudioColorWB_Setpoint(true);
-                    }
-                } else {
-                    setaudioWB_Setpoint(false);
-                    setaudioColorWB_Setpoint(false);
-                }
-            }
-        }
-    }, [
-        HighWB_Setpoint,
-        WB_Setpoint,
-        audioWB_Setpoint,
-        LowWB_Setpoint,
-        maintainWB_Setpoint,
-    ]);
-
-    useEffect(() => {
-        if (audioWB_Setpoint) {
-            const audioEnded = () => {
-                setaudioWB_Setpoint(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioWB_Setpoint]);
+    const WB_SetpointValue = parseFloat(WB_Setpoint as any);
+    const highValue = WB_Setpoint_High ?? NaN;
+    const lowValue = WB_Setpoint_Low ?? NaN;
+    
+    if (!isNaN(WB_SetpointValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_Setpoint) {
+     setExceedThresholdWB_Setpoint(WB_SetpointValue >= highValue || WB_SetpointValue <= lowValue);
+    }
+    }, [WB_Setpoint, WB_Setpoint_High, WB_Setpoint_Low, maintainWB_Setpoint]);
 
     //================================ WB_Setpoint======================================================
-    const [audioHV_1001, setaudioHV_1001] = useState(false);
-    const [HighHV_1001, setHighHV_1001] = useState<number | null>(null);
-    const [LowHV_1001, setLowHV_1001] = useState<number | null>(null);
-    const [audioColorHV_1001, setaudioColorHV_1001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [HV_1001, setHV_1001] = useState<string | null>(null);
+    const [HV_1001_High, setHV_1001_High] = useState<number | null>(null);
+    const [HV_1001_Low, setHV_1001_Low] = useState<number | null>(null);
+    const [exceedThresholdHV_1001, setExceedThresholdHV_1001] = useState(false); 
     const [maintainHV_1001, setMaintainHV_1001] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighHV_1001 === "string" &&
-            typeof LowHV_1001 === "string" &&
-            HV_1001 !== null &&
-            maintainHV_1001 === false
-        ) {
-            const highValue = parseFloat(HighHV_1001);
-            const lowValue = parseFloat(LowHV_1001);
-            const HV_1001Value = parseFloat(HV_1001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HV_1001Value)) {
-                if (highValue < HV_1001Value || HV_1001Value < lowValue) {
-                    if (!audioHV_1001) {
-                        audioRef.current?.play();
-                        setaudioHV_1001(true);
-                        setaudioColorHV_1001(true);
-                    }
-                } else {
-                    setaudioHV_1001(false);
-                    setaudioColorHV_1001(false);
-                }
-            }
+        const HV_1001Value = parseFloat(HV_1001 as any);
+        const highValue = HV_1001_High ?? NaN;
+        const lowValue = HV_1001_Low ?? NaN;
+    
+        if (!isNaN(HV_1001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHV_1001) {
+            setExceedThresholdHV_1001(HV_1001Value >= highValue || HV_1001Value <= lowValue);
         }
-    }, [HighHV_1001, HV_1001, audioHV_1001, LowHV_1001, maintainHV_1001]);
-
-    useEffect(() => {
-        if (audioHV_1001) {
-            const audioEnded = () => {
-                setaudioHV_1001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioHV_1001]);
+    }, [HV_1001, HV_1001_High, HV_1001_Low, maintainHV_1001]);
+    
 
     //================================ HV_1001======================================================
-    const [audioRATIO_MODE, setaudioRATIO_MODE] = useState(false);
-    const [HighRATIO_MODE, setHighRATIO_MODE] = useState<number | null>(null);
-    const [LowRATIO_MODE, setLowRATIO_MODE] = useState<number | null>(null);
-    const [audioColorRATIO_MODE, setaudioColorRATIO_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainRATIO_MODE, setMaintainRATIO_MODE] =
-        useState<boolean>(false);
-
+    const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
+    const [RATIO_MODE_High, setRATIO_MODE_High] = useState<number | null>(null);
+    const [RATIO_MODE_Low, setRATIO_MODE_Low] = useState<number | null>(null);
+    const [exceedThresholdRATIO_MODE, setExceedThresholdRATIO_MODE] = useState(false); 
+    const [maintainRATIO_MODE, setMaintainRATIO_MODE] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighRATIO_MODE === "string" &&
-            typeof LowRATIO_MODE === "string" &&
-            RATIO_MODE !== null &&
-            maintainRATIO_MODE === false
-        ) {
-            const highValue = parseFloat(HighRATIO_MODE);
-            const lowValue = parseFloat(LowRATIO_MODE);
-            const RATIO_MODEValue = parseFloat(RATIO_MODE);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(RATIO_MODEValue)
-            ) {
-                if (highValue < RATIO_MODEValue || RATIO_MODEValue < lowValue) {
-                    if (!audioRATIO_MODE) {
-                        audioRef.current?.play();
-                        setaudioRATIO_MODE(true);
-                        setaudioColorRATIO_MODE(true);
-                    }
-                } else {
-                    setaudioRATIO_MODE(false);
-                    setaudioColorRATIO_MODE(false);
-                }
-            }
-        }
-    }, [
-        HighRATIO_MODE,
-        RATIO_MODE,
-        audioRATIO_MODE,
-        LowRATIO_MODE,
-        maintainRATIO_MODE,
-    ]);
-
-    useEffect(() => {
-        if (audioRATIO_MODE) {
-            const audioEnded = () => {
-                setaudioRATIO_MODE(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioRATIO_MODE]);
+    const RATIO_MODEValue = parseFloat(RATIO_MODE as any);
+    const highValue = RATIO_MODE_High ?? NaN;
+    const lowValue = RATIO_MODE_Low ?? NaN;
+    
+    if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainRATIO_MODE) {
+     setExceedThresholdRATIO_MODE(RATIO_MODEValue >= highValue || RATIO_MODEValue <= lowValue);
+    }
+    }, [RATIO_MODE, RATIO_MODE_High, RATIO_MODE_Low, maintainRATIO_MODE]);
+    
 
     //================================ RATIO_MODE======================================================
 
-    const [audioFCV_MODE, setaudioFCV_MODE] = useState(false);
-    const [HighFCV_MODE, setHighFCV_MODE] = useState<number | null>(null);
-    const [LowFCV_MODE, setLowFCV_MODE] = useState<number | null>(null);
-    const [audioColorFCV_MODE, setaudioColorFCV_MODE] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [FCV_MODE, setFCV_MODE] = useState<string | null>(null);
+    const [FCV_MODE_High, setFCV_MODE_High] = useState<number | null>(null);
+    const [FCV_MODE_Low, setFCV_MODE_Low] = useState<number | null>(null);
+    const [exceedThresholdFCV_MODE, setExceedThresholdFCV_MODE] = useState(false); 
     const [maintainFCV_MODE, setMaintainFCV_MODE] = useState<boolean>(false);
-
+    
     useEffect(() => {
-        if (
-            typeof HighFCV_MODE === "string" &&
-            typeof LowFCV_MODE === "string" &&
-            FCV_MODE !== null &&
-            maintainFCV_MODE === false
-        ) {
-            const highValue = parseFloat(HighFCV_MODE);
-            const lowValue = parseFloat(LowFCV_MODE);
-            const FCV_MODEValue = parseFloat(FCV_MODE);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(FCV_MODEValue)
-            ) {
-                if (highValue < FCV_MODEValue || FCV_MODEValue < lowValue) {
-                    if (!audioFCV_MODE) {
-                        audioRef.current?.play();
-                        setaudioFCV_MODE(true);
-                        setaudioColorFCV_MODE(true);
-                    }
-                } else {
-                    setaudioFCV_MODE(false);
-                    setaudioColorFCV_MODE(false);
-                }
-            }
+        const FCV_MODEValue = parseFloat(FCV_MODE as any);
+        const highValue = FCV_MODE_High ?? NaN;
+        const lowValue = FCV_MODE_Low ?? NaN;
+    
+        if (!isNaN(FCV_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_MODE) {
+            setExceedThresholdFCV_MODE(FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue);
         }
-    }, [HighFCV_MODE, FCV_MODE, audioFCV_MODE, LowFCV_MODE, maintainFCV_MODE]);
-
-    useEffect(() => {
-        if (audioFCV_MODE) {
-            const audioEnded = () => {
-                setaudioFCV_MODE(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioFCV_MODE]);
-
+    }, [FCV_MODE, FCV_MODE_High, FCV_MODE_Low, maintainFCV_MODE]);
+   
     //================================ FCV_MODE======================================================
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
@@ -1609,7 +822,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_2004 && !maintainPT_2004
+                                        exceedThresholdPT_2004 && !maintainPT_2004
                                             ? "#ff5656"
                                             : maintainPT_2004
                                             ? "orange"
@@ -1627,7 +840,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2004 :
+                                        PT-2004 :
                                     </p>
                                     <p
                                         style={{
@@ -1671,7 +884,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_2005 && !maintainPT_2005
+                                        exceedThresholdPT_2005 && !maintainPT_2005
                                             ? "#ff5656"
                                             : maintainPT_2005
                                             ? "orange"
@@ -1689,7 +902,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2005 :
+                                        PT-2005 :
                                     </p>
                                     <p
                                         style={{
@@ -1707,7 +920,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    L
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -1735,7 +948,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTM_2002_SNG &&
+                                        exceedThresholdTM_2002_SNG &&
                                         !maintainTM_2002_SNG
                                             ? "#ff5656"
                                             : maintainTM_2002_SNG
@@ -1800,7 +1013,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTM_2003_SNG &&
+                                        exceedThresholdTM_2003_SNG &&
                                         !maintainTM_2003_SNG
                                             ? "#ff5656"
                                             : maintainTM_2003_SNG
@@ -1863,7 +1076,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTT_2003 && !maintainTT_2003
+                                        exceedThresholdTT_2003 && !maintainTT_2003
                                             ? "#ff5656"
                                             : maintainTT_2003
                                             ? "orange"
@@ -1925,7 +1138,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTT_2004 && !maintainTT_2004
+                                        exceedThresholdTT_2004 && !maintainTT_2004
                                             ? "#ff5656"
                                             : maintainTT_2004
                                             ? "orange"
@@ -2006,7 +1219,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorFCV_2001 && !maintainFCV_2001
+                                        exceedThresholdFCV_2001 && !maintainFCV_2001
                                             ? "#ff5656"
                                             : maintainFCV_2001
                                             ? "orange"
@@ -2069,7 +1282,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorWB_1001 && !maintainWB_1001
+                                        exceedThresholdWB_1001 && !maintainWB_1001
                                             ? "#ff5656"
                                             : maintainWB_1001
                                             ? "orange"
@@ -2105,7 +1318,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    MJ/Sm3
+                                    MJ/Sm³
                                 </p>
                             </div>
                         ),
@@ -2133,7 +1346,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorWB_Setpoint &&
+                                        exceedThresholdWB_Setpoint &&
                                         !maintainWB_Setpoint
                                             ? "#ff5656"
                                             : maintainWB_Setpoint
@@ -2176,7 +1389,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                             position: "relative",
                                         }}
                                     >
-                                        MJ/Sm3
+                                        MJ/Sm³
                                     </p>
                                 </div>
                             </div>
@@ -2203,7 +1416,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorHV_1001 && !maintainHV_1001
+                                        exceedThresholdHV_1001 && !maintainHV_1001
                                             ? "#ff5656"
                                             : maintainHV_1001
                                             ? "orange"
@@ -2245,7 +1458,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                             position: "relative",
                                         }}
                                     >
-                                        MJ/Sm3
+                                        MJ/Sm³
                                     </p>
                                 </div>
                             </div>
@@ -2274,7 +1487,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorRATIO_MODE &&
+                                        exceedThresholdRATIO_MODE &&
                                         !maintainRATIO_MODE
                                             ? "#ff5656"
                                             : maintainRATIO_MODE
@@ -2337,7 +1550,7 @@ export default function Graphic_SNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorFCV_MODE && !maintainFCV_MODE
+                                        exceedThresholdFCV_MODE && !maintainFCV_MODE
                                             ? "#ff5656"
                                             : maintainFCV_MODE
                                             ? "orange"
@@ -4267,7 +3480,7 @@ export default function Graphic_SNG_BINHDUONG() {
                         timeUpdate3: position,
                     }));
                 }
-                //========================== pit line 1 =========================
+                //========================== pt line 1 =========================
                 else if (id === "percent") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
