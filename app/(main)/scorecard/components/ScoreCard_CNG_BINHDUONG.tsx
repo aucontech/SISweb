@@ -605,131 +605,131 @@ export default function ScoreCard_CNG_BINHDUONG() {
  // =================================================================================================================== 
 
  
- setMaintainHR_BC(HR_BC_Maintain?.value || false);
+ setmaintainHR_BC(HR_BC_Maintain?.value || false);
 
- setMaintainSD(SD_Maintain?.value || false);
+ setmaintainSD(SD_Maintain?.value || false);
 
- setMaintainESD_2001(ESD_2001_Maintain?.value || false);
-
-
- setMaintainSD_2001(SD_2001_Maintain?.value || false);
+ setmaintainESD_2001(ESD_2001_Maintain?.value || false);
 
 
- setMaintainSD_2002(SD_2002_Maintain?.value || false);
-
- setMaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
+ setmaintainSD_2001(SD_2001_Maintain?.value || false);
 
 
-            setMaintainPT_2002(PT_2002_Maintain.value || false);
+ setmaintainSD_2002(SD_2002_Maintain?.value || false);
+
+ setmaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
+
+
+            setmaintainPT_2002(PT_2002_Maintain.value || false);
             
-            setMaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
+            setmaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
 
-            setMaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
+            setmaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
 
-            setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
-
-
-
-            setMaintainEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Maintain?.value || false);
-
-            setMaintainEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Maintain?.value || false);
-
-
-            setMaintainEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Maintain?.value || false);
-
-
-            setMaintainEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false);
-
-            setMaintainEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Maintain?.value || false);
-
-
-            setMaintainEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false);
-
-            setMaintainEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Maintain?.value || false);
-
-            setMaintainEVC_01_Pressure(EVC_01_Pressure_Maintain?.value || false);
-
-            setMaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
-
-            setMaintainEVC_01_Remain_Battery_Service_Life(MaintainEVC_01_Remain_Battery_Service_Life?.value || false);
+            setmaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
 
 
 
+            setmaintainEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Maintain?.value || false);
 
-            setMaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
-
-            setMaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
-
-
-            setMaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
+            setmaintainEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Maintain?.value || false);
 
 
-            setMaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
-
-            setMaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Maintain?.value || false);
 
 
-            setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false);
 
-            setMaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Maintain?.value || false);
 
-            setMaintainEVC_02_Pressure(EVC_02_Pressure_Maintain?.value || false);
 
-            setMaintainEVC_02_Temperature(EVC_02_Temperature_Maintain?.value || false);
+            setmaintainEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false);
 
-            setMaintainEVC_02_Remain_Battery_Service_Life(MaintainEVC_02_Remain_Battery_Service_Life?.value || false);
+            setmaintainEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Maintain?.value || false);
+
+            setmaintainEVC_01_Pressure(EVC_01_Pressure_Maintain?.value || false);
+
+            setmaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
+
+            setmaintainEVC_01_Remain_Battery_Service_Life(MaintainEVC_01_Remain_Battery_Service_Life?.value || false);
+
+
+
+
+            setmaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
+
+            setmaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
+
+
+            setmaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
+
+
+            setmaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
+
+            setmaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
+
+
+            setmaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false);
+
+            setmaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
+
+            setmaintainEVC_02_Pressure(EVC_02_Pressure_Maintain?.value || false);
+
+            setmaintainEVC_02_Temperature(EVC_02_Temperature_Maintain?.value || false);
+
+            setmaintainEVC_02_Remain_Battery_Service_Life(MaintainEVC_02_Remain_Battery_Service_Life?.value || false);
 
 
            
 
-            setMaintainPIT_2007(PIT_2007_Maintain?.value || false);
+            setmaintainPIT_2007(PIT_2007_Maintain?.value || false);
 
 
-            setMaintainPT_2001(PT_2001_Maintain?.value || false);
+            setmaintainPT_2001(PT_2001_Maintain?.value || false);
 
 
-            setMaintainPIT_2006(PIT_2006_Maintain?.value || false);
+            setmaintainPIT_2006(PIT_2006_Maintain?.value || false);
 
 
-            setMaintainTT_2002(TT_2002_Maintain?.value || false);
+            setmaintainTT_2002(TT_2002_Maintain?.value || false);
 
 
-            setMaintainSDV_2002(SDV_2002_Maintain?.value || false);
+            setmaintainSDV_2002(SDV_2002_Maintain?.value || false);
 
-            setMaintainWater_LSW(Water_LSW_Maintain?.value || false);
+            setmaintainWater_LSW(Water_LSW_Maintain?.value || false);
             
-            setMaintainPUMP_1(PUMP_1_Maintain?.value || false);
+            setmaintainPUMP_1(PUMP_1_Maintain?.value || false);
             
-            setMaintainGD_2001(GD_2001_Maintain?.value || false);
+            setmaintainGD_2001(GD_2001_Maintain?.value || false);
 
             
-            setMaintainPUMP_2(PUMP_2_Maintain?.value || false);
+            setmaintainPUMP_2(PUMP_2_Maintain?.value || false);
 
 
 
-            setMaintainWater_PG(Water_PG_Maintain?.value || false);
+            setmaintainWater_PG(Water_PG_Maintain?.value || false);
 
 
-            setMaintainSDV_2001B(SDV_2001B_Maintain?.value || false);
+            setmaintainSDV_2001B(SDV_2001B_Maintain?.value || false);
 
 
-            setMaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
+            setmaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
 
-            setMaintainBOILER(BOILER_Maintain?.value || false);
-
-
+            setmaintainBOILER(BOILER_Maintain?.value || false);
 
 
 
-            setMaintainTT_2001(TT_2001_Maintain?.value || false);
-
-            setMaintainHEATER_2(HEATER_2_Maintain?.value || false);
 
 
-            setMaintainHEATER_1(HEATER_1_Maintain?.value || false);
+            setmaintainTT_2001(TT_2001_Maintain?.value || false);
+
+            setmaintainHEATER_2(HEATER_2_Maintain?.value || false);
 
 
-            setMaintainPT_2003(PT_2003_Maintain?.value || false);
+            setmaintainHEATER_1(HEATER_1_Maintain?.value || false);
+
+
+            setmaintainPT_2003(PT_2003_Maintain?.value || false);
             } catch (error) {
             console.error("Error fetching data:", error);
             }
@@ -739,26 +739,19 @@ export default function ScoreCard_CNG_BINHDUONG() {
 const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
 const [EVC_01_Remain_Battery_Service_Life_High, setEVC_01_Remain_Battery_Service_Life_High] = useState<number | null>(null);
 const [EVC_01_Remain_Battery_Service_Life_Low, setEVC_01_Remain_Battery_Service_Life_Low] = useState<number | null>(null);
-const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setExceedThresholdEVC_01_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
+const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setexceedThresholdEVC_01_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEVC_01_Remain_Battery_Service_Life, setmaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof EVC_01_Remain_Battery_Service_Life_High === 'string' && typeof EVC_01_Remain_Battery_Service_Life_Low === 'string' && EVC_01_Remain_Battery_Service_Life !== null && maintainEVC_01_Remain_Battery_Service_Life === false
-        ) {
-            const highValue = parseFloat(EVC_01_Remain_Battery_Service_Life_High);
-            const lowValue = parseFloat(EVC_01_Remain_Battery_Service_Life_Low);
-            const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                        setExceedThresholdEVC_01_Remain_Battery_Service_Life(true);
-                } else {
-                    setExceedThresholdEVC_01_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life,  EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life as any);
+    const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
+
+    if (!isNaN(EVC_01_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Remain_Battery_Service_Life) {
+        setexceedThresholdEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_LifeValue >= highValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low, maintainEVC_01_Remain_Battery_Service_Life]);
 
 
 
@@ -768,28 +761,21 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
      const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
      const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
-     const [exceedThresholdEVC_01_Temperature, setExceedThresholdEVC_01_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
+     const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_01_Temperature_High === 'string' && typeof EVC_01_Temperature_Low === 'string' && EVC_01_Temperature !== null && maintainEVC_01_Temperature === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Temperature_High);
-                 const lowValue = parseFloat(EVC_01_Temperature_Low);
-                 const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
-                     if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                             setExceedThresholdEVC_01_Temperature(true);
-                     } else {
-                         setExceedThresholdEVC_01_Temperature(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Temperature_High, EVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
-     
+     useEffect(() => {
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+            setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+        }
+    }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
+    
 
 
      // =================================================================================================================== 
@@ -799,28 +785,21 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
      const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
      const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
-     const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
+     const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_01_Pressure_High === 'string' && typeof EVC_01_Pressure_Low === 'string' && EVC_01_Pressure !== null && maintainEVC_01_Pressure === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Pressure_High);
-                 const lowValue = parseFloat(EVC_01_Pressure_Low);
-                 const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
-                     if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                             setExceedThresholdEVC_01_Pressure(true);
-                     } else {
-                        setExceedThresholdEVC_01_Pressure(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Pressure_High, EVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
-     
+     useEffect(() => {
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+            setexceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+        }
+    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+    
 
 
 
@@ -832,27 +811,19 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
           const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
           const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
+          const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
           
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Base_Condition_High === 'string' && typeof EVC_01_Volume_at_Base_Condition_Low === 'string' && EVC_01_Volume_at_Base_Condition !== null && maintainEVC_01_Volume_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Base_Condition_Low);
-                      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
-          
+          useEffect(() => {
+            const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+            const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+                setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+        
 
      
           // =================================================================================================================== 
@@ -861,27 +832,19 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
           const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
           const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
+          const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
           
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_01_Volume_at_Measurement_Condition_Low === 'string' && EVC_01_Volume_at_Measurement_Condition !== null && maintainEVC_01_Volume_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_Low);
-                      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Volume_at_Measurement_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Volume_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
-          
-
+          useEffect(() => {
+            const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+            const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+                setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
+        
      
           // =================================================================================================================== 
 
@@ -889,27 +852,22 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  
           const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
           const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Flow_at_Base_Condition, setExceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+          const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Flow_at_Base_Condition_High === 'string' && typeof EVC_01_Flow_at_Base_Condition_Low === 'string' && EVC_01_Flow_at_Base_Condition !== null && maintainEVC_01_Flow_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Flow_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Flow_at_Base_Condition_Low);
-                      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
+          useEffect(() => {
+            const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+            const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+                setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
+        
+       
               // =================================================================================================================== 
           
 
@@ -917,28 +875,21 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
    
               const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
               const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-              const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setExceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
               
-              const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
+              const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
               
               
-                  useEffect(() => {
-                      if (typeof EVC_01_Flow_at_Measurement_Condition_High === 'string' && typeof EVC_01_Flow_at_Measurement_Condition_Low === 'string' && EVC_01_Flow_at_Measurement_Condition !== null && maintainEVC_01_Flow_at_Measurement_Condition === false
-                      ) {
-                          const highValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_High);
-                          const lowValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_Low);
-                          const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Measurement_ConditionValue)) {
-                              if (highValue <= EVC_01_Flow_at_Measurement_ConditionValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue) {
-                                      setExceedThresholdEVC_01_Flow_at_Measurement_Condition(true);
-                              } else {
-                                 setExceedThresholdEVC_01_Flow_at_Measurement_Condition(false);
-                              }
-                          } 
-                      } 
-                  }, [EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_Low,maintainEVC_01_Flow_at_Measurement_Condition]);
-              
+              useEffect(() => {
+                const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+                const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+                const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+            
+                if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+                    setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+                }
+            }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
+            
        
          
           // =================================================================================================================== 
@@ -947,27 +898,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [EVC_01_Vm_of_Current_Day, setEVC_01_Vm_of_Current_Day] = useState<string | null>(null);
           const [EVC_01_Vm_of_Current_Day_High, setEVC_01_Vm_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_01_Vm_of_Current_Day_Low, setEVC_01_Vm_of_Current_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Vm_of_Current_Day, setExceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_01_Vm_of_Current_Day, setMaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
+          const [exceedThresholdEVC_01_Vm_of_Current_Day, setexceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_01_Vm_of_Current_Day, setmaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vm_of_Current_Day_High === 'string' && typeof EVC_01_Vm_of_Current_Day_Low === 'string' && EVC_01_Vm_of_Current_Day !== null && maintainEVC_01_Vm_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vm_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vm_of_Current_Day_Low);
-                      const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vm_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vm_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
-          
+          useEffect(() => {
+            const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day as any);
+            const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Current_Day) {
+                setexceedThresholdEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_DayValue >= highValue || EVC_01_Vm_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low, maintainEVC_01_Vm_of_Current_Day]);
+        
 
      
      
@@ -976,27 +920,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [EVC_01_Vb_of_Current_Day, setEVC_01_Vb_of_Current_Day] = useState<string | null>(null);
           const [EVC_01_Vb_of_Current_Day_High, setEVC_01_Vb_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_01_Vb_of_Current_Day_Low, setEVC_01_Vb_of_Current_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Vb_of_Current_Day, setExceedThresholdEVC_01_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_01_Vb_of_Current_Day, setMaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
+          const [exceedThresholdEVC_01_Vb_of_Current_Day, setexceedThresholdEVC_01_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_01_Vb_of_Current_Day, setmaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Current_Day_High === 'string' && typeof EVC_01_Vb_of_Current_Day_Low === 'string' && EVC_01_Vb_of_Current_Day !== null && maintainEVC_01_Vb_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Current_Day_Low);
-                      const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vb_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vb_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
-
+          useEffect(() => {
+            const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day as any);
+            const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Current_Day) {
+                setexceedThresholdEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_DayValue >= highValue || EVC_01_Vb_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low, maintainEVC_01_Vb_of_Current_Day]);
+        
      
           // =================================================================================================================== 
 
@@ -1006,61 +943,41 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
     
           const [EVC_01_Vb_of_Last_Day_High, setEVC_01_Vb_of_Last_Day_High] = useState<number | null>(null);
           const [EVC_01_Vb_of_Last_Day_Low, setEVC_01_Vb_of_Last_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Vb_of_Last_Day, setExceedThresholdEVC_01_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_01_Vb_of_Last_Day, setexceedThresholdEVC_01_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainEVC_01_Vb_of_Last_Day, setMaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
+          const [maintainEVC_01_Vb_of_Last_Day, setmaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Last_Day_High === 'string' && typeof EVC_01_Vb_of_Last_Day_Low === 'string' && EVC_01_Vb_of_Last_Day !== null && maintainEVC_01_Vb_of_Last_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Last_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Last_Day_Low);
-                      const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vb_of_Last_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vb_of_Last_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low,maintainEVC_01_Vb_of_Last_Day]);
-          
-
+          useEffect(() => {
+            const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day as any);
+            const highValue = EVC_01_Vb_of_Last_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Last_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Last_Day) {
+                setexceedThresholdEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_DayValue >= highValue || EVC_01_Vb_of_Last_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low, maintainEVC_01_Vb_of_Last_Day]);
      
-          // =================================================================================================================== 
-
     // =================================================================================================================== 
 
     const [EVC_01_Vm_of_Last_Day, setEVC_01_Vm_of_Last_Day] = useState<string | null>(null);
 
     const [EVC_01_Vm_of_Last_Day_High, setEVC_01_Vm_of_Last_Day_High] = useState<number | null>(null);
     const [EVC_01_Vm_of_Last_Day_Low, setEVC_01_Vm_of_Last_Day_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Vm_of_Last_Day, setExceedThresholdEVC_01_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainEVC_01_Vm_of_Last_Day, setMaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
+    const [exceedThresholdEVC_01_Vm_of_Last_Day, setexceedThresholdEVC_01_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainEVC_01_Vm_of_Last_Day, setmaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof EVC_01_Vm_of_Last_Day_High === 'string' && typeof EVC_01_Vm_of_Last_Day_Low === 'string' && EVC_01_Vm_of_Last_Day !== null && maintainEVC_01_Vm_of_Last_Day === false
-            ) {
-                const highValue = parseFloat(EVC_01_Vm_of_Last_Day_High);
-                const lowValue = parseFloat(EVC_01_Vm_of_Last_Day_Low);
-                const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
-                    if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                            setExceedThresholdEVC_01_Vm_of_Last_Day(true);
-                    } else {
-                       setExceedThresholdEVC_01_Vm_of_Last_Day(false);
-                    }
-                } 
-            } 
-        }, [EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low,maintainEVC_01_Vm_of_Last_Day]);
+    useEffect(() => {
+        const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day as any);
+        const highValue = EVC_01_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_01_Vm_of_Last_Day_Low ?? NaN;
     
-
-
+        if (!isNaN(EVC_01_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Last_Day) {
+            setexceedThresholdEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_DayValue >= highValue || EVC_01_Vm_of_Last_DayValue <= lowValue);
+        }
+    }, [EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low, maintainEVC_01_Vm_of_Last_Day]);
+    
     // =================================================================================================================== 
 
 
@@ -1071,26 +988,19 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
   const [PIT_2007, setPIT_2007] = useState<string | null>(null);
   const [PIT_2007_High, setPIT_2007_High] = useState<number | null>(null);
   const [PIT_2007_Low, setPIT_2007_Low] = useState<number | null>(null);
-  const [exceedThresholdPIT_2007, setExceedThresholdPIT_2007] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-  const [maintainPIT_2007, setMaintainPIT_2007] = useState<boolean>(false);
+  const [exceedThresholdPIT_2007, setexceedThresholdPIT_2007] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+  const [maintainPIT_2007, setmaintainPIT_2007] = useState<boolean>(false);
   
   
-      useEffect(() => {
-          if (typeof PIT_2007_High === 'string' && typeof PIT_2007_Low === 'string' && PIT_2007 !== null && maintainPIT_2007 === false
-          ) {
-              const highValue = parseFloat(PIT_2007_High);
-              const lowValue = parseFloat(PIT_2007_Low);
-              const PIT_2007Value = parseFloat(PIT_2007);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PIT_2007Value)) {
-                  if (highValue <= PIT_2007Value || PIT_2007Value <= lowValue) {
-                          setExceedThresholdPIT_2007(true);
-                  } else {
-                     setExceedThresholdPIT_2007(false);
-                  }
-              } 
-          } 
-      }, [PIT_2007_High, PIT_2007, PIT_2007_Low,maintainPIT_2007]);
+  useEffect(() => {
+    const PIT_2007Value = parseFloat(PIT_2007 as any);
+    const highValue = PIT_2007_High ?? NaN;
+    const lowValue = PIT_2007_Low ?? NaN;
+
+    if (!isNaN(PIT_2007Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_2007) {
+        setexceedThresholdPIT_2007(PIT_2007Value >= highValue || PIT_2007Value <= lowValue);
+    }
+}, [PIT_2007, PIT_2007_High, PIT_2007_Low, maintainPIT_2007]);
 
 
   // =================================================================================================================== 
@@ -1100,27 +1010,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [PT_2001, setPT_2001] = useState<string | null>(null);
        const [PT_2001_High, setPT_2001_High] = useState<number | null>(null);
        const [PT_2001_Low, setPT_2001_Low] = useState<number | null>(null);
-       const [exceedThresholdPT_2001, setExceedThresholdPT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-       const [maintainPT_2001, setMaintainPT_2001] = useState<boolean>(false);
+       const [exceedThresholdPT_2001, setexceedThresholdPT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainPT_2001, setmaintainPT_2001] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof PT_2001_High === 'string' && typeof PT_2001_Low === 'string' && PT_2001 !== null && maintainPT_2001 === false
-               ) {
-                   const highValue = parseFloat(PT_2001_High);
-                   const lowValue = parseFloat(PT_2001_Low);
-                   const PT_2001Value = parseFloat(PT_2001);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2001Value)) {
-                       if (highValue <= PT_2001Value || PT_2001Value <= lowValue) {
-                               setExceedThresholdPT_2001(true);
-                       } else {
-                          setExceedThresholdPT_2001(false);
-                       }
-                   } 
-               } 
-           }, [PT_2001_High, PT_2001, PT_2001_Low,maintainPT_2001]);
-       
+       useEffect(() => {
+        const PT_2001Value = parseFloat(PT_2001 as any);
+        const highValue = PT_2001_High ?? NaN;
+        const lowValue = PT_2001_Low ?? NaN;
+    
+        if (!isNaN(PT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2001) {
+            setexceedThresholdPT_2001(PT_2001Value >= highValue || PT_2001Value <= lowValue);
+        }
+    }, [PT_2001, PT_2001_High, PT_2001_Low, maintainPT_2001]);
+    
 
   
        // =================================================================================================================== 
@@ -1129,27 +1032,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [PT_2002, setPT_2002] = useState<string | null>(null);
        const [PT_2002_High, setPT_2002_High] = useState<number | null>(null);
        const [PT_2002_Low, setPT_2002_Low] = useState<number | null>(null);
-       const [exceedThresholdPT_2002, setExceedThresholdPT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-       const [maintainPT_2002, setMaintainPT_2002] = useState<boolean>(false);
+       const [exceedThresholdPT_2002, setexceedThresholdPT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainPT_2002, setmaintainPT_2002] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof PT_2002_High === 'string' && typeof PT_2002_Low === 'string' && PT_2002 !== null && maintainPT_2002 === false
-               ) {
-                   const highValue = parseFloat(PT_2002_High);
-                   const lowValue = parseFloat(PT_2002_Low);
-                   const PT_2002Value = parseFloat(PT_2002);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2002Value)) {
-                       if (highValue <= PT_2002Value || PT_2002Value <= lowValue) {
-                               setExceedThresholdPT_2002(true);
-                       } else {
-                          setExceedThresholdPT_2002(false);
-                       }
-                   } 
-               } 
-           }, [PT_2002_High, PT_2002, PT_2002_Low,maintainPT_2002]);
-       
+       useEffect(() => {
+        const PT_2002Value = parseFloat(PT_2002 as any);
+        const highValue = PT_2002_High ?? NaN;
+        const lowValue = PT_2002_Low ?? NaN;
+    
+        if (!isNaN(PT_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2002) {
+            setexceedThresholdPT_2002(PT_2002Value >= highValue || PT_2002Value <= lowValue);
+        }
+    }, [PT_2002, PT_2002_High, PT_2002_Low, maintainPT_2002]);
+    
 
   
        // =================================================================================================================== 
@@ -1159,9 +1055,9 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
        const [PIT_2006_High, setPIT_2006_High] = useState<number | null>(null);
        const [PIT_2006_Low, setPIT_2006_Low] = useState<number | null>(null);
-       const [exceedThresholdPIT_2006, setExceedThresholdPIT_2006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [exceedThresholdPIT_2006, setexceedThresholdPIT_2006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
        
-       const [maintainPIT_2006, setMaintainPIT_2006] = useState<boolean>(false);
+       const [maintainPIT_2006, setmaintainPIT_2006] = useState<boolean>(false);
        
        
            useEffect(() => {
@@ -1173,9 +1069,9 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
            
                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PIT_2006Value)) {
                        if (highValue <= PIT_2006Value || PIT_2006Value <= lowValue) {
-                               setExceedThresholdPIT_2006(true);
+                               setexceedThresholdPIT_2006(true);
                        } else {
-                          setExceedThresholdPIT_2006(false);
+                          setexceedThresholdPIT_2006(false);
                        }
                    } 
                } 
@@ -1188,27 +1084,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [TT_2002, setTT_2002] = useState<string | null>(null);
        const [TT_2002_High, setTT_2002_High] = useState<number | null>(null);
        const [TT_2002_Low, setTT_2002_Low] = useState<number | null>(null);
-       const [exceedThresholdTT_2002, setExceedThresholdTT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-       const [maintainTT_2002, setMaintainTT_2002] = useState<boolean>(false);
+       const [exceedThresholdTT_2002, setexceedThresholdTT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainTT_2002, setmaintainTT_2002] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof TT_2002_High === 'string' && typeof TT_2002_Low === 'string' && TT_2002 !== null && maintainTT_2002 === false
-               ) {
-                   const highValue = parseFloat(TT_2002_High);
-                   const lowValue = parseFloat(TT_2002_Low);
-                   const TT_2002Value = parseFloat(TT_2002);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2002Value)) {
-                       if (highValue <= TT_2002Value || TT_2002Value <= lowValue) {
-                               setExceedThresholdTT_2002(true);
-                       } else {
-                          setExceedThresholdTT_2002(false);
-                       }
-                   } 
-               } 
-           }, [TT_2002_High, TT_2002, TT_2002_Low,maintainTT_2002]);
-       
+       useEffect(() => {
+        const TT_2002Value = parseFloat(TT_2002 as any);
+        const highValue = TT_2002_High ?? NaN;
+        const lowValue = TT_2002_Low ?? NaN;
+    
+        if (!isNaN(TT_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2002) {
+            setexceedThresholdTT_2002(TT_2002Value >= highValue || TT_2002Value <= lowValue);
+        }
+    }, [TT_2002, TT_2002_High, TT_2002_Low, maintainTT_2002]);
+    
 
   
   
@@ -1217,27 +1106,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [TT_2001, setTT_2001] = useState<string | null>(null);
        const [TT_2001_High, setTT_2001_High] = useState<number | null>(null);
        const [TT_2001_Low, setTT_2001_Low] = useState<number | null>(null);
-       const [exceedThresholdTT_2001, setExceedThresholdTT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-       const [maintainTT_2001, setMaintainTT_2001] = useState<boolean>(false);
+       const [exceedThresholdTT_2001, setexceedThresholdTT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+       const [maintainTT_2001, setmaintainTT_2001] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof TT_2001_High === 'string' && typeof TT_2001_Low === 'string' && TT_2001 !== null && maintainTT_2001 === false
-               ) {
-                   const highValue = parseFloat(TT_2001_High);
-                   const lowValue = parseFloat(TT_2001_Low);
-                   const TT_2001Value = parseFloat(TT_2001);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2001Value)) {
-                       if (highValue <= TT_2001Value || TT_2001Value <= lowValue) {
-                               setExceedThresholdTT_2001(true);
-                       } else {
-                          setExceedThresholdTT_2001(false);
-                       }
-                   } 
-               } 
-           }, [TT_2001_High, TT_2001, TT_2001_Low,maintainTT_2001]);
-       
+       useEffect(() => {
+        const TT_2001Value = parseFloat(TT_2001 as any);
+        const highValue = TT_2001_High ?? NaN;
+        const lowValue = TT_2001_Low ?? NaN;
+    
+        if (!isNaN(TT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2001) {
+            setexceedThresholdTT_2001(TT_2001Value >= highValue || TT_2001Value <= lowValue);
+        }
+    }, [TT_2001, TT_2001_High, TT_2001_Low, maintainTT_2001]);
+    
  
   
        // =================================================================================================================== 
@@ -1250,57 +1132,40 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [BOILER, setBOILER] = useState<string | null>(null);
  const [BOILER_High, setBOILER_High] = useState<number | null>(null);
  const [BOILER_Low, setBOILER_Low] = useState<number | null>(null);
- const [exceedThresholdBOILER, setExceedThresholdBOILER] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [maintainBOILER, setMaintainBOILER] = useState<boolean>(false);
+ const [exceedThresholdBOILER, setexceedThresholdBOILER] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainBOILER, setmaintainBOILER] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof BOILER_High === 'string' && typeof BOILER_Low === 'string' && BOILER !== null && maintainBOILER === false
-         ) {
-             const highValue = parseFloat(BOILER_High);
-             const lowValue = parseFloat(BOILER_Low);
-             const BOILERValue = parseFloat(BOILER);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(BOILERValue)) {
-                 if (highValue <= BOILERValue || BOILERValue <= lowValue) {
-                         setExceedThresholdBOILER(true);
-                 } else {
-                    setExceedThresholdBOILER(false);
-                 }
-             } 
-         } 
-     }, [BOILER_High, BOILER, BOILER_Low,maintainBOILER]);
- 
+ useEffect(() => {
+    const BOILERValue = parseFloat(BOILER as any);
+    const highValue = BOILER_High ?? NaN;
+    const lowValue = BOILER_Low ?? NaN;
 
+    if (!isNaN(BOILERValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainBOILER) {
+        setexceedThresholdBOILER(BOILERValue >= highValue || BOILERValue <= lowValue);
+    }
+}, [BOILER, BOILER_High, BOILER_Low, maintainBOILER]);
 
- // =================================================================================================================== 
 
      // =================================================================================================================== 
 
      const [SDV_2001A, setSDV_2001A] = useState<string | null>(null);
      const [SDV_2001A_High, setSDV_2001A_High] = useState<number | null>(null);
      const [SDV_2001A_Low, setSDV_2001A_Low] = useState<number | null>(null);
-     const [exceedThresholdSDV_2001A, setExceedThresholdSDV_2001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     const [maintainSDV_2001A, setMaintainSDV_2001A] = useState<boolean>(false);
+     const [exceedThresholdSDV_2001A, setexceedThresholdSDV_2001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainSDV_2001A, setmaintainSDV_2001A] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof SDV_2001A_High === 'string' && typeof SDV_2001A_Low === 'string' && SDV_2001A !== null && maintainSDV_2001A === false
-             ) {
-                 const highValue = parseFloat(SDV_2001A_High);
-                 const lowValue = parseFloat(SDV_2001A_Low);
-                 const SDV_2001AValue = parseFloat(SDV_2001A);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_2001AValue)) {
-                     if (highValue <= SDV_2001AValue || SDV_2001AValue <= lowValue) {
-                             setExceedThresholdSDV_2001A(true);
-                     } else {
-                        setExceedThresholdSDV_2001A(false);
-                     }
-                 } 
-             } 
-         }, [SDV_2001A_High, SDV_2001A, SDV_2001A_Low,maintainSDV_2001A]);
-     
+     useEffect(() => {
+        const SDV_2001AValue = parseFloat(SDV_2001A as any);
+        const highValue = SDV_2001A_High ?? NaN;
+        const lowValue = SDV_2001A_Low ?? NaN;
+    
+        if (!isNaN(SDV_2001AValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2001A) {
+            setexceedThresholdSDV_2001A(SDV_2001AValue >= highValue || SDV_2001AValue <= lowValue);
+        }
+    }, [SDV_2001A, SDV_2001A_High, SDV_2001A_Low, maintainSDV_2001A]);
+    
    
  
      // =================================================================================================================== 
@@ -1311,27 +1176,20 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
  const [SDV_2001B_High, setSDV_2001B_High] = useState<number | null>(null);
  const [SDV_2001B_Low, setSDV_2001B_Low] = useState<number | null>(null);
- const [exceedThresholdSDV_2001B, setExceedThresholdSDV_2001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
- const [maintainSDV_2001B, setMaintainSDV_2001B] = useState<boolean>(false);
+ const [exceedThresholdSDV_2001B, setexceedThresholdSDV_2001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainSDV_2001B, setmaintainSDV_2001B] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof SDV_2001B_High === 'string' && typeof SDV_2001B_Low === 'string' && SDV_2001B !== null && maintainSDV_2001B === false
-         ) {
-             const highValue = parseFloat(SDV_2001B_High);
-             const lowValue = parseFloat(SDV_2001B_Low);
-             const SDV_2001BValue = parseFloat(SDV_2001B);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_2001BValue)) {
-                 if (highValue <= SDV_2001BValue || SDV_2001BValue <= lowValue) {
-                         setExceedThresholdSDV_2001B(true);
-                 } else {
-                    setExceedThresholdSDV_2001B(false);
-                 }
-             } 
-         } 
-     }, [SDV_2001B_High, SDV_2001B, SDV_2001B_Low,maintainSDV_2001B]);
- 
+ useEffect(() => {
+    const SDV_2001BValue = parseFloat(SDV_2001B as any);
+    const highValue = SDV_2001B_High ?? NaN;
+    const lowValue = SDV_2001B_Low ?? NaN;
+
+    if (!isNaN(SDV_2001BValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2001B) {
+        setexceedThresholdSDV_2001B(SDV_2001BValue >= highValue || SDV_2001BValue <= lowValue);
+    }
+}, [SDV_2001B, SDV_2001B_High, SDV_2001B_Low, maintainSDV_2001B]);
+
 
 
 
@@ -1344,34 +1202,20 @@ const [Water_PG, setWater_PG] = useState<string | null>(null);
 
 const [Water_PG_High, setWater_PG_High] = useState<number | null>(null);
 const [Water_PG_Low, setWater_PG_Low] = useState<number | null>(null);
-const [exceedThresholdWater_PG, setExceedThresholdWater_PG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [exceedThresholdWater_PG, setexceedThresholdWater_PG] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-const [maintainWater_PG, setMaintainWater_PG] = useState<boolean>(false);
-
-
- useEffect(() => {
-     if (typeof Water_PG_High === 'string' && typeof Water_PG_Low === 'string' && Water_PG !== null && maintainWater_PG === false
-     ) {
-         const highValue = parseFloat(Water_PG_High);
-         const lowValue = parseFloat(Water_PG_Low);
-         const Water_PGValue = parseFloat(Water_PG);
- 
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Water_PGValue)) {
-             if (highValue <= Water_PGValue || Water_PGValue <= lowValue) {
-            
-                     setExceedThresholdWater_PG(true);
-             } else {
-                setExceedThresholdWater_PG(false);
-             }
-         } 
-     } 
- }, [Water_PG_High, Water_PG, Water_PG_Low,maintainWater_PG]);
+const [maintainWater_PG, setmaintainWater_PG] = useState<boolean>(false);
 
 
+useEffect(() => {
+    const Water_PGValue = parseFloat(Water_PG as any);
+    const highValue = Water_PG_High ?? NaN;
+    const lowValue = Water_PG_Low ?? NaN;
 
-
-// =================================================================================================================== 
-
+    if (!isNaN(Water_PGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWater_PG) {
+        setexceedThresholdWater_PG(Water_PGValue >= highValue || Water_PGValue <= lowValue);
+    }
+}, [Water_PG, Water_PG_High, Water_PG_Low, maintainWater_PG]);
 
 
 
@@ -1381,26 +1225,20 @@ const [PUMP_2, setPUMP_2] = useState<string | null>(null);
 
 const [PUMP_2_High, setPUMP_2_High] = useState<number | null>(null);
 const [PUMP_2_Low, setPUMP_2_Low] = useState<number | null>(null);
-const [exceedThresholdPUMP_2, setExceedThresholdPUMP_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainPUMP_2, setMaintainPUMP_2] = useState<boolean>(false);
+const [exceedThresholdPUMP_2, setexceedThresholdPUMP_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainPUMP_2, setmaintainPUMP_2] = useState<boolean>(false);
 
 
+     
 useEffect(() => {
- if (typeof PUMP_2_High === 'string' && typeof PUMP_2_Low === 'string' && PUMP_2 !== null && maintainPUMP_2 === false
- ) {
-     const highValue = parseFloat(PUMP_2_High);
-     const lowValue = parseFloat(PUMP_2_Low);
-     const PUMP_2Value = parseFloat(PUMP_2);
+    const PUMP_2Value = parseFloat(PUMP_2 as any);
+    const highValue = PUMP_2_High ?? NaN;
+    const lowValue = PUMP_2_Low ?? NaN;
 
-     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PUMP_2Value)) {
-         if (highValue <= PUMP_2Value || PUMP_2Value <= lowValue) {
-                 setExceedThresholdPUMP_2(true);
-         } else {
-            setExceedThresholdPUMP_2(false);
-         }
-     } 
- } 
-}, [PUMP_2_High, PUMP_2, PUMP_2_Low,maintainPUMP_2]);
+    if (!isNaN(PUMP_2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPUMP_2) {
+        setexceedThresholdPUMP_2(PUMP_2Value >= highValue || PUMP_2Value <= lowValue);
+    }
+}, [PUMP_2, PUMP_2_High, PUMP_2_Low, maintainPUMP_2]);
 
 
 
@@ -1414,28 +1252,21 @@ useEffect(() => {
     
      const [GD_2001_High, setGD_2001_High] = useState<number | null>(null);
      const [GD_2001_Low, setGD_2001_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_2001, setExceedThresholdGD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdGD_2001, setexceedThresholdGD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainGD_2001, setMaintainGD_2001] = useState<boolean>(false);
+     const [maintainGD_2001, setmaintainGD_2001] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof GD_2001_High === 'string' && typeof GD_2001_Low === 'string' && GD_2001 !== null && maintainGD_2001 === false
-             ) {
-                 const highValue = parseFloat(GD_2001_High);
-                 const lowValue = parseFloat(GD_2001_Low);
-                 const GD_2001Value = parseFloat(GD_2001);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2001Value)) {
-                     if (highValue <= GD_2001Value || GD_2001Value <= lowValue) {
-                             setExceedThresholdGD_2001(true);
-                     } else {
-                        setExceedThresholdGD_2001(false);
-                     }
-                 } 
-             } 
-         }, [GD_2001_High, GD_2001, GD_2001_Low,maintainGD_2001]);
-     
+     useEffect(() => {
+        const GD_2001Value = parseFloat(GD_2001 as any);
+        const highValue = GD_2001_High ?? NaN;
+        const lowValue = GD_2001_Low ?? NaN;
+    
+        if (!isNaN(GD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2001) {
+            setexceedThresholdGD_2001(GD_2001Value >= highValue || GD_2001Value <= lowValue);
+        }
+    }, [GD_2001, GD_2001_High, GD_2001_Low, maintainGD_2001]);
+    
  
      
      
@@ -1445,60 +1276,41 @@ useEffect(() => {
      const [PUMP_1, setPUMP_1] = useState<string | null>(null);
      const [PUMP_1_High, setPUMP_1_High] = useState<number | null>(null);
      const [PUMP_1_Low, setPUMP_1_Low] = useState<number | null>(null);
-     const [exceedThresholdPUMP_1, setExceedThresholdPUMP_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     const [maintainPUMP_1, setMaintainPUMP_1] = useState<boolean>(false);
+     const [exceedThresholdPUMP_1, setexceedThresholdPUMP_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [maintainPUMP_1, setmaintainPUMP_1] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof PUMP_1_High === 'string' && typeof PUMP_1_Low === 'string' && PUMP_1 !== null && maintainPUMP_1 === false
-             ) {
-                 const highValue = parseFloat(PUMP_1_High);
-                 const lowValue = parseFloat(PUMP_1_Low);
-                 const PUMP_1Value = parseFloat(PUMP_1);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PUMP_1Value)) {
-                     if (highValue <= PUMP_1Value || PUMP_1Value <= lowValue) {
-                         
-                             setExceedThresholdPUMP_1(true);
-                     } else {
-                        setExceedThresholdPUMP_1(false);
-                     }
-                 } 
-             } 
-         }, [PUMP_1_High, PUMP_1, , PUMP_1_Low,maintainPUMP_1]);
-     
-     
-     
-     
-     // =================================================================================================================== 
+     useEffect(() => {
+        const PUMP_1Value = parseFloat(PUMP_1 as any);
+        const highValue = PUMP_1_High ?? NaN;
+        const lowValue = PUMP_1_Low ?? NaN;
+    
+        if (!isNaN(PUMP_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPUMP_1) {
+            setexceedThresholdPUMP_1(PUMP_1Value >= highValue || PUMP_1Value <= lowValue);
+        }
+    }, [PUMP_1, PUMP_1_High, PUMP_1_Low, maintainPUMP_1]);
+    
      
          // =================================================================================================================== 
      
      const [SDV_2002, setSDV_2002] = useState<string | null>(null);
      const [SDV_2002_High, setSDV_2002_High] = useState<number | null>(null);
      const [SDV_2002_Low, setSDV_2002_Low] = useState<number | null>(null);
-     const [exceedThresholdSDV_2002, setExceedThresholdSDV_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdSDV_2002, setexceedThresholdSDV_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainSDV_2002, setMaintainSDV_2002] = useState<boolean>(false);
+     const [maintainSDV_2002, setmaintainSDV_2002] = useState<boolean>(false);
      
      
      useEffect(() => {
-         if (typeof SDV_2002_High === 'string' && typeof SDV_2002_Low === 'string' && SDV_2002 !== null && maintainSDV_2002 === false
-         ) {
-             const highValue = parseFloat(SDV_2002_High);
-             const lowValue = parseFloat(SDV_2002_Low);
-             const SDV_2002Value = parseFloat(SDV_2002);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_2002Value)) {
-                 if (highValue <= SDV_2002Value || SDV_2002Value <= lowValue) {
-                         setExceedThresholdSDV_2002(true);
-                 } else {
-                    setExceedThresholdSDV_2002(false);
-                 }
-             } 
-         } 
-     }, [SDV_2002_High, SDV_2002, , SDV_2002_Low,maintainSDV_2002]);
-     
+        const SDV_2002Value = parseFloat(SDV_2002 as any);
+        const highValue = SDV_2002_High ?? NaN;
+        const lowValue = SDV_2002_Low ?? NaN;
+    
+        if (!isNaN(SDV_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2002) {
+            setexceedThresholdSDV_2002(SDV_2002Value >= highValue || SDV_2002Value <= lowValue);
+        }
+    }, [SDV_2002, SDV_2002_High, SDV_2002_Low, maintainSDV_2002]);
+    
 
       // =================================================================================================================== 
 
@@ -1507,28 +1319,21 @@ useEffect(() => {
 
      const [HEATER_2_High, setHEATER_2_High] = useState<number | null>(null);
      const [HEATER_2_Low, setHEATER_2_Low] = useState<number | null>(null);
-     const [exceedThresholdHEATER_2, setExceedThresholdHEATER_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdHEATER_2, setexceedThresholdHEATER_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainHEATER_2, setMaintainHEATER_2] = useState<boolean>(false);
+     const [maintainHEATER_2, setmaintainHEATER_2] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof HEATER_2_High === 'string' && typeof HEATER_2_Low === 'string' && HEATER_2 !== null && maintainHEATER_2 === false
-             ) {
-                 const highValue = parseFloat(HEATER_2_High);
-                 const lowValue = parseFloat(HEATER_2_Low);
-                 const HEATER_2Value = parseFloat(HEATER_2);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HEATER_2Value)) {
-                     if (highValue <= HEATER_2Value || HEATER_2Value <= lowValue) {
-                             setExceedThresholdHEATER_2(true);
-                     } else {
-                         setExceedThresholdHEATER_2(false);
-                     }
-                 } 
-             } 
-         }, [HEATER_2_High, HEATER_2, HEATER_2_Low,maintainHEATER_2]);
-     
+     useEffect(() => {
+        const HEATER_2Value = parseFloat(HEATER_2 as any);
+        const highValue = HEATER_2_High ?? NaN;
+        const lowValue = HEATER_2_Low ?? NaN;
+    
+        if (!isNaN(HEATER_2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHEATER_2) {
+            setexceedThresholdHEATER_2(HEATER_2Value >= highValue || HEATER_2Value <= lowValue);
+        }
+    }, [HEATER_2, HEATER_2_High, HEATER_2_Low, maintainHEATER_2]);
+    
       
 
      // =================================================================================================================== 
@@ -1538,32 +1343,20 @@ useEffect(() => {
 
      const [Water_LSW_High, setWater_LSW_High] = useState<number | null>(null);
      const [Water_LSW_Low, setWater_LSW_Low] = useState<number | null>(null);
-     const [exceedThresholdWater_LSW, setExceedThresholdWater_LSW] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdWater_LSW, setexceedThresholdWater_LSW] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainWater_LSW, setMaintainWater_LSW] = useState<boolean>(false);
-     
-     
-      useEffect(() => {
-          if (typeof Water_LSW_High === 'string' && typeof Water_LSW_Low === 'string' && Water_LSW !== null && maintainWater_LSW === false
-          ) {
-              const highValue = parseFloat(Water_LSW_High);
-              const lowValue = parseFloat(Water_LSW_Low);
-              const Water_LSWValue = parseFloat(Water_LSW);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Water_LSWValue)) {
-                  if (highValue <= Water_LSWValue || Water_LSWValue <= lowValue) {
-                          setExceedThresholdWater_LSW(true);
-                  } else {
-                     setExceedThresholdWater_LSW(false);
-                  }
-              } 
-          } 
-      }, [Water_LSW_High, Water_LSW, Water_LSW_Low,maintainWater_LSW]);
-     
-   
-     
-     // =================================================================================================================== 
+     const [maintainWater_LSW, setmaintainWater_LSW] = useState<boolean>(false);
 
+     useEffect(() => {
+        const Water_LSWValue = parseFloat(Water_LSW as any);
+        const highValue = Water_LSW_High ?? NaN;
+        const lowValue = Water_LSW_Low ?? NaN;
+    
+        if (!isNaN(Water_LSWValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWater_LSW) {
+            setexceedThresholdWater_LSW(Water_LSWValue >= highValue || Water_LSWValue <= lowValue);
+        }
+    }, [Water_LSW, Water_LSW_High, Water_LSW_Low, maintainWater_LSW]);
+    
 
      // =================================================================================================================== 
 
@@ -1573,27 +1366,20 @@ useEffect(() => {
   
           const [HEATER_1_High, setHEATER_1_High] = useState<number | null>(null);
           const [HEATER_1_Low, setHEATER_1_Low] = useState<number | null>(null);
-          const [exceedThresholdHEATER_1, setExceedThresholdHEATER_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainHEATER_1, setMaintainHEATER_1] = useState<boolean>(false);
+          const [exceedThresholdHEATER_1, setexceedThresholdHEATER_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainHEATER_1, setmaintainHEATER_1] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof HEATER_1_High === 'string' && typeof HEATER_1_Low === 'string' && HEATER_1 !== null && maintainHEATER_1 === false
-                  ) {
-                      const highValue = parseFloat(HEATER_1_High);
-                      const lowValue = parseFloat(HEATER_1_Low);
-                      const HEATER_1Value = parseFloat(HEATER_1);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HEATER_1Value)) {
-                          if (highValue <= HEATER_1Value || HEATER_1Value <= lowValue) {
-                                  setExceedThresholdHEATER_1(true);
-                          } else {
-                             setExceedThresholdHEATER_1(false);
-                          }
-                      } 
-                  } 
-              }, [HEATER_1_High, HEATER_1, HEATER_1_Low,maintainHEATER_1]);
-          
+          useEffect(() => {
+            const HEATER_1Value = parseFloat(HEATER_1 as any);
+            const highValue = HEATER_1_High ?? NaN;
+            const lowValue = HEATER_1_Low ?? NaN;
+        
+            if (!isNaN(HEATER_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHEATER_1) {
+                setexceedThresholdHEATER_1(HEATER_1Value >= highValue || HEATER_1Value <= lowValue);
+            }
+        }, [HEATER_1, HEATER_1_High, HEATER_1_Low, maintainHEATER_1]);
+        
            
      
           // =================================================================================================================== 
@@ -1603,28 +1389,20 @@ useEffect(() => {
  
           const [PT_2003_High, setPT_2003_High] = useState<number | null>(null);
           const [PT_2003_Low, setPT_2003_Low] = useState<number | null>(null);
-          const [exceedThresholdPT_2003, setExceedThresholdPT_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdPT_2003, setexceedThresholdPT_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainPT_2003, setMaintainPT_2003] = useState<boolean>(false);
+          const [maintainPT_2003, setmaintainPT_2003] = useState<boolean>(false);
           
-          
-              useEffect(() => {
-                  if (typeof PT_2003_High === 'string' && typeof PT_2003_Low === 'string' && PT_2003 !== null && maintainPT_2003 === false
-                  ) {
-                      const highValue = parseFloat(PT_2003_High);
-                      const lowValue = parseFloat(PT_2003_Low);
-                      const PT_2003Value = parseFloat(PT_2003);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2003Value)) {
-                          if (highValue <= PT_2003Value || PT_2003Value <= lowValue) {
-                                  setExceedThresholdPT_2003(true);
-                          } else {
-                             setExceedThresholdPT_2003(false);
-                          }
-                      } 
-                  } 
-              }, [PT_2003_High, PT_2003 , PT_2003_Low,maintainPT_2003]);
-          
+          useEffect(() => {
+            const PT_2003Value = parseFloat(PT_2003 as any);
+            const highValue = PT_2003_High ?? NaN;
+            const lowValue = PT_2003_Low ?? NaN;
+        
+            if (!isNaN(PT_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2003) {
+                setexceedThresholdPT_2003(PT_2003Value >= highValue || PT_2003Value <= lowValue);
+            }
+        }, [PT_2003, PT_2003_High, PT_2003_Low, maintainPT_2003]);
+        
        
     
          
@@ -1634,8 +1412,8 @@ useEffect(() => {
 
         const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
         const [DI_SD_1_Low, setDI_SD_1_Low] = useState<number | null>(null);
-        const [exceedThresholdDI_SD_1, setExceedThresholdDI_SD_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-        const [maintainDI_SD_1, setMaintainDI_SD_1] = useState<boolean>(false);
+        const [exceedThresholdDI_SD_1, setexceedThresholdDI_SD_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        const [maintainDI_SD_1, setmaintainDI_SD_1] = useState<boolean>(false);
  
  
      useEffect(() => {
@@ -1647,9 +1425,9 @@ useEffect(() => {
      
              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
                  if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                         setExceedThresholdDI_SD_1(true);
+                         setexceedThresholdDI_SD_1(true);
                  } else {
-                    setExceedThresholdDI_SD_1(false);
+                    setexceedThresholdDI_SD_1(false);
                  }
              } 
          } 
@@ -1665,8 +1443,8 @@ useEffect(() => {
 const [EVC_02_Remain_Battery_Service_Life, setEVC_02_Remain_Battery_Service_Life] = useState<string | null>(null);
 const [EVC_02_Remain_Battery_Service_Life_High, setEVC_02_Remain_Battery_Service_Life_High] = useState<number | null>(null);
 const [EVC_02_Remain_Battery_Service_Life_Low, setEVC_02_Remain_Battery_Service_Life_Low] = useState<number | null>(null);
-const [exceedThresholdEVC_02_Remain_Battery_Service_Life, setExceedThresholdEVC_02_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Battery_Service_Life] = useState<boolean>(false);
+const [exceedThresholdEVC_02_Remain_Battery_Service_Life, setexceedThresholdEVC_02_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [maintainEVC_02_Remain_Battery_Service_Life, setmaintainEVC_02_Remain_Battery_Service_Life] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -1678,9 +1456,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     
             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Remain_Battery_Service_LifeValue)) {
                 if (highValue <= EVC_02_Remain_Battery_Service_LifeValue || EVC_02_Remain_Battery_Service_LifeValue <= lowValue) {
-                        setExceedThresholdEVC_02_Remain_Battery_Service_Life(true);
+                        setexceedThresholdEVC_02_Remain_Battery_Service_Life(true);
                 } else {
-                    setExceedThresholdEVC_02_Remain_Battery_Service_Life(false);
+                    setexceedThresholdEVC_02_Remain_Battery_Service_Life(false);
                 }
             } 
         } 
@@ -1694,9 +1472,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
      const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<number | null>(null);
      const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<number | null>(null);
-     const [exceedThresholdEVC_02_Temperature, setExceedThresholdEVC_02_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdEVC_02_Temperature, setexceedThresholdEVC_02_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] = useState<boolean>(false);
+     const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] = useState<boolean>(false);
      
      
          useEffect(() => {
@@ -1708,9 +1486,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_TemperatureValue)) {
                      if (highValue <= EVC_02_TemperatureValue || EVC_02_TemperatureValue <= lowValue) {
-                             setExceedThresholdEVC_02_Temperature(true);
+                             setexceedThresholdEVC_02_Temperature(true);
                      } else {
-                         setExceedThresholdEVC_02_Temperature(false);
+                         setexceedThresholdEVC_02_Temperature(false);
                      }
                  } 
              } 
@@ -1725,9 +1503,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
      const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
      const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
-     const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
-     const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
+     const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] = useState<boolean>(false);
      
      
          useEffect(() => {
@@ -1739,9 +1517,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
          
                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_PressureValue)) {
                      if (highValue <= EVC_02_PressureValue || EVC_02_PressureValue <= lowValue) {
-                             setExceedThresholdEVC_02_Pressure(true);
+                             setexceedThresholdEVC_02_Pressure(true);
                      } else {
-                        setExceedThresholdEVC_02_Pressure(false);
+                        setexceedThresholdEVC_02_Pressure(false);
                      }
                  } 
              } 
@@ -1758,8 +1536,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
           const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
           const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Volume_at_Base_Condition, setExceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
+          const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
           
           
               useEffect(() => {
@@ -1771,9 +1549,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Base_ConditionValue)) {
                           if (highValue <= EVC_02_Volume_at_Base_ConditionValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Volume_at_Base_Condition(true);
+                                  setexceedThresholdEVC_02_Volume_at_Base_Condition(true);
                           } else {
-                             setExceedThresholdEVC_02_Volume_at_Base_Condition(false);
+                             setexceedThresholdEVC_02_Volume_at_Base_Condition(false);
                           }
                       } 
                   } 
@@ -1786,8 +1564,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
           const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
           const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setExceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
+          const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
           
               useEffect(() => {
                   if (typeof EVC_02_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_02_Volume_at_Measurement_Condition_Low === 'string' && EVC_02_Volume_at_Measurement_Condition !== null && maintainEVC_02_Volume_at_Measurement_Condition === false
@@ -1798,9 +1576,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Measurement_ConditionValue)) {
                           if (highValue <= EVC_02_Volume_at_Measurement_ConditionValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Volume_at_Measurement_Condition(true);
+                                  setexceedThresholdEVC_02_Volume_at_Measurement_Condition(true);
                           } else {
-                             setExceedThresholdEVC_02_Volume_at_Measurement_Condition(false);
+                             setexceedThresholdEVC_02_Volume_at_Measurement_Condition(false);
                           }
                       } 
                   } 
@@ -1814,9 +1592,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
  
           const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
           const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Flow_at_Base_Condition, setExceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainEVC_02_Flow_at_Base_Condition, setMaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
+          const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
           
           
               useEffect(() => {
@@ -1828,9 +1606,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Base_ConditionValue)) {
                           if (highValue <= EVC_02_Flow_at_Base_ConditionValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Flow_at_Base_Condition(true);
+                                  setexceedThresholdEVC_02_Flow_at_Base_Condition(true);
                           } else {
-                             setExceedThresholdEVC_02_Flow_at_Base_Condition(false);
+                             setexceedThresholdEVC_02_Flow_at_Base_Condition(false);
                           }
                       } 
                   } 
@@ -1842,9 +1620,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
    
               const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
               const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-              const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setExceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
               
-              const [maintainEVC_02_Flow_at_Measurement_Condition, setMaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
+              const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
               
               
                   useEffect(() => {
@@ -1856,9 +1634,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                   
                           if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Measurement_ConditionValue)) {
                               if (highValue <= EVC_02_Flow_at_Measurement_ConditionValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue) {
-                                      setExceedThresholdEVC_02_Flow_at_Measurement_Condition(true);
+                                      setexceedThresholdEVC_02_Flow_at_Measurement_Condition(true);
                               } else {
-                                 setExceedThresholdEVC_02_Flow_at_Measurement_Condition(false);
+                                 setexceedThresholdEVC_02_Flow_at_Measurement_Condition(false);
                               }
                           } 
                       } 
@@ -1872,8 +1650,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [EVC_02_Vm_of_Current_Day, setEVC_02_Vm_of_Current_Day] = useState<string | null>(null);
           const [EVC_02_Vm_of_Current_Day_High, setEVC_02_Vm_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_02_Vm_of_Current_Day_Low, setEVC_02_Vm_of_Current_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Vm_of_Current_Day, setExceedThresholdEVC_02_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_02_Vm_of_Current_Day, setMaintainEVC_02_Vm_of_Current_Day] = useState<boolean>(false);
+          const [exceedThresholdEVC_02_Vm_of_Current_Day, setexceedThresholdEVC_02_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_02_Vm_of_Current_Day, setmaintainEVC_02_Vm_of_Current_Day] = useState<boolean>(false);
           
           
               useEffect(() => {
@@ -1885,9 +1663,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Current_DayValue)) {
                           if (highValue <= EVC_02_Vm_of_Current_DayValue || EVC_02_Vm_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vm_of_Current_Day(true);
+                                  setexceedThresholdEVC_02_Vm_of_Current_Day(true);
                           } else {
-                             setExceedThresholdEVC_02_Vm_of_Current_Day(false);
+                             setexceedThresholdEVC_02_Vm_of_Current_Day(false);
                           }
                       } 
                   } 
@@ -1901,8 +1679,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [EVC_02_Vb_of_Current_Day, setEVC_02_Vb_of_Current_Day] = useState<string | null>(null);
           const [EVC_02_Vb_of_Current_Day_High, setEVC_02_Vb_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_02_Vb_of_Current_Day_Low, setEVC_02_Vb_of_Current_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Vb_of_Current_Day, setExceedThresholdEVC_02_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          const [maintainEVC_02_Vb_of_Current_Day, setMaintainEVC_02_Vb_of_Current_Day] = useState<boolean>(false);
+          const [exceedThresholdEVC_02_Vb_of_Current_Day, setexceedThresholdEVC_02_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [maintainEVC_02_Vb_of_Current_Day, setmaintainEVC_02_Vb_of_Current_Day] = useState<boolean>(false);
           
           
               useEffect(() => {
@@ -1914,9 +1692,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Current_DayValue)) {
                           if (highValue <= EVC_02_Vb_of_Current_DayValue || EVC_02_Vb_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vb_of_Current_Day(true);
+                                  setexceedThresholdEVC_02_Vb_of_Current_Day(true);
                           } else {
-                             setExceedThresholdEVC_02_Vb_of_Current_Day(false);
+                             setexceedThresholdEVC_02_Vb_of_Current_Day(false);
                           }
                       } 
                   } 
@@ -1931,9 +1709,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     
           const [EVC_02_Vb_of_Last_Day_High, setEVC_02_Vb_of_Last_Day_High] = useState<number | null>(null);
           const [EVC_02_Vb_of_Last_Day_Low, setEVC_02_Vb_of_Last_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Vb_of_Last_Day, setExceedThresholdEVC_02_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_02_Vb_of_Last_Day, setexceedThresholdEVC_02_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
-          const [maintainEVC_02_Vb_of_Last_Day, setMaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
+          const [maintainEVC_02_Vb_of_Last_Day, setmaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
           
           
               useEffect(() => {
@@ -1945,9 +1723,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               
                       if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Last_DayValue)) {
                           if (highValue <= EVC_02_Vb_of_Last_DayValue || EVC_02_Vb_of_Last_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vb_of_Last_Day(true);
+                                  setexceedThresholdEVC_02_Vb_of_Last_Day(true);
                           } else {
-                             setExceedThresholdEVC_02_Vb_of_Last_Day(false);
+                             setexceedThresholdEVC_02_Vb_of_Last_Day(false);
                           }
                       } 
                   } 
@@ -1963,8 +1741,8 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
 
     const [EVC_02_Vm_of_Last_Day_High, setEVC_02_Vm_of_Last_Day_High] = useState<number | null>(null);
     const [EVC_02_Vm_of_Last_Day_Low, setEVC_02_Vm_of_Last_Day_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Vm_of_Last_Day, setExceedThresholdEVC_02_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainEVC_02_Vm_of_Last_Day, setMaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
+    const [exceedThresholdEVC_02_Vm_of_Last_Day, setexceedThresholdEVC_02_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainEVC_02_Vm_of_Last_Day, setmaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
     
     
         useEffect(() => {
@@ -1976,9 +1754,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
         
                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Last_DayValue)) {
                     if (highValue <= EVC_02_Vm_of_Last_DayValue || EVC_02_Vm_of_Last_DayValue <= lowValue) {
-                            setExceedThresholdEVC_02_Vm_of_Last_Day(true);
+                            setexceedThresholdEVC_02_Vm_of_Last_Day(true);
                     } else {
-                       setExceedThresholdEVC_02_Vm_of_Last_Day(false);
+                       setexceedThresholdEVC_02_Vm_of_Last_Day(false);
                     }
                 } 
             } 
@@ -1987,34 +1765,25 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
  // =================================================================================================================== 
          
          const [GD_STATUS, setGD_STATUS] = useState<string | null>(null);
-         const [audioPlayingGD_STATUS, setAudioPlayingGD_STATUS] = useState(false);
-         const [inputValueGD_STATUS, setInputValueGD_STATUS] = useState<any>();
-         const [inputValue2GD_STATUS, setInputValue2GD_STATUS] = useState<any>();
+     
          const [GD_STATUS_High, setGD_STATUS_High] = useState<number | null>(null);
          const [GD_STATUS_Low, setGD_STATUS_Low] = useState<number | null>(null);
-         const [exceedThresholdGD_STATUS, setExceedThresholdGD_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         const [exceedThresholdGD_STATUS, setexceedThresholdGD_STATUS] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
          
-         const [maintainGD_STATUS, setMaintainGD_STATUS] = useState<boolean>(false);
+         const [maintainGD_STATUS, setmaintainGD_STATUS] = useState<boolean>(false);
+         
          
          
          useEffect(() => {
-             if (typeof GD_STATUS_High === 'string' && typeof GD_STATUS_Low === 'string' && GD_STATUS !== null && maintainGD_STATUS === false
-             ) {
-                 const highValue = parseFloat(GD_STATUS_High);
-                 const lowValue = parseFloat(GD_STATUS_Low);
-                 const GD_STATUSValue = parseFloat(GD_STATUS);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_STATUSValue)) {
-                     if (highValue <= GD_STATUSValue || GD_STATUSValue <= lowValue) {
-                    
-                             setExceedThresholdGD_STATUS(true);
-                     } else {
-                        setExceedThresholdGD_STATUS(false);
-                     }
-                 } 
-             } 
-         }, [GD_STATUS_High, GD_STATUS, GD_STATUS_Low,maintainGD_STATUS]);
-         
+            const GD_STATUSValue = parseFloat(GD_STATUS as any);
+            const highValue = GD_STATUS_High ?? NaN;
+            const lowValue = GD_STATUS_Low ?? NaN;
+        
+            if (!isNaN(GD_STATUSValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_STATUS) {
+                setexceedThresholdGD_STATUS(GD_STATUSValue >= highValue || GD_STATUSValue <= lowValue);
+            }
+        }, [GD_STATUS, GD_STATUS_High, GD_STATUS_Low, maintainGD_STATUS]);
+        
 
 
           // =================================================================================================================== 
@@ -2023,28 +1792,20 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
          const [HR_BC, setHR_BC] = useState<string | null>(null);
          const [HR_BC_High, setHR_BC_High] = useState<number | null>(null);
          const [HR_BC_Low, setHR_BC_Low] = useState<number | null>(null);
-         const [exceedThresholdHR_BC, setExceedThresholdHR_BC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-         const [maintainHR_BC, setMaintainHR_BC] = useState<boolean>(false);
+         const [exceedThresholdHR_BC, setexceedThresholdHR_BC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         const [maintainHR_BC, setmaintainHR_BC] = useState<boolean>(false);
          
          
-             useEffect(() => {
-                 if (typeof HR_BC_High === 'string' && typeof HR_BC_Low === 'string' && HR_BC !== null && maintainHR_BC === false
-                 ) {
-                     const highValue = parseFloat(HR_BC_High);
-                     const lowValue = parseFloat(HR_BC_Low);
-                     const HR_BCValue = parseFloat(HR_BC);
-             
-                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(HR_BCValue)) {
-                         if (highValue <= HR_BCValue || HR_BCValue <= lowValue) {
-                                 setExceedThresholdHR_BC(true);
-                         } else {
-                             setExceedThresholdHR_BC(false);
-                         }
-                     } 
-                 } 
-             }, [HR_BC_High, HR_BC, HR_BC_Low,maintainHR_BC]);
-         
-    
+         useEffect(() => {
+            const HR_BCValue = parseFloat(HR_BC as any);
+            const highValue = HR_BC_High ?? NaN;
+            const lowValue = HR_BC_Low ?? NaN;
+        
+            if (!isNaN(HR_BCValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHR_BC) {
+                setexceedThresholdHR_BC(HR_BCValue >= highValue || HR_BCValue <= lowValue);
+            }
+        }, [HR_BC, HR_BC_High, HR_BC_Low, maintainHR_BC]);
+        
     
     
          // =================================================================================================================== 
@@ -2056,9 +1817,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
          const [inputValue2SD, setInputValue2SD] = useState<any>();
          const [SD_High, setSD_High] = useState<number | null>(null);
          const [SD_Low, setSD_Low] = useState<number | null>(null);
-         const [exceedThresholdSD, setExceedThresholdSD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+         const [exceedThresholdSD, setexceedThresholdSD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
          
-         const [maintainSD, setMaintainSD] = useState<boolean>(false);
+         const [maintainSD, setmaintainSD] = useState<boolean>(false);
          
          
              useEffect(() => {
@@ -2070,9 +1831,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
              
                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDValue)) {
                          if (highValue <= SDValue || SDValue <= lowValue) {
-                                 setExceedThresholdSD(true);
+                                 setexceedThresholdSD(true);
                          } else {
-                            setExceedThresholdSD(false);
+                            setexceedThresholdSD(false);
                          }
                      } 
                  } 
@@ -2086,46 +1847,34 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     
     
               const [ESD_2001, setESD_2001] = useState<string | null>(null);
-              const [audioPlayingESD_2001, setAudioPlayingESD_2001] = useState(false);
-              const [inputValueESD_2001, setInputValueESD_2001] = useState<any>();
-              const [inputValue2ESD_2001, setInputValue2ESD_2001] = useState<any>();
+   
               const [ESD_2001_High, setESD_2001_High] = useState<number | null>(null);
               const [ESD_2001_Low, setESD_2001_Low] = useState<number | null>(null);
-              const [exceedThresholdESD_2001, setExceedThresholdESD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [exceedThresholdESD_2001, setexceedThresholdESD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
               
-              const [maintainESD_2001, setMaintainESD_2001] = useState<boolean>(false);
+              const [maintainESD_2001, setmaintainESD_2001] = useState<boolean>(false);
               
               
-                  useEffect(() => {
-                      if (typeof ESD_2001_High === 'string' && typeof ESD_2001_Low === 'string' && ESD_2001 !== null && maintainESD_2001 === false
-                      ) {
-                          const highValue = parseFloat(ESD_2001_High);
-                          const lowValue = parseFloat(ESD_2001_Low);
-                          const ESD_2001Value = parseFloat(ESD_2001);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(ESD_2001Value)) {
-                              if (highValue <= ESD_2001Value || ESD_2001Value <= lowValue) {
-                                      setExceedThresholdESD_2001(true);
-                              } else {
-                                 setExceedThresholdESD_2001(false);
-                              }
-                          } 
-                      } 
-                  }, [ESD_2001_High, ESD_2001, ESD_2001_Low,maintainESD_2001]);
-             
+              useEffect(() => {
+                const ESD_2001Value = parseFloat(ESD_2001 as any);
+                const highValue = ESD_2001_High ?? NaN;
+                const lowValue = ESD_2001_Low ?? NaN;
+            
+                if (!isNaN(ESD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD_2001) {
+                    setexceedThresholdESD_2001(ESD_2001Value >= highValue || ESD_2001Value <= lowValue);
+                }
+            }, [ESD_2001, ESD_2001_High, ESD_2001_Low, maintainESD_2001]);
          
               // =================================================================================================================== 
     
     
               const [SD_2001, setSD_2001] = useState<string | null>(null);
-              const [audioPlayingSD_2001, setAudioPlayingSD_2001] = useState(false);
-              const [inputValueSD_2001, setInputValueSD_2001] = useState<any>();
-              const [inputValue2SD_2001, setInputValue2SD_2001] = useState<any>();
+      
               const [SD_2001_High, setSD_2001_High] = useState<number | null>(null);
               const [SD_2001_Low, setSD_2001_Low] = useState<number | null>(null);
-              const [exceedThresholdSD_2001, setExceedThresholdSD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [exceedThresholdSD_2001, setexceedThresholdSD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
               
-              const [maintainSD_2001, setMaintainSD_2001] = useState<boolean>(false);
+              const [maintainSD_2001, setmaintainSD_2001] = useState<boolean>(false);
               
               
                   useEffect(() => {
@@ -2137,9 +1886,9 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
                   
                           if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SD_2001Value)) {
                               if (highValue <= SD_2001Value || SD_2001Value <= lowValue) {
-                                      setExceedThresholdSD_2001(true);
+                                      setexceedThresholdSD_2001(true);
                               } else {
-                                 setExceedThresholdSD_2001(false);
+                                 setexceedThresholdSD_2001(false);
                               }
                           } 
                       } 
@@ -2150,33 +1899,24 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               // =================================================================================================================== 
     
               const [SD_2002, setSD_2002] = useState<string | null>(null);
-              const [audioPlayingSD_2002, setAudioPlayingSD_2002] = useState(false);
-              const [inputValueSD_2002, setInputValueSD_2002] = useState<any>();
-              const [inputValue2SD_2002, setInputValue2SD_2002] = useState<any>();
+          
               const [SD_2002_High, setSD_2002_High] = useState<number | null>(null);
               const [SD_2002_Low, setSD_2002_Low] = useState<number | null>(null);
-              const [exceedThresholdSD_2002, setExceedThresholdSD_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+              const [exceedThresholdSD_2002, setexceedThresholdSD_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
               
-              const [maintainSD_2002, setMaintainSD_2002] = useState<boolean>(false);
+              const [maintainSD_2002, setmaintainSD_2002] = useState<boolean>(false);
               
               
-                  useEffect(() => {
-                      if (typeof SD_2002_High === 'string' && typeof SD_2002_Low === 'string' && SD_2002 !== null && maintainSD_2002 === false
-                      ) {
-                          const highValue = parseFloat(SD_2002_High);
-                          const lowValue = parseFloat(SD_2002_Low);
-                          const SD_2002Value = parseFloat(SD_2002);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SD_2002Value)) {
-                              if (highValue <= SD_2002Value || SD_2002Value <= lowValue) {
-                                      setExceedThresholdSD_2002(true);
-                              } else {
-                                 setExceedThresholdSD_2002(false);
-                              }
-                          } 
-                      } 
-                  }, [SD_2002_High, SD_2002, SD_2002_Low,maintainSD_2002]);
-              
+              useEffect(() => {
+                const SD_2002Value = parseFloat(SD_2002 as any);
+                const highValue = SD_2002_High ?? NaN;
+                const lowValue = SD_2002_Low ?? NaN;
+            
+                if (!isNaN(SD_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSD_2002) {
+                    setexceedThresholdSD_2002(SD_2002Value >= highValue || SD_2002Value <= lowValue);
+                }
+            }, [SD_2002, SD_2002_High, SD_2002_Low, maintainSD_2002]);
+            
               
          
               // =================================================================================================================== 

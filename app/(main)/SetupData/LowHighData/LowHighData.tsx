@@ -3843,7 +3843,7 @@ const handleCheckboxChangePLC = (e:any) => {
         VB_Yesterday:"40866",
         VM_TODAY:"40864",
         VM_Yesterday:"40868",
-        ReBattery:"40002",
+        ReBattery:"40001",
         EVC_01_Conn_STT:"Status",
         EVC_02_Conn_STT:"Status"
 
@@ -3851,19 +3851,19 @@ const handleCheckboxChangePLC = (e:any) => {
 
     const modbusEVC2 = {
         SVF: "40010",
-        GVF: "40012",
-        SVA: "40006",
-        GVA: "40008",
+        GVF: "40013",
+        SVA: "40007",
+        GVA: "40009",
 
-        PT: "40004",
-        TT: "40850",
+        PT: "40005",
+        TT: "40003",
 
 
-        VB_TODAY:"40014",
-        VB_Yesterday:"40018",
-        VM_TODAY:"40016",
-        VM_Yesterday:"40020",
-        ReBattery:"40001",
+        VB_TODAY:"40015",
+        VB_Yesterday:"40019",
+        VM_TODAY:"40017",
+        VM_Yesterday:"40021",
+        ReBattery:"40002",
       
     }
 
