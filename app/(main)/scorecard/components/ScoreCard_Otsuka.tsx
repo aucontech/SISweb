@@ -1215,23 +1215,15 @@ const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setExceedThresholdEVC_
 const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof EVC_01_Remain_Battery_Service_Life_High === 'string' && typeof EVC_01_Remain_Battery_Service_Life_Low === 'string' && EVC_01_Remain_Battery_Service_Life !== null && maintainEVC_01_Remain_Battery_Service_Life === false
-        ) {
-            const highValue = parseFloat(EVC_01_Remain_Battery_Service_Life_High);
-            const lowValue = parseFloat(EVC_01_Remain_Battery_Service_Life_Low);
-            const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                        setExceedThresholdEVC_01_Remain_Battery_Service_Life(true);
-                } else {
-                    setExceedThresholdEVC_01_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life,  EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life as any);
+    const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
 
+    if (!isNaN(EVC_01_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Remain_Battery_Service_Life) {
+        setExceedThresholdEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_LifeValue >= highValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low, maintainEVC_01_Remain_Battery_Service_Life]);
 
 
      // =================================================================================================================== 
@@ -1245,22 +1237,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_01_Temperature_High === 'string' && typeof EVC_01_Temperature_Low === 'string' && EVC_01_Temperature !== null && maintainEVC_01_Temperature === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Temperature_High);
-                 const lowValue = parseFloat(EVC_01_Temperature_Low);
-                 const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
-                     if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                             setExceedThresholdEVC_01_Temperature(true);
-                     } else {
-                         setExceedThresholdEVC_01_Temperature(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Temperature_High, EVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
+     useEffect(() => {
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+            setExceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+        }
+    }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
      
 
 
@@ -1276,23 +1261,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_01_Pressure_High === 'string' && typeof EVC_01_Pressure_Low === 'string' && EVC_01_Pressure !== null && maintainEVC_01_Pressure === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Pressure_High);
-                 const lowValue = parseFloat(EVC_01_Pressure_Low);
-                 const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
-                     if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                             setExceedThresholdEVC_01_Pressure(true);
-                     } else {
-                        setExceedThresholdEVC_01_Pressure(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Pressure_High, EVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
-     
+     useEffect(() => {
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+            setExceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+        }
+    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
 
 
 
@@ -1307,25 +1284,17 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
           
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Base_Condition_High === 'string' && typeof EVC_01_Volume_at_Base_Condition_Low === 'string' && EVC_01_Volume_at_Base_Condition !== null && maintainEVC_01_Volume_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Base_Condition_Low);
-                      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
-          
 
+              useEffect(() => {
+                const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+                const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+                const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+            
+                if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+                    setExceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+                }
+            }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+        
      
           // =================================================================================================================== 
 
@@ -1336,22 +1305,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
           
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_01_Volume_at_Measurement_Condition_Low === 'string' && EVC_01_Volume_at_Measurement_Condition !== null && maintainEVC_01_Volume_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_Low);
-                      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Volume_at_Measurement_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Volume_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
+          useEffect(() => {
+            const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+            const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+                setExceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
           
 
      
@@ -1366,22 +1328,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Flow_at_Base_Condition_High === 'string' && typeof EVC_01_Flow_at_Base_Condition_Low === 'string' && EVC_01_Flow_at_Base_Condition !== null && maintainEVC_01_Flow_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Flow_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Flow_at_Base_Condition_Low);
-                      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
+          useEffect(() => {
+            const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+            const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+                setExceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
               // =================================================================================================================== 
           
 
@@ -1394,22 +1349,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
               const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
               
               
-                  useEffect(() => {
-                      if (typeof EVC_01_Flow_at_Measurement_Condition_High === 'string' && typeof EVC_01_Flow_at_Measurement_Condition_Low === 'string' && EVC_01_Flow_at_Measurement_Condition !== null && maintainEVC_01_Flow_at_Measurement_Condition === false
-                      ) {
-                          const highValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_High);
-                          const lowValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_Low);
-                          const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Measurement_ConditionValue)) {
-                              if (highValue <= EVC_01_Flow_at_Measurement_ConditionValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue) {
-                                      setExceedThresholdEVC_01_Flow_at_Measurement_Condition(true);
-                              } else {
-                                 setExceedThresholdEVC_01_Flow_at_Measurement_Condition(false);
-                              }
-                          } 
-                      } 
-                  }, [EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_Low,maintainEVC_01_Flow_at_Measurement_Condition]);
+              useEffect(() => {
+                const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+                const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+                const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+            
+                if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+                    setExceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+                }
+            }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
               
        
          
@@ -1422,24 +1370,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [exceedThresholdEVC_01_Vm_of_Current_Day, setExceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           const [maintainEVC_01_Vm_of_Current_Day, setMaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
           
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Vm_of_Current_Day_High === 'string' && typeof EVC_01_Vm_of_Current_Day_Low === 'string' && EVC_01_Vm_of_Current_Day !== null && maintainEVC_01_Vm_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vm_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vm_of_Current_Day_Low);
-                      const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vm_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vm_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
-          
+          useEffect(() => {
+            const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day as any);
+            const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Current_Day) {
+                setExceedThresholdEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_DayValue >= highValue || EVC_01_Vm_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low, maintainEVC_01_Vm_of_Current_Day]);
 
      
      
@@ -1452,22 +1391,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Vb_of_Current_Day, setMaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Current_Day_High === 'string' && typeof EVC_01_Vb_of_Current_Day_Low === 'string' && EVC_01_Vb_of_Current_Day !== null && maintainEVC_01_Vb_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Current_Day_Low);
-                      const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vb_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vb_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
+          useEffect(() => {
+            const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day as any);
+            const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Current_Day) {
+                setExceedThresholdEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_DayValue >= highValue || EVC_01_Vb_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low, maintainEVC_01_Vb_of_Current_Day]);
+
 
      
           // =================================================================================================================== 
@@ -1483,22 +1416,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Vb_of_Last_Day, setMaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Last_Day_High === 'string' && typeof EVC_01_Vb_of_Last_Day_Low === 'string' && EVC_01_Vb_of_Last_Day !== null && maintainEVC_01_Vb_of_Last_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Last_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Last_Day_Low);
-                      const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_01_Vb_of_Last_Day(true);
-                          } else {
-                             setExceedThresholdEVC_01_Vb_of_Last_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low,maintainEVC_01_Vb_of_Last_Day]);
+          useEffect(() => {
+            const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day as any);
+            const highValue = EVC_01_Vb_of_Last_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Last_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Last_Day) {
+                setExceedThresholdEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_DayValue >= highValue || EVC_01_Vb_of_Last_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low, maintainEVC_01_Vb_of_Last_Day]);
           
 
      
@@ -1514,22 +1440,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
     const [maintainEVC_01_Vm_of_Last_Day, setMaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof EVC_01_Vm_of_Last_Day_High === 'string' && typeof EVC_01_Vm_of_Last_Day_Low === 'string' && EVC_01_Vm_of_Last_Day !== null && maintainEVC_01_Vm_of_Last_Day === false
-            ) {
-                const highValue = parseFloat(EVC_01_Vm_of_Last_Day_High);
-                const lowValue = parseFloat(EVC_01_Vm_of_Last_Day_Low);
-                const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
-                    if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                            setExceedThresholdEVC_01_Vm_of_Last_Day(true);
-                    } else {
-                       setExceedThresholdEVC_01_Vm_of_Last_Day(false);
-                    }
-                } 
-            } 
-        }, [EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low,maintainEVC_01_Vm_of_Last_Day]);
+    useEffect(() => {
+        const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day as any);
+        const highValue = EVC_01_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_01_Vm_of_Last_Day_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Last_Day) {
+            setExceedThresholdEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_DayValue >= highValue || EVC_01_Vm_of_Last_DayValue <= lowValue);
+        }
+    }, [EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low, maintainEVC_01_Vm_of_Last_Day]);
     
 
 
@@ -1547,23 +1466,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
   const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
   
   
-      useEffect(() => {
-          if (typeof GD1_High === 'string' && typeof GD1_Low === 'string' && GD1 !== null && maintainGD1 === false
-          ) {
-              const highValue = parseFloat(GD1_High);
-              const lowValue = parseFloat(GD1_Low);
-              const GD1Value = parseFloat(GD1);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1Value)) {
-                  if (highValue <= GD1Value || GD1Value <= lowValue) {
-                          setExceedThresholdGD1(true);
-                  } else {
-                     setExceedThresholdGD1(false);
-                  }
-              } 
-          } 
-      }, [GD1_High, GD1, GD1_Low,maintainGD1]);
+  useEffect(() => {
+    const GD1Value = parseFloat(GD1 as any);
+    const highValue = GD1_High ?? NaN;
+    const lowValue = GD1_Low ?? NaN;
 
+    if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
+        setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+    }
+}, [GD1, GD1_High, GD1_Low, maintainGD1]);
 
   // =================================================================================================================== 
 
@@ -1576,23 +1487,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof GD2_High === 'string' && typeof GD2_Low === 'string' && GD2 !== null && maintainGD2 === false
-               ) {
-                   const highValue = parseFloat(GD2_High);
-                   const lowValue = parseFloat(GD2_Low);
-                   const GD2Value = parseFloat(GD2);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2Value)) {
-                       if (highValue <= GD2Value || GD2Value <= lowValue) {
-                               setExceedThresholdGD2(true);
-                       } else {
-                          setExceedThresholdGD2(false);
-                       }
-                   } 
-               } 
-           }, [GD2_High, GD2, GD2_Low,maintainGD2]);
-       
+       useEffect(() => {
+        const GD2Value = parseFloat(GD2 as any);
+        const highValue = GD2_High ?? NaN;
+        const lowValue = GD2_Low ?? NaN;
+    
+        if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
+            setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
+        }
+    }, [GD2, GD2_High, GD2_Low, maintainGD2]);
 
   
        // =================================================================================================================== 
@@ -1605,22 +1508,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainGD3, setMaintainGD3] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof GD3_High === 'string' && typeof GD3_Low === 'string' && GD3 !== null && maintainGD3 === false
-               ) {
-                   const highValue = parseFloat(GD3_High);
-                   const lowValue = parseFloat(GD3_Low);
-                   const GD3Value = parseFloat(GD3);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD3Value)) {
-                       if (highValue <= GD3Value || GD3Value <= lowValue) {
-                               setExceedThresholdGD3(true);
-                       } else {
-                          setExceedThresholdGD3(false);
-                       }
-                   } 
-               } 
-           }, [GD3_High, GD3, GD3_Low,maintainGD3]);
+       useEffect(() => {
+        const GD3Value = parseFloat(GD3 as any);
+        const highValue = GD3_High ?? NaN;
+        const lowValue = GD3_Low ?? NaN;
+    
+        if (!isNaN(GD3Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD3) {
+            setExceedThresholdGD3(GD3Value >= highValue || GD3Value <= lowValue);
+        }
+    }, [GD3, GD3_High, GD3_Low, maintainGD3]);
+
        
 
   
@@ -1636,23 +1533,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof PT1_High === 'string' && typeof PT1_Low === 'string' && PT1 !== null && maintainPT1 === false
-               ) {
-                   const highValue = parseFloat(PT1_High);
-                   const lowValue = parseFloat(PT1_Low);
-                   const PT1Value = parseFloat(PT1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
-                       if (highValue <= PT1Value || PT1Value <= lowValue) {
-                               setExceedThresholdPT1(true);
-                       } else {
-                          setExceedThresholdPT1(false);
-                       }
-                   } 
-               } 
-           }, [PT1_High, PT1 , PT1_Low,maintainPT1]);
-       
+       useEffect(() => {
+        const PT1Value = parseFloat(PT1 as any);
+        const highValue = PT1_High ?? NaN;
+        const lowValue = PT1_Low ?? NaN;
+    
+        if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+            setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+        }
+    }, [PT1, PT1_High, PT1_Low, maintainPT1]);
+
 
   
        // =================================================================================================================== 
@@ -1664,22 +1554,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSO_1, setMaintainDI_ZSO_1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSO_1_High === 'string' && typeof DI_ZSO_1_Low === 'string' && DI_ZSO_1 !== null && maintainDI_ZSO_1 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSO_1_High);
-                   const lowValue = parseFloat(DI_ZSO_1_Low);
-                   const DI_ZSO_1Value = parseFloat(DI_ZSO_1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_1Value)) {
-                       if (highValue <= DI_ZSO_1Value || DI_ZSO_1Value <= lowValue) {
-                               setExceedThresholdDI_ZSO_1(true);
-                       } else {
-                          setExceedThresholdDI_ZSO_1(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSO_1_High, DI_ZSO_1, DI_ZSO_1_Low,maintainDI_ZSO_1]);
+             
+       useEffect(() => {
+        const DI_ZSO_1Value = parseFloat(DI_ZSO_1 as any);
+        const highValue = DI_ZSO_1_High ?? NaN;
+        const lowValue = DI_ZSO_1_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSO_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSO_1) {
+            setExceedThresholdDI_ZSO_1(DI_ZSO_1Value >= highValue || DI_ZSO_1Value <= lowValue);
+        }
+    }, [DI_ZSO_1, DI_ZSO_1_High, DI_ZSO_1_Low, maintainDI_ZSO_1]);
        
 
   
@@ -1693,22 +1577,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSC_1, setMaintainDI_ZSC_1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSC_1_High === 'string' && typeof DI_ZSC_1_Low === 'string' && DI_ZSC_1 !== null && maintainDI_ZSC_1 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSC_1_High);
-                   const lowValue = parseFloat(DI_ZSC_1_Low);
-                   const DI_ZSC_1Value = parseFloat(DI_ZSC_1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_1Value)) {
-                       if (highValue <= DI_ZSC_1Value || DI_ZSC_1Value <= lowValue) {
-                               setExceedThresholdDI_ZSC_1(true);
-                       } else {
-                          setExceedThresholdDI_ZSC_1(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSC_1_High, DI_ZSC_1, DI_ZSC_1_Low,maintainDI_ZSC_1]);
+       useEffect(() => {
+        const DI_ZSC_1Value = parseFloat(DI_ZSC_1 as any);
+        const highValue = DI_ZSC_1_High ?? NaN;
+        const lowValue = DI_ZSC_1_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSC_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSC_1) {
+            setExceedThresholdDI_ZSC_1(DI_ZSC_1Value >= highValue || DI_ZSC_1Value <= lowValue);
+        }
+    }, [DI_ZSC_1, DI_ZSC_1_High, DI_ZSC_1_Low, maintainDI_ZSC_1]);
+       
        
  
   
@@ -1725,23 +1603,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [exceedThresholdDI_MAP_1, setExceedThresholdDI_MAP_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
  const [maintainDI_MAP_1, setMaintainDI_MAP_1] = useState<boolean>(false);
  
- 
-     useEffect(() => {
-         if (typeof DI_MAP_1_High === 'string' && typeof DI_MAP_1_Low === 'string' && DI_MAP_1 !== null && maintainDI_MAP_1 === false
-         ) {
-             const highValue = parseFloat(DI_MAP_1_High);
-             const lowValue = parseFloat(DI_MAP_1_Low);
-             const DI_MAP_1Value = parseFloat(DI_MAP_1);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_MAP_1Value)) {
-                 if (highValue <= DI_MAP_1Value || DI_MAP_1Value <= lowValue) {
-                         setExceedThresholdDI_MAP_1(true);
-                 } else {
-                    setExceedThresholdDI_MAP_1(false);
-                 }
-             } 
-         } 
-     }, [DI_MAP_1_High, DI_MAP_1, DI_MAP_1_Low,maintainDI_MAP_1]);
+ useEffect(() => {
+    const DI_MAP_1Value = parseFloat(DI_MAP_1 as any);
+    const highValue = DI_MAP_1_High ?? NaN;
+    const lowValue = DI_MAP_1_Low ?? NaN;
+
+    if (!isNaN(DI_MAP_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_MAP_1) {
+        setExceedThresholdDI_MAP_1(DI_MAP_1Value >= highValue || DI_MAP_1Value <= lowValue);
+    }
+}, [DI_MAP_1, DI_MAP_1_High, DI_MAP_1_Low, maintainDI_MAP_1]);
  
 
 
@@ -1756,22 +1626,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      const [maintainDI_UPS_CHARGING, setMaintainDI_UPS_CHARGING] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DI_UPS_CHARGING_High === 'string' && typeof DI_UPS_CHARGING_Low === 'string' && DI_UPS_CHARGING !== null && maintainDI_UPS_CHARGING === false
-             ) {
-                 const highValue = parseFloat(DI_UPS_CHARGING_High);
-                 const lowValue = parseFloat(DI_UPS_CHARGING_Low);
-                 const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_CHARGINGValue)) {
-                     if (highValue <= DI_UPS_CHARGINGValue || DI_UPS_CHARGINGValue <= lowValue) {
-                             setExceedThresholdDI_UPS_CHARGING(true);
-                     } else {
-                        setExceedThresholdDI_UPS_CHARGING(false);
-                     }
-                 } 
-             } 
-         }, [DI_UPS_CHARGING_High, DI_UPS_CHARGING, DI_UPS_CHARGING_Low,maintainDI_UPS_CHARGING]);
+     useEffect(() => {
+        const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING as any);
+        const highValue = DI_UPS_CHARGING_High ?? NaN;
+        const lowValue = DI_UPS_CHARGING_Low ?? NaN;
+    
+        if (!isNaN(DI_UPS_CHARGINGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_CHARGING) {
+            setExceedThresholdDI_UPS_CHARGING(DI_UPS_CHARGINGValue >= highValue || DI_UPS_CHARGINGValue <= lowValue);
+        }
+    }, [DI_UPS_CHARGING, DI_UPS_CHARGING_High, DI_UPS_CHARGING_Low, maintainDI_UPS_CHARGING]);
      
    
  
@@ -1787,22 +1650,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [maintainDI_UPS_ALARM, setMaintainDI_UPS_ALARM] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof DI_UPS_ALARM_High === 'string' && typeof DI_UPS_ALARM_Low === 'string' && DI_UPS_ALARM !== null && maintainDI_UPS_ALARM === false
-         ) {
-             const highValue = parseFloat(DI_UPS_ALARM_High);
-             const lowValue = parseFloat(DI_UPS_ALARM_Low);
-             const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_ALARMValue)) {
-                 if (highValue <= DI_UPS_ALARMValue || DI_UPS_ALARMValue <= lowValue) {
-                         setExceedThresholdDI_UPS_ALARM(true);
-                 } else {
-                    setExceedThresholdDI_UPS_ALARM(false);
-                 }
-             } 
-         } 
-     }, [DI_UPS_ALARM_High, DI_UPS_ALARM, DI_UPS_ALARM_Low,maintainDI_UPS_ALARM]);
+ useEffect(() => {
+    const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM as any);
+    const highValue = DI_UPS_ALARM_High ?? NaN;
+    const lowValue = DI_UPS_ALARM_Low ?? NaN;
+
+    if (!isNaN(DI_UPS_ALARMValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_ALARM) {
+        setExceedThresholdDI_UPS_ALARM(DI_UPS_ALARMValue >= highValue || DI_UPS_ALARMValue <= lowValue);
+    }
+}, [DI_UPS_ALARM, DI_UPS_ALARM_High, DI_UPS_ALARM_Low, maintainDI_UPS_ALARM]);
+ 
  
 
 
@@ -1821,23 +1678,16 @@ const [exceedThresholdDI_SELECT_SW, setExceedThresholdDI_SELECT_SW] = useState(f
 const [maintainDI_SELECT_SW, setMaintainDI_SELECT_SW] = useState<boolean>(false);
 
 
- useEffect(() => {
-     if (typeof DI_SELECT_SW_High === 'string' && typeof DI_SELECT_SW_Low === 'string' && DI_SELECT_SW !== null && maintainDI_SELECT_SW === false
-     ) {
-         const highValue = parseFloat(DI_SELECT_SW_High);
-         const lowValue = parseFloat(DI_SELECT_SW_Low);
-         const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW);
+useEffect(() => {
+    const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW as any);
+    const highValue = DI_SELECT_SW_High ?? NaN;
+    const lowValue = DI_SELECT_SW_Low ?? NaN;
+
+    if (!isNaN(DI_SELECT_SWValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_SELECT_SW) {
+        setExceedThresholdDI_SELECT_SW(DI_SELECT_SWValue >= highValue || DI_SELECT_SWValue <= lowValue);
+    }
+}, [DI_SELECT_SW, DI_SELECT_SW_High, DI_SELECT_SW_Low, maintainDI_SELECT_SW]);
  
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SELECT_SWValue)) {
-             if (highValue <= DI_SELECT_SWValue || DI_SELECT_SWValue <= lowValue) {
-            
-                     setExceedThresholdDI_SELECT_SW(true);
-             } else {
-                setExceedThresholdDI_SELECT_SW(false);
-             }
-         } 
-     } 
- }, [DI_SELECT_SW_High, DI_SELECT_SW, DI_SELECT_SW_Low,maintainDI_SELECT_SW]);
 
 
 
@@ -1858,21 +1708,15 @@ const [maintainEmergency_NC, setMaintainEmergency_NC] = useState<boolean>(false)
 
 
 useEffect(() => {
- if (typeof Emergency_NC_High === 'string' && typeof Emergency_NC_Low === 'string' && Emergency_NC !== null && maintainEmergency_NC === false
- ) {
-     const highValue = parseFloat(Emergency_NC_High);
-     const lowValue = parseFloat(Emergency_NC_Low);
-     const Emergency_NCValue = parseFloat(Emergency_NC);
+    const Emergency_NCValue = parseFloat(Emergency_NC as any);
+    const highValue = Emergency_NC_High ?? NaN;
+    const lowValue = Emergency_NC_Low ?? NaN;
 
-     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NCValue)) {
-         if (highValue <= Emergency_NCValue || Emergency_NCValue <= lowValue) {
-                 setExceedThresholdEmergency_NC(true);
-         } else {
-            setExceedThresholdEmergency_NC(false);
-         }
-     } 
- } 
-}, [Emergency_NC_High, Emergency_NC, Emergency_NC_Low,maintainEmergency_NC]);
+    if (!isNaN(Emergency_NCValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NC) {
+        setExceedThresholdEmergency_NC(Emergency_NCValue >= highValue || Emergency_NCValue <= lowValue);
+    }
+}, [Emergency_NC, Emergency_NC_High, Emergency_NC_Low, maintainEmergency_NC]);
+ 
 
 
 
@@ -1891,22 +1735,16 @@ useEffect(() => {
      const [maintainDI_UPS_BATTERY, setMaintainDI_UPS_BATTERY] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DI_UPS_BATTERY_High === 'string' && typeof DI_UPS_BATTERY_Low === 'string' && DI_UPS_BATTERY !== null && maintainDI_UPS_BATTERY === false
-             ) {
-                 const highValue = parseFloat(DI_UPS_BATTERY_High);
-                 const lowValue = parseFloat(DI_UPS_BATTERY_Low);
-                 const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_BATTERYValue)) {
-                     if (highValue <= DI_UPS_BATTERYValue || DI_UPS_BATTERYValue <= lowValue) {
-                             setExceedThresholdDI_UPS_BATTERY(true);
-                     } else {
-                        setExceedThresholdDI_UPS_BATTERY(false);
-                     }
-                 } 
-             } 
-         }, [DI_UPS_BATTERY_High, DI_UPS_BATTERY, DI_UPS_BATTERY_Low,maintainDI_UPS_BATTERY]);
+     useEffect(() => {
+        const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY as any);
+        const highValue = DI_UPS_BATTERY_High ?? NaN;
+        const lowValue = DI_UPS_BATTERY_Low ?? NaN;
+    
+        if (!isNaN(DI_UPS_BATTERYValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_BATTERY) {
+            setExceedThresholdDI_UPS_BATTERY(DI_UPS_BATTERYValue >= highValue || DI_UPS_BATTERYValue <= lowValue);
+        }
+    }, [DI_UPS_BATTERY, DI_UPS_BATTERY_High, DI_UPS_BATTERY_Low, maintainDI_UPS_BATTERY]);
+     
      
  
      
@@ -1921,23 +1759,15 @@ useEffect(() => {
      const [maintainEmergency_NO, setMaintainEmergency_NO] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof Emergency_NO_High === 'string' && typeof Emergency_NO_Low === 'string' && Emergency_NO !== null && maintainEmergency_NO === false
-             ) {
-                 const highValue = parseFloat(Emergency_NO_High);
-                 const lowValue = parseFloat(Emergency_NO_Low);
-                 const Emergency_NOValue = parseFloat(Emergency_NO);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NOValue)) {
-                     if (highValue <= Emergency_NOValue || Emergency_NOValue <= lowValue) {
-                         
-                             setExceedThresholdEmergency_NO(true);
-                     } else {
-                        setExceedThresholdEmergency_NO(false);
-                     }
-                 } 
-             } 
-         }, [Emergency_NO_High, Emergency_NO, , Emergency_NO_Low,maintainEmergency_NO]);
+     useEffect(() => {
+        const Emergency_NOValue = parseFloat(Emergency_NO as any);
+        const highValue = Emergency_NO_High ?? NaN;
+        const lowValue = Emergency_NO_Low ?? NaN;
+    
+        if (!isNaN(Emergency_NOValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NO) {
+            setExceedThresholdEmergency_NO(Emergency_NOValue >= highValue || Emergency_NOValue <= lowValue);
+        }
+    }, [Emergency_NO, Emergency_NO_High, Emergency_NO_Low, maintainEmergency_NO]);
      
      
      
@@ -1955,21 +1785,14 @@ useEffect(() => {
      
      
      useEffect(() => {
-         if (typeof UPS_Mode_High === 'string' && typeof UPS_Mode_Low === 'string' && UPS_Mode !== null && maintainUPS_Mode === false
-         ) {
-             const highValue = parseFloat(UPS_Mode_High);
-             const lowValue = parseFloat(UPS_Mode_Low);
-             const UPS_ModeValue = parseFloat(UPS_Mode);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UPS_ModeValue)) {
-                 if (highValue <= UPS_ModeValue || UPS_ModeValue <= lowValue) {
-                         setExceedThresholdUPS_Mode(true);
-                 } else {
-                    setExceedThresholdUPS_Mode(false);
-                 }
-             } 
-         } 
-     }, [UPS_Mode_High, UPS_Mode, , UPS_Mode_Low,maintainUPS_Mode]);
+        const UPS_ModeValue = parseFloat(UPS_Mode as any);
+        const highValue = UPS_Mode_High ?? NaN;
+        const lowValue = UPS_Mode_Low ?? NaN;
+    
+        if (!isNaN(UPS_ModeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainUPS_Mode) {
+            setExceedThresholdUPS_Mode(UPS_ModeValue >= highValue || UPS_ModeValue <= lowValue);
+        }
+    }, [UPS_Mode, UPS_Mode_High, UPS_Mode_Low, maintainUPS_Mode]);
      
 
       // =================================================================================================================== 
@@ -1984,22 +1807,16 @@ useEffect(() => {
      const [maintainDO_HR_01, setMaintainDO_HR_01] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DO_HR_01_High === 'string' && typeof DO_HR_01_Low === 'string' && DO_HR_01 !== null && maintainDO_HR_01 === false
-             ) {
-                 const highValue = parseFloat(DO_HR_01_High);
-                 const lowValue = parseFloat(DO_HR_01_Low);
-                 const DO_HR_01Value = parseFloat(DO_HR_01);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_HR_01Value)) {
-                     if (highValue <= DO_HR_01Value || DO_HR_01Value <= lowValue) {
-                             setExceedThresholdDO_HR_01(true);
-                     } else {
-                         setExceedThresholdDO_HR_01(false);
-                     }
-                 } 
-             } 
-         }, [DO_HR_01_High, DO_HR_01, DO_HR_01_Low,maintainDO_HR_01]);
+     useEffect(() => {
+        const DO_HR_01Value = parseFloat(DO_HR_01 as any);
+        const highValue = DO_HR_01_High ?? NaN;
+        const lowValue = DO_HR_01_Low ?? NaN;
+    
+        if (!isNaN(DO_HR_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_HR_01) {
+            setExceedThresholdDO_HR_01(DO_HR_01Value >= highValue || DO_HR_01Value <= lowValue);
+        }
+    }, [DO_HR_01, DO_HR_01_High, DO_HR_01_Low, maintainDO_HR_01]);
+     
      
       
 
@@ -2015,22 +1832,15 @@ useEffect(() => {
      const [maintainDI_RESET, setMaintainDI_RESET] = useState<boolean>(false);
      
      
-      useEffect(() => {
-          if (typeof DI_RESET_High === 'string' && typeof DI_RESET_Low === 'string' && DI_RESET !== null && maintainDI_RESET === false
-          ) {
-              const highValue = parseFloat(DI_RESET_High);
-              const lowValue = parseFloat(DI_RESET_Low);
-              const DI_RESETValue = parseFloat(DI_RESET);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_RESETValue)) {
-                  if (highValue <= DI_RESETValue || DI_RESETValue <= lowValue) {
-                          setExceedThresholdDI_RESET(true);
-                  } else {
-                     setExceedThresholdDI_RESET(false);
-                  }
-              } 
-          } 
-      }, [DI_RESET_High, DI_RESET, DI_RESET_Low,maintainDI_RESET]);
+     useEffect(() => {
+        const DI_RESETValue = parseFloat(DI_RESET as any);
+        const highValue = DI_RESET_High ?? NaN;
+        const lowValue = DI_RESET_Low ?? NaN;
+    
+        if (!isNaN(DI_RESETValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_RESET) {
+            setExceedThresholdDI_RESET(DI_RESETValue >= highValue || DI_RESETValue <= lowValue);
+        }
+    }, [DI_RESET, DI_RESET_High, DI_RESET_Low, maintainDI_RESET]);
      
    
      
@@ -2049,22 +1859,15 @@ useEffect(() => {
           const [maintainDO_BC_01, setMaintainDO_BC_01] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof DO_BC_01_High === 'string' && typeof DO_BC_01_Low === 'string' && DO_BC_01 !== null && maintainDO_BC_01 === false
-                  ) {
-                      const highValue = parseFloat(DO_BC_01_High);
-                      const lowValue = parseFloat(DO_BC_01_Low);
-                      const DO_BC_01Value = parseFloat(DO_BC_01);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_BC_01Value)) {
-                          if (highValue <= DO_BC_01Value || DO_BC_01Value <= lowValue) {
-                                  setExceedThresholdDO_BC_01(true);
-                          } else {
-                             setExceedThresholdDO_BC_01(false);
-                          }
-                      } 
-                  } 
-              }, [DO_BC_01_High, DO_BC_01, DO_BC_01_Low,maintainDO_BC_01]);
+          useEffect(() => {
+            const DO_BC_01Value = parseFloat(DO_BC_01 as any);
+            const highValue = DO_BC_01_High ?? NaN;
+            const lowValue = DO_BC_01_Low ?? NaN;
+        
+            if (!isNaN(DO_BC_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_BC_01) {
+                setExceedThresholdDO_BC_01(DO_BC_01Value >= highValue || DO_BC_01Value <= lowValue);
+            }
+        }, [DO_BC_01, DO_BC_01_High, DO_BC_01_Low, maintainDO_BC_01]);
           
            
      
@@ -2080,22 +1883,15 @@ useEffect(() => {
           const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof DO_SV1_High === 'string' && typeof DO_SV1_Low === 'string' && DO_SV1 !== null && maintainDO_SV1 === false
-                  ) {
-                      const highValue = parseFloat(DO_SV1_High);
-                      const lowValue = parseFloat(DO_SV1_Low);
-                      const DO_SV1Value = parseFloat(DO_SV1);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV1Value)) {
-                          if (highValue <= DO_SV1Value || DO_SV1Value <= lowValue) {
-                                  setExceedThresholdDO_SV1(true);
-                          } else {
-                             setExceedThresholdDO_SV1(false);
-                          }
-                      } 
-                  } 
-              }, [DO_SV1_High, DO_SV1 , DO_SV1_Low,maintainDO_SV1]);
+          useEffect(() => {
+            const DO_SV1Value = parseFloat(DO_SV1 as any);
+            const highValue = DO_SV1_High ?? NaN;
+            const lowValue = DO_SV1_Low ?? NaN;
+        
+            if (!isNaN(DO_SV1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_SV1) {
+                setExceedThresholdDO_SV1(DO_SV1Value >= highValue || DO_SV1Value <= lowValue);
+            }
+        }, [DO_SV1, DO_SV1_High, DO_SV1_Low, maintainDO_SV1]);
           
        
     
@@ -2110,22 +1906,15 @@ useEffect(() => {
         const [maintainDI_SD_1, setMaintainDI_SD_1] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof DI_SD_1_High === 'string' && typeof DI_SD_1_Low === 'string' && DI_SD_1 !== null && maintainDI_SD_1 === false
-         ) {
-             const highValue = parseFloat(DI_SD_1_High);
-             const lowValue = parseFloat(DI_SD_1_Low);
-             const DI_SD_1Value = parseFloat(DI_SD_1);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
-                 if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                         setExceedThresholdDI_SD_1(true);
-                 } else {
-                    setExceedThresholdDI_SD_1(false);
-                 }
-             } 
-         } 
-     }, [DI_SD_1_High, DI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
+        useEffect(() => {
+            const DI_SD_1Value = parseFloat(DI_SD_1 as any);
+            const highValue = DI_SD_1_High ?? NaN;
+            const lowValue = DI_SD_1_Low ?? NaN;
+        
+            if (!isNaN(DI_SD_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_SD_1) {
+                setExceedThresholdDI_SD_1(DI_SD_1Value >= highValue || DI_SD_1Value <= lowValue);
+            }
+        }, [DI_SD_1, DI_SD_1_High, DI_SD_1_Low, maintainDI_SD_1]);
  
   
 
@@ -2141,22 +1930,15 @@ const [exceedThresholdEVC_02_Remain_Battery_Service_Life, setExceedThresholdEVC_
 const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Battery_Service_Life] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof EVC_02_Remain_Battery_Service_Life_High === 'string' && typeof EVC_02_Remain_Battery_Service_Life_Low === 'string' && EVC_02_Remain_Battery_Service_Life !== null && maintainEVC_02_Remain_Battery_Service_Life === false
-        ) {
-            const highValue = parseFloat(EVC_02_Remain_Battery_Service_Life_High);
-            const lowValue = parseFloat(EVC_02_Remain_Battery_Service_Life_Low);
-            const EVC_02_Remain_Battery_Service_LifeValue = parseFloat(EVC_02_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_02_Remain_Battery_Service_LifeValue || EVC_02_Remain_Battery_Service_LifeValue <= lowValue) {
-                        setExceedThresholdEVC_02_Remain_Battery_Service_Life(true);
-                } else {
-                    setExceedThresholdEVC_02_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [EVC_02_Remain_Battery_Service_Life_High, EVC_02_Remain_Battery_Service_Life,  EVC_02_Remain_Battery_Service_Life_Low,maintainEVC_02_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_02_Remain_Battery_Service_LifeValue = parseFloat(EVC_02_Remain_Battery_Service_Life as any);
+    const highValue = EVC_02_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_02_Remain_Battery_Service_Life_Low ?? NaN;
+
+    if (!isNaN(EVC_02_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Remain_Battery_Service_Life) {
+        setExceedThresholdEVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_LifeValue >= highValue || EVC_02_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_02_Remain_Battery_Service_Life, EVC_02_Remain_Battery_Service_Life_High, EVC_02_Remain_Battery_Service_Life_Low, maintainEVC_02_Remain_Battery_Service_Life]);
 
 
 
@@ -2171,22 +1953,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
      const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_02_Temperature_High === 'string' && typeof EVC_02_Temperature_Low === 'string' && EVC_02_Temperature !== null && maintainEVC_02_Temperature === false
-             ) {
-                 const highValue = parseFloat(EVC_02_Temperature_High);
-                 const lowValue = parseFloat(EVC_02_Temperature_Low);
-                 const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_TemperatureValue)) {
-                     if (highValue <= EVC_02_TemperatureValue || EVC_02_TemperatureValue <= lowValue) {
-                             setExceedThresholdEVC_02_Temperature(true);
-                     } else {
-                         setExceedThresholdEVC_02_Temperature(false);
-                     }
-                 } 
-             } 
-         }, [EVC_02_Temperature_High, EVC_02_Temperature, EVC_02_Temperature_Low,maintainEVC_02_Temperature]);
+     useEffect(() => {
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Temperature) {
+            setExceedThresholdEVC_02_Temperature(EVC_02_TemperatureValue >= highValue || EVC_02_TemperatureValue <= lowValue);
+        }
+    }, [EVC_02_Temperature, EVC_02_Temperature_High, EVC_02_Temperature_Low, maintainEVC_02_Temperature]);
      
 
 
@@ -2202,22 +1977,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
      const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof EVC_02_Pressure_High === 'string' && typeof EVC_02_Pressure_Low === 'string' && EVC_02_Pressure !== null && maintainEVC_02_Pressure === false
-             ) {
-                 const highValue = parseFloat(EVC_02_Pressure_High);
-                 const lowValue = parseFloat(EVC_02_Pressure_Low);
-                 const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_PressureValue)) {
-                     if (highValue <= EVC_02_PressureValue || EVC_02_PressureValue <= lowValue) {
-                             setExceedThresholdEVC_02_Pressure(true);
-                     } else {
-                        setExceedThresholdEVC_02_Pressure(false);
-                     }
-                 } 
-             } 
-         }, [EVC_02_Pressure_High, EVC_02_Pressure, EVC_02_Pressure_Low,maintainEVC_02_Pressure]);
+     useEffect(() => {
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
+            setExceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
+        }
+    }, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
      
 
 
@@ -2234,22 +2002,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_02_Volume_at_Base_Condition_High === 'string' && typeof EVC_02_Volume_at_Base_Condition_Low === 'string' && EVC_02_Volume_at_Base_Condition !== null && maintainEVC_02_Volume_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Volume_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_02_Volume_at_Base_Condition_Low);
-                      const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_02_Volume_at_Base_ConditionValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Volume_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_02_Volume_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_Low,maintainEVC_02_Volume_at_Base_Condition]);
+          useEffect(() => {
+            const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
+            const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
+                setExceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
           
 
           // =================================================================================================================== 
@@ -2261,22 +2022,16 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setExceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
           
-              useEffect(() => {
-                  if (typeof EVC_02_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_02_Volume_at_Measurement_Condition_Low === 'string' && EVC_02_Volume_at_Measurement_Condition !== null && maintainEVC_02_Volume_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Volume_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_02_Volume_at_Measurement_Condition_Low);
-                      const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_02_Volume_at_Measurement_ConditionValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Volume_at_Measurement_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_02_Volume_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition , EVC_02_Volume_at_Measurement_Condition_Low,maintainEVC_02_Volume_at_Measurement_Condition]);
+          useEffect(() => {
+            const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+            const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
+                setExceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
+          
           
 
      
@@ -2291,22 +2046,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [maintainEVC_02_Flow_at_Base_Condition, setMaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_02_Flow_at_Base_Condition_High === 'string' && typeof EVC_02_Flow_at_Base_Condition_Low === 'string' && EVC_02_Flow_at_Base_Condition !== null && maintainEVC_02_Flow_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Flow_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_02_Flow_at_Base_Condition_Low);
-                      const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_02_Flow_at_Base_ConditionValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Flow_at_Base_Condition(true);
-                          } else {
-                             setExceedThresholdEVC_02_Flow_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_Low,maintainEVC_02_Flow_at_Base_Condition]);
+          useEffect(() => {
+            const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
+            const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
+                setExceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
               // =================================================================================================================== 
           
 
@@ -2319,22 +2067,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
               const [maintainEVC_02_Flow_at_Measurement_Condition, setMaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
               
               
-                  useEffect(() => {
-                      if (typeof EVC_02_Flow_at_Measurement_Condition_High === 'string' && typeof EVC_02_Flow_at_Measurement_Condition_Low === 'string' && EVC_02_Flow_at_Measurement_Condition !== null && maintainEVC_02_Flow_at_Measurement_Condition === false
-                      ) {
-                          const highValue = parseFloat(EVC_02_Flow_at_Measurement_Condition_High);
-                          const lowValue = parseFloat(EVC_02_Flow_at_Measurement_Condition_Low);
-                          const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Measurement_ConditionValue)) {
-                              if (highValue <= EVC_02_Flow_at_Measurement_ConditionValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue) {
-                                      setExceedThresholdEVC_02_Flow_at_Measurement_Condition(true);
-                              } else {
-                                 setExceedThresholdEVC_02_Flow_at_Measurement_Condition(false);
-                              }
-                          } 
-                      } 
-                  }, [EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_Low,maintainEVC_02_Flow_at_Measurement_Condition]);
+              useEffect(() => {
+                const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
+                const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+                const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+            
+                if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
+                    setExceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
+                }
+            }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
               
        
          
@@ -2348,22 +2089,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [maintainEVC_02_Vm_of_Current_Day, setMaintainEVC_02_Vm_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_02_Vm_of_Current_Day_High === 'string' && typeof EVC_02_Vm_of_Current_Day_Low === 'string' && EVC_02_Vm_of_Current_Day !== null && maintainEVC_02_Vm_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Vm_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_02_Vm_of_Current_Day_Low);
-                      const EVC_02_Vm_of_Current_DayValue = parseFloat(EVC_02_Vm_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Current_DayValue)) {
-                          if (highValue <= EVC_02_Vm_of_Current_DayValue || EVC_02_Vm_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vm_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_02_Vm_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Vm_of_Current_Day_High, EVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day_Low,maintainEVC_02_Vm_of_Current_Day]);
+          useEffect(() => {
+            const EVC_02_Vm_of_Current_DayValue = parseFloat(EVC_02_Vm_of_Current_Day as any);
+            const highValue = EVC_02_Vm_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_02_Vm_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vm_of_Current_Day) {
+                setExceedThresholdEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_DayValue >= highValue || EVC_02_Vm_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day_High, EVC_02_Vm_of_Current_Day_Low, maintainEVC_02_Vm_of_Current_Day]);
           
 
      
@@ -2377,22 +2111,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [maintainEVC_02_Vb_of_Current_Day, setMaintainEVC_02_Vb_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_02_Vb_of_Current_Day_High === 'string' && typeof EVC_02_Vb_of_Current_Day_Low === 'string' && EVC_02_Vb_of_Current_Day !== null && maintainEVC_02_Vb_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Vb_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_02_Vb_of_Current_Day_Low);
-                      const EVC_02_Vb_of_Current_DayValue = parseFloat(EVC_02_Vb_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Current_DayValue)) {
-                          if (highValue <= EVC_02_Vb_of_Current_DayValue || EVC_02_Vb_of_Current_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vb_of_Current_Day(true);
-                          } else {
-                             setExceedThresholdEVC_02_Vb_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Vb_of_Current_Day_High, EVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day_Low,maintainEVC_02_Vb_of_Current_Day]);
+          useEffect(() => {
+            const EVC_02_Vb_of_Current_DayValue = parseFloat(EVC_02_Vb_of_Current_Day as any);
+            const highValue = EVC_02_Vb_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_02_Vb_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vb_of_Current_Day) {
+                setExceedThresholdEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_DayValue >= highValue || EVC_02_Vb_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day_High, EVC_02_Vb_of_Current_Day_Low, maintainEVC_02_Vb_of_Current_Day]);
 
      
           // =================================================================================================================== 
@@ -2408,22 +2135,16 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
           const [maintainEVC_02_Vb_of_Last_Day, setMaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_02_Vb_of_Last_Day_High === 'string' && typeof EVC_02_Vb_of_Last_Day_Low === 'string' && EVC_02_Vb_of_Last_Day !== null && maintainEVC_02_Vb_of_Last_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_02_Vb_of_Last_Day_High);
-                      const lowValue = parseFloat(EVC_02_Vb_of_Last_Day_Low);
-                      const EVC_02_Vb_of_Last_DayValue = parseFloat(EVC_02_Vb_of_Last_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Last_DayValue)) {
-                          if (highValue <= EVC_02_Vb_of_Last_DayValue || EVC_02_Vb_of_Last_DayValue <= lowValue) {
-                                  setExceedThresholdEVC_02_Vb_of_Last_Day(true);
-                          } else {
-                             setExceedThresholdEVC_02_Vb_of_Last_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_02_Vb_of_Last_Day_High, EVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_Low,maintainEVC_02_Vb_of_Last_Day]);
+          useEffect(() => {
+            const EVC_02_Vb_of_Last_DayValue = parseFloat(EVC_02_Vb_of_Last_Day as any);
+            const highValue = EVC_02_Vb_of_Last_Day_High ?? NaN;
+            const lowValue = EVC_02_Vb_of_Last_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vb_of_Last_Day) {
+                setExceedThresholdEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_DayValue >= highValue || EVC_02_Vb_of_Last_DayValue <= lowValue);
+            }
+        }, [EVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_High, EVC_02_Vb_of_Last_Day_Low, maintainEVC_02_Vb_of_Last_Day]);
+
           
 
      
@@ -2439,22 +2160,16 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     const [maintainEVC_02_Vm_of_Last_Day, setMaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof EVC_02_Vm_of_Last_Day_High === 'string' && typeof EVC_02_Vm_of_Last_Day_Low === 'string' && EVC_02_Vm_of_Last_Day !== null && maintainEVC_02_Vm_of_Last_Day === false
-            ) {
-                const highValue = parseFloat(EVC_02_Vm_of_Last_Day_High);
-                const lowValue = parseFloat(EVC_02_Vm_of_Last_Day_Low);
-                const EVC_02_Vm_of_Last_DayValue = parseFloat(EVC_02_Vm_of_Last_Day);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Last_DayValue)) {
-                    if (highValue <= EVC_02_Vm_of_Last_DayValue || EVC_02_Vm_of_Last_DayValue <= lowValue) {
-                            setExceedThresholdEVC_02_Vm_of_Last_Day(true);
-                    } else {
-                       setExceedThresholdEVC_02_Vm_of_Last_Day(false);
-                    }
-                } 
-            } 
-        }, [EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_Low,maintainEVC_02_Vm_of_Last_Day]);
+    useEffect(() => {
+        const EVC_02_Vm_of_Last_DayValue = parseFloat(EVC_02_Vm_of_Last_Day as any);
+        const highValue = EVC_02_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_02_Vm_of_Last_Day_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vm_of_Last_Day) {
+            setExceedThresholdEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_DayValue >= highValue || EVC_02_Vm_of_Last_DayValue <= lowValue);
+        }
+    }, [EVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day_Low, maintainEVC_02_Vm_of_Last_Day]);
+
     
 
 
@@ -2890,15 +2605,15 @@ const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Batt
     },
 
     CSSEVC_02_Vm_of_Current_Day : {
-        color:exceedThresholdEVC_02_Vb_of_Current_Day && !maintainEVC_02_Vb_of_Current_Day
+        color:exceedThresholdEVC_02_Vm_of_Current_Day && !maintainEVC_02_Vm_of_Current_Day
         ? "#ff5656"
-        : maintainEVC_02_Vb_of_Current_Day
+        : maintainEVC_02_Vm_of_Current_Day
         ? "orange"
         : "" ,
-        fontWeight: (exceedThresholdEVC_02_Vb_of_Current_Day || maintainEVC_02_Vb_of_Current_Day)
+        fontWeight: (exceedThresholdEVC_02_Vm_of_Current_Day || maintainEVC_02_Vm_of_Current_Day)
         ? 600
         : "",
-        fontSize: (exceedThresholdEVC_02_Vb_of_Current_Day || maintainEVC_02_Vb_of_Current_Day)
+        fontSize: (exceedThresholdEVC_02_Vm_of_Current_Day || maintainEVC_02_Vm_of_Current_Day)
         ? 18
         : ""
     },

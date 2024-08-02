@@ -736,23 +736,7 @@ useEffect(() => {
         setExceedThresholdTT_3004(TT_3004Value >= highValue || TT_3004Value <= lowValue);
     }
 }, [TT_3004, TT_3004_High, TT_3004_Low, maintainTT_3004]);
-
-
-
-
-
-const ChangeMaintainTT_3004 = async () => {
-    try {
-        const newValue = !maintainTT_3004;
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-            { TT_3004_Maintain: newValue }
-        );
-        setMaintainTT_3004(newValue);
-    } catch (error) {
-        console.error(error);
-    }
-};
+// =================================================================================================================== 
 
 
 const [PT_3006, setPT_3006] = useState<string | null>(null);
@@ -770,23 +754,6 @@ if (!isNaN(PT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT
  setExceedThresholdPT_3006(PT_3006Value >= highValue || PT_3006Value <= lowValue);
 }
 }, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006]);
-
-
-
-
-
-const ChangeMaintainPT_3006 = async () => {
-try {
- const newValue = !maintainPT_3006;
- await httpApi.post(
-     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-     { PT_3006_Maintain: newValue }
- );
- setMaintainPT_3006(newValue);
-} catch (error) {
- console.error(error);
-}
-};
 
 
 // =================================================================================================================== 
@@ -808,22 +775,6 @@ useEffect(() => {
 }, [PT_3005, PT_3005_High, PT_3005_Low, maintainPT_3005]);
 
 
-
-
-
-const ChangeMaintainPT_3005 = async () => {
- try {
-     const newValue = !maintainPT_3005;
-     await httpApi.post(
-         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-         { PT_3005_Maintain: newValue }
-     );
-     setMaintainPT_3005(newValue);
- } catch (error) {
-     console.error(error);
- }
-};
-
 // =================================================================================================================== 
 
 
@@ -842,23 +793,6 @@ useEffect(() => {
      setExceedThresholdTT_3003(TT_3003Value >= highValue || TT_3003Value <= lowValue);
  }
 }, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
-
-
-
-
-
-const ChangeMaintainTT_3003 = async () => {
- try {
-     const newValue = !maintainTT_3003;
-     await httpApi.post(
-         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-         { TT_3003_Maintain: newValue }
-     );
-     setMaintainTT_3003(newValue);
- } catch (error) {
-     console.error(error);
- }
-};
 
 
   // =================================================================================================================== 
@@ -880,24 +814,6 @@ useEffect(() => {
  }
 }, [TG_3005, TG_3005_High, TG_3005_Low, maintainTG_3005]);
 
-
-
-
-
-const ChangeMaintainTG_3005 = async () => {
- try {
-     const newValue = !maintainTG_3005;
-     await httpApi.post(
-         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-         { TG_3005_Maintain: newValue }
-     );
-     setMaintainTG_3005(newValue);
- } catch (error) {
-     console.error(error);
- }
-};
-
-
   // =================================================================================================================== 
   const [WB_3001, setWB_3001] = useState<string | null>(null);
   const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
@@ -915,24 +831,7 @@ const ChangeMaintainTG_3005 = async () => {
       }
   }, [WB_3001, WB_3001_High, WB_3001_Low, maintainWB_3001]);
  
-  
- 
-  
- 
-  const ChangeMaintainWB_3001 = async () => {
-      try {
-          const newValue = !maintainWB_3001;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { WB_3001_Maintain: newValue }
-          );
-          setMaintainWB_3001(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
-  
-  
+
   // =================================================================================================================== 
 
   const [GD_3004, setGD_3004] = useState<string | null>(null);
@@ -952,23 +851,7 @@ const ChangeMaintainTG_3005 = async () => {
   }, [GD_3004, GD_3004_High, GD_3004_Low, maintainGD_3004]);
  
   
- 
-  
- 
-  const ChangeMaintainGD_3004 = async () => {
-      try {
-          const newValue = !maintainGD_3004;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { GD_3004_Maintain: newValue }
-          );
-          setMaintainGD_3004(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
 
-  
   // =================================================================================================================== 
 
   const [GD_3003, setGD_3003] = useState<string | null>(null);
@@ -987,23 +870,6 @@ const ChangeMaintainTG_3005 = async () => {
       }
   }, [GD_3003, GD_3003_High, GD_3003_Low, maintainGD_3003]);
  
-  
- 
-  
- 
-  const ChangeMaintainGD_3003 = async () => {
-      try {
-          const newValue = !maintainGD_3003;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { GD_3003_Maintain: newValue }
-          );
-          setMaintainGD_3003(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
-
 
   // =================================================================================================================== 
 
@@ -1023,22 +889,7 @@ const ChangeMaintainTG_3005 = async () => {
       }
   }, [GD_3002, GD_3002_High, GD_3002_Low, maintainGD_3002]);
  
-  
- 
-  
- 
-  const ChangeMaintainGD_3002 = async () => {
-      try {
-          const newValue = !maintainGD_3002;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { GD_3002_Maintain: newValue }
-          );
-          setMaintainGD_3002(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
+
 
   // =================================================================================================================== 
 
@@ -1058,22 +909,6 @@ const ChangeMaintainTG_3005 = async () => {
       }
   }, [GD_3005, GD_3005_High, GD_3005_Low, maintainGD_3005]);
  
-  
- 
-  
- 
-  const ChangeMaintainGD_3005 = async () => {
-      try {
-          const newValue = !maintainGD_3005;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { GD_3005_Maintain: newValue }
-          );
-          setMaintainGD_3005(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
 
   // =================================================================================================================== 
 
@@ -1096,22 +931,6 @@ if (!isNaN(GD_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD
 }, [GD_3006, GD_3006_High, GD_3006_Low, maintainGD_3006]);
 
 
-
-
-
-const ChangeMaintainGD_3006 = async () => {
-try {
-    const newValue = !maintainGD_3006;
-    await httpApi.post(
-        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-        { GD_3006_Maintain: newValue }
-    );
-    setMaintainGD_3006(newValue);
-} catch (error) {
-    console.error(error);
-}
-};
-
 // =================================================================================================================== 
 
 // =================================================================================================================== 
@@ -1131,23 +950,6 @@ useEffect(() => {
         setExceedThresholdTM_3002_SNG(TM_3002_SNGValue >= highValue || TM_3002_SNGValue <= lowValue);
     }
 }, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
-
-
-
-
-
-const ChangeMaintainTM_3002_SNG = async () => {
-    try {
-        const newValue = !maintainTM_3002_SNG;
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-            { TM_3002_SNG_Maintain: newValue }
-        );
-        setMaintainTM_3002_SNG(newValue);
-    } catch (error) {
-        console.error(error);
-    }
-};
 
 // =================================================================================================================== 
 
@@ -1169,23 +971,6 @@ const ChangeMaintainTM_3002_SNG = async () => {
         }
     }, [TM_3003_SNG, TM_3003_SNG_High, TM_3003_SNG_Low, maintainTM_3003_SNG]);
    
-    
-   
-    
-   
-    const ChangeMaintainTM_3003_SNG = async () => {
-        try {
-            const newValue = !maintainTM_3003_SNG;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                { TM_3003_SNG_Maintain: newValue }
-            );
-            setMaintainTM_3003_SNG(newValue);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
 
 // =================================================================================================================== 
 
@@ -1205,25 +990,6 @@ if (!isNaN(TOTAL_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintain
     setExceedThresholdTOTAL_SNG(TOTAL_SNGValue >= highValue || TOTAL_SNGValue <= lowValue);
 }
 }, [TOTAL_SNG, TOTAL_SNG_High, TOTAL_SNG_Low, maintainTOTAL_SNG]);
-
-
-
-
-
-const ChangeMaintainTOTAL_SNG = async () => {
-try {
-    const newValue = !maintainTOTAL_SNG;
-    await httpApi.post(
-        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-        { TOTAL_SNG_Maintain: newValue }
-    );
-    setMaintainTOTAL_SNG(newValue);
-} catch (error) {
-    console.error(error);
-}
-};
-
-
 
 // =================================================================================================================== 
 
@@ -1246,23 +1012,6 @@ useEffect(() => {
 }, [SDV_3004, SDV_3004_High, SDV_3004_Low, maintainSDV_3004]);
 
 
-
-
-
-const ChangeMaintainSDV_3004 = async () => {
-    try {
-        const newValue = !maintainSDV_3004;
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-            { SDV_3004_Maintain: newValue }
-        );
-        setMaintainSDV_3004(newValue);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-
 // =================================================================================================================== 
 
 
@@ -1283,22 +1032,6 @@ setExceedThresholdSDV_3003(SDV_3003Value >= highValue || SDV_3003Value <= lowVal
 }, [SDV_3003, SDV_3003_High, SDV_3003_Low, maintainSDV_3003]);
 
 
-
-
-
-const ChangeMaintainSDV_3003 = async () => {
-try {
-const newValue = !maintainSDV_3003;
-await httpApi.post(
-    `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-    { SDV_3003_Maintain: newValue }
-);
-setMaintainSDV_3003(newValue);
-} catch (error) {
-console.error(error);
-}
-};
-
 // =================================================================================================================== 
 
 // =================================================================================================================== 
@@ -1318,24 +1051,6 @@ if (!isNaN(GD1_STATUSValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     setExceedThresholdGD1_STATUS(GD1_STATUSValue >= highValue || GD1_STATUSValue <= lowValue);
 }
 }, [GD1_STATUS, GD1_STATUS_High, GD1_STATUS_Low, maintainGD1_STATUS]);
-
-
-
-
-
-const ChangeMaintainGD1_STATUS = async () => {
-try {
-    const newValue = !maintainGD1_STATUS;
-    await httpApi.post(
-        `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-        { GD1_STATUS_Maintain: newValue }
-    );
-    setMaintainGD1_STATUS(newValue);
-} catch (error) {
-    console.error(error);
-}
-};
-
 
 
 // =================================================================================================================== 
@@ -1360,24 +1075,6 @@ useEffect(() => {
 }, [GD2_STATUS, GD2_STATUS_High, GD2_STATUS_Low, maintainGD2_STATUS]);
 
 
-
-
-
-const ChangeMaintainGD2_STATUS = async () => {
-    try {
-        const newValue = !maintainGD2_STATUS;
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-            { GD2_STATUS_Maintain: newValue }
-        );
-        setMaintainGD2_STATUS(newValue);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-
-
 // =================================================================================================================== 
 
 
@@ -1396,23 +1093,6 @@ useEffect(() => {
         setExceedThresholdGD3_STATUS(GD3_STATUSValue >= highValue || GD3_STATUSValue <= lowValue);
     }
 }, [GD3_STATUS, GD3_STATUS_High, GD3_STATUS_Low, maintainGD3_STATUS]);
-
-
-
-
-
-const ChangeMaintainGD3_STATUS = async () => {
-    try {
-        const newValue = !maintainGD3_STATUS;
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-            { GD3_STATUS_Maintain: newValue }
-        );
-        setMaintainGD3_STATUS(newValue);
-    } catch (error) {
-        console.error(error);
-    }
-};
 
 
 // =================================================================================================================== 
@@ -1434,23 +1114,6 @@ const ChangeMaintainGD3_STATUS = async () => {
             setExceedThresholdGD4_STATUS(GD4_STATUSValue >= highValue || GD4_STATUSValue <= lowValue);
         }
     }, [GD4_STATUS, GD4_STATUS_High, GD4_STATUS_Low, maintainGD4_STATUS]);
-    
-    
-    
-    
-    
-    const ChangeMaintainGD4_STATUS = async () => {
-        try {
-            const newValue = !maintainGD4_STATUS;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                { GD4_STATUS_Maintain: newValue }
-            );
-            setMaintainGD4_STATUS(newValue);
-        } catch (error) {
-            console.error(error);
-        }
-    };
     
 
 
@@ -1476,28 +1139,6 @@ const ChangeMaintainGD3_STATUS = async () => {
         }
     }, [GD5_STATUS, GD5_STATUS_High, GD5_STATUS_Low, maintainGD5_STATUS]);
     
-    
-    
-    
-    
-    const ChangeMaintainGD5_STATUS = async () => {
-        try {
-            const newValue = !maintainGD5_STATUS;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                { GD5_STATUS_Maintain: newValue }
-            );
-            setMaintainGD5_STATUS(newValue);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    
-    
-    
-    // =================================================================================================================== 
-
-    
 
     // =================================================================================================================== 
 
@@ -1516,26 +1157,7 @@ const ChangeMaintainGD3_STATUS = async () => {
             setExceedThresholdEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_DayValue >= highValue || EVC_02_Vm_of_Last_DayValue <= lowValue);
         }
     }, [EVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day_Low, maintainEVC_02_Vm_of_Last_Day]);
-    
-    
-    
-    
-    
-    const ChangeMaintainEVC_02_Vm_of_Last_Day = async () => {
-        try {
-            const newValue = !maintainEVC_02_Vm_of_Last_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                { EVC_02_Vm_of_Last_Day_Maintain: newValue }
-            );
-            setMaintainEVC_02_Vm_of_Last_Day(newValue);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    
-    
-    
+
     // =================================================================================================================== 
     
 // =================================================================================================================== 
@@ -1557,21 +1179,6 @@ if (!isNaN(ESDValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD) {
 }, [ESD, ESD_High, ESD_Low, maintainESD]);
 
 
-
-
-
-const ChangeMaintainESD = async () => {
-try {
- const newValue = !maintainESD;
- await httpApi.post(
-     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-     { ESD_Maintain: newValue }
- );
- setMaintainESD(newValue);
-} catch (error) {
- console.error(error);
-}
-};
 // =================================================================================================================== 
 const [VAPORIZER_1, setVAPORIZER_1] = useState<string | null>(null);
 const [VAPORIZER_1_High, setVAPORIZER_1_High] = useState<number | null>(null);
@@ -1589,22 +1196,6 @@ useEffect(() => {
   }
 }, [VAPORIZER_1, VAPORIZER_1_High, VAPORIZER_1_Low, maintainVAPORIZER_1]);
 
-
-
-
-
-const ChangeMaintainVAPORIZER_1 = async () => {
-  try {
-      const newValue = !maintainVAPORIZER_1;
-      await httpApi.post(
-          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-          { VAPORIZER_1_Maintain: newValue }
-      );
-      setMaintainVAPORIZER_1(newValue);
-  } catch (error) {
-      console.error(error);
-  }
-};
 
 
 // =================================================================================================================== 
@@ -1625,23 +1216,6 @@ useEffect(() => {
       setExceedThresholdVAPORIZER_2(VAPORIZER_2Value >= highValue || VAPORIZER_2Value <= lowValue);
   }
 }, [VAPORIZER_2, VAPORIZER_2_High, VAPORIZER_2_Low, maintainVAPORIZER_2]);
-
-
-
-
-
-const ChangeMaintainVAPORIZER_2 = async () => {
-  try {
-      const newValue = !maintainVAPORIZER_2;
-      await httpApi.post(
-          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-          { VAPORIZER_2_Maintain: newValue }
-      );
-      setMaintainVAPORIZER_2(newValue);
-  } catch (error) {
-      console.error(error);
-  }
-};
 
 
 // =================================================================================================================== 
@@ -1665,24 +1239,6 @@ useEffect(() => {
 }, [VAPORIZER_3, VAPORIZER_3_High, VAPORIZER_3_Low, maintainVAPORIZER_3]);
 
 
-
-
-
-const ChangeMaintainVAPORIZER_3 = async () => {
-  try {
-      const newValue = !maintainVAPORIZER_3;
-      await httpApi.post(
-          `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-          { VAPORIZER_3_Maintain: newValue }
-      );
-      setMaintainVAPORIZER_3(newValue);
-  } catch (error) {
-      console.error(error);
-  }
-};
-
-
-
    // =================================================================================================================== 
 
 
@@ -1702,23 +1258,6 @@ const ChangeMaintainVAPORIZER_3 = async () => {
        }
    }, [VAPORIZER_4, VAPORIZER_4_High, VAPORIZER_4_Low, maintainVAPORIZER_4]);
    
-   
-   
-   
-   
-   const ChangeMaintainVAPORIZER_4 = async () => {
-       try {
-           const newValue = !maintainVAPORIZER_4;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { VAPORIZER_4_Maintain: newValue }
-           );
-           setMaintainVAPORIZER_4(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
-
 
    
    // =================================================================================================================== 
@@ -1743,18 +1282,6 @@ const ChangeMaintainVAPORIZER_3 = async () => {
    
    
    
-   const ChangeMaintainCOOLING_V = async () => {
-       try {
-           const newValue = !maintainCOOLING_V;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { COOLING_V_Maintain: newValue }
-           );
-           setMaintainCOOLING_V(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
 
    
    // =================================================================================================================== 
@@ -1776,24 +1303,7 @@ const ChangeMaintainVAPORIZER_3 = async () => {
        }
    }, [PERCENT_LPG, PERCENT_LPG_High, PERCENT_LPG_Low, maintainPERCENT_LPG]);
    
-   
-   
-   
-   
-   const ChangeMaintainPERCENT_LPG = async () => {
-       try {
-           const newValue = !maintainPERCENT_LPG;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { PERCENT_LPG_Maintain: newValue }
-           );
-           setMaintainPERCENT_LPG(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
 
-   
    // =================================================================================================================== 
 
    const [FCV_3001, setFCV_3001] = useState<string | null>(null);
@@ -1811,23 +1321,6 @@ const ChangeMaintainVAPORIZER_3 = async () => {
            setExceedThresholdFCV_3001(FCV_3001Value >= highValue || FCV_3001Value <= lowValue);
        }
    }, [FCV_3001, FCV_3001_High, FCV_3001_Low, maintainFCV_3001]);
-   
-   
-   
-   
-   
-   const ChangeMaintainFCV_3001 = async () => {
-       try {
-           const newValue = !maintainFCV_3001;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { FCV_3001_Maintain: newValue }
-           );
-           setMaintainFCV_3001(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
 
    // =================================================================================================================== 
 
@@ -1847,23 +1340,6 @@ const ChangeMaintainVAPORIZER_3 = async () => {
        }
    }, [PERCENT_AIR, PERCENT_AIR_High, PERCENT_AIR_Low, maintainPERCENT_AIR]);
    
-   
-   
-   
-   
-   const ChangeMaintainPERCENT_AIR = async () => {
-       try {
-           const newValue = !maintainPERCENT_AIR;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { PERCENT_AIR_Maintain: newValue }
-           );
-           setMaintainPERCENT_AIR(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
-
 
    // =================================================================================================================== 
    
@@ -1889,18 +1365,6 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
    
    
    
-   const ChangeMaintainHV_3001 = async () => {
-       try {
-           const newValue = !maintainHV_3001;
-           await httpApi.post(
-               `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-               { HV_3001_Maintain: newValue }
-           );
-           setMaintainHV_3001(newValue);
-       } catch (error) {
-           console.error(error);
-       }
-   };
 
 
 
@@ -1928,18 +1392,6 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
  
  
  
- const ChangeMaintainFCV_MODE = async () => {
-     try {
-         const newValue = !maintainFCV_MODE;
-         await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-             { FCV_MODE_Maintain: newValue }
-         );
-         setMaintainFCV_MODE(newValue);
-     } catch (error) {
-         console.error(error);
-     }
- };
 
 
 
@@ -1967,18 +1419,6 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
      
      
      
-     const ChangeMaintainTOTAL_CNG = async () => {
-         try {
-             const newValue = !maintainTOTAL_CNG;
-             await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                 { TOTAL_CNG_Maintain: newValue }
-             );
-             setMaintainTOTAL_CNG(newValue);
-         } catch (error) {
-             console.error(error);
-         }
-     };
 
 // =================================================================================================================== 
 
@@ -2004,18 +1444,6 @@ useEffect(() => {
 
 
 
-const ChangeMaintainTM3002_CNG = async () => {
- try {
-     const newValue = !maintainTM3002_CNG;
-     await httpApi.post(
-         `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-         { TM3002_CNG_Maintain: newValue }
-     );
-     setMaintainTM3002_CNG(newValue);
- } catch (error) {
-     console.error(error);
- }
-};
 
 
 // =================================================================================================================== 
@@ -2042,18 +1470,6 @@ const ChangeMaintainTM3002_CNG = async () => {
  
  
  
- const ChangeMaintainTM3003_CNG = async () => {
-     try {
-         const newValue = !maintainTM3003_CNG;
-         await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-             { TM3003_CNG_Maintain: newValue }
-         );
-         setMaintainTM3003_CNG(newValue);
-     } catch (error) {
-         console.error(error);
-     }
- };
 
 
 // =================================================================================================================== 
@@ -2079,18 +1495,6 @@ if (!isNaN(WB_SetpointValue) && !isNaN(highValue) && !isNaN(lowValue) && !mainta
 
 
 
-const ChangeMaintainWB_Setpoint = async () => {
-try {
- const newValue = !maintainWB_Setpoint;
- await httpApi.post(
-     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-     { WB_Setpoint_Maintain: newValue }
- );
- setMaintainWB_Setpoint(newValue);
-} catch (error) {
- console.error(error);
-}
-};
 
 
 // =================================================================================================================== 
@@ -2120,18 +1524,6 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
 
 
-const ChangeMaintainRATIO_MODE = async () => {
-try {
- const newValue = !maintainRATIO_MODE;
- await httpApi.post(
-     `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-     { RATIO_MODE_Maintain: newValue }
- );
- setMaintainRATIO_MODE(newValue);
-} catch (error) {
- console.error(error);
-}
-};
 
  
  
@@ -2163,18 +1555,6 @@ try {
   
   
   
-  const ChangeMaintainHR_BC = async () => {
-      try {
-          const newValue = !maintainHR_BC;
-          await httpApi.post(
-              `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-              { HR_BC_Maintain: newValue }
-          );
-          setMaintainHR_BC(newValue);
-      } catch (error) {
-          console.error(error);
-      }
-  };
   
  // =================================================================================================================== 
 
@@ -2200,18 +1580,6 @@ try {
  
  
  
- const ChangeMaintainSD = async () => {
-     try {
-         const newValue = !maintainSD;
-         await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-             { SD_Maintain: newValue }
-         );
-         setMaintainSD(newValue);
-     } catch (error) {
-         console.error(error);
-     }
- };
 
  // =================================================================================================================== 
 
@@ -2237,18 +1605,6 @@ try {
  
  
  
- const ChangeMaintainESD_3001 = async () => {
-     try {
-         const newValue = !maintainESD_3001;
-         await httpApi.post(
-             `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-             { ESD_3001_Maintain: newValue }
-         );
-         setMaintainESD_3001(newValue);
-     } catch (error) {
-         console.error(error);
-     }
- };
  
       // =================================================================================================================== 
       
@@ -2276,18 +1632,6 @@ try {
      
      
      
-     const ChangeMaintainWIS_Calorimeter = async () => {
-         try {
-             const newValue = !maintainWIS_Calorimeter;
-             await httpApi.post(
-                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                 { WIS_Calorimeter_Maintain: newValue }
-             );
-             setMaintainWIS_Calorimeter(newValue);
-         } catch (error) {
-             console.error(error);
-         }
-     };
 
      // =================================================================================================================== 
            // =================================================================================================================== 
@@ -2315,18 +1659,6 @@ try {
            
            
            
-           const ChangeMaintainCVS_Calorimeter = async () => {
-               try {
-                   const newValue = !maintainCVS_Calorimeter;
-                   await httpApi.post(
-                       `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                       { CVS_Calorimeter_Maintain: newValue }
-                   );
-                   setMaintainCVS_Calorimeter(newValue);
-               } catch (error) {
-                   console.error(error);
-               }
-           };
       
       
            // =================================================================================================================== 
@@ -2357,18 +1689,6 @@ try {
                      
                      
                      
-                     const ChangeMaintainSG_Calorimeter = async () => {
-                         try {
-                             const newValue = !maintainSG_Calorimeter;
-                             await httpApi.post(
-                                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                                 { SG_Calorimeter_Maintain: newValue }
-                             );
-                             setMaintainSG_Calorimeter(newValue);
-                         } catch (error) {
-                             console.error(error);
-                         }
-                     };
                 
                 
                      // =================================================================================================================== 
@@ -2397,31 +1717,8 @@ try {
                }
            }, [TD_4072_Conn_STT, TD_4072_Conn_STT_High, TD_4072_Conn_STT_Low, maintainTD_4072_Conn_STT]);
            
-           
-           
-           
-           
-           const ChangeMaintainTD_4072_Conn_STT = async () => {
-               try {
-                   const newValue = !maintainTD_4072_Conn_STT;
-                   await httpApi.post(
-                       `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                       { TD_4072_Conn_STT_Maintain: newValue }
-                   );
-                   setMaintainTD_4072_Conn_STT(newValue);
-               } catch (error) {
-                   console.error(error);
-               }
-           };
-      
-      
+
            // =================================================================================================================== 
-
-
-           
-
-                     // =================================================================================================================== 
-
 
                      const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
                      const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
@@ -2438,32 +1735,8 @@ try {
                              setExceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
                          }
                      }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
-                     
-                     
-                     
-                     
-                     
-                     const ChangeMaintainPLC_Conn_STT = async () => {
-                         try {
-                             const newValue = !maintainPLC_Conn_STT;
-                             await httpApi.post(
-                                 `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/SERVER_SCOPE`,
-                                 { PLC_Conn_STT_Maintain: newValue }
-                             );
-                             setMaintainPLC_Conn_STT(newValue);
-                         } catch (error) {
-                             console.error(error);
-                         }
-                     };
-                
-                
-                     // =================================================================================================================== 
- // =================================================================================================================== 
 
-// =================================================================================================================== 
        
-       
-
      //======================================================================================================================
 
     const tagNamePLC = {
@@ -2490,9 +1763,6 @@ try {
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
         SDV_3003:"Shutdown Valve SDV-3003 (0: Close - 1: Open)",
-
-        
-        
 
 
         GD1_STATUS:"GD-3002 Status (0: Normal - 1: Alarm)",
@@ -3540,9 +2810,7 @@ try {
                     </DataTable>
             </div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+      
         </div>
     );
 }

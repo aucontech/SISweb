@@ -432,7 +432,7 @@ export default function SetAttribute() {
                 <InputText
                 disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
-                    placeholder="High"
+                    
                     step="0.1"
                     type="Name"
                     value={inputValue}
@@ -459,7 +459,7 @@ export default function SetAttribute() {
                 <InputText
                 disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
-                    placeholder="High"
+                    
                     step="0.1"
                     type="Name"
                     value={inputValue2}
@@ -486,7 +486,7 @@ export default function SetAttribute() {
                 <InputText
                 disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
-                    placeholder="High"
+                    
                     step="0.1"
                     type="Name"
                     value={inputValue3}
@@ -513,7 +513,7 @@ export default function SetAttribute() {
                 <InputText
                 disabled={AuthUpdatePCV}
                     style={combineCss.PCV}
-                    placeholder="High"
+                    
                     step="0.1"
                     type="Name"
                     value={inputGetwayPhone}

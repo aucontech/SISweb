@@ -50,6 +50,7 @@ import BallValue03 from "../BallValueSNG_BINHDUONG/BallValue03";
 import PSV01 from "../BallValueSNG_BINHDUONG/PSV01";
 import PSV02 from "../BallValueSNG_BINHDUONG/PSV02";
 import AlarmSNG_BINHDUONG from "@/layout/AlarmBell/AlarmSNG_BINHDUONG";
+import { nameValue } from "@/app/(main)/SetupData/namValue";
 
 interface StateMap {
     [key: string]:
@@ -87,6 +88,7 @@ export default function Graphic_SNG_BINHDUONG() {
     const [SDV, setSDV] = useState<string | null>(null);
 
 
+    const [TOTAL_SNG, setTOTAL_SNG] = useState<any>();
  
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
 
@@ -218,7 +220,7 @@ export default function Graphic_SNG_BINHDUONG() {
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
 
-            
+                        TOTAL_SNG: setTOTAL_SNG,
                         PLC_Conn_STT: setPLC_STT,
 
                         PERCENT_AIR: setAIR,
@@ -1326,6 +1328,81 @@ useEffect(() => {
                 };
             }
 
+
+
+            if (node.id === "TOTAL_VOLUME") {
+                const roundedPT02 =
+                    WB_Setpoint !== null
+                        ? parseFloat(WB_Setpoint).toFixed(2)
+                        : "";
+
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        exceedThresholdWB_Setpoint &&
+                                        !maintainWB_Setpoint
+                                            ? "#ff5656"
+                                            : maintainWB_Setpoint
+                                            ? "orange"
+                                            : "transparent",
+                                    cursor: "pointer",
+                                }}
+                                // onClick={() => confirmPT_1902()}
+                            >
+                                <div
+                                    style={{
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    <p style={{ color: colorNameValue }}>
+                                    TOTAL SNG
+                                    </p>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        marginTop: 5,
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            color: colorData,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                                                          {TOTAL_SNG}
+
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: colorNameValue,
+                                            position: "relative",
+                                        }}
+                                    >
+                                       {KeyGas.SM3}
+                                    </p>
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
             if (node.id === "WB_Setpoint") {
                 const roundedPT02 =
                     WB_Setpoint !== null
@@ -2293,6 +2370,7 @@ useEffect(() => {
             data: {
                 label: <div></div>,
             },
+            zIndex:9999999,
 
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
@@ -2306,7 +2384,7 @@ useEffect(() => {
             data: {
                 label: <div></div>,
             },
-
+zIndex:9999999,
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
@@ -2669,7 +2747,7 @@ useEffect(() => {
                 ),
             },
             position: positions.WB_1001,
-
+zIndex:999999,
             style: {
                 border: background,
                 width: 300,
@@ -2979,8 +3057,8 @@ useEffect(() => {
                             fontWeight: 600,
                         }}
                     >
-                        TOTAL VOLUME
-                        <div style={{ marginTop: 10 }}>Waiting...</div>
+                        TOTAL SNG
+                        <div style={{ marginTop: 10 }}></div>
                     </div>
                 ),
             },
