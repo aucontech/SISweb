@@ -637,7 +637,6 @@ export default function ScoreCard_Otsuka() {
                         EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
                         EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
                         EVC_01_Pressure: setEVC_01_Pressure,
-
                         EVC_01_Temperature: setEVC_01_Temperature,
                         EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
                         EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
@@ -653,7 +652,6 @@ export default function ScoreCard_Otsuka() {
                         EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
                         EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
                         EVC_02_Pressure: setEVC_02_Pressure,
-
                         EVC_02_Temperature: setEVC_02_Temperature,
                         EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
                         EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
@@ -667,17 +665,16 @@ export default function ScoreCard_Otsuka() {
                         GD1: setGD1,
                         GD2: setGD2,
                         GD3: setGD3,
-
                         PT1: setPT1,
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
-
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
                         DI_UPS_ALARM: setDI_UPS_ALARM,
                         UPS_Mode: setUPS_Mode,
+
+
                         DI_MAP_1: setDI_MAP_1,
-                        
                         DI_SELECT_SW: setDI_SELECT_SW,
                         DI_RESET: setDI_RESET,
                         Emergency_NO: setEmergency_NO,

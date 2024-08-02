@@ -623,7 +623,7 @@ export default function SetUpdata_CNG_BINHDUONG() {
             setEVC_01_Remain_Battery_Service_Life_High(EVC_01_Remain_Battery_Service_Life_High?.value || null);
             const EVC_01_Remain_Battery_Service_Life_Low = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
             setEVC_01_Remain_Battery_Service_Life_Low(EVC_01_Remain_Battery_Service_Life_Low?.value || null);
-            const MaintainEVC_01_Remain_Battery_Service_Life = res.data.find(
+            const maintainEVC_01_Remain_Battery_Service_Life = res.data.find(
                 (item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Maintain"
             );
 
@@ -1022,7 +1022,7 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
             setMaintainEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Maintain?.value || false);
 
-            setMaintainEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Maintain?.value || false);
+            setmaintainEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Maintain?.value || false);
 
 
             setMaintainEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Maintain?.value || false);
@@ -1030,18 +1030,18 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
             setMaintainEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false);
 
-            setMaintainEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Maintain?.value || false);
 
 
-            setMaintainEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false);
 
-            setMaintainEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Maintain?.value || false);
+            setmaintainEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Maintain?.value || false);
 
-            setMaintainEVC_01_Pressure(EVC_01_Pressure_Maintain?.value || false);
+            setmaintainEVC_01_Pressure(EVC_01_Pressure_Maintain?.value || false);
 
-            setMaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
+            setmaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
 
-            setMaintainEVC_01_Remain_Battery_Service_Life(MaintainEVC_01_Remain_Battery_Service_Life?.value || false);
+            setmaintainEVC_01_Remain_Battery_Service_Life(maintainEVC_01_Remain_Battery_Service_Life?.value || false);
 
 
             setMaintainPIT_2006(MaintainPIT_2006?.value || false);
@@ -1100,495 +1100,313 @@ export default function SetUpdata_CNG_BINHDUONG() {
             }
         };
 
- // =================================================================================================================== 
 
-    const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
-const [audioPlayingEVC_01_Remain_Battery_Service_Life, setAudioPlayingEVC_01_Remain_Battery_Service_Life] = useState(false);
-const [inputValueEVC_01_Remain_Battery_Service_Life, setInputValueEVC_01_Remain_Battery_Service_Life] = useState<any>();
-const [inputValue2EVC_01_Remain_Battery_Service_Life, setInputValue2EVC_01_Remain_Battery_Service_Life] = useState<any>();
+
+        const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
+const [inputValueEVC_01_Remain_Battery_Service_Life, setinputValueEVC_01_Remain_Battery_Service_Life] = useState<any>();
+const [inputValue2EVC_01_Remain_Battery_Service_Life, setinputValue2EVC_01_Remain_Battery_Service_Life] = useState<any>();
 const [EVC_01_Remain_Battery_Service_Life_High, setEVC_01_Remain_Battery_Service_Life_High] = useState<number | null>(null);
 const [EVC_01_Remain_Battery_Service_Life_Low, setEVC_01_Remain_Battery_Service_Life_Low] = useState<number | null>(null);
-const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setExceedThresholdEVC_01_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setexceedThresholdEVC_01_Remain_Battery_Service_Life] = useState(false); 
+const [maintainEVC_01_Remain_Battery_Service_Life, setmaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
 
-const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life as any);
+    const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
+
+    if (!isNaN(EVC_01_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Remain_Battery_Service_Life) {
+        setexceedThresholdEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_LifeValue >= highValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low, maintainEVC_01_Remain_Battery_Service_Life]);
+
+const handleInputChangeEVC_01_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Remain_Battery_Service_Life(event.target.value);
+};
+
+const handleInputChange2EVC_01_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Remain_Battery_Service_Life(event.target.value);
+};
+
+const ChangemaintainEVC_01_Remain_Battery_Service_Life = async () => {
+    try {
+        const newValue = !maintainEVC_01_Remain_Battery_Service_Life;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+            { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
+        );
+        setmaintainEVC_01_Remain_Battery_Service_Life(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+     // =================================================================================================================== 
 
 
-    useEffect(() => {
-        if (typeof EVC_01_Remain_Battery_Service_Life_High === 'string' && typeof EVC_01_Remain_Battery_Service_Life_Low === 'string' && EVC_01_Remain_Battery_Service_Life !== null && maintainEVC_01_Remain_Battery_Service_Life === false
-        ) {
-            const highValue = parseFloat(EVC_01_Remain_Battery_Service_Life_High);
-            const lowValue = parseFloat(EVC_01_Remain_Battery_Service_Life_Low);
-            const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                    if (!audioPlayingEVC_01_Remain_Battery_Service_Life) {
-                        audioRef.current?.play();
-                        setAudioPlayingEVC_01_Remain_Battery_Service_Life(true);
-                        setExceedThresholdEVC_01_Remain_Battery_Service_Life(true);
-                    }
-                } else {
-                    setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
-                    setExceedThresholdEVC_01_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life, audioPlayingEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
+const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
+const [inputValueEVC_01_Temperature, setinputValueEVC_01_Temperature] = useState<any>();
+const [inputValue2EVC_01_Temperature, setinputValue2EVC_01_Temperature] = useState<any>();
+const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
+const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); 
+const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (audioPlayingEVC_01_Remain_Battery_Service_Life) {
-            const audioEnded = () => {
-                setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingEVC_01_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+    const highValue = EVC_01_Temperature_High ?? NaN;
+    const lowValue = EVC_01_Temperature_Low ?? NaN;
 
-    const handleInputChangeEVC_01_Remain_Battery_Service_Life = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueEVC_01_Remain_Battery_Service_Life(newValue);
-    };
+    if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+        setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+    }
+}, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
 
-    const handleInputChange2EVC_01_Remain_Battery_Service_Life = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputValue2EVC_01_Remain_Battery_Service_Life(newValue2);
-    };
-    const ChangeMaintainEVC_01_Remain_Battery_Service_Life = async () => {
-        try {
-            const newValue = !maintainEVC_01_Remain_Battery_Service_Life;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
-            );
-            setMaintainEVC_01_Remain_Battery_Service_Life(newValue);
-            
-        } catch (error) {}
-    };
+const handleInputChangeEVC_01_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Temperature(event.target.value);
+};
+
+const handleInputChange2EVC_01_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Temperature(event.target.value);
+};
+
+const ChangemaintainEVC_01_Temperature = async () => {
+    try {
+        const newValue = !maintainEVC_01_Temperature;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+            { EVC_01_Temperature_Maintain: newValue }
+        );
+        setmaintainEVC_01_Temperature(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+     // =================================================================================================================== 
+
+
+const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
+const [inputValueEVC_01_Pressure, setinputValueEVC_01_Pressure] = useState<any>();
+const [inputValue2EVC_01_Pressure, setinputValue2EVC_01_Pressure] = useState<any>();
+const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
+const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] = useState(false); 
+const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+    const highValue = EVC_01_Pressure_High ?? NaN;
+    const lowValue = EVC_01_Pressure_Low ?? NaN;
+
+    if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+        setexceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+    }
+}, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+
+const handleInputChangeEVC_01_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Pressure(event.target.value);
+};
+
+const handleInputChange2EVC_01_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Pressure(event.target.value);
+};
+
+const ChangemaintainEVC_01_Pressure = async () => {
+    try {
+        const newValue = !maintainEVC_01_Pressure;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+            { EVC_01_Pressure_Maintain: newValue }
+        );
+        setmaintainEVC_01_Pressure(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+ 
+
 
 
      // =================================================================================================================== 
 
-     const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
-     const [audioPlayingEVC_01_Temperature, setAudioPlayingEVC_01_Temperature] = useState(false);
-     const [inputValueEVC_01_Temperature, setInputValueEVC_01_Temperature] = useState<any>();
-     const [inputValue2EVC_01_Temperature, setInputValue2EVC_01_Temperature] = useState<any>();
-     const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
-     const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
-     const [exceedThresholdTemperature, setExceedThresholdTemperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
+     const [inputValueEVC_01_Volume_at_Base_Condition, setinputValueEVC_01_Volume_at_Base_Condition] = useState<any>();
+     const [inputValue2EVC_01_Volume_at_Base_Condition, setinputValue2EVC_01_Volume_at_Base_Condition] = useState<any>();
+     const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
+     const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+     const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
+     const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
      
-     const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
+     useEffect(() => {
+         const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+         const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+         const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+     
+         if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+             setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+         }
+     }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+     
+     const handleInputChangeEVC_01_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setinputValueEVC_01_Volume_at_Base_Condition(event.target.value);
+     };
+     
+     const handleInputChange2EVC_01_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setinputValue2EVC_01_Volume_at_Base_Condition(event.target.value);
+     };
+     
+     const ChangemaintainEVC_01_Volume_at_Base_Condition = async () => {
+         try {
+             const newValue = !maintainEVC_01_Volume_at_Base_Condition;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                 { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
+             );
+             setmaintainEVC_01_Volume_at_Base_Condition(newValue);
+         } catch (error) {
+             console.error(error);
+         }
+     };
      
      
-         useEffect(() => {
-             if (typeof EVC_01_Temperature_High === 'string' && typeof EVC_01_Temperature_Low === 'string' && EVC_01_Temperature !== null && maintainEVC_01_Temperature === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Temperature_High);
-                 const lowValue = parseFloat(EVC_01_Temperature_Low);
-                 const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
-                     if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Temperature) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Temperature(true);
-                             setExceedThresholdTemperature(true);
-                         }
-                     } else {
-                        setAudioPlayingEVC_01_Temperature(false);
-                         setExceedThresholdTemperature(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Temperature_High, EVC_01_Temperature, audioPlayingEVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
-     
-         useEffect(() => {
-             if (audioPlayingEVC_01_Temperature) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Temperature(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Temperature]);
-     
-         const handleInputChangeEVC_01_Temperature = (event: any) => {
-             const newValue = event.target.value;
-             setInputValueEVC_01_Temperature(newValue);
-         };
-     
-         const handleInputChange2EVC_01_Temperature = (event: any) => {
-             const newValue2 = event.target.value;
-             setInputValue2EVC_01_Temperature(newValue2);
-         };
-         const ChangeMaintainEVC_01_Temperature = async () => {
-             try {
-                 const newValue = !maintainEVC_01_Temperature;
-                 await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                     { EVC_01_Temperature_Maintain: newValue }
-                 );
-                 setMaintainEVC_01_Temperature(newValue);
-                 
-             } catch (error) {}
-         };
 
 
      // =================================================================================================================== 
-
-
-     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-     const [audioPlayingEVC_01_Pressure, setAudioPlayingEVC_01_Pressure] = useState(false);
-     const [inputValueEVC_01_Pressure, setInputValueEVC_01_Pressure] = useState<any>();
-     const [inputValue2EVC_01_Pressure, setInputValue2EVC_01_Pressure] = useState<any>();
-     const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
-     const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
-     const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
+     const [inputValueEVC_01_Volume_at_Measurement_Condition, setinputValueEVC_01_Volume_at_Measurement_Condition] = useState<any>();
+     const [inputValue2EVC_01_Volume_at_Measurement_Condition, setinputValue2EVC_01_Volume_at_Measurement_Condition] = useState<any>();
+     const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+     const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+     const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
+     const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
      
-     const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
+     useEffect(() => {
+         const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+         const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+         const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
      
+         if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+             setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+         }
+     }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
      
-         useEffect(() => {
-             if (typeof EVC_01_Pressure_High === 'string' && typeof EVC_01_Pressure_Low === 'string' && EVC_01_Pressure !== null && maintainEVC_01_Pressure === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Pressure_High);
-                 const lowValue = parseFloat(EVC_01_Pressure_Low);
-                 const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
-                     if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Pressure) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Pressure(true);
-                             setExceedThresholdEVC_01_Pressure(true);
-                         }
-                     } else {
-                        setAudioPlayingEVC_01_Pressure(false);
-                        setExceedThresholdEVC_01_Pressure(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Pressure_High, EVC_01_Pressure, audioPlayingEVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
+     const handleInputChangeEVC_01_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setinputValueEVC_01_Volume_at_Measurement_Condition(event.target.value);
+     };
      
-         useEffect(() => {
-             if (audioPlayingEVC_01_Pressure) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Pressure(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Pressure]);
+     const handleInputChange2EVC_01_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setinputValue2EVC_01_Volume_at_Measurement_Condition(event.target.value);
+     };
      
-         const handleInputChangeEVC_01_Pressure = (event: any) => {
-             const newValue = event.target.value;
-             setInputValueEVC_01_Pressure(newValue);
-         };
-     
-         const handleInputChange2EVC_01_Pressure = (event: any) => {
-             const newValue2 = event.target.value;
-             setInputValue2EVC_01_Pressure(newValue2);
-         };
-         const ChangeMaintainEVC_01_Pressure = async () => {
-             try {
-                 const newValue = !maintainEVC_01_Pressure;
-                 await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                     { EVC_01_Pressure_Maintain: newValue }
-                 );
-                 setMaintainEVC_01_Pressure(newValue);
-                 
-             } catch (error) {}
-         };
-
-
-     // =================================================================================================================== 
-
-
-
-          const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Volume_at_Base_Condition, setAudioPlayingEVC_01_Volume_at_Base_Condition] = useState(false);
-          const [inputValueEVC_01_Volume_at_Base_Condition, setInputValueEVC_01_Volume_at_Base_Condition] = useState<any>();
-          const [inputValue2EVC_01_Volume_at_Base_Condition, setInputValue2EVC_01_Volume_at_Base_Condition] = useState<any>();
-          const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
-          const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          
-          const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
-          
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Base_Condition_High === 'string' && typeof EVC_01_Volume_at_Base_Condition_Low === 'string' && EVC_01_Volume_at_Base_Condition !== null && maintainEVC_01_Volume_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Base_Condition_Low);
-                      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Base_Condition(true);
-                                  setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
-                             setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, audioPlayingEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Base_Condition]);
-          
-              const handleInputChangeEVC_01_Volume_at_Base_Condition = (event: any) => {
-                  const newValue = event.target.value;
-                  setInputValueEVC_01_Volume_at_Base_Condition(newValue);
-              };
-          
-              const handleInputChange2EVC_01_Volume_at_Base_Condition = (event: any) => {
-                  const newValue2 = event.target.value;
-                  setInputValue2EVC_01_Volume_at_Base_Condition(newValue2);
-              };
-              const ChangeMaintainEVC_01_Volume_at_Base_Condition = async () => {
-                  try {
-                      const newValue = !maintainEVC_01_Volume_at_Base_Condition;
-                      await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                          { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
-                      );
-                      setMaintainEVC_01_Volume_at_Base_Condition(newValue);
-                      
-                  } catch (error) {}
-              };
-     
+     const ChangemaintainEVC_01_Volume_at_Measurement_Condition = async () => {
+         try {
+             const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
+             await httpApi.post(
+                 `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                 { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
+             );
+             setmaintainEVC_01_Volume_at_Measurement_Condition(newValue);
+         } catch (error) {
+             console.error(error);
+         }
+     };
      
           // =================================================================================================================== 
 
-
-          const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Volume_at_Measurement_Condition, setAudioPlayingEVC_01_Volume_at_Measurement_Condition] = useState(false);
-          const [inputValueEVC_01_Volume_at_Measurement_Condition, setInputValueEVC_01_Volume_at_Measurement_Condition] = useState<any>();
-          const [inputValue2EVC_01_Volume_at_Measurement_Condition, setInputValue2EVC_01_Volume_at_Measurement_Condition] = useState<any>();
-          const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-          const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          
-          const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
-          
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_01_Volume_at_Measurement_Condition_Low === 'string' && EVC_01_Volume_at_Measurement_Condition !== null && maintainEVC_01_Volume_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_Low);
-                      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Measurement_Condition(true);
-                                  setExceedThresholdEVC_01_Volume_at_Measurement_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
-                             setExceedThresholdEVC_01_Volume_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition, audioPlayingEVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Measurement_Condition]);
-          
-              const handleInputChangeEVC_01_Volume_at_Measurement_Condition = (event: any) => {
-                  const newValue = event.target.value;
-                  setInputValueEVC_01_Volume_at_Measurement_Condition(newValue);
-              };
-          
-              const handleInputChange2EVC_01_Volume_at_Measurement_Condition = (event: any) => {
-                  const newValue2 = event.target.value;
-                  setInputValue2EVC_01_Volume_at_Measurement_Condition(newValue2);
-              };
-              const ChangeMaintainEVC_01_Volume_at_Measurement_Condition = async () => {
-                  try {
-                      const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
-                      await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                          { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
-                      );
-                      setMaintainEVC_01_Volume_at_Measurement_Condition(newValue);
-                      
-                  } catch (error) {}
-              };
-     
-     
-          // =================================================================================================================== 
 
           const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Flow_at_Base_Condition, setAudioPlayingEVC_01_Flow_at_Base_Condition] = useState(false);
-          const [inputValueEVC_01_Flow_at_Base_Condition, setInputValueEVC_01_Flow_at_Base_Condition] = useState<any>();
-          const [inputValue2EVC_01_Flow_at_Base_Condition, setInputValue2EVC_01_Flow_at_Base_Condition] = useState<any>();
+          const [inputValueEVC_01_Flow_at_Base_Condition, setinputValueEVC_01_Flow_at_Base_Condition] = useState<any>();
+          const [inputValue2EVC_01_Flow_at_Base_Condition, setinputValue2EVC_01_Flow_at_Base_Condition] = useState<any>();
           const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
           const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Flow_at_Base_Condition, setExceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
+          const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
           
-          const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+          useEffect(() => {
+              const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+              const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+              const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
           
+              if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+                  setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+              }
+          }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
           
-              useEffect(() => {
-                  if (typeof EVC_01_Flow_at_Base_Condition_High === 'string' && typeof EVC_01_Flow_at_Base_Condition_Low === 'string' && EVC_01_Flow_at_Base_Condition !== null && maintainEVC_01_Flow_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Flow_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Flow_at_Base_Condition_Low);
-                      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Flow_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Flow_at_Base_Condition(true);
-                                  setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
-                             setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, audioPlayingEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
+          const handleInputChangeEVC_01_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+              setinputValueEVC_01_Flow_at_Base_Condition(event.target.value);
+          };
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Flow_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Flow_at_Base_Condition]);
+          const handleInputChange2EVC_01_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+              setinputValue2EVC_01_Flow_at_Base_Condition(event.target.value);
+          };
           
-              const handleInputChangeEVC_01_Flow_at_Base_Condition = (event: any) => {
-                  const newValue = event.target.value;
-                  setInputValueEVC_01_Flow_at_Base_Condition(newValue);
-              };
+          const ChangemaintainEVC_01_Flow_at_Base_Condition = async () => {
+              try {
+                  const newValue = !maintainEVC_01_Flow_at_Base_Condition;
+                  await httpApi.post(
+                      `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                      { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
+                  );
+                  setmaintainEVC_01_Flow_at_Base_Condition(newValue);
+              } catch (error) {
+                  console.error(error);
+              }
+          };
           
-              const handleInputChange2EVC_01_Flow_at_Base_Condition = (event: any) => {
-                  const newValue2 = event.target.value;
-                  setInputValue2EVC_01_Flow_at_Base_Condition(newValue2);
-              };
-              const ChangeMaintainEVC_01_Flow_at_Base_Condition = async () => {
-                  try {
-                      const newValue = !maintainEVC_01_Flow_at_Base_Condition;
-                      await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                          { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
-                      );
-                      setMaintainEVC_01_Flow_at_Base_Condition(newValue);
-                      
-                  } catch (error) {}
-              };
-     
-     
+
+
+
           // =================================================================================================================== 
+
 
 
           const [EVC_01_Vm_of_Current_Day, setEVC_01_Vm_of_Current_Day] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Vm_of_Current_Day, setAudioPlayingEVC_01_Vm_of_Current_Day] = useState(false);
-          const [inputValueEVC_01_Vm_of_Current_Day, setInputValueEVC_01_Vm_of_Current_Day] = useState<any>();
-          const [inputValue2EVC_01_Vm_of_Current_Day, setInputValue2EVC_01_Vm_of_Current_Day] = useState<any>();
+          const [inputValueEVC_01_Vm_of_Current_Day, setinputValueEVC_01_Vm_of_Current_Day] = useState<any>();
+          const [inputValue2EVC_01_Vm_of_Current_Day, setinputValue2EVC_01_Vm_of_Current_Day] = useState<any>();
           const [EVC_01_Vm_of_Current_Day_High, setEVC_01_Vm_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_01_Vm_of_Current_Day_Low, setEVC_01_Vm_of_Current_Day_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_01_Vm_of_Current_Day, setExceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+          const [exceedThresholdEVC_01_Vm_of_Current_Day, setexceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); 
+          const [maintainEVC_01_Vm_of_Current_Day, setmaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
           
-          const [maintainEVC_01_Vm_of_Current_Day, setMaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
+          useEffect(() => {
+              const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day as any);
+              const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+              const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
           
+              if (!isNaN(EVC_01_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Current_Day) {
+                  setexceedThresholdEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_DayValue >= highValue || EVC_01_Vm_of_Current_DayValue <= lowValue);
+              }
+          }, [EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low, maintainEVC_01_Vm_of_Current_Day]);
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vm_of_Current_Day_High === 'string' && typeof EVC_01_Vm_of_Current_Day_Low === 'string' && EVC_01_Vm_of_Current_Day !== null && maintainEVC_01_Vm_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vm_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vm_of_Current_Day_Low);
-                      const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vm_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vm_of_Current_Day(true);
-                                  setExceedThresholdEVC_01_Vm_of_Current_Day(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Vm_of_Current_Day(false);
-                             setExceedThresholdEVC_01_Vm_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, audioPlayingEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
+          const handleInputChangeEVC_01_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+              setinputValueEVC_01_Vm_of_Current_Day(event.target.value);
+          };
           
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vm_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vm_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vm_of_Current_Day]);
+          const handleInputChange2EVC_01_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+              setinputValue2EVC_01_Vm_of_Current_Day(event.target.value);
+          };
           
-              const handleInputChangeEVC_01_Vm_of_Current_Day = (event: any) => {
-                  const newValue = event.target.value;
-                  setInputValueEVC_01_Vm_of_Current_Day(newValue);
-              };
+          const ChangemaintainEVC_01_Vm_of_Current_Day = async () => {
+              try {
+                  const newValue = !maintainEVC_01_Vm_of_Current_Day;
+                  await httpApi.post(
+                      `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                      { EVC_01_Vm_of_Current_Day_Maintain: newValue }
+                  );
+                  setmaintainEVC_01_Vm_of_Current_Day(newValue);
+              } catch (error) {
+                  console.error(error);
+              }
+          };
           
-              const handleInputChange2EVC_01_Vm_of_Current_Day = (event: any) => {
-                  const newValue2 = event.target.value;
-                  setInputValue2EVC_01_Vm_of_Current_Day(newValue2);
-              };
-              const ChangeMaintainEVC_01_Vm_of_Current_Day = async () => {
-                  try {
-                      const newValue = !maintainEVC_01_Vm_of_Current_Day;
-                      await httpApi.post(
-                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
-                          { EVC_01_Vm_of_Current_Day_Maintain: newValue }
-                      );
-                      setMaintainEVC_01_Vm_of_Current_Day(newValue);
-                      
-                  } catch (error) {}
-              };
-     
+
      
           // =================================================================================================================== 
+
+
+
+          
 
           const [EVC_01_Vb_of_Current_Day, setEVC_01_Vb_of_Current_Day] = useState<string | null>(null);
           const [audioPlayingEVC_01_Vb_of_Current_Day, setAudioPlayingEVC_01_Vb_of_Current_Day] = useState(false);
@@ -4665,32 +4483,32 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         setInputValue2SD_2002(SD_2002_Low); 
 
 
-        setInputValueEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_High); 
-        setInputValue2EVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Low); 
+        setinputValueEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_High); 
+        setinputValue2EVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Low); 
 
-        setInputValueEVC_01_Temperature(EVC_01_Temperature_High); 
-        setInputValue2EVC_01_Temperature(EVC_01_Temperature_Low); 
+        setinputValueEVC_01_Temperature(EVC_01_Temperature_High); 
+        setinputValue2EVC_01_Temperature(EVC_01_Temperature_Low); 
 
-        setInputValueEVC_01_Pressure(EVC_01_Pressure_High); 
-        setInputValue2EVC_01_Pressure(EVC_01_Pressure_Low); 
+        setinputValueEVC_01_Pressure(EVC_01_Pressure_High); 
+        setinputValue2EVC_01_Pressure(EVC_01_Pressure_Low); 
 
 
 
-        setInputValueEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_High); 
-        setInputValue2EVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Low); 
+        setinputValueEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_High); 
+        setinputValue2EVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Low); 
 
-        setInputValueEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_High); 
-        setInputValue2EVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Low); 
+        setinputValueEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_High); 
+        setinputValue2EVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Low); 
 
-        setInputValueEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_High); 
-        setInputValue2EVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Low); 
+        setinputValueEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_High); 
+        setinputValue2EVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Low); 
         
 
         setInputValueEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_High); 
         setInputValue2EVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Low); 
 
-        setInputValueEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_High); 
-        setInputValue2EVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Low); 
+        setinputValueEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_High); 
+        setinputValue2EVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Low); 
 
         setInputValueEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_High); 
         setInputValue2EVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Low); 
@@ -4971,7 +4789,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             fontWeight:400,
         },
         CSSEVC_01_Temperature : {
-            color:exceedThresholdTemperature && !maintainEVC_01_Temperature
+            color:exceedThresholdEVC_01_Temperature && !maintainEVC_01_Temperature
             ? "#ff5656"
             : maintainEVC_01_Temperature
             ? "orange"
@@ -5414,7 +5232,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 timeUpdate: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
     
-             modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40001	 </span> ,
+             modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40002	 </span> ,
     
             value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
@@ -5422,7 +5240,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
-             onChange={ChangeMaintainEVC_01_Remain_Battery_Service_Life}
+             onChange={ChangemaintainEVC_01_Remain_Battery_Service_Life}
              checked={maintainEVC_01_Remain_Battery_Service_Life}
          ></Checkbox>
     
@@ -5435,7 +5253,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 timeUpdate: <span style={combineCss.CSSEVC_01_Temperature} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSEVC_01_Temperature}>Temperature</span> ,
     
-             modbus: <span style={combineCss.CSSEVC_01_Temperature}>40850	 </span> ,
+             modbus: <span style={combineCss.CSSEVC_01_Temperature}>40851	 </span> ,
     
             value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}  {nameValue.C}</span> , 
              high: <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
@@ -5443,7 +5261,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
-             onChange={ChangeMaintainEVC_01_Temperature}
+             onChange={ChangemaintainEVC_01_Temperature}
              checked={maintainEVC_01_Temperature}
          ></Checkbox>
     
@@ -5455,7 +5273,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 timeUpdate: <span style={combineCss.CSSEVC_01_Pressure} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSEVC_01_Pressure}>Pressure</span> ,
    
-            modbus: <span style={combineCss.CSSEVC_01_Pressure}>40852	 </span> ,
+            modbus: <span style={combineCss.CSSEVC_01_Pressure}>40853	 </span> ,
    
            value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure} {nameValue.Bara}</span> , 
             high: <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
@@ -5463,7 +5281,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
-            onChange={ChangeMaintainEVC_01_Pressure}
+            onChange={ChangemaintainEVC_01_Pressure}
             checked={maintainEVC_01_Pressure}
         ></Checkbox>
    
@@ -5475,7 +5293,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}> Volume at Base Condition</span> ,
   
-           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40854	 </span> ,
+           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40855	 </span> ,
   
           value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
            high: <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
@@ -5483,7 +5301,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
            Maintain:   <Checkbox
            style={{ marginRight: 20, }}
-           onChange={ChangeMaintainEVC_01_Volume_at_Base_Condition}
+           onChange={ChangemaintainEVC_01_Volume_at_Base_Condition}
            checked={maintainEVC_01_Volume_at_Base_Condition}
        ></Checkbox>
   
@@ -5495,7 +5313,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             timeUpdate: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
  
-          modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40856	 </span> ,
+          modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40857	 </span> ,
  
          value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
           high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
@@ -5503,7 +5321,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
           Maintain:   <Checkbox
           style={{ marginRight: 20, }}
-          onChange={ChangeMaintainEVC_01_Volume_at_Measurement_Condition}
+          onChange={ChangemaintainEVC_01_Volume_at_Measurement_Condition}
           checked={maintainEVC_01_Volume_at_Measurement_Condition}
       ></Checkbox>
  
@@ -5514,7 +5332,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
 
-         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40858	 </span> ,
+         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40859	 </span> ,
 
         value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
          high: <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
@@ -5522,7 +5340,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainEVC_01_Flow_at_Base_Condition}
+         onChange={ChangemaintainEVC_01_Flow_at_Base_Condition}
          checked={maintainEVC_01_Flow_at_Base_Condition}
      ></Checkbox>
 
@@ -5535,7 +5353,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             timeUpdate: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
 
-        modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40860	 </span> ,
+        modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40861	 </span> ,
 
        value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition} {nameValue.m3h} </span> , 
         high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
@@ -5554,7 +5372,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>Vb of Current Day</span> ,
 
-       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40862	 </span> ,
+       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40863	 </span> ,
 
       value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
@@ -5574,7 +5392,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>Vm of Current Day</span> ,
 
-        modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40864	 </span> ,
+        modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40865	 </span> ,
 
        value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day} {nameValue.m3}</span> , 
         high: <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
@@ -5582,7 +5400,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Vm_of_Current_Day}
+        onChange={ChangemaintainEVC_01_Vm_of_Current_Day}
         checked={maintainEVC_01_Vm_of_Current_Day}
     ></Checkbox>
 
@@ -5595,7 +5413,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         timeUpdate: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
-       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40866	 </span> ,
+       modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40867	 </span> ,
 
       value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
        high: <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
@@ -5616,7 +5434,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         timeUpdate: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
-      modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40868	 </span> ,
+      modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40869	 </span> ,
 
      value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day} {nameValue.m3}</span> , 
       high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
@@ -5646,7 +5464,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 timeUpdate: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} >{EVC_STT02Value}</span>,
             name: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>Remain Battery Service Life</span> ,
        
-            modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40001	 </span> ,
+            modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40002	 </span> ,
        
            value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life} {nameValue.month}</span> , 
             high: <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
@@ -5671,7 +5489,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         timeUpdate: <span style={combineCss.CSSEVC_02_Temperature} >{EVC_STT02Value}</span>,
     name: <span style={combineCss.CSSEVC_02_Temperature}>Temperature</span> ,
 
-    modbus: <span style={combineCss.CSSEVC_02_Temperature}>40850	 </span> ,
+    modbus: <span style={combineCss.CSSEVC_02_Temperature}>40851	 </span> ,
 
    value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature} {nameValue.C}</span> , 
     high: <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
@@ -5692,7 +5510,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure</span> ,
 
-   modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
+   modbus: <span style={combineCss.CSSEVC_02_Pressure}>40853	 </span> ,
 
   value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure} {nameValue.Bara}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
@@ -5713,7 +5531,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>Volume at Base Condition</span> ,
 
-  modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40854	 </span> ,
+  modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40855	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
@@ -5733,7 +5551,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     timeUpdate: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} >{EVC_STT02Value}</span>,
    name: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>Volume at Measurement Condition</span> ,
 
-   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40856	 </span> ,
+   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40857	 </span> ,
 
   value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
    high: <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
@@ -5754,7 +5572,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>Flow at Base Condition</span> ,
 
-  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40858	 </span> ,
+  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40859	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
@@ -5777,7 +5595,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
     timeUpdate: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>Flow at Measurement Condition</span> ,
 
- modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40860	 </span> ,
+ modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40861	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition} {nameValue.m3h}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
@@ -5797,7 +5615,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} >{EVC_STT02Value}</span>,
   name: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>Vb of Current Day</span> ,
 
-  modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40862	 </span> ,
+  modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40863	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
   high: <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
@@ -5818,7 +5636,7 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} >{EVC_STT02Value}</span>,
  name: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>Vm of Current Day</span> ,
 
- modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40864	 </span> ,
+ modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40865	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day} {nameValue.m3}</span> , 
  high: <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
@@ -5839,7 +5657,7 @@ value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Curr
     timeUpdate: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Vb of Last Day</span> ,
 
-modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40866	 </span> ,
+modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40867	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
@@ -5860,7 +5678,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
     timeUpdate: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} >{EVC_STT02Value}</span>,
 name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Vm of Last Day</span> ,
 
-modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40868	 </span> ,
+modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40869	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day} {nameValue.m3}</span> , 
 high: <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
@@ -6223,9 +6041,9 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSHEATER_2} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSHEATER_2}>HEATER_2</span> ,
+  name: <span style={combineCss.CSSHEATER_2}>Heater 1</span> ,
 
-  modbus: <span style={combineCss.CSSHEATER_2}>400011	 </span> ,
+  modbus: <span style={combineCss.CSSHEATER_2}>40033</span> ,
 
  value: <span style={combineCss.CSSHEATER_2} > {HEATER_2}</span> , 
   high: <InputText style={combineCss.CSSHEATER_2}   placeholder='High' step="0.1" type='number' value={inputValueHEATER_2} onChange={handleInputChangeHEATER_2} inputMode="decimal" />, 
@@ -6269,7 +6087,7 @@ checked={maintainEVC_02_Vm_of_Last_Day}
     mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSGD_STATUS} >{PLC_STTValue}</span>,
- name: <span style={combineCss.CSSGD_STATUS}>Gas Detector ST</span> ,
+ name: <span style={combineCss.CSSGD_STATUS}>Gas Detector Status</span> ,
 
  modbus: <span style={combineCss.CSSGD_STATUS}>40037	 </span> ,
 
@@ -6336,7 +6154,7 @@ checked={maintainHR_BC}
     mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSSD_2001} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSSD_2001}>Smoker Detector SD-2001</span> ,
+name: <span style={combineCss.CSSSD_2001}>Smoke Detector SD-2001</span> ,
 
 modbus: <span style={combineCss.CSSSD_2001}>40043	 </span> ,
 
@@ -6356,7 +6174,7 @@ checked={maintainSD_2001}
     mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSSD_2002} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSSD_2002}> Smoker Detector SD-2002</span> ,
+name: <span style={combineCss.CSSSD_2002}> Smoke Detector SD-2002</span> ,
 
 modbus: <span style={combineCss.CSSSD_2002}>40045	 </span> ,
 
@@ -6479,7 +6297,7 @@ checked={maintainSD_2002}
             PSV: "Pressure Safety Valve ( PSV-1901)" ,
             PCV1: "Pressure Control Valve (PCV-1901)",
             PCV2: "Pressure Control Valve (PCV-1902)",
-            IOT: "IOT getway phone number",
+            IOT: "IOT gateway phone number",
             EVC_01_Battery_Expiration_Date: "EVC 01 Battery Expiration Date",
             EVC_01_Battery_Installation_Date: "EVC 01 Battery Installation Date",
     
