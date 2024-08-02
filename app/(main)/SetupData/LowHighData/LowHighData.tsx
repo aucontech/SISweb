@@ -270,19 +270,19 @@ export default function LowHighData() {
 //=====================================================================================
     
             const highEVC_01_Pressure = res.data.find((item: any) => item.key === "EVC_01_Pressure_High");
-            setHighEVC_01_PressureValue(highEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_High(highEVC_01_Pressure?.value || null);
             const lowEVC_01_Pressure = res.data.find((item: any) => item.key === "EVC_01_Pressure_Low");
-            setLowEVC_01_PressureValue(lowEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_Low(lowEVC_01_Pressure?.value || null);
 
             const highEVC_02_PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_High");
-            setHighEVC_02_PressureValue(highEVC_02_PressureItem?.value || null);
+            setEVC_02_Pressure_High(highEVC_02_PressureItem?.value || null);
             const lowEVC_02_PressureItem = res.data.find((item: any) => item.key === "EVC_02_Pressure_Low");
-            setLowEVC_02_PressureValue(lowEVC_02_PressureItem?.value || null);
+            setEVC_02_Pressure_Low(lowEVC_02_PressureItem?.value || null);
 
             const highPT1PressureItem = res.data.find((item: any) => item.key === "PT1_High");
-            setHighPT1PressureValue(highPT1PressureItem?.value || null);
+            setPT1_High(highPT1PressureItem?.value || null);
             const lowPT1PressureItem = res.data.find((item: any) => item.key === "PT1_Low");
-            setLowPT1PressureValue(lowPT1PressureItem?.value || null);
+            setPT1_Low(lowPT1PressureItem?.value || null);
 
             const MaintainEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
@@ -300,20 +300,20 @@ export default function LowHighData() {
             setMaintainPT1(MaintainPT1?.value || false);
 //=====================================================================================
 
-            const HighGD1 = res.data.find((item: any) => item.key === "GD1_High");
-            setHighGD1(HighGD1?.value || null);
-            const LowGD1 = res.data.find((item: any) => item.key === "GD1_Low");
-            setLowGD1(LowGD1?.value || null);
+            const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
+            setGD1_High(GD1_High?.value || null);
+            const GD1_Low = res.data.find((item: any) => item.key === "GD1_Low");
+            setGD1_Low(GD1_Low?.value || null);
 
-            const HighGD2 = res.data.find((item: any) => item.key === "GD2_High");
-            setHighGD2(HighGD2?.value || null);
-            const LowGD2 = res.data.find((item: any) => item.key === "GD2_Low");
-            setLowGD2(LowGD2?.value || null);
+            const GD2_High = res.data.find((item: any) => item.key === "GD2_High");
+            setGD2_High(GD2_High?.value || null);
+            const GD2_Low = res.data.find((item: any) => item.key === "GD2_Low");
+            setGD2_Low(GD2_Low?.value || null);
 
-            const HighGD3 = res.data.find((item: any) => item.key === "GD3_High");
-            setHighGD3(HighGD3?.value || null);
-            const LowGD3 = res.data.find((item: any) => item.key === "GD3_Low");
-            setLowGD3(LowGD3?.value || null);
+            const GD3_High = res.data.find((item: any) => item.key === "GD3_High");
+            setGD3_High(GD3_High?.value || null);
+            const GD3_Low = res.data.find((item: any) => item.key === "GD3_Low");
+            setGD3_Low(GD3_Low?.value || null);
 
 
             const MaintainGD1 = res.data.find(
@@ -332,213 +332,213 @@ export default function LowHighData() {
             setMaintainGD3(MaintainGD3?.value || false);            
 //=====================================================================================
 
-            const HighEVC_01_Flow_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High");
-            setHighEVC_01_Flow_at_Measurement_Condition(HighEVC_01_Flow_at_Measurement_Condition?.value || null);
-            const LowEVC_01_Flow_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low");
-            setLowEVC_01_Flow_at_Measurement_Condition(LowEVC_01_Flow_at_Measurement_Condition?.value || null);
+            const EVC_01_Flow_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High");
+            setEVC_01_Flow_at_Measurement_Condition_High(EVC_01_Flow_at_Measurement_Condition_High?.value || null);
+            const EVC_01_Flow_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low");
+            setEVC_01_Flow_at_Measurement_Condition_Low(EVC_01_Flow_at_Measurement_Condition_Low?.value || null);
 
-            const HighEVC_01_Flow_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High");
-            setHighEVC_01_Flow_at_Base_Condition(HighEVC_01_Flow_at_Base_Condition?.value || null);
-            const LowEVC_01_Flow_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low");
-            setLowEVC_01_Flow_at_Base_Condition(LowEVC_01_Flow_at_Base_Condition?.value || null);
+            const EVC_01_Flow_at_Base_Condition_High = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High");
+            setEVC_01_Flow_at_Base_Condition_High(EVC_01_Flow_at_Base_Condition_High?.value || null);
+            const EVC_01_Flow_at_Base_Condition_Low = res.data.find((item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low");
+            setEVC_01_Flow_at_Base_Condition_Low(EVC_01_Flow_at_Base_Condition_Low?.value || null);
 
-            const HighEVC_01_Volume_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_High");
-            setHighEVC_01_Volume_at_Base_Condition(HighEVC_01_Volume_at_Base_Condition?.value || null);
-            const LowEVC_01_Volume_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_Low");
-            setLowEVC_01_Volume_at_Base_Condition(LowEVC_01_Volume_at_Base_Condition?.value || null);
+            const EVC_01_Volume_at_Base_Condition_High = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_High");
+            setEVC_01_Volume_at_Base_Condition_High(EVC_01_Volume_at_Base_Condition_High?.value || null);
+            const EVC_01_Volume_at_Base_Condition_Low = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Base_Condition_Low");
+            setEVC_01_Volume_at_Base_Condition_Low(EVC_01_Volume_at_Base_Condition_Low?.value || null);
 
-            const HighEVC_01_Volume_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_High");
-            setHighEVC_01_Volume_at_Measurement_Condition(HighEVC_01_Volume_at_Measurement_Condition?.value || null);
-            const LowEVC_01_Volume_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_Low");
-            setLowEVC_01_Volume_at_Measurement_Condition(LowEVC_01_Volume_at_Measurement_Condition?.value || null);
+            const EVC_01_Volume_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_High");
+            setEVC_01_Volume_at_Measurement_Condition_High(EVC_01_Volume_at_Measurement_Condition_High?.value || null);
+            const EVC_01_Volume_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_Low");
+            setEVC_01_Volume_at_Measurement_Condition_Low(EVC_01_Volume_at_Measurement_Condition_Low?.value || null);
 
-            const HighEVC_02_Flow_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High");
-            setHighEVC_02_Flow_at_Measurement_Condition(HighEVC_02_Flow_at_Measurement_Condition?.value || null);
-            const LowEVC_02_Flow_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low");
-            setLowEVC_02_Flow_at_Measurement_Condition(LowEVC_02_Flow_at_Measurement_Condition?.value || null);
+            const EVC_02_Flow_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High");
+            setEVC_02_Flow_at_Measurement_Condition_High(EVC_02_Flow_at_Measurement_Condition_High?.value || null);
+            const EVC_02_Flow_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low");
+            setEVC_02_Flow_at_Measurement_Condition_Low(EVC_02_Flow_at_Measurement_Condition_Low?.value || null);
 
-            const HighEVC_02_Flow_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High");
-            setHighEVC_02_Flow_at_Base_Condition(HighEVC_02_Flow_at_Base_Condition?.value || null);
-            const LowEVC_02_Flow_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low");
-            setLowEVC_02_Flow_at_Base_Condition(LowEVC_02_Flow_at_Base_Condition?.value || null);
+            const EVC_02_Flow_at_Base_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High");
+            setEVC_02_Flow_at_Base_Condition_High(EVC_02_Flow_at_Base_Condition_High?.value || null);
+            const EVC_02_Flow_at_Base_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low");
+            setEVC_02_Flow_at_Base_Condition_Low(EVC_02_Flow_at_Base_Condition_Low?.value || null);
 
-            const HighEVC_02_Volume_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_High");
-            setHighEVC_02_Volume_at_Base_Condition(HighEVC_02_Volume_at_Base_Condition?.value || null);
-            const LowEVC_02_Volume_at_Base_Condition = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Low");
-            setLowEVC_02_Volume_at_Base_Condition(LowEVC_02_Volume_at_Base_Condition?.value || null);
+            const EVC_02_Volume_at_Base_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_High");
+            setEVC_02_Volume_at_Base_Condition_High(EVC_02_Volume_at_Base_Condition_High?.value || null);
+            const EVC_02_Volume_at_Base_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Low");
+            setEVC_02_Volume_at_Base_Condition_Low(EVC_02_Volume_at_Base_Condition_Low?.value || null);
 
-            const HighEVC_02_Volume_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High");
-            setHighEVC_02_Volume_at_Measurement_Condition(HighEVC_02_Volume_at_Measurement_Condition?.value || null);
-            const LowEVC_02_Volume_at_Measurement_Condition = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low");
-            setLowEVC_02_Volume_at_Measurement_Condition(LowEVC_02_Volume_at_Measurement_Condition?.value || null);
+            const EVC_02_Volume_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High");
+            setEVC_02_Volume_at_Measurement_Condition_High(EVC_02_Volume_at_Measurement_Condition_High?.value || null);
+            const EVC_02_Volume_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low");
+            setEVC_02_Volume_at_Measurement_Condition_Low(EVC_02_Volume_at_Measurement_Condition_Low?.value || null);
 
 
             const MaintainSVF_1 = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Base_Condition(MaintainSVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Base_Condition(MaintainSVF_1?.value || false);
 
             const MaintainGVF_1 = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Measurement_Condition(MaintainGVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Measurement_Condition(MaintainGVF_1?.value || false);
 
             const MaintainSVA_1 = res.data.find(
                 (item: any) => item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Volume_at_Base_Condition(MaintainSVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Base_Condition(MaintainSVA_1?.value || false);
 
             const MaintainGVA_1 = res.data.find(
                 (item: any) => item.key === "EVC_01_Volume_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_01_Volume_at_Measurement_Condition(MaintainGVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Measurement_Condition(MaintainGVA_1?.value || false);
 
             const MaintainSVF_2 = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Maintain" 
             );
-            setMaintainEVC_02_Flow_at_Base_Condition(MaintainSVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Base_Condition(MaintainSVF_2?.value || false);
 
             const MaintainGVF_2 = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_02_Flow_at_Measurement_Condition(MaintainGVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Measurement_Condition(MaintainGVF_2?.value || false);
 
             const MaintainSVA_2 = res.data.find(
                 (item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_02_Volume_at_Base_Condition(MaintainSVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Base_Condition(MaintainSVA_2?.value || false);
 
             const MaintainGVA_2 = res.data.find(
                 (item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_02_Volume_at_Measurement_Condition(MaintainGVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Measurement_Condition(MaintainGVA_2?.value || false);
 //=====================================================================================
 
             const HightEVC_01_Temperature = res.data.find((item: any) => item.key === "EVC_01_Temperature_High");
-            setHighEVC_01_Temperature(HightEVC_01_Temperature?.value || null);
-            const LowEVC_01_Temperature = res.data.find((item: any) => item.key === "EVC_01_Temperature_Low");
-            setLowEVC_01_Temperature(LowEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_High(HightEVC_01_Temperature?.value || null);
+            const EVC_01_Temperature_Low = res.data.find((item: any) => item.key === "EVC_01_Temperature_Low");
+            setEVC_01_Temperature_Low(EVC_01_Temperature_Low?.value || null);
 
             const HightEVC_02_Temperature = res.data.find((item: any) => item.key === "EVC_02_Temperature_High");
-            setHighEVC_02_Temperature(HightEVC_02_Temperature?.value || null);
-            const LowEVC_02_Temperature = res.data.find((item: any) => item.key === "EVC_02_Temperature_Low");
-            setLowEVC_02_Temperature(LowEVC_02_Temperature?.value || null);
+            setEVC_02_Temperature_High(HightEVC_02_Temperature?.value || null);
+            const EVC_02_Temperature_Low = res.data.find((item: any) => item.key === "EVC_02_Temperature_Low");
+            setEVC_02_Temperature_Low(EVC_02_Temperature_Low?.value || null);
 
 
             const MaintainTemperature_01 = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
-            setMaintainEVC_01_Temperature(MaintainTemperature_01?.value || false);
+            setmaintainEVC_01_Temperature(MaintainTemperature_01?.value || false);
 
 
             const MaintainTemperature_02 = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Maintain"
             );
-            setMaintainEVC_02_Temperature(MaintainTemperature_02?.value || false);
+            setmaintainEVC_02_Temperature(MaintainTemperature_02?.value || false);
 //=====================================================================================
 
 
-            const HighEVC_01_Remain_Battery_Service_Life = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_High");
-            setHighEVC_01_Remain_Battery_Service_Life(HighEVC_01_Remain_Battery_Service_Life?.value || null);
-            const LowEVC_01_Remain_Battery_Service_Life = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
-            setLowEVC_01_Remain_Battery_Service_Life(LowEVC_01_Remain_Battery_Service_Life?.value || null);
+            const EVC_01_Remain_Battery_Service_Life_High = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_High");
+            setEVC_01_Remain_Battery_Service_Life_High(EVC_01_Remain_Battery_Service_Life_High?.value || null);
+            const EVC_01_Remain_Battery_Service_Life_Low = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
+            setEVC_01_Remain_Battery_Service_Life_Low(EVC_01_Remain_Battery_Service_Life_Low?.value || null);
 
-            const HighEVC_02_Remain_Battery_Service_Life = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_High");
-            setHighEVC_02_Remain_Battery_Service_Life(HighEVC_02_Remain_Battery_Service_Life?.value || null);
-            const LowEVC_02_Remain_Battery_Service_Life = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_Low");
-            setLowEVC_02_Remain_Battery_Service_Life(LowEVC_02_Remain_Battery_Service_Life?.value || null);
+            const EVC_02_Remain_Battery_Service_Life_High = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_High");
+            setEVC_02_Remain_Battery_Service_Life_High(EVC_02_Remain_Battery_Service_Life_High?.value || null);
+            const EVC_02_Remain_Battery_Service_Life_Low = res.data.find((item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_Low");
+            setEVC_02_Remain_Battery_Service_Life_Low(EVC_02_Remain_Battery_Service_Life_Low?.value || null);
 
 
             const MaintainReBattery_01 = res.data.find(
                 (item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Maintain"
             );
-            setMaintainEVC_01_Remain_Battery_Service_Life(MaintainReBattery_01?.value || false);
+            setmaintainEVC_01_Remain_Battery_Service_Life(MaintainReBattery_01?.value || false);
 
             const MaintainReBattery_02 = res.data.find(
                 (item: any) => item.key === "EVC_02_Remain_Battery_Service_Life_Maintain"
             );
-            setMaintainEVC_02_Remain_Battery_Service_Life(MaintainReBattery_02?.value || false);
+            setmaintainEVC_02_Remain_Battery_Service_Life(MaintainReBattery_02?.value || false);
 //=====================================================================================
 
-            const HighEVC_01_Vm_of_Last_Day = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_High");
-            setHighEVC_01_Vm_of_Last_Day(HighEVC_01_Vm_of_Last_Day?.value || null);
-            const LowEVC_01_Vm_of_Last_Day = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_Low");
-            setLowEVC_01_Vm_of_Last_Day(LowEVC_01_Vm_of_Last_Day?.value || null);
+            const EVC_01_Vm_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_High");
+            setEVC_01_Vm_of_Last_Day_High(EVC_01_Vm_of_Last_Day_High?.value || null);
+            const EVC_01_Vm_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_Low");
+            setEVC_01_Vm_of_Last_Day_Low(EVC_01_Vm_of_Last_Day_Low?.value || null);
 
-            const HighEVC_01_Vm_of_Current_Day = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_High");
-            setHighEVC_01_Vm_of_Current_Day(HighEVC_01_Vm_of_Current_Day?.value || null);
-            const LowEVC_01_Vm_of_Current_Day = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_Low");
-            setLowEVC_01_Vm_of_Current_Day(LowEVC_01_Vm_of_Current_Day?.value || null);
-
-
-            const HighEVC_01_Vb_of_Last_Day = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_High");
-            setHighEVC_01_Vb_of_Last_Day(HighEVC_01_Vb_of_Last_Day?.value || null);
-            const LowEVC_01_Vb_of_Last_Day = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_Low");
-            setLowEVC_01_Vb_of_Last_Day(LowEVC_01_Vb_of_Last_Day?.value || null);
+            const EVC_01_Vm_of_Current_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_High");
+            setEVC_01_Vm_of_Current_Day_High(EVC_01_Vm_of_Current_Day_High?.value || null);
+            const EVC_01_Vm_of_Current_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Current_Day_Low");
+            setEVC_01_Vm_of_Current_Day_Low(EVC_01_Vm_of_Current_Day_Low?.value || null);
 
 
-            const HighEVC_02_Vb_of_Last_Day = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_High");
-            setHighEVC_02_Vb_of_Last_Day(HighEVC_02_Vb_of_Last_Day?.value || null);
-            const LowEVC_02_Vb_of_Last_Day = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_Low");
-            setLowEVC_02_Vb_of_Last_Day(LowEVC_02_Vb_of_Last_Day?.value || null);
+            const EVC_01_Vb_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_High");
+            setEVC_01_Vb_of_Last_Day_High(EVC_01_Vb_of_Last_Day_High?.value || null);
+            const EVC_01_Vb_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_Low");
+            setEVC_01_Vb_of_Last_Day_Low(EVC_01_Vb_of_Last_Day_Low?.value || null);
+
+
+            const EVC_02_Vb_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_High");
+            setEVC_02_Vb_of_Last_Day_High(EVC_02_Vb_of_Last_Day_High?.value || null);
+            const EVC_02_Vb_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_Low");
+            setEVC_02_Vb_of_Last_Day_Low(EVC_02_Vb_of_Last_Day_Low?.value || null);
 
 
             const MaintainVmLastDay_01 = res.data.find(
                 (item: any) => item.key === "EVC_01_Vm_of_Last_Day_Maintain"
             );
-            setMaintainEVC_01_Vm_of_Last_Day(MaintainVmLastDay_01?.value || false);
+            setmaintainEVC_01_Vm_of_Last_Day(MaintainVmLastDay_01?.value || false);
 
 
             const MaintainVmLastDay_02 = res.data.find(
                 (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
             );
-            setMaintainEVC_02_Vm_of_Last_Day(MaintainVmLastDay_02?.value || false);
+            setmaintainEVC_02_Vm_of_Last_Day(MaintainVmLastDay_02?.value || false);
 
 
             const MaintainVbLastDay_01 = res.data.find(
                 (item: any) => item.key === "EVC_01_Vb_of_Last_Day_Maintain"
             );
-            setMaintainEVC_01_Vb_of_Last_Day(MaintainVbLastDay_01?.value || false);
+            setmaintainEVC_01_Vb_of_Last_Day(MaintainVbLastDay_01?.value || false);
 
 
             const MaintainVbLastDay_02 = res.data.find(
                 (item: any) => item.key === "EVC_02_Vb_of_Last_Day_Maintain"
             );
-            setMaintainEVC_02_Vb_of_Last_Day(MaintainVbLastDay_02?.value || false);
+            setmaintainEVC_02_Vb_of_Last_Day(MaintainVbLastDay_02?.value || false);
 //=====================================================================================
 
 
-const HighEVC_02_Vm_of_Last_Day = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_High");
-setHighEVC_02_Vm_of_Last_Day(HighEVC_02_Vm_of_Last_Day?.value || null);
-const LowEVC_02_Vm_of_Last_Day = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_Low");
-setLowEVC_02_Vm_of_Last_Day(LowEVC_02_Vm_of_Last_Day?.value || null);
+const EVC_02_Vm_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_High");
+setEVC_02_Vm_of_Last_Day_High(EVC_02_Vm_of_Last_Day_High?.value || null);
+const EVC_02_Vm_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Last_Day_Low");
+setEVC_02_Vm_of_Last_Day_Low(EVC_02_Vm_of_Last_Day_Low?.value || null);
 
-const HighEVC_02_Vm_of_Current_Day = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_High");
-setHighEVC_02_Vm_of_Current_Day(HighEVC_02_Vm_of_Current_Day?.value || null);
-const LowEVC_02_Vm_of_Current_Day = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_Low");
-setLowEVC_02_Vm_of_Current_Day(LowEVC_02_Vm_of_Current_Day?.value || null);
+const EVC_02_Vm_of_Current_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_High");
+setEVC_02_Vm_of_Current_Day_High(EVC_02_Vm_of_Current_Day_High?.value || null);
+const EVC_02_Vm_of_Current_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vm_of_Current_Day_Low");
+setEVC_02_Vm_of_Current_Day_Low(EVC_02_Vm_of_Current_Day_Low?.value || null);
 
-const HighEVC_01_Vb_of_Current_Day = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_High");
-setHighEVC_01_Vb_of_Current_Day(HighEVC_01_Vb_of_Current_Day?.value || null);
-const LowEVC_01_Vb_of_Current_Day = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_Low");
-setLowEVC_01_Vb_of_Current_Day(LowEVC_01_Vb_of_Current_Day?.value || null);
+const EVC_01_Vb_of_Current_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_High");
+setEVC_01_Vb_of_Current_Day_High(EVC_01_Vb_of_Current_Day_High?.value || null);
+const EVC_01_Vb_of_Current_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Current_Day_Low");
+setEVC_01_Vb_of_Current_Day_Low(EVC_01_Vb_of_Current_Day_Low?.value || null);
 
 
-const HighEVC_02_Vb_of_Current_Day = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_High");
-setHighEVC_02_Vb_of_Current_Day(HighEVC_02_Vb_of_Current_Day?.value || null);
-const LowEVC_02_Vb_of_Current_Day = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_Low");
-setLowEVC_02_Vb_of_Current_Day(LowEVC_02_Vb_of_Current_Day?.value || null);
+const EVC_02_Vb_of_Current_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_High");
+setEVC_02_Vb_of_Current_Day_High(EVC_02_Vb_of_Current_Day_High?.value || null);
+const EVC_02_Vb_of_Current_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Current_Day_Low");
+setEVC_02_Vb_of_Current_Day_Low(EVC_02_Vb_of_Current_Day_Low?.value || null);
 
 const MaintainVmToDay_01 = res.data.find(
     (item: any) => item.key === "EVC_01_Vm_of_Current_Day_Maintain"
 );
-setMaintainEVC_01_Vm_of_Current_Day(MaintainVmToDay_01?.value || false);
+setmaintainEVC_01_Vm_of_Current_Day(MaintainVmToDay_01?.value || false);
 
 
 const MaintainVmToDay_02 = res.data.find(
     (item: any) => item.key === "EVC_02_Vm_of_Current_Day_Maintain"
 );
-setMaintainEVC_02_Vm_of_Current_Day(MaintainVmToDay_02?.value || false);
+setmaintainEVC_02_Vm_of_Current_Day(MaintainVmToDay_02?.value || false);
 
 
 const MaintainVbToDay_01 = res.data.find(
@@ -550,124 +550,124 @@ setMaintainEVC_01_Vb_of_Current_Day(MaintainVbToDay_01?.value || false);
 const MaintainVbToDay_02 = res.data.find(
     (item: any) => item.key === "EVC_02_Vb_of_Current_Day_Maintain"
 );
-setMaintainEVC_02_Vb_of_Current_Day(MaintainVbToDay_02?.value || false);
+setmaintainEVC_02_Vb_of_Current_Day(MaintainVbToDay_02?.value || false);
 
 //=====================================================================================
 
-const HighDI_UPS_BATTERY = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_High");
-setHighDI_UPS_BATTERY(HighDI_UPS_BATTERY?.value || null);
-const LowDI_UPS_BATTERY = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_Low");
-setLowDI_UPS_BATTERY(LowDI_UPS_BATTERY?.value || null);
+const DI_UPS_BATTERY_High = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_High");
+setDI_UPS_BATTERY_High(DI_UPS_BATTERY_High?.value || null);
+const DI_UPS_BATTERY_Low = res.data.find((item: any) => item.key === "DI_UPS_BATTERY_Low");
+setDI_UPS_BATTERY_Low(DI_UPS_BATTERY_Low?.value || null);
 
-const MaintainDI_UPS_BATTERY = res.data.find(
+const maintainDI_UPS_BATTERY = res.data.find(
     (item: any) => item.key === "DI_UPS_BATTERY_Maintain"
 );
-setMaintainDI_UPS_BATTERY(MaintainDI_UPS_BATTERY?.value || false);
+setmaintainDI_UPS_BATTERY(maintainDI_UPS_BATTERY?.value || false);
 //=====================================================================================
 
 
-const HighDI_UPS_CHARGING = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_High");
-setHighDI_UPS_CHARGING(HighDI_UPS_CHARGING?.value || null);
-const LowDI_UPS_CHARGING = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_Low");
-setLowDI_UPS_CHARGING(LowDI_UPS_CHARGING?.value || null);
-const MaintainDI_UPS_CHARGING = res.data.find(
+const DI_UPS_CHARGING_High = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_High");
+setDI_UPS_CHARGING_High(DI_UPS_CHARGING_High?.value || null);
+const DI_UPS_CHARGING_Low = res.data.find((item: any) => item.key === "DI_UPS_CHARGING_Low");
+setDI_UPS_CHARGING_Low(DI_UPS_CHARGING_Low?.value || null);
+const maintainDI_UPS_CHARGING = res.data.find(
     (item: any) => item.key === "DI_UPS_CHARGING_Maintain"
 );
-setMaintainDI_UPS_CHARGING(MaintainDI_UPS_CHARGING?.value || false);
+setmaintainDI_UPS_CHARGING(maintainDI_UPS_CHARGING?.value || false);
 //=====================================================================================
 
-const HighDI_UPS_ALARM = res.data.find((item: any) => item.key === "DI_UPS_ALARM_High");
-setHighDI_UPS_ALARM(HighDI_UPS_ALARM?.value || null);
-const LowDI_UPS_ALARM = res.data.find((item: any) => item.key === "DI_UPS_ALARM_Low");
-setLowDI_UPS_ALARM(LowDI_UPS_ALARM?.value || null);
+const DI_UPS_ALARM_High = res.data.find((item: any) => item.key === "DI_UPS_ALARM_High");
+setDI_UPS_ALARM_High(DI_UPS_ALARM_High?.value || null);
+const DI_UPS_ALARM_Low = res.data.find((item: any) => item.key === "DI_UPS_ALARM_Low");
+setDI_UPS_ALARM_Low(DI_UPS_ALARM_Low?.value || null);
 
-const MaintainDI_UPS_ALARM = res.data.find(
+const maintainDI_UPS_ALARM = res.data.find(
     (item: any) => item.key === "DI_UPS_ALARM_Maintain"
 );
-setMaintainDI_UPS_ALARM(MaintainDI_UPS_ALARM?.value || false);
+setmaintainDI_UPS_ALARM(maintainDI_UPS_ALARM?.value || false);
 //=====================================================================================
 
-const HighUPS_Mode = res.data.find((item: any) => item.key === "UPS_Mode_High");
-setHighUPS_Mode(HighUPS_Mode?.value || null);
-const LowUPS_Mode = res.data.find((item: any) => item.key === "UPS_Mode_Low");
-setLowUPS_Mode(LowUPS_Mode?.value || null);
+const UPS_Mode_High = res.data.find((item: any) => item.key === "UPS_Mode_High");
+setUPS_Mode_High(UPS_Mode_High?.value || null);
+const UPS_Mode_Low = res.data.find((item: any) => item.key === "UPS_Mode_Low");
+setUPS_Mode_Low(UPS_Mode_Low?.value || null);
 
-const MaintainUPS_Mode = res.data.find(
+const maintainUPS_Mode = res.data.find(
     (item: any) => item.key === "UPS_Mode_Maintain"
 );
-setMaintainUPS_Mode(MaintainUPS_Mode?.value || false);
+setmaintainUPS_Mode(maintainUPS_Mode?.value || false);
 //=====================================================================================
-const HighDI_SELECT_SW = res.data.find((item: any) => item.key === "DI_SELECT_SW_High");
-setHighDI_SELECT_SW(HighDI_SELECT_SW?.value || null);
-const LowDI_SELECT_SW = res.data.find((item: any) => item.key === "DI_SELECT_SW_Low");
-setLowDI_SELECT_SW(LowDI_SELECT_SW?.value || null);
+const DI_SELECT_SW_High = res.data.find((item: any) => item.key === "DI_SELECT_SW_High");
+setDI_SELECT_SW_High(DI_SELECT_SW_High?.value || null);
+const DI_SELECT_SW_Low = res.data.find((item: any) => item.key === "DI_SELECT_SW_Low");
+setDI_SELECT_SW_Low(DI_SELECT_SW_Low?.value || null);
 
 const MaintainSelect = res.data.find(
     (item: any) => item.key === "DI_SELECT_SW_Maintain"
 );
-setMaintainDI_SELECT_SW(MaintainSelect?.value || false);
+setmaintainDI_SELECT_SW(MaintainSelect?.value || false);
 //=====================================================================================
 
-const HighEmergency_NC = res.data.find((item: any) => item.key === "Emergency_NC_High");
-setHighEmergency_NC(HighEmergency_NC?.value || null);
-const LowEmergency_NC = res.data.find((item: any) => item.key === "Emergency_NC_Low");
-setLowEmergency_NC(LowEmergency_NC?.value || null);
+const Emergency_NC_High = res.data.find((item: any) => item.key === "Emergency_NC_High");
+setEmergency_NC_High(Emergency_NC_High?.value || null);
+const Emergency_NC_Low = res.data.find((item: any) => item.key === "Emergency_NC_Low");
+setEmergency_NC_Low(Emergency_NC_Low?.value || null);
 
-const MaintainEmergency_NC = res.data.find(
+const maintainEmergency_NC = res.data.find(
     (item: any) => item.key === "Emergency_NC_Maintain"
 );
-setMaintainEmergency_NC(MaintainEmergency_NC?.value || false);
+setmaintainEmergency_NC(maintainEmergency_NC?.value || false);
 //=====================================================================================
 
-const HighEmergency_NO = res.data.find((item: any) => item.key === "Emergency_NO_High");
-setHighEmergency_NO(HighEmergency_NO?.value || null);
-const LowEmergency_NO = res.data.find((item: any) => item.key === "Emergency_NO_Low");
-setLowEmergency_NO(LowEmergency_NO?.value || null);
+const Emergency_NO_High = res.data.find((item: any) => item.key === "Emergency_NO_High");
+setEmergency_NO_High(Emergency_NO_High?.value || null);
+const Emergency_NO_Low = res.data.find((item: any) => item.key === "Emergency_NO_Low");
+setEmergency_NO_Low(Emergency_NO_Low?.value || null);
 
-const MaintainEmergency_NO = res.data.find(
+const maintainEmergency_NO = res.data.find(
     (item: any) => item.key === "Emergency_NO_Maintain"
 );
-setMaintainEmergency_NO(MaintainEmergency_NO?.value || false);
+setmaintainEmergency_NO(maintainEmergency_NO?.value || false);
 //=====================================================================================
 
 
 //=====================================================================================
 
-const HighDI_RESET = res.data.find((item: any) => item.key === "DI_RESET_High");
-setHighDI_RESET(HighDI_RESET?.value || null);
-const LowDI_RESET = res.data.find((item: any) => item.key === "DI_RESET_Low");
-setLowDI_RESET(LowDI_RESET?.value || null);
+const DI_RESET_High = res.data.find((item: any) => item.key === "DI_RESET_High");
+setDI_RESET_High(DI_RESET_High?.value || null);
+const DI_RESET_Low = res.data.find((item: any) => item.key === "DI_RESET_Low");
+setDI_RESET_Low(DI_RESET_Low?.value || null);
 
-const MaintainDI_RESET = res.data.find(
+const maintainDI_RESET = res.data.find(
     (item: any) => item.key === "DI_RESET_Maintain"
 );
-setMaintainDI_RESET(MaintainDI_RESET?.value || false);
+setmaintainDI_RESET(maintainDI_RESET?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
 const HighDIHorn = res.data.find((item: any) => item.key === "DO_HR_01_High");
-setHighDO_HR_01(HighDIHorn?.value || null);
+setDO_HR_01_High(HighDIHorn?.value || null);
 const LowDIHorn = res.data.find((item: any) => item.key === "DO_HR_01_Low");
-setLowDO_HR_01(LowDIHorn?.value || null);
+setDO_HR_01_Low(LowDIHorn?.value || null);
 
 const MaintainDIHorn = res.data.find(
     (item: any) => item.key === "DO_HR_01_Maintain"
 );
-setMaintainDO_HR_01(MaintainDIHorn?.value || false);
+setmaintainDO_HR_01(MaintainDIHorn?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
-const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_0_01_High");
-setHighDO_SV1(HighSOLENOID?.value || null);
-const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_0_01_Low");
-setLowDO_SV1(LowSOLENOID?.value || null);
+const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_High");
+setDO_SV1_High(HighSOLENOID?.value || null);
+const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_Low");
+setDO_SV1_Low(LowSOLENOID?.value || null);
 
 const MaintainSOLENOID = res.data.find(
     (item: any) => item.key === "DO_SV_0_01_Maintain"
 );
-setMaintainDO_SV1(MaintainSOLENOID?.value || false);
+setmaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================
 
 
@@ -675,94 +675,94 @@ setMaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================
 
 const HighZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_High");
-setInputHighDI_ZSC_1(HighZSC?.value || null);
+setinputValueDI_ZSC_1(HighZSC?.value || null);
 const LowZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_Low");
-setInputLowDI_ZSC_1(LowZSC?.value || null);
+setinputValue2DI_ZSC_1(LowZSC?.value || null);
 
 const MaintainZSC_0 = res.data.find(
     (item: any) => item.key === "DI_ZSC_1_Maintain"
 );
-setMaintainDI_ZSC_1(MaintainZSC_0?.value || false);
+setmaintainDI_ZSC_1(MaintainZSC_0?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
 const HighZSO = res.data.find((item: any) => item.key === "DI_ZSO_1_High");
-setHighDI_ZSO_1(HighZSO?.value || null);
+setDI_ZSO_1_High(HighZSO?.value || null);
 const LowZSO = res.data.find((item: any) => item.key === "DI_ZSO_1_Low");
-setLowDI_ZSO_1(LowZSO?.value || null);
+setDI_ZSO_1_Low(LowZSO?.value || null);
 
 const MaintainZSO = res.data.find(
     (item: any) => item.key === "DI_ZSO_1_Maintain"
 );
-setMaintainDI_ZSO_1(MaintainZSO?.value || false);
+setmaintainDI_ZSO_1(MaintainZSO?.value || false);
 //=====================================================================================
 
 
 
 //=====================================================================================
 
-const HighDI_MAP_1 = res.data.find((item: any) => item.key === "DI_MAP_1_High");
-setHighDI_MAP_1(HighDI_MAP_1?.value || null);
+const DI_MAP_1_High = res.data.find((item: any) => item.key === "DI_MAP_1_High");
+setDI_MAP_1_High(DI_MAP_1_High?.value || null);
 const LowMap = res.data.find((item: any) => item.key === "DI_MAP_1_Low");
-setLowDI_MAP_1(LowMap?.value || null);
+setDI_MAP_1_Low(LowMap?.value || null);
 
 const MaintainMap = res.data.find(
     (item: any) => item.key === "DI_MAP_1_Maintain"
 );
-setMaintainDI_MAP_1(MaintainMap?.value || false);
+setmaintainDI_MAP_1(MaintainMap?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
-const HighDO_BC_01 = res.data.find((item: any) => item.key === "DO_BC_01_High");
-setHighDO_BC_01(HighDO_BC_01?.value || null);
-const LowDO_BC_01 = res.data.find((item: any) => item.key === "DO_BC_01_Low");
-setLowDO_BC_01(LowDO_BC_01?.value || null);
+const DO_BC_01_High = res.data.find((item: any) => item.key === "DO_BC_01_High");
+setDO_BC_01_High(DO_BC_01_High?.value || null);
+const DO_BC_01_Low = res.data.find((item: any) => item.key === "DO_BC_01_Low");
+setDO_BC_01_Low(DO_BC_01_Low?.value || null);
 
-const MaintainDO_BC_01 = res.data.find(
+const maintainDO_BC_01 = res.data.find(
     (item: any) => item.key === "DO_BC_01_Maintain"
 );
-setMaintainDO_BC_01(MaintainDO_BC_01?.value || false);
+setmaintainDO_BC_01(maintainDO_BC_01?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
-const HighEVC_01_Conn_STT = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_High");
-setHighEVC_01_Conn_STT(HighEVC_01_Conn_STT?.value || null);
-const LowEVC_01_Conn_STT = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_Low");
-setLowEVC_01_Conn_STT(LowEVC_01_Conn_STT?.value || null);
+const EVC_01_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_High");
+setEVC_01_Conn_STT_High(EVC_01_Conn_STT_High?.value || null);
+const EVC_01_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_Low");
+setEVC_01_Conn_STT_Low(EVC_01_Conn_STT_Low?.value || null);
 
-const MaintainEVC_01_Conn_STT = res.data.find(
+const maintainEVC_01_Conn_STT = res.data.find(
     (item: any) => item.key === "EVC_01_Conn_STT_Maintain"
 );
-setMaintainEVC_01_Conn_STT(MaintainEVC_01_Conn_STT?.value || false);
+setmaintainEVC_01_Conn_STT(maintainEVC_01_Conn_STT?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
-const HighEVC_02_Conn_STT = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_High");
-setHighEVC_02_Conn_STT(HighEVC_02_Conn_STT?.value || null);
-const LowEVC_02_Conn_STT = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_Low");
-setLowEVC_02_Conn_STT(LowEVC_02_Conn_STT?.value || null);
+const EVC_02_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_High");
+setEVC_02_Conn_STT_High(EVC_02_Conn_STT_High?.value || null);
+const EVC_02_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_Low");
+setEVC_02_Conn_STT_Low(EVC_02_Conn_STT_Low?.value || null);
 
-const MaintainEVC_02_Conn_STT = res.data.find(
+const maintainEVC_02_Conn_STT = res.data.find(
     (item: any) => item.key === "EVC_02_Conn_STT_Maintain"
 );
-setMaintainEVC_02_Conn_STT(MaintainEVC_02_Conn_STT?.value || false);
+setmaintainEVC_02_Conn_STT(maintainEVC_02_Conn_STT?.value || false);
 //=====================================================================================
 
 //=====================================================================================
 
-const HighPLC_Conn_STT = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
-setHighPLC_Conn_STT(HighPLC_Conn_STT?.value || null);
-const LowPLC_Conn_STT = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
-setLowPLC_Conn_STT(LowPLC_Conn_STT?.value || null);
+const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
 
-const MaintainPLC_Conn_STT = res.data.find(
+const maintainPLC_Conn_STT = res.data.find(
     (item: any) => item.key === "PLC_Conn_STT_Maintain"
 );
-setMaintainPLC_Conn_STT(MaintainPLC_Conn_STT?.value || false);
+setmaintainPLC_Conn_STT(maintainPLC_Conn_STT?.value || false);
 //=====================================================================================
 
 //=====================================================================================
@@ -776,2861 +776,1776 @@ setMaintainPLC_Conn_STT(MaintainPLC_Conn_STT?.value || false);
         fetchData();
     }, []);
 // ========================== PT 1901 ============================================
+
 const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-const [audioPlaying, setAudioPlaying] = useState(false);
 const [inputValueEVC_01_Pressure, setInputValueEVC_01_Pressure] = useState<any>();
 const [inputValue2EVC_01_Pressure, setInputValue2EVC_01_Pressure] = useState<any>();
-const [highEVC_01_PressureValue, setHighEVC_01_PressureValue] = useState<number | null>(null);
-const [lowEVC_01_PressureValue, setLowEVC_01_PressureValue] = useState<number | null>(null);
-const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
+const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] = useState(false); 
 const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
 
+useEffect(() => {
+    const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+    const highValue = EVC_01_Pressure_High ?? NaN;
+    const lowValue = EVC_01_Pressure_Low ?? NaN;
 
-    useEffect(() => {
-        if (typeof highEVC_01_PressureValue === 'string' && typeof lowEVC_01_PressureValue === 'string' && EVC_01_Pressure !== null && maintainEVC_01_Pressure === false
-        ) {
-            const highValue = parseFloat(highEVC_01_PressureValue);
-            const lowValue = parseFloat(lowEVC_01_PressureValue);
-            const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
-                if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                    if (!audioPlaying) {
-                        audioRef.current?.play();
-                        setAudioPlaying(true);
-                        setExceedThreshold(true);
-                    }
-                } else {
-                    setAudioPlaying(false);
-                    setExceedThreshold(false);
-                }
-            } 
-        } 
-    }, [highEVC_01_PressureValue, EVC_01_Pressure, audioPlaying, lowEVC_01_PressureValue,maintainEVC_01_Pressure]);
+    if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+        setExceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+    }
+}, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
 
-    useEffect(() => {
-        if (audioPlaying) {
-            const audioEnded = () => {
-                setAudioPlaying(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlaying]);
+const handleInputChangeEVC_01_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueEVC_01_Pressure(event.target.value);
+};
 
-    const handleInputChange = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueEVC_01_Pressure(newValue);
-    };
+const handleInputChange2EVC_01_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2EVC_01_Pressure(event.target.value);
+};
 
-    const handleInputChange2 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputValue2EVC_01_Pressure(newValue2);
-    };
-    const ChangeMaintainEVC_01_Pressure = async () => {
-        try {
-            const newValue = !maintainEVC_01_Pressure;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Pressure_Maintain: newValue }
-            );
-            setMaintainEVC_01_Pressure(newValue);
-            
-        } catch (error) {}
-    };
+const ChangeMaintainEVC_01_Pressure = async () => {
+    try {
+        const newValue = !maintainEVC_01_Pressure;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Pressure_Maintain: newValue }
+        );
+        setMaintainEVC_01_Pressure(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
 
 // ========================== PT 1901 ============================================
 
 // ========================== PT 1902 ============================================
 
-
 const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-const [inputValueEVC_02_PressureHigh, setInputValueEVC_02_PressureHigh] = useState<any>();
-const [inputValueEVC_02_PressureLow, setInputValueEVC_02_PressureLow] = useState<any>();
-const [highEVC_02_PressureValue, setHighEVC_02_PressureValue] = useState<number | null>(null);
-const [lowEVC_02_PressureValue, setLowEVC_02_PressureValue] = useState<number | null>(null);
-const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueEVC_02_Pressure, setInputValueEVC_02_Pressure] = useState<any>();
+const [inputValue2EVC_02_Pressure, setInputValue2EVC_02_Pressure] = useState<any>();
+const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
+const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] = useState(false); 
 const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
 
+useEffect(() => {
+    const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+    const highValue = EVC_02_Pressure_High ?? NaN;
+    const lowValue = EVC_02_Pressure_Low ?? NaN;
 
+    if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
+        setExceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
+    }
+}, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
 
-    useEffect(() => {
-        if (typeof highEVC_02_PressureValue === 'string' && typeof lowEVC_02_PressureValue === 'string' && EVC_02_Pressure !== null && maintainEVC_02_Pressure === false) {
-            const highValue = parseFloat(highEVC_02_PressureValue);
-            const lowValue = parseFloat(lowEVC_02_PressureValue);
-            const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_PressureValue)) {
-                if (highValue <= EVC_02_PressureValue || EVC_02_PressureValue <= lowValue) {
-                        setExceedThreshold2(true);
-                } else {
-                    setExceedThreshold2(false);
-                }
-            } 
-        } 
-    }, [highEVC_02_PressureValue, EVC_02_Pressure, lowEVC_02_PressureValue, maintainEVC_02_Pressure]);
+const handleInputChangeEVC_02_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueEVC_02_Pressure(event.target.value);
+};
 
-    const handleInputChangeEVC_02_PressureHigh = (event: any) => {
-        const newValue = event.target.value;
-        setInputValueEVC_02_PressureHigh(newValue);
-    };
+const handleInputChange2EVC_02_Pressure = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2EVC_02_Pressure(event.target.value);
+};
 
-    const handleInputChangeEVC_02_PressureLow = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputValueEVC_02_PressureLow(newValue2);
-    };
+const ChangeMaintainEVC_02_Pressure = async () => {
+    try {
+        const newValue = !maintainEVC_02_Pressure;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Pressure_Maintain: newValue }
+        );
+        setMaintainEVC_02_Pressure(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-    const ChangeMaintainEVC_02_Pressure = async () => {
-        try {
-            const newValue = !maintainEVC_02_Pressure;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Pressure_Maintain: newValue }
-            );
-            setMaintainEVC_02_Pressure(newValue);
-            
-        } catch (error) {}
-    };
 // ========================== PT 1902 ============================================
-
 // ========================== PT 1903 ============================================
 
 const [PT1, setPT1] = useState<string | null>(null);
-const [audioPlaying3, setAudioPlaying3] = useState(false);
-const [inputValuePT1High, setInputValuePT1High] = useState<any>();
-const [inputValuePT1Low, setInputValuePT1Low] = useState<any>();
-const [highPT1PressureValue, setHighPT1PressureValue] = useState<number | null>(null);
-const [lowPT1PressureValue, setLowPT1PressureValue] = useState<number | null>(null);
-const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValuePT1, setInputValuePT1] = useState<any>();
+const [inputValue2PT1, setInputValue2PT1] = useState<any>();
+const [PT1_High, setPT1_High] = useState<number | null>(null);
+const [PT1_Low, setPT1_Low] = useState<number | null>(null);
+const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); 
 const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof highPT1PressureValue === 'string' && typeof lowPT1PressureValue === 'string' && PT1 !== null && maintainPT1 === false  ) {
-            const highValue = parseFloat(highPT1PressureValue);
-            const lowValue = parseFloat(lowPT1PressureValue);
-            const PT1Value = parseFloat(PT1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
-                if (highValue <= PT1Value || PT1Value <= lowValue) {
-                    if (!audioPlaying3) {
-                        audioRef.current?.play();
-                        setAudioPlaying3(true);
-                        setExceedThreshold3(true);
-                    }
-                } else {
-                    setAudioPlaying3(false);
-                    setExceedThreshold3(false);
-                }
-            } 
-        } 
-    }, [highPT1PressureValue, PT1, audioPlaying3, lowPT1PressureValue,maintainPT1]);
+useEffect(() => {
+    const PT1Value = parseFloat(PT1 as any);
+    const highValue = PT1_High ?? NaN;
+    const lowValue = PT1_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlaying3) {
-            const audioEnded = () => {
-                setAudioPlaying3(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlaying3]);
+    if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+        setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+    }
+}, [PT1, PT1_High, PT1_Low, maintainPT1]);
 
-    const handleInputChangePT1High = (event: any) => {
-        const newValue = event.target.value;
-        setInputValuePT1High(newValue);
-    };
+const handleInputChangePT1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValuePT1(event.target.value);
+};
 
-    const handleInputChangePT1Low = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputValuePT1Low(newValue2);
-    };
+const handleInputChange2PT1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2PT1(event.target.value);
+};
 
-    const ChangeMaintainPT1 = async () => {
-        try {
-            const newValue = !maintainPT1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT1_Maintain: newValue }
-            );
-            setMaintainPT1(newValue);
-            
-        } catch (error) {}
-    };
+const ChangeMaintainPT1 = async () => {
+    try {
+        const newValue = !maintainPT1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { PT1_Maintain: newValue }
+        );
+        setMaintainPT1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 // ========================== PT 1903 ============================================
 
-// ========================== GD_01 ============================================
-
 const [GD1, setGD1] = useState<string | null>(null);
-const [AudioGD1, setAudioGD1] = useState(false);
-const [inputHighGD1, setInputHighGD1] = useState<any>();
-const [inputLowGD1, setInputLowGD1] = useState<any>();
-const [HighGD1, setHighGD1] = useState<number | null>(null);
-const [LowGD1, setLowGD1] = useState<number | null>(null);
-const [AlarmGD1, setAlarmGD1] = useState(false);
+const [inputValueGD1, setInputValueGD1] = useState<any>();
+const [inputValue2GD1, setInputValue2GD1] = useState<any>();
+const [GD1_High, setGD1_High] = useState<number | null>(null);
+const [GD1_Low, setGD1_Low] = useState<number | null>(null);
+const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); 
 const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighGD1 === 'string' && typeof LowGD1 === 'string' && GD1 !== null && maintainGD1 === false) {
-            const highValue = parseFloat(HighGD1);
-            const lowValue = parseFloat(LowGD1);
-            const GD1Value = parseFloat(GD1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1Value)) {
-                if (highValue <= GD1Value || GD1Value <= lowValue) {
-                    if (!AudioGD1) {
-                        audioRef.current?.play();
-                        setAudioGD1(true);
-                        setAlarmGD1(true);
-                    }
-                } else {
-                    setAudioGD1(false);
-                    setAlarmGD1(false);
-                }
-            } 
-        } 
-    }, [HighGD1, GD1, AudioGD1, LowGD1,maintainGD1]);
+useEffect(() => {
+    const GD1Value = parseFloat(GD1 as any);
+    const highValue = GD1_High ?? NaN;
+    const lowValue = GD1_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioGD1) {
-            const audioEnded = () => {
-                setAudioGD1(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioGD1]);
+    if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
+        setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+    }
+}, [GD1, GD1_High, GD1_Low, maintainGD1]);
 
-    const handleInputChangeHighGD1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighGD1(newValue);
-    };
+const handleInputChangeGD1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueGD1(event.target.value);
+};
 
-    const handleInputChangeLowGD1 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowGD1(newValue2);
-    };
+const handleInputChange2GD1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2GD1(event.target.value);
+};
 
-    const ChangeMaintainGD_01 = async () => {
-        try {
-            const newValue = !maintainGD1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD1_Maintain: newValue }
-            );
-            setMaintainGD1(newValue);
-            
-        } catch (error) {}
-    };
-// ========================== GD_01 ============================================
+const ChangeMaintainGD1 = async () => {
+    try {
+        const newValue = !maintainGD1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { GD1_Maintain: newValue }
+        );
+        setMaintainGD1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+// ========================== PT 1903 ============================================
 
-// ========================== GD_02 ============================================
+// ========================== PT 1903 ============================================
+
 const [GD2, setGD2] = useState<string | null>(null);
-const [AudioGD2, setAudioGD2] = useState(false);
-const [inputHighGD2, setInputHighGD2] = useState<any>();
-const [inputLowGD2, setInputLowGD2] = useState<any>();
-const [HighGD2, setHighGD2] = useState<number | null>(null);
-const [LowGD2, setLowGD2] = useState<number | null>(null);
-const [AlarmGD2, setAlarmGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueGD2, setInputValueGD2] = useState<any>();
+const [inputValue2GD2, setInputValue2GD2] = useState<any>();
+const [GD2_High, setGD2_High] = useState<number | null>(null);
+const [GD2_Low, setGD2_Low] = useState<number | null>(null);
+const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); 
 const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighGD2 === 'string' && typeof LowGD2 === 'string' && GD2 !== null && maintainGD2=== false ) {
-            const highValue = parseFloat(HighGD2);
-            const lowValue = parseFloat(LowGD2);
-            const GD2Value = parseFloat(GD2);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2Value)) {
-                if (highValue <= GD2Value || GD2Value <= lowValue) {
-                    if (!AudioGD2) {
-                        audioRef.current?.play();
-                        setAudioGD2(true);
-                        setAlarmGD2(true);
-                    }
-                } else {
-                    setAudioGD2(false);
-                    setAlarmGD2(false);
-                }
-            } 
-        } 
-    }, [HighGD2, GD2, AudioGD2, LowGD2,maintainGD2]);
+useEffect(() => {
+    const GD2Value = parseFloat(GD2 as any);
+    const highValue = GD2_High ?? NaN;
+    const lowValue = GD2_Low ?? NaN;
 
-    useEffect(() => {
-        if (AlarmGD2) {
-            const audioEnded = () => {
-                setAudioGD2(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioGD2]);
+    if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
+        setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
+    }
+}, [GD2, GD2_High, GD2_Low, maintainGD2]);
 
-    const handleInputChangeHighGD2 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighGD2(newValue);
-    };
+const handleInputChangeGD2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueGD2(event.target.value);
+};
 
-    const handleInputChangeLowGD2 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowGD2(newValue2);
-    };
-    const ChangeMaintainGD_02 = async () => {
-        try {
-            const newValue = !maintainGD2;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD2_Maintain: newValue }
-            );
-            setMaintainGD2(newValue);
-            
-        } catch (error) {}
-    };
-// ========================== GD_02 ============================================
+const handleInputChange2GD2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2GD2(event.target.value);
+};
 
+const ChangeMaintainGD2 = async () => {
+    try {
+        const newValue = !maintainGD2;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { GD2_Maintain: newValue }
+        );
+        setMaintainGD2(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+// ========================== PT 1903 ============================================
 
-// ========================== GD3 ============================================
+// ========================== PT 1903 ============================================
+
 const [GD3, setGD3] = useState<string | null>(null);
-const [AudioGD3, setAudioGD3] = useState(false);
-const [inputHighGD3, setInputHighGD3] = useState<any>();
-const [inputLowGD3, setInputLowGD3] = useState<any>();
-const [HighGD3, setHighGD3] = useState<number | null>(null);
-const [LowGD3, setLowGD3] = useState<number | null>(null);
-const [AlarmGD3, setAlarmGD3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueGD3, setInputValueGD3] = useState<any>();
+const [inputValue2GD3, setInputValue2GD3] = useState<any>();
+const [GD3_High, setGD3_High] = useState<number | null>(null);
+const [GD3_Low, setGD3_Low] = useState<number | null>(null);
+const [exceedThresholdGD3, setExceedThresholdGD3] = useState(false); 
 const [maintainGD3, setMaintainGD3] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighGD3 === 'string' && typeof LowGD3 === 'string' && GD3 !== null && maintainGD3 === false ) {
-            const highValue = parseFloat(HighGD3);
-            const lowValue = parseFloat(LowGD3);
-            const GD3Value = parseFloat(GD3);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD3Value)) {
-                if (highValue <= GD3Value || GD3Value <= lowValue) {
-                    if (!AudioGD3) {
-                        audioRef.current?.play();
-                        setAudioGD3(true);
-                        setAlarmGD3(true);
-                    }
-                } else {
-                    setAudioGD3(false);
-                    setAlarmGD3(false);
-                }
-            } 
-        } 
-    }, [HighGD3, GD3, AudioGD3, LowGD3,maintainGD3]);
+useEffect(() => {
+    const GD3Value = parseFloat(GD3 as any);
+    const highValue = GD3_High ?? NaN;
+    const lowValue = GD3_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioGD3) {
-            const audioEnded = () => {
-                setAudioGD3(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioGD3]);
+    if (!isNaN(GD3Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD3) {
+        setExceedThresholdGD3(GD3Value >= highValue || GD3Value <= lowValue);
+    }
+}, [GD3, GD3_High, GD3_Low, maintainGD3]);
 
-    const handleInputChangeHighGD3 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighGD3(newValue);
-    };
+const handleInputChangeGD3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueGD3(event.target.value);
+};
 
-    const handleInputChangeLowGD3 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowGD3(newValue2);
-    };
-    const ChangeMaintainGD3 = async () => {
-        try {
-            const newValue = !maintainGD3;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD3_Maintain: newValue }
-            );
-            setMaintainGD3(newValue);
-            
-            
-        } catch (error) {}
-    };
+const handleInputChange2GD3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2GD3(event.target.value);
+};
+
+const ChangeMaintainGD3 = async () => {
+    try {
+        const newValue = !maintainGD3;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { GD3_Maintain: newValue }
+        );
+        setMaintainGD3(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 // ========================== GD3 ============================================
 
+// ========================== PT 1903 ============================================
 
-// ========================== EVC_01_Flow_at_Measurement_Condition- FIQ-1901  ============================================
 const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
-const [AudioEVC_01_Flow_at_Measurement_Condition, setAudioEVC_01_Flow_at_Measurement_Condition] = useState(false);
-const [inputHighEVC_01_Flow_at_Measurement_Condition, setInputHighEVC_01_Flow_at_Measurement_Condition] = useState<any>();
-const [inputLowEVC_01_Flow_at_Measurement_Condition, setInputLowEVC_01_Flow_at_Measurement_Condition] = useState<any>();
-const [HighEVC_01_Flow_at_Measurement_Condition, setHighEVC_01_Flow_at_Measurement_Condition] = useState<number | null>(null);
-const [LowEVC_01_Flow_at_Measurement_Condition, setLowEVC_01_Flow_at_Measurement_Condition] = useState<number | null>(null);
-const [AlarmEVC_01_Flow_at_Measurement_Condition, setAlarmEVC_01_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
+const [inputValueEVC_01_Flow_at_Measurement_Condition, setinputValueEVC_01_Flow_at_Measurement_Condition] = useState<any>();
+const [inputValue2EVC_01_Flow_at_Measurement_Condition, setinputValue2EVC_01_Flow_at_Measurement_Condition] = useState<any>();
+const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); 
+const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Flow_at_Measurement_Condition === 'string' && typeof LowEVC_01_Flow_at_Measurement_Condition === 'string' && EVC_01_Flow_at_Measurement_Condition !== null && maintainEVC_01_Flow_at_Measurement_Condition === false) {
-            const highValue = parseFloat(HighEVC_01_Flow_at_Measurement_Condition);
-            const lowValue = parseFloat(LowEVC_01_Flow_at_Measurement_Condition);
-            const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Measurement_ConditionValue)) {
-                if (highValue <= EVC_01_Flow_at_Measurement_ConditionValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue) {
-                    if (!AudioEVC_01_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Measurement_Condition(true);
-                        setAlarmEVC_01_Flow_at_Measurement_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Measurement_Condition(false);
-                    setAlarmEVC_01_Flow_at_Measurement_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition, AudioEVC_01_Flow_at_Measurement_Condition, LowEVC_01_Flow_at_Measurement_Condition,maintainEVC_01_Flow_at_Measurement_Condition]);
+useEffect(() => {
+    const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+    const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (AlarmEVC_01_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Flow_at_Measurement_Condition]);
+    if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+        setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+    }
+}, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
 
-    const handleInputChangeHighEVC_01_Flow_at_Measurement_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Flow_at_Measurement_Condition(newValue);
-    };
+const handleInputChangeEVC_01_Flow_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Flow_at_Measurement_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Flow_at_Measurement_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Flow_at_Measurement_Condition(newValue2);
-    };
-    const ChangeMaintainGVF_01 = async () => {
-        try {
-            const newValue = !maintainEVC_01_Flow_at_Measurement_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Flow_at_Measurement_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_01_Flow_at_Measurement_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_01_Flow_at_Measurement_Condition- FIQ-1901 ============================================
+const handleInputChange2EVC_01_Flow_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Flow_at_Measurement_Condition(event.target.value);
+};
 
-// ========================== EVC_01_Flow_at_Base_Condition- FIQ-1901  ============================================
+const ChangemaintainEVC_01_Flow_at_Measurement_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_01_Flow_at_Measurement_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Flow_at_Measurement_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_01_Flow_at_Measurement_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+// ========================== PT 1903 ============================================
+
 const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
-const [AudioEVC_01_Flow_at_Base_Condition, setAudioEVC_01_Flow_at_Base_Condition] = useState(false);
-const [inputHighEVC_01_Flow_at_Base_Condition, setInputHighEVC_01_Flow_at_Base_Condition] = useState<any>();
-const [inputLowEVC_01_Flow_at_Base_Condition, setInputLowEVC_01_Flow_at_Base_Condition] = useState<any>();
-const [HighEVC_01_Flow_at_Base_Condition, setHighEVC_01_Flow_at_Base_Condition] = useState<number | null>(null);
-const [LowEVC_01_Flow_at_Base_Condition, setLowEVC_01_Flow_at_Base_Condition] = useState<number | null>(null);
-const [AlarmEVC_01_Flow_at_Base_Condition, setAlarmEVC_01_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+const [inputValueEVC_01_Flow_at_Base_Condition, setinputValueEVC_01_Flow_at_Base_Condition] = useState<any>();
+const [inputValue2EVC_01_Flow_at_Base_Condition, setinputValue2EVC_01_Flow_at_Base_Condition] = useState<any>();
+const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
+const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
+const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Flow_at_Base_Condition === 'string' && typeof LowEVC_01_Flow_at_Base_Condition === 'string' && EVC_01_Flow_at_Base_Condition !== null && maintainEVC_01_Flow_at_Base_Condition === false) {
-            const highValue = parseFloat(HighEVC_01_Flow_at_Base_Condition);
-            const lowValue = parseFloat(LowEVC_01_Flow_at_Base_Condition);
-            const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
-                if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                    if (!AudioEVC_01_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Base_Condition(true);
-                        setAlarmEVC_01_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Base_Condition(false);
-                    setAlarmEVC_01_Flow_at_Base_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition, AudioEVC_01_Flow_at_Base_Condition, LowEVC_01_Flow_at_Base_Condition,maintainEVC_01_Flow_at_Base_Condition]);
+useEffect(() => {
+    const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+    const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_01_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Flow_at_Base_Condition]);
+    if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+        setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+    }
+}, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
 
-    const handleInputChangeHighEVC_01_Flow_at_Base_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Flow_at_Base_Condition(newValue);
-    };
+const handleInputChangeEVC_01_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Flow_at_Base_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Flow_at_Base_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Flow_at_Base_Condition(newValue2);
-    };
+const handleInputChange2EVC_01_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Flow_at_Base_Condition(event.target.value);
+};
 
-    const ChangeMaintainSVF_01 = async () => {
-        try {
-            const newValue = !maintainEVC_01_Flow_at_Base_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_01_Flow_at_Base_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_01_Flow_at_Base_Condition- FIQ-1901 ============================================
+const ChangemaintainEVC_01_Flow_at_Base_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_01_Flow_at_Base_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Flow_at_Base_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_01_Flow_at_Base_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+// ========================== PT 1903 ============================================
 
 
-// ========================== EVC_01_Volume_at_Base_Condition- FIQ-1901  ============================================
 const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
-const [AudioEVC_01_Volume_at_Base_Condition, setAudioEVC_01_Volume_at_Base_Condition] = useState(false);
-const [inputHighEVC_01_Volume_at_Base_Condition, setInputHighEVC_01_Volume_at_Base_Condition] = useState<any>();
-const [inputLowEVC_01_Volume_at_Base_Condition, setInputLowEVC_01_Volume_at_Base_Condition] = useState<any>();
-const [HighEVC_01_Volume_at_Base_Condition, setHighEVC_01_Volume_at_Base_Condition] = useState<number | null>(null);
-const [LowEVC_01_Volume_at_Base_Condition, setLowEVC_01_Volume_at_Base_Condition] = useState<number | null>(null);
-const [AlarmEVC_01_Volume_at_Base_Condition, setAlarmEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueEVC_01_Volume_at_Base_Condition, setinputValueEVC_01_Volume_at_Base_Condition] = useState<any>();
+const [inputValue2EVC_01_Volume_at_Base_Condition, setinputValue2EVC_01_Volume_at_Base_Condition] = useState<any>();
+const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
+const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
+const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
 
-const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+    const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Volume_at_Base_Condition === 'string' && typeof LowEVC_01_Volume_at_Base_Condition === 'string' && EVC_01_Volume_at_Base_Condition !== null && maintainEVC_01_Volume_at_Base_Condition === false) {
-            const highValue = parseFloat(HighEVC_01_Volume_at_Base_Condition);
-            const lowValue = parseFloat(LowEVC_01_Volume_at_Base_Condition);
-            const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
-                if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                    if (!AudioEVC_01_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Base_Condition(true);
-                        setAlarmEVC_01_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Base_Condition(false);
-                    setAlarmEVC_01_Volume_at_Base_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition, AudioEVC_01_Volume_at_Base_Condition, LowEVC_01_Volume_at_Base_Condition,maintainEVC_01_Volume_at_Base_Condition]);
+    if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+        setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+    }
+}, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
 
-    useEffect(() => {
-        if (AudioEVC_01_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Volume_at_Base_Condition]);
+const handleInputChangeEVC_01_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Volume_at_Base_Condition(event.target.value);
+};
 
-    const handleInputChangeHighEVC_01_Volume_at_Base_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Volume_at_Base_Condition(newValue);
-    };
+const handleInputChange2EVC_01_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Volume_at_Base_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Volume_at_Base_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Volume_at_Base_Condition(newValue2);
-    };
-    const ChangeMaintainSVA_01 = async () => {
-        try {
-            const newValue = !maintainEVC_01_Volume_at_Base_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_01_Volume_at_Base_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_01_Volume_at_Base_Condition- FIQ-1901 ============================================
+const ChangemaintainEVC_01_Volume_at_Base_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_01_Volume_at_Base_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Volume_at_Base_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_01_Volume_at_Base_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-// ========================== EVC_01_Volume_at_Measurement_Condition- FIQ-1901  ============================================
+
+
+
 const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
-const [AudioEVC_01_Volume_at_Measurement_Condition, setAudioEVC_01_Volume_at_Measurement_Condition] = useState(false);
-const [inputHighEVC_01_Volume_at_Measurement_Condition, setInputHighEVC_01_Volume_at_Measurement_Condition] = useState<any>();
-const [inputLowEVC_01_Volume_at_Measurement_Condition, setInputLowEVC_01_Volume_at_Measurement_Condition] = useState<any>();
-const [HighEVC_01_Volume_at_Measurement_Condition, setHighEVC_01_Volume_at_Measurement_Condition] = useState<number | null>(null);
-const [LowEVC_01_Volume_at_Measurement_Condition, setLowEVC_01_Volume_at_Measurement_Condition] = useState<number | null>(null);
-const [AlarmEVC_01_Volume_at_Measurement_Condition, setAlarmEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueEVC_01_Volume_at_Measurement_Condition, setinputValueEVC_01_Volume_at_Measurement_Condition] = useState<any>();
+const [inputValue2EVC_01_Volume_at_Measurement_Condition, setinputValue2EVC_01_Volume_at_Measurement_Condition] = useState<any>();
+const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
+const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
 
-const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+    const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Volume_at_Measurement_Condition === 'string' && typeof LowEVC_01_Volume_at_Measurement_Condition === 'string' && EVC_01_Volume_at_Measurement_Condition !== null && maintainEVC_01_Volume_at_Measurement_Condition === false) {
-            const highValue = parseFloat(HighEVC_01_Volume_at_Measurement_Condition);
-            const lowValue = parseFloat(LowEVC_01_Volume_at_Measurement_Condition);
-            const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
-                if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                    if (!AudioEVC_01_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Measurement_Condition(true);
-                        setAlarmEVC_01_Volume_at_Measurement_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Measurement_Condition(false);
-                    setAlarmEVC_01_Volume_at_Measurement_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition, AudioEVC_01_Volume_at_Measurement_Condition, LowEVC_01_Volume_at_Measurement_Condition,maintainEVC_01_Volume_at_Measurement_Condition]);
+    if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+        setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+    }
+}, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
 
-    useEffect(() => {
-        if (AudioEVC_01_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Volume_at_Measurement_Condition]);
+const handleInputChangeEVC_01_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Volume_at_Measurement_Condition(event.target.value);
+};
 
-    const handleInputChangeHighEVC_01_Volume_at_Measurement_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Volume_at_Measurement_Condition(newValue);
-    };
+const handleInputChange2EVC_01_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Volume_at_Measurement_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Volume_at_Measurement_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Volume_at_Measurement_Condition(newValue2);
-    };
-    const ChangeMaintainGVA_01 = async () => {
-        try {
-            const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_01_Volume_at_Measurement_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_01_Volume_at_Measurement_Condition- FIQ-1901 ============================================
+const ChangemaintainEVC_01_Volume_at_Measurement_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_01_Volume_at_Measurement_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Volume_at_Measurement_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_01_Volume_at_Measurement_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-// ========================== EVC_02_Flow_at_Measurement_Condition- FIQ-19012 ============================================
+
+
 const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
-const [AudioEVC_02_Flow_at_Measurement_Condition, setAudioEVC_02_Flow_at_Measurement_Condition] = useState(false);
-const [inputHighEVC_02_Flow_at_Measurement_Condition, setInputHighEVC_02_Flow_at_Measurement_Condition] = useState<any>();
-const [inputLowEVC_02_Flow_at_Measurement_Condition, setInputLowEVC_02_Flow_at_Measurement_Condition] = useState<any>();
-const [HighEVC_02_Flow_at_Measurement_Condition, setHighEVC_02_Flow_at_Measurement_Condition] = useState<number | null>(null);
-const [LowEVC_02_Flow_at_Measurement_Condition, setLowEVC_02_Flow_at_Measurement_Condition] = useState<number | null>(null);
-const [AlarmEVC_02_Flow_at_Measurement_Condition, setAlarmEVC_02_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueEVC_02_Flow_at_Measurement_Condition, setinputValueEVC_02_Flow_at_Measurement_Condition] = useState<any>();
+const [inputValue2EVC_02_Flow_at_Measurement_Condition, setinputValue2EVC_02_Flow_at_Measurement_Condition] = useState<any>();
+const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); 
+const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
 
-const [maintainEVC_02_Flow_at_Measurement_Condition, setMaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
+    const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
 
+    if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
+        setexceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
+    }
+}, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Flow_at_Measurement_Condition === 'string' && typeof LowEVC_02_Flow_at_Measurement_Condition === 'string' && EVC_02_Flow_at_Measurement_Condition !== null && maintainEVC_02_Flow_at_Measurement_Condition === false) {
-            const highValue = parseFloat(HighEVC_02_Flow_at_Measurement_Condition);
-            const lowValue = parseFloat(LowEVC_02_Flow_at_Measurement_Condition);
-            const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Measurement_ConditionValue)) {
-                if (highValue <= EVC_02_Flow_at_Measurement_ConditionValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue) {
-                    if (!AudioEVC_02_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Measurement_Condition(true);
-                        setAlarmEVC_02_Flow_at_Measurement_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Measurement_Condition(false);
-                    setAlarmEVC_02_Flow_at_Measurement_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition, AudioEVC_02_Flow_at_Measurement_Condition, LowEVC_02_Flow_at_Measurement_Condition,maintainEVC_02_Flow_at_Measurement_Condition]);
+const handleInputChangeEVC_02_Flow_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Flow_at_Measurement_Condition(event.target.value);
+};
 
-    useEffect(() => {
-        if (AlarmEVC_02_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Flow_at_Measurement_Condition]);
+const handleInputChange2EVC_02_Flow_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Flow_at_Measurement_Condition(event.target.value);
+};
 
-    const handleInputChangeHighEVC_02_Flow_at_Measurement_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Flow_at_Measurement_Condition(newValue);
-    };
-
-    const handleInputChangeLowEVC_02_Flow_at_Measurement_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Flow_at_Measurement_Condition(newValue2);
-    };
-    const ChangeMaintainGVF_02 = async () => {
-        try {
-            const newValue = !maintainEVC_02_Flow_at_Measurement_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Flow_at_Measurement_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_02_Flow_at_Measurement_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_02_Flow_at_Measurement_Condition- FIQ-1902 ============================================
-
+const ChangemaintainEVC_02_Flow_at_Measurement_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_02_Flow_at_Measurement_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Flow_at_Measurement_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_02_Flow_at_Measurement_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 // ========================== EVC_02_Flow_at_Base_Condition- FIQ-1902  ============================================
+
+
 const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
-const [AudioEVC_02_Flow_at_Base_Condition, setAudioEVC_02_Flow_at_Base_Condition] = useState(false);
-const [inputHighEVC_02_Flow_at_Base_Condition, setInputHighEVC_02_Flow_at_Base_Condition] = useState<any>();
-const [inputLowEVC_02_Flow_at_Base_Condition, setInputLowEVC_02_Flow_at_Base_Condition] = useState<any>();
-const [HighEVC_02_Flow_at_Base_Condition, setHighEVC_02_Flow_at_Base_Condition] = useState<number | null>(null);
-const [LowEVC_02_Flow_at_Base_Condition, setLowEVC_02_Flow_at_Base_Condition] = useState<number | null>(null);
-const [AlarmEVC_02_Flow_at_Base_Condition, setAlarmEVC_02_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Flow_at_Base_Condition, setMaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
+const [inputValueEVC_02_Flow_at_Base_Condition, setinputValueEVC_02_Flow_at_Base_Condition] = useState<any>();
+const [inputValue2EVC_02_Flow_at_Base_Condition, setinputValue2EVC_02_Flow_at_Base_Condition] = useState<any>();
+const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
+const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); 
+const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Flow_at_Base_Condition === 'string' && typeof LowEVC_02_Flow_at_Base_Condition === 'string' && EVC_02_Flow_at_Base_Condition !== null && maintainEVC_02_Flow_at_Base_Condition === false) {
-            const highValue = parseFloat(HighEVC_02_Flow_at_Base_Condition);
-            const lowValue = parseFloat(LowEVC_02_Flow_at_Base_Condition);
-            const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Flow_at_Base_ConditionValue)) {
-                if (highValue <= EVC_02_Flow_at_Base_ConditionValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue) {
-                    if (!AudioEVC_02_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Base_Condition(true);
-                        setAlarmEVC_02_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Base_Condition(false);
-                    setAlarmEVC_02_Flow_at_Base_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition, AudioEVC_02_Flow_at_Base_Condition, LowEVC_02_Flow_at_Base_Condition,maintainEVC_02_Flow_at_Base_Condition]);
+useEffect(() => {
+    const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
+    const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Flow_at_Base_Condition]);
+    if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
+        setexceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
+    }
+}, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
 
-    const handleInputChangeHighEVC_02_Flow_at_Base_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Flow_at_Base_Condition(newValue);
-    };
+const handleInputChangeEVC_02_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Flow_at_Base_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Flow_at_Base_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Flow_at_Base_Condition(newValue2);
-    };
-    const ChangeMaintainSVF_02 = async () => {
-        try {
-            const newValue = !maintainEVC_02_Flow_at_Base_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Flow_at_Base_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_02_Flow_at_Base_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_02_Flow_at_Base_Condition- FIQ-1902 ============================================
+const handleInputChange2EVC_02_Flow_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Flow_at_Base_Condition(event.target.value);
+};
 
+const ChangemaintainEVC_02_Flow_at_Base_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_02_Flow_at_Base_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Flow_at_Base_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_02_Flow_at_Base_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-// ========================== EVC_02_Volume_at_Base_Condition- FIQ-1902  ============================================
 const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
-const [AudioEVC_02_Volume_at_Base_Condition, setAudioEVC_02_Volume_at_Base_Condition] = useState(false);
-const [inputHighEVC_02_Volume_at_Base_Condition, setInputHighEVC_02_Volume_at_Base_Condition] = useState<any>();
-const [inputLowEVC_02_Volume_at_Base_Condition, setInputLowEVC_02_Volume_at_Base_Condition] = useState<any>();
-const [HighEVC_02_Volume_at_Base_Condition, setHighEVC_02_Volume_at_Base_Condition] = useState<number | null>(null);
-const [LowEVC_02_Volume_at_Base_Condition, setLowEVC_02_Volume_at_Base_Condition] = useState<number | null>(null);
-const [AlarmEVC_02_Volume_at_Base_Condition, setAlarmEVC_02_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
+const [inputValueEVC_02_Volume_at_Base_Condition, setinputValueEVC_02_Volume_at_Base_Condition] = useState<any>();
+const [inputValue2EVC_02_Volume_at_Base_Condition, setinputValue2EVC_02_Volume_at_Base_Condition] = useState<any>();
+const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
+const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); 
+const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Volume_at_Base_Condition === 'string' && typeof LowEVC_02_Volume_at_Base_Condition === 'string' && EVC_02_Volume_at_Base_Condition !== null && maintainEVC_02_Volume_at_Base_Condition === false) {
-            const highValue = parseFloat(HighEVC_02_Volume_at_Base_Condition);
-            const lowValue = parseFloat(LowEVC_02_Volume_at_Base_Condition);
-            const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Base_ConditionValue)) {
-                if (highValue <= EVC_02_Volume_at_Base_ConditionValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue) {
-                    if (!AudioEVC_02_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Base_Condition(true);
-                        setAlarmEVC_02_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Base_Condition(false);
-                    setAlarmEVC_02_Volume_at_Base_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition, AudioEVC_02_Volume_at_Base_Condition, LowEVC_02_Volume_at_Base_Condition,maintainEVC_02_Volume_at_Base_Condition]);
+useEffect(() => {
+    const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
+    const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Volume_at_Base_Condition]);
+    if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
+        setexceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
+    }
+}, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
 
-    const handleInputChangeHighEVC_02_Volume_at_Base_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Volume_at_Base_Condition(newValue);
-    };
+const handleInputChangeEVC_02_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Volume_at_Base_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Volume_at_Base_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Volume_at_Base_Condition(newValue2);
-    };
-    const ChangeMaintainSVA_02 = async () => {
-        try {
-            const newValue = !maintainEVC_02_Volume_at_Base_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Volume_at_Base_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_02_Volume_at_Base_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_02_Volume_at_Base_Condition- FIQ-1902 ============================================
+const handleInputChange2EVC_02_Volume_at_Base_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Volume_at_Base_Condition(event.target.value);
+};
 
-// ========================== EVC_02_Volume_at_Measurement_Condition- FIQ-1902  ============================================
+const ChangemaintainEVC_02_Volume_at_Base_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_02_Volume_at_Base_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Volume_at_Base_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_02_Volume_at_Base_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
 const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
-const [AudioEVC_02_Volume_at_Measurement_Condition, setAudioEVC_02_Volume_at_Measurement_Condition] = useState(false);
-const [inputHighEVC_02_Volume_at_Measurement_Condition, setInputHighEVC_02_Volume_at_Measurement_Condition] = useState<any>();
-const [inputLowEVC_02_Volume_at_Measurement_Condition, setInputLowEVC_02_Volume_at_Measurement_Condition] = useState<any>();
-const [HighEVC_02_Volume_at_Measurement_Condition, setHighEVC_02_Volume_at_Measurement_Condition] = useState<number | null>(null);
-const [LowEVC_02_Volume_at_Measurement_Condition, setLowEVC_02_Volume_at_Measurement_Condition] = useState<number | null>(null);
-const [AlarmEVC_02_Volume_at_Measurement_Condition, setAlarmEVC_02_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
+const [inputValueEVC_02_Volume_at_Measurement_Condition, setinputValueEVC_02_Volume_at_Measurement_Condition] = useState<any>();
+const [inputValue2EVC_02_Volume_at_Measurement_Condition, setinputValue2EVC_02_Volume_at_Measurement_Condition] = useState<any>();
+const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); 
+const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Volume_at_Measurement_Condition === 'string' && typeof LowEVC_02_Volume_at_Measurement_Condition === 'string' && EVC_02_Volume_at_Measurement_Condition !== null && maintainEVC_02_Volume_at_Measurement_Condition === false) {
-            const highValue = parseFloat(HighEVC_02_Volume_at_Measurement_Condition);
-            const lowValue = parseFloat(LowEVC_02_Volume_at_Measurement_Condition);
-            const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Volume_at_Measurement_ConditionValue)) {
-                if (highValue <= EVC_02_Volume_at_Measurement_ConditionValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue) {
-                    if (!AudioEVC_02_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Measurement_Condition(true);
-                        setAlarmEVC_02_Volume_at_Measurement_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Measurement_Condition(false);
-                    setAlarmEVC_02_Volume_at_Measurement_Condition(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition, AudioEVC_02_Volume_at_Measurement_Condition, LowEVC_02_Volume_at_Measurement_Condition,maintainEVC_02_Volume_at_Measurement_Condition]);
+useEffect(() => {
+    const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+    const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Volume_at_Measurement_Condition]);
+    if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
+        setexceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
+    }
+}, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
 
-    const handleInputChangeHighEVC_02_Volume_at_Measurement_Condition = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Volume_at_Measurement_Condition(newValue);
-    };
+const handleInputChangeEVC_02_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Volume_at_Measurement_Condition(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Volume_at_Measurement_Condition = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Volume_at_Measurement_Condition(newValue2);
-    };
-    const ChangeMaintainGVA_02 = async () => {
-        try {
-            const newValue = !maintainEVC_02_Volume_at_Measurement_Condition;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Volume_at_Measurement_Condition_Maintain: newValue }
-            );
-            setMaintainEVC_02_Volume_at_Measurement_Condition(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC_02_Volume_at_Measurement_Condition- FIQ-1901 ============================================
+const handleInputChange2EVC_02_Volume_at_Measurement_Condition = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Volume_at_Measurement_Condition(event.target.value);
+};
 
-// ========================== EVC 01 TEMPERATURE ============================================
+const ChangemaintainEVC_02_Volume_at_Measurement_Condition = async () => {
+    try {
+        const newValue = !maintainEVC_02_Volume_at_Measurement_Condition;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Volume_at_Measurement_Condition_Maintain: newValue }
+        );
+        setmaintainEVC_02_Volume_at_Measurement_Condition(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
 const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
+const [inputValueEVC_01_Temperature, setinputValueEVC_01_Temperature] = useState<any>();
+const [inputValue2EVC_01_Temperature, setinputValue2EVC_01_Temperature] = useState<any>();
+const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
+const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); 
+const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] = useState<boolean>(false);
 
-const [AudioEVC_01_Temperature, setAudioEVC_01_Temperature] = useState(false);
-const [inputHighEVC_01_Temperature, setInputHighEVC_01_Temperature] = useState<any>();
-const [inputLowEVC_01_Temperature, setInputLowEVC_01_Temperature] = useState<any>();
-const [HighEVC_01_Temperature, setHighEVC_01_Temperature] = useState<number | null>(null);
-const [LowEVC_01_Temperature, setLowEVC_01_Temperature] = useState<number | null>(null);
-const [AlarmEVC_01_Temperature, setAlarmEVC_01_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+    const highValue = EVC_01_Temperature_High ?? NaN;
+    const lowValue = EVC_01_Temperature_Low ?? NaN;
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Temperature === 'string' && typeof LowEVC_01_Temperature === 'string' && EVC_01_Temperature !== null && maintainEVC_01_Temperature === false) {
-            const highValue = parseFloat(HighEVC_01_Temperature);
-            const lowValue = parseFloat(LowEVC_01_Temperature);
-            const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
-                if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                    if (!AudioEVC_01_Temperature) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Temperature(true);
-                        setAlarmEVC_01_Temperature(true);
-                    }
-                } else {
-                    setAudioEVC_01_Temperature(false);
-                    setAlarmEVC_01_Temperature(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Temperature, EVC_01_Temperature, AudioEVC_01_Temperature, LowEVC_01_Temperature,maintainEVC_01_Temperature]);
+    if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+        setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+    }
+}, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
 
-    useEffect(() => {
-        if (AudioEVC_01_Temperature) {
-            const audioEnded = () => {
-                setAudioEVC_01_Temperature(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Temperature]);
+const handleInputChangeEVC_01_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Temperature(event.target.value);
+};
 
-    const handleInputChangeHighEVC_01_Temperature = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Temperature(newValue);
-    };
+const handleInputChange2EVC_01_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Temperature(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Temperature = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Temperature(newValue2);
-    };
-    const ChangeMaintainEVC_01_Temperature = async () => {
-        try {
-            const newValue = !maintainEVC_01_Temperature;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Temperature_Maintain: newValue }
-            );
-            setMaintainEVC_01_Temperature(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC 01 TEMPERATURE ============================================
+const ChangemaintainEVC_01_Temperature = async () => {
+    try {
+        const newValue = !maintainEVC_01_Temperature;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Temperature_Maintain: newValue }
+        );
+        setmaintainEVC_01_Temperature(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(null);
+const [inputValueEVC_02_Temperature, setinputValueEVC_02_Temperature] = useState<any>();
+const [inputValue2EVC_02_Temperature, setinputValue2EVC_02_Temperature] = useState<any>();
+const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<number | null>(null);
+const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Temperature, setexceedThresholdEVC_02_Temperature] = useState(false); 
+const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] = useState<boolean>(false);
 
-const [AudioEVC_02_Temperature, setAudioEVC_02_Temperature] = useState(false);
-const [inputHighEVC_02_Temperature, setInputHighEVC_02_Temperature] = useState<any>();
-const [inputLowEVC_02_Temperature, setInputLowEVC_02_Temperature] = useState<any>();
-const [HighEVC_02_Temperature, setHighEVC_02_Temperature] = useState<number | null>(null);
-const [LowEVC_02_Temperature, setLowEVC_02_Temperature] = useState<number | null>(null);
-const [AlarmEVC_02_Temperature, setAlarmEVC_02_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] = useState<boolean>(false);
+useEffect(() => {
+    const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+    const highValue = EVC_02_Temperature_High ?? NaN;
+    const lowValue = EVC_02_Temperature_Low ?? NaN;
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Temperature === 'string' && typeof LowEVC_02_Temperature === 'string' && EVC_02_Temperature !== null && maintainEVC_02_Temperature === false) {
-            const highValue = parseFloat(HighEVC_02_Temperature);
-            const lowValue = parseFloat(LowEVC_02_Temperature);
-            const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_TemperatureValue)) {
-                if (highValue <= EVC_02_TemperatureValue || EVC_02_TemperatureValue <= lowValue) {
-                    if (!AudioEVC_02_Temperature) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Temperature(true);
-                        setAlarmEVC_02_Temperature(true);
-                    }
-                } else {
-                    setAudioEVC_02_Temperature(false);
-                    setAlarmEVC_02_Temperature(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Temperature, EVC_02_Temperature, AudioEVC_02_Temperature, LowEVC_02_Temperature,maintainEVC_02_Temperature]);
+    if (!isNaN(EVC_02_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Temperature) {
+        setexceedThresholdEVC_02_Temperature(EVC_02_TemperatureValue >= highValue || EVC_02_TemperatureValue <= lowValue);
+    }
+}, [EVC_02_Temperature, EVC_02_Temperature_High, EVC_02_Temperature_Low, maintainEVC_02_Temperature]);
 
-    useEffect(() => {
-        if (AudioEVC_02_Temperature) {
-            const audioEnded = () => {
-                setAudioEVC_02_Temperature(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Temperature]);
+const handleInputChangeEVC_02_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Temperature(event.target.value);
+};
 
-    const handleInputChangeHighEVC_02_Temperature = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Temperature(newValue);
-    };
+const handleInputChange2EVC_02_Temperature = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Temperature(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Temperature = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Temperature(newValue2);
-    };
-    const ChangeMaintainEVC_02_Temperature = async () => {
-        try {
-            const newValue = !maintainEVC_02_Temperature;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Temperature_Maintain: newValue }
-            );
-            setMaintainEVC_02_Temperature(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== EVC 01 TEMPERATURE ============================================
+const ChangemaintainEVC_02_Temperature = async () => {
+    try {
+        const newValue = !maintainEVC_02_Temperature;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Temperature_Maintain: newValue }
+        );
+        setmaintainEVC_02_Temperature(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
-// ========================== Remain battery 01 ============================================
-const [EVC_01_Remain_Battery_Service_Life,setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
+const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
+const [inputValueEVC_01_Remain_Battery_Service_Life, setinputValueEVC_01_Remain_Battery_Service_Life] = useState<any>();
+const [inputValue2EVC_01_Remain_Battery_Service_Life, setinputValue2EVC_01_Remain_Battery_Service_Life] = useState<any>();
+const [EVC_01_Remain_Battery_Service_Life_High, setEVC_01_Remain_Battery_Service_Life_High] = useState<number | null>(null);
+const [EVC_01_Remain_Battery_Service_Life_Low, setEVC_01_Remain_Battery_Service_Life_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setexceedThresholdEVC_01_Remain_Battery_Service_Life] = useState(false); 
+const [maintainEVC_01_Remain_Battery_Service_Life, setmaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life as any);
+    const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
+
+    if (!isNaN(EVC_01_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Remain_Battery_Service_Life) {
+        setexceedThresholdEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_LifeValue >= highValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low, maintainEVC_01_Remain_Battery_Service_Life]);
+
+const handleInputChangeEVC_01_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Remain_Battery_Service_Life(event.target.value);
+};
+
+const handleInputChange2EVC_01_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Remain_Battery_Service_Life(event.target.value);
+};
+
+const ChangemaintainEVC_01_Remain_Battery_Service_Life = async () => {
+    try {
+        const newValue = !maintainEVC_01_Remain_Battery_Service_Life;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
+        );
+        setmaintainEVC_01_Remain_Battery_Service_Life(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
-const [AudioEVC_01_Remain_Battery_Service_Life, setAudioEVC_01_Remain_Battery_Service_Life] = useState(false);
-const [inputHighEVC_01_Remain_Battery_Service_Life, setInputHighEVC_01_Remain_Battery_Service_Life] = useState<any>();
-const [inputLowEVC_01_Remain_Battery_Service_Life, setInputLowEVC_01_Remain_Battery_Service_Life] = useState<any>();
-const [HighEVC_01_Remain_Battery_Service_Life, setHighEVC_01_Remain_Battery_Service_Life] = useState<number | null>(null);
-const [LowEVC_01_Remain_Battery_Service_Life, setLowEVC_01_Remain_Battery_Service_Life] = useState<number | null>(null);
-const [AlarmEVC_01_Remain_Battery_Service_Life, setAlarmEVC_01_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Remain_Battery_Service_Life === 'string' && typeof LowEVC_01_Remain_Battery_Service_Life === 'string' && EVC_01_Remain_Battery_Service_Life !== null && maintainEVC_01_Remain_Battery_Service_Life === false) {
-            const highValue = parseFloat(HighEVC_01_Remain_Battery_Service_Life);
-            const lowValue = parseFloat(LowEVC_01_Remain_Battery_Service_Life);
-            const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                    if (!AudioEVC_01_Remain_Battery_Service_Life) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Remain_Battery_Service_Life(true);
-                        setAlarmEVC_01_Remain_Battery_Service_Life(true);
-                    }
-                } else {
-                    setAudioEVC_01_Remain_Battery_Service_Life(false);
-                    setAlarmEVC_01_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life, AudioEVC_01_Remain_Battery_Service_Life, LowEVC_01_Remain_Battery_Service_Life,maintainEVC_01_Remain_Battery_Service_Life]);
+const [EVC_02_Remain_Battery_Service_Life, setEVC_02_Remain_Battery_Service_Life] = useState<string | null>(null);
+const [inputValueEVC_02_Remain_Battery_Service_Life, setinputValueEVC_02_Remain_Battery_Service_Life] = useState<any>();
+const [inputValue2EVC_02_Remain_Battery_Service_Life, setinputValue2EVC_02_Remain_Battery_Service_Life] = useState<any>();
+const [EVC_02_Remain_Battery_Service_Life_High, setEVC_02_Remain_Battery_Service_Life_High] = useState<number | null>(null);
+const [EVC_02_Remain_Battery_Service_Life_Low, setEVC_02_Remain_Battery_Service_Life_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Remain_Battery_Service_Life, setexceedThresholdEVC_02_Remain_Battery_Service_Life] = useState(false); 
+const [maintainEVC_02_Remain_Battery_Service_Life, setmaintainEVC_02_Remain_Battery_Service_Life] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (AudioEVC_01_Remain_Battery_Service_Life) {
-            const audioEnded = () => {
-                setAudioEVC_01_Remain_Battery_Service_Life(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_02_Remain_Battery_Service_LifeValue = parseFloat(EVC_02_Remain_Battery_Service_Life as any);
+    const highValue = EVC_02_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_02_Remain_Battery_Service_Life_Low ?? NaN;
 
-    const handleInputChangeHighEVC_01_Remain_Battery_Service_Life = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Remain_Battery_Service_Life(newValue);
-    };
+    if (!isNaN(EVC_02_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Remain_Battery_Service_Life) {
+        setexceedThresholdEVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_LifeValue >= highValue || EVC_02_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_02_Remain_Battery_Service_Life, EVC_02_Remain_Battery_Service_Life_High, EVC_02_Remain_Battery_Service_Life_Low, maintainEVC_02_Remain_Battery_Service_Life]);
 
-    const handleInputChangeLowEVC_01_Remain_Battery_Service_Life = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Remain_Battery_Service_Life(newValue2);
-    };
-    const ChangeMaintainEVC_01_Remain_Battery_Service_Life = async () => {
-        try {
-            const newValue = !maintainEVC_01_Remain_Battery_Service_Life;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Remain_Battery_Service_Life_Maintain: newValue }
-            );
-            setMaintainEVC_01_Remain_Battery_Service_Life(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== Remain battery 01 ============================================
+const handleInputChangeEVC_02_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Remain_Battery_Service_Life(event.target.value);
+};
 
-// ==========================Remain battery 02 ============================================
-const [EVC_02_Remain_Battery_Service_Life,setEVC_02_Remain_Battery_Service_Life] = useState<string | null>(null);
+const handleInputChange2EVC_02_Remain_Battery_Service_Life = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Remain_Battery_Service_Life(event.target.value);
+};
 
-const [AudioEVC_02_Remain_Battery_Service_Life, setAudioEVC_02_Remain_Battery_Service_Life] = useState(false);
-const [inputHighEVC_02_Remain_Battery_Service_Life, setInputHighEVC_02_Remain_Battery_Service_Life] = useState<any>();
-const [inputLowEVC_02_Remain_Battery_Service_Life, setInputLowEVC_02_Remain_Battery_Service_Life] = useState<any>();
-const [HighEVC_02_Remain_Battery_Service_Life, setHighEVC_02_Remain_Battery_Service_Life] = useState<number | null>(null);
-const [LowEVC_02_Remain_Battery_Service_Life, setLowEVC_02_Remain_Battery_Service_Life] = useState<number | null>(null);
-const [AlarmEVC_02_Remain_Battery_Service_Life, setAlarmEVC_02_Remain_Battery_Service_Life] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Remain_Battery_Service_Life, setMaintainEVC_02_Remain_Battery_Service_Life] = useState<boolean>(false);
+const ChangemaintainEVC_02_Remain_Battery_Service_Life = async () => {
+    try {
+        const newValue = !maintainEVC_02_Remain_Battery_Service_Life;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Remain_Battery_Service_Life_Maintain: newValue }
+        );
+        setmaintainEVC_02_Remain_Battery_Service_Life(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Remain_Battery_Service_Life === 'string' && typeof LowEVC_02_Remain_Battery_Service_Life === 'string' && EVC_02_Remain_Battery_Service_Life !== null && maintainEVC_02_Remain_Battery_Service_Life === false) {
-            const highValue = parseFloat(HighEVC_02_Remain_Battery_Service_Life);
-            const lowValue = parseFloat(LowEVC_02_Remain_Battery_Service_Life);
-            const EVC_02_Remain_Battery_Service_LifeValue = parseFloat(EVC_02_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_02_Remain_Battery_Service_LifeValue || EVC_02_Remain_Battery_Service_LifeValue <= lowValue) {
-                    if (!AudioEVC_02_Remain_Battery_Service_Life) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Remain_Battery_Service_Life(true);
-                        setAlarmEVC_02_Remain_Battery_Service_Life(true);
-                    }
-                } else {
-                    setAudioEVC_02_Remain_Battery_Service_Life(false);
-                    setAlarmEVC_02_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Remain_Battery_Service_Life, EVC_02_Remain_Battery_Service_Life, AudioEVC_02_Remain_Battery_Service_Life, LowEVC_02_Remain_Battery_Service_Life,maintainEVC_02_Remain_Battery_Service_Life]);
 
-    useEffect(() => {
-        if (AudioEVC_02_Remain_Battery_Service_Life) {
-            const audioEnded = () => {
-                setAudioEVC_02_Remain_Battery_Service_Life(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Remain_Battery_Service_Life]);
 
-    const handleInputChangeHighEVC_02_Remain_Battery_Service_Life = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Remain_Battery_Service_Life(newValue);
-    };
-
-    const handleInputChangeLowEVC_02_Remain_Battery_Service_Life = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Remain_Battery_Service_Life(newValue2);
-    };
-    const ChangeMaintainEVC_02_Remain_Battery_Service_Life = async () => {
-        try {
-            const newValue = !maintainEVC_02_Remain_Battery_Service_Life;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Remain_Battery_Service_Life_Maintain: newValue }
-            );
-            setMaintainEVC_02_Remain_Battery_Service_Life(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== Remain battery 02 ============================================
-
-// ========================== VM LAST DAY 01 ============================================
-const [EVC_01_Vm_of_Last_Day, setEVC_01_Vm_of_Last_Day] = useState<string | null>(null);
-const [AudioEVC_01_Vm_of_Last_Day, setAudioEVC_01_Vm_of_Last_Day] = useState(false);
-const [inputHighEVC_01_Vm_of_Last_Day, setInputHighEVC_01_Vm_of_Last_Day] = useState<any>();
-const [inputLowEVC_01_Vm_of_Last_Day, setInputLowEVC_01_Vm_of_Last_Day] = useState<any>();
-const [HighEVC_01_Vm_of_Last_Day, setHighEVC_01_Vm_of_Last_Day] = useState<number | null>(null);
-const [LowEVC_01_Vm_of_Last_Day, setLowEVC_01_Vm_of_Last_Day] = useState<number | null>(null);
-const [AlarmEVC_01_Vm_of_Last_Day, setAlarmEVC_01_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Vm_of_Last_Day, setMaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEVC_01_Vm_of_Last_Day === 'string' && typeof LowEVC_01_Vm_of_Last_Day === 'string' && EVC_01_Vm_of_Last_Day !== null && maintainEVC_01_Vm_of_Last_Day === false) {
-            const highValue = parseFloat(HighEVC_01_Vm_of_Last_Day);
-            const lowValue = parseFloat(LowEVC_01_Vm_of_Last_Day);
-            const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
-                if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                    if (!AudioEVC_01_Vm_of_Last_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Vm_of_Last_Day(true);
-                        setAlarmEVC_01_Vm_of_Last_Day(true);
-                    }
-                } else {
-                    setAudioEVC_01_Vm_of_Last_Day(false);
-                    setAlarmEVC_01_Vm_of_Last_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day, AudioEVC_01_Vm_of_Last_Day, LowEVC_01_Vm_of_Last_Day,maintainEVC_01_Vm_of_Last_Day]);
-
-    useEffect(() => {
-        if (AudioEVC_01_Vm_of_Last_Day) {
-            const audioEnded = () => {
-                setAudioEVC_01_Vm_of_Last_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Vm_of_Last_Day]);
-
-    const handleInputChangeHighEVC_01_Vm_of_Last_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Vm_of_Last_Day(newValue);
-    };
-
-    const handleInputChangeLowEVC_01_Vm_of_Last_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Vm_of_Last_Day(newValue2);
-    };
-    const ChangeMaintainEVC_01_Vm_of_Last_Day = async () => {
-        try {
-            const newValue = !maintainEVC_01_Vm_of_Last_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Vm_of_Last_Day_Maintain: newValue }
-            );
-            setMaintainEVC_01_Vm_of_Last_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ==========================VM LAST DAY 01 ============================================
-
-// ==========================VM LAST DAY 01  ============================================
 const [EVC_02_Vm_of_Last_Day, setEVC_02_Vm_of_Last_Day] = useState<string | null>(null);
-const [AudioEVC_02_Vm_of_Last_Day, setAudioEVC_02_Vm_of_Last_Day] = useState(false);
-const [inputHighEVC_02_Vm_of_Last_Day, setInputHighEVC_02_Vm_of_Last_Day] = useState<any>();
-const [inputLowEVC_02_Vm_of_Last_Day, setInputLowEVC_02_Vm_of_Last_Day] = useState<any>();
-const [HighEVC_02_Vm_of_Last_Day, setHighEVC_02_Vm_of_Last_Day] = useState<number | null>(null);
-const [LowEVC_02_Vm_of_Last_Day, setLowEVC_02_Vm_of_Last_Day] = useState<number | null>(null);
-const [AlarmEVC_02_Vm_of_Last_Day, setAlarmEVC_02_Vm_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Vm_of_Last_Day, setMaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
+const [inputValueEVC_02_Vm_of_Last_Day, setinputValueEVC_02_Vm_of_Last_Day] = useState<any>();
+const [inputValue2EVC_02_Vm_of_Last_Day, setinputValue2EVC_02_Vm_of_Last_Day] = useState<any>();
+const [EVC_02_Vm_of_Last_Day_High, setEVC_02_Vm_of_Last_Day_High] = useState<number | null>(null);
+const [EVC_02_Vm_of_Last_Day_Low, setEVC_02_Vm_of_Last_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Vm_of_Last_Day, setexceedThresholdEVC_02_Vm_of_Last_Day] = useState(false); 
+const [maintainEVC_02_Vm_of_Last_Day, setmaintainEVC_02_Vm_of_Last_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Vm_of_Last_Day === 'string' && typeof LowEVC_02_Vm_of_Last_Day === 'string' && EVC_02_Vm_of_Last_Day !== null && maintainEVC_02_Vm_of_Last_Day === false) {
-            const highValue = parseFloat(HighEVC_02_Vm_of_Last_Day);
-            const lowValue = parseFloat(LowEVC_02_Vm_of_Last_Day);
-            const EVC_02_Vm_of_Last_DayValue = parseFloat(EVC_02_Vm_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Last_DayValue)) {
-                if (highValue <= EVC_02_Vm_of_Last_DayValue || EVC_02_Vm_of_Last_DayValue <= lowValue) {
-                    if (!AudioEVC_02_Vm_of_Last_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Vm_of_Last_Day(true);
-                        setAlarmEVC_02_Vm_of_Last_Day(true);
-                    }
-                } else {
-                    setAudioEVC_02_Vm_of_Last_Day(false);
-                    setAlarmEVC_02_Vm_of_Last_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day, AudioEVC_02_Vm_of_Last_Day, LowEVC_02_Vm_of_Last_Day,maintainEVC_02_Vm_of_Last_Day]);
+useEffect(() => {
+    const EVC_02_Vm_of_Last_DayValue = parseFloat(EVC_02_Vm_of_Last_Day as any);
+    const highValue = EVC_02_Vm_of_Last_Day_High ?? NaN;
+    const lowValue = EVC_02_Vm_of_Last_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Vm_of_Last_Day) {
-            const audioEnded = () => {
-                setAudioEVC_02_Vm_of_Last_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Vm_of_Last_Day]);
+    if (!isNaN(EVC_02_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vm_of_Last_Day) {
+        setexceedThresholdEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_DayValue >= highValue || EVC_02_Vm_of_Last_DayValue <= lowValue);
+    }
+}, [EVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day_Low, maintainEVC_02_Vm_of_Last_Day]);
 
-    const handleInputChangeHighEVC_02_Vm_of_Last_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Vm_of_Last_Day(newValue);
-    };
+const handleInputChangeEVC_02_Vm_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Vm_of_Last_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Vm_of_Last_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Vm_of_Last_Day(newValue2);
-    };
-    const ChangeMaintainEVC_02_Vm_of_Last_Day = async () => {
-        try {
-            const newValue = !maintainEVC_02_Vm_of_Last_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Vm_of_Last_Day_Maintain: newValue }
-            );
-            setMaintainEVC_02_Vm_of_Last_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== VM LAST DAY 01 ============================================
+const handleInputChange2EVC_02_Vm_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Vm_of_Last_Day(event.target.value);
+};
+
+const ChangemaintainEVC_02_Vm_of_Last_Day = async () => {
+    try {
+        const newValue = !maintainEVC_02_Vm_of_Last_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Vm_of_Last_Day_Maintain: newValue }
+        );
+        setmaintainEVC_01_Vm_of_Last_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
-
-// ========================== Vb LAST DAY 01 ============================================
 const [EVC_01_Vb_of_Last_Day, setEVC_01_Vb_of_Last_Day] = useState<string | null>(null);
-const [AudioEVC_01_Vb_of_Last_Day, setAudioEVC_01_Vb_of_Last_Day] = useState(false);
-const [inputHighEVC_01_Vb_of_Last_Day, setInputHighEVC_01_Vb_of_Last_Day] = useState<any>();
-const [inputLowEVC_01_Vb_of_Last_Day, setInputLowEVC_01_Vb_of_Last_Day] = useState<any>();
-const [HighEVC_01_Vb_of_Last_Day, setHighEVC_01_Vb_of_Last_Day] = useState<number | null>(null);
-const [LowEVC_01_Vb_of_Last_Day, setLowEVC_01_Vb_of_Last_Day] = useState<number | null>(null);
-const [AlarmEVC_01_Vb_of_Last_Day, setAlarmEVC_01_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Vb_of_Last_Day, setMaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
+const [inputValueEVC_01_Vb_of_Last_Day, setinputValueEVC_01_Vb_of_Last_Day] = useState<any>();
+const [inputValue2EVC_01_Vb_of_Last_Day, setinputValue2EVC_01_Vb_of_Last_Day] = useState<any>();
+const [EVC_01_Vb_of_Last_Day_High, setEVC_01_Vb_of_Last_Day_High] = useState<number | null>(null);
+const [EVC_01_Vb_of_Last_Day_Low, setEVC_01_Vb_of_Last_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Vb_of_Last_Day, setexceedThresholdEVC_01_Vb_of_Last_Day] = useState(false); 
+const [maintainEVC_01_Vb_of_Last_Day, setmaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Vb_of_Last_Day === 'string' && typeof LowEVC_01_Vb_of_Last_Day === 'string' && EVC_01_Vb_of_Last_Day !== null && maintainEVC_01_Vb_of_Last_Day === false) {
-            const highValue = parseFloat(HighEVC_01_Vb_of_Last_Day);
-            const lowValue = parseFloat(LowEVC_01_Vb_of_Last_Day);
-            const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
-                if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                    if (!AudioEVC_01_Vb_of_Last_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Vb_of_Last_Day(true);
-                        setAlarmEVC_01_Vb_of_Last_Day(true);
-                    }
-                } else {
-                    setAudioEVC_01_Vb_of_Last_Day(false);
-                    setAlarmEVC_01_Vb_of_Last_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day, AudioEVC_01_Vb_of_Last_Day, LowEVC_01_Vb_of_Last_Day,maintainEVC_01_Vb_of_Last_Day]);
+useEffect(() => {
+    const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day as any);
+    const highValue = EVC_01_Vb_of_Last_Day_High ?? NaN;
+    const lowValue = EVC_01_Vb_of_Last_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_01_Vb_of_Last_Day) {
-            const audioEnded = () => {
-                setAudioEVC_01_Vb_of_Last_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Vb_of_Last_Day]);
+    if (!isNaN(EVC_01_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Last_Day) {
+        setexceedThresholdEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_DayValue >= highValue || EVC_01_Vb_of_Last_DayValue <= lowValue);
+    }
+}, [EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low, maintainEVC_01_Vb_of_Last_Day]);
 
-    const handleInputChangeHighEVC_01_Vb_of_Last_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Vb_of_Last_Day(newValue);
-    };
+const handleInputChangeEVC_01_Vb_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Vb_of_Last_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Vb_of_Last_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Vb_of_Last_Day(newValue2);
-    };
-    const ChangeMaintainEVC_01_Vb_of_Last_Day = async () => {
-        try {
-            const newValue = !maintainEVC_01_Vb_of_Last_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Vb_of_Last_Day_Maintain: newValue }
-            );
-            setMaintainEVC_01_Vb_of_Last_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ==========================Vb LAST DAY 01 ============================================
+const handleInputChange2EVC_01_Vb_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Vb_of_Last_Day(event.target.value);
+};
 
-// ==========================Vb LAST DAY 02  ============================================
+const ChangemaintainEVC_01_Vb_of_Last_Day = async () => {
+    try {
+        const newValue = !maintainEVC_01_Vb_of_Last_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Vb_of_Last_Day_Maintain: newValue }
+        );
+        setmaintainEVC_01_Vm_of_Last_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+
+
+const [EVC_01_Vm_of_Last_Day, setEVC_01_Vm_of_Last_Day] = useState<string | null>(null);
+const [inputValueEVC_01_Vm_of_Last_Day, setinputValueEVC_01_Vm_of_Last_Day] = useState<any>();
+const [inputValue2EVC_01_Vm_of_Last_Day, setinputValue2EVC_01_Vm_of_Last_Day] = useState<any>();
+const [EVC_01_Vm_of_Last_Day_High, setEVC_01_Vm_of_Last_Day_High] = useState<number | null>(null);
+const [EVC_01_Vm_of_Last_Day_Low, setEVC_01_Vm_of_Last_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Vm_of_Last_Day, setexceedThresholdEVC_01_Vm_of_Last_Day] = useState(false); 
+const [maintainEVC_01_Vm_of_Last_Day, setmaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day as any);
+    const highValue = EVC_01_Vm_of_Last_Day_High ?? NaN;
+    const lowValue = EVC_01_Vm_of_Last_Day_Low ?? NaN;
+
+    if (!isNaN(EVC_01_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Last_Day) {
+        setexceedThresholdEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_DayValue >= highValue || EVC_01_Vm_of_Last_DayValue <= lowValue);
+    }
+}, [EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low, maintainEVC_01_Vm_of_Last_Day]);
+
+const handleInputChangeEVC_01_Vm_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Vm_of_Last_Day(event.target.value);
+};
+
+const handleInputChange2EVC_01_Vm_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Vm_of_Last_Day(event.target.value);
+};
+
+const ChangemaintainEVC_01_Vm_of_Last_Day = async () => {
+    try {
+        const newValue = !maintainEVC_01_Vm_of_Last_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Vm_of_Last_Day_Maintain: newValue }
+        );
+        setmaintainEVC_01_Vm_of_Last_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
 const [EVC_02_Vb_of_Last_Day, setEVC_02_Vb_of_Last_Day] = useState<string | null>(null);
-const [AudioEVC_02_Vb_of_Last_Day, setAudioEVC_02_Vb_of_Last_Day] = useState(false);
-const [inputHighEVC_02_Vb_of_Last_Day, setInputHighEVC_02_Vb_of_Last_Day] = useState<any>();
-const [inputLowEVC_02_Vb_of_Last_Day, setInputLowEVC_02_Vb_of_Last_Day] = useState<any>();
-const [HighEVC_02_Vb_of_Last_Day, setHighEVC_02_Vb_of_Last_Day] = useState<number | null>(null);
-const [LowEVC_02_Vb_of_Last_Day, setLowEVC_02_Vb_of_Last_Day] = useState<number | null>(null);
-const [AlarmEVC_02_Vb_of_Last_Day, setAlarmEVC_02_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Vb_of_Last_Day, setMaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
+const [inputValueEVC_02_Vb_of_Last_Day, setinputValueEVC_02_Vb_of_Last_Day] = useState<any>();
+const [inputValue2EVC_02_Vb_of_Last_Day, setinputValue2EVC_02_Vb_of_Last_Day] = useState<any>();
+const [EVC_02_Vb_of_Last_Day_High, setEVC_02_Vb_of_Last_Day_High] = useState<number | null>(null);
+const [EVC_02_Vb_of_Last_Day_Low, setEVC_02_Vb_of_Last_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Vb_of_Last_Day, setexceedThresholdEVC_02_Vb_of_Last_Day] = useState(false); 
+const [maintainEVC_02_Vb_of_Last_Day, setmaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Vb_of_Last_Day === 'string' && typeof LowEVC_02_Vb_of_Last_Day === 'string' && EVC_02_Vb_of_Last_Day !== null && maintainEVC_02_Vb_of_Last_Day === false) {
-            const highValue = parseFloat(HighEVC_02_Vb_of_Last_Day);
-            const lowValue = parseFloat(LowEVC_02_Vb_of_Last_Day);
-            const EVC_02_Vb_of_Last_DayValue = parseFloat(EVC_02_Vb_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Last_DayValue)) {
-                if (highValue <= EVC_02_Vb_of_Last_DayValue || EVC_02_Vb_of_Last_DayValue <= lowValue) {
-                    if (!AudioEVC_02_Vb_of_Last_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Vb_of_Last_Day(true);
-                        setAlarmEVC_02_Vb_of_Last_Day(true);
-                    }
-                } else {
-                    setAudioEVC_02_Vb_of_Last_Day(false);
-                    setAlarmEVC_02_Vb_of_Last_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day, AudioEVC_02_Vb_of_Last_Day, LowEVC_02_Vb_of_Last_Day,maintainEVC_02_Vb_of_Last_Day]);
+useEffect(() => {
+    const EVC_02_Vb_of_Last_DayValue = parseFloat(EVC_02_Vb_of_Last_Day as any);
+    const highValue = EVC_02_Vb_of_Last_Day_High ?? NaN;
+    const lowValue = EVC_02_Vb_of_Last_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Vb_of_Last_Day) {
-            const audioEnded = () => {
-                setAudioEVC_02_Vb_of_Last_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Vb_of_Last_Day]);
+    if (!isNaN(EVC_02_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vb_of_Last_Day) {
+        setexceedThresholdEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_DayValue >= highValue || EVC_02_Vb_of_Last_DayValue <= lowValue);
+    }
+}, [EVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_High, EVC_02_Vb_of_Last_Day_Low, maintainEVC_02_Vb_of_Last_Day]);
 
-    const handleInputChangeHighEVC_02_Vb_of_Last_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Vb_of_Last_Day(newValue);
-    };
+const handleInputChangeEVC_02_Vb_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Vb_of_Last_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Vb_of_Last_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Vb_of_Last_Day(newValue2);
-    };
-    const ChangeMaintainEVC_02_Vb_of_Last_Day = async () => {
-        try {
-            const newValue = !maintainEVC_02_Vb_of_Last_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Vb_of_Last_Day_Maintain: newValue }
-            );
-            setMaintainEVC_02_Vb_of_Last_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== Vb LAST DAY 02 ============================================
+const handleInputChange2EVC_02_Vb_of_Last_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Vb_of_Last_Day(event.target.value);
+};
 
-//=============================================================================================
+const ChangemaintainEVC_02_Vb_of_Last_Day = async () => {
+    try {
+        const newValue = !maintainEVC_02_Vb_of_Last_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Vb_of_Last_Day_Maintain: newValue }
+        );
+        setmaintainEVC_02_Vb_of_Last_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
-// ========================== VM to DAY 01 ============================================
+
 const [EVC_01_Vm_of_Current_Day, setEVC_01_Vm_of_Current_Day] = useState<string | null>(null);
-const [AudioEVC_01_Vm_of_Current_Day, setAudioEVC_01_Vm_of_Current_Day] = useState(false);
-const [inputHighEVC_01_Vm_of_Current_Day, setInputHighEVC_01_Vm_of_Current_Day] = useState<any>();
-const [inputLowEVC_01_Vm_of_Current_Day, setInputLowEVC_01_Vm_of_Current_Day] = useState<any>();
-const [HighEVC_01_Vm_of_Current_Day, setHighEVC_01_Vm_of_Current_Day] = useState<number | null>(null);
-const [LowEVC_01_Vm_of_Current_Day, setLowEVC_01_Vm_of_Current_Day] = useState<number | null>(null);
-const [AlarmEVC_01_Vm_of_Current_Day, setAlarmEVC_01_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Vm_of_Current_Day, setMaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
+const [inputValueEVC_01_Vm_of_Current_Day, setinputValueEVC_01_Vm_of_Current_Day] = useState<any>();
+const [inputValue2EVC_01_Vm_of_Current_Day, setinputValue2EVC_01_Vm_of_Current_Day] = useState<any>();
+const [EVC_01_Vm_of_Current_Day_High, setEVC_01_Vm_of_Current_Day_High] = useState<number | null>(null);
+const [EVC_01_Vm_of_Current_Day_Low, setEVC_01_Vm_of_Current_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Vm_of_Current_Day, setexceedThresholdEVC_01_Vm_of_Current_Day] = useState(false); 
+const [maintainEVC_01_Vm_of_Current_Day, setmaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Vm_of_Current_Day === 'string' && typeof LowEVC_01_Vm_of_Current_Day === 'string' && EVC_01_Vm_of_Current_Day !== null && maintainEVC_01_Vm_of_Current_Day === false) {
-            const highValue = parseFloat(HighEVC_01_Vm_of_Current_Day);
-            const lowValue = parseFloat(LowEVC_01_Vm_of_Current_Day);
-            const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
-                if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                    if (!AudioEVC_01_Vm_of_Current_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Vm_of_Current_Day(true);
-                        setAlarmEVC_01_Vm_of_Current_Day(true);
-                    }
-                } else {
-                    setAudioEVC_01_Vm_of_Current_Day(false);
-                    setAlarmEVC_01_Vm_of_Current_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day, AudioEVC_01_Vm_of_Current_Day, LowEVC_01_Vm_of_Current_Day,maintainEVC_01_Vm_of_Current_Day]);
+useEffect(() => {
+    const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day as any);
+    const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+    const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_01_Vm_of_Current_Day) {
-            const audioEnded = () => {
-                setAudioEVC_01_Vm_of_Current_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Vm_of_Current_Day]);
+    if (!isNaN(EVC_01_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Current_Day) {
+        setexceedThresholdEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_DayValue >= highValue || EVC_01_Vm_of_Current_DayValue <= lowValue);
+    }
+}, [EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low, maintainEVC_01_Vm_of_Current_Day]);
 
-    const handleInputChangeHighEVC_01_Vm_of_Current_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Vm_of_Current_Day(newValue);
-    };
+const handleInputChangeEVC_01_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Vm_of_Current_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Vm_of_Current_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Vm_of_Current_Day(newValue2);
-    };
-    const ChangeMaintainEVC_01_Vm_of_Current_Day = async () => {
-        try {
-            const newValue = !maintainEVC_01_Vm_of_Current_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Vm_of_Current_Day_Maintain: newValue }
-            );
-            setMaintainEVC_01_Vm_of_Current_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ==========================VM LAST DAY 01 ============================================
+const handleInputChange2EVC_01_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Vm_of_Current_Day(event.target.value);
+};
 
-// ==========================VM LAST DAY 01  ============================================
+const ChangemaintainEVC_01_Vm_of_Current_Day = async () => {
+    try {
+        const newValue = !maintainEVC_01_Vm_of_Current_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Vm_of_Current_Day_Maintain: newValue }
+        );
+        setmaintainEVC_01_Vm_of_Current_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
 const [EVC_02_Vm_of_Current_Day, setEVC_02_Vm_of_Current_Day] = useState<string | null>(null);
-const [AudioEVC_02_Vm_of_Current_Day, setAudioEVC_02_Vm_of_Current_Day] = useState(false);
-const [inputHighEVC_02_Vm_of_Current_Day, setInputHighEVC_02_Vm_of_Current_Day] = useState<any>();
-const [inputLowEVC_02_Vm_of_Current_Day, setInputLowEVC_02_Vm_of_Current_Day] = useState<any>();
-const [HighEVC_02_Vm_of_Current_Day, setHighEVC_02_Vm_of_Current_Day] = useState<number | null>(null);
-const [LowEVC_02_Vm_of_Current_Day, setLowEVC_02_Vm_of_Current_Day] = useState<number | null>(null);
-const [AlarmEVC_02_Vm_of_Current_Day, setAlarmEVC_02_Vm_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Vm_of_Current_Day, setMaintainEVC_02_Vm_of_Current_Day] = useState<boolean>(false);
+const [inputValueEVC_02_Vm_of_Current_Day, setinputValueEVC_02_Vm_of_Current_Day] = useState<any>();
+const [inputValue2EVC_02_Vm_of_Current_Day, setinputValue2EVC_02_Vm_of_Current_Day] = useState<any>();
+const [EVC_02_Vm_of_Current_Day_High, setEVC_02_Vm_of_Current_Day_High] = useState<number | null>(null);
+const [EVC_02_Vm_of_Current_Day_Low, setEVC_02_Vm_of_Current_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Vm_of_Current_Day, setexceedThresholdEVC_02_Vm_of_Current_Day] = useState(false); 
+const [maintainEVC_02_Vm_of_Current_Day, setmaintainEVC_02_Vm_of_Current_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_02_Vm_of_Current_Day === 'string' && typeof LowEVC_02_Vm_of_Current_Day === 'string' && EVC_02_Vm_of_Current_Day !== null && maintainEVC_02_Vm_of_Current_Day === false) {
-            const highValue = parseFloat(HighEVC_02_Vm_of_Current_Day);
-            const lowValue = parseFloat(LowEVC_02_Vm_of_Current_Day);
-            const EVC_02_Vm_of_Current_DayValue = parseFloat(EVC_02_Vm_of_Current_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vm_of_Current_DayValue)) {
-                if (highValue <= EVC_02_Vm_of_Current_DayValue || EVC_02_Vm_of_Current_DayValue <= lowValue) {
-                    if (!AudioEVC_02_Vm_of_Current_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Vm_of_Current_Day(true);
-                        setAlarmEVC_02_Vm_of_Current_Day(true);
-                    }
-                } else {
-                    setAudioEVC_02_Vm_of_Current_Day(false);
-                    setAlarmEVC_02_Vm_of_Current_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day, AudioEVC_02_Vm_of_Current_Day, LowEVC_02_Vm_of_Current_Day,maintainEVC_02_Vm_of_Current_Day]);
+useEffect(() => {
+    const EVC_02_Vm_of_Current_DayValue = parseFloat(EVC_02_Vm_of_Current_Day as any);
+    const highValue = EVC_02_Vm_of_Current_Day_High ?? NaN;
+    const lowValue = EVC_02_Vm_of_Current_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_02_Vm_of_Current_Day) {
-            const audioEnded = () => {
-                setAudioEVC_02_Vm_of_Current_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Vm_of_Current_Day]);
+    if (!isNaN(EVC_02_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vm_of_Current_Day) {
+        setexceedThresholdEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_DayValue >= highValue || EVC_02_Vm_of_Current_DayValue <= lowValue);
+    }
+}, [EVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day_High, EVC_02_Vm_of_Current_Day_Low, maintainEVC_02_Vm_of_Current_Day]);
 
-    const handleInputChangeHighEVC_02_Vm_of_Current_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Vm_of_Current_Day(newValue);
-    };
+const handleInputChangeEVC_02_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Vm_of_Current_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_02_Vm_of_Current_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Vm_of_Current_Day(newValue2);
-    };
-    const ChangeMaintainEVC_02_Vm_of_Current_Day = async () => {
-        try {
-            const newValue = !maintainEVC_02_Vm_of_Current_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Vm_of_Current_Day_Maintain: newValue }
-            );
-            setMaintainEVC_02_Vm_of_Current_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== VM LAST DAY 01 ============================================
+const handleInputChange2EVC_02_Vm_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Vm_of_Current_Day(event.target.value);
+};
 
+const ChangemaintainEVC_02_Vm_of_Current_Day = async () => {
+    try {
+        const newValue = !maintainEVC_02_Vm_of_Current_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Vm_of_Current_Day_Maintain: newValue }
+        );
+        setmaintainEVC_02_Vm_of_Current_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-
-// ========================== Vb LAST DAY 01 ============================================
 const [EVC_01_Vb_of_Current_Day, setEVC_01_Vb_of_Current_Day] = useState<string | null>(null);
-const [AudioEVC_01_Vb_of_Current_Day, setAudioEVC_01_Vb_of_Current_Day] = useState(false);
-const [inputHighEVC_01_Vb_of_Current_Day, setInputHighEVC_01_Vb_of_Current_Day] = useState<any>();
-const [inputLowEVC_01_Vb_of_Current_Day, setInputLowEVC_01_Vb_of_Current_Day] = useState<any>();
-const [HighEVC_01_Vb_of_Current_Day, setHighEVC_01_Vb_of_Current_Day] = useState<number | null>(null);
-const [LowEVC_01_Vb_of_Current_Day, setLowEVC_01_Vb_of_Current_Day] = useState<number | null>(null);
-const [AlarmEVC_01_Vb_of_Current_Day, setAlarmEVC_01_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+const [inputValueEVC_01_Vb_of_Current_Day, setinputValueEVC_01_Vb_of_Current_Day] = useState<any>();
+const [inputValue2EVC_01_Vb_of_Current_Day, setinputValue2EVC_01_Vb_of_Current_Day] = useState<any>();
+const [EVC_01_Vb_of_Current_Day_High, setEVC_01_Vb_of_Current_Day_High] = useState<number | null>(null);
+const [EVC_01_Vb_of_Current_Day_Low, setEVC_01_Vb_of_Current_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Vb_of_Current_Day, setexceedThresholdEVC_01_Vb_of_Current_Day] = useState(false); 
 const [maintainEVC_01_Vb_of_Current_Day, setMaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (typeof HighEVC_01_Vb_of_Current_Day === 'string' && typeof LowEVC_01_Vb_of_Current_Day === 'string' && EVC_01_Vb_of_Current_Day !== null && maintainEVC_01_Vb_of_Current_Day === false) {
-            const highValue = parseFloat(HighEVC_01_Vb_of_Current_Day);
-            const lowValue = parseFloat(LowEVC_01_Vb_of_Current_Day);
-            const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
-                if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                    if (!AudioEVC_01_Vb_of_Current_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Vb_of_Current_Day(true);
-                        setAlarmEVC_01_Vb_of_Current_Day(true);
-                    }
-                } else {
-                    setAudioEVC_01_Vb_of_Current_Day(false);
-                    setAlarmEVC_01_Vb_of_Current_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day, AudioEVC_01_Vb_of_Current_Day, LowEVC_01_Vb_of_Current_Day,maintainEVC_01_Vb_of_Current_Day]);
+useEffect(() => {
+    const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day as any);
+    const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+    const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
 
-    useEffect(() => {
-        if (AudioEVC_01_Vb_of_Current_Day) {
-            const audioEnded = () => {
-                setAudioEVC_01_Vb_of_Current_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_01_Vb_of_Current_Day]);
+    if (!isNaN(EVC_01_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Current_Day) {
+        setexceedThresholdEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_DayValue >= highValue || EVC_01_Vb_of_Current_DayValue <= lowValue);
+    }
+}, [EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low, maintainEVC_01_Vb_of_Current_Day]);
 
-    const handleInputChangeHighEVC_01_Vb_of_Current_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Vb_of_Current_Day(newValue);
-    };
+const handleInputChangeEVC_01_Vb_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Vb_of_Current_Day(event.target.value);
+};
 
-    const handleInputChangeLowEVC_01_Vb_of_Current_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Vb_of_Current_Day(newValue2);
-    };
-    const ChangeMaintainEVC_01_Vb_of_Current_Day = async () => {
-        try {
-            const newValue = !maintainEVC_01_Vb_of_Current_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Vb_of_Current_Day_Maintain: newValue }
-            );
-            setMaintainEVC_01_Vb_of_Current_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ==========================Vb LAST DAY 01 ============================================
+const handleInputChange2EVC_01_Vb_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Vb_of_Current_Day(event.target.value);
+};
 
-// ==========================Vb LAST DAY 02  ============================================
+const ChangemaintainEVC_01_Vb_of_Current_Day = async () => {
+    try {
+        const newValue = !maintainEVC_01_Vb_of_Current_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Vb_of_Current_Day_Maintain: newValue }
+        );
+        setMaintainEVC_01_Vb_of_Current_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
 const [EVC_02_Vb_of_Current_Day, setEVC_02_Vb_of_Current_Day] = useState<string | null>(null);
-const [AudioEVC_02_Vb_of_Current_Day, setAudioEVC_02_Vb_of_Current_Day] = useState(false);
-const [inputHighEVC_02_Vb_of_Current_Day, setInputHighEVC_02_Vb_of_Current_Day] = useState<any>();
-const [inputLowEVC_02_Vb_of_Current_Day, setInputLowEVC_02_Vb_of_Current_Day] = useState<any>();
-const [HighEVC_02_Vb_of_Current_Day, setHighEVC_02_Vb_of_Current_Day] = useState<number | null>(null);
-const [LowEVC_02_Vb_of_Current_Day, setLowEVC_02_Vb_of_Current_Day] = useState<number | null>(null);
-const [AlarmEVC_02_Vb_of_Current_Day, setAlarmEVC_02_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Vb_of_Current_Day, setMaintainEVC_02_Vb_of_Current_Day] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEVC_02_Vb_of_Current_Day === 'string' && typeof LowEVC_02_Vb_of_Current_Day === 'string' && EVC_02_Vb_of_Current_Day !== null && maintainEVC_02_Vb_of_Current_Day === false) {
-            const highValue = parseFloat(HighEVC_02_Vb_of_Current_Day);
-            const lowValue = parseFloat(LowEVC_02_Vb_of_Current_Day);
-            const EVC_02_Vb_of_Current_DayValue = parseFloat(EVC_02_Vb_of_Current_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Vb_of_Current_DayValue)) {
-                if (highValue <= EVC_02_Vb_of_Current_DayValue || EVC_02_Vb_of_Current_DayValue <= lowValue) {
-                    if (!AudioEVC_02_Vb_of_Current_Day) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Vb_of_Current_Day(true);
-                        setAlarmEVC_02_Vb_of_Current_Day(true);
-                    }
-                } else {
-                    setAudioEVC_02_Vb_of_Current_Day(false);
-                    setAlarmEVC_02_Vb_of_Current_Day(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day, AudioEVC_02_Vb_of_Current_Day, LowEVC_02_Vb_of_Current_Day,maintainEVC_02_Vb_of_Current_Day]);
-
-    useEffect(() => {
-        if (AudioEVC_02_Vb_of_Current_Day) {
-            const audioEnded = () => {
-                setAudioEVC_02_Vb_of_Current_Day(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEVC_02_Vb_of_Current_Day]);
-
-    const handleInputChangeHighEVC_02_Vb_of_Current_Day = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Vb_of_Current_Day(newValue);
-    };
-
-    const handleInputChangeLowEVC_02_Vb_of_Current_Day = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Vb_of_Current_Day(newValue2);
-    };
-    const ChangeMaintainEVC_02_Vb_of_Current_Day = async () => {
-        try {
-            const newValue = !maintainEVC_02_Vb_of_Current_Day;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Vb_of_Current_Day_Maintain: newValue }
-            );
-            setMaintainEVC_02_Vb_of_Current_Day(newValue);
-            
-            
-        } catch (error) {}
-    };
-// ========================== Vb LAST DAY 02 ============================================
-//===========================================================================================
-
-const [DI_UPS_BATTERY,setDI_UPS_BATTERY] = useState<string | null>(null);
-const [AudioDI_UPS_BATTERY, setAudioDI_UPS_BATTERY] = useState(false);
-const [inputHighDI_UPS_BATTERY, setInputHighDI_UPS_BATTERY] = useState<any>();
-const [inputLowDI_UPS_BATTERY, setInputLowDI_UPS_BATTERY] = useState<any>();
-const [HighDI_UPS_BATTERY, setHighDI_UPS_BATTERY] = useState<number | null>(null);
-const [LowDI_UPS_BATTERY, setLowDI_UPS_BATTERY] = useState<number | null>(null);
-const [AlarmDI_UPS_BATTERY, setAlarmDI_UPS_BATTERY] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_UPS_BATTERY, setMaintainDI_UPS_BATTERY] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_UPS_BATTERY === 'string' && typeof LowDI_UPS_BATTERY === 'string' && DI_UPS_BATTERY !== null && maintainDI_UPS_BATTERY === false) {
-            const highValue = parseFloat(HighDI_UPS_BATTERY);
-            const lowValue = parseFloat(LowDI_UPS_BATTERY);
-            const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_BATTERYValue)) {
-                if (highValue <= DI_UPS_BATTERYValue || DI_UPS_BATTERYValue <= lowValue) {
-                    if (!AudioDI_UPS_BATTERY) {
-                        audioRef.current?.play();
-                        setAudioDI_UPS_BATTERY(true);
-                        setAlarmDI_UPS_BATTERY(true);
-                    }
-                } else {
-                    setAudioDI_UPS_BATTERY(false);
-                    setAlarmDI_UPS_BATTERY(false);
-                }
-            } 
-        } 
-    }, [HighDI_UPS_BATTERY, DI_UPS_BATTERY, AudioDI_UPS_BATTERY, LowDI_UPS_BATTERY,maintainDI_UPS_BATTERY]);
-
-    useEffect(() => {
-        if (AudioDI_UPS_BATTERY) {
-            const audioEnded = () => {
-                setAudioDI_UPS_BATTERY(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_UPS_BATTERY]);
-
-    const handleInputChangeHighDI_UPS_BATTERY = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_UPS_BATTERY(newValue);
-    };
-
-    const handleInputChangeLowDI_UPS_BATTERY = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_UPS_BATTERY(newValue2);
-    };
-    const ChangeMaintainDI_UPS_BATTERY = async () => {
-        try {
-            const newValue = !maintainDI_UPS_BATTERY;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_UPS_BATTERY_Maintain: newValue }
-            );
-            setMaintainDI_UPS_BATTERY(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-//===========================================================================================
-
-const [DI_UPS_CHARGING,setDI_UPS_CHARGING] = useState<string | null>(null);
-
-const [AudioDI_UPS_CHARGING, setAudioDI_UPS_CHARGING] = useState(false);
-const [inputHighDI_UPS_CHARGING, setInputHighDI_UPS_CHARGING] = useState<any>();
-const [inputLowDI_UPS_CHARGING, setInputLowDI_UPS_CHARGING] = useState<any>();
-const [HighDI_UPS_CHARGING, setHighDI_UPS_CHARGING] = useState<number | null>(null);
-const [LowDI_UPS_CHARGING, setLowDI_UPS_CHARGING] = useState<number | null>(null);
-const [AlarmDI_UPS_CHARGING, setAlarmDI_UPS_CHARGING] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_UPS_CHARGING, setMaintainDI_UPS_CHARGING] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_UPS_CHARGING === 'string' && typeof LowDI_UPS_CHARGING === 'string' && DI_UPS_CHARGING !== null && maintainDI_UPS_CHARGING === false) {
-            const highValue = parseFloat(HighDI_UPS_CHARGING);
-            const lowValue = parseFloat(LowDI_UPS_CHARGING);
-            const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_CHARGINGValue)) {
-                if (highValue <= DI_UPS_CHARGINGValue || DI_UPS_CHARGINGValue <= lowValue) {
-                    if (!AudioDI_UPS_CHARGING) {
-                        audioRef.current?.play();
-                        setAudioDI_UPS_CHARGING(true);
-                        setAlarmDI_UPS_CHARGING(true);
-                    }
-                } else {
-                    setAudioDI_UPS_CHARGING(false);
-                    setAlarmDI_UPS_CHARGING(false);
-                }
-            } 
-        } 
-    }, [HighDI_UPS_CHARGING, DI_UPS_CHARGING, AudioDI_UPS_CHARGING, LowDI_UPS_CHARGING,maintainDI_UPS_CHARGING]);
-
-    useEffect(() => {
-        if (AudioDI_UPS_CHARGING) {
-            const audioEnded = () => {
-                setAudioDI_UPS_CHARGING(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_UPS_CHARGING]);
-
-    const handleInputChangeHighDI_UPS_CHARGING = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_UPS_CHARGING(newValue);
-    };
-
-    const handleInputChangeLowDI_UPS_CHARGING = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_UPS_CHARGING(newValue2);
-    };
-    const ChangeMaintainDI_UPS_CHARGING = async () => {
-        try {
-            const newValue = !maintainDI_UPS_CHARGING;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_UPS_CHARGING_Maintain: newValue }
-            );
-            setMaintainDI_UPS_CHARGING(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [DI_UPS_ALARM,setDI_UPS_ALARM] = useState<string | null>(null);
-const [AudioDI_UPS_ALARM, setAudioDI_UPS_ALARM] = useState(false);
-const [inputHighDI_UPS_ALARM, setInputHighDI_UPS_ALARM] = useState<any>();
-const [inputLowDI_UPS_ALARM, setInputLowDI_UPS_ALARM] = useState<any>();
-const [HighDI_UPS_ALARM, setHighDI_UPS_ALARM] = useState<number | null>(null);
-const [LowDI_UPS_ALARM, setLowDI_UPS_ALARM] = useState<number | null>(null);
-const [AlarmDI_UPS_ALARM, setAlarmDI_UPS_ALARM] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_UPS_ALARM, setMaintainDI_UPS_ALARM] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_UPS_ALARM === 'string' && typeof LowDI_UPS_ALARM === 'string' && DI_UPS_ALARM !== null && maintainDI_UPS_ALARM === false) {
-            const highValue = parseFloat(HighDI_UPS_ALARM);
-            const lowValue = parseFloat(LowDI_UPS_ALARM);
-            const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_ALARMValue)) {
-                if (highValue <= DI_UPS_ALARMValue || DI_UPS_ALARMValue <= lowValue) {
-                    if (!AudioDI_UPS_ALARM) {
-                        audioRef.current?.play();
-                        setAudioDI_UPS_ALARM(true);
-                        setAlarmDI_UPS_ALARM(true);
-                    }
-                } else {
-                    setAudioDI_UPS_ALARM(false);
-                    setAlarmDI_UPS_ALARM(false);
-                }
-            } 
-        } 
-    }, [HighDI_UPS_ALARM, DI_UPS_ALARM, AudioDI_UPS_ALARM, LowDI_UPS_ALARM,maintainDI_UPS_ALARM]);
-
-    useEffect(() => {
-        if (AudioDI_UPS_ALARM) {
-            const audioEnded = () => {
-                setAudioDI_UPS_ALARM(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_UPS_ALARM]);
-
-    const handleInputChangeHighDI_UPS_ALARM = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_UPS_ALARM(newValue);
-    };
-
-    const handleInputChangeLowDI_UPS_ALARM = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_UPS_ALARM(newValue2);
-    };
-    const ChangeMaintainDI_UPS_ALARM = async () => {
-        try {
-            const newValue = !maintainDI_UPS_ALARM;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_UPS_ALARM_Maintain: newValue }
-            );
-            setMaintainDI_UPS_ALARM(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [UPS_Mode,setUPS_Mode] = useState<string | null>(null);
-const [AudioUPS_Mode, setAudioUPS_Mode] = useState(false);
-const [inputHighUPS_Mode, setInputHighUPS_Mode] = useState<any>();
-const [inputLowUPS_Mode, setInputLowUPS_Mode] = useState<any>();
-const [HighUPS_Mode, setHighUPS_Mode] = useState<number | null>(null);
-const [LowUPS_Mode, setLowUPS_Mode] = useState<number | null>(null);
-const [AlarmUPS_Mode, setAlarmUPS_Mode] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainUPS_Mode, setMaintainUPS_Mode] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighUPS_Mode === 'string' && typeof LowUPS_Mode === 'string' && UPS_Mode !== null && maintainUPS_Mode === false) {
-            const highValue = parseFloat(HighUPS_Mode);
-            const lowValue = parseFloat(LowUPS_Mode);
-            const UPS_ModeValue = parseFloat(UPS_Mode);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UPS_ModeValue)) {
-                if (highValue <= UPS_ModeValue || UPS_ModeValue <= lowValue) {
-                    if (!AudioUPS_Mode) {
-                        audioRef.current?.play();
-                        setAudioUPS_Mode(true);
-                        setAlarmUPS_Mode(true);
-                    }
-                } else {
-                    setAudioUPS_Mode(false);
-                    setAlarmUPS_Mode(false);
-                }
-            } 
-        } 
-    }, [HighUPS_Mode, UPS_Mode, AudioUPS_Mode, LowUPS_Mode,maintainUPS_Mode]);
-
-    useEffect(() => {
-        if (AudioUPS_Mode) {
-            const audioEnded = () => {
-                setAudioUPS_Mode(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioUPS_Mode]);
-
-    const handleInputChangeHighUPS_Mode = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighUPS_Mode(newValue);
-    };
-
-    const handleInputChangeLowUPS_Mode = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowUPS_Mode(newValue2);
-    };
-    const ChangeMaintainUPS_Mode = async () => {
-        try {
-            const newValue = !maintainUPS_Mode;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { UPS_Mode_Maintain: newValue }
-            );
-            setMaintainUPS_Mode(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-
-//===========================================================================================
-
-const [DI_SELECT_SW,setDI_SELECT_SW] = useState<string | null>(null);
-const [AudioDI_SELECT_SW, setAudioDI_SELECT_SW] = useState(false);
-const [inputHighDI_SELECT_SW, setInputHighDI_SELECT_SW] = useState<any>();
-const [inputLowDI_SELECT_SW, setInputLowDI_SELECT_SW] = useState<any>();
-const [HighDI_SELECT_SW, setHighDI_SELECT_SW] = useState<number | null>(null);
-const [LowDI_SELECT_SW, setLowDI_SELECT_SW] = useState<number | null>(null);
-const [AlarmDI_SELECT_SW, setAlarmDI_SELECT_SW] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_SELECT_SW, setMaintainDI_SELECT_SW] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_SELECT_SW === 'string' && typeof LowDI_SELECT_SW === 'string' && DI_SELECT_SW !== null && maintainDI_SELECT_SW === false) {
-            const highValue = parseFloat(HighDI_SELECT_SW);
-            const lowValue = parseFloat(LowDI_SELECT_SW);
-            const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SELECT_SWValue)) {
-                if (highValue <= DI_SELECT_SWValue || DI_SELECT_SWValue <= lowValue) {
-                    if (!AudioDI_SELECT_SW) {
-                        audioRef.current?.play();
-                        setAudioDI_SELECT_SW(true);
-                        setAlarmDI_SELECT_SW(true);
-                    }
-                } else {
-                    setAudioDI_SELECT_SW(false);
-                    setAlarmDI_SELECT_SW(false);
-                }
-            } 
-        } 
-    }, [HighDI_SELECT_SW, DI_SELECT_SW, AudioDI_SELECT_SW, LowDI_SELECT_SW,maintainDI_SELECT_SW]);
-
-    useEffect(() => {
-        if (AudioDI_SELECT_SW) {
-            const audioEnded = () => {
-                setAudioDI_SELECT_SW(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_SELECT_SW]);
-
-    const handleInputChangeHighDI_SELECT_SW = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_SELECT_SW(newValue);
-    };
-
-    const handleInputChangeLowDI_SELECT_SW = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_SELECT_SW(newValue2);
-    };
-    const ChangeMaintainDI_SELECT_SW = async () => {
-        try {
-            const newValue = !maintainDI_SELECT_SW;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_SELECT_SW_Maintain: newValue }
-            );
-            setMaintainDI_SELECT_SW(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [Emergency_NC,setEmergency_NC] =useState<string | null>(null);
-
-const [AudioEmergency_NC, setAudioEmergency_NC] = useState(false);
-const [inputHighEmergency_NC, setInputHighEmergency_NC] = useState<any>();
-const [inputLowEmergency_NC, setInputLowEmergency_NC] = useState<any>();
-const [HighEmergency_NC, setHighEmergency_NC] = useState<number | null>(null);
-const [LowEmergency_NC, setLowEmergency_NC] = useState<number | null>(null);
-const [AlarmEmergency_NC, setAlarmEmergency_NC] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEmergency_NC, setMaintainEmergency_NC] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEmergency_NC === 'string' && typeof LowEmergency_NC === 'string' && Emergency_NC !== null && maintainEmergency_NC === false) {
-            const highValue = parseFloat(HighEmergency_NC);
-            const lowValue = parseFloat(LowEmergency_NC);
-            const Emergency_NCValue = parseFloat(Emergency_NC);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NCValue)) {
-                if (highValue <= Emergency_NCValue || Emergency_NCValue <= lowValue) {
-                    if (!AudioEmergency_NC) {
-                        audioRef.current?.play();
-                        setAudioEmergency_NC(true);
-                        setAlarmEmergency_NC(true);
-                    }
-                } else {
-                    setAudioEmergency_NC(false);
-                    setAlarmEmergency_NC(false);
-                }
-            } 
-        } 
-    }, [HighEmergency_NC, Emergency_NC, AudioEmergency_NC, LowEmergency_NC,maintainEmergency_NC]);
-
-    useEffect(() => {
-        if (AudioEmergency_NC) {
-            const audioEnded = () => {
-                setAudioEmergency_NC(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEmergency_NC]);
-
-    const handleInputChangeHighEmergency_NC = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEmergency_NC(newValue);
-    };
-
-    const handleInputChangeLowEmergency_NC = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEmergency_NC(newValue2);
-    };
-    const ChangeMaintainEmergency_NC = async () => {
-        try {
-            const newValue = !maintainEmergency_NC;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { Emergency_NC_Maintain: newValue }
-            );
-            setMaintainEmergency_NC(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-//===========================================================================================
-
-const [Emergency_NO,setEmergency_NO] =useState<string | null>(null);
-
-
-const [AudioEmergency_NO, setAudioEmergency_NO] = useState(false);
-const [inputHighEmergency_NO, setInputHighEmergency_NO] = useState<any>();
-const [inputLowEmergency_NO, setInputLowEmergency_NO] = useState<any>();
-const [HighEmergency_NO, setHighEmergency_NO] = useState<number | null>(null);
-const [LowEmergency_NO, setLowEmergency_NO] = useState<number | null>(null);
-const [AlarmEmergency_NO, setAlarmEmergency_NO] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEmergency_NO, setMaintainEmergency_NO] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEmergency_NO === 'string' && typeof LowEmergency_NO === 'string' && Emergency_NO !== null && maintainEmergency_NO === false) {
-            const highValue = parseFloat(HighEmergency_NO);
-            const lowValue = parseFloat(LowEmergency_NO);
-            const Emergency_NOValue = parseFloat(Emergency_NO);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NOValue)) {
-                if (highValue <= Emergency_NOValue || Emergency_NOValue <= lowValue) {
-                    if (!AudioEmergency_NO) {
-                        audioRef.current?.play();
-                        setAudioEmergency_NO(true);
-                        setAlarmEmergency_NO(true);
-                    }
-                } else {
-                    setAudioEmergency_NO(false);
-                    setAlarmEmergency_NO(false);
-                }
-            } 
-        } 
-    }, [HighEmergency_NO, Emergency_NO, AudioEmergency_NO, LowEmergency_NO,maintainEmergency_NO]);
-
-    useEffect(() => {
-        if (AudioEmergency_NO) {
-            const audioEnded = () => {
-                setAudioEmergency_NO(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioEmergency_NO]);
-
-    const handleInputChangeHighEmergency_NO = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEmergency_NO(newValue);
-    };
-
-    const handleInputChangeLowEmergency_NO = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEmergency_NO(newValue2);
-    };
-    const ChangeMaintainEmergency_NO = async () => {
-        try {
-            const newValue = !maintainEmergency_NO;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { Emergency_NO_Maintain: newValue }
-            );
-            setMaintainEmergency_NO(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-//===========================================================================================
-
-const [DI_RESET,setDI_RESET] =useState<string | null>(null);
-
-const [AudioDI_RESET, setAudioDI_RESET] = useState(false);
-const [inputHighDI_RESET, setInputHighDI_RESET] = useState<any>();
-const [inputLowDI_RESET, setInputLowDI_RESET] = useState<any>();
-const [HighDI_RESET, setHighDI_RESET] = useState<number | null>(null);
-const [LowDI_RESET, setLowDI_RESET] = useState<number | null>(null);
-const [AlarmDI_RESET, setAlarmDI_RESET] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_RESET, setMaintainDI_RESET] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_RESET === 'string' && typeof LowDI_RESET === 'string' && DI_RESET !== null && maintainDI_RESET === false) {
-            const highValue = parseFloat(HighDI_RESET);
-            const lowValue = parseFloat(LowDI_RESET);
-            const DI_RESETValue = parseFloat(DI_RESET);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_RESETValue)) {
-                if (highValue <= DI_RESETValue || DI_RESETValue <= lowValue) {
-                    if (!AudioDI_RESET) {
-                        audioRef.current?.play();
-                        setAudioDI_RESET(true);
-                        setAlarmDI_RESET(true);
-                    }
-                } else {
-                    setAudioDI_RESET(false);
-                    setAlarmDI_RESET(false);
-                }
-            } 
-        } 
-    }, [HighDI_RESET, DI_RESET, AudioDI_RESET, LowDI_RESET,maintainDI_RESET]);
-
-    useEffect(() => {
-        if (AudioDI_RESET) {
-            const audioEnded = () => {
-                setAudioDI_RESET(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_RESET]);
-
-    const handleInputChangeHighDI_RESET = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_RESET(newValue);
-    };
-
-    const handleInputChangeLowDI_RESET = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_RESET(newValue2);
-    };
-    const ChangeMaintainDI_RESET = async () => {
-        try {
-            const newValue = !maintainDI_RESET;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_RESET_Maintain: newValue }
-            );
-            setMaintainDI_RESET(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [DO_HR_01,setDO_HR_01] =useState<string | null>(null);
-
-
-const [AudioDO_HR_01, setAudioDO_HR_01] = useState(false);
-const [inputHighDO_HR_01, setInputHighDO_HR_01] = useState<any>();
-const [inputLowDO_HR_01, setInputLowDO_HR_01] = useState<any>();
-const [HighDO_HR_01, setHighDO_HR_01] = useState<number | null>(null);
-const [LowDO_HR_01, setLowDO_HR_01] = useState<number | null>(null);
-const [AlarmDO_HR_01, setAlarmDO_HR_01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDO_HR_01, setMaintainDO_HR_01] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDO_HR_01 === 'string' && typeof LowDO_HR_01 === 'string' && DO_HR_01 !== null && maintainDO_HR_01 === false) {
-            const highValue = parseFloat(HighDO_HR_01);
-            const lowValue = parseFloat(LowDO_HR_01);
-            const DO_HR_01Value = parseFloat(DO_HR_01);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_HR_01Value)) {
-                if (highValue <= DO_HR_01Value || DO_HR_01Value <= lowValue) {
-                    if (!AudioDO_HR_01) {
-                        audioRef.current?.play();
-                        setAudioDO_HR_01(true);
-                        setAlarmDO_HR_01(true);
-                    }
-                } else {
-                    setAudioDO_HR_01(false);
-                    setAlarmDO_HR_01(false);
-                }
-            } 
-        } 
-    }, [HighDO_HR_01, DO_HR_01, AudioDO_HR_01, LowDO_HR_01,maintainDO_HR_01]);
-
-    useEffect(() => {
-        if (AudioDO_HR_01) {
-            const audioEnded = () => {
-                setAudioDO_HR_01(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDO_HR_01]);
-
-    const handleInputChangeHighDO_HR_01 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDO_HR_01(newValue);
-    };
-
-    const handleInputChangeLowDO_HR_01 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDO_HR_01(newValue2);
-    };
-    const ChangeMaintainDO_HR_01 = async () => {
-        try {
-            const newValue = !maintainDO_HR_01;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DO_HR_01_Maintain: newValue }
-            );
-            setMaintainDO_HR_01(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-
-
-
-//===========================================================================================
-
-const [DI_MAP_1,setDI_MAP_1] = useState<string | null>(null);
-
-const [AudioDI_MAP_1, setAudioDI_MAP_1] = useState(false);
-const [inputHighDI_MAP_1, setInputHighDI_MAP_1] = useState<any>();
-const [inputLowDI_MAP_1, setInputLowDI_MAP_1] = useState<any>();
-const [HighDI_MAP_1, setHighDI_MAP_1] = useState<number | null>(null);
-const [LowDI_MAP_1, setLowDI_MAP_1] = useState<number | null>(null);
-const [AlarmDI_MAP_1, setAlarmDI_MAP_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_MAP_1, setMaintainDI_MAP_1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_MAP_1 === 'string' && typeof LowDI_MAP_1 === 'string' && DI_MAP_1 !== null && maintainDI_MAP_1 === false) {
-            const highValue = parseFloat(HighDI_MAP_1);
-            const lowValue = parseFloat(LowDI_MAP_1);
-            const DI_MAP_1Value = parseFloat(DI_MAP_1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_MAP_1Value)) {
-                if (highValue <= DI_MAP_1Value || DI_MAP_1Value <= lowValue) {
-                    if (!AudioDI_MAP_1) {
-                        audioRef.current?.play();
-                        setAudioDI_MAP_1(true);
-                        setAlarmDI_MAP_1(true);
-                    }
-                } else {
-                    setAudioDI_MAP_1(false);
-                    setAlarmDI_MAP_1(false);
-                }
-            } 
-        } 
-    }, [HighDI_MAP_1, DI_MAP_1, AudioDI_MAP_1, LowDI_MAP_1,maintainDI_MAP_1]);
-
-    useEffect(() => {
-        if (AudioDI_MAP_1) {
-            const audioEnded = () => {
-                setAudioDI_MAP_1(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_MAP_1]);
-
-    const handleInputChangeHighDI_MAP_1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_MAP_1(newValue);
-    };
-
-    const handleInputChangeLowDI_MAP_1 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_MAP_1(newValue2);
-    };
-    const ChangeMaintainDI_MAP_1 = async () => {
-        try {
-            const newValue = !maintainDI_MAP_1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_MAP_1_Maintain: newValue }
-            );
-            setMaintainDI_MAP_1(newValue);
-            
-            
-        } catch (error) {}
-    };
+const [inputValueEVC_02_Vb_of_Current_Day, setinputValueEVC_02_Vb_of_Current_Day] = useState<any>();
+const [inputValue2EVC_02_Vb_of_Current_Day, setinputValue2EVC_02_Vb_of_Current_Day] = useState<any>();
+const [EVC_02_Vb_of_Current_Day_High, setEVC_02_Vb_of_Current_Day_High] = useState<number | null>(null);
+const [EVC_02_Vb_of_Current_Day_Low, setEVC_02_Vb_of_Current_Day_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Vb_of_Current_Day, setexceedThresholdEVC_02_Vb_of_Current_Day] = useState(false); 
+const [maintainEVC_02_Vb_of_Current_Day, setmaintainEVC_02_Vb_of_Current_Day] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_02_Vb_of_Current_DayValue = parseFloat(EVC_02_Vb_of_Current_Day as any);
+    const highValue = EVC_02_Vb_of_Current_Day_High ?? NaN;
+    const lowValue = EVC_02_Vb_of_Current_Day_Low ?? NaN;
+
+    if (!isNaN(EVC_02_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vb_of_Current_Day) {
+        setexceedThresholdEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_DayValue >= highValue || EVC_02_Vb_of_Current_DayValue <= lowValue);
+    }
+}, [EVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day_High, EVC_02_Vb_of_Current_Day_Low, maintainEVC_02_Vb_of_Current_Day]);
+
+const handleInputChangeEVC_02_Vb_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Vb_of_Current_Day(event.target.value);
+};
+
+const handleInputChange2EVC_02_Vb_of_Current_Day = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Vb_of_Current_Day(event.target.value);
+};
+
+const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
+    try {
+        const newValue = !maintainEVC_02_Vb_of_Current_Day;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Vb_of_Current_Day_Maintain: newValue }
+        );
+        setmaintainEVC_02_Vb_of_Current_Day(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [DI_UPS_BATTERY, setDI_UPS_BATTERY] = useState<string | null>(null);
+const [inputValueDI_UPS_BATTERY, setinputValueDI_UPS_BATTERY] = useState<any>();
+const [inputValue2DI_UPS_BATTERY, setinputValue2DI_UPS_BATTERY] = useState<any>();
+const [DI_UPS_BATTERY_High, setDI_UPS_BATTERY_High] = useState<number | null>(null);
+const [DI_UPS_BATTERY_Low, setDI_UPS_BATTERY_Low] = useState<number | null>(null);
+const [exceedThresholdDI_UPS_BATTERY, setexceedThresholdDI_UPS_BATTERY] = useState(false); 
+const [maintainDI_UPS_BATTERY, setmaintainDI_UPS_BATTERY] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY as any);
+    const highValue = DI_UPS_BATTERY_High ?? NaN;
+    const lowValue = DI_UPS_BATTERY_Low ?? NaN;
+
+    if (!isNaN(DI_UPS_BATTERYValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_BATTERY) {
+        setexceedThresholdDI_UPS_BATTERY(DI_UPS_BATTERYValue >= highValue || DI_UPS_BATTERYValue <= lowValue);
+    }
+}, [DI_UPS_BATTERY, DI_UPS_BATTERY_High, DI_UPS_BATTERY_Low, maintainDI_UPS_BATTERY]);
+
+const handleInputChangeDI_UPS_BATTERY = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_UPS_BATTERY(event.target.value);
+};
+
+const handleInputChange2DI_UPS_BATTERY = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_UPS_BATTERY(event.target.value);
+};
+
+const ChangemaintainDI_UPS_BATTERY = async () => {
+    try {
+        const newValue = !maintainDI_UPS_BATTERY;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_UPS_BATTERY_Maintain: newValue }
+        );
+        setmaintainDI_UPS_BATTERY(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const [DI_UPS_CHARGING, setDI_UPS_CHARGING] = useState<string | null>(null);
+const [inputValueDI_UPS_CHARGING, setinputValueDI_UPS_CHARGING] = useState<any>();
+const [inputValue2DI_UPS_CHARGING, setinputValue2DI_UPS_CHARGING] = useState<any>();
+const [DI_UPS_CHARGING_High, setDI_UPS_CHARGING_High] = useState<number | null>(null);
+const [DI_UPS_CHARGING_Low, setDI_UPS_CHARGING_Low] = useState<number | null>(null);
+const [exceedThresholdDI_UPS_CHARGING, setexceedThresholdDI_UPS_CHARGING] = useState(false); 
+const [maintainDI_UPS_CHARGING, setmaintainDI_UPS_CHARGING] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING as any);
+    const highValue = DI_UPS_CHARGING_High ?? NaN;
+    const lowValue = DI_UPS_CHARGING_Low ?? NaN;
+
+    if (!isNaN(DI_UPS_CHARGINGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_CHARGING) {
+        setexceedThresholdDI_UPS_CHARGING(DI_UPS_CHARGINGValue >= highValue || DI_UPS_CHARGINGValue <= lowValue);
+    }
+}, [DI_UPS_CHARGING, DI_UPS_CHARGING_High, DI_UPS_CHARGING_Low, maintainDI_UPS_CHARGING]);
+
+const handleInputChangeDI_UPS_CHARGING = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_UPS_CHARGING(event.target.value);
+};
+
+const handleInputChange2DI_UPS_CHARGING = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_UPS_CHARGING(event.target.value);
+};
+
+const ChangemaintainDI_UPS_CHARGING = async () => {
+    try {
+        const newValue = !maintainDI_UPS_CHARGING;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_UPS_CHARGING_Maintain: newValue }
+        );
+        setmaintainDI_UPS_CHARGING(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+const [DI_UPS_ALARM, setDI_UPS_ALARM] = useState<string | null>(null);
+const [inputValueDI_UPS_ALARM, setinputValueDI_UPS_ALARM] = useState<any>();
+const [inputValue2DI_UPS_ALARM, setinputValue2DI_UPS_ALARM] = useState<any>();
+const [DI_UPS_ALARM_High, setDI_UPS_ALARM_High] = useState<number | null>(null);
+const [DI_UPS_ALARM_Low, setDI_UPS_ALARM_Low] = useState<number | null>(null);
+const [exceedThresholdDI_UPS_ALARM, setexceedThresholdDI_UPS_ALARM] = useState(false); 
+const [maintainDI_UPS_ALARM, setmaintainDI_UPS_ALARM] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM as any);
+    const highValue = DI_UPS_ALARM_High ?? NaN;
+    const lowValue = DI_UPS_ALARM_Low ?? NaN;
+
+    if (!isNaN(DI_UPS_ALARMValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_ALARM) {
+        setexceedThresholdDI_UPS_ALARM(DI_UPS_ALARMValue >= highValue || DI_UPS_ALARMValue <= lowValue);
+    }
+}, [DI_UPS_ALARM, DI_UPS_ALARM_High, DI_UPS_ALARM_Low, maintainDI_UPS_ALARM]);
+
+const handleInputChangeDI_UPS_ALARM = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_UPS_ALARM(event.target.value);
+};
+
+const handleInputChange2DI_UPS_ALARM = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_UPS_ALARM(event.target.value);
+};
+
+const ChangemaintainDI_UPS_ALARM = async () => {
+    try {
+        const newValue = !maintainDI_UPS_ALARM;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_UPS_ALARM_Maintain: newValue }
+        );
+        setmaintainDI_UPS_ALARM(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+
+const [UPS_Mode, setUPS_Mode] = useState<string | null>(null);
+const [inputValueUPS_Mode, setinputValueUPS_Mode] = useState<any>();
+const [inputValue2UPS_Mode, setinputValue2UPS_Mode] = useState<any>();
+const [UPS_Mode_High, setUPS_Mode_High] = useState<number | null>(null);
+const [UPS_Mode_Low, setUPS_Mode_Low] = useState<number | null>(null);
+const [exceedThresholdUPS_Mode, setexceedThresholdUPS_Mode] = useState(false); 
+const [maintainUPS_Mode, setmaintainUPS_Mode] = useState<boolean>(false);
+
+useEffect(() => {
+    const UPS_ModeValue = parseFloat(UPS_Mode as any);
+    const highValue = UPS_Mode_High ?? NaN;
+    const lowValue = UPS_Mode_Low ?? NaN;
+
+    if (!isNaN(UPS_ModeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainUPS_Mode) {
+        setexceedThresholdUPS_Mode(UPS_ModeValue >= highValue || UPS_ModeValue <= lowValue);
+    }
+}, [UPS_Mode, UPS_Mode_High, UPS_Mode_Low, maintainUPS_Mode]);
+
+const handleInputChangeUPS_Mode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueUPS_Mode(event.target.value);
+};
+
+const handleInputChange2UPS_Mode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2UPS_Mode(event.target.value);
+};
+
+const ChangemaintainUPS_Mode = async () => {
+    try {
+        const newValue = !maintainUPS_Mode;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { UPS_Mode_Maintain: newValue }
+        );
+        setmaintainUPS_Mode(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [DI_SELECT_SW, setDI_SELECT_SW] = useState<string | null>(null);
+const [inputValueDI_SELECT_SW, setinputValueDI_SELECT_SW] = useState<any>();
+const [inputValue2DI_SELECT_SW, setinputValue2DI_SELECT_SW] = useState<any>();
+const [DI_SELECT_SW_High, setDI_SELECT_SW_High] = useState<number | null>(null);
+const [DI_SELECT_SW_Low, setDI_SELECT_SW_Low] = useState<number | null>(null);
+const [exceedThresholdDI_SELECT_SW, setexceedThresholdDI_SELECT_SW] = useState(false); 
+const [maintainDI_SELECT_SW, setmaintainDI_SELECT_SW] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW as any);
+    const highValue = DI_SELECT_SW_High ?? NaN;
+    const lowValue = DI_SELECT_SW_Low ?? NaN;
+
+    if (!isNaN(DI_SELECT_SWValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_SELECT_SW) {
+        setexceedThresholdDI_SELECT_SW(DI_SELECT_SWValue >= highValue || DI_SELECT_SWValue <= lowValue);
+    }
+}, [DI_SELECT_SW, DI_SELECT_SW_High, DI_SELECT_SW_Low, maintainDI_SELECT_SW]);
+
+const handleInputChangeDI_SELECT_SW = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_SELECT_SW(event.target.value);
+};
+
+const handleInputChange2DI_SELECT_SW = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_SELECT_SW(event.target.value);
+};
+
+const ChangemaintainDI_SELECT_SW = async () => {
+    try {
+        const newValue = !maintainDI_SELECT_SW;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_SELECT_SW_Maintain: newValue }
+        );
+        setmaintainDI_SELECT_SW(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+const [Emergency_NC, setEmergency_NC] = useState<string | null>(null);
+const [inputValueEmergency_NC, setinputValueEmergency_NC] = useState<any>();
+const [inputValue2Emergency_NC, setinputValue2Emergency_NC] = useState<any>();
+const [Emergency_NC_High, setEmergency_NC_High] = useState<number | null>(null);
+const [Emergency_NC_Low, setEmergency_NC_Low] = useState<number | null>(null);
+const [exceedThresholdEmergency_NC, setexceedThresholdEmergency_NC] = useState(false); 
+const [maintainEmergency_NC, setmaintainEmergency_NC] = useState<boolean>(false);
+
+useEffect(() => {
+    const Emergency_NCValue = parseFloat(Emergency_NC as any);
+    const highValue = Emergency_NC_High ?? NaN;
+    const lowValue = Emergency_NC_Low ?? NaN;
+
+    if (!isNaN(Emergency_NCValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NC) {
+        setexceedThresholdEmergency_NC(Emergency_NCValue >= highValue || Emergency_NCValue <= lowValue);
+    }
+}, [Emergency_NC, Emergency_NC_High, Emergency_NC_Low, maintainEmergency_NC]);
+
+const handleInputChangeEmergency_NC = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEmergency_NC(event.target.value);
+};
+
+const handleInputChange2Emergency_NC = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2Emergency_NC(event.target.value);
+};
+
+const ChangemaintainEmergency_NC = async () => {
+    try {
+        const newValue = !maintainEmergency_NC;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { Emergency_NC_Maintain: newValue }
+        );
+        setmaintainEmergency_NC(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [Emergency_NO, setEmergency_NO] = useState<string | null>(null);
+const [inputValueEmergency_NO, setinputValueEmergency_NO] = useState<any>();
+const [inputValue2Emergency_NO, setinputValue2Emergency_NO] = useState<any>();
+const [Emergency_NO_High, setEmergency_NO_High] = useState<number | null>(null);
+const [Emergency_NO_Low, setEmergency_NO_Low] = useState<number | null>(null);
+const [exceedThresholdEmergency_NO, setexceedThresholdEmergency_NO] = useState(false); 
+const [maintainEmergency_NO, setmaintainEmergency_NO] = useState<boolean>(false);
+
+useEffect(() => {
+    const Emergency_NOValue = parseFloat(Emergency_NO as any);
+    const highValue = Emergency_NO_High ?? NaN;
+    const lowValue = Emergency_NO_Low ?? NaN;
+
+    if (!isNaN(Emergency_NOValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NO) {
+        setexceedThresholdEmergency_NO(Emergency_NOValue >= highValue || Emergency_NOValue <= lowValue);
+    }
+}, [Emergency_NO, Emergency_NO_High, Emergency_NO_Low, maintainEmergency_NO]);
+
+const handleInputChangeEmergency_NO = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEmergency_NO(event.target.value);
+};
+
+const handleInputChange2Emergency_NO = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2Emergency_NO(event.target.value);
+};
+
+const ChangemaintainEmergency_NO = async () => {
+    try {
+        const newValue = !maintainEmergency_NO;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { Emergency_NO_Maintain: newValue }
+        );
+        setmaintainEmergency_NO(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [DI_RESET, setDI_RESET] = useState<string | null>(null);
+const [inputValueDI_RESET, setinputValueDI_RESET] = useState<any>();
+const [inputValue2DI_RESET, setinputValue2DI_RESET] = useState<any>();
+const [DI_RESET_High, setDI_RESET_High] = useState<number | null>(null);
+const [DI_RESET_Low, setDI_RESET_Low] = useState<number | null>(null);
+const [exceedThresholdDI_RESET, setexceedThresholdDI_RESET] = useState(false); 
+const [maintainDI_RESET, setmaintainDI_RESET] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_RESETValue = parseFloat(DI_RESET as any);
+    const highValue = DI_RESET_High ?? NaN;
+    const lowValue = DI_RESET_Low ?? NaN;
+
+    if (!isNaN(DI_RESETValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_RESET) {
+        setexceedThresholdDI_RESET(DI_RESETValue >= highValue || DI_RESETValue <= lowValue);
+    }
+}, [DI_RESET, DI_RESET_High, DI_RESET_Low, maintainDI_RESET]);
+
+const handleInputChangeDI_RESET = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_RESET(event.target.value);
+};
+
+const handleInputChange2DI_RESET = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_RESET(event.target.value);
+};
+
+const ChangemaintainDI_RESET = async () => {
+    try {
+        const newValue = !maintainDI_RESET;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_RESET_Maintain: newValue }
+        );
+        setmaintainDI_RESET(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+const [DO_HR_01, setDO_HR_01] = useState<string | null>(null);
+const [inputValueDO_HR_01, setinputValueDO_HR_01] = useState<any>();
+const [inputValue2DO_HR_01, setinputValue2DO_HR_01] = useState<any>();
+const [DO_HR_01_High, setDO_HR_01_High] = useState<number | null>(null);
+const [DO_HR_01_Low, setDO_HR_01_Low] = useState<number | null>(null);
+const [exceedThresholdDO_HR_01, setexceedThresholdDO_HR_01] = useState(false); 
+const [maintainDO_HR_01, setmaintainDO_HR_01] = useState<boolean>(false);
+
+useEffect(() => {
+    const DO_HR_01Value = parseFloat(DO_HR_01 as any);
+    const highValue = DO_HR_01_High ?? NaN;
+    const lowValue = DO_HR_01_Low ?? NaN;
+
+    if (!isNaN(DO_HR_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_HR_01) {
+        setexceedThresholdDO_HR_01(DO_HR_01Value >= highValue || DO_HR_01Value <= lowValue);
+    }
+}, [DO_HR_01, DO_HR_01_High, DO_HR_01_Low, maintainDO_HR_01]);
+
+const handleInputChangeDO_HR_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDO_HR_01(event.target.value);
+};
+
+const handleInputChange2DO_HR_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DO_HR_01(event.target.value);
+};
+
+const ChangemaintainDO_HR_01 = async () => {
+    try {
+        const newValue = !maintainDO_HR_01;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DO_HR_01_Maintain: newValue }
+        );
+        setmaintainDO_HR_01(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+const [DI_MAP_1, setDI_MAP_1] = useState<string | null>(null);
+const [inputValueDI_MAP_1, setinputValueDI_MAP_1] = useState<any>();
+const [inputValue2DI_MAP_1, setinputValue2DI_MAP_1] = useState<any>();
+const [DI_MAP_1_High, setDI_MAP_1_High] = useState<number | null>(null);
+const [DI_MAP_1_Low, setDI_MAP_1_Low] = useState<number | null>(null);
+const [exceedThresholdDI_MAP_1, setexceedThresholdDI_MAP_1] = useState(false); 
+const [maintainDI_MAP_1, setmaintainDI_MAP_1] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_MAP_1Value = parseFloat(DI_MAP_1 as any);
+    const highValue = DI_MAP_1_High ?? NaN;
+    const lowValue = DI_MAP_1_Low ?? NaN;
+
+    if (!isNaN(DI_MAP_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_MAP_1) {
+        setexceedThresholdDI_MAP_1(DI_MAP_1Value >= highValue || DI_MAP_1Value <= lowValue);
+    }
+}, [DI_MAP_1, DI_MAP_1_High, DI_MAP_1_Low, maintainDI_MAP_1]);
+
+const handleInputChangeDI_MAP_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_MAP_1(event.target.value);
+};
+
+const handleInputChange2DI_MAP_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_MAP_1(event.target.value);
+};
+
+const ChangemaintainDI_MAP_1 = async () => {
+    try {
+        const newValue = !maintainDI_MAP_1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_MAP_1_Maintain: newValue }
+        );
+        setmaintainDI_MAP_1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+const [DO_SV1, setDO_SV1] = useState<string | null>(null);
+const [inputValueDO_SV1, setinputValueDO_SV1] = useState<any>();
+const [inputValue2DO_SV1, setinputValue2DO_SV1] = useState<any>();
+const [DO_SV1_High, setDO_SV1_High] = useState<number | null>(null);
+const [DO_SV1_Low, setDO_SV1_Low] = useState<number | null>(null);
+const [exceedThresholdDO_SV1, setexceedThresholdDO_SV1] = useState(false); 
+const [maintainDO_SV1, setmaintainDO_SV1] = useState<boolean>(false);
+
+useEffect(() => {
+    const DO_SV1Value = parseFloat(DO_SV1 as any);
+    const highValue = DO_SV1_High ?? NaN;
+    const lowValue = DO_SV1_Low ?? NaN;
+
+    if (!isNaN(DO_SV1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_SV1) {
+        setexceedThresholdDO_SV1(DO_SV1Value >= highValue || DO_SV1Value <= lowValue);
+    }
+}, [DO_SV1, DO_SV1_High, DO_SV1_Low, maintainDO_SV1]);
+
+const handleInputChangeDO_SV1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDO_SV1(event.target.value);
+};
+
+const handleInputChange2DO_SV1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DO_SV1(event.target.value);
+};
+
+const ChangemaintainDO_SV1 = async () => {
+    try {
+        const newValue = !maintainDO_SV1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DO_SV1_Maintain: newValue }
+        );
+        setmaintainDO_SV1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [DI_ZSC_1, setDI_ZSC_1] = useState<string | null>(null);
+const [inputValueDI_ZSC_1, setinputValueDI_ZSC_1] = useState<any>();
+const [inputValue2DI_ZSC_1, setinputValue2DI_ZSC_1] = useState<any>();
+const [DI_ZSC_1_High, setDI_ZSC_1_High] = useState<number | null>(null);
+const [DI_ZSC_1_Low, setDI_ZSC_1_Low] = useState<number | null>(null);
+const [exceedThresholdDI_ZSC_1, setexceedThresholdDI_ZSC_1] = useState(false); 
+const [maintainDI_ZSC_1, setmaintainDI_ZSC_1] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_ZSC_1Value = parseFloat(DI_ZSC_1 as any);
+    const highValue = DI_ZSC_1_High ?? NaN;
+    const lowValue = DI_ZSC_1_Low ?? NaN;
+
+    if (!isNaN(DI_ZSC_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSC_1) {
+        setexceedThresholdDI_ZSC_1(DI_ZSC_1Value >= highValue || DI_ZSC_1Value <= lowValue);
+    }
+}, [DI_ZSC_1, DI_ZSC_1_High, DI_ZSC_1_Low, maintainDI_ZSC_1]);
+
+const handleInputChangeDI_ZSC_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_ZSC_1(event.target.value);
+};
+
+const handleInputChange2DI_ZSC_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_ZSC_1(event.target.value);
+};
+
+const ChangemaintainDI_ZSC_1 = async () => {
+    try {
+        const newValue = !maintainDI_ZSC_1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_ZSC_1_Maintain: newValue }
+        );
+        setmaintainDI_ZSC_1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+const [DI_ZSO_1, setDI_ZSO_1] = useState<string | null>(null);
+const [inputValueDI_ZSO_1, setinputValueDI_ZSO_1] = useState<any>();
+const [inputValue2DI_ZSO_1, setinputValue2DI_ZSO_1] = useState<any>();
+const [DI_ZSO_1_High, setDI_ZSO_1_High] = useState<number | null>(null);
+const [DI_ZSO_1_Low, setDI_ZSO_1_Low] = useState<number | null>(null);
+const [exceedThresholdDI_ZSO_1, setexceedThresholdDI_ZSO_1] = useState(false); 
+const [maintainDI_ZSO_1, setmaintainDI_ZSO_1] = useState<boolean>(false);
+
+useEffect(() => {
+    const DI_ZSO_1Value = parseFloat(DI_ZSO_1 as any);
+    const highValue = DI_ZSO_1_High ?? NaN;
+    const lowValue = DI_ZSO_1_Low ?? NaN;
+
+    if (!isNaN(DI_ZSO_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSO_1) {
+        setexceedThresholdDI_ZSO_1(DI_ZSO_1Value >= highValue || DI_ZSO_1Value <= lowValue);
+    }
+}, [DI_ZSO_1, DI_ZSO_1_High, DI_ZSO_1_Low, maintainDI_ZSO_1]);
+
+const handleInputChangeDI_ZSO_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDI_ZSO_1(event.target.value);
+};
+
+const handleInputChange2DI_ZSO_1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DI_ZSO_1(event.target.value);
+};
+
+const ChangemaintainDI_ZSO_1 = async () => {
+    try {
+        const newValue = !maintainDI_ZSO_1;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DI_ZSO_1_Maintain: newValue }
+        );
+        setmaintainDI_ZSO_1(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+const [DO_BC_01, setDO_BC_01] = useState<string | null>(null);
+const [inputValueDO_BC_01, setinputValueDO_BC_01] = useState<any>();
+const [inputValue2DO_BC_01, setinputValue2DO_BC_01] = useState<any>();
+const [DO_BC_01_High, setDO_BC_01_High] = useState<number | null>(null);
+const [DO_BC_01_Low, setDO_BC_01_Low] = useState<number | null>(null);
+const [exceedThresholdDO_BC_01, setexceedThresholdDO_BC_01] = useState(false); 
+const [maintainDO_BC_01, setmaintainDO_BC_01] = useState<boolean>(false);
+
+useEffect(() => {
+    const DO_BC_01Value = parseFloat(DO_BC_01 as any);
+    const highValue = DO_BC_01_High ?? NaN;
+    const lowValue = DO_BC_01_Low ?? NaN;
+
+    if (!isNaN(DO_BC_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_BC_01) {
+        setexceedThresholdDO_BC_01(DO_BC_01Value >= highValue || DO_BC_01Value <= lowValue);
+    }
+}, [DO_BC_01, DO_BC_01_High, DO_BC_01_Low, maintainDO_BC_01]);
+
+const handleInputChangeDO_BC_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueDO_BC_01(event.target.value);
+};
+
+const handleInputChange2DO_BC_01 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2DO_BC_01(event.target.value);
+};
+
+const ChangemaintainDO_BC_01 = async () => {
+    try {
+        const newValue = !maintainDO_BC_01;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { DO_BC_01_Maintain: newValue }
+        );
+        setmaintainDO_BC_01(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+const [inputValueEVC_01_Conn_STT, setinputValueEVC_01_Conn_STT] = useState<any>();
+const [inputValue2EVC_01_Conn_STT, setinputValue2EVC_01_Conn_STT] = useState<any>();
+const [EVC_01_Conn_STT_High, setEVC_01_Conn_STT_High] = useState<number | null>(null);
+const [EVC_01_Conn_STT_Low, setEVC_01_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_01_Conn_STT, setexceedThresholdEVC_01_Conn_STT] = useState(false); 
+const [maintainEVC_01_Conn_STT, setmaintainEVC_01_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT as any);
+    const highValue = EVC_01_Conn_STT_High ?? NaN;
+    const lowValue = EVC_01_Conn_STT_Low ?? NaN;
+
+    if (!isNaN(EVC_01_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Conn_STT) {
+        setexceedThresholdEVC_01_Conn_STT(EVC_01_Conn_STTValue >= highValue || EVC_01_Conn_STTValue <= lowValue);
+    }
+}, [EVC_01_Conn_STT, EVC_01_Conn_STT_High, EVC_01_Conn_STT_Low, maintainEVC_01_Conn_STT]);
+
+const handleInputChangeEVC_01_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_01_Conn_STT(event.target.value);
+};
+
+const handleInputChange2EVC_01_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_01_Conn_STT(event.target.value);
+};
+
+const ChangemaintainEVC_01_Conn_STT = async () => {
+    try {
+        const newValue = !maintainEVC_01_Conn_STT;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_01_Conn_STT_Maintain: newValue }
+        );
+        setmaintainEVC_01_Conn_STT(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+const [inputValueEVC_02_Conn_STT, setinputValueEVC_02_Conn_STT] = useState<any>();
+const [inputValue2EVC_02_Conn_STT, setinputValue2EVC_02_Conn_STT] = useState<any>();
+const [EVC_02_Conn_STT_High, setEVC_02_Conn_STT_High] = useState<number | null>(null);
+const [EVC_02_Conn_STT_Low, setEVC_02_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdEVC_02_Conn_STT, setexceedThresholdEVC_02_Conn_STT] = useState(false); 
+const [maintainEVC_02_Conn_STT, setmaintainEVC_02_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+    const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT as any);
+    const highValue = EVC_02_Conn_STT_High ?? NaN;
+    const lowValue = EVC_02_Conn_STT_Low ?? NaN;
+
+    if (!isNaN(EVC_02_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Conn_STT) {
+        setexceedThresholdEVC_02_Conn_STT(EVC_02_Conn_STTValue >= highValue || EVC_02_Conn_STTValue <= lowValue);
+    }
+}, [EVC_02_Conn_STT, EVC_02_Conn_STT_High, EVC_02_Conn_STT_Low, maintainEVC_02_Conn_STT]);
+
+const handleInputChangeEVC_02_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValueEVC_02_Conn_STT(event.target.value);
+};
+
+const handleInputChange2EVC_02_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2EVC_02_Conn_STT(event.target.value);
+};
+
+const ChangemaintainEVC_02_Conn_STT = async () => {
+    try {
+        const newValue = !maintainEVC_02_Conn_STT;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { EVC_02_Conn_STT_Maintain: newValue }
+        );
+        setmaintainEVC_02_Conn_STT(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+const [inputValuePLC_Conn_STT, setinputValuePLC_Conn_STT] = useState<any>();
+const [inputValue2PLC_Conn_STT, setinputValue2PLC_Conn_STT] = useState<any>();
+const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdPLC_Conn_STT, setexceedThresholdPLC_Conn_STT] = useState(false); 
+const [maintainPLC_Conn_STT, setmaintainPLC_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+    const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+    const highValue = PLC_Conn_STT_High ?? NaN;
+    const lowValue = PLC_Conn_STT_Low ?? NaN;
+
+    if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+        setexceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+    }
+}, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+
+const handleInputChangePLC_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValuePLC_Conn_STT(event.target.value);
+};
+
+const handleInputChange2PLC_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setinputValue2PLC_Conn_STT(event.target.value);
+};
+
+const ChangemaintainPLC_Conn_STT = async () => {
+    try {
+        const newValue = !maintainPLC_Conn_STT;
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { PLC_Conn_STT_Maintain: newValue }
+        );
+        setmaintainPLC_Conn_STT(newValue);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 
 //===========================================================================================
 
-//===========================================================================================
-
-const [DO_SV1,setDO_SV1] =useState<string | null>(null);
-
-const [AudioDO_SV1, setAudioDO_SV1] = useState(false);
-const [inputHighDO_SV1, setInputHighDO_SV1] = useState<any>();
-const [inputLowDO_SV1, setInputLowDO_SV1] = useState<any>();
-const [HighDO_SV1, setHighDO_SV1] = useState<number | null>(null);
-const [LowDO_SV1, setLowDO_SV1] = useState<number | null>(null);
-const [AlarmDO_SV1, setAlarmDO_SV1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDO_SV1, setMaintainDO_SV1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDO_SV1 === 'string' && typeof LowDO_SV1 === 'string' && DO_SV1 !== null && maintainDO_SV1 === false) {
-            const highValue = parseFloat(HighDO_SV1);
-            const lowValue = parseFloat(LowDO_SV1);
-            const DO_SV1Value = parseFloat(DO_SV1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV1Value)) {
-                if (highValue <= DO_SV1Value || DO_SV1Value <= lowValue) {
-                    if (!AudioDO_SV1) {
-                        audioRef.current?.play();
-                        setAudioDO_SV1(true);
-                        setAlarmDO_SV1(true);
-                    }
-                } else {
-                    setAudioDO_SV1(false);
-                    setAlarmDO_SV1(false);
-                }
-            } 
-        } 
-    }, [HighDO_SV1, DO_SV1, AudioDO_SV1, LowDO_SV1,maintainDO_SV1]);
-
-    useEffect(() => {
-        if (AudioDO_SV1) {
-            const audioEnded = () => {
-                setAudioDO_SV1(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDO_SV1]);
-
-    const handleInputChangeHighDO_SV1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDO_SV1(newValue);
-    };
-
-    const handleInputChangeLowDO_SV1 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDO_SV1(newValue2);
-    };
-    const ChangeMaintainDO_SV1 = async () => {
-        try {
-            const newValue = !maintainDO_SV1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DO_SV_0_01_Maintain: newValue }
-            );
-            setMaintainDO_SV1(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-//===========================================================================================
-
-const [DI_ZSC_1,setDI_ZSC_1] =useState<string | null>(null);
-
-const [AudioDI_ZSC_1, setAudioDI_ZSC_1] = useState(false);
-const [inputHighDI_ZSC_1, setInputHighDI_ZSC_1] = useState<any>();
-const [inputLowDI_ZSC_1, setInputLowDI_ZSC_1] = useState<any>();
-const [HighDI_ZSC_1, setHighDI_ZSC_1] = useState<number | null>(null);
-const [LowDI_ZSC_1, setLowDI_ZSC_1] = useState<number | null>(null);
-const [AlarmDI_ZSC_1, setAlarmDI_ZSC_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_ZSC_1, setMaintainDI_ZSC_1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_ZSC_1 === 'string' && typeof LowDI_ZSC_1 === 'string' && DI_ZSC_1 !== null && maintainDI_ZSC_1 === false) {
-            const highValue = parseFloat(HighDI_ZSC_1);
-            const lowValue = parseFloat(LowDI_ZSC_1);
-            const DI_ZSC_1Value = parseFloat(DI_ZSC_1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_1Value)) {
-                if (highValue <= DI_ZSC_1Value || DI_ZSC_1Value <= lowValue) {
-                    if (!AudioDI_ZSC_1) {
-                        audioRef.current?.play();
-                        setAudioDI_ZSC_1(true);
-                        setAlarmDI_ZSC_1(true);
-                    }
-                } else {
-                    setAudioDI_ZSC_1(false);
-                    setAlarmDI_ZSC_1(false);
-                }
-            } 
-        } 
-    }, [HighDI_ZSC_1, DI_ZSC_1, AudioDI_ZSC_1, LowDI_ZSC_1,maintainDI_ZSC_1]);
-
-    useEffect(() => {
-        if (AudioDI_ZSC_1) {
-            const audioEnded = () => {
-                setAudioDI_ZSC_1(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_ZSC_1]);
-
-    const handleInputChangeHighDI_ZSC_1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_ZSC_1(newValue);
-    };
-
-    const handleInputChangeLowDI_ZSC_1 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_ZSC_1(newValue2);
-    };
-    const ChangeMaintainDI_ZSC_1 = async () => {
-        try {
-            const newValue = !maintainDI_ZSC_1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_DI_ZSC_1_Maintain: newValue }
-            );
-            setMaintainDI_ZSC_1(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-
-//===========================================================================================
-
-const [DI_ZSO_1,setDI_ZSO_1] =useState<string | null>(null);
-
-const [AudioDI_ZSO_1, setAudioDI_ZSO_1] = useState(false);
-const [inputHighDI_ZSO_1, setInputHighDI_ZSO_1] = useState<any>();
-const [inputLowDI_ZSO_1, setInputLowDI_ZSO_1] = useState<any>();
-const [HighDI_ZSO_1, setHighDI_ZSO_1] = useState<number | null>(null);
-const [LowDI_ZSO_1, setLowDI_ZSO_1] = useState<number | null>(null);
-const [AlarmDI_ZSO_1, setAlarmDI_ZSO_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDI_ZSO_1, setMaintainDI_ZSO_1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDI_ZSO_1 === 'string' && typeof LowDI_ZSO_1 === 'string' && DI_ZSO_1 !== null && maintainDI_ZSO_1 === false) {
-            const highValue = parseFloat(HighDI_ZSO_1);
-            const lowValue = parseFloat(LowDI_ZSO_1);
-            const DI_ZSO_1Value = parseFloat(DI_ZSO_1);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_1Value)) {
-                if (highValue <= DI_ZSO_1Value || DI_ZSO_1Value <= lowValue) {
-                    if (!AudioDI_ZSO_1) {
-                        audioRef.current?.play();
-                        setAudioDI_ZSO_1(true);
-                        setAlarmDI_ZSO_1(true);
-                    }
-                } else {
-                    setAudioDI_ZSO_1(false);
-                    setAlarmDI_ZSO_1(false);
-                }
-            } 
-        } 
-    }, [HighDI_ZSO_1, DI_ZSO_1, AudioDI_ZSO_1, LowDI_ZSO_1,maintainDI_ZSO_1]);
-
-    useEffect(() => {
-        if (AudioDI_ZSO_1) {
-            const audioEnded = () => {
-                setAudioDI_ZSO_1(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDI_ZSO_1]);
-
-    const handleInputChangeHighDI_ZSO_1 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDI_ZSO_1(newValue);
-    };
-
-    const handleInputChangeLowDI_ZSO_1 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDI_ZSO_1(newValue2);
-    };
-    const ChangeMaintainDI_ZSO_1 = async () => {
-        try {
-            const newValue = !maintainDI_ZSO_1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DI_DI_ZSO_1_Maintain: newValue }
-            );
-            setMaintainDI_ZSO_1(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [DO_BC_01,setDO_BC_01] = useState<string | null>(null);
-const [AudioDO_BC_01, setAudioDO_BC_01] = useState(false);
-const [inputHighDO_BC_01, setInputHighDO_BC_01] = useState<any>();
-const [inputLowDO_BC_01, setInputLowDO_BC_01] = useState<any>();
-const [HighDO_BC_01, setHighDO_BC_01] = useState<number | null>(null);
-const [LowDO_BC_01, setLowDO_BC_01] = useState<number | null>(null);
-const [AlarmDO_BC_01, setAlarmDO_BC_01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainDO_BC_01, setMaintainDO_BC_01] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighDO_BC_01 === 'string' && typeof LowDO_BC_01 === 'string' && DO_BC_01 !== null && maintainDO_BC_01 === false) {
-            const highValue = parseFloat(HighDO_BC_01);
-            const lowValue = parseFloat(LowDO_BC_01);
-            const DO_BC_01Value = parseFloat(DO_BC_01);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_BC_01Value)) {
-                if (highValue <= DO_BC_01Value || DO_BC_01Value <= lowValue) {
-                    if (!AudioDO_BC_01) {
-                        audioRef.current?.play();
-                        setAudioDO_BC_01(true);
-                        setAlarmDO_BC_01(true);
-                    }
-                } else {
-                    setAudioDO_BC_01(false);
-                    setAlarmDO_BC_01(false);
-                }
-            } 
-        } 
-    }, [HighDO_BC_01, DO_BC_01, AudioDO_BC_01, LowDO_BC_01,maintainDO_BC_01]);
-
-    useEffect(() => {
-        if (AudioDO_BC_01) {
-            const audioEnded = () => {
-                setAudioDO_BC_01(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [AudioDO_BC_01]);
-
-    const handleInputChangeHighDO_BC_01 = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighDO_BC_01(newValue);
-    };
-
-    const handleInputChangeLowDO_BC_01 = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowDO_BC_01(newValue2);
-    };
-    const ChangeMaintainDO_BC_01 = async () => {
-        try {
-            const newValue = !maintainDO_BC_01;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { DO_BC_01_Maintain: newValue }
-            );
-            setMaintainDO_BC_01(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [EVC_01_Conn_STT,setEVC_01_Conn_STT] = useState<string | null>(null);
-const [inputHighEVC_01_Conn_STT, setInputHighEVC_01_Conn_STT] = useState<any>();
-const [inputLowEVC_01_Conn_STT, setInputLowEVC_01_Conn_STT] = useState<any>();
-const [HighEVC_01_Conn_STT, setHighEVC_01_Conn_STT] = useState<number | null>(null);
-const [LowEVC_01_Conn_STT, setLowEVC_01_Conn_STT] = useState<number | null>(null);
-const [AlarmEVC_01_Conn_STT, setAlarmEVC_01_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_01_Conn_STT, setMaintainEVC_01_Conn_STT] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEVC_01_Conn_STT === 'string' && typeof LowEVC_01_Conn_STT === 'string' && EVC_01_Conn_STT !== null && maintainEVC_01_Conn_STT === false) {
-            const highValue = parseFloat(HighEVC_01_Conn_STT);
-            const lowValue = parseFloat(LowEVC_01_Conn_STT);
-            const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Conn_STTValue)) {
-                if (highValue <= EVC_01_Conn_STTValue || EVC_01_Conn_STTValue <= lowValue) {
-                        setAlarmEVC_01_Conn_STT(true);
-                } else {
-                    setAlarmEVC_01_Conn_STT(false);
-                }
-            } 
-        } 
-    }, [HighEVC_01_Conn_STT, EVC_01_Conn_STT, LowEVC_01_Conn_STT,maintainEVC_01_Conn_STT]);
-
-
-
-    const handleInputChangeHighEVC_01_Conn_STT = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_01_Conn_STT(newValue);
-    };
-
-    const handleInputChangeLowEVC_01_Conn_STT = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_01_Conn_STT(newValue2);
-    };
-    const ChangeMaintainEVC_01_Conn_STT = async () => {
-        try {
-            const newValue = !maintainEVC_01_Conn_STT;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_01_Conn_STT_Maintain: newValue }
-            );
-            setMaintainEVC_01_Conn_STT(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [EVC_02_Conn_STT,setEVC_02_Conn_STT] = useState<string | null>(null);
-const [inputHighEVC_02_Conn_STT, setInputHighEVC_02_Conn_STT] = useState<any>();
-const [inputLowEVC_02_Conn_STT, setInputLowEVC_02_Conn_STT] = useState<any>();
-const [HighEVC_02_Conn_STT, setHighEVC_02_Conn_STT] = useState<number | null>(null);
-const [LowEVC_02_Conn_STT, setLowEVC_02_Conn_STT] = useState<number | null>(null);
-const [AlarmEVC_02_Conn_STT, setAlarmEVC_02_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainEVC_02_Conn_STT, setMaintainEVC_02_Conn_STT] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighEVC_02_Conn_STT === 'string' && typeof LowEVC_02_Conn_STT === 'string' && EVC_02_Conn_STT !== null && maintainEVC_02_Conn_STT === false) {
-            const highValue = parseFloat(HighEVC_02_Conn_STT);
-            const lowValue = parseFloat(LowEVC_02_Conn_STT);
-            const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Conn_STTValue)) {
-                if (highValue <= EVC_02_Conn_STTValue || EVC_02_Conn_STTValue <= lowValue) {
-                        setAlarmEVC_02_Conn_STT(true);
-                } else {
-                    setAlarmEVC_02_Conn_STT(false);
-                }
-            } 
-        } 
-    }, [HighEVC_02_Conn_STT, EVC_02_Conn_STT, LowEVC_02_Conn_STT,maintainEVC_02_Conn_STT]);
-
-
-
-    const handleInputChangeHighEVC_02_Conn_STT = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighEVC_02_Conn_STT(newValue);
-    };
-
-    const handleInputChangeLowEVC_02_Conn_STT = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowEVC_02_Conn_STT(newValue2);
-    };
-    const ChangeMaintainEVC_02_Conn_STT = async () => {
-        try {
-            const newValue = !maintainEVC_02_Conn_STT;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { EVC_02_Conn_STT_Maintain: newValue }
-            );
-            setMaintainEVC_02_Conn_STT(newValue);
-            
-            
-        } catch (error) {}
-    };
-
-//===========================================================================================
-
-//===========================================================================================
-
-const [PLC_Conn_STT,setPLC_Conn_STT] = useState<string | null>(null);
-const [inputHighPLC_Conn_STT, setInputHighPLC_Conn_STT] = useState<any>();
-const [inputLowPLC_Conn_STT, setInputLowPLC_Conn_STT] = useState<any>();
-const [HighPLC_Conn_STT, setHighPLC_Conn_STT] = useState<number | null>(null);
-const [LowPLC_Conn_STT, setLowPLC_Conn_STT] = useState<number | null>(null);
-const [AlarmPLC_Conn_STT, setAlarmPLC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (typeof HighPLC_Conn_STT === 'string' && typeof LowPLC_Conn_STT === 'string' && PLC_Conn_STT !== null && maintainPLC_Conn_STT === false) {
-            const highValue = parseFloat(HighPLC_Conn_STT);
-            const lowValue = parseFloat(LowPLC_Conn_STT);
-            const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PLC_Conn_STTValue)) {
-                if (highValue <= PLC_Conn_STTValue || PLC_Conn_STTValue <= lowValue) {
-                        setAlarmPLC_Conn_STT(true);
-                } else {
-                    setAlarmPLC_Conn_STT(false);
-                }
-            } 
-        } 
-    }, [HighPLC_Conn_STT, PLC_Conn_STT, LowPLC_Conn_STT,maintainPLC_Conn_STT]);
-
-
-
-    const handleInputChangeHighPLC_Conn_STT = (event: any) => {
-        const newValue = event.target.value;
-        setInputHighPLC_Conn_STT(newValue);
-    };
-
-    const handleInputChangeLowPLC_Conn_STT = (event: any) => {
-        const newValue2 = event.target.value;
-        setInputLowPLC_Conn_STT(newValue2);
-    };
-    const ChangeMaintainPLC_Conn_STT = async () => {
-        try {
-            const newValue = !maintainPLC_Conn_STT;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PLC_Conn_STT_Maintain: newValue }
-            );
-            setMaintainPLC_Conn_STT(newValue);
-            
-            
-        } catch (error) {}
-    };
 
 //===========================================================================================
 const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -3677,28 +2592,28 @@ const confirmUpChangeGatewayPhone = () => {
 const handleMainTainAll = async (checked:any) => {
     try {
         const newMaintainEVC_01_Remain_Battery_Service_Life = checked;
-        const newMaintainEVC_01_Temperature = checked;
-        const newMaintainEVC_01_Volume_at_Base_Condition = checked;
-        const newMaintainEVC_01_Volume_at_Measurement_Condition = checked;
+        const newmaintainEVC_01_Temperature = checked;
+        const newmaintainEVC_01_Volume_at_Base_Condition = checked;
+        const newmaintainEVC_01_Volume_at_Measurement_Condition = checked;
         const newMaintainEVC_01_Pressure = checked;
         const newMaintainEVC_01_Flow_at_Base_Condition = checked;
-        const newMaintainEVC_01_Vm_of_Current_Day = checked;
+        const newmaintainEVC_01_Vm_of_Current_Day = checked;
         const newMaintainEVC_01_Vb_of_Current_Day = checked;
-        const newMaintainEVC_01_Flow_at_Measurement_Condition = checked;
-        const newMaintainEVC_01_Vb_of_Last_Day = checked;
-        const newMaintainEVC_01_Vm_of_Last_Day = checked;
+        const newmaintainEVC_01_Flow_at_Measurement_Condition = checked;
+        const newmaintainEVC_01_Vb_of_Last_Day = checked;
+        const newmaintainEVC_01_Vm_of_Last_Day = checked;
 
-        const newMaintainEVC_02_Remain_Battery_Service_Life = checked;
+        const newmaintainEVC_02_Remain_Battery_Service_Life = checked;
         const newMaintainEVC_02_Temperature = checked;
-        const newMaintainEVC_02_Volume_at_Base_Condition = checked;
-        const newMaintainEVC_02_Volume_at_Measurement_Condition = checked;
+        const newmaintainEVC_02_Volume_at_Base_Condition = checked;
+        const newmaintainEVC_02_Volume_at_Measurement_Condition = checked;
         const newMaintainEVC_02_Pressure = checked;
-        const newMaintainEVC_02_Flow_at_Base_Condition = checked;
-        const newMaintainEVC_02_Vm_of_Current_Day = checked;
-        const newMaintainEVC_02_Vb_of_Current_Day = checked;
-        const newMaintainEVC_02_Flow_at_Measurement_Condition = checked;
-        const newMaintainEVC_02_Vb_of_Last_Day = checked;
-        const newMaintainEVC_02_Vm_of_Last_Day = checked;
+        const newmaintainEVC_02_Flow_at_Base_Condition = checked;
+        const newmaintainEVC_02_Vm_of_Current_Day = checked;
+        const newmaintainEVC_02_Vb_of_Current_Day = checked;
+        const newmaintainEVC_02_Flow_at_Measurement_Condition = checked;
+        const newmaintainEVC_02_Vb_of_Last_Day = checked;
+        const newmaintainEVC_02_Vm_of_Last_Day = checked;
 
         const newMaintainGD1 = checked;
         const newMaintainGD2 = checked;
@@ -3707,51 +2622,51 @@ const handleMainTainAll = async (checked:any) => {
         const newMaintainPT1 = checked;
         const newMaintainDI_DI_ZSO_1 = checked;
         const newMaintainDI_DI_ZSC_1 = checked;
-        const newMaintainDI_MAP_1 = checked;
-        const newMaintainDI_UPS_CHARGING = checked;
-        const newMaintainDI_UPS_ALARM = checked;
-        const newMaintainDI_SELECT_SW = checked;
-        const newMaintainDI_RESET = checked;
-        const newMaintainDI_UPS_BATTERY = checked;
-        const newMaintainDO_SV1 = checked;
+        const newmaintainDI_MAP_1 = checked;
+        const newmaintainDI_UPS_CHARGING = checked;
+        const newmaintainDI_UPS_ALARM = checked;
+        const newmaintainDI_SELECT_SW = checked;
+        const newmaintainDI_RESET = checked;
+        const newmaintainDI_UPS_BATTERY = checked;
+        const newmaintainDO_SV1 = checked;
 
-        const newMaintainEmergency_NO = checked;
-        const newMaintainEmergency_NC = checked;
-        const newMaintainUPS_Mode = checked;
-        const newMaintainDO_HR_01 = checked;
-        const newMaintainDO_BC_01 = checked;
+        const newmaintainEmergency_NO = checked;
+        const newmaintainEmergency_NC = checked;
+        const newmaintainUPS_Mode = checked;
+        const newmaintainDO_HR_01 = checked;
+        const newmaintainDO_BC_01 = checked;
         const newMaintainDO_SV_0_01 = checked;
-        const newMaintainPLC_Conn_STT = checked;
-        const newMaintainEVC_01_Conn_STT = checked;
-        const newMaintainEVC_02_Conn_STT = checked;
+        const newmaintainPLC_Conn_STT = checked;
+        const newmaintainEVC_01_Conn_STT = checked;
+        const newmaintainEVC_02_Conn_STT = checked;
 
 
         await httpApi.post(
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
             { EVC_01_Remain_Battery_Service_Life_Maintain: newMaintainEVC_01_Remain_Battery_Service_Life,
-               EVC_01_Temperature_Maintain: newMaintainEVC_01_Temperature,
-               EVC_01_Volume_at_Base_Condition_Maintain: newMaintainEVC_01_Volume_at_Base_Condition,
-               EVC_01_Volume_at_Measurement_Condition_Maintain: newMaintainEVC_01_Volume_at_Measurement_Condition,
+               EVC_01_Temperature_Maintain: newmaintainEVC_01_Temperature,
+               EVC_01_Volume_at_Base_Condition_Maintain: newmaintainEVC_01_Volume_at_Base_Condition,
+               EVC_01_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_01_Volume_at_Measurement_Condition,
                EVC_01_Pressure_Maintain: newMaintainEVC_01_Pressure,
                EVC_01_Flow_at_Base_Condition_Maintain: newMaintainEVC_01_Flow_at_Base_Condition,
-               EVC_01_Vm_of_Current_Day_Maintain: newMaintainEVC_01_Vm_of_Current_Day,
+               EVC_01_Vm_of_Current_Day_Maintain: newmaintainEVC_01_Vm_of_Current_Day,
                EVC_01_Vb_of_Current_Day_Maintain: newMaintainEVC_01_Vb_of_Current_Day,
-               EVC_01_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_01_Flow_at_Measurement_Condition,
-               EVC_01_Vb_of_Last_Day_Maintain: newMaintainEVC_01_Vb_of_Last_Day,
-               EVC_01_Vm_of_Last_Day_Maintain: newMaintainEVC_01_Vm_of_Last_Day,
+               EVC_01_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_01_Flow_at_Measurement_Condition,
+               EVC_01_Vb_of_Last_Day_Maintain: newmaintainEVC_01_Vb_of_Last_Day,
+               EVC_01_Vm_of_Last_Day_Maintain: newmaintainEVC_01_Vm_of_Last_Day,
 
 
-               EVC_02_Remain_Battery_Service_Life_Maintain: newMaintainEVC_02_Remain_Battery_Service_Life,
+               EVC_02_Remain_Battery_Service_Life_Maintain: newmaintainEVC_02_Remain_Battery_Service_Life,
                EVC_02_Temperature_Maintain: newMaintainEVC_02_Temperature,
-               EVC_02_Volume_at_Base_Condition_Maintain: newMaintainEVC_02_Volume_at_Base_Condition,
-               EVC_02_Volume_at_Measurement_Condition_Maintain: newMaintainEVC_02_Volume_at_Measurement_Condition,
+               EVC_02_Volume_at_Base_Condition_Maintain: newmaintainEVC_02_Volume_at_Base_Condition,
+               EVC_02_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_02_Volume_at_Measurement_Condition,
                EVC_02_Pressure_Maintain: newMaintainEVC_02_Pressure,
-               EVC_02_Flow_at_Base_Condition_Maintain: newMaintainEVC_02_Flow_at_Base_Condition,
-               EVC_02_Vm_of_Current_Day_Maintain: newMaintainEVC_02_Vm_of_Current_Day,
-               EVC_02_Vb_of_Current_Day_Maintain: newMaintainEVC_02_Vb_of_Current_Day,
-               EVC_02_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_02_Flow_at_Measurement_Condition,
-               EVC_02_Vb_of_Last_Day_Maintain: newMaintainEVC_02_Vb_of_Last_Day,
-               EVC_02_Vm_of_Last_Day_Maintain: newMaintainEVC_02_Vm_of_Last_Day,
+               EVC_02_Flow_at_Base_Condition_Maintain: newmaintainEVC_02_Flow_at_Base_Condition,
+               EVC_02_Vm_of_Current_Day_Maintain: newmaintainEVC_02_Vm_of_Current_Day,
+               EVC_02_Vb_of_Current_Day_Maintain: newmaintainEVC_02_Vb_of_Current_Day,
+               EVC_02_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_02_Flow_at_Measurement_Condition,
+               EVC_02_Vb_of_Last_Day_Maintain: newmaintainEVC_02_Vb_of_Last_Day,
+               EVC_02_Vm_of_Last_Day_Maintain: newmaintainEVC_02_Vm_of_Last_Day,
 
                GD1_Maintain: newMaintainGD1,
                GD2_Maintain: newMaintainGD2,
@@ -3759,50 +2674,50 @@ const handleMainTainAll = async (checked:any) => {
                PT1_Maintain: newMaintainPT1,
             DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
                DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
-               DI_MAP_1_Maintain: newMaintainDI_MAP_1,
-               DI_UPS_CHARGING_Maintain: newMaintainDI_UPS_CHARGING,
-               DI_UPS_ALARM_Maintain: newMaintainDI_UPS_ALARM,
-               DI_SELECT_SW_Maintain: newMaintainDI_SELECT_SW,
-               DI_RESET_Maintain: newMaintainDI_RESET,
-               DI_UPS_BATTERY_Maintain: newMaintainDI_UPS_BATTERY,
-               DO_SV1_Maintain: newMaintainDO_SV1,
+               DI_MAP_1_Maintain: newmaintainDI_MAP_1,
+               DI_UPS_CHARGING_Maintain: newmaintainDI_UPS_CHARGING,
+               DI_UPS_ALARM_Maintain: newmaintainDI_UPS_ALARM,
+               DI_SELECT_SW_Maintain: newmaintainDI_SELECT_SW,
+               DI_RESET_Maintain: newmaintainDI_RESET,
+               DI_UPS_BATTERY_Maintain: newmaintainDI_UPS_BATTERY,
+               DO_SV1_Maintain: newmaintainDO_SV1,
 
-               Emergency_NO_Maintain: newMaintainEmergency_NO,
-               Emergency_NC_Maintain: newMaintainEmergency_NC,
-               UPS_Mode_Maintain: newMaintainUPS_Mode,
-               DO_HR_01_Maintain: newMaintainDO_HR_01,
-               DO_BC_01_Maintain: newMaintainDO_BC_01,
+               Emergency_NO_Maintain: newmaintainEmergency_NO,
+               Emergency_NC_Maintain: newmaintainEmergency_NC,
+               UPS_Mode_Maintain: newmaintainUPS_Mode,
+               DO_HR_01_Maintain: newmaintainDO_HR_01,
+               DO_BC_01_Maintain: newmaintainDO_BC_01,
                DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
-               PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
-               EVC_01_Conn_STT_Maintain: newMaintainEVC_01_Conn_STT,
-               EVC_02_Conn_STT_Maintain: newMaintainEVC_02_Conn_STT,
+               PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
+               EVC_01_Conn_STT_Maintain: newmaintainEVC_01_Conn_STT,
+               EVC_02_Conn_STT_Maintain: newmaintainEVC_02_Conn_STT,
 
 
              }
         );
-        setMaintainEVC_01_Remain_Battery_Service_Life(newMaintainEVC_01_Remain_Battery_Service_Life);
-        setMaintainEVC_01_Temperature(newMaintainEVC_01_Temperature);
-        setMaintainEVC_01_Volume_at_Base_Condition(newMaintainEVC_01_Volume_at_Base_Condition);
-        setMaintainEVC_01_Volume_at_Measurement_Condition(newMaintainEVC_01_Volume_at_Measurement_Condition);
+        setmaintainEVC_01_Remain_Battery_Service_Life(newMaintainEVC_01_Remain_Battery_Service_Life);
+        setmaintainEVC_01_Temperature(newmaintainEVC_01_Temperature);
+        setmaintainEVC_01_Volume_at_Base_Condition(newmaintainEVC_01_Volume_at_Base_Condition);
+        setmaintainEVC_01_Volume_at_Measurement_Condition(newmaintainEVC_01_Volume_at_Measurement_Condition);
         setMaintainEVC_01_Pressure(newMaintainEVC_01_Pressure);
-        setMaintainEVC_01_Flow_at_Base_Condition(newMaintainEVC_01_Flow_at_Base_Condition);
-        setMaintainEVC_01_Vm_of_Current_Day(newMaintainEVC_01_Vm_of_Current_Day);
+        setmaintainEVC_01_Flow_at_Base_Condition(newMaintainEVC_01_Flow_at_Base_Condition);
+        setmaintainEVC_01_Vm_of_Current_Day(newmaintainEVC_01_Vm_of_Current_Day);
         setMaintainEVC_01_Vb_of_Current_Day(newMaintainEVC_01_Vb_of_Current_Day);
-        setMaintainEVC_01_Flow_at_Measurement_Condition(newMaintainEVC_01_Flow_at_Measurement_Condition);
-        setMaintainEVC_01_Vb_of_Last_Day(newMaintainEVC_01_Vb_of_Last_Day);
-        setMaintainEVC_01_Vm_of_Last_Day(newMaintainEVC_01_Vm_of_Last_Day);
+        setmaintainEVC_01_Flow_at_Measurement_Condition(newmaintainEVC_01_Flow_at_Measurement_Condition);
+        setmaintainEVC_01_Vb_of_Last_Day(newmaintainEVC_01_Vb_of_Last_Day);
+        setmaintainEVC_01_Vm_of_Last_Day(newmaintainEVC_01_Vm_of_Last_Day);
 
-        setMaintainEVC_02_Remain_Battery_Service_Life(newMaintainEVC_02_Remain_Battery_Service_Life);
-        setMaintainEVC_02_Temperature(newMaintainEVC_02_Temperature);
-        setMaintainEVC_02_Volume_at_Base_Condition(newMaintainEVC_02_Volume_at_Base_Condition);
-        setMaintainEVC_02_Volume_at_Measurement_Condition(newMaintainEVC_02_Volume_at_Measurement_Condition);
+        setmaintainEVC_02_Remain_Battery_Service_Life(newmaintainEVC_02_Remain_Battery_Service_Life);
+        setmaintainEVC_02_Temperature(newMaintainEVC_02_Temperature);
+        setmaintainEVC_02_Volume_at_Base_Condition(newmaintainEVC_02_Volume_at_Base_Condition);
+        setmaintainEVC_02_Volume_at_Measurement_Condition(newmaintainEVC_02_Volume_at_Measurement_Condition);
         setMaintainEVC_02_Pressure(newMaintainEVC_02_Pressure);
-        setMaintainEVC_02_Flow_at_Base_Condition(newMaintainEVC_02_Flow_at_Base_Condition);
-        setMaintainEVC_02_Vm_of_Current_Day(newMaintainEVC_02_Vm_of_Current_Day);
-        setMaintainEVC_02_Vb_of_Current_Day(newMaintainEVC_02_Vb_of_Current_Day);
-        setMaintainEVC_02_Flow_at_Measurement_Condition(newMaintainEVC_02_Flow_at_Measurement_Condition);
-        setMaintainEVC_02_Vb_of_Last_Day(newMaintainEVC_02_Vb_of_Last_Day);
-        setMaintainEVC_02_Vm_of_Last_Day(newMaintainEVC_02_Vm_of_Last_Day);
+        setmaintainEVC_02_Flow_at_Base_Condition(newmaintainEVC_02_Flow_at_Base_Condition);
+        setmaintainEVC_02_Vm_of_Current_Day(newmaintainEVC_02_Vm_of_Current_Day);
+        setmaintainEVC_02_Vb_of_Current_Day(newmaintainEVC_02_Vb_of_Current_Day);
+        setmaintainEVC_02_Flow_at_Measurement_Condition(newmaintainEVC_02_Flow_at_Measurement_Condition);
+        setmaintainEVC_02_Vb_of_Last_Day(newmaintainEVC_02_Vb_of_Last_Day);
+        setmaintainEVC_02_Vm_of_Last_Day(newmaintainEVC_02_Vm_of_Last_Day);
         
 
         setMaintainGD1(newMaintainGD1);
@@ -3810,25 +2725,25 @@ const handleMainTainAll = async (checked:any) => {
         setMaintainGD3(newMaintainGD3);
 
         setMaintainPT1(newMaintainPT1);
-        setMaintainDI_ZSO_1(newMaintainDI_DI_ZSO_1);
-        setMaintainDI_ZSC_1(newMaintainDI_DI_ZSC_1);
-        setMaintainDI_MAP_1(newMaintainDI_MAP_1);
-        setMaintainDI_UPS_CHARGING(newMaintainDI_UPS_CHARGING);
-        setMaintainDI_UPS_ALARM(newMaintainDI_UPS_ALARM);
-        setMaintainDI_SELECT_SW(newMaintainDI_SELECT_SW);
-        setMaintainDI_RESET(newMaintainDI_RESET);
-        setMaintainDI_UPS_BATTERY(newMaintainDI_UPS_BATTERY);
-        setMaintainDO_SV1(newMaintainDO_SV1);
+        setmaintainDI_ZSO_1(newMaintainDI_DI_ZSO_1);
+        setmaintainDI_ZSC_1(newMaintainDI_DI_ZSC_1);
+        setmaintainDI_MAP_1(newmaintainDI_MAP_1);
+        setmaintainDI_UPS_CHARGING(newmaintainDI_UPS_CHARGING);
+        setmaintainDI_UPS_ALARM(newmaintainDI_UPS_ALARM);
+        setmaintainDI_SELECT_SW(newmaintainDI_SELECT_SW);
+        setmaintainDI_RESET(newmaintainDI_RESET);
+        setmaintainDI_UPS_BATTERY(newmaintainDI_UPS_BATTERY);
+        setmaintainDO_SV1(newmaintainDO_SV1);
 
-        setMaintainEmergency_NO(newMaintainEmergency_NO);
-        setMaintainEmergency_NC(newMaintainEmergency_NC);
-        setMaintainUPS_Mode(newMaintainUPS_Mode);
-        setMaintainDO_HR_01(newMaintainDO_HR_01);
-        setMaintainDO_BC_01(newMaintainDO_BC_01);
+        setmaintainEmergency_NO(newmaintainEmergency_NO);
+        setmaintainEmergency_NC(newmaintainEmergency_NC);
+        setmaintainUPS_Mode(newmaintainUPS_Mode);
+        setmaintainDO_HR_01(newmaintainDO_HR_01);
+        setmaintainDO_BC_01(newmaintainDO_BC_01);
 
-        setMaintainEVC_01_Conn_STT(newMaintainEVC_01_Conn_STT);
-        setMaintainEVC_02_Conn_STT(newMaintainEVC_02_Conn_STT);
-        setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
+        setmaintainEVC_01_Conn_STT(newmaintainEVC_01_Conn_STT);
+        setmaintainEVC_02_Conn_STT(newmaintainEVC_02_Conn_STT);
+        setmaintainPLC_Conn_STT(newmaintainPLC_Conn_STT);
 
 
     } catch (error) {
@@ -3846,50 +2761,50 @@ const handleCheckboxChange = (e:any) => {
 const handleMainTainEVC01 = async (checked:any) => {
     try {
         const newMaintainEVC_01_Remain_Battery_Service_Life = checked;
-        const newMaintainEVC_01_Temperature = checked;
-        const newMaintainEVC_01_Volume_at_Base_Condition = checked;
-        const newMaintainEVC_01_Volume_at_Measurement_Condition = checked;
+        const newmaintainEVC_01_Temperature = checked;
+        const newmaintainEVC_01_Volume_at_Base_Condition = checked;
+        const newmaintainEVC_01_Volume_at_Measurement_Condition = checked;
         const newMaintainEVC_01_Pressure = checked;
         const newMaintainEVC_01_Flow_at_Base_Condition = checked;
-        const newMaintainEVC_01_Vm_of_Current_Day = checked;
+        const newmaintainEVC_01_Vm_of_Current_Day = checked;
         const newMaintainEVC_01_Vb_of_Current_Day = checked;
-        const newMaintainEVC_01_Flow_at_Measurement_Condition = checked;
-        const newMaintainEVC_01_Vb_of_Last_Day = checked;
-        const newMaintainEVC_01_Vm_of_Last_Day = checked;
-        const newMaintainEVC_01_Conn_STT = checked;
+        const newmaintainEVC_01_Flow_at_Measurement_Condition = checked;
+        const newmaintainEVC_01_Vb_of_Last_Day = checked;
+        const newmaintainEVC_01_Vm_of_Last_Day = checked;
+        const newmaintainEVC_01_Conn_STT = checked;
 
    
 
         await httpApi.post(
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
             { EVC_01_Remain_Battery_Service_Life_Maintain: newMaintainEVC_01_Remain_Battery_Service_Life,
-               EVC_01_Temperature_Maintain: newMaintainEVC_01_Temperature,
-               EVC_01_Volume_at_Base_Condition_Maintain: newMaintainEVC_01_Volume_at_Base_Condition,
-               EVC_01_Volume_at_Measurement_Condition_Maintain: newMaintainEVC_01_Volume_at_Measurement_Condition,
+               EVC_01_Temperature_Maintain: newmaintainEVC_01_Temperature,
+               EVC_01_Volume_at_Base_Condition_Maintain: newmaintainEVC_01_Volume_at_Base_Condition,
+               EVC_01_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_01_Volume_at_Measurement_Condition,
                EVC_01_Pressure_Maintain: newMaintainEVC_01_Pressure,
                EVC_01_Flow_at_Base_Condition_Maintain: newMaintainEVC_01_Flow_at_Base_Condition,
-               EVC_01_Vm_of_Current_Day_Maintain: newMaintainEVC_01_Vm_of_Current_Day,
+               EVC_01_Vm_of_Current_Day_Maintain: newmaintainEVC_01_Vm_of_Current_Day,
                EVC_01_Vb_of_Current_Day_Maintain: newMaintainEVC_01_Vb_of_Current_Day,
-               EVC_01_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_01_Flow_at_Measurement_Condition,
-               EVC_01_Vb_of_Last_Day_Maintain: newMaintainEVC_01_Vb_of_Last_Day,
-               EVC_01_Vm_of_Last_Day_Maintain: newMaintainEVC_01_Vm_of_Last_Day,
-               EVC_01_Conn_STT_Maintain: newMaintainEVC_01_Conn_STT,
+               EVC_01_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_01_Flow_at_Measurement_Condition,
+               EVC_01_Vb_of_Last_Day_Maintain: newmaintainEVC_01_Vb_of_Last_Day,
+               EVC_01_Vm_of_Last_Day_Maintain: newmaintainEVC_01_Vm_of_Last_Day,
+               EVC_01_Conn_STT_Maintain: newmaintainEVC_01_Conn_STT,
 
 
              }
         );
-        setMaintainEVC_01_Remain_Battery_Service_Life(newMaintainEVC_01_Remain_Battery_Service_Life);
-        setMaintainEVC_01_Temperature(newMaintainEVC_01_Temperature);
-        setMaintainEVC_01_Volume_at_Base_Condition(newMaintainEVC_01_Volume_at_Base_Condition);
-        setMaintainEVC_01_Volume_at_Measurement_Condition(newMaintainEVC_01_Volume_at_Measurement_Condition);
+        setmaintainEVC_01_Remain_Battery_Service_Life(newMaintainEVC_01_Remain_Battery_Service_Life);
+        setmaintainEVC_01_Temperature(newmaintainEVC_01_Temperature);
+        setmaintainEVC_01_Volume_at_Base_Condition(newmaintainEVC_01_Volume_at_Base_Condition);
+        setmaintainEVC_01_Volume_at_Measurement_Condition(newmaintainEVC_01_Volume_at_Measurement_Condition);
         setMaintainEVC_01_Pressure(newMaintainEVC_01_Pressure);
-        setMaintainEVC_01_Flow_at_Base_Condition(newMaintainEVC_01_Flow_at_Base_Condition);
-        setMaintainEVC_01_Vm_of_Current_Day(newMaintainEVC_01_Vm_of_Current_Day);
+        setmaintainEVC_01_Flow_at_Base_Condition(newMaintainEVC_01_Flow_at_Base_Condition);
+        setmaintainEVC_01_Vm_of_Current_Day(newmaintainEVC_01_Vm_of_Current_Day);
         setMaintainEVC_01_Vb_of_Current_Day(newMaintainEVC_01_Vb_of_Current_Day);
-        setMaintainEVC_01_Flow_at_Measurement_Condition(newMaintainEVC_01_Flow_at_Measurement_Condition);
-        setMaintainEVC_01_Vb_of_Last_Day(newMaintainEVC_01_Vb_of_Last_Day);
-        setMaintainEVC_01_Vm_of_Last_Day(newMaintainEVC_01_Vm_of_Last_Day);
-        setMaintainEVC_01_Conn_STT(newMaintainEVC_01_Conn_STT);
+        setmaintainEVC_01_Flow_at_Measurement_Condition(newmaintainEVC_01_Flow_at_Measurement_Condition);
+        setmaintainEVC_01_Vb_of_Last_Day(newmaintainEVC_01_Vb_of_Last_Day);
+        setmaintainEVC_01_Vm_of_Last_Day(newmaintainEVC_01_Vm_of_Last_Day);
+        setmaintainEVC_01_Conn_STT(newmaintainEVC_01_Conn_STT);
 
        
     } catch (error) {
@@ -3906,51 +2821,51 @@ const handleCheckboxChangeEVC01 = (e:any) => {
 
 const handleMainTainEVC02 = async (checked:any) => {
     try {
-        const newMaintainEVC_02_Remain_Battery_Service_Life = checked;
+        const newmaintainEVC_02_Remain_Battery_Service_Life = checked;
         const newMaintainEVC_02_Temperature = checked;
-        const newMaintainEVC_02_Volume_at_Base_Condition = checked;
-        const newMaintainEVC_02_Volume_at_Measurement_Condition = checked;
+        const newmaintainEVC_02_Volume_at_Base_Condition = checked;
+        const newmaintainEVC_02_Volume_at_Measurement_Condition = checked;
         const newMaintainEVC_02_Pressure = checked;
-        const newMaintainEVC_02_Flow_at_Base_Condition = checked;
-        const newMaintainEVC_02_Vm_of_Current_Day = checked;
-        const newMaintainEVC_02_Vb_of_Current_Day = checked;
-        const newMaintainEVC_02_Flow_at_Measurement_Condition = checked;
-        const newMaintainEVC_02_Vb_of_Last_Day = checked;
-        const newMaintainEVC_02_Vm_of_Last_Day = checked;
-        const newMaintainEVC_02_Conn_STT = checked;
+        const newmaintainEVC_02_Flow_at_Base_Condition = checked;
+        const newmaintainEVC_02_Vm_of_Current_Day = checked;
+        const newmaintainEVC_02_Vb_of_Current_Day = checked;
+        const newmaintainEVC_02_Flow_at_Measurement_Condition = checked;
+        const newmaintainEVC_02_Vb_of_Last_Day = checked;
+        const newmaintainEVC_02_Vm_of_Last_Day = checked;
+        const newmaintainEVC_02_Conn_STT = checked;
 
    
 
         await httpApi.post(
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-            { EVC_02_Remain_Battery_Service_Life_Maintain: newMaintainEVC_02_Remain_Battery_Service_Life,
+            { EVC_02_Remain_Battery_Service_Life_Maintain: newmaintainEVC_02_Remain_Battery_Service_Life,
                EVC_02_Temperature_Maintain: newMaintainEVC_02_Temperature,
-               EVC_02_Volume_at_Base_Condition_Maintain: newMaintainEVC_02_Volume_at_Base_Condition,
-               EVC_02_Volume_at_Measurement_Condition_Maintain: newMaintainEVC_02_Volume_at_Measurement_Condition,
+               EVC_02_Volume_at_Base_Condition_Maintain: newmaintainEVC_02_Volume_at_Base_Condition,
+               EVC_02_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_02_Volume_at_Measurement_Condition,
                EVC_02_Pressure_Maintain: newMaintainEVC_02_Pressure,
-               EVC_02_Flow_at_Base_Condition_Maintain: newMaintainEVC_02_Flow_at_Base_Condition,
-               EVC_02_Vm_of_Current_Day_Maintain: newMaintainEVC_02_Vm_of_Current_Day,
-               EVC_02_Vb_of_Current_Day_Maintain: newMaintainEVC_02_Vb_of_Current_Day,
-               EVC_02_Flow_at_Measurement_Condition_Maintain: newMaintainEVC_02_Flow_at_Measurement_Condition,
-               EVC_02_Vb_of_Last_Day_Maintain: newMaintainEVC_02_Vb_of_Last_Day,
-               EVC_02_Vm_of_Last_Day_Maintain: newMaintainEVC_02_Vm_of_Last_Day,
-               EVC_02_Conn_STT_Maintain: newMaintainEVC_02_Conn_STT,
+               EVC_02_Flow_at_Base_Condition_Maintain: newmaintainEVC_02_Flow_at_Base_Condition,
+               EVC_02_Vm_of_Current_Day_Maintain: newmaintainEVC_02_Vm_of_Current_Day,
+               EVC_02_Vb_of_Current_Day_Maintain: newmaintainEVC_02_Vb_of_Current_Day,
+               EVC_02_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_02_Flow_at_Measurement_Condition,
+               EVC_02_Vb_of_Last_Day_Maintain: newmaintainEVC_02_Vb_of_Last_Day,
+               EVC_02_Vm_of_Last_Day_Maintain: newmaintainEVC_02_Vm_of_Last_Day,
+               EVC_02_Conn_STT_Maintain: newmaintainEVC_02_Conn_STT,
 
 
              }
         );
-        setMaintainEVC_02_Remain_Battery_Service_Life(newMaintainEVC_02_Remain_Battery_Service_Life);
-        setMaintainEVC_02_Temperature(newMaintainEVC_02_Temperature);
-        setMaintainEVC_02_Volume_at_Base_Condition(newMaintainEVC_02_Volume_at_Base_Condition);
-        setMaintainEVC_02_Volume_at_Measurement_Condition(newMaintainEVC_02_Volume_at_Measurement_Condition);
+        setmaintainEVC_02_Remain_Battery_Service_Life(newmaintainEVC_02_Remain_Battery_Service_Life);
+        setmaintainEVC_02_Temperature(newMaintainEVC_02_Temperature);
+        setmaintainEVC_02_Volume_at_Base_Condition(newmaintainEVC_02_Volume_at_Base_Condition);
+        setmaintainEVC_02_Volume_at_Measurement_Condition(newmaintainEVC_02_Volume_at_Measurement_Condition);
         setMaintainEVC_02_Pressure(newMaintainEVC_02_Pressure);
-        setMaintainEVC_02_Flow_at_Base_Condition(newMaintainEVC_02_Flow_at_Base_Condition);
-        setMaintainEVC_02_Vm_of_Current_Day(newMaintainEVC_02_Vm_of_Current_Day);
-        setMaintainEVC_02_Vb_of_Current_Day(newMaintainEVC_02_Vb_of_Current_Day);
-        setMaintainEVC_02_Flow_at_Measurement_Condition(newMaintainEVC_02_Flow_at_Measurement_Condition);
-        setMaintainEVC_02_Vb_of_Last_Day(newMaintainEVC_02_Vb_of_Last_Day);
-        setMaintainEVC_02_Vm_of_Last_Day(newMaintainEVC_02_Vm_of_Last_Day);
-        setMaintainEVC_02_Conn_STT(newMaintainEVC_02_Conn_STT);
+        setmaintainEVC_02_Flow_at_Base_Condition(newmaintainEVC_02_Flow_at_Base_Condition);
+        setmaintainEVC_02_Vm_of_Current_Day(newmaintainEVC_02_Vm_of_Current_Day);
+        setmaintainEVC_02_Vb_of_Current_Day(newmaintainEVC_02_Vb_of_Current_Day);
+        setmaintainEVC_02_Flow_at_Measurement_Condition(newmaintainEVC_02_Flow_at_Measurement_Condition);
+        setmaintainEVC_02_Vb_of_Last_Day(newmaintainEVC_02_Vb_of_Last_Day);
+        setmaintainEVC_02_Vm_of_Last_Day(newmaintainEVC_02_Vm_of_Last_Day);
+        setmaintainEVC_02_Conn_STT(newmaintainEVC_02_Conn_STT);
 
        
     } catch (error) {
@@ -3975,21 +2890,21 @@ const handleMainTainPLC = async (checked:any) => {
         const newMaintainPT1 = checked;
         const newMaintainDI_DI_ZSO_1 = checked;
         const newMaintainDI_DI_ZSC_1 = checked;
-        const newMaintainDI_MAP_1 = checked;
-        const newMaintainDI_UPS_CHARGING = checked;
-        const newMaintainDI_UPS_ALARM = checked;
-        const newMaintainDI_SELECT_SW = checked;
-        const newMaintainDI_RESET = checked;
-        const newMaintainDI_UPS_BATTERY = checked;
-        const newMaintainDO_SV1 = checked;
+        const newmaintainDI_MAP_1 = checked;
+        const newmaintainDI_UPS_CHARGING = checked;
+        const newmaintainDI_UPS_ALARM = checked;
+        const newmaintainDI_SELECT_SW = checked;
+        const newmaintainDI_RESET = checked;
+        const newmaintainDI_UPS_BATTERY = checked;
+        const newmaintainDO_SV1 = checked;
 
-        const newMaintainEmergency_NO = checked;
-        const newMaintainEmergency_NC = checked;
-        const newMaintainUPS_Mode = checked;
-        const newMaintainDO_HR_01 = checked;
-        const newMaintainDO_BC_01 = checked;
+        const newmaintainEmergency_NO = checked;
+        const newmaintainEmergency_NC = checked;
+        const newmaintainUPS_Mode = checked;
+        const newmaintainDO_HR_01 = checked;
+        const newmaintainDO_BC_01 = checked;
         const newMaintainDO_SV_0_01 = checked;
-        const newMaintainPLC_Conn_STT = checked;
+        const newmaintainPLC_Conn_STT = checked;
 
    
 
@@ -4001,21 +2916,21 @@ const handleMainTainPLC = async (checked:any) => {
                 PT1_Maintain: newMaintainPT1,
                 DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
                 DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
-                DI_MAP_1_Maintain: newMaintainDI_MAP_1,
-                DI_UPS_CHARGING_Maintain: newMaintainDI_UPS_CHARGING,
-                DI_UPS_ALARM_Maintain: newMaintainDI_UPS_ALARM,
-                DI_SELECT_SW_Maintain: newMaintainDI_SELECT_SW,
-                DI_RESET_Maintain: newMaintainDI_RESET,
-                DI_UPS_BATTERY_Maintain: newMaintainDI_UPS_BATTERY,
-                DO_SV1_Maintain: newMaintainDO_SV1,
+                DI_MAP_1_Maintain: newmaintainDI_MAP_1,
+                DI_UPS_CHARGING_Maintain: newmaintainDI_UPS_CHARGING,
+                DI_UPS_ALARM_Maintain: newmaintainDI_UPS_ALARM,
+                DI_SELECT_SW_Maintain: newmaintainDI_SELECT_SW,
+                DI_RESET_Maintain: newmaintainDI_RESET,
+                DI_UPS_BATTERY_Maintain: newmaintainDI_UPS_BATTERY,
+                DO_SV1_Maintain: newmaintainDO_SV1,
  
-                Emergency_NO_Maintain: newMaintainEmergency_NO,
-                Emergency_NC_Maintain: newMaintainEmergency_NC,
-                UPS_Mode_Maintain: newMaintainUPS_Mode,
-                DO_HR_01_Maintain: newMaintainDO_HR_01,
-                DO_BC_01_Maintain: newMaintainDO_BC_01,
+                Emergency_NO_Maintain: newmaintainEmergency_NO,
+                Emergency_NC_Maintain: newmaintainEmergency_NC,
+                UPS_Mode_Maintain: newmaintainUPS_Mode,
+                DO_HR_01_Maintain: newmaintainDO_HR_01,
+                DO_BC_01_Maintain: newmaintainDO_BC_01,
                 DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
-                PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
+                PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
 
 
              }
@@ -4025,22 +2940,22 @@ const handleMainTainPLC = async (checked:any) => {
         setMaintainGD3(newMaintainGD3);
 
         setMaintainPT1(newMaintainPT1);
-        setMaintainDI_ZSO_1(newMaintainDI_DI_ZSO_1);
-        setMaintainDI_ZSC_1(newMaintainDI_DI_ZSC_1);
-        setMaintainDI_MAP_1(newMaintainDI_MAP_1);
-        setMaintainDI_UPS_CHARGING(newMaintainDI_UPS_CHARGING);
-        setMaintainDI_UPS_ALARM(newMaintainDI_UPS_ALARM);
-        setMaintainDI_SELECT_SW(newMaintainDI_SELECT_SW);
-        setMaintainDI_RESET(newMaintainDI_RESET);
-        setMaintainDI_UPS_BATTERY(newMaintainDI_UPS_BATTERY);
-        setMaintainDO_SV1(newMaintainDO_SV1);
+        setmaintainDI_ZSO_1(newMaintainDI_DI_ZSO_1);
+        setmaintainDI_ZSC_1(newMaintainDI_DI_ZSC_1);
+        setmaintainDI_MAP_1(newmaintainDI_MAP_1);
+        setmaintainDI_UPS_CHARGING(newmaintainDI_UPS_CHARGING);
+        setmaintainDI_UPS_ALARM(newmaintainDI_UPS_ALARM);
+        setmaintainDI_SELECT_SW(newmaintainDI_SELECT_SW);
+        setmaintainDI_RESET(newmaintainDI_RESET);
+        setmaintainDI_UPS_BATTERY(newmaintainDI_UPS_BATTERY);
+        setmaintainDO_SV1(newmaintainDO_SV1);
 
-        setMaintainEmergency_NO(newMaintainEmergency_NO);
-        setMaintainEmergency_NC(newMaintainEmergency_NC);
-        setMaintainUPS_Mode(newMaintainUPS_Mode);
-        setMaintainDO_HR_01(newMaintainDO_HR_01);
-        setMaintainDO_BC_01(newMaintainDO_BC_01);
-        setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
+        setmaintainEmergency_NO(newmaintainEmergency_NO);
+        setmaintainEmergency_NC(newmaintainEmergency_NC);
+        setmaintainUPS_Mode(newmaintainUPS_Mode);
+        setmaintainDO_HR_01(newmaintainDO_HR_01);
+        setmaintainDO_BC_01(newmaintainDO_BC_01);
+        setmaintainPLC_Conn_STT(newmaintainPLC_Conn_STT);
 
 
        
@@ -4069,196 +2984,187 @@ const handleCheckboxChangePLC = (e:any) => {
 
       
 
-        setInputValueEVC_01_Pressure(highEVC_01_PressureValue); 
-        setInputValue2EVC_01_Pressure(lowEVC_01_PressureValue); 
+        setInputValueEVC_01_Pressure(EVC_01_Pressure_High); 
+        setInputValue2EVC_01_Pressure(EVC_01_Pressure_Low); 
 
-        setInputValueEVC_02_PressureHigh(highEVC_02_PressureValue); 
-        setInputValueEVC_02_PressureLow(lowEVC_02_PressureValue); 
+        setInputValueEVC_01_Pressure(EVC_02_Pressure_High); 
+        setInputValue2EVC_01_Pressure(EVC_02_Pressure_Low); 
 
-        setInputValuePT1High(highPT1PressureValue); 
-        setInputValuePT1Low(lowPT1PressureValue);    
+        setInputValuePT1(PT1_High); 
+        setInputValue2PT1(PT1_Low);    
         
-        setInputHighGD1(HighGD1)
-        setInputLowGD1(LowGD1)
+        setInputValueGD1(GD1_High)
+        setInputValue2GD1(GD1_Low)
 
-        setInputHighGD2(HighGD2)
-        setInputLowGD2(LowGD2)
+        setInputValueGD2(GD2_High)
+        setInputValue2GD2(GD2_Low)
 
-        setInputHighGD3(HighGD3)
-        setInputLowGD3(LowGD3)
+        setInputValueGD3(GD3_High)
+        setInputValue2GD3(GD3_Low)
 
-        setInputHighEVC_01_Flow_at_Measurement_Condition(HighEVC_01_Flow_at_Measurement_Condition)
-        setInputLowEVC_01_Flow_at_Measurement_Condition(LowEVC_01_Flow_at_Measurement_Condition)
+        setinputValueEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_High)
+        setinputValue2EVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Low)
 
-        setInputHighEVC_01_Flow_at_Base_Condition(HighEVC_01_Flow_at_Base_Condition)
-        setInputLowEVC_01_Flow_at_Base_Condition(LowEVC_01_Flow_at_Base_Condition)
+        setinputValueEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_High)
+        setinputValue2EVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Low)
 
-        setInputHighEVC_01_Volume_at_Base_Condition(HighEVC_01_Volume_at_Base_Condition)
-        setInputLowEVC_01_Volume_at_Base_Condition(LowEVC_01_Volume_at_Base_Condition)
+        setinputValueEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_High)
+        setinputValue2EVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Low)
 
-        setInputHighEVC_01_Volume_at_Measurement_Condition(HighEVC_01_Volume_at_Measurement_Condition)
-        setInputLowEVC_01_Volume_at_Measurement_Condition(LowEVC_01_Volume_at_Measurement_Condition)
+        setinputValueEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_High)
+        setinputValue2EVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Low)
 
-        setInputHighEVC_02_Flow_at_Measurement_Condition(HighEVC_02_Flow_at_Measurement_Condition)
-        setInputLowEVC_02_Flow_at_Measurement_Condition(LowEVC_02_Flow_at_Measurement_Condition)
+        setinputValueEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_High)
+        setinputValue2EVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Low)
 
-        setInputHighEVC_02_Flow_at_Base_Condition(HighEVC_02_Flow_at_Base_Condition)
-        setInputLowEVC_02_Flow_at_Base_Condition(LowEVC_02_Flow_at_Base_Condition)
+        setinputValueEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_High)
+        setinputValue2EVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Low)
 
-        setInputHighEVC_02_Volume_at_Base_Condition(HighEVC_02_Volume_at_Base_Condition)
-        setInputLowEVC_02_Volume_at_Base_Condition(LowEVC_02_Volume_at_Base_Condition)
+        setinputValueEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_High)
+        setinputValue2EVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Low)
 
-        setInputHighEVC_02_Volume_at_Measurement_Condition(HighEVC_02_Volume_at_Measurement_Condition)
-        setInputLowEVC_02_Volume_at_Measurement_Condition(LowEVC_02_Volume_at_Measurement_Condition)
+        setinputValueEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_High)
+        setinputValue2EVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Low)
 
-        setInputHighEVC_01_Temperature(HighEVC_01_Temperature)
-        setInputLowEVC_01_Temperature(LowEVC_01_Temperature)
+        setinputValueEVC_01_Temperature(EVC_01_Temperature_High)
+        setinputValue2EVC_01_Temperature(EVC_01_Temperature_Low)
 
-        setInputHighEVC_02_Temperature(HighEVC_02_Temperature)
-        setInputLowEVC_02_Temperature(LowEVC_02_Temperature)
+        setinputValueEVC_02_Temperature(EVC_02_Temperature_High)
+        setinputValue2EVC_02_Temperature(EVC_02_Temperature_Low)
 
-        setInputHighEVC_01_Remain_Battery_Service_Life(HighEVC_01_Remain_Battery_Service_Life)
-        setInputLowEVC_01_Remain_Battery_Service_Life(LowEVC_01_Remain_Battery_Service_Life)
+        setinputValueEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_High)
+        setinputValue2EVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Low)
 
-        setInputHighEVC_02_Remain_Battery_Service_Life(HighEVC_02_Remain_Battery_Service_Life)
-        setInputLowEVC_02_Remain_Battery_Service_Life(LowEVC_02_Remain_Battery_Service_Life)
+        setinputValueEVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_Life_High)
+        setinputValue2EVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_Life_Low)
 
-        setInputHighEVC_01_Vm_of_Last_Day(HighEVC_01_Vm_of_Last_Day)
-        setInputLowEVC_01_Vm_of_Last_Day(LowEVC_01_Vm_of_Last_Day)
+        setinputValueEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_High)
+        setinputValue2EVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Low)
 
-        setInputHighEVC_02_Vm_of_Last_Day(HighEVC_02_Vm_of_Last_Day)
-        setInputLowEVC_02_Vm_of_Last_Day(LowEVC_02_Vm_of_Last_Day)
+        setinputValueEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_High)
+        setinputValue2EVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Low)
 
-        setInputHighEVC_01_Vb_of_Last_Day(HighEVC_01_Vb_of_Last_Day)
-        setInputLowEVC_01_Vb_of_Last_Day(LowEVC_01_Vb_of_Last_Day)
+        setinputValueEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_High)
+        setinputValue2EVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Low)
 
-        setInputHighEVC_02_Vb_of_Last_Day(HighEVC_02_Vb_of_Last_Day)
-        setInputLowEVC_02_Vb_of_Last_Day(LowEVC_02_Vb_of_Last_Day)
+        setinputValueEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_High)
+        setinputValue2EVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Low)
 
-        setInputHighEVC_01_Vm_of_Current_Day(HighEVC_01_Vm_of_Current_Day)
-        setInputLowEVC_01_Vm_of_Current_Day(LowEVC_01_Vm_of_Current_Day)
+        setinputValueEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_High)
+        setinputValue2EVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Low)
 
-        setInputHighEVC_02_Vm_of_Current_Day(HighEVC_02_Vm_of_Current_Day)
-        setInputLowEVC_02_Vm_of_Current_Day(LowEVC_02_Vm_of_Current_Day)
+        setinputValueEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_High)
+        setinputValue2EVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Low)
 
-        setInputHighEVC_01_Vb_of_Current_Day(HighEVC_01_Vb_of_Current_Day)
-        setInputLowEVC_01_Vb_of_Current_Day(LowEVC_01_Vb_of_Current_Day)
+        setinputValueEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_High)
+        setinputValue2EVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Low)
 
-        setInputHighEVC_02_Vb_of_Current_Day(HighEVC_02_Vb_of_Current_Day)
-        setInputLowEVC_02_Vb_of_Current_Day(LowEVC_02_Vb_of_Current_Day)
+        setinputValueEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_High)
+        setinputValue2EVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Low)
 
-        setInputHighDI_UPS_BATTERY(HighDI_UPS_BATTERY)
-        setInputLowDI_UPS_BATTERY(LowDI_UPS_BATTERY)
+        setinputValueDI_UPS_BATTERY(DI_UPS_BATTERY_High)
+        setinputValue2DI_UPS_BATTERY(DI_UPS_BATTERY_Low)
 
-        setInputHighDI_UPS_CHARGING(HighDI_UPS_CHARGING)
-        setInputLowDI_UPS_CHARGING(LowDI_UPS_CHARGING)
+        setinputValueDI_UPS_CHARGING(DI_UPS_CHARGING_High)
+        setinputValue2DI_UPS_CHARGING(DI_UPS_CHARGING_Low)
 
-        setInputHighDI_UPS_ALARM(HighDI_UPS_ALARM)
-        setInputLowDI_UPS_ALARM(LowDI_UPS_ALARM)
+        setinputValueDI_UPS_ALARM(DI_UPS_ALARM_High)
+        setinputValue2DI_UPS_ALARM(DI_UPS_ALARM_Low)
 
-        setInputHighUPS_Mode(HighUPS_Mode)
-        setInputLowUPS_Mode(LowUPS_Mode)
+        setinputValueUPS_Mode(UPS_Mode_High)
+        setinputValue2UPS_Mode(UPS_Mode_Low)
 
-        setInputHighDI_SELECT_SW(HighDI_SELECT_SW)
-        setInputLowDI_SELECT_SW(LowDI_SELECT_SW)
+        setinputValueDI_SELECT_SW(DI_SELECT_SW_High)
+        setinputValue2DI_SELECT_SW(DI_SELECT_SW_Low)
 
-        setInputHighEmergency_NC(HighEmergency_NC)
-        setInputLowEmergency_NC(LowEmergency_NC)
+        setinputValueEmergency_NC(Emergency_NC_High)
+        setinputValue2Emergency_NC(Emergency_NC_Low)
 
-        setInputHighEmergency_NO(HighEmergency_NO)
-        setInputLowEmergency_NO(LowEmergency_NO)
+        setinputValueEmergency_NO(Emergency_NO_High)
+        setinputValue2Emergency_NO(Emergency_NO_Low)
 
-        setInputHighDI_RESET(HighDI_RESET)
-        setInputLowDI_RESET(LowDI_RESET)
+        setinputValueDI_RESET(DI_RESET_High)
+        setinputValue2DI_RESET(DI_RESET_Low)
 
-        setInputHighDO_HR_01(HighDO_HR_01)
-        setInputLowDO_HR_01(LowDO_HR_01)
+        setinputValueDO_HR_01(DO_HR_01_High)
+        setinputValue2DO_HR_01(DO_HR_01_Low)
 
-        setInputHighDI_MAP_1(HighDI_MAP_1)
-        setInputLowDI_MAP_1(LowDI_MAP_1)
+        setinputValueDI_MAP_1(DI_MAP_1_High)
+        setinputValue2DI_MAP_1(DI_MAP_1_Low)
 
-        setInputHighDI_ZSC_1(HighDI_ZSC_1)
-        setInputLowDI_ZSC_1(LowDI_ZSC_1)
+        setinputValueDI_ZSC_1(DI_ZSC_1_High)
+        setinputValue2DI_ZSC_1(DI_ZSC_1_Low)
 
-        setInputHighDI_ZSO_1(HighDI_ZSO_1)
-        setInputLowDI_ZSO_1(LowDI_ZSO_1)
+        setinputValueDI_ZSO_1(DI_ZSO_1_High)
+        setinputValue2DI_ZSO_1(DI_ZSO_1_Low)
 
-        setInputHighDO_SV1(HighDO_SV1)
-        setInputLowDO_SV1(LowDO_SV1)
-
-
-        setInputHighDO_BC_01(HighDO_BC_01)
-        setInputLowDO_BC_01(LowDO_BC_01)
+        setinputValueDO_SV1(DO_SV1_High)
+        setinputValue2DO_SV1(DO_SV1_Low)
 
 
-
-        setInputHighEVC_01_Conn_STT(HighEVC_01_Conn_STT)
-        setInputLowEVC_01_Conn_STT(LowEVC_01_Conn_STT)
-
-        setInputHighEVC_02_Conn_STT(HighEVC_02_Conn_STT)
-        setInputLowEVC_02_Conn_STT(LowEVC_02_Conn_STT)
+        setinputValueDO_BC_01(DO_BC_01_High)
+        setinputValue2DO_BC_01(DO_BC_01_Low)
 
 
-        setInputHighPLC_Conn_STT(HighPLC_Conn_STT)
-        setInputLowPLC_Conn_STT(LowPLC_Conn_STT)
 
-    }, [highEVC_01_PressureValue, lowEVC_01_PressureValue,
-         highEVC_02_PressureValue, lowEVC_02_PressureValue ,
-         highPT1PressureValue, lowPT1PressureValue, 
-         HighGD1, LowGD1,
-         HighGD2, LowGD2,
-         HighGD3, LowGD3 ,
+        setinputValueEVC_01_Conn_STT(EVC_01_Conn_STT_High)
+        setinputValue2EVC_01_Conn_STT(EVC_01_Conn_STT_Low)
 
-         HighEVC_01_Flow_at_Measurement_Condition, LowEVC_01_Flow_at_Measurement_Condition ,
-         HighEVC_01_Flow_at_Base_Condition, LowEVC_01_Flow_at_Base_Condition ,
-         HighEVC_01_Volume_at_Base_Condition, LowEVC_01_Volume_at_Base_Condition ,
-         HighEVC_01_Volume_at_Measurement_Condition, LowEVC_01_Volume_at_Measurement_Condition ,
-
-         HighEVC_02_Flow_at_Measurement_Condition, LowEVC_02_Flow_at_Measurement_Condition ,
-         HighEVC_02_Flow_at_Base_Condition, LowEVC_02_Flow_at_Base_Condition ,
-         HighEVC_02_Volume_at_Base_Condition, LowEVC_02_Volume_at_Base_Condition ,
-         HighEVC_02_Volume_at_Measurement_Condition, LowEVC_02_Volume_at_Measurement_Condition ,
-
-         HighEVC_01_Temperature, LowEVC_01_Temperature ,
-         HighEVC_02_Temperature, LowEVC_02_Temperature ,
-
-         HighEVC_01_Remain_Battery_Service_Life, LowEVC_01_Remain_Battery_Service_Life ,
-         HighEVC_02_Remain_Battery_Service_Life, LowEVC_02_Remain_Battery_Service_Life ,
-
-         HighEVC_01_Vm_of_Last_Day, LowEVC_01_Vm_of_Last_Day ,
-         HighEVC_02_Vm_of_Last_Day, LowEVC_02_Vm_of_Last_Day ,
-         HighEVC_01_Vb_of_Last_Day, LowEVC_01_Vb_of_Last_Day ,
-         HighEVC_02_Vb_of_Last_Day, LowEVC_02_Vb_of_Last_Day ,
-
-         HighEVC_01_Vm_of_Current_Day, LowEVC_01_Vm_of_Current_Day ,
-         HighEVC_02_Vm_of_Current_Day, LowEVC_02_Vm_of_Current_Day ,
-         HighEVC_01_Vb_of_Current_Day, LowEVC_01_Vb_of_Current_Day ,
-         HighEVC_02_Vb_of_Current_Day, LowEVC_02_Vb_of_Current_Day ,
-
-         HighDI_UPS_BATTERY, LowDI_UPS_BATTERY ,
-         HighDI_UPS_CHARGING, LowDI_UPS_CHARGING ,
-         HighDI_UPS_ALARM, LowDI_UPS_ALARM ,
-         HighUPS_Mode, LowUPS_Mode ,
-
-         HighDI_SELECT_SW, LowDI_SELECT_SW ,
-
-         HighEmergency_NO, LowEmergency_NO ,
-         HighEmergency_NC, LowEmergency_NC ,
-
-         HighDI_RESET, LowDI_RESET ,
-
-         HighDO_HR_01, LowDO_HR_01 ,
-         HighDI_MAP_1, LowDI_MAP_1 ,
-         
-         HighDI_ZSC_1, LowDI_ZSC_1 ,
-         HighDI_ZSO_1, LowDI_ZSO_1 ,
-         HighDO_SV1, LowDO_SV1 ,
-         HighDO_BC_01, LowDO_BC_01 ,
+        setinputValueEVC_02_Conn_STT(EVC_02_Conn_STT_High)
+        setinputValue2EVC_02_Conn_STT(EVC_02_Conn_STT_Low)
 
 
-         HighEVC_01_Conn_STT, LowEVC_01_Conn_STT ,
-         HighEVC_02_Conn_STT, LowEVC_02_Conn_STT ,
-         HighPLC_Conn_STT, LowPLC_Conn_STT ,
+        setinputValuePLC_Conn_STT(PLC_Conn_STT_High)
+        setinputValue2PLC_Conn_STT(PLC_Conn_STT_Low)
+
+    }, [EVC_01_Pressure_High, EVC_01_Pressure_Low,
+        EVC_02_Pressure_High, EVC_02_Pressure_Low ,
+         PT1_High, PT1_Low, 
+         GD1_High, GD1_Low,
+         GD2_High, GD2_Low,
+         GD3_High, GD3_Low ,
+         EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low ,
+         EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low ,
+         EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low ,
+         EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low ,
+
+         EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low ,
+         EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low ,
+         EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low ,
+         EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low ,
+         EVC_01_Temperature_High, EVC_01_Temperature_Low ,
+         EVC_02_Temperature_High, EVC_02_Temperature_Low ,
+         EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low ,
+         EVC_02_Remain_Battery_Service_Life_High, EVC_02_Remain_Battery_Service_Life_Low ,
+         EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low ,
+         EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day_Low ,
+
+         EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low ,
+         EVC_02_Vb_of_Last_Day_High, EVC_02_Vb_of_Last_Day_Low ,
+         EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low ,
+         EVC_02_Vm_of_Current_Day_High, EVC_02_Vm_of_Current_Day_Low ,
+         EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low ,
+         EVC_02_Vb_of_Current_Day_High, EVC_02_Vb_of_Current_Day_Low ,
+         DI_UPS_BATTERY_High, DI_UPS_BATTERY_Low ,
+         DI_UPS_CHARGING_High, DI_UPS_CHARGING_Low ,
+         DI_UPS_ALARM_High, DI_UPS_ALARM_Low ,
+         UPS_Mode_High, UPS_Mode_Low ,
+
+         DI_SELECT_SW_High, DI_SELECT_SW_Low ,
+         Emergency_NO_High, Emergency_NO_Low ,
+         Emergency_NC_High, Emergency_NC_Low ,
+         DI_RESET_High, DI_RESET_Low ,
+         DO_HR_01_High, DO_HR_01_Low ,
+         DI_MAP_1_High, DI_MAP_1_Low ,
+         DI_ZSC_1_High, DI_ZSC_1_Low ,
+         DI_ZSO_1_High, DI_ZSO_1_Low ,
+         DO_SV1_High, DO_SV1_Low ,
+         DO_BC_01_High, DO_BC_01_Low ,
+
+
+         EVC_01_Conn_STT_High, EVC_01_Conn_STT_Low ,
+         EVC_02_Conn_STT_High, EVC_02_Conn_STT_Low ,
+         PLC_Conn_STT_High, PLC_Conn_STT_Low ,
 
          getWayPhoneOTSUKA
          
@@ -4271,69 +3177,54 @@ const handleCheckboxChangePLC = (e:any) => {
                 { 
 
                     EVC_01_Pressure_High: inputValueEVC_01_Pressure, EVC_01_Pressure_Low:inputValue2EVC_01_Pressure,
-                    EVC_02_Pressure_High: inputValueEVC_02_PressureHigh, EVC_02_Pressure_Low:inputValueEVC_02_PressureLow,
-                    PT1_High:inputValuePT1High, PT1_Low:inputValuePT1Low,
-                
-                    GD1_High:inputHighGD1, GD1_Low:inputLowGD1,
-                    GD2_High:inputHighGD2, GD2_Low:inputLowGD2,
-                    GD3_High:inputHighGD3, GD3_Low:inputLowGD3,
+                    EVC_02_Pressure_High: inputValueEVC_02_Pressure, EVC_02_Pressure_Low:inputValue2EVC_02_Pressure,
+                    PT1_High:inputValuePT1, PT1_Low:inputValue2PT1,
+                    GD1_High:inputValueGD1, GD1_Low:inputValue2GD1,
+                    GD2_High:inputValueGD2, GD2_Low:inputValue2GD2,
+                    GD3_High:inputValueGD3, GD3_Low:inputValue2GD3,
+                    EVC_01_Flow_at_Measurement_Condition_High:inputValueEVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_Low:inputValue2EVC_01_Flow_at_Measurement_Condition,
+                    EVC_01_Flow_at_Base_Condition_High:inputValueEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low:inputValue2EVC_01_Flow_at_Base_Condition,
+                    EVC_01_Volume_at_Base_Condition_High:inputValueEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low:inputValue2EVC_01_Volume_at_Base_Condition,
+                    EVC_01_Volume_at_Measurement_Condition_High:inputValueEVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_Low:inputValue2EVC_01_Volume_at_Measurement_Condition,
 
-                    EVC_01_Flow_at_Measurement_Condition_High:inputHighEVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_Low:inputLowEVC_01_Flow_at_Measurement_Condition,
-                    EVC_01_Flow_at_Base_Condition_High:inputHighEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low:inputLowEVC_01_Flow_at_Base_Condition,
-                    EVC_01_Volume_at_Base_Condition_High:inputHighEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low:inputLowEVC_01_Volume_at_Base_Condition,
-                    EVC_01_Volume_at_Measurement_Condition_High:inputHighEVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_Low:inputLowEVC_01_Volume_at_Measurement_Condition,
+                    EVC_02_Flow_at_Measurement_Condition_High:inputValueEVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_Low:inputValue2EVC_02_Flow_at_Measurement_Condition,
+                    EVC_02_Flow_at_Base_Condition_High:inputValueEVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_Low:inputValue2EVC_02_Flow_at_Base_Condition,
+                    EVC_02_Volume_at_Base_Condition_High:inputValueEVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_Low:inputValue2EVC_02_Volume_at_Base_Condition,
+                    EVC_02_Volume_at_Measurement_Condition_High:inputValueEVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_Low:inputValue2EVC_02_Volume_at_Measurement_Condition,
+                    EVC_01_Temperature_High:inputValueEVC_01_Temperature, EVC_01_Temperature_Low:inputValue2EVC_01_Temperature,
+                    EVC_02_Temperature_High:inputValueEVC_02_Temperature, EVC_02_Temperature_Low:inputValue2EVC_02_Temperature,
+                    EVC_01_Remain_Battery_Service_Life_High:inputValueEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low:inputValue2EVC_01_Remain_Battery_Service_Life,
+                    EVC_02_Remain_Battery_Service_Life_High:inputValueEVC_02_Remain_Battery_Service_Life, EVC_02_Remain_Battery_Service_Life_Low:inputValue2EVC_02_Remain_Battery_Service_Life,
+                    EVC_01_Vm_of_Last_Day_High:inputValueEVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low:inputValue2EVC_01_Vm_of_Last_Day,
+                    EVC_02_Vm_of_Last_Day_High:inputValueEVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_Low:inputValue2EVC_02_Vm_of_Last_Day,
 
-                    EVC_02_Flow_at_Measurement_Condition_High:inputHighEVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_Low:inputLowEVC_02_Flow_at_Measurement_Condition,
-                    EVC_02_Flow_at_Base_Condition_High:inputHighEVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_Low:inputLowEVC_02_Flow_at_Base_Condition,
-                    EVC_02_Volume_at_Base_Condition_High:inputHighEVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_Low:inputLowEVC_02_Volume_at_Base_Condition,
-                    EVC_02_Volume_at_Measurement_Condition_High:inputHighEVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_Low:inputLowEVC_02_Volume_at_Measurement_Condition,
+                    EVC_01_Vb_of_Last_Day_High:inputValueEVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low:inputValue2EVC_01_Vb_of_Last_Day,
+                    EVC_02_Vb_of_Last_Day_High:inputValueEVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_Low:inputValue2EVC_02_Vb_of_Last_Day,
+                    EVC_01_Vb_of_Current_Day_High:inputValueEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low:inputValue2EVC_01_Vb_of_Current_Day,
+                    EVC_02_Vb_of_Current_Day_High:inputValueEVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day_Low:inputValue2EVC_02_Vb_of_Current_Day,
+                    EVC_01_Vm_of_Current_Day_High:inputValueEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low:inputValue2EVC_01_Vm_of_Current_Day,
+                    EVC_02_Vm_of_Current_Day_High:inputValueEVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day_Low:inputValue2EVC_02_Vm_of_Current_Day,
+                    DI_UPS_BATTERY_High:inputValueDI_UPS_BATTERY, DI_UPS_BATTERY_Low:inputValue2DI_UPS_BATTERY,
+                    DI_UPS_CHARGING_High:inputValueDI_UPS_CHARGING, DI_UPS_CHARGING_Low:inputValue2DI_UPS_CHARGING,
+                    DI_UPS_ALARM_High:inputValueDI_UPS_ALARM, DI_UPS_ALARM_Low:inputValue2DI_UPS_ALARM,
+                    UPS_Mode_High:inputValueUPS_Mode, UPS_Mode_Low:inputValue2UPS_Mode,
 
-                    EVC_01_Temperature_High:inputHighEVC_01_Temperature, EVC_01_Temperature_Low:inputLowEVC_01_Temperature,
-                    EVC_02_Temperature_High:inputHighEVC_02_Temperature, EVC_02_Temperature_Low:inputLowEVC_02_Temperature,
-
-                    EVC_01_Remain_Battery_Service_Life_High:inputHighEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low:inputLowEVC_01_Remain_Battery_Service_Life,
-                    EVC_02_Remain_Battery_Service_Life_High:inputHighEVC_02_Remain_Battery_Service_Life, EVC_02_Remain_Battery_Service_Life_Low:inputLowEVC_02_Remain_Battery_Service_Life,
-
-                    EVC_01_Vm_of_Last_Day_High:inputHighEVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low:inputLowEVC_01_Vm_of_Last_Day,
-                    EVC_02_Vm_of_Last_Day_High:inputHighEVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_Low:inputLowEVC_02_Vm_of_Last_Day,
-
-                    EVC_01_Vb_of_Last_Day_High:inputHighEVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low:inputLowEVC_01_Vb_of_Last_Day,
-                    EVC_02_Vb_of_Last_Day_High:inputHighEVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_Low:inputLowEVC_02_Vb_of_Last_Day,
-
-                    EVC_01_Vb_of_Current_Day_High:inputHighEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low:inputLowEVC_01_Vb_of_Current_Day,
-                    EVC_02_Vb_of_Current_Day_High:inputHighEVC_02_Vb_of_Current_Day, EVC_02_Vb_of_Current_Day_Low:inputLowEVC_02_Vb_of_Current_Day,
-
-                    EVC_01_Vm_of_Current_Day_High:inputHighEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low:inputLowEVC_01_Vm_of_Current_Day,
-                    EVC_02_Vm_of_Current_Day_High:inputHighEVC_02_Vm_of_Current_Day, EVC_02_Vm_of_Current_Day_Low:inputLowEVC_02_Vm_of_Current_Day,
-
-                    DI_UPS_BATTERY_High:inputHighDI_UPS_BATTERY, DI_UPS_BATTERY_Low:inputLowDI_UPS_BATTERY,
-                    DI_UPS_CHARGING_High:inputHighDI_UPS_CHARGING, DI_UPS_CHARGING_Low:inputLowDI_UPS_CHARGING,
-
-                    DI_UPS_ALARM_High:inputHighDI_UPS_ALARM, DI_UPS_ALARM_Low:inputLowDI_UPS_ALARM,
-                    UPS_Mode_High:inputHighUPS_Mode, UPS_Mode_Low:inputLowUPS_Mode,
-
-                    DI_SELECT_SW_High:inputHighDI_SELECT_SW, DI_SELECT_SW_Low:inputLowDI_SELECT_SW,
-
-                    Emergency_NO_High:inputHighEmergency_NO, Emergency_NO_Low:inputLowEmergency_NO,
-                    Emergency_NC_High:inputHighEmergency_NC, Emergency_NC_Low:inputLowEmergency_NC,
-
-                    DI_RESET_High:inputHighDI_RESET, DI_RESET_Low:inputLowDI_RESET,
-
-                    DO_HR_01_High:inputHighDO_HR_01, DO_HR_01_Low:inputLowDO_HR_01,
-
-                    DI_MAP_1_High:inputHighDI_MAP_1, DI_MAP_1_Low:inputLowDI_MAP_1,
-
-                   DI_ZSC_1_High:inputHighDI_ZSC_1, DI_ZSC_1_Low:inputLowDI_ZSC_1,
-                   DI_ZSO_1_High:inputHighDI_ZSO_1, DI_ZSO_1_Low:inputLowDI_ZSO_1,
-
-                    DO_SV_0_01_High:inputHighDO_SV1, DO_SV_0_01_Low:inputLowDO_SV1,
-                    DO_BC_01_High:inputHighDO_BC_01, DO_BC_01_Low:inputLowDO_BC_01,
+                    DI_SELECT_SW_High:inputValueDI_SELECT_SW, DI_SELECT_SW_Low:inputValue2DI_SELECT_SW,
+                    Emergency_NO_High:inputValueEmergency_NO, Emergency_NO_Low:inputValue2Emergency_NO,
+                    Emergency_NC_High:inputValueEmergency_NC, Emergency_NC_Low:inputValue2Emergency_NC,
+                    DI_RESET_High:inputValueDI_RESET, DI_RESET_Low:inputValue2DI_RESET,
+                    DO_HR_01_High:inputValueDO_HR_01, DO_HR_01_Low:inputValue2DO_HR_01,
+                    DI_MAP_1_High:inputValueDI_MAP_1, DI_MAP_1_Low:inputValue2DI_MAP_1,
+                   DI_ZSC_1_High:inputValueDI_ZSC_1, DI_ZSC_1_Low:inputValue2DI_ZSC_1,
+                   DI_ZSO_1_High:inputValueDI_ZSO_1, DI_ZSO_1_Low:inputValue2DI_ZSO_1,
+                    DO_SV_0_01_High:inputValueDO_SV1, DO_SV_0_01_Low:inputValue2DO_SV1,
+                    DO_BC_01_High:inputValueDO_BC_01, DO_BC_01_Low:inputValue2DO_BC_01,
 
 
-                    EVC_01_Conn_STT_High:inputHighEVC_01_Conn_STT, EVC_01_Conn_STT_Low:inputLowEVC_01_Conn_STT,
+                    EVC_01_Conn_STT_High:inputValueEVC_01_Conn_STT, EVC_01_Conn_STT_Low:inputValue2EVC_01_Conn_STT,
 
-                   EVC_02_Conn_STT_High:inputHighEVC_02_Conn_STT,EVC_02_Conn_STT_Low:inputLowEVC_02_Conn_STT,
-                    PLC_Conn_STT_High:inputHighPLC_Conn_STT, PLC_Conn_STT_Low:inputLowPLC_Conn_STT,
+                   EVC_02_Conn_STT_High:inputValueEVC_02_Conn_STT,EVC_02_Conn_STT_Low:inputValue2EVC_02_Conn_STT,
+                    PLC_Conn_STT_High:inputValuePLC_Conn_STT, PLC_Conn_STT_Low:inputValue2PLC_Conn_STT,
 
 
             IOT_Gateway_Phone:inputGetwayPhone
@@ -4341,145 +3232,101 @@ const handleCheckboxChangePLC = (e:any) => {
                 }
             );
 
-            setHighEVC_01_PressureValue(inputValueEVC_01_Pressure);
-            setLowEVC_01_PressureValue(inputValue2EVC_01_Pressure);
+            setEVC_01_Pressure_High(inputValueEVC_01_Pressure);
+            setEVC_01_Pressure_Low(inputValue2EVC_01_Pressure);
+            setInputValueEVC_02_Pressure(inputValueEVC_02_Pressure);
+            setInputValue2EVC_02_Pressure(inputValue2EVC_02_Pressure);
+            setPT1_High(inputValuePT1);
+            setPT1_Low(inputValue2PT1);
+            setGD1_High(inputValueGD1);
+            setGD1_Low(inputValue2GD1);
+            setGD2_High(inputValueGD2);
+            setGD2_Low(inputValue2GD2);
+            setGD3_High(inputValueGD3);
+            setGD3_Low(inputValue2GD3);
+            setEVC_01_Flow_at_Measurement_Condition_High(inputValueEVC_01_Flow_at_Measurement_Condition);
+            setEVC_01_Flow_at_Measurement_Condition_Low(inputValue2EVC_01_Flow_at_Measurement_Condition);
+            setEVC_01_Flow_at_Base_Condition_High(inputValueEVC_01_Flow_at_Base_Condition);
+            setEVC_01_Flow_at_Base_Condition_Low(inputValue2EVC_01_Flow_at_Base_Condition);
+            setEVC_01_Volume_at_Base_Condition_High(inputValueEVC_01_Volume_at_Base_Condition);
+            setEVC_01_Volume_at_Base_Condition_Low(inputValue2EVC_01_Volume_at_Base_Condition);
+            setEVC_01_Volume_at_Measurement_Condition_High(inputValueEVC_01_Volume_at_Measurement_Condition);
+            setEVC_01_Volume_at_Measurement_Condition_Low(inputValue2EVC_01_Volume_at_Measurement_Condition);
 
-            setHighEVC_02_PressureValue(inputValueEVC_02_PressureHigh);
-            setLowEVC_02_PressureValue(inputValueEVC_02_PressureLow);
+            setEVC_02_Flow_at_Measurement_Condition_High(inputValueEVC_02_Flow_at_Measurement_Condition);
+            setEVC_02_Flow_at_Measurement_Condition_Low(inputValue2EVC_02_Flow_at_Measurement_Condition);
+            setEVC_02_Flow_at_Base_Condition_High(inputValueEVC_02_Flow_at_Base_Condition);
+            setEVC_02_Flow_at_Base_Condition_Low(inputValue2EVC_02_Flow_at_Base_Condition);
+            setEVC_02_Volume_at_Base_Condition_High(inputValueEVC_02_Volume_at_Base_Condition);
+            setEVC_02_Volume_at_Base_Condition_Low(inputValue2EVC_02_Volume_at_Base_Condition);
+            setEVC_02_Volume_at_Measurement_Condition_High(inputValueEVC_02_Volume_at_Measurement_Condition);
+            setEVC_02_Volume_at_Measurement_Condition_Low(inputValue2EVC_02_Volume_at_Measurement_Condition);
+            setEVC_01_Temperature_High(inputValueEVC_01_Temperature);
+            setEVC_01_Temperature_Low(inputValue2EVC_01_Temperature);
+            setEVC_02_Temperature_High(inputValueEVC_02_Temperature);
+            setEVC_02_Temperature_Low(inputValue2EVC_02_Temperature);
+            setEVC_01_Remain_Battery_Service_Life_High(inputValueEVC_01_Remain_Battery_Service_Life);
+            setEVC_01_Remain_Battery_Service_Life_Low(inputValue2EVC_01_Remain_Battery_Service_Life);
+            setEVC_02_Remain_Battery_Service_Life_High(inputValueEVC_02_Remain_Battery_Service_Life);
+            setEVC_02_Remain_Battery_Service_Life_Low(inputValue2EVC_02_Remain_Battery_Service_Life);
+            setEVC_01_Vm_of_Last_Day_High(inputValueEVC_01_Vm_of_Last_Day);
+            setEVC_01_Vm_of_Last_Day_Low(inputValue2EVC_01_Vm_of_Last_Day);
 
-            setHighPT1PressureValue(inputValuePT1High);
-            setLowPT1PressureValue(inputValuePT1Low);
+            setEVC_02_Vm_of_Last_Day_High(inputValueEVC_02_Vm_of_Last_Day);
+            setEVC_02_Vm_of_Last_Day_Low(inputValue2EVC_02_Vm_of_Last_Day);
+            setEVC_01_Vb_of_Last_Day_High(inputValueEVC_01_Vb_of_Last_Day);
+            setEVC_01_Vb_of_Last_Day_Low(inputValue2EVC_01_Vb_of_Last_Day);
+            setEVC_02_Vb_of_Last_Day_High(inputValueEVC_02_Vb_of_Last_Day);
+            setEVC_02_Vb_of_Last_Day_Low(inputValue2EVC_02_Vb_of_Last_Day);
+            setEVC_01_Vb_of_Current_Day_High(inputValueEVC_01_Vb_of_Current_Day);
+            setEVC_01_Vb_of_Current_Day_Low(inputValue2EVC_01_Vb_of_Current_Day);
+            setEVC_02_Vb_of_Current_Day_High(inputValueEVC_02_Vb_of_Current_Day);
+            setEVC_02_Vb_of_Current_Day_Low(inputValue2EVC_02_Vb_of_Current_Day);
+            setEVC_01_Vm_of_Current_Day_High(inputValueEVC_01_Vm_of_Current_Day);
+            setEVC_01_Vm_of_Current_Day_Low(inputValue2EVC_01_Vm_of_Current_Day);
+            setEVC_02_Vm_of_Current_Day_High(inputValueEVC_02_Vm_of_Current_Day);
+            setEVC_02_Vm_of_Current_Day_Low(inputValue2EVC_02_Vm_of_Current_Day);
+            setDI_UPS_BATTERY_High(inputValueDI_UPS_BATTERY);
+            setDI_UPS_BATTERY_Low(inputValue2DI_UPS_BATTERY);
+            setDI_UPS_CHARGING_High(inputValueDI_UPS_CHARGING);
+            setDI_UPS_CHARGING_Low(inputValue2DI_UPS_CHARGING);
+            setDI_UPS_ALARM_High(inputValueDI_UPS_ALARM);
+            setDI_UPS_ALARM_Low(inputValue2DI_UPS_ALARM);
 
-
-            setHighGD1(inputHighGD1);
-            setLowGD1(inputLowGD1);
-
-            setHighGD2(inputHighGD2);
-            setLowGD2(inputLowGD2);
-
-            setHighGD3(inputHighGD3);
-            setLowGD3(inputLowGD3);
-
-
-            setHighEVC_01_Flow_at_Measurement_Condition(inputHighEVC_01_Flow_at_Measurement_Condition);
-            setLowEVC_01_Flow_at_Measurement_Condition(inputLowEVC_01_Flow_at_Measurement_Condition);
-
-            setHighEVC_01_Flow_at_Base_Condition(inputHighEVC_01_Flow_at_Base_Condition);
-            setLowEVC_01_Flow_at_Base_Condition(inputLowEVC_01_Flow_at_Base_Condition);
-
-            setHighEVC_01_Volume_at_Base_Condition(inputHighEVC_01_Volume_at_Base_Condition);
-            setLowEVC_01_Volume_at_Base_Condition(inputLowEVC_01_Volume_at_Base_Condition);
-
-            setHighEVC_01_Volume_at_Measurement_Condition(inputHighEVC_01_Volume_at_Measurement_Condition);
-            setLowEVC_01_Volume_at_Measurement_Condition(inputLowEVC_01_Volume_at_Measurement_Condition);
-
-            setHighEVC_02_Flow_at_Measurement_Condition(inputHighEVC_02_Flow_at_Measurement_Condition);
-            setLowEVC_02_Flow_at_Measurement_Condition(inputLowEVC_02_Flow_at_Measurement_Condition);
-
-            setHighEVC_02_Flow_at_Base_Condition(inputHighEVC_02_Flow_at_Base_Condition);
-            setLowEVC_02_Flow_at_Base_Condition(inputLowEVC_02_Flow_at_Base_Condition);
-
-            setHighEVC_02_Volume_at_Base_Condition(inputHighEVC_02_Volume_at_Base_Condition);
-            setLowEVC_02_Volume_at_Base_Condition(inputLowEVC_02_Volume_at_Base_Condition);
-
-            setHighEVC_02_Volume_at_Measurement_Condition(inputHighEVC_02_Volume_at_Measurement_Condition);
-            setLowEVC_02_Volume_at_Measurement_Condition(inputLowEVC_02_Volume_at_Measurement_Condition);
-
-            setHighEVC_01_Temperature(inputHighEVC_01_Temperature);
-            setLowEVC_01_Temperature(inputLowEVC_01_Temperature);
-
-
-            setHighEVC_02_Temperature(inputHighEVC_02_Temperature);
-            setLowEVC_02_Temperature(inputLowEVC_02_Temperature);
-
-
-            setHighEVC_01_Remain_Battery_Service_Life(inputHighEVC_01_Remain_Battery_Service_Life);
-            setLowEVC_01_Remain_Battery_Service_Life(inputLowEVC_01_Remain_Battery_Service_Life);
-
-            setHighEVC_02_Remain_Battery_Service_Life(inputHighEVC_02_Remain_Battery_Service_Life);
-            setLowEVC_02_Remain_Battery_Service_Life(inputLowEVC_02_Remain_Battery_Service_Life);
-
-
-            setHighEVC_01_Vm_of_Last_Day(inputHighEVC_01_Vm_of_Last_Day);
-            setLowEVC_01_Vm_of_Last_Day(inputLowEVC_01_Vm_of_Last_Day);
-
-            setHighEVC_02_Vm_of_Last_Day(inputHighEVC_02_Vm_of_Last_Day);
-            setLowEVC_02_Vm_of_Last_Day(inputLowEVC_02_Vm_of_Last_Day);
-
-
-            setHighEVC_01_Vb_of_Last_Day(inputHighEVC_01_Vb_of_Last_Day);
-            setLowEVC_01_Vb_of_Last_Day(inputLowEVC_01_Vb_of_Last_Day);
-
-            setHighEVC_02_Vb_of_Last_Day(inputHighEVC_02_Vb_of_Last_Day);
-            setLowEVC_02_Vb_of_Last_Day(inputLowEVC_02_Vb_of_Last_Day);
-
-            setHighEVC_01_Vb_of_Current_Day(inputHighEVC_01_Vb_of_Current_Day);
-            setLowEVC_01_Vb_of_Current_Day(inputLowEVC_01_Vb_of_Current_Day);
-
-            setHighEVC_02_Vb_of_Current_Day(inputHighEVC_02_Vb_of_Current_Day);
-            setLowEVC_02_Vb_of_Current_Day(inputLowEVC_02_Vb_of_Current_Day);
-
-            setHighEVC_01_Vm_of_Current_Day(inputHighEVC_01_Vm_of_Current_Day);
-            setLowEVC_01_Vm_of_Current_Day(inputLowEVC_01_Vm_of_Current_Day);
-
-            setHighEVC_02_Vm_of_Current_Day(inputHighEVC_02_Vm_of_Current_Day);
-            setLowEVC_02_Vm_of_Current_Day(inputLowEVC_02_Vm_of_Current_Day);
-
-            setHighDI_UPS_BATTERY(inputHighDI_UPS_BATTERY);
-            setLowDI_UPS_BATTERY(inputLowDI_UPS_BATTERY);
-
-
-            setHighDI_UPS_CHARGING(inputHighDI_UPS_CHARGING);
-            setLowDI_UPS_CHARGING(inputLowDI_UPS_CHARGING);
-
-            setHighDI_UPS_ALARM(inputHighDI_UPS_ALARM);
-            setLowDI_UPS_ALARM(inputLowDI_UPS_ALARM);
-
-            setHighUPS_Mode(inputHighUPS_Mode);
-            setLowUPS_Mode(inputLowUPS_Mode);
-
-            setHighDI_SELECT_SW(inputHighDI_SELECT_SW);
-            setLowDI_SELECT_SW(inputLowDI_SELECT_SW);
-
-            setHighEmergency_NC(inputHighEmergency_NC);
-            setLowEmergency_NC(inputLowEmergency_NC);
-
-            setHighEmergency_NO(inputHighEmergency_NO);
-            setLowEmergency_NO(inputLowEmergency_NO);
-
-            setHighDI_RESET(inputHighDI_RESET);
-            setLowDI_RESET(inputLowDI_RESET);
-
-            setHighDO_HR_01(inputHighDO_HR_01);
-            setLowDO_HR_01(inputLowDO_HR_01);
-
-            setHighDI_MAP_1(inputHighDI_MAP_1);
-            setLowDI_MAP_1(inputLowDI_MAP_1);
-
-            setHighDI_ZSC_1(inputHighDI_ZSC_1);
-            setLowDI_ZSC_1(inputLowDI_ZSC_1);
-
-            setHighDI_ZSO_1(inputHighDI_ZSO_1);
-            setLowDI_ZSO_1(inputLowDI_ZSO_1);
-
-
-            setHighDO_SV1(inputHighDO_SV1);
-            setLowDO_SV1(inputLowDO_SV1);
-
-            setHighDO_BC_01(inputHighDO_BC_01);
-            setLowDO_BC_01(inputLowDO_BC_01);
+            setUPS_Mode_High(inputValueUPS_Mode);
+            setUPS_Mode_Low(inputValue2UPS_Mode);
+            setDI_SELECT_SW_High(inputValueDI_SELECT_SW);
+            setDI_SELECT_SW_Low(inputValue2DI_SELECT_SW);
+            setEmergency_NC_High(inputValueEmergency_NC);
+            setEmergency_NC_Low(inputValue2Emergency_NC);
+            setEmergency_NO_High(inputValueEmergency_NO);
+            setEmergency_NO_Low(inputValue2Emergency_NO);
+            setDI_RESET_High(inputValueDI_RESET);
+            setDI_RESET_Low(inputValue2DI_RESET);
+            setDO_HR_01_High(inputValueDO_HR_01);
+            setDO_HR_01_Low(inputValue2DO_HR_01);
+            setDI_MAP_1_High(inputValueDI_MAP_1);
+            setDI_MAP_1_Low(inputValue2DI_MAP_1);
+            setDI_ZSC_1_High(inputValueDI_ZSC_1);
+            setDI_ZSC_1_Low(inputValue2DI_ZSC_1);
+            setDI_ZSO_1_High(inputValueDI_ZSO_1);
+            setDI_ZSO_1_Low(inputValue2DI_ZSO_1);
+            setDO_SV1_High(inputValueDO_SV1);
+            setDO_SV1_Low(inputValue2DO_SV1);
+            setDO_BC_01_High(inputValueDO_BC_01);
+            setDO_BC_01_Low(inputValue2DO_BC_01);
 
 
 
-            setHighEVC_02_Conn_STT(inputHighEVC_02_Conn_STT);
-            setLowEVC_02_Conn_STT(inputLowEVC_02_Conn_STT);
+            setEVC_02_Conn_STT_High(inputValueEVC_02_Conn_STT);
+            setEVC_02_Conn_STT_Low(inputValue2EVC_02_Conn_STT);
 
 
-            setHighEVC_01_Conn_STT(inputHighEVC_01_Conn_STT);
-            setLowEVC_01_Conn_STT(inputLowEVC_01_Conn_STT);
+            setEVC_01_Conn_STT_High(inputValueEVC_01_Conn_STT);
+            setEVC_01_Conn_STT_Low(inputValue2EVC_01_Conn_STT);
 
-            setHighPLC_Conn_STT(inputHighPLC_Conn_STT);
-            setLowPLC_Conn_STT(inputLowPLC_Conn_STT);
+            setPLC_Conn_STT_High(inputValuePLC_Conn_STT);
+            setPLC_Conn_STT_Low(inputValue2PLC_Conn_STT);
 
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
@@ -4508,7 +3355,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
       const combineCss = {
             CSSEVC_01_Pressure : {
-                color:exceedThreshold && !maintainEVC_01_Pressure
+                color:exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure
                 ? "#ff5656"
                 : maintainEVC_01_Pressure
                 ? "orange"
@@ -4518,7 +3365,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSSEVC_02_Pressure : {
-                color:exceedThreshold2 && !maintainEVC_02_Pressure
+                color:exceedThresholdEVC_02_Pressure && !maintainEVC_02_Pressure
                 ? "#ff5656"
                 : maintainEVC_02_Pressure
                 ? "orange"
@@ -4528,7 +3375,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSSPT1 : {
-                color:exceedThreshold3 && !maintainPT1
+                color:exceedThresholdPT1 && !maintainPT1
                 ? "#ff5656"
                 : maintainPT1
                 ? "orange"
@@ -4539,7 +3386,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSSGD1 : {
-                color:AlarmGD1 && !maintainGD1
+                color:exceedThresholdGD1 && !maintainGD1
                 ? "#ff5656"
                 : maintainGD1
                 ? "orange"
@@ -4549,7 +3396,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSSGD2 : {
-                color:AlarmGD2 && !maintainGD2
+                color:exceedThresholdGD2 && !maintainGD2
                 ? "#ff5656"
                 : maintainGD2
                 ? "orange"
@@ -4559,7 +3406,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSSgd3 : {
-                color:AlarmGD3 && !maintainGD3
+                color:exceedThresholdGD3 && !maintainGD3
                 ? "#ff5656"
                 : maintainGD3
                 ? "orange"
@@ -4569,7 +3416,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_01_Flow_at_Measurement_Condition : {
-                color:AlarmEVC_01_Flow_at_Measurement_Condition && !maintainEVC_01_Flow_at_Measurement_Condition
+                color:exceedThresholdEVC_01_Flow_at_Measurement_Condition && !maintainEVC_01_Flow_at_Measurement_Condition
                 ? "#ff5656"
                 : maintainEVC_01_Flow_at_Measurement_Condition
                 ? "orange"
@@ -4579,7 +3426,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_01_Flow_at_Base_Condition : {
-                color:AlarmEVC_01_Flow_at_Base_Condition&& !maintainEVC_01_Flow_at_Base_Condition
+                color:exceedThresholdEVC_01_Flow_at_Base_Condition&& !maintainEVC_01_Flow_at_Base_Condition
                 ? "#ff5656"
                 : maintainEVC_01_Flow_at_Base_Condition
                 ? "orange"
@@ -4589,7 +3436,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
              CSS_EVC_01_Volume_at_Base_Condition : {
-                color:AlarmEVC_01_Volume_at_Base_Condition && !maintainEVC_01_Volume_at_Base_Condition
+                color:exceedThresholdEVC_01_Volume_at_Base_Condition && !maintainEVC_01_Volume_at_Base_Condition
                 ? "#ff5656"
                 : maintainEVC_01_Volume_at_Base_Condition
                 ? "orange"
@@ -4599,7 +3446,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_01_Volume_at_Measurement_Condition : {
-                color:AlarmEVC_01_Volume_at_Measurement_Condition && !maintainEVC_01_Volume_at_Measurement_Condition
+                color:exceedThresholdEVC_01_Volume_at_Measurement_Condition && !maintainEVC_01_Volume_at_Measurement_Condition
                 ? "#ff5656"
                 : maintainEVC_01_Volume_at_Measurement_Condition
                 ? "orange"
@@ -4609,7 +3456,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Flow_at_Measurement_Condition : {
-                color:AlarmEVC_02_Flow_at_Measurement_Condition && !maintainEVC_02_Flow_at_Measurement_Condition
+                color:exceedThresholdEVC_02_Flow_at_Measurement_Condition && !maintainEVC_02_Flow_at_Measurement_Condition
                 ? "#ff5656"
                 : maintainEVC_02_Flow_at_Measurement_Condition
                 ? "orange"
@@ -4619,7 +3466,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Flow_at_Base_Condition : {
-                color:AlarmEVC_02_Flow_at_Base_Condition && !maintainEVC_02_Flow_at_Base_Condition
+                color:exceedThresholdEVC_02_Flow_at_Base_Condition && !maintainEVC_02_Flow_at_Base_Condition
                 ? "#ff5656"
                 : maintainEVC_02_Flow_at_Base_Condition
                 ? "orange"
@@ -4629,7 +3476,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
              CSS_EVC_02_Volume_at_Base_Condition : {
-                color:AlarmEVC_02_Volume_at_Base_Condition&& !maintainEVC_02_Volume_at_Base_Condition
+                color:exceedThresholdEVC_02_Volume_at_Base_Condition&& !maintainEVC_02_Volume_at_Base_Condition
                 ? "#ff5656"
                 : maintainEVC_02_Volume_at_Base_Condition
                 ? "orange"
@@ -4639,7 +3486,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Volume_at_Measurement_Condition : {
-                color:AlarmEVC_02_Volume_at_Measurement_Condition && !maintainEVC_02_Volume_at_Measurement_Condition
+                color:exceedThresholdEVC_02_Volume_at_Measurement_Condition && !maintainEVC_02_Volume_at_Measurement_Condition
                 ? "#ff5656"
                 : maintainEVC_02_Volume_at_Measurement_Condition
                 ? "orange"
@@ -4650,7 +3497,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_Temperature : {
-                color:AlarmEVC_01_Temperature && !maintainEVC_01_Temperature
+                color:exceedThresholdEVC_01_Temperature && !maintainEVC_01_Temperature
                 ? "#ff5656"
                 : maintainEVC_01_Temperature
                 ? "orange"
@@ -4662,7 +3509,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_EVC_02_Temperature : {
-                color:AlarmEVC_02_Temperature && !maintainEVC_02_Temperature
+                color:exceedThresholdEVC_02_Temperature && !maintainEVC_02_Temperature
                 ? "#ff5656"
                 : maintainEVC_02_Temperature
                 ? "orange"
@@ -4674,7 +3521,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_Rebattery : {
-                color:AlarmEVC_01_Remain_Battery_Service_Life && !maintainEVC_01_Remain_Battery_Service_Life
+                color:exceedThresholdEVC_01_Remain_Battery_Service_Life && !maintainEVC_01_Remain_Battery_Service_Life
                 ? "#ff5656"
                 : maintainEVC_01_Remain_Battery_Service_Life
                 ? "orange"
@@ -4684,7 +3531,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Remain_Battery_Service_Life : {
-                color:AlarmEVC_02_Remain_Battery_Service_Life && !maintainEVC_02_Remain_Battery_Service_Life
+                color:exceedThresholdEVC_02_Remain_Battery_Service_Life && !maintainEVC_02_Remain_Battery_Service_Life
                 ? "#ff5656"
                 : maintainEVC_02_Remain_Battery_Service_Life
                 ? "orange"
@@ -4696,7 +3543,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_EVC_01_Vm_of_Last_Day : {
-                color:AlarmEVC_01_Vm_of_Last_Day && !maintainEVC_01_Vm_of_Last_Day
+                color:exceedThresholdEVC_01_Vm_of_Last_Day && !maintainEVC_01_Vm_of_Last_Day
                 ? "#ff5656"
                 : maintainEVC_01_Vm_of_Last_Day
                 ? "orange"
@@ -4706,7 +3553,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Vm_of_Last_Day : {
-                color:AlarmEVC_02_Vm_of_Last_Day && !maintainEVC_02_Vm_of_Last_Day
+                color:exceedThresholdEVC_02_Vm_of_Last_Day && !maintainEVC_02_Vm_of_Last_Day
                 ? "#ff5656"
                 : maintainEVC_02_Vm_of_Last_Day
                 ? "orange"
@@ -4718,7 +3565,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_EVC_01_Vb_of_Last_Day : {
-                color:AlarmEVC_01_Vb_of_Last_Day && !maintainEVC_01_Vb_of_Last_Day
+                color:exceedThresholdEVC_01_Vb_of_Last_Day && !maintainEVC_01_Vb_of_Last_Day
                 ? "#ff5656"
                 : maintainEVC_01_Vb_of_Last_Day
                 ? "orange"
@@ -4728,7 +3575,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Vb_of_Last_Day : {
-                color:AlarmEVC_02_Vb_of_Last_Day && !maintainEVC_02_Vb_of_Last_Day
+                color:exceedThresholdEVC_02_Vb_of_Last_Day && !maintainEVC_02_Vb_of_Last_Day
                 ? "#ff5656"
                 : maintainEVC_02_Vb_of_Last_Day
                 ? "orange"
@@ -4739,7 +3586,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_EVC_01_Vm_of_Current_Day : {
-                color:AlarmEVC_01_Vm_of_Current_Day && !maintainEVC_01_Vm_of_Current_Day
+                color:exceedThresholdEVC_01_Vm_of_Current_Day && !maintainEVC_01_Vm_of_Current_Day
                 ? "#ff5656"
                 : maintainEVC_01_Vm_of_Current_Day
                 ? "orange"
@@ -4749,7 +3596,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Vm_of_Current_Day : {
-                color:AlarmEVC_02_Vm_of_Current_Day && !maintainEVC_02_Vm_of_Current_Day
+                color:exceedThresholdEVC_02_Vm_of_Current_Day && !maintainEVC_02_Vm_of_Current_Day
                 ? "#ff5656"
                 : maintainEVC_02_Vm_of_Current_Day
                 ? "orange"
@@ -4761,7 +3608,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_EVC_01_Vb_of_Current_Day : {
-                color:AlarmEVC_01_Vb_of_Current_Day && !maintainEVC_01_Vb_of_Current_Day
+                color:exceedThresholdEVC_01_Vb_of_Current_Day && !maintainEVC_01_Vb_of_Current_Day
                 ? "#ff5656"
                 : maintainEVC_01_Vb_of_Current_Day
                 ? "orange"
@@ -4771,7 +3618,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_EVC_02_Vb_of_Current_Day : {
-                color:AlarmEVC_02_Vb_of_Current_Day && !maintainEVC_02_Vb_of_Current_Day
+                color:exceedThresholdEVC_02_Vb_of_Current_Day && !maintainEVC_02_Vb_of_Current_Day
                 ? "#ff5656"
                 : maintainEVC_02_Vb_of_Current_Day
                 ? "orange"
@@ -4782,7 +3629,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_DI_UPS_BATTERY : {
-                color:AlarmDI_UPS_BATTERY && !maintainDI_UPS_BATTERY
+                color:exceedThresholdDI_UPS_BATTERY && !maintainDI_UPS_BATTERY
                 ? "#ff5656"
                 : maintainDI_UPS_BATTERY
                 ? "orange"
@@ -4792,7 +3639,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_DI_UPS_CHARGING: {
-                color:AlarmDI_UPS_CHARGING && !maintainDI_UPS_CHARGING
+                color:exceedThresholdDI_UPS_CHARGING && !maintainDI_UPS_CHARGING
                 ? "#ff5656"
                 : maintainDI_UPS_CHARGING
                 ? "orange"
@@ -4802,7 +3649,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_DI_UPS_ALARM: {
-                color:AlarmDI_UPS_ALARM && !maintainDI_UPS_ALARM
+                color:exceedThresholdDI_UPS_ALARM && !maintainDI_UPS_ALARM
                 ? "#ff5656"
                 : maintainDI_UPS_ALARM
                 ? "orange"
@@ -4812,7 +3659,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
             CSS_UPS_Mode: {
-                color:AlarmUPS_Mode && !maintainUPS_Mode
+                color:exceedThresholdUPS_Mode && !maintainUPS_Mode
                 ? "#ff5656"
                 : maintainUPS_Mode
                 ? "orange"
@@ -4822,7 +3669,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             }, 
               CSS_DI_SELECT_SW: {
-                color:AlarmDI_SELECT_SW && !maintainDI_SELECT_SW
+                color:exceedThresholdDI_SELECT_SW && !maintainDI_SELECT_SW
                 ? "#ff5656"
                 : maintainDI_SELECT_SW
                 ? "orange"
@@ -4833,7 +3680,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_Emergency_NO: {
-                color:AlarmEmergency_NO && !maintainEmergency_NO
+                color:exceedThresholdEmergency_NO && !maintainEmergency_NO
                 ? "#ff5656"
                 : maintainEmergency_NO
                 ? "orange"
@@ -4844,7 +3691,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_Emergency_NC: {
-                color:AlarmEmergency_NC && !maintainEmergency_NC
+                color:exceedThresholdEmergency_NC && !maintainEmergency_NC
                 ? "#ff5656"
                 : maintainEmergency_NC
                 ? "orange"
@@ -4855,7 +3702,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_Reset: {
-                color:AlarmDI_RESET && !maintainDI_RESET
+                color:exceedThresholdDI_RESET && !maintainDI_RESET
                 ? "#ff5656"
                 : maintainDI_RESET
                 ? "orange"
@@ -4866,7 +3713,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_Horn: {
-                color:AlarmDO_HR_01 && !maintainDO_HR_01
+                color:exceedThresholdDO_HR_01 && !maintainDO_HR_01
                 ? "#ff5656"
                 : maintainDO_HR_01
                 ? "orange"
@@ -4878,7 +3725,7 @@ const handleCheckboxChangePLC = (e:any) => {
            
 
             CSS_Map: {
-                color:AlarmDI_MAP_1 && !maintainDI_MAP_1
+                color:exceedThresholdDI_MAP_1 && !maintainDI_MAP_1
                 ? "#ff5656"
                 : maintainDI_MAP_1
                 ? "orange"
@@ -4890,7 +3737,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_ZSC: {
-                color:AlarmDI_ZSC_1 && !maintainDI_ZSC_1
+                color:exceedThresholdDI_ZSC_1 && !maintainDI_ZSC_1
                 ? "#ff5656"
                 : maintainDI_ZSC_1
                 ? "orange"
@@ -4902,7 +3749,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_ZSO: {
-                color:AlarmDI_ZSO_1 && !maintainDI_ZSO_1
+                color:exceedThresholdDI_ZSO_1 && !maintainDI_ZSO_1
                 ? "#ff5656"
                 : maintainDI_ZSO_1
                 ? "orange"
@@ -4912,7 +3759,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
               CSS_SELENOID: {
-                color:AlarmDO_SV1 && !maintainDO_SV1
+                color:exceedThresholdDO_SV1 && !maintainDO_SV1
                 ? "#ff5656"
                 : maintainDO_SV1
                 ? "orange"
@@ -4923,7 +3770,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_DO_BC_01: {
-                color:AlarmDO_BC_01 && !maintainDO_BC_01
+                color:exceedThresholdDO_BC_01 && !maintainDO_BC_01
                 ? "#ff5656"
                 : maintainDO_BC_01
                 ? "orange"
@@ -4936,7 +3783,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
 
             CSS_EVC_01_Conn_STT: {
-                color:AlarmEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
+                color:exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
                 ? "#ff5656"
                 : maintainEVC_01_Conn_STT
                 ? "orange"
@@ -4946,7 +3793,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
               CSS_PLC_Conn_STT: {
-                color:AlarmPLC_Conn_STT && !maintainPLC_Conn_STT
+                color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
                 ? "#ff5656"
                 : maintainPLC_Conn_STT
                 ? "orange"
@@ -4957,7 +3804,7 @@ const handleCheckboxChangePLC = (e:any) => {
             },
 
             CSS_EVC_02_Conn_STT: {
-                color:AlarmEVC_02_Conn_STT && !maintainEVC_02_Conn_STT
+                color:exceedThresholdEVC_02_Conn_STT && !maintainEVC_02_Conn_STT
                 ? "#ff5656"
                 : maintainEVC_02_Conn_STT
                 ? "orange"
@@ -5101,15 +3948,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeHighEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
+        style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeLowEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
+        style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Remain_Battery_Service_Life}
+        onChange={ChangemaintainEVC_01_Remain_Battery_Service_Life}
         checked={maintainEVC_01_Remain_Battery_Service_Life}
     ></Checkbox>
 
@@ -5127,15 +3974,15 @@ const handleCheckboxChangePLC = (e:any) => {
     high: <InputText  
  disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Temperature} onChange={handleInputChangeHighEVC_01_Temperature} inputMode="decimal" />, 
+    style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
     low:  <InputText  
  disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Temperature} onChange={handleInputChangeLowEVC_01_Temperature} inputMode="decimal" />,
+    style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
-    onChange={ChangeMaintainEVC_01_Temperature}
+    onChange={ChangemaintainEVC_01_Temperature}
     checked={maintainEVC_01_Temperature}
 ></Checkbox>
 
@@ -5152,11 +3999,11 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSSEVC_01_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChange} inputMode="decimal" />, 
+        style={combineCss.CSSEVC_01_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2} inputMode="decimal" />,
+        style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
      update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
@@ -5179,15 +4026,15 @@ const handleCheckboxChangePLC = (e:any) => {
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeHighEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeLowEVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainSVA_01}
+         onChange={ChangemaintainEVC_01_Volume_at_Base_Condition}
          checked={maintainEVC_01_Volume_at_Base_Condition}
      ></Checkbox>
 
@@ -5205,15 +4052,15 @@ const handleCheckboxChangePLC = (e:any) => {
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeHighEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeLowEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGVA_01}
+         onChange={ChangemaintainEVC_01_Volume_at_Measurement_Condition}
          checked={maintainEVC_01_Volume_at_Measurement_Condition}
      ></Checkbox>
 
@@ -5231,15 +4078,15 @@ const handleCheckboxChangePLC = (e:any) => {
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeHighEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeLowEVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainSVF_01}
+         onChange={ChangemaintainEVC_01_Flow_at_Base_Condition}
          checked={maintainEVC_01_Flow_at_Base_Condition}
      ></Checkbox>
 
@@ -5258,15 +4105,15 @@ const handleCheckboxChangePLC = (e:any) => {
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeHighEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeLowEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGVF_01}
+         onChange={ChangemaintainEVC_01_Flow_at_Measurement_Condition}
          checked={maintainEVC_01_Flow_at_Measurement_Condition}
      ></Checkbox>
 
@@ -5289,15 +4136,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Vb_of_Current_Day} onChange={handleInputChangeHighEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Vb_of_Current_Day} onChange={handleInputChangeLowEVC_01_Vb_of_Current_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_01_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Vb_of_Current_Day}
+        onChange={ChangemaintainEVC_01_Vb_of_Current_Day}
         checked={maintainEVC_01_Vb_of_Current_Day}
     ></Checkbox>
 
@@ -5314,15 +4161,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Vm_of_Current_Day} onChange={handleInputChangeHighEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Vm_of_Current_Day} onChange={handleInputChangeLowEVC_01_Vm_of_Current_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_01_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Vm_of_Current_Day}
+        onChange={ChangemaintainEVC_01_Vm_of_Current_Day}
         checked={maintainEVC_01_Vm_of_Current_Day}
     ></Checkbox>
 
@@ -5340,15 +4187,15 @@ const handleCheckboxChangePLC = (e:any) => {
        high: <InputText  
  disabled={AuthInputHighLow}
        
-       style={combineCss.CSS_EVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Vb_of_Last_Day} onChange={handleInputChangeHighEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
+       style={combineCss.CSS_EVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
        low:  <InputText  
  disabled={AuthInputHighLow}
        
-       style={combineCss.CSS_EVC_01_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Vb_of_Last_Day} onChange={handleInputChangeLowEVC_01_Vb_of_Last_Day} inputMode="decimal" />,
+       style={combineCss.CSS_EVC_01_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
-       onChange={ChangeMaintainEVC_01_Vb_of_Last_Day}
+       onChange={ChangemaintainEVC_01_Vb_of_Last_Day}
        checked={maintainEVC_01_Vb_of_Last_Day}
    ></Checkbox>
 
@@ -5366,15 +4213,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Vm_of_Last_Day} onChange={handleInputChangeHighEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Vm_of_Last_Day} onChange={handleInputChangeLowEVC_01_Vm_of_Last_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_01_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Vm_of_Last_Day}
+        onChange={ChangemaintainEVC_01_Vm_of_Last_Day}
         checked={maintainEVC_01_Vm_of_Last_Day}
     ></Checkbox>
 
@@ -5392,15 +4239,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighEVC_01_Conn_STT} onChange={handleInputChangeHighEVC_01_Conn_STT} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Conn_STT} onChange={handleInputChangeEVC_01_Conn_STT} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_01_Conn_STT} onChange={handleInputChangeLowEVC_01_Conn_STT} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Conn_STT} onChange={handleInputChange2EVC_01_Conn_STT} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_01_Conn_STT}
+        onChange={ChangemaintainEVC_01_Conn_STT}
         checked={maintainEVC_01_Conn_STT}
     ></Checkbox>
 
@@ -5437,15 +4284,15 @@ const handleCheckboxChangePLC = (e:any) => {
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeHighEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeLowEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_02_Remain_Battery_Service_Life}
+        onChange={ChangemaintainEVC_02_Remain_Battery_Service_Life}
         checked={maintainEVC_02_Remain_Battery_Service_Life}
     ></Checkbox>
 
@@ -5463,15 +4310,15 @@ const handleCheckboxChangePLC = (e:any) => {
     high: <InputText  
     disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_EVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Temperature} onChange={handleInputChangeHighEVC_02_Temperature} inputMode="decimal" />, 
+    style={combineCss.CSS_EVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
     low:  <InputText  
     disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_EVC_02_Temperature}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Temperature} onChange={handleInputChangeLowEVC_02_Temperature} inputMode="decimal" />,
+    style={combineCss.CSS_EVC_02_Temperature}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
-    onChange={ChangeMaintainEVC_02_Temperature}
+    onChange={ChangemaintainEVC_02_Temperature}
     checked={maintainEVC_02_Temperature}
     ></Checkbox>
     
@@ -5488,11 +4335,11 @@ const handleCheckboxChangePLC = (e:any) => {
     high: <InputText  
 disabled={AuthInputHighLow}
     
-    style={combineCss.CSSEVC_02_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_02_PressureHigh} onChange={handleInputChangeEVC_02_PressureHigh} inputMode="decimal" />, 
+    style={combineCss.CSSEVC_02_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
     low:  <InputText  
 disabled={AuthInputHighLow}
     
-    style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_PressureLow} onChange={handleInputChangeEVC_02_PressureLow} inputMode="decimal" />,
+    style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
@@ -5514,15 +4361,15 @@ value: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition} > {EVC_02_Vo
  high: <InputText  
 disabled={AuthInputHighLow}
  
- style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeHighEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
+ style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
  low:  <InputText  
 disabled={AuthInputHighLow}
  
- style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeLowEVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
+ style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
- onChange={ChangeMaintainSVA_02}
+ onChange={ChangemaintainEVC_02_Volume_at_Base_Condition}
  checked={maintainEVC_02_Volume_at_Base_Condition}
 ></Checkbox>
 
@@ -5540,15 +4387,15 @@ value: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition} > {EV
  high: <InputText  
 disabled={AuthInputHighLow}
  
- style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeHighEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
+ style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
  low:  <InputText  
 disabled={AuthInputHighLow}
  
- style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeLowEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
+ style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
- onChange={ChangeMaintainGVA_02} 
+ onChange={ChangemaintainEVC_02_Volume_at_Measurement_Condition} 
  checked={maintainEVC_02_Volume_at_Measurement_Condition}
 ></Checkbox>
 
@@ -5566,15 +4413,15 @@ disabled={AuthInputHighLow}
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeHighEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeLowEVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainSVF_02}
+         onChange={ChangemaintainEVC_02_Flow_at_Base_Condition}
          checked={maintainEVC_02_Flow_at_Base_Condition}
      ></Checkbox>
 
@@ -5592,15 +4439,15 @@ disabled={AuthInputHighLow}
          high: <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeHighEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
+         style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInputHighLow}
          
-         style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeLowEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
+         style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGVF_02}
+         onChange={ChangemaintainEVC_02_Flow_at_Measurement_Condition}
          checked={maintainEVC_02_Flow_at_Measurement_Condition}
      ></Checkbox>
          
@@ -5625,15 +4472,15 @@ disabled={AuthInputHighLow}
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Vb_of_Current_Day} onChange={handleInputChangeHighEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Vb_of_Current_Day} onChange={handleInputChangeLowEVC_02_Vb_of_Current_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_02_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_02_Vb_of_Current_Day}
+        onChange={ChangemaintainEVC_02_Vb_of_Current_Day}
         checked={maintainEVC_02_Vb_of_Current_Day}
     ></Checkbox>
 
@@ -5652,15 +4499,15 @@ disabled={AuthInputHighLow}
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Vm_of_Current_Day} onChange={handleInputChangeHighEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Vm_of_Current_Day} onChange={handleInputChangeLowEVC_02_Vm_of_Current_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_02_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_02_Vm_of_Current_Day}
+        onChange={ChangemaintainEVC_02_Vm_of_Current_Day}
         checked={maintainEVC_02_Vm_of_Current_Day}
     ></Checkbox>
 
@@ -5679,15 +4526,15 @@ disabled={AuthInputHighLow}
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Vb_of_Last_Day} onChange={handleInputChangeHighEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Vb_of_Last_Day} onChange={handleInputChangeLowEVC_02_Vb_of_Last_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_02_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_02_Vb_of_Last_Day}
+        onChange={ChangemaintainEVC_02_Vb_of_Last_Day}
         checked={maintainEVC_02_Vb_of_Last_Day}
     ></Checkbox>
 
@@ -5705,15 +4552,15 @@ disabled={AuthInputHighLow}
         high: <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Vm_of_Last_Day} onChange={handleInputChangeHighEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
+        style={combineCss.CSS_EVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_EVC_02_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Vm_of_Last_Day} onChange={handleInputChangeLowEVC_02_Vm_of_Last_Day} inputMode="decimal" />,
+        style={combineCss.CSS_EVC_02_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEVC_02_Vm_of_Last_Day}
+        onChange={ChangemaintainEVC_02_Vm_of_Last_Day}
         checked={maintainEVC_02_Vm_of_Last_Day}
     ></Checkbox>
 
@@ -5730,15 +4577,15 @@ disabled={AuthInputHighLow}
     high: <InputText  
 disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighEVC_02_Conn_STT} onChange={handleInputChangeHighEVC_02_Conn_STT} inputMode="decimal" />, 
+    style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Conn_STT} onChange={handleInputChangeEVC_02_Conn_STT} inputMode="decimal" />, 
     low:  <InputText  
 disabled={AuthInputHighLow}
     
-    style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowEVC_02_Conn_STT} onChange={handleInputChangeLowEVC_02_Conn_STT} inputMode="decimal" />,
+    style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Conn_STT} onChange={handleInputChange2EVC_02_Conn_STT} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
-    onChange={ChangeMaintainEVC_02_Conn_STT}
+    onChange={ChangemaintainEVC_02_Conn_STT}
     checked={maintainEVC_02_Conn_STT}
 ></Checkbox>
 
@@ -5793,15 +4640,15 @@ disabled={AuthInputHighLow}
          high: <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputHighGD1} onChange={handleInputChangeHighGD1} inputMode="decimal" />, 
+         style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
          low:  <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputLowGD1} onChange={handleInputChangeLowGD1} inputMode="decimal" />,
+         style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1} onChange={handleInputChange2GD1} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGD_01}
+         onChange={ChangeMaintainGD1}
          checked={maintainGD1}
      ></Checkbox>
    
@@ -5818,15 +4665,15 @@ disabled={AuthInputHighLow}
          high: <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputHighGD2} onChange={handleInputChangeHighGD2} inputMode="decimal" />, 
+         style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
          low:  <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputLowGD2} onChange={handleInputChangeLowGD2} inputMode="decimal" />,
+         style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
-         onChange={ChangeMaintainGD_02}
+         onChange={ChangeMaintainGD2}
          checked={maintainGD2}
      ></Checkbox>
    
@@ -5843,11 +4690,11 @@ disabled={AuthInputHighLow}
          high: <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSgd3}   placeholder='High' step="0.1" type='number' value={inputHighGD3} onChange={handleInputChangeHighGD3} inputMode="decimal" />, 
+         style={combineCss.CSSgd3}   placeholder='High' step="0.1" type='number' value={inputValueGD3} onChange={handleInputChangeGD3} inputMode="decimal" />, 
          low:  <InputText  
     disabled={AuthInput}
          
-         style={combineCss.CSSgd3}   placeholder='Low' step="0.1" type='number' value={inputLowGD3} onChange={handleInputChangeLowGD3} inputMode="decimal" />,
+         style={combineCss.CSSgd3}   placeholder='Low' step="0.1" type='number' value={inputValue2GD3} onChange={handleInputChange2GD3} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
@@ -5867,11 +4714,11 @@ disabled={AuthInputHighLow}
          high: <InputText  
  disabled={AuthInput}
          
-         style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1High} onChange={handleInputChangePT1High} inputMode="decimal" />, 
+         style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
          low:  <InputText  
  disabled={AuthInput}
          
-         style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValuePT1Low} onChange={handleInputChangePT1Low} inputMode="decimal" />,
+         style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
       update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
@@ -5892,15 +4739,15 @@ disabled={AuthInputHighLow}
        high: <InputText  
  disabled={AuthInput}
        
-       style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputHighDI_ZSO_1} onChange={handleInputChangeHighDI_ZSO_1} inputMode="decimal" />, 
+       style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
        low:  <InputText  
  disabled={AuthInput}
        
-       style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputLowDI_ZSO_1} onChange={handleInputChangeLowDI_ZSO_1} inputMode="decimal" />,
+       style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
-       onChange={ChangeMaintainDI_ZSO_1}
+       onChange={ChangemaintainDI_ZSO_1}
        checked={maintainDI_ZSO_1}
    ></Checkbox>
        },
@@ -5916,15 +4763,15 @@ disabled={AuthInputHighLow}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputHighDI_ZSC_1} onChange={handleInputChangeHighDI_ZSC_1} inputMode="decimal" />, 
+        style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputLowDI_ZSC_1} onChange={handleInputChangeLowDI_ZSC_1} inputMode="decimal" />,
+        style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_ZSC_1}
+        onChange={ChangemaintainDI_ZSC_1}
         checked={maintainDI_ZSC_1}
     ></Checkbox>
         },
@@ -5940,15 +4787,15 @@ disabled={AuthInputHighLow}
        high: <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputHighDI_MAP_1} onChange={handleInputChangeHighDI_MAP_1} inputMode="decimal" />, 
+       style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
        low:  <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputLowDI_MAP_1} onChange={handleInputChangeLowDI_MAP_1} inputMode="decimal" />,
+       style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
-       onChange={ChangeMaintainDI_MAP_1}
+       onChange={ChangemaintainDI_MAP_1}
        checked={maintainDI_MAP_1}
    ></Checkbox>
        },
@@ -5964,15 +4811,15 @@ disabled={AuthInput}
        high: <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputHighDI_UPS_BATTERY} onChange={handleInputChangeHighDI_UPS_BATTERY} inputMode="decimal" />, 
+       style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
        low:  <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputLowDI_UPS_BATTERY} onChange={handleInputChangeLowDI_UPS_BATTERY} inputMode="decimal" />,
+       style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
-       onChange={ChangeMaintainDI_UPS_BATTERY}
+       onChange={ChangemaintainDI_UPS_BATTERY}
        checked={maintainDI_UPS_BATTERY}
    ></Checkbox>
        },
@@ -5989,15 +4836,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputHighDI_UPS_CHARGING} onChange={handleInputChangeHighDI_UPS_CHARGING} inputMode="decimal" />, 
+        style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputLowDI_UPS_CHARGING} onChange={handleInputChangeLowDI_UPS_CHARGING} inputMode="decimal" />,
+        style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_UPS_CHARGING}
+        onChange={ChangemaintainDI_UPS_CHARGING}
         checked={maintainDI_UPS_CHARGING}
     ></Checkbox>
         },
@@ -6013,15 +4860,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputHighDI_UPS_ALARM} onChange={handleInputChangeHighDI_UPS_ALARM} inputMode="decimal" />, 
+        style={combineCss.CSS_DI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputLowDI_UPS_ALARM} onChange={handleInputChangeLowDI_UPS_ALARM} inputMode="decimal" />,
+        style={combineCss.CSS_DI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_UPS_ALARM}
+        onChange={ChangemaintainDI_UPS_ALARM}
         checked={maintainDI_UPS_ALARM}
     ></Checkbox>
         },
@@ -6037,15 +4884,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_UPS_Mode}   placeholder='High' step="0.1" type='number' value={inputHighUPS_Mode} onChange={handleInputChangeHighUPS_Mode} inputMode="decimal" />, 
+        style={combineCss.CSS_UPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_UPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputLowUPS_Mode} onChange={handleInputChangeLowUPS_Mode} inputMode="decimal" />,
+        style={combineCss.CSS_UPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainUPS_Mode}
+        onChange={ChangemaintainUPS_Mode}
         checked={maintainUPS_Mode}
     ></Checkbox>
         },
@@ -6062,15 +4909,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputHighDI_SELECT_SW} onChange={handleInputChangeHighDI_SELECT_SW} inputMode="decimal" />, 
+        style={combineCss.CSS_DI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputLowDI_SELECT_SW} onChange={handleInputChangeLowDI_SELECT_SW} inputMode="decimal" />,
+        style={combineCss.CSS_DI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_SELECT_SW}
+        onChange={ChangemaintainDI_SELECT_SW}
         checked={maintainDI_SELECT_SW}
     ></Checkbox>
         },
@@ -6086,15 +4933,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputHighDI_RESET} onChange={handleInputChangeHighDI_RESET} inputMode="decimal" />, 
+        style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputLowDI_RESET} onChange={handleInputChangeLowDI_RESET} inputMode="decimal" />,
+        style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDI_RESET}
+        onChange={ChangemaintainDI_RESET}
         checked={maintainDI_RESET}
     ></Checkbox>
         },
@@ -6109,15 +4956,15 @@ disabled={AuthInput}
        high: <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_Emergency_NO}   placeholder='High' step="0.1" type='number' value={inputHighEmergency_NO} onChange={handleInputChangeHighEmergency_NO} inputMode="decimal" />, 
+       style={combineCss.CSS_Emergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
        low:  <InputText  
 disabled={AuthInput}
        
-       style={combineCss.CSS_Emergency_NO}   placeholder='Low' step="0.1" type='number' value={inputLowEmergency_NO} onChange={handleInputChangeLowEmergency_NO} inputMode="decimal" />,
+       style={combineCss.CSS_Emergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
-       onChange={ChangeMaintainEmergency_NO}
+       onChange={ChangemaintainEmergency_NO}
        checked={maintainEmergency_NO}
    ></Checkbox>
        },
@@ -6132,15 +4979,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Emergency_NC}   placeholder='High' step="0.1" type='number' value={inputHighEmergency_NC} onChange={handleInputChangeHighEmergency_NC} inputMode="decimal" />, 
+        style={combineCss.CSS_Emergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Emergency_NC}   placeholder='Low' step="0.1" type='number' value={inputLowEmergency_NC} onChange={handleInputChangeLowEmergency_NC} inputMode="decimal" />,
+        style={combineCss.CSS_Emergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainEmergency_NC}
+        onChange={ChangemaintainEmergency_NC}
         checked={maintainEmergency_NC}
     ></Checkbox>
         },
@@ -6155,15 +5002,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputHighDO_SV1} onChange={handleInputChangeHighDO_SV1} inputMode="decimal" />, 
+        style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV1} onChange={handleInputChangeDO_SV1} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputLowDO_SV1} onChange={handleInputChangeLowDO_SV1} inputMode="decimal" />,
+        style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV1} onChange={handleInputChange2DO_SV1} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV}  className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDO_SV1}
+        onChange={ChangemaintainDO_SV1}
         checked={maintainDO_SV1}
     ></Checkbox>
         },
@@ -6181,15 +5028,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputHighDO_HR_01} onChange={handleInputChangeHighDO_HR_01} inputMode="decimal" />, 
+        style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputLowDO_HR_01} onChange={handleInputChangeLowDO_HR_01} inputMode="decimal" />,
+        style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDO_HR_01}
+        onChange={ChangemaintainDO_HR_01}
         checked={maintainDO_HR_01}
     ></Checkbox>
         },
@@ -6205,15 +5052,15 @@ disabled={AuthInput}
         high: <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DO_BC_01}   placeholder='High' step="0.1" type='number' value={inputHighDO_BC_01} onChange={handleInputChangeHighDO_BC_01} inputMode="decimal" />, 
+        style={combineCss.CSS_DO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
         low:  <InputText  
  disabled={AuthInput}
         
-        style={combineCss.CSS_DO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputLowDO_BC_01} onChange={handleInputChangeLowDO_BC_01} inputMode="decimal" />,
+        style={combineCss.CSS_DO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainDO_BC_01}
+        onChange={ChangemaintainDO_BC_01}
         checked={maintainDO_BC_01}
     ></Checkbox>
         },
@@ -6229,15 +5076,15 @@ disabled={AuthInput}
         high: <InputText  
     disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputHighPLC_Conn_STT} onChange={handleInputChangeHighPLC_Conn_STT} inputMode="decimal" />, 
+        style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
         low:  <InputText  
     disabled={AuthInputHighLow}
         
-        style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputLowPLC_Conn_STT} onChange={handleInputChangeLowPLC_Conn_STT} inputMode="decimal" />,
+        style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
-        onChange={ChangeMaintainPLC_Conn_STT}
+        onChange={ChangemaintainPLC_Conn_STT}
         checked={maintainPLC_Conn_STT}
     ></Checkbox>
     

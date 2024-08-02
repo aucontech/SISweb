@@ -5361,7 +5361,7 @@ disabled={AuthInputHighLow}
 
     modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
 
-   value: <span style={combineCss.CSSTOTAL_CNG} > {TOTAL_CNG} . </span> , 
+   value: <span style={combineCss.CSSTOTAL_CNG} > {TOTAL_CNG} (Sm³)</span> , 
     high: <InputText 
 disabled={AuthInputHighLow}
     
@@ -5389,7 +5389,7 @@ disabled={AuthInputHighLow}
 
    modbus: <span style={combineCss.CSSTM2002_CNG}>40073	 </span> ,
 
-  value: <span style={combineCss.CSSTM2002_CNG} > {TM2002_CNG}</span> , 
+  value: <span style={combineCss.CSSTM2002_CNG} > {TM2002_CNG} (Sm³/h)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -5417,7 +5417,7 @@ disabled={AuthInputHighLow}
 
   modbus: <span style={combineCss.CSSTM2003_CNG}>40075	 </span> ,
 
- value: <span style={combineCss.CSSTM2003_CNG} > {TM2003_CNG}</span> , 
+ value: <span style={combineCss.CSSTM2003_CNG} > {TM2003_CNG} (Sm³/h)</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -5652,7 +5652,6 @@ checked={maintainPLC_Conn_STT}
 
 
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1" type='number'
                     value={inputPCV_01}
                     onChange={handleInputPCV_01}
@@ -5679,7 +5678,6 @@ checked={maintainPLC_Conn_STT}
 
 
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type='number'
                     value={inputPCV_02}
@@ -5707,7 +5705,6 @@ checked={maintainPLC_Conn_STT}
 
 
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1" type='number'
                     value={inputGetwayPhone}
                     onChange={handleInputChangeGetWayPhone}
