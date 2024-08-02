@@ -2215,7 +2215,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2279,7 +2279,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),

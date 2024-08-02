@@ -385,7 +385,9 @@ export default function SetUpdata_CNG_BINHDUONG() {
                         SD_2001: setSD_2001,
                         SD_2002: setSD_2002,
 
-
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                   
                     };
                     const valueStateMap: ValueStateMap = {
@@ -3109,7 +3111,128 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
      
          
               // =================================================================================================================== 
-         
+              const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+              const [inputValueEVC_01_Conn_STT, setinputValueEVC_01_Conn_STT] = useState<any>();
+              const [inputValue2EVC_01_Conn_STT, setinputValue2EVC_01_Conn_STT] = useState<any>();
+              const [EVC_01_Conn_STT_High, setEVC_01_Conn_STT_High] = useState<number | null>(null);
+              const [EVC_01_Conn_STT_Low, setEVC_01_Conn_STT_Low] = useState<number | null>(null);
+              const [exceedThresholdEVC_01_Conn_STT, setexceedThresholdEVC_01_Conn_STT] = useState(false); 
+              const [maintainEVC_01_Conn_STT, setmaintainEVC_01_Conn_STT] = useState<boolean>(false);
+              
+              useEffect(() => {
+                  const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT as any);
+                  const highValue = EVC_01_Conn_STT_High ?? NaN;
+                  const lowValue = EVC_01_Conn_STT_Low ?? NaN;
+              
+                  if (!isNaN(EVC_01_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Conn_STT) {
+                      setexceedThresholdEVC_01_Conn_STT(EVC_01_Conn_STTValue >= highValue || EVC_01_Conn_STTValue <= lowValue);
+                  }
+              }, [EVC_01_Conn_STT, EVC_01_Conn_STT_High, EVC_01_Conn_STT_Low, maintainEVC_01_Conn_STT]);
+              
+              const handleInputChangeEVC_01_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValueEVC_01_Conn_STT(event.target.value);
+              };
+              
+              const handleInputChange2EVC_01_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValue2EVC_01_Conn_STT(event.target.value);
+              };
+              
+              const ChangemaintainEVC_01_Conn_STT = async () => {
+                  try {
+                      const newValue = !maintainEVC_01_Conn_STT;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                          { EVC_01_Conn_STT_Maintain: newValue }
+                      );
+                      setmaintainEVC_01_Conn_STT(newValue);
+                  } catch (error) {
+                      console.error(error);
+                  }
+              };
+              
+              
+              
+              const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+              const [inputValueEVC_02_Conn_STT, setinputValueEVC_02_Conn_STT] = useState<any>();
+              const [inputValue2EVC_02_Conn_STT, setinputValue2EVC_02_Conn_STT] = useState<any>();
+              const [EVC_02_Conn_STT_High, setEVC_02_Conn_STT_High] = useState<number | null>(null);
+              const [EVC_02_Conn_STT_Low, setEVC_02_Conn_STT_Low] = useState<number | null>(null);
+              const [exceedThresholdEVC_02_Conn_STT, setexceedThresholdEVC_02_Conn_STT] = useState(false); 
+              const [maintainEVC_02_Conn_STT, setmaintainEVC_02_Conn_STT] = useState<boolean>(false);
+              
+              useEffect(() => {
+                  const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT as any);
+                  const highValue = EVC_02_Conn_STT_High ?? NaN;
+                  const lowValue = EVC_02_Conn_STT_Low ?? NaN;
+              
+                  if (!isNaN(EVC_02_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Conn_STT) {
+                      setexceedThresholdEVC_02_Conn_STT(EVC_02_Conn_STTValue >= highValue || EVC_02_Conn_STTValue <= lowValue);
+                  }
+              }, [EVC_02_Conn_STT, EVC_02_Conn_STT_High, EVC_02_Conn_STT_Low, maintainEVC_02_Conn_STT]);
+              
+              const handleInputChangeEVC_02_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValueEVC_02_Conn_STT(event.target.value);
+              };
+              
+              const handleInputChange2EVC_02_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValue2EVC_02_Conn_STT(event.target.value);
+              };
+              
+              const ChangemaintainEVC_02_Conn_STT = async () => {
+                  try {
+                      const newValue = !maintainEVC_02_Conn_STT;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                          { EVC_02_Conn_STT_Maintain: newValue }
+                      );
+                      setmaintainEVC_02_Conn_STT(newValue);
+                  } catch (error) {
+                      console.error(error);
+                  }
+              };
+              
+              
+              
+              
+              const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+              const [inputValuePLC_Conn_STT, setinputValuePLC_Conn_STT] = useState<any>();
+              const [inputValue2PLC_Conn_STT, setinputValue2PLC_Conn_STT] = useState<any>();
+              const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+              const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+              const [exceedThresholdPLC_Conn_STT, setexceedThresholdPLC_Conn_STT] = useState(false); 
+              const [maintainPLC_Conn_STT, setmaintainPLC_Conn_STT] = useState<boolean>(false);
+              
+              useEffect(() => {
+                  const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+                  const highValue = PLC_Conn_STT_High ?? NaN;
+                  const lowValue = PLC_Conn_STT_Low ?? NaN;
+              
+                  if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+                      setexceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+                  }
+              }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+              
+              const handleInputChangePLC_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValuePLC_Conn_STT(event.target.value);
+              };
+              
+              const handleInputChange2PLC_Conn_STT = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setinputValue2PLC_Conn_STT(event.target.value);
+              };
+              
+              const ChangemaintainPLC_Conn_STT = async () => {
+                  try {
+                      const newValue = !maintainPLC_Conn_STT;
+                      await httpApi.post(
+                          `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                          { PLC_Conn_STT_Maintain: newValue }
+                      );
+                      setmaintainPLC_Conn_STT(newValue);
+                  } catch (error) {
+                      console.error(error);
+                  }
+              };
+              
          
          // =================================================================================================================== 
          
@@ -3199,6 +3322,12 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
       EVC_01_Battery_Installation_Date: timeEVC_02,
       EVC_02_Battery_Expiration_Date: timeEVC_03,
       EVC_02_Battery_Installation_Date: timeEVC_04,
+
+
+      EVC_01_Conn_STT_High:inputValueEVC_01_Conn_STT, EVC_01_Conn_STT_Low:inputValue2EVC_01_Conn_STT,
+
+      EVC_02_Conn_STT_High:inputValueEVC_02_Conn_STT,EVC_02_Conn_STT_Low:inputValue2EVC_02_Conn_STT,
+       PLC_Conn_STT_High:inputValuePLC_Conn_STT, PLC_Conn_STT_Low:inputValue2PLC_Conn_STT,
                 }
             );
             setPCV_2001A(inputPCV_2001A)
@@ -3356,6 +3485,17 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
             setGD_STATUS_High(inputValueGD_STATUS);
             setGD_STATUS_Low(inputValue2GD_STATUS);
+
+
+            setEVC_02_Conn_STT_High(inputValueEVC_02_Conn_STT);
+            setEVC_02_Conn_STT_Low(inputValue2EVC_02_Conn_STT);
+
+
+            setEVC_01_Conn_STT_High(inputValueEVC_01_Conn_STT);
+            setEVC_01_Conn_STT_Low(inputValue2EVC_01_Conn_STT);
+
+            setPLC_Conn_STT_High(inputValuePLC_Conn_STT);
+            setPLC_Conn_STT_Low(inputValue2PLC_Conn_STT);
 
             toast.current?.show({
                 severity: "info",
@@ -3553,6 +3693,18 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
         setinputValueGD_STATUS(GD_STATUS_High); 
         setinputValue2GD_STATUS(GD_STATUS_Low); 
 
+
+
+        setinputValueEVC_01_Conn_STT(EVC_01_Conn_STT_High)
+        setinputValue2EVC_01_Conn_STT(EVC_01_Conn_STT_Low)
+
+        setinputValueEVC_02_Conn_STT(EVC_02_Conn_STT_High)
+        setinputValue2EVC_02_Conn_STT(EVC_02_Conn_STT_Low)
+
+
+        setinputValuePLC_Conn_STT(PLC_Conn_STT_High)
+        setinputValue2PLC_Conn_STT(PLC_Conn_STT_Low)
+
     }, [
         
         HR_BC_High, HR_BC_Low ,
@@ -3639,7 +3791,12 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
            PSV_2002A,
            PSV_2002B,
 
-           timeEVC_01,timeEVC_02
+           timeEVC_01,timeEVC_02,
+
+
+           EVC_01_Conn_STT_High, EVC_01_Conn_STT_Low ,
+           EVC_02_Conn_STT_High, EVC_02_Conn_STT_Low ,
+           PLC_Conn_STT_High, PLC_Conn_STT_Low ,
         ]);
 
 
@@ -4634,6 +4791,39 @@ setmaintainSD_2002(newSD_2002);
             height:25,
             fontWeight:400,
         },
+
+
+        CSS_EVC_01_Conn_STT: {
+            color:exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
+            ? "#ff5656"
+            : maintainEVC_01_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+            
+        },
+          CSS_PLC_Conn_STT: {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+            
+        },
+
+        CSS_EVC_02_Conn_STT: {
+            color:exceedThresholdEVC_02_Conn_STT && !maintainEVC_02_Conn_STT
+            ? "#ff5656"
+            : maintainEVC_02_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+            
+        },
   };
     
   const mainCategoryFC = {
@@ -4695,6 +4885,9 @@ const dataHR_BC = HR_BC === "0" ? "Normal" : HR_BC === "1" ? "Alarm" : null;
 const dataSD_2001 = SD_2001 === "0" ? "Normal" : SD_2001 === "1" ? "Smoker Detected" : null;
 const dataSD_2002 = SD_2002 === "0" ? "Normal" : SD_2002 === "1" ? "Smoker Detected" : null;
 
+const DataEVC_01_Conn_STT = EVC_01_Conn_STT === "0" ? "Not Init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null
+const DataEVC_02_Conn_STT = EVC_02_Conn_STT === "0" ? "Not Init" : EVC_02_Conn_STT === "1" ? "COM OK" : EVC_02_Conn_STT === "2" ? "Error" : null
+const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
 
 
         const dataEVC01 = [
@@ -4926,7 +5119,31 @@ const dataSD_2002 = SD_2002 === "0" ? "Normal" : SD_2002 === "1" ? "Smoker Detec
      },
 
 
+     { 
+        mainCategory: mainCategoryFC.EVC01,
+        
+        timeUpdate: <span style={combineCss.CSS_EVC_01_Conn_STT} >{EVC_STT01Value}</span>,
+    modbus: <span style={combineCss.CSS_EVC_01_Conn_STT}>Status</span> ,
 
+    name: <span style={combineCss.CSS_EVC_01_Conn_STT}> EVC Connection Status</span> ,
+
+    value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {EVC_01_Conn_STT} {DataEVC_01_Conn_STT}</span>, 
+    high: <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Conn_STT} onChange={handleInputChangeEVC_01_Conn_STT} inputMode="decimal" />, 
+    low:  <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Conn_STT} onChange={handleInputChange2EVC_01_Conn_STT} inputMode="decimal" />,
+    update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangemaintainEVC_01_Conn_STT}
+    checked={maintainEVC_01_Conn_STT}
+></Checkbox>
+
+    },
 
     
 
@@ -5168,7 +5385,31 @@ checked={maintainEVC_02_Vm_of_Last_Day}
 ></Checkbox>
 
 },
+{ 
+    mainCategory: mainCategoryFC.EVC02,
+    
+    timeUpdate: <span style={combineCss.CSS_EVC_02_Conn_STT} >{EVC_STT01Value}</span>,
+modbus: <span style={combineCss.CSS_EVC_02_Conn_STT}>Status</span> ,
 
+name: <span style={combineCss.CSS_EVC_02_Conn_STT}> EVC Connection Status </span> ,
+
+value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {EVC_02_Conn_STT} {DataEVC_02_Conn_STT}</span>, 
+high: <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Conn_STT} onChange={handleInputChangeEVC_02_Conn_STT} inputMode="decimal" />, 
+low:  <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Conn_STT} onChange={handleInputChange2EVC_02_Conn_STT} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangemaintainEVC_02_Conn_STT}
+checked={maintainEVC_02_Conn_STT}
+></Checkbox>
+
+},
 
           ]
 
@@ -5655,7 +5896,7 @@ name: <span style={combineCss.CSSSD_2002}> Smoke Detector SD-2002</span> ,
 
 modbus: <span style={combineCss.CSSSD_2002}>40045	 </span> ,
 
-value: <span style={combineCss.CSSSD_2002} > {SD_2002} {dataSDV_2002}</span> , 
+value: <span style={combineCss.CSSSD_2002} > {SD_2002} {dataSD_2002}</span> , 
 high: <InputText style={combineCss.CSSSD_2002}   placeholder='High' step="0.1" type='number' value={inputValueSD_2002} onChange={handleInputChangeSD_2002} inputMode="decimal" />, 
 low:  <InputText style={combineCss.CSSSD_2002}   placeholder='Low' step="0.1" type='number' value={inputValue2SD_2002} onChange={handleInputChange2SD_2002} inputMode="decimal" />,
 update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -5663,6 +5904,32 @@ Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainSD_2002}
 checked={maintainSD_2002}
+></Checkbox>
+
+},
+
+{ 
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSS_PLC_Conn_STT} >{EVC_STT01Value}</span>,
+modbus: <span style={combineCss.CSS_PLC_Conn_STT}>Status</span> ,
+
+name: <span style={combineCss.CSS_PLC_Conn_STT}>PLC Connection Status</span> ,
+
+value: <span style={combineCss.CSS_PLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span>, 
+high: <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
+low:  <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangemaintainPLC_Conn_STT}
+checked={maintainPLC_Conn_STT}
 ></Checkbox>
 
 },
