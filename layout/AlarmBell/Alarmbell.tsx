@@ -28,6 +28,7 @@ import {
     CNGPM3_DEVICE_ID,
     SNGHY_DEVICE_ID,
     SNG_PM3_DEVICEC_ID,
+    SNG_ACECOOK_DEVICE_ID,
 } from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
 interface Notification {
@@ -112,6 +113,7 @@ export default function Alarmbell() {
                                         CNGPM3_DEVICE_ID,
                                         SNGHY_DEVICE_ID,
                                         SNG_PM3_DEVICEC_ID,
+                                        SNG_ACECOOK_DEVICE_ID,
                                     ],
                                 },
                                 pageLink: {
