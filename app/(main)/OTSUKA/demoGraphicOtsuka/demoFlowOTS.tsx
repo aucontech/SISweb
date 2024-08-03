@@ -93,23 +93,9 @@ export default function DemoFlowOTS() {
 
     const [data, setData] = useState<any[]>([]);
 
-    const [GVF1, setGVF1] = useState<string | null>(null);
-    const [SVF1, setSVF1] = useState<string | null>(null);
-    const [SVA1, setSVA1] = useState<string | null>(null);
-    const [GVA1, setGVA1] = useState<string | null>(null);
 
-    const [GVF2, setGVF2] = useState<string | null>(null);
-    const [SVF2, setSVF2] = useState<string | null>(null);
-    const [SVA2, setSVA2] = useState<string | null>(null);
-    const [GVA2, setGVA2] = useState<string | null>(null);
 
-    const [PT01, setPT01] = useState<string | null>(null);
-    const [PT02, setPT02] = useState<string | null>(null);
-    const [PT03, setPT03] = useState<string | null>(null);
 
-    const [GD1, SetGD1] = useState<string | null>(null);
-    const [GD2, SetGD2] = useState<string | null>(null);
-    const [GD3, SetGD3] = useState<string | null>(null);
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
@@ -199,7 +185,7 @@ export default function DemoFlowOTS() {
 
         if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket connected");
+                console.log("WebSocket CONNECTED");
                 setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
@@ -228,26 +214,26 @@ export default function DemoFlowOTS() {
 
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setSVF1,
-                        EVC_01_Flow_at_Measurement_Condition: setGVF1,
+                        EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
+                        EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
 
-                        EVC_01_Volume_at_Base_Condition: setSVA1,
-                        EVC_01_Volume_at_Measurement_Condition: setGVA1,
-                        EVC_01_Pressure: setPT01,
+                        EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
+                        EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
+                        EVC_01_Pressure: setEVC_01_Pressure,
 
-                        EVC_02_Flow_at_Base_Condition: setSVF2,
-                        EVC_02_Flow_at_Measurement_Condition: setGVF2,
+                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
+                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
 
-                        EVC_02_Volume_at_Base_Condition: setSVA2,
-                        EVC_02_Volume_at_Measurement_Condition: setGVA2,
+                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
+                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
 
-                        EVC_02_Pressure: setPT02,
+                        EVC_02_Pressure: setEVC_02_Pressure,
 
-                        GD1: SetGD1,
-                        GD2: SetGD2,
-                        GD3: SetGD3,
+                        GD1: setGD1,
+                        GD2: setGD2,
+                        GD3: setGD3,
 
-                        PT1: setPT03,
+                        PT1: setPT1,
 
                         DI_ZSC_1: setNC,
                         DI_ZSO_1: setNO,
@@ -311,1110 +297,291 @@ export default function DemoFlowOTS() {
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
 
-    //================================ PT 1901================================
-
-    const [audioPT1901, setAudio1901] = useState(false);
-    const [HighPT01, setHighPT01] = useState<number | null>(null);
-    const [LowPT01, setLowPT01] = useState<number | null>(null);
-    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPT_1901, setMaintainPT_1901] = useState<boolean>(false);
-
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] = useState(false); 
+    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighPT01 === "string" &&
-            typeof LowPT01 === "string" &&
-            PT01 !== null &&
-            maintainPT_1901 === false
-        ) {
-            const highValue = parseFloat(HighPT01);
-            const lowValue = parseFloat(LowPT01);
-            const PT01Value = parseFloat(PT01);
+    const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+    const highValue = EVC_01_Pressure_High ?? NaN;
+    const lowValue = EVC_01_Pressure_Low ?? NaN;
+    
+    if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+     setExceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+    }
+    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue <= PT01Value || PT01Value <= lowValue) {
-                    if (!audioPT1901) {
-                        audioRef.current?.play();
-                        setAudio1901(true);
-                        setExceedThreshold(true);
-                    }
-                } else {
-                    setAudio1901(false);
-                    setExceedThreshold(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPT_1901]);
-
-    useEffect(() => {
-        if (audioPT1901) {
-            const audioEnded = () => {
-                setAudio1901(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1901]);
-
-    const ChangeMaintainPT_1901 = async () => {
-        try {
-            const newValue = !maintainPT_1901;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1901_maintain: newValue }
-            );
-            setMaintainPT_1901(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain PT-1901 ",
-                detail: "Success",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPT_1901 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1901(),
-        });
-    };
 
     //================================ PT 1901======================================================
-
-    //================================ PT 1902======================================================
-    const [audioPT1902, setAudio1902] = useState(false);
-    const [HighPT02, setHighPT02] = useState<number | null>(null);
-    const [LowPT02, setLowPT02] = useState<number | null>(null);
-    const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
-
-    const op1902 = useRef<OverlayPanel>(null);
-
+    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] = useState(false); 
+    const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighPT02 === "string" &&
-            typeof LowPT02 === "string" &&
-            PT02 !== null &&
-            maintainPT_1902 === false
-        ) {
-            const highValue = parseFloat(HighPT02);
-            const lowValue = parseFloat(LowPT02);
-            const PT02Value = parseFloat(PT02);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue <= PT02Value || PT02Value <= lowValue) {
-                    if (!audioPT1902) {
-                        audioRef.current?.play();
-                        setAudio1902(true);
-                        setExceedThreshold2(true);
-                    }
-                } else {
-                    setAudio1902(false);
-                    setExceedThreshold2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighPT02, PT02, audioPT1902, LowPT02, maintainPT_1902]);
-
-    useEffect(() => {
-        if (audioPT1902) {
-            const audioEnded = () => {
-                setAudio1902(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1902]);
-
-    const ChangeMaintainPT_1902 = async () => {
-        try {
-            const newValue = !maintainPT_1902;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1902_maintain: newValue }
-            );
-            setMaintainPT_1902(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain PT-1902 ",
-                detail: "Success",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPT_1902 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1902(),
-        });
-    };
-
-    //================================ PT 1902======================================================
+    const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+    const highValue = EVC_02_Pressure_High ?? NaN;
+    const lowValue = EVC_02_Pressure_Low ?? NaN;
+    
+    if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
+     setExceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
+    }
+    }, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
 
     //================================ PT 1903======================================================
-    const [audioPT1903, setAudio1903] = useState(false);
-    const [HighPT03, setHighPT03] = useState<number | null>(null);
-    const [LowPT03, setLowPT03] = useState<number | null>(null);
-    const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
-
+    const [PT1, setPT1] = useState<string | null>(null);
+    const [PT1_High, setPT1_High] = useState<number | null>(null);
+    const [PT1_Low, setPT1_Low] = useState<number | null>(null);
+    const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); 
+    const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighPT03 === "string" &&
-            typeof LowPT03 === "string" &&
-            PT03 !== null &&
-            maintainPT_1903 === false
-        ) {
-            const highValue = parseFloat(HighPT03);
-            const lowValue = parseFloat(LowPT03);
-            const PT03Value = parseFloat(PT03);
+    const PT1Value = parseFloat(PT1 as any);
+    const highValue = PT1_High ?? NaN;
+    const lowValue = PT1_Low ?? NaN;
+    
+    if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+     setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+    }
+    }, [PT1, PT1_High, PT1_Low, maintainPT1]);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT03Value)) {
-                if (highValue <= PT03Value || PT03Value <= lowValue) {
-                    if (!audioPT1903) {
-                        audioRef.current?.play();
-                        setAudio1903(true);
-                        setExceedThreshold3(true);
-                    }
-                } else {
-                    setAudio1903(false);
-                    setExceedThreshold3(false);
-                }
-            }
-            fetchData();
+
+
+        //================================ PT 1903======================================================
+        const [GD1, setGD1] = useState<string | null>(null);
+        const [GD1_High, setGD1_High] = useState<number | null>(null);
+        const [GD1_Low, setGD1_Low] = useState<number | null>(null);
+        const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); 
+        const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
+        
+        useEffect(() => {
+        const GD1Value = parseFloat(GD1 as any);
+        const highValue = GD1_High ?? NaN;
+        const lowValue = GD1_Low ?? NaN;
+        
+        if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
+         setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
         }
-    }, [HighPT03, PT03, audioPT1903, LowPT03, maintainPT_1903]);
-
-    useEffect(() => {
-        if (audioPT1903) {
-            const audioEnded = () => {
-                setAudio1903(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1903]);
-
-    const ChangeMaintainPT_1903 = async () => {
-        try {
-            const newValue = !maintainPT_1903;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { PT_1903_maintain: newValue }
-            );
-            setMaintainPT_1903(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain PT-1903 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPT_1903 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1903",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1903(),
-        });
-    };
-
-    //================================ PT 1903======================================================
+        }, [GD1, GD1_High, GD1_Low, maintainGD1]);
+    
 
     //================================ GD 1901 ======================================================
-    const [audioGD01, setAudioGD01] = useState(false);
-    const [HighGD01, setHighGD01] = useState<number | null>(null);
-    const [LowGD01, setLowGD01] = useState<number | null>(null);
-    const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
-
+    const [GD2, setGD2] = useState<string | null>(null);
+    const [GD2_High, setGD2_High] = useState<number | null>(null);
+    const [GD2_Low, setGD2_Low] = useState<number | null>(null);
+    const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); 
+    const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighGD01 === "string" &&
-            typeof LowGD01 === "string" &&
-            GD1 !== null &&
-            maintainGD_1901 === false
-        ) {
-            const highValueGD01 = parseFloat(HighGD01);
-            const lowValueGD01 = parseFloat(LowGD01);
-            const ValueGD01 = parseFloat(GD1);
-
-            if (
-                !isNaN(highValueGD01) &&
-                !isNaN(lowValueGD01) &&
-                !isNaN(ValueGD01)
-            ) {
-                if (highValueGD01 <= ValueGD01 || ValueGD01 <= lowValueGD01) {
-                    if (!audioGD01) {
-                        audioRef.current?.play();
-                        setAudioGD01(true);
-                        setExceedThresholdGD01(true);
-                    }
-                } else {
-                    setAudioGD01(false);
-                    setExceedThresholdGD01(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD01, GD1, audioGD01, LowGD01, maintainGD_1901]);
-
-    useEffect(() => {
-        if (audioGD01) {
-            const audioEnded = () => {
-                setAudioGD01(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD01]);
-
-    const ChangeMaintainGD_01 = async () => {
-        try {
-            const newValue = !maintainGD_1901;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD1_Maintain: newValue }
-            );
-            setMaintainGD_1901(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GD-1901 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGD_1901 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GD-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_01(),
-        });
-    };
-
-    //================================ GD 1901======================================================
+    const GD2Value = parseFloat(GD2 as any);
+    const highValue = GD2_High ?? NaN;
+    const lowValue = GD2_Low ?? NaN;
+    
+    if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
+     setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
+    }
+    }, [GD2, GD2_High, GD2_Low, maintainGD2]);
 
     //================================ GD 1902 ======================================================
-    const [audioGD02, setAudioGD02] = useState(false);
-    const [HighGD02, setHighGD02] = useState<number | null>(null);
-    const [LowGD02, setLowGD02] = useState<number | null>(null);
-    const [exceedThresholdGD02, setExceedThresholdGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighGD02, setInputValueHighGD02] = useState<any>();
-    const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
-    const opGD02 = useRef<OverlayPanel>(null);
+    const [GD3, setGD3] = useState<string | null>(null);
 
-    const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
-
+    const [GD3_High, setGD3_High] = useState<number | null>(null);
+    const [GD3_Low, setGD3_Low] = useState<number | null>(null);
+    const [exceedThresholdGD3, setExceedThresholdGD3] = useState(false); 
+    const [maintainGD3, setMaintainGD3] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighGD02 === "string" &&
-            typeof LowGD02 === "string" &&
-            GD2 !== null &&
-            maintainGD_1902 === false
-        ) {
-            const highValueGD02 = parseFloat(HighGD02);
-            const lowValueGD02 = parseFloat(LowGD02);
-            const ValueGD02 = parseFloat(GD2);
+    const GD3Value = parseFloat(GD3 as any);
+    const highValue = GD3_High ?? NaN;
+    const lowValue = GD3_Low ?? NaN;
+    
+    if (!isNaN(GD3Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD3) {
+     setExceedThresholdGD3(GD3Value >= highValue || GD3Value <= lowValue);
+    }
+    }, [GD3, GD3_High, GD3_Low, maintainGD3]);
 
-            if (
-                !isNaN(highValueGD02) &&
-                !isNaN(lowValueGD02) &&
-                !isNaN(ValueGD02)
-            ) {
-                if (highValueGD02 <= ValueGD02 || ValueGD02 <= lowValueGD02) {
-                    if (!audioGD02) {
-                        audioRef.current?.play();
-                        setAudioGD02(true);
-                        setExceedThresholdGD02(true);
-                    }
-                } else {
-                    setAudioGD02(false);
-                    setExceedThresholdGD02(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD02, GD2, audioGD02, LowGD02, maintainGD_1902]);
-
-    useEffect(() => {
-        if (audioGD02) {
-            const audioEnded = () => {
-                setAudioGD02(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD02]);
-
-    const ChangeMaintainGD_02 = async () => {
-        try {
-            const newValue = !maintainGD_1902;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD2_Maintain: newValue }
-            );
-            setMaintainGD_1902(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GD-1902 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGD_1902 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GD-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_02(),
-        });
-    };
 
     //================================ GD 1902 ======================================================
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
 
-    //================================ GD 1902 ======================================================
-    const [audioGD03, setAudioGD03] = useState(false);
-    const [HighGD03, setHighGD03] = useState<number | null>(null);
-    const [LowGD03, setLowGD03] = useState<number | null>(null);
-    const [exceedThresholdGD03, setExceedThresholdGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighGD03, setInputValueHighGD03] = useState<any>();
-    const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
-    const opGD03 = useRef<OverlayPanel>(null);
-
-    const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
-
+    const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
+    const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighGD03 === "string" &&
-            typeof LowGD03 === "string" &&
-            GD3 !== null &&
-            maintainGD_1903 === false
-        ) {
-            const highValueGD03 = parseFloat(HighGD03);
-            const lowValueGD03 = parseFloat(LowGD03);
-            const ValueGD03 = parseFloat(GD3);
+    const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+    const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+     setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+    }
+    }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
 
-            if (
-                !isNaN(highValueGD03) &&
-                !isNaN(lowValueGD03) &&
-                !isNaN(ValueGD03)
-            ) {
-                if (highValueGD03 <= ValueGD03 || ValueGD03 <= lowValueGD03) {
-                    if (!audioGD03) {
-                        audioRef.current?.play();
-                        setAudioGD03(true);
-                        setExceedThresholdGD03(true);
-                    }
-                } else {
-                    setAudioGD03(false);
-                    setExceedThresholdGD03(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD03, GD3, audioGD03, LowGD03, maintainGD_1903]);
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
+
+
+
+    const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
+
+    const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (audioGD03) {
-            const audioEnded = () => {
-                setAudioGD03(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD03]);
+    const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+    const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+     setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+    }
+    }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
 
-    const ChangeMaintainGD_03 = async () => {
-        try {
-            const newValue = !maintainGD_1903;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GD3_Maintain: newValue }
-            );
-            setMaintainGD_1903(newValue);
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+ 
 
-            toast.current?.show({
-                severity: "info",
-                summary: "GD-1903 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
 
-    const confirmGD_1903 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: "Maintain GD-1903",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_03(),
-        });
-    };
 
-    //================================ GD 1902 ======================================================
 
-    //================================ SVF1 FIQ 1901 ======================================================
-    const [audioSVF1, setAudioSVF1] = useState(false);
-    const [HighSVF1, setHighSVF1] = useState<number | null>(null);
-    const [LowSVF1, setLowSVF1] = useState<number | null>(null);
-    const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
 
-    const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
-
+    const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
+    const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighSVF1 === "string" &&
-            typeof LowSVF1 === "string" &&
-            SVF1 !== null &&
-            maintainSVF1 === false
-        ) {
-            const highValueSVF1 = parseFloat(HighSVF1);
-            const lowValueSVF1 = parseFloat(LowSVF1);
-            const ValueSVF1 = parseFloat(SVF1);
+    const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+    const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+     setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+    }
+    }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
 
-            if (
-                !isNaN(highValueSVF1) &&
-                !isNaN(lowValueSVF1) &&
-                !isNaN(ValueSVF1)
-            ) {
-                if (highValueSVF1 <= ValueSVF1 || ValueSVF1 <= lowValueSVF1) {
-                    if (!audioSVF1) {
-                        audioRef.current?.play();
-                        setAudioSVF1(true);
-                        setExceedThresholdSVF1(true);
-                    }
-                } else {
-                    setAudioSVF1(false);
-                    setExceedThresholdSVF1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVF1, SVF1, audioSVF1, LowSVF1, maintainSVF1]);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+
+
+
+
+    const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
+
+    const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (audioSVF1) {
-            const audioEnded = () => {
-                setAudioSVF1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVF1]);
+    const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+    const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+     setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+    }
+    }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
 
-    const ChangeMaintainSVF_1 = async () => {
-        try {
-            const newValue = !maintainSVF1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVF1_Maintain: newValue }
-            );
-            setMaintainSVF1(newValue);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain SVF FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
 
-    const confirmSVF_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVF FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVF_1(),
-        });
-    };
 
-    //================================ SVF1 FIQ 1901 ======================================================
 
-    //================================ GVF1 FIQ 1901 ======================================================
-    const [audioGVF1, setAudioGVF1] = useState(false);
-    const [HighGVF1, setHighGVF1] = useState<number | null>(null);
-    const [LowGVF1, setLowGVF1] = useState<number | null>(null);
-    const [exceedThresholdGVF1, setExceedThresholdGVF1] = useState(false);
 
-    const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
+    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
 
+    const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); 
+    const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighGVF1 === "string" &&
-            typeof LowGVF1 === "string" &&
-            GVF1 !== null &&
-            maintainGVF1 === false
-        ) {
-            const highValueGVF1 = parseFloat(HighGVF1);
-            const lowValueGVF1 = parseFloat(LowGVF1);
-            const ValueGVF1 = parseFloat(GVF1);
+    const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
+    const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
+     setexceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
+    }
+    }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
 
-            if (
-                !isNaN(highValueGVF1) &&
-                !isNaN(lowValueGVF1) &&
-                !isNaN(ValueGVF1)
-            ) {
-                if (highValueGVF1 <= ValueGVF1 || ValueGVF1 <= lowValueGVF1) {
-                    if (!audioGVF1) {
-                        audioRef.current?.play();
-                        setAudioGVF1(true);
-                        setExceedThresholdGVF1(true);
-                    }
-                } else {
-                    setAudioGVF1(false);
-                    setExceedThresholdGVF1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVF1, GVF1, audioGVF1, LowGVF1, maintainGVF1]);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+
+
+
+    const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
+
+    const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (audioGVF1) {
-            const audioEnded = () => {
-                setAudioGVF1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVF1]);
+    const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
+    const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
+     setexceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
+    }
+    }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
 
-    const ChangeMaintainGVF_1 = async () => {
-        try {
-            const newValue = !maintainGVF1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVF1_Maintain: newValue }
-            );
-            setMaintainGVF1(newValue);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVF FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
 
-    const confirmGVF_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVF FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVF_1(),
-        });
-    };
 
-    //================================ GVF1 FIQ 1901 ======================================================
 
-    //================================ SVA1 FIQ 1901 ======================================================
-    const [audioSVA1, setAudioSVA1] = useState(false);
-    const [HighSVA1, setHighSVA1] = useState<number | null>(null);
-    const [LowSVA1, setLowSVA1] = useState<number | null>(null);
-    const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
+    const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
 
+    const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); 
+    const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (
-            typeof HighSVA1 === "string" &&
-            typeof LowSVA1 === "string" &&
-            SVA1 !== null &&
-            maintainSVA1 === false
-        ) {
-            const highValueSVA1 = parseFloat(HighSVA1);
-            const lowValueSVA1 = parseFloat(LowSVA1);
-            const ValueSVA1 = parseFloat(SVA1);
+    const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
+    const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+    const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
+     setexceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
+    }
+    }, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
 
-            if (
-                !isNaN(highValueSVA1) &&
-                !isNaN(lowValueSVA1) &&
-                !isNaN(ValueSVA1)
-            ) {
-                if (highValueSVA1 <= ValueSVA1 || ValueSVA1 <= lowValueSVA1) {
-                    if (!audioSVA1) {
-                        audioRef.current?.play();
-                        setAudioSVA1(true);
-                        setExceedThresholdSVA1(true);
-                    }
-                } else {
-                    setAudioSVA1(false);
-                    setExceedThresholdSVA1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+
+
+    const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
+
+    const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        if (audioSVA1) {
-            const audioEnded = () => {
-                setAudioSVA1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVA1]);
+    const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+    const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+    const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
+    
+    if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
+     setexceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
+    }
+    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
 
-    const ChangeMaintainSVA_1 = async () => {
-        try {
-            const newValue = !maintainSVA1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVA1_Maintain: newValue }
-            );
-            setMaintainSVA1(newValue);
+    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain SVA FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVA_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVA FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVA_1(),
-        });
-    };
-
-    //================================ SVA1 FIQ 1901 ======================================================
-
-    //================================ GVA1 FIQ 1901 ======================================================
-    const [audioGVA1, setAudioGVA1] = useState(false);
-    const [HighGVA1, setHighGVA1] = useState<number | null>(null);
-    const [LowGVA1, setLowGVA1] = useState<number | null>(null);
-    const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
-
-    const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighGVA1 === "string" &&
-            typeof LowGVA1 === "string" &&
-            GVA1 !== null &&
-            maintainGVA1 === false
-        ) {
-            const highValueGVA1 = parseFloat(HighGVA1);
-            const lowValueGVA1 = parseFloat(LowGVA1);
-            const ValueGVA1 = parseFloat(GVA1);
-
-            if (
-                !isNaN(highValueGVA1) &&
-                !isNaN(lowValueGVA1) &&
-                !isNaN(ValueGVA1)
-            ) {
-                if (highValueGVA1 <= ValueGVA1 || ValueGVA1 <= lowValueGVA1) {
-                    if (!audioGVA1) {
-                        audioRef.current?.play();
-                        setAudioGVA1(true);
-                        setExceedThresholdGVA1(true);
-                    }
-                } else {
-                    setAudioGVA1(false);
-                    setExceedThresholdGVA1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
-
-    useEffect(() => {
-        if (audioGVA1) {
-            const audioEnded = () => {
-                setAudioGVA1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVA1]);
-
-    const ChangeMaintainGVA_1 = async () => {
-        try {
-            const newValue = !maintainGVA1;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVA1_Maintain: newValue }
-            );
-            setMaintainGVA1(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVA FIQ-1901 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVA_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVA FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVA_1(),
-        });
-    };
-
-    //================================ GVA1 FIQ 1901 ======================================================
-
-    //================================ SVF2 FIQ 1901 ======================================================
-    //================================ SVF1 FIQ 1901 ======================================================
-    const [audioSVF2, setAudioSVF2] = useState(false);
-    const [HighSVF2, setHighSVF2] = useState<number | null>(null);
-    const [LowSVF2, setLowSVF2] = useState<number | null>(null);
-    const [exceedThresholdSVF2, setExceedThresholdSVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSVF2 === "string" &&
-            typeof LowSVF2 === "string" &&
-            SVF2 !== null &&
-            maintainSVF2 === false
-        ) {
-            const highValueSVF2 = parseFloat(HighSVF2);
-            const lowValueSVF2 = parseFloat(LowSVF2);
-            const ValueSVF2 = parseFloat(SVF2);
-
-            if (
-                !isNaN(highValueSVF2) &&
-                !isNaN(lowValueSVF2) &&
-                !isNaN(ValueSVF2)
-            ) {
-                if (highValueSVF2 <= ValueSVF2 || ValueSVF2 <= lowValueSVF2) {
-                    if (!audioSVF2) {
-                        audioRef.current?.play();
-                        setAudioSVF2(true);
-                        setExceedThresholdSVF2(true);
-                    }
-                } else {
-                    setAudioSVF2(false);
-                    setExceedThresholdSVF2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVF2, SVF2, audioSVF2, LowSVF2, maintainSVF2]);
-
-    useEffect(() => {
-        if (audioSVF2) {
-            const audioEnded = () => {
-                setAudioSVF2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVF2]);
-
-    const ChangeMaintainSVF_2 = async () => {
-        try {
-            const newValue = !maintainSVF2;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { SVF2_Maintain: newValue }
-            );
-            setMaintainSVF2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain SVF FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVF_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVF FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVF_2(),
-        });
-    };
-
-    //================================ SVF1 FIQ 1901 ======================================================
-
-    //================================ GVF2 FIQ 1901 ======================================================
-    const [audioGVF2, setAudioGVF2] = useState(false);
-    const [HighGVF2, setHighGVF2] = useState<number | null>(null);
-    const [LowGVF2, setLowGVF2] = useState<number | null>(null);
-    const [exceedThresholdGVF2, setExceedThresholdGVF2] = useState(false);
-
-    const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighGVF2 === "string" &&
-            typeof LowGVF2 === "string" &&
-            GVF2 !== null &&
-            maintainGVF2 === false
-        ) {
-            const highValueGVF2 = parseFloat(HighGVF2);
-            const lowValueGVF2 = parseFloat(LowGVF2);
-            const ValueGVF2 = parseFloat(GVF2);
-
-            if (
-                !isNaN(highValueGVF2) &&
-                !isNaN(lowValueGVF2) &&
-                !isNaN(ValueGVF2)
-            ) {
-                if (highValueGVF2 <= ValueGVF2 || ValueGVF2 <= lowValueGVF2) {
-                    if (!audioGVF2) {
-                        audioRef.current?.play();
-                        setAudioGVF2(true);
-                        setExceedThresholdGVF2(true);
-                    }
-                } else {
-                    setAudioGVF2(false);
-                    setExceedThresholdGVF2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVF2, GVF2, audioGVF2, LowGVF2, maintainGVF2]);
-
-    useEffect(() => {
-        if (audioGVF2) {
-            const audioEnded = () => {
-                setAudioGVF2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVF2]);
-
-    const ChangeMaintainGVF_2 = async () => {
-        try {
-            const newValue = !maintainGVF2;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVF2_Maintain: newValue }
-            );
-            setMaintainGVF2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVF FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVF_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVF FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVF_2(),
-        });
-    };
-
-    //================================ GVF1 FIQ 1901 ======================================================
-
-    //================================ SVA2 FIQ 1901 ======================================================
-    const [audioSVA2, setAudioSVA2] = useState(false);
-    const [HighSVA2, setHighSVA2] = useState<number | null>(null);
-    const [LowSVA2, setLowSVA2] = useState<number | null>(null);
-    const [exceedThresholdSVA2, setExceedThresholdSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSVA2 === "string" &&
-            typeof LowSVA2 === "string" &&
-            SVA2 !== null &&
-            maintainSVA2 === false
-        ) {
-            const highValueSVA2 = parseFloat(HighSVA2);
-            const lowValueSVA2 = parseFloat(LowSVA2);
-            const ValueSVA2 = parseFloat(SVA2);
-
-            if (
-                !isNaN(highValueSVA2) &&
-                !isNaN(lowValueSVA2) &&
-                !isNaN(ValueSVA2)
-            ) {
-                if (highValueSVA2 <= ValueSVA2 || ValueSVA2 <= lowValueSVA2) {
-                    if (!audioSVA2) {
-                        audioRef.current?.play();
-                        setAudioSVA2(true);
-                        setExceedThresholdSVA2(true);
-                    }
-                } else {
-                    setAudioSVA2(false);
-                    setExceedThresholdSVA2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVA2, SVA2, audioSVA2, LowSVA2, maintainSVA2]);
-
-    useEffect(() => {
-        if (audioSVA2) {
-            const audioEnded = () => {
-                setAudioSVA2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVA2]);
-
-    //================================ SVA2 FIQ 1901 ======================================================
-
-    //================================ GVA2 FIQ 1901 ======================================================
-    const [audioGVA2, setAudioGVA2] = useState(false);
-    const [HighGVA2, setHighGVA2] = useState<number | null>(null);
-    const [LowGVA2, setLowGVA2] = useState<number | null>(null);
-    const [exceedThresholdGVA2, setExceedThresholdGVA2] = useState(false);
-
-    const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighGVA2 === "string" &&
-            typeof LowGVA2 === "string" &&
-            GVA2 !== null &&
-            maintainGVA2 === false
-        ) {
-            const highValueGVA2 = parseFloat(HighGVA2);
-            const lowValueGVA2 = parseFloat(LowGVA2);
-            const ValueGVA2 = parseFloat(GVA2);
-
-            if (
-                !isNaN(highValueGVA2) &&
-                !isNaN(lowValueGVA2) &&
-                !isNaN(ValueGVA2)
-            ) {
-                if (highValueGVA2 <= ValueGVA2 || ValueGVA2 <= lowValueGVA2) {
-                    if (!audioGVA2) {
-                        audioRef.current?.play();
-                        setAudioGVA2(true);
-                        setExceedThresholdGVA2(true);
-                    }
-                } else {
-                    setAudioGVA2(false);
-                    setExceedThresholdGVA2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVA2, GVA2, audioGVA2, LowGVA2, maintainGVA2]);
-
-    useEffect(() => {
-        if (audioGVA2) {
-            const audioEnded = () => {
-                setAudioGVA2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVA2]);
-
-    const ChangeMaintainGVA_2 = async () => {
-        try {
-            const newValue = !maintainGVA2;
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { GVA2_Maintain: newValue }
-            );
-            setMaintainGVA2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain GVA FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVA_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVA FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVA_2(),
-        });
-    };
-
-    //================================ GVA1 FIQ 1901 ======================================================
 
     const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
@@ -1457,240 +624,240 @@ export default function DemoFlowOTS() {
             const highEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
             );
-            setHighPT01(highEVCPressureItem?.value || null);
+            setEVC_01_Pressure_High(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Low"
             );
-            setLowPT01(lowEVCPressureItem?.value || null);
+            setEVC_01_Pressure_Low(lowEVCPressureItem?.value || null);
 
-            const HighPT1902 = res.data.find(
+            const PT1_High902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_High"
             );
-            setHighPT02(HighPT1902?.value || null);
-            const LowPT1902 = res.data.find(
+            setEVC_02_Pressure_High(PT1_High902?.value || null);
+            const PT1_Low902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Low"
             );
-            setLowPT02(LowPT1902?.value || null);
+            setEVC_02_Pressure_Low(PT1_Low902?.value || null);
 
-            const HighPT1903 = res.data.find(
+            const PT1_High903 = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
-            setHighPT03(HighPT1903?.value || null);
-            const LowPT1903 = res.data.find(
+            setPT1_High(PT1_High903?.value || null);
+            const PT1_Low903 = res.data.find(
                 (item: any) => item.key === "PT1_Low"
             );
-            setLowPT03(LowPT1903?.value || null);
+            setPT1_Low(PT1_Low903?.value || null);
 
-            const HighGD01 = res.data.find(
+            const GD1_High = res.data.find(
                 (item: any) => item.key === "GD1_High"
             );
-            setHighGD01(HighGD01?.value || null);
+            setGD1_High(GD1_High?.value || null);
 
-            const LowGD01 = res.data.find(
+            const GD1_Low = res.data.find(
                 (item: any) => item.key === "GD1_Low"
             );
-            setLowGD01(LowGD01?.value || null);
+            setGD1_Low(GD1_Low?.value || null);
 
-            const HighGD02 = res.data.find(
+            const GD2_High = res.data.find(
                 (item: any) => item.key === "GD2_High"
             );
-            setHighGD02(HighGD02?.value || null);
+            setGD2_High(GD2_High?.value || null);
 
-            const LowGD02 = res.data.find(
+            const GD2_Low = res.data.find(
                 (item: any) => item.key === "GD2_Low"
             );
-            setLowGD02(LowGD02?.value || null);
+            setGD2_Low(GD2_Low?.value || null);
 
-            const HighGD03 = res.data.find(
+            const GD3_High = res.data.find(
                 (item: any) => item.key === "GD3_High"
             );
-            setHighGD03(HighGD03?.value || null);
+            setGD3_High(GD3_High?.value || null);
 
-            const LowGD03 = res.data.find(
+            const GD3_Low = res.data.find(
                 (item: any) => item.key === "GD3_Low"
             );
-            setLowGD03(LowGD03?.value || null);
+            setGD3_Low(GD3_Low?.value || null);
             //========================================================================
 
-            const HighSVF1 = res.data.find(
+            const EVC_01_Flow_at_Base_Condition_High = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setHighSVF1(HighSVF1?.value || null);
+            setEVC_01_Flow_at_Base_Condition_High(EVC_01_Flow_at_Base_Condition_High?.value || null);
 
-            const LowSVF1 = res.data.find(
+            const EVC_01_Flow_at_Base_Condition_Low = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setLowSVF1(LowSVF1?.value || null);
+            setEVC_01_Flow_at_Base_Condition_Low(EVC_01_Flow_at_Base_Condition_Low?.value || null);
             //========================================================================
 
-            const HighGVF1 = res.data.find(
+            const EVC_01_Flow_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setHighGVF1(HighGVF1?.value || null);
+            setEVC_01_Flow_at_Measurement_Condition_High(EVC_01_Flow_at_Measurement_Condition_High?.value || null);
 
-            const LowGVF1 = res.data.find(
+            const EVC_01_Flow_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setLowGVF1(LowGVF1?.value || null);
+            setEVC_01_Flow_at_Measurement_Condition_Low(EVC_01_Flow_at_Measurement_Condition_Low?.value || null);
             //========================================================================
 
-            const HighSVA1 = res.data.find(
+            const EVC_01_Volume_at_Base_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
-            setHighSVA1(HighSVA1?.value || null);
+            setEVC_01_Volume_at_Base_Condition_High(EVC_01_Volume_at_Base_Condition_High?.value || null);
 
-            const LowSVA1 = res.data.find(
+            const EVC_01_Volume_at_Base_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
-            setLowSVA1(LowSVA1?.value || null);
+            setEVC_01_Volume_at_Base_Condition_Low(EVC_01_Volume_at_Base_Condition_Low?.value || null);
             //========================================================================
 
-            const HighGVA1 = res.data.find(
+            const EVC_01_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
-            setHighGVA1(HighGVA1?.value || null);
+            setEVC_01_Volume_at_Measurement_Condition_High(EVC_01_Volume_at_Measurement_Condition_High?.value || null);
 
-            const LowGVA1 = res.data.find(
+            const EVC_01_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
-            setLowGVA1(LowGVA1?.value || null);
+            setEVC_01_Volume_at_Measurement_Condition_Low(EVC_01_Volume_at_Measurement_Condition_Low?.value || null);
             //========================================================================
 
-            const HighSVF2 = res.data.find(
+            const EVC_02_Flow_at_Base_Condition_High = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
-            setHighSVF2(HighSVF2?.value || null);
+            setEVC_02_Flow_at_Base_Condition_High(EVC_02_Flow_at_Base_Condition_High?.value || null);
 
-            const LowSVF2 = res.data.find(
+            const EVC_02_Flow_at_Base_Condition_Low = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
-            setLowSVF2(LowSVF2?.value || null);
+            setEVC_02_Flow_at_Base_Condition_Low(EVC_02_Flow_at_Base_Condition_Low?.value || null);
             //========================================================================
 
-            const HighGVF2 = res.data.find(
+            const EVC_02_Flow_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
-            setHighGVF2(HighGVF2?.value || null);
+            setEVC_02_Flow_at_Measurement_Condition_High(EVC_02_Flow_at_Measurement_Condition_High?.value || null);
 
-            const LowGVF2 = res.data.find(
+            const EVC_02_Flow_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
-            setLowGVF2(LowGVF2?.value || null);
+            setEVC_02_Flow_at_Measurement_Condition_Low(EVC_02_Flow_at_Measurement_Condition_Low?.value || null);
             //========================================================================
 
-            const HighSVA2 = res.data.find(
+            const EVC_02_Volume_at_Base_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_High"
             );
-            setHighSVA2(HighSVA2?.value || null);
+            setEVC_02_Volume_at_Base_Condition_High(EVC_02_Volume_at_Base_Condition_High?.value || null);
 
-            const LowSVA2 = res.data.find(
+            const EVC_02_Volume_at_Base_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
-            setLowSVA2(LowSVA2?.value || null);
+            setEVC_02_Volume_at_Base_Condition_Low(EVC_02_Volume_at_Base_Condition_Low?.value || null);
             //========================================================================
 
-            const HighGVA2 = res.data.find(
+            const EVC_02_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
-            setHighGVA2(HighGVA2?.value || null);
+            setEVC_02_Volume_at_Measurement_Condition_High(EVC_02_Volume_at_Measurement_Condition_High?.value || null);
 
-            const LowGVA2 = res.data.find(
+            const EVC_02_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
-            setLowGVA2(LowGVA2?.value || null);
+            setEVC_02_Volume_at_Measurement_Condition_Low(EVC_02_Volume_at_Measurement_Condition_Low?.value || null);
             //========================================================================
 
-            const MaintainPT_1901 = res.data.find(
+            const maintainEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
-            setMaintainPT_1901(MaintainPT_1901?.value || false);
+            setMaintainEVC_01_Pressure(maintainEVC_01_Pressure?.value || false);
 
-            const MaintainPT_1902 = res.data.find(
+            const maintainEVC_02_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
             );
-            setMaintainPT_1902(MaintainPT_1902?.value || false);
+            setMaintainEVC_02_Pressure(maintainEVC_02_Pressure?.value || false);
 
-            const MaintainPT_1903 = res.data.find(
+            const maintainPT1 = res.data.find(
                 (item: any) => item.key === "PT1_Maintain"
             );
-            setMaintainPT_1903(MaintainPT_1903?.value || false);
+            setMaintainPT1(maintainPT1?.value || false);
 
-            const MaintainGD_1901 = res.data.find(
+            const maintainGD1 = res.data.find(
                 (item: any) => item.key === "GD1_Maintain"
             );
-            setMaintainGD_1901(MaintainGD_1901?.value || false);
+            setMaintainGD1(maintainGD1?.value || false);
 
-            const MaintainGD_1902 = res.data.find(
+            const maintainGD2 = res.data.find(
                 (item: any) => item.key === "GD2_Maintain"
             );
-            setMaintainGD_1902(MaintainGD_1902?.value || false);
+            setMaintainGD2(maintainGD2?.value || false);
 
-            const MaintainGD_1903 = res.data.find(
+            const maintainGD3 = res.data.find(
                 (item: any) => item.key === "GD3_Maintain"
             );
-            setMaintainGD_1903(MaintainGD_1903?.value || false);
+            setMaintainGD3(maintainGD3?.value || false);
 
             const MaintainSVF_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainSVF1(MaintainSVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Base_Condition(MaintainSVF_1?.value || false);
 
             const MaintainGVF_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVF1(MaintainGVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Measurement_Condition(MaintainGVF_1?.value || false);
 
             const MaintainSVA_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainSVA1(MaintainSVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Base_Condition(MaintainSVA_1?.value || false);
 
             const MaintainGVA_1 = res.data.find(
                 (item: any) =>
                     item.key ===
                     "EVC_01_Volume_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVA1(MaintainGVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Measurement_Condition(MaintainGVA_1?.value || false);
 
             const MaintainSVF_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainSVF2(MaintainSVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Base_Condition(MaintainSVF_2?.value || false);
 
             const MaintainGVF_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVF2(MaintainGVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Measurement_Condition(MaintainGVF_2?.value || false);
 
             const MaintainSVA_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainSVA2(MaintainSVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Base_Condition(MaintainSVA_2?.value || false);
 
             const MaintainGVA_2 = res.data.find(
                 (item: any) =>
                     item.key ===
                     "EVC_02_Volume_at_Measurement_Condition_Maintain"
             );
-            setMaintainGVA2(MaintainGVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Measurement_Condition(MaintainGVA_2?.value || false);
 
             const LineDuty1901 = res.data.find(
                 (item: any) => item.key === "FIQ1901_LineDuty"
@@ -1747,8 +914,8 @@ export default function DemoFlowOTS() {
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
-                const roundedSVF1 =
-                    SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+                const roundedEVC_01_Flow_at_Base_Condition =
+                    EVC_01_Flow_at_Base_Condition !== null ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1765,9 +932,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVF1 && !maintainSVF1
+                                        exceedThresholdEVC_01_Flow_at_Base_Condition && !maintainEVC_01_Flow_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVF1
+                                            : maintainEVC_01_Flow_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1790,7 +957,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF1}
+                                        {roundedEVC_01_Flow_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1808,8 +975,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data3") {
-                const roundedGVF1 =
-                    GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+                const roundedEVC_01_Flow_at_Measurement_Condition =
+                    EVC_01_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_01_Flow_at_Measurement_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1826,9 +993,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVF1 && !maintainGVF1
+                                        exceedThresholdEVC_01_Flow_at_Measurement_Condition && !maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVF1
+                                            : maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1851,7 +1018,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF1}
+                                        {roundedEVC_01_Flow_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1869,8 +1036,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data2") {
-                const roundedSVA1 =
-                    SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
+                const roundedEVC_01_Volume_at_Base_Condition =
+                    EVC_01_Volume_at_Base_Condition !== null ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1887,9 +1054,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVA1 && !maintainSVA1
+                                        exceedThresholdEVC_01_Volume_at_Base_Condition && !maintainEVC_01_Volume_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVA1
+                                            : maintainEVC_01_Volume_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1912,7 +1079,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVA1}
+                                        {roundedEVC_01_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1930,8 +1097,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data1") {
-                const roundedGVA1 =
-                    GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
+                const roundedEVC_01_Volume_at_Measurement_Condition =
+                    EVC_01_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_01_Volume_at_Measurement_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1949,9 +1116,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     background:
-                                        exceedThresholdGVA1 && !maintainGVA1
+                                        exceedThresholdEVC_01_Volume_at_Measurement_Condition && !maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVA1
+                                            : maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1975,7 +1142,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVA1}
+                                        {roundedEVC_01_Volume_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1993,8 +1160,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data5") {
-                const roundedSVF2 =
-                    SVF2 !== null ? parseFloat(SVF2).toFixed(2) : "";
+                const roundedEVC_02_Flow_at_Base_Condition =
+                    EVC_02_Flow_at_Base_Condition !== null ? parseFloat(EVC_02_Flow_at_Base_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2012,9 +1179,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVF2 && !maintainSVF2
+                                        exceedThresholdEVC_02_Flow_at_Base_Condition && !maintainEVC_02_Flow_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVF2
+                                            : maintainEVC_02_Flow_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2037,7 +1204,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF2}
+                                        {roundedEVC_02_Flow_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2055,8 +1222,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data6") {
-                const roundedGVF2 =
-                    GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
+                const roundedEVC_02_Flow_at_Measurement_Condition =
+                    EVC_02_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_02_Flow_at_Measurement_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2074,9 +1241,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVF2 && !maintainGVF2
+                                        exceedThresholdEVC_02_Flow_at_Measurement_Condition && !maintainEVC_02_Flow_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVF2
+                                            : maintainEVC_02_Flow_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2099,7 +1266,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF2}
+                                        {roundedEVC_02_Flow_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2117,8 +1284,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data7") {
-                const roundedSVA2 =
-                    SVA2 !== null ? parseFloat(SVA2).toFixed(2) : "";
+                const roundedEVC_02_Volume_at_Base_Condition =
+                    EVC_02_Volume_at_Base_Condition !== null ? parseFloat(EVC_02_Volume_at_Base_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2136,9 +1303,9 @@ export default function DemoFlowOTS() {
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVA2 && !maintainSVA2
+                                        exceedThresholdEVC_02_Volume_at_Base_Condition && !maintainEVC_02_Volume_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainSVA2
+                                            : maintainEVC_02_Volume_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2161,7 +1328,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedSVA2}
+                                        {roundedEVC_02_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2179,8 +1346,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "data8") {
-                const roundedGVA2 =
-                    GVA2 !== null ? parseFloat(GVA2).toFixed(2) : "";
+                const roundedEVC_02_Volume_at_Measurement_Condition =
+                    EVC_02_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_02_Volume_at_Measurement_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2197,9 +1364,9 @@ export default function DemoFlowOTS() {
                                     bottom: 8,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVA2 && !maintainGVA2
+                                        exceedThresholdEVC_02_Volume_at_Measurement_Condition && !maintainEVC_02_Volume_at_Measurement_Condition
                                             ? "#ff5656"
-                                            : maintainGVA2
+                                            : maintainEVC_02_Volume_at_Measurement_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2222,7 +1389,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedGVA2}
+                                        {roundedEVC_02_Volume_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2240,8 +1407,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT03 =
-                    PT03 !== null ? parseFloat(PT03).toFixed(2) : "";
+                const roundedPT1 =
+                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2258,9 +1425,9 @@ export default function DemoFlowOTS() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold3 && !maintainPT_1903
+                                        exceedThresholdPT1 && !maintainPT1
                                             ? "#ff5656"
-                                            : maintainPT_1903
+                                            : maintainPT1
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2283,7 +1450,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT03}
+                                        {roundedPT1}
                                     </p>
                                 </div>
                                 <p
@@ -2301,8 +1468,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "Pressure_Trans02") {
-                const roundedPT01 =
-                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+                const roundedEVC_01_Pressure =
+                    EVC_01_Pressure !== null ? parseFloat(EVC_01_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2319,9 +1486,9 @@ export default function DemoFlowOTS() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainPT_1901
+                                        exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure
                                             ? "#ff5656"
-                                            : maintainPT_1901
+                                            : maintainEVC_01_Pressure
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2344,7 +1511,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT01}
+                                        {roundedEVC_01_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2362,8 +1529,8 @@ export default function DemoFlowOTS() {
                 };
             }
             if (node.id === "Pressure_Trans03") {
-                const roundedPT02 =
-                    PT02 !== null ? parseFloat(PT02).toFixed(2) : "";
+                const roundedEVC_02_Pressure =
+                    EVC_02_Pressure !== null ? parseFloat(EVC_02_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2380,9 +1547,9 @@ export default function DemoFlowOTS() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold2 && !maintainPT_1902
+                                        exceedThresholdEVC_02_Pressure && !maintainEVC_02_Pressure
                                             ? "#ff5656"
-                                            : maintainPT_1902
+                                            : maintainEVC_02_Pressure
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2406,7 +1573,7 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {roundedEVC_02_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2535,7 +1702,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Un Active
+                                                Inactive
                                             </span>
                                         )}
                                     </p>
@@ -2601,43 +1768,43 @@ export default function DemoFlowOTS() {
                                 <div>
                                     <p
                                         style={{
+                                            color: 'white',
+                                            
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                          {EVC_01_Conn_STTValue}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: background,
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        {/* {EVC_01_Conn_STTValue} */}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: background,
+
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        {/* {EVC_02_Conn_STTValue} */}
+                                    </p>
+                                    <p
+                                        style={{
                                             color: background,
 
                                             fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        null
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {EVC_01_Conn_STTValue}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {EVC_02_Conn_STTValue}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {PLC_Conn_STT}
+                                        {/* {PLC_Conn_STT} */}
                                     </p>
                                 </div>
                             </div>
@@ -2667,9 +1834,9 @@ export default function DemoFlowOTS() {
 
                                     right: 4,
                                     backgroundColor:
-                                        exceedThresholdGD01 && !maintainGD_1901
+                                        exceedThresholdGD1 && !maintainGD1
                                             ? "#ff5656"
-                                            : maintainGD_1901
+                                            : maintainGD1
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2703,9 +1870,9 @@ export default function DemoFlowOTS() {
                                     right: 4,
 
                                     backgroundColor:
-                                        exceedThresholdGD02 && !maintainGD_1902
+                                        exceedThresholdGD2 && !maintainGD2
                                             ? "#ff5656"
-                                            : maintainGD_1902
+                                            : maintainGD2
                                             ? "orange"
                                             : "transparent",
 
@@ -2740,9 +1907,9 @@ export default function DemoFlowOTS() {
                                     right: 4,
 
                                     backgroundColor:
-                                        exceedThresholdGD03 && !maintainGD_1903
+                                        exceedThresholdGD3 && !maintainGD3
                                             ? "#ff5656"
-                                            : maintainGD_1903
+                                            : maintainGD3
                                             ? "orange"
                                             : "transparent",
 
@@ -6239,7 +5406,7 @@ export default function DemoFlowOTS() {
                         timeUpdate3: position,
                     }));
                 }
-                // ============= Connected ===================
+                // ============= CONNECTED ===================
                 else if (id === "ConnectData") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,

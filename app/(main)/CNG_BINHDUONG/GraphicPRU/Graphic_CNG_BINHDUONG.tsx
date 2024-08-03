@@ -31,6 +31,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
 import AlarmCNG_BINHDUONG from "@/layout/AlarmBell/AlarmCNG_BINHDUONG";
+import { nameValue } from "../../SetupData/namValue";
 
 interface StateMap {
     [key: string]:
@@ -63,49 +64,7 @@ export default function Graphic_CNG_BINHDUONG() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const toast = useRef<Toast>(null);
-
-    const [PIT_2006, setPIT_2006] = useState<string | null>(null);
-    const [PIT_2007, setPIT_2007] = useState<string | null>(null);
-    const [PT_2001, setPT_2001] = useState<string | null>(null);
-    const [PT_2002, setPT_2002] = useState<string | null>(null);
-    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-
-    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
-        null
-    );
-    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
-        null
-    );
-    const [
-        EVC_01_Flow_at_Measurement_Condition,
-        setEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
-        useState<string | null>(null);
-    const [
-        EVC_01_Volume_at_Base_Condition,
-        setEVC_01_Volume_at_Base_Condition,
-    ] = useState<string | null>(null);
-    const [
-        EVC_01_Volume_at_Measurement_Condition,
-        setEVC_01_Volume_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-
-    const [
-        EVC_02_Flow_at_Measurement_Condition,
-        setEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] =
-        useState<string | null>(null);
-    const [
-        EVC_02_Volume_at_Base_Condition,
-        setEVC_02_Volume_at_Base_Condition,
-    ] = useState<string | null>(null);
-    const [
-        EVC_02_Volume_at_Measurement_Condition,
-        setEVC_02_Volume_at_Measurement_Condition,
-    ] = useState<string | null>(null);
+ 
     const [PCV_2001A, setPCV_2001A] = useState();
     const [PCV_2001B, setPCV_2001B] = useState();
     const [PCV_2002A, setPCV_2002A] = useState();
@@ -453,11 +412,11 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighPIT_2006 = res.data.find(
                 (item: any) => item.key === "PIT_2006_High"
             );
-            setHighPIT_2006(HighPIT_2006?.value || null);
+            setPIT_2006_High(HighPIT_2006?.value || null);
             const LowPIT_2006 = res.data.find(
                 (item: any) => item.key === "PIT_2006_Low"
             );
-            setLowPIT_2006(LowPIT_2006?.value || null);
+            setPIT_2006_Low(LowPIT_2006?.value || null);
 
             const MaintainPIT_2006 = res.data.find(
                 (item: any) => item.key === "PIT_2006_Maintain"
@@ -468,11 +427,11 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighPIT_2007 = res.data.find(
                 (item: any) => item.key === "PIT_2007_High"
             );
-            setHighPIT_2007(HighPIT_2007?.value || null);
+            setPIT_2007_High(HighPIT_2007?.value || null);
             const LowPIT_2007 = res.data.find(
                 (item: any) => item.key === "PIT_2007_Low"
             );
-            setLowPIT_2007(LowPIT_2007?.value || null);
+            setPIT_2007_Low(LowPIT_2007?.value || null);
 
             const MaintainPIT_2007 = res.data.find(
                 (item: any) => item.key === "PIT_2007_Maintain"
@@ -483,11 +442,11 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighPT_2001 = res.data.find(
                 (item: any) => item.key === "PT_2001_High"
             );
-            setHighPT_2001(HighPT_2001?.value || null);
+            setPT_2001_High(HighPT_2001?.value || null);
             const LowPT_2001 = res.data.find(
                 (item: any) => item.key === "PT_2001_Low"
             );
-            setLowPT_2001(LowPT_2001?.value || null);
+            setPT_2001_Low(LowPT_2001?.value || null);
 
             const PT_2001_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2001_Maintain"
@@ -499,12 +458,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighPT_2002 = res.data.find(
                 (item: any) => item.key === "PT_2002_High"
             );
-            setHighPT_2002(HighPT_2002?.value || null);
+            setPT_2002_High(HighPT_2002?.value || null);
 
             const LowPT_2002 = res.data.find(
                 (item: any) => item.key === "PT_2002_Low"
             );
-            setLowPT_2002(LowPT_2002?.value || null);
+            setPT_2002_Low(LowPT_2002?.value || null);
 
             const PT_2002_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2002_Maintain"
@@ -515,12 +474,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
             );
-            setHighEVC_01_Pressure(HighEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_High(HighEVC_01_Pressure?.value || null);
 
             const LowEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Low"
             );
-            setLowEVC_01_Pressure(LowEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_Low(LowEVC_01_Pressure?.value || null);
 
             const EVC_01_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
@@ -534,12 +493,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_02_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_High"
             );
-            setHighEVC_02_Pressure(HighEVC_02_Pressure?.value || null);
+            setEVC_02_Pressure_High(HighEVC_02_Pressure?.value || null);
 
             const LowEVC_02_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Low"
             );
-            setLowEVC_02_Pressure(LowEVC_02_Pressure?.value || null);
+            setEVC_02_Pressure_Low(LowEVC_02_Pressure?.value || null);
             const EVC_02_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
             );
@@ -552,12 +511,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_01_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_High"
             );
-            setHighEVC_01_Temperature(HighEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_High(HighEVC_01_Temperature?.value || null);
 
             const LowEVC_01_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Low"
             );
-            setLowEVC_01_Temperature(LowEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_Low(LowEVC_01_Temperature?.value || null);
             const EVC_01_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
@@ -570,12 +529,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_02_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_High"
             );
-            setHighEVC_02_Temperature(HighEVC_02_Temperature?.value || null);
+            setEVC_02_Temperature_High(HighEVC_02_Temperature?.value || null);
 
             const LowEVC_02_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Low"
             );
-            setLowEVC_02_Temperature(LowEVC_02_Temperature?.value || null);
+            setEVC_02_Temperature_Low(LowEVC_02_Temperature?.value || null);
 
             const EVC_02_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Maintain"
@@ -585,49 +544,17 @@ export default function Graphic_CNG_BINHDUONG() {
             );
             //===========================================================================================
 
-            const HighSDV_2001A = res.data.find(
-                (item: any) => item.key === "SDV_2001A_High"
-            );
-            setHighSDV_2001A(HighSDV_2001A?.value || null);
-
-            const LowSDV_2001A = res.data.find(
-                (item: any) => item.key === "SDV_2001A_Low"
-            );
-            setLowSDV_2001A(LowSDV_2001A?.value || null);
-
-            const SDV_2001A_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2001A_Maintain"
-            );
-            setMaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
-            //===========================================================================================
-
-            const HighSDV_2002 = res.data.find(
-                (item: any) => item.key === "SDV_2002_High"
-            );
-            setHighSDV_2002(HighSDV_2002?.value || null);
-
-            const LowSDV_2002 = res.data.find(
-                (item: any) => item.key === "SDV_2002_Low"
-            );
-            setLowSDV_2002(LowSDV_2002?.value || null);
-
-            const SDV_2002_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2002_Maintain"
-            );
-            setMaintainSDV_2002(SDV_2002_Maintain?.value || false);
-
-            //===========================================================================================
             //===========================================================================================
 
             const HighTT_2001 = res.data.find(
                 (item: any) => item.key === "TT_2001_High"
             );
-            setHighTT_2001(HighTT_2001?.value || null);
+            setTT_2001_High(HighTT_2001?.value || null);
 
             const LowTT_2001 = res.data.find(
                 (item: any) => item.key === "TT_2001_Low"
             );
-            setLowTT_2001(LowTT_2001?.value || null);
+            setTT_2001_Low(LowTT_2001?.value || null);
 
             const TT_2001_Maintain = res.data.find(
                 (item: any) => item.key === "TT_2001_Maintain"
@@ -639,12 +566,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighPT_2003 = res.data.find(
                 (item: any) => item.key === "PT_2003_High"
             );
-            setHighPT_2003(HighPT_2003?.value || null);
+            setPT_2003_High(HighPT_2003?.value || null);
 
             const LowPT_2003 = res.data.find(
                 (item: any) => item.key === "PT_2003_Low"
             );
-            setLowPT_2003(LowPT_2003?.value || null);
+            setPT_2003_Low(LowPT_2003?.value || null);
 
             const PT_2003_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2003_Maintain"
@@ -656,12 +583,12 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighGD_2001 = res.data.find(
                 (item: any) => item.key === "GD_2001_High"
             );
-            setHighGD_2001(HighGD_2001?.value || null);
+            setGD_2001_High(HighGD_2001?.value || null);
 
             const LowGD_2001 = res.data.find(
                 (item: any) => item.key === "GD_2001_Low"
             );
-            setLowGD_2001(LowGD_2001?.value || null);
+            setGD_2001_Low(LowGD_2001?.value || null);
 
             const GD_2001_Maintain = res.data.find(
                 (item: any) => item.key === "GD_2001_Maintain"
@@ -673,14 +600,14 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setHighEVC_01_Flow_at_Base_Condition(
+            setEVC_01_Flow_at_Base_Condition_High(
                 HighEVC_01_Flow_at_Base_Condition?.value || null
             );
 
             const LowEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setLowEVC_01_Flow_at_Base_Condition(
+            setEVC_01_Flow_at_Base_Condition_Low(
                 LowEVC_01_Flow_at_Base_Condition?.value || null
             );
 
@@ -699,7 +626,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setHighEVC_01_Flow_at_Measurement_Condition(
+            setEVC_01_Flow_at_Measurement_Condition_High(
                 HighEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -707,7 +634,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setLowEVC_01_Flow_at_Measurement_Condition(
+            setEVC_01_Flow_at_Measurement_Condition_Low(
                 LowEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -726,7 +653,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
-            setHighEVC_01_Volume_at_Base_Condition(
+            setEVC_01_Volume_at_Base_Condition_High(
                 HighEVC_01_Volume_at_Base_Condition?.value || null
             );
 
@@ -734,7 +661,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
-            setLowEVC_01_Volume_at_Base_Condition(
+            setEVC_01_Volume_at_Base_Condition_Low(
                 LowEVC_01_Volume_at_Base_Condition?.value || null
             );
 
@@ -753,7 +680,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
-            setHighEVC_01_Volume_at_Measurement_Condition(
+            setEVC_01_Volume_at_Measurement_Condition_High(
                 HighEVC_01_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -761,7 +688,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
-            setLowEVC_01_Volume_at_Measurement_Condition(
+            setEVC_01_Volume_at_Measurement_Condition_Low(
                 LowEVC_01_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -780,14 +707,14 @@ export default function Graphic_CNG_BINHDUONG() {
             const HighEVC_02_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
-            setHighEVC_02_Flow_at_Base_Condition(
+            setEVC_02_Flow_at_Base_Condition_High(
                 HighEVC_02_Flow_at_Base_Condition?.value || null
             );
 
             const LowEVC_02_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
-            setLowEVC_02_Flow_at_Base_Condition(
+            setEVC_02_Flow_at_Base_Condition_Low(
                 LowEVC_02_Flow_at_Base_Condition?.value || null
             );
 
@@ -806,7 +733,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
-            setHighEVC_02_Flow_at_Measurement_Condition(
+            setEVC_02_Flow_at_Measurement_Condition_High(
                 HighEVC_02_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -814,7 +741,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
-            setLowEVC_02_Flow_at_Measurement_Condition(
+            setEVC_02_Flow_at_Measurement_Condition_Low(
                 LowEVC_02_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -832,7 +759,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_High"
             );
-            setHighEVC_02_Volume_at_Base_Condition(
+            setEVC_02_Volume_at_Base_Condition_High(
                 HighEVC_02_Volume_at_Base_Condition?.value || null
             );
 
@@ -840,7 +767,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
-            setLowEVC_02_Volume_at_Base_Condition(
+            setEVC_02_Volume_at_Base_Condition_Low(
                 LowEVC_02_Volume_at_Base_Condition?.value || null
             );
 
@@ -859,7 +786,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
-            setHighEVC_02_Volume_at_Measurement_Condition(
+            setEVC_02_Volume_at_Measurement_Condition_High(
                 HighEVC_02_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -867,7 +794,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
-            setLowEVC_02_Volume_at_Measurement_Condition(
+            setEVC_02_Volume_at_Measurement_Condition_Low(
                 LowEVC_02_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -904,1512 +831,545 @@ export default function Graphic_CNG_BINHDUONG() {
         TT: "TT",
     };
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
-        BARG: "BARG",
+        BARG: "BarG",
     };
     //================================ PIT_2006================================
 
-    const [audioPIT_2006, setaudioPIT_2006] = useState(false);
-    const [HighPIT_2006, setHighPIT_2006] = useState<number | null>(null);
-    const [LowPIT_2006, setLowPIT_2006] = useState<number | null>(null);
-    const [audioColorPIT_2006, setaudioColorPIT_2006] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [PIT_2006, setPIT_2006] = useState<string | null>(null);
 
+    const [PIT_2006_High, setPIT_2006_High] = useState<number | null>(null);
+    const [PIT_2006_Low, setPIT_2006_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_2006, setExceedThresholdPIT_2006] =
+        useState(false);
     const [maintainPIT_2006, setMaintainPIT_2006] = useState<boolean>(false);
-
     useEffect(() => {
+        const PIT_2006Value = parseFloat(PIT_2006 as any);
+        const highValue = PIT_2006_High ?? NaN;
+        const lowValue = PIT_2006_Low ?? NaN;
+
         if (
-            typeof HighPIT_2006 === "string" &&
-            typeof LowPIT_2006 === "string" &&
-            PIT_2006 !== null &&
-            maintainPIT_2006 === false
+            !isNaN(PIT_2006Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_2006
         ) {
-            const highValue = parseFloat(HighPIT_2006);
-            const lowValue = parseFloat(LowPIT_2006);
-            const PIT_2006Value = parseFloat(PIT_2006);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_2006Value)
-            ) {
-                if (highValue < PIT_2006Value || PIT_2006Value < lowValue) {
-                    if (!audioPIT_2006) {
-                        audioRef.current?.play();
-                        setaudioPIT_2006(true);
-                        setaudioColorPIT_2006(true);
-                    }
-                } else {
-                    setaudioPIT_2006(false);
-                    setaudioColorPIT_2006(false);
-                }
-            }
+            setExceedThresholdPIT_2006(
+                PIT_2006Value >= highValue || PIT_2006Value <= lowValue
+            );
         }
-    }, [HighPIT_2006, PIT_2006, audioPIT_2006, LowPIT_2006, maintainPIT_2006]);
-
-    useEffect(() => {
-        if (audioPIT_2006) {
-            const audioEnded = () => {
-                setaudioPIT_2006(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_2006]);
-
-    //================================ PIT_2006======================================================
+    }, [PIT_2006, PIT_2006_High, PIT_2006_Low, maintainPIT_2006]);
 
     //================================ PIT_2007================================
 
-    const [audioPIT_2007, setaudioPIT_2007] = useState(false);
-    const [HighPIT_2007, setHighPIT_2007] = useState<number | null>(null);
-    const [LowPIT_2007, setLowPIT_2007] = useState<number | null>(null);
-    const [audioColorPIT_2007, setaudioColorPIT_2007] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [PIT_2007, setPIT_2007] = useState<string | null>(null);
 
+    const [PIT_2007_High, setPIT_2007_High] = useState<number | null>(null);
+    const [PIT_2007_Low, setPIT_2007_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_2007, setExceedThresholdPIT_2007] =
+        useState(false);
     const [maintainPIT_2007, setMaintainPIT_2007] = useState<boolean>(false);
-
     useEffect(() => {
+        const PIT_2007Value = parseFloat(PIT_2007 as any);
+        const highValue = PIT_2007_High ?? NaN;
+        const lowValue = PIT_2007_Low ?? NaN;
+
         if (
-            typeof HighPIT_2007 === "string" &&
-            typeof LowPIT_2007 === "string" &&
-            PIT_2007 !== null &&
-            maintainPIT_2007 === false
+            !isNaN(PIT_2007Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_2007
         ) {
-            const highValue = parseFloat(HighPIT_2007);
-            const lowValue = parseFloat(LowPIT_2007);
-            const PIT_2007Value = parseFloat(PIT_2007);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_2007Value)
-            ) {
-                if (highValue < PIT_2007Value || PIT_2007Value < lowValue) {
-                    if (!audioPIT_2007) {
-                        audioRef.current?.play();
-                        setaudioPIT_2007(true);
-                        setaudioColorPIT_2007(true);
-                    }
-                } else {
-                    setaudioPIT_2007(false);
-                    setaudioColorPIT_2007(false);
-                }
-            }
+            setExceedThresholdPIT_2007(
+                PIT_2007Value >= highValue || PIT_2007Value <= lowValue
+            );
         }
-    }, [HighPIT_2007, PIT_2007, audioPIT_2007, LowPIT_2007, maintainPIT_2007]);
-
-    useEffect(() => {
-        if (audioPIT_2007) {
-            const audioEnded = () => {
-                setaudioPIT_2007(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_2007]);
-
-    //================================ PIT_2007 ======================================================
+    }, [PIT_2007, PIT_2007_High, PIT_2007_Low, maintainPIT_2007]);
 
     //================================ PT_2001================================
 
-    const [audioPT_2001, setaudioPT_2001] = useState(false);
-    const [HighPT_2001, setHighPT_2001] = useState<number | null>(null);
-    const [LowPT_2001, setLowPT_2001] = useState<number | null>(null);
-    const [audioColorPT_2001, setaudioColorPT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [PT_2001, setPT_2001] = useState<string | null>(null);
+    const [PT_2001_High, setPT_2001_High] = useState<number | null>(null);
+    const [PT_2001_Low, setPT_2001_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2001, setExceedThresholdPT_2001] = useState(false);
     const [maintainPT_2001, setMaintainPT_2001] = useState<boolean>(false);
-
     useEffect(() => {
+        const PT_2001Value = parseFloat(PT_2001 as any);
+        const highValue = PT_2001_High ?? NaN;
+        const lowValue = PT_2001_Low ?? NaN;
+
         if (
-            typeof HighPT_2001 === "string" &&
-            typeof LowPT_2001 === "string" &&
-            PT_2001 !== null &&
-            maintainPT_2001 === false
+            !isNaN(PT_2001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_2001
         ) {
-            const highValue = parseFloat(HighPT_2001);
-            const lowValue = parseFloat(LowPT_2001);
-            const PT_2001Value = parseFloat(PT_2001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2001Value)) {
-                if (highValue < PT_2001Value || PT_2001Value < lowValue) {
-                    if (!audioPT_2001) {
-                        audioRef.current?.play();
-                        setaudioPT_2001(true);
-                        setaudioColorPT_2001(true);
-                    }
-                } else {
-                    setaudioPT_2001(false);
-                    setaudioColorPT_2001(false);
-                }
-            }
+            setExceedThresholdPT_2001(
+                PT_2001Value >= highValue || PT_2001Value <= lowValue
+            );
         }
-    }, [HighPT_2001, PT_2001, audioPT_2001, LowPT_2001, maintainPT_2001]);
-
-    useEffect(() => {
-        if (audioPT_2001) {
-            const audioEnded = () => {
-                setaudioPT_2001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT_2001]);
-
-    //================================ PT_2001 ======================================================
+    }, [PT_2001, PT_2001_High, PT_2001_Low, maintainPT_2001]);
 
     //================================ PT_2002================================
-
-    const [audioPT_2002, setaudioPT_2002] = useState(false);
-    const [HighPT_2002, setHighPT_2002] = useState<number | null>(null);
-    const [LowPT_2002, setLowPT_2002] = useState<number | null>(null);
-    const [audioColorPT_2002, setaudioColorPT_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [PT_2002, setPT_2002] = useState<string | null>(null);
+    const [PT_2002_High, setPT_2002_High] = useState<number | null>(null);
+    const [PT_2002_Low, setPT_2002_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2002, setExceedThresholdPT_2002] = useState(false);
     const [maintainPT_2002, setMaintainPT_2002] = useState<boolean>(false);
-
     useEffect(() => {
+        const PT_2002Value = parseFloat(PT_2002 as any);
+        const highValue = PT_2002_High ?? NaN;
+        const lowValue = PT_2002_Low ?? NaN;
+
         if (
-            typeof HighPT_2002 === "string" &&
-            typeof LowPT_2002 === "string" &&
-            PT_2002 !== null &&
-            maintainPT_2002 === false
+            !isNaN(PT_2002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_2002
         ) {
-            const highValue = parseFloat(HighPT_2002);
-            const lowValue = parseFloat(LowPT_2002);
-            const PT_2002Value = parseFloat(PT_2002);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2002Value)) {
-                if (highValue < PT_2002Value || PT_2002Value < lowValue) {
-                    if (!audioPT_2002) {
-                        audioRef.current?.play();
-                        setaudioPT_2002(true);
-                        setaudioColorPT_2002(true);
-                    }
-                } else {
-                    setaudioPT_2002(false);
-                    setaudioColorPT_2002(false);
-                }
-            }
+            setExceedThresholdPT_2002(
+                PT_2002Value >= highValue || PT_2002Value <= lowValue
+            );
         }
-    }, [HighPT_2002, PT_2002, audioPT_2002, LowPT_2002, maintainPT_2002]);
-
-    useEffect(() => {
-        if (audioPT_2002) {
-            const audioEnded = () => {
-                setaudioPT_2002(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT_2002]);
-
-    //================================ PT_2002 ======================================================
+    }, [PT_2002, PT_2002_High, PT_2002_Low, maintainPT_2002]);
 
     //================================ EVC_02_Pressure================================
-
-    const [audioEVC_02_Pressure, setaudioEVC_02_Pressure] = useState(false);
-    const [HighEVC_02_Pressure, setHighEVC_02_Pressure] = useState<
+    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
         number | null
     >(null);
-    const [LowEVC_02_Pressure, setLowEVC_02_Pressure] = useState<number | null>(
-        null
-    );
-    const [audioColorEVC_02_Pressure, setaudioColorEVC_02_Pressure] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] =
+        useState(false);
     const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] =
         useState<boolean>(false);
-
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Pressure === "string" &&
-            typeof LowEVC_02_Pressure === "string" &&
-            EVC_02_Pressure !== null &&
-            maintainEVC_02_Pressure === false
-        ) {
-            const highValue = parseFloat(HighEVC_02_Pressure);
-            const lowValue = parseFloat(LowEVC_02_Pressure);
-            const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_02_PressureValue)
-            ) {
-                if (
-                    highValue < EVC_02_PressureValue ||
-                    EVC_02_PressureValue < lowValue
-                ) {
-                    if (!audioEVC_02_Pressure) {
-                        audioRef.current?.play();
-                        setaudioEVC_02_Pressure(true);
-                        setaudioColorEVC_02_Pressure(true);
-                    }
-                } else {
-                    setaudioEVC_02_Pressure(false);
-                    setaudioColorEVC_02_Pressure(false);
-                }
-            }
+        if (
+            !isNaN(EVC_02_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Pressure
+        ) {
+            setExceedThresholdEVC_02_Pressure(
+                EVC_02_PressureValue >= highValue ||
+                    EVC_02_PressureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Pressure,
         EVC_02_Pressure,
-        audioEVC_02_Pressure,
-        LowEVC_02_Pressure,
+        EVC_02_Pressure_High,
+        EVC_02_Pressure_Low,
         maintainEVC_02_Pressure,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Pressure) {
-            const audioEnded = () => {
-                setaudioEVC_02_Pressure(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Pressure]);
-
-    //================================ EVC_02_Pressure ======================================================
-
     //================================ EVC_01_Pressure================================
 
-    const [audioEVC_01_Pressure, setaudioEVC_01_Pressure] = useState(false);
-    const [HighEVC_01_Pressure, setHighEVC_01_Pressure] = useState<
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
         number | null
     >(null);
-    const [LowEVC_01_Pressure, setLowEVC_01_Pressure] = useState<number | null>(
-        null
-    );
-    const [audioColorEVC_01_Pressure, setaudioColorEVC_01_Pressure] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] =
+        useState(false);
     const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] =
         useState<boolean>(false);
-
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Pressure === "string" &&
-            typeof LowEVC_01_Pressure === "string" &&
-            EVC_01_Pressure !== null &&
-            maintainEVC_01_Pressure === false
-        ) {
-            const highValue = parseFloat(HighEVC_01_Pressure);
-            const lowValue = parseFloat(LowEVC_01_Pressure);
-            const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_01_PressureValue)
-            ) {
-                if (
-                    highValue < EVC_01_PressureValue ||
-                    EVC_01_PressureValue < lowValue
-                ) {
-                    if (!audioEVC_01_Pressure) {
-                        audioRef.current?.play();
-                        setaudioEVC_01_Pressure(true);
-                        setaudioColorEVC_01_Pressure(true);
-                    }
-                } else {
-                    setaudioEVC_01_Pressure(false);
-                    setaudioColorEVC_01_Pressure(false);
-                }
-            }
+        if (
+            !isNaN(EVC_01_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Pressure
+        ) {
+            setExceedThresholdEVC_01_Pressure(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Pressure,
         EVC_01_Pressure,
-        audioEVC_01_Pressure,
-        LowEVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
         maintainEVC_01_Pressure,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Pressure) {
-            const audioEnded = () => {
-                setaudioEVC_01_Pressure(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Pressure]);
-
-    //================================ EVC_01_Pressure ======================================================
-
     //================================ EVC_01_Temperature================================
 
-    const [audioEVC_01_Temperature, setaudioEVC_01_Temperature] =
-        useState(false);
-    const [HighEVC_01_Temperature, setHighEVC_01_Temperature] = useState<
+    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
+        null
+    );
+    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<
         number | null
     >(null);
-    const [LowEVC_01_Temperature, setLowEVC_01_Temperature] = useState<
+    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<
         number | null
     >(null);
-    const [audioColorEVC_01_Temperature, setaudioColorEVC_01_Temperature] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [
+        exceedThresholdEVC_01_Temperature,
+        setExceedThresholdEVC_01_Temperature,
+    ] = useState(false);
     const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] =
         useState<boolean>(false);
-
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Temperature === "string" &&
-            typeof LowEVC_01_Temperature === "string" &&
-            EVC_01_Temperature !== null &&
-            maintainEVC_01_Temperature === false
-        ) {
-            const highValue = parseFloat(HighEVC_01_Temperature);
-            const lowValue = parseFloat(LowEVC_01_Temperature);
-            const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_01_TemperatureValue)
-            ) {
-                if (
-                    highValue < EVC_01_TemperatureValue ||
-                    EVC_01_TemperatureValue < lowValue
-                ) {
-                    if (!audioEVC_01_Temperature) {
-                        audioRef.current?.play();
-                        setaudioEVC_01_Temperature(true);
-                        setaudioColorEVC_01_Temperature(true);
-                    }
-                } else {
-                    setaudioEVC_01_Temperature(false);
-                    setaudioColorEVC_01_Temperature(false);
-                }
-            }
+        if (
+            !isNaN(EVC_01_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Temperature
+        ) {
+            setExceedThresholdEVC_01_Temperature(
+                EVC_01_TemperatureValue >= highValue ||
+                    EVC_01_TemperatureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Temperature,
         EVC_01_Temperature,
-        audioEVC_01_Temperature,
-        LowEVC_01_Temperature,
+        EVC_01_Temperature_High,
+        EVC_01_Temperature_Low,
         maintainEVC_01_Temperature,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Temperature) {
-            const audioEnded = () => {
-                setaudioEVC_01_Temperature(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Temperature]);
-
-    //================================ EVC_01_Temperature ======================================================
     //================================ EVC_02_Temperature================================
 
-    const [audioEVC_02_Temperature, setaudioEVC_02_Temperature] =
-        useState(false);
-    const [HighEVC_02_Temperature, setHighEVC_02_Temperature] = useState<
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
+        null
+    );
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
         number | null
     >(null);
-    const [LowEVC_02_Temperature, setLowEVC_02_Temperature] = useState<
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
         number | null
     >(null);
-    const [audioColorEVC_02_Temperature, setaudioColorEVC_02_Temperature] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [
+        exceedThresholdEVC_02_Temperature,
+        setExceedThresholdEVC_02_Temperature,
+    ] = useState(false);
     const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] =
         useState<boolean>(false);
-
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Temperature === "string" &&
-            typeof LowEVC_02_Temperature === "string" &&
-            EVC_02_Temperature !== null &&
-            maintainEVC_02_Temperature === false
-        ) {
-            const highValue = parseFloat(HighEVC_02_Temperature);
-            const lowValue = parseFloat(LowEVC_02_Temperature);
-            const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature);
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_02_TemperatureValue)
-            ) {
-                if (
-                    highValue < EVC_02_TemperatureValue ||
-                    EVC_02_TemperatureValue < lowValue
-                ) {
-                    if (!audioEVC_02_Temperature) {
-                        audioRef.current?.play();
-                        setaudioEVC_02_Temperature(true);
-                        setaudioColorEVC_02_Temperature(true);
-                    }
-                } else {
-                    setaudioEVC_02_Temperature(false);
-                    setaudioColorEVC_02_Temperature(false);
-                }
-            }
+        if (
+            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Temperature
+        ) {
+            setExceedThresholdEVC_02_Temperature(
+                EVC_02_TemperatureValue >= highValue ||
+                    EVC_02_TemperatureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Temperature,
         EVC_02_Temperature,
-        audioEVC_02_Temperature,
-        LowEVC_02_Temperature,
+        EVC_02_Temperature_High,
+        EVC_02_Temperature_Low,
         maintainEVC_02_Temperature,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Temperature) {
-            const audioEnded = () => {
-                setaudioEVC_02_Temperature(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Temperature]);
-
-    //================================ EVC_02_Temperature ======================================================
-
     //================================ EVC_02_Temperature================================
 
-    const [audioSDV_2001A, setaudioSDV_2001A] = useState(false);
-    const [HighSDV_2001A, setHighSDV_2001A] = useState<number | null>(null);
-    const [LowSDV_2001A, setLowSDV_2001A] = useState<number | null>(null);
-    const [audioColorSDV_2001A, setaudioColorSDV_2001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_2001A, setMaintainSDV_2001A] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_2001A === "string" &&
-            typeof LowSDV_2001A === "string" &&
-            SDV_2001A !== null &&
-            maintainSDV_2001A === false
-        ) {
-            const highValue = parseFloat(HighSDV_2001A);
-            const lowValue = parseFloat(LowSDV_2001A);
-            const SDV_2001AValue = parseFloat(SDV_2001A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_2001AValue)
-            ) {
-                if (highValue < SDV_2001AValue || SDV_2001AValue < lowValue) {
-                    if (!audioSDV_2001A) {
-                        audioRef.current?.play();
-                        setaudioSDV_2001A(true);
-                        setaudioColorSDV_2001A(true);
-                    }
-                } else {
-                    setaudioSDV_2001A(false);
-                    setaudioColorSDV_2001A(false);
-                }
-            }
-        }
-    }, [
-        HighSDV_2001A,
-        SDV_2001A,
-        audioSDV_2001A,
-        LowSDV_2001A,
-        maintainSDV_2001A,
-    ]);
-
-    useEffect(() => {
-        if (audioSDV_2001A) {
-            const audioEnded = () => {
-                setaudioSDV_2001A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_2001A]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    //================================ EVC_02_Temperature================================
-
-    const [audioSDV_2001B, setaudioSDV_2001B] = useState(false);
-    const [HighSDV_2001B, setHighSDV_2001B] = useState<number | null>(null);
-    const [LowSDV_2001B, setLowSDV_2001B] = useState<number | null>(null);
-    const [audioColorSDV_2001B, setaudioColorSDV_2001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_2001B, setMaintainSDV_2001B] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_2001B === "string" &&
-            typeof LowSDV_2001B === "string" &&
-            SDV_2001B !== null &&
-            maintainSDV_2001B === false
-        ) {
-            const highValue = parseFloat(HighSDV_2001B);
-            const lowValue = parseFloat(LowSDV_2001B);
-            const SDV_2001BValue = parseFloat(SDV_2001B);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_2001BValue)
-            ) {
-                if (highValue < SDV_2001BValue || SDV_2001BValue < lowValue) {
-                    if (!audioSDV_2001B) {
-                        audioRef.current?.play();
-                        setaudioSDV_2001B(true);
-                        setaudioColorSDV_2001B(true);
-                    }
-                } else {
-                    setaudioSDV_2001B(false);
-                    setaudioColorSDV_2001B(false);
-                }
-            }
-        }
-    }, [
-        HighSDV_2001B,
-        SDV_2001B,
-        audioSDV_2001B,
-        LowSDV_2001B,
-        maintainSDV_2001B,
-    ]);
-
-    useEffect(() => {
-        if (audioSDV_2001B) {
-            const audioEnded = () => {
-                setaudioSDV_2001B(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_2001B]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    //================================ EVC_02_Temperature================================
-
-    const [audioSDV_2002, setaudioSDV_2002] = useState(false);
-    const [HighSDV_2002, setHighSDV_2002] = useState<number | null>(null);
-    const [LowSDV_2002, setLowSDV_2002] = useState<number | null>(null);
-    const [audioColorSDV_2002, setaudioColorSDV_2002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_2002, setMaintainSDV_2002] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_2002 === "string" &&
-            typeof LowSDV_2002 === "string" &&
-            SDV_2002 !== null &&
-            maintainSDV_2002 === false
-        ) {
-            const highValue = parseFloat(HighSDV_2002);
-            const lowValue = parseFloat(LowSDV_2002);
-            const SDV_2002Value = parseFloat(SDV_2002);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_2002Value)
-            ) {
-                if (highValue < SDV_2002Value || SDV_2002Value < lowValue) {
-                    if (!audioSDV_2002) {
-                        audioRef.current?.play();
-                        setaudioSDV_2002(true);
-                        setaudioColorSDV_2002(true);
-                    }
-                } else {
-                    setaudioSDV_2002(false);
-                    setaudioColorSDV_2002(false);
-                }
-            }
-        }
-    }, [HighSDV_2002, SDV_2002, audioSDV_2002, LowSDV_2002, maintainSDV_2002]);
-
-    useEffect(() => {
-        if (audioSDV_2002) {
-            const audioEnded = () => {
-                setaudioSDV_2002(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_2002]);
-
-    //================================ EVC_02_Temperature =============================================
-
-    //================================ EVC_02_Temperature================================
     const [TT_2001, setTT_2001] = useState<string | null>(null);
-    const [audioTT_2001, setaudioTT_2001] = useState(false);
-    const [HighTT_2001, setHighTT_2001] = useState<number | null>(null);
-    const [LowTT_2001, setLowTT_2001] = useState<number | null>(null);
-    const [audioColorTT_2001, setaudioColorTT_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [TT_2001_High, setTT_2001_High] = useState<number | null>(null);
+    const [TT_2001_Low, setTT_2001_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_2001, setExceedThresholdTT_2001] = useState(false);
     const [maintainTT_2001, setMaintainTT_2001] = useState<boolean>(false);
-
     useEffect(() => {
+        const TT_2001Value = parseFloat(TT_2001 as any);
+        const highValue = TT_2001_High ?? NaN;
+        const lowValue = TT_2001_Low ?? NaN;
+
         if (
-            typeof HighTT_2001 === "string" &&
-            typeof LowTT_2001 === "string" &&
-            TT_2001 !== null &&
-            maintainTT_2001 === false
+            !isNaN(TT_2001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_2001
         ) {
-            const highValue = parseFloat(HighTT_2001);
-            const lowValue = parseFloat(LowTT_2001);
-            const TT_2001Value = parseFloat(TT_2001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(TT_2001Value)) {
-                if (highValue < TT_2001Value || TT_2001Value < lowValue) {
-                    if (!audioTT_2001) {
-                        audioRef.current?.play();
-                        setaudioTT_2001(true);
-                        setaudioColorTT_2001(true);
-                    }
-                } else {
-                    setaudioTT_2001(false);
-                    setaudioColorTT_2001(false);
-                }
-            }
+            setExceedThresholdTT_2001(
+                TT_2001Value >= highValue || TT_2001Value <= lowValue
+            );
         }
-    }, [HighTT_2001, TT_2001, audioTT_2001, LowTT_2001, maintainTT_2001]);
-
-    useEffect(() => {
-        if (audioTT_2001) {
-            const audioEnded = () => {
-                setaudioTT_2001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioTT_2001]);
-
-    //================================ EVC_02_Temperature ======================================================
+    }, [TT_2001, TT_2001_High, TT_2001_Low, maintainTT_2001]);
 
     //================================ EVC_02_Temperature================================
+
     const [PT_2003, setPT_2003] = useState<string | null>(null);
-    const [audioPT_2003, setaudioPT_2003] = useState(false);
-    const [HighPT_2003, setHighPT_2003] = useState<number | null>(null);
-    const [LowPT_2003, setLowPT_2003] = useState<number | null>(null);
-    const [audioColorPT_2003, setaudioColorPT_2003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [PT_2003_High, setPT_2003_High] = useState<number | null>(null);
+    const [PT_2003_Low, setPT_2003_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2003, setExceedThresholdPT_2003] = useState(false);
     const [maintainPT_2003, setMaintainPT_2003] = useState<boolean>(false);
-
     useEffect(() => {
+        const PT_2003Value = parseFloat(PT_2003 as any);
+        const highValue = PT_2003_High ?? NaN;
+        const lowValue = PT_2003_Low ?? NaN;
+
         if (
-            typeof HighPT_2003 === "string" &&
-            typeof LowPT_2003 === "string" &&
-            PT_2003 !== null &&
-            maintainPT_2003 === false
+            !isNaN(PT_2003Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_2003
         ) {
-            const highValue = parseFloat(HighPT_2003);
-            const lowValue = parseFloat(LowPT_2003);
-            const PT_2003Value = parseFloat(PT_2003);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_2003Value)) {
-                if (highValue < PT_2003Value || PT_2003Value < lowValue) {
-                    if (!audioPT_2003) {
-                        audioRef.current?.play();
-                        setaudioPT_2003(true);
-                        setaudioColorPT_2003(true);
-                    }
-                } else {
-                    setaudioPT_2003(false);
-                    setaudioColorPT_2003(false);
-                }
-            }
+            setExceedThresholdPT_2003(
+                PT_2003Value >= highValue || PT_2003Value <= lowValue
+            );
         }
-    }, [HighPT_2003, PT_2003, audioPT_2003, LowPT_2003, maintainPT_2003]);
-
-    useEffect(() => {
-        if (audioPT_2003) {
-            const audioEnded = () => {
-                setaudioPT_2003(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT_2003]);
+    }, [PT_2003, PT_2003_High, PT_2003_Low, maintainPT_2003]);
 
     //================================ EVC_02_Temperature ======================================================
 
-    //================================ EVC_02_Temperature================================
     const [GD_2001, setGD_2001] = useState<string | null>(null);
-    const [audioGD_2001, setaudioGD_2001] = useState(false);
-    const [HighGD_2001, setHighGD_2001] = useState<number | null>(null);
-    const [LowGD_2001, setLowGD_2001] = useState<number | null>(null);
-    const [audioColorGD_2001, setaudioColorGD_2001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+    const [GD_2001_High, setGD_2001_High] = useState<number | null>(null);
+    const [GD_2001_Low, setGD_2001_Low] = useState<number | null>(null);
+    const [exceedThresholdGD_2001, setExceedThresholdGD_2001] = useState(false);
     const [maintainGD_2001, setMaintainGD_2001] = useState<boolean>(false);
-
     useEffect(() => {
+        const GD_2001Value = parseFloat(GD_2001 as any);
+        const highValue = GD_2001_High ?? NaN;
+        const lowValue = GD_2001_Low ?? NaN;
+
         if (
-            typeof HighGD_2001 === "string" &&
-            typeof LowGD_2001 === "string" &&
-            GD_2001 !== null &&
-            maintainGD_2001 === false
+            !isNaN(GD_2001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD_2001
         ) {
-            const highValue = parseFloat(HighGD_2001);
-            const lowValue = parseFloat(LowGD_2001);
-            const GD_2001Value = parseFloat(GD_2001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_2001Value)) {
-                if (highValue < GD_2001Value || GD_2001Value < lowValue) {
-                    if (!audioGD_2001) {
-                        audioRef.current?.play();
-                        setaudioGD_2001(true);
-                        setaudioColorGD_2001(true);
-                    }
-                } else {
-                    setaudioGD_2001(false);
-                    setaudioColorGD_2001(false);
-                }
-            }
-        }
-    }, [HighGD_2001, GD_2001, audioGD_2001, LowGD_2001, maintainGD_2001]);
-
-    useEffect(() => {
-        if (audioGD_2001) {
-            const audioEnded = () => {
-                setaudioGD_2001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD_2001]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_01_Flow_at_Base_Condition,
-        setAudioEVC_01_Flow_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_01_Flow_at_Base_Condition,
-        setHighEVC_01_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_01_Flow_at_Base_Condition,
-        setLowEVC_01_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Flow_at_Base_Condition,
-        setExceedThresholdEVC_01_Flow_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [
-        inputValueHighEVC_01_Flow_at_Base_Condition,
-        setInputValueHighEVC_01_Flow_at_Base_Condition,
-    ] = useState<any>();
-    const [
-        inputValueLowEVC_01_Flow_at_Base_Condition,
-        settInputValueLowEVC_01_Flow_at_Base_Condition,
-    ] = useState<any>();
-
-    const [
-        maintainEVC_01_Flow_at_Base_Condition,
-        setMaintainEVC_01_Flow_at_Base_Condition,
-    ] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighEVC_01_Flow_at_Base_Condition === "string" &&
-            typeof LowEVC_01_Flow_at_Base_Condition === "string" &&
-            EVC_01_Flow_at_Base_Condition !== null &&
-            maintainEVC_01_Flow_at_Base_Condition === false
-        ) {
-            const highValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                HighEVC_01_Flow_at_Base_Condition
+            setExceedThresholdGD_2001(
+                GD_2001Value >= highValue || GD_2001Value <= lowValue
             );
-            const lowValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                LowEVC_01_Flow_at_Base_Condition
-            );
-            const ValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                EVC_01_Flow_at_Base_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_01_Flow_at_Base_Condition) &&
-                !isNaN(lowValueEVC_01_Flow_at_Base_Condition) &&
-                !isNaN(ValueEVC_01_Flow_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Flow_at_Base_Condition <=
-                        ValueEVC_01_Flow_at_Base_Condition ||
-                    ValueEVC_01_Flow_at_Base_Condition <=
-                        lowValueEVC_01_Flow_at_Base_Condition
-                ) {
-                    if (!audioEVC_01_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Base_Condition(true);
-                        setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Base_Condition(false);
-                    setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_01_Flow_at_Base_Condition,
-        EVC_01_Flow_at_Base_Condition,
-        audioEVC_01_Flow_at_Base_Condition,
-        LowEVC_01_Flow_at_Base_Condition,
-        maintainEVC_01_Flow_at_Base_Condition,
-    ]);
-
-    useEffect(() => {
-        if (audioEVC_01_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Flow_at_Base_Condition]);
+    }, [GD_2001, GD_2001_High, GD_2001_Low, maintainGD_2001]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_01_Flow_at_Measurement_Condition,
-        setAudioEVC_01_Flow_at_Measurement_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_01_Flow_at_Measurement_Condition,
-        setHighEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_01_Flow_at_Measurement_Condition,
-        setLowEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
-        setExceedThresholdEVC_01_Flow_at_Measurement_Condition,
-    ] = useState(false);
 
-    const [
-        maintainEVC_01_Flow_at_Measurement_Condition,
-        setMaintainEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<boolean>(false);
-
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
+    const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setExceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false);
+    const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_01_Flow_at_Measurement_Condition === "string" &&
-            typeof LowEVC_01_Flow_at_Measurement_Condition === "string" &&
-            EVC_01_Flow_at_Measurement_Condition !== null &&
-            maintainEVC_01_Flow_at_Measurement_Condition === false
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
         ) {
-            const highValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                HighEVC_01_Flow_at_Measurement_Condition
+            setExceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue
             );
-            const lowValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                LowEVC_01_Flow_at_Measurement_Condition
-            );
-            const ValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                EVC_01_Flow_at_Measurement_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_01_Flow_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_01_Flow_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_01_Flow_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Flow_at_Measurement_Condition <=
-                        ValueEVC_01_Flow_at_Measurement_Condition ||
-                    ValueEVC_01_Flow_at_Measurement_Condition <=
-                        lowValueEVC_01_Flow_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_01_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_01_Flow_at_Measurement_Condition,
-        EVC_01_Flow_at_Measurement_Condition,
-        audioEVC_01_Flow_at_Measurement_Condition,
-        LowEVC_01_Flow_at_Measurement_Condition,
-        maintainEVC_01_Flow_at_Measurement_Condition,
-    ]);
+    }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
 
+
+
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+
+    const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
+    const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setExceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false);
+    const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
     useEffect(() => {
-        if (audioEVC_01_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Flow_at_Measurement_Condition]);
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
 
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
-
-    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_01_Volume_at_Base_Condition,
-        setAudioEVC_01_Volume_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_01_Volume_at_Base_Condition,
-        setHighEVC_01_Volume_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_01_Volume_at_Base_Condition,
-        setLowEVC_01_Volume_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Volume_at_Base_Condition,
-        setExceedThresholdEVC_01_Volume_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [
-        maintainEVC_01_Volume_at_Base_Condition,
-        setMaintainEVC_01_Volume_at_Base_Condition,
-    ] = useState<boolean>(false);
-
-    useEffect(() => {
         if (
-            typeof HighEVC_01_Volume_at_Base_Condition === "string" &&
-            typeof LowEVC_01_Volume_at_Base_Condition === "string" &&
-            EVC_01_Volume_at_Base_Condition !== null &&
-            maintainEVC_01_Volume_at_Base_Condition === false
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
         ) {
-            const highValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                HighEVC_01_Volume_at_Base_Condition
+            setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
             );
-            const lowValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                LowEVC_01_Volume_at_Base_Condition
-            );
-            const ValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                EVC_01_Volume_at_Base_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_01_Volume_at_Base_Condition) &&
-                !isNaN(lowValueEVC_01_Volume_at_Base_Condition) &&
-                !isNaN(ValueEVC_01_Volume_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Volume_at_Base_Condition <=
-                        ValueEVC_01_Volume_at_Base_Condition ||
-                    ValueEVC_01_Volume_at_Base_Condition <=
-                        lowValueEVC_01_Volume_at_Base_Condition
-                ) {
-                    if (!audioEVC_01_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Base_Condition(true);
-                        setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Base_Condition(false);
-                    setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_01_Volume_at_Base_Condition,
-        EVC_01_Volume_at_Base_Condition,
-        audioEVC_01_Volume_at_Base_Condition,
-        LowEVC_01_Volume_at_Base_Condition,
-        maintainEVC_01_Volume_at_Base_Condition,
-    ]);
+    }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
 
-    useEffect(() => {
-        if (audioEVC_01_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Volume_at_Base_Condition]);
+
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_01_Volume_at_Measurement_Condition,
-        setAudioEVC_01_Volume_at_Measurement_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_01_Volume_at_Measurement_Condition,
-        setHighEVC_01_Volume_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_01_Volume_at_Measurement_Condition,
-        setLowEVC_01_Volume_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
-        setExceedThresholdEVC_01_Volume_at_Measurement_Condition,
-    ] = useState(false);
-
-    const [
-        maintainEVC_01_Volume_at_Measurement_Condition,
-        setMaintainEVC_01_Volume_at_Measurement_Condition,
-    ] = useState<boolean>(false);
-
+    const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
+    const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false);
+    const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_01_Volume_at_Measurement_Condition === "string" &&
-            typeof LowEVC_01_Volume_at_Measurement_Condition === "string" &&
-            EVC_01_Volume_at_Measurement_Condition !== null &&
-            maintainEVC_01_Volume_at_Measurement_Condition === false
+            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Base_Condition
         ) {
-            const highValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                HighEVC_01_Volume_at_Measurement_Condition
+            setExceedThresholdEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue
             );
-            const lowValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                LowEVC_01_Volume_at_Measurement_Condition
-            );
-            const ValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                EVC_01_Volume_at_Measurement_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_01_Volume_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_01_Volume_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_01_Volume_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Volume_at_Measurement_Condition <=
-                        ValueEVC_01_Volume_at_Measurement_Condition ||
-                    ValueEVC_01_Volume_at_Measurement_Condition <=
-                        lowValueEVC_01_Volume_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_01_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_01_Volume_at_Measurement_Condition,
-        EVC_01_Volume_at_Measurement_Condition,
-        audioEVC_01_Volume_at_Measurement_Condition,
-        LowEVC_01_Volume_at_Measurement_Condition,
-        maintainEVC_01_Volume_at_Measurement_Condition,
-    ]);
+    }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
 
-    useEffect(() => {
-        if (audioEVC_01_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Volume_at_Measurement_Condition]);
 
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
 
-    //================================ EVC_02_Flow_at_Base_Condition FIQ 1901 ======================================================
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Flow_at_Base_Condition,
-        setAudioEVC_02_Flow_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Flow_at_Base_Condition,
-        setHighEVC_02_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Flow_at_Base_Condition,
-        setLowEVC_02_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Flow_at_Base_Condition,
-        setExceedThresholdEVC_02_Flow_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [
-        maintainEVC_02_Flow_at_Base_Condition,
-        setMaintainEVC_02_Flow_at_Base_Condition,
-    ] = useState<boolean>(false);
-
+    const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
+    const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false);
+    const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_02_Flow_at_Base_Condition === "string" &&
-            typeof LowEVC_02_Flow_at_Base_Condition === "string" &&
-            EVC_02_Flow_at_Base_Condition !== null &&
-            maintainEVC_02_Flow_at_Base_Condition === false
+            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Measurement_Condition
         ) {
-            const highValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                HighEVC_02_Flow_at_Base_Condition
+            setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
             );
-            const lowValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                LowEVC_02_Flow_at_Base_Condition
-            );
-            const ValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                EVC_02_Flow_at_Base_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Flow_at_Base_Condition) &&
-                !isNaN(lowValueEVC_02_Flow_at_Base_Condition) &&
-                !isNaN(ValueEVC_02_Flow_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Flow_at_Base_Condition <=
-                        ValueEVC_02_Flow_at_Base_Condition ||
-                    ValueEVC_02_Flow_at_Base_Condition <=
-                        lowValueEVC_02_Flow_at_Base_Condition
-                ) {
-                    if (!audioEVC_02_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Base_Condition(true);
-                        setExceedThresholdEVC_02_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Base_Condition(false);
-                    setExceedThresholdEVC_02_Flow_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_02_Flow_at_Base_Condition,
-        EVC_02_Flow_at_Base_Condition,
-        audioEVC_02_Flow_at_Base_Condition,
-        LowEVC_02_Flow_at_Base_Condition,
-        maintainEVC_02_Flow_at_Base_Condition,
-    ]);
+    }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
 
-    useEffect(() => {
-        if (audioEVC_02_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Flow_at_Base_Condition]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+
+
+
+    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
+    const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Flow_at_Base_Condition, setExceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false);
+    const [maintainEVC_02_Flow_at_Base_Condition, setMaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
+    useEffect(() => {
+        const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
+        const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Base_Condition
+        ) {
+            setExceedThresholdEVC_02_Flow_at_Base_Condition(
+                EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
+
 
     //================================ EVC_02_Flow_at_Measurement_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Flow_at_Measurement_Condition,
-        setAudioEVC_02_Flow_at_Measurement_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Flow_at_Measurement_Condition,
-        setHighEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Flow_at_Measurement_Condition,
-        setLowEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
-        setExceedThresholdEVC_02_Flow_at_Measurement_Condition,
-    ] = useState(false);
 
-    const [
-        maintainEVC_02_Flow_at_Measurement_Condition,
-        setMaintainEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<boolean>(false);
 
+
+    const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
+    const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setExceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false);
+    const [maintainEVC_02_Flow_at_Measurement_Condition, setMaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
+        const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_02_Flow_at_Measurement_Condition === "string" &&
-            typeof LowEVC_02_Flow_at_Measurement_Condition === "string" &&
-            EVC_02_Flow_at_Measurement_Condition !== null &&
-            maintainEVC_02_Flow_at_Measurement_Condition === false
+            !isNaN(EVC_02_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Measurement_Condition
         ) {
-            const highValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                HighEVC_02_Flow_at_Measurement_Condition
+            setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
+                EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue
             );
-            const lowValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                LowEVC_02_Flow_at_Measurement_Condition
-            );
-            const ValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                EVC_02_Flow_at_Measurement_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Flow_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_02_Flow_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_02_Flow_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Flow_at_Measurement_Condition <=
-                        ValueEVC_02_Flow_at_Measurement_Condition ||
-                    ValueEVC_02_Flow_at_Measurement_Condition <=
-                        lowValueEVC_02_Flow_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_02_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_02_Flow_at_Measurement_Condition,
-        EVC_02_Flow_at_Measurement_Condition,
-        audioEVC_02_Flow_at_Measurement_Condition,
-        LowEVC_02_Flow_at_Measurement_Condition,
-        maintainEVC_02_Flow_at_Measurement_Condition,
-    ]);
+    }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
 
-    useEffect(() => {
-        if (audioEVC_02_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Flow_at_Measurement_Condition]);
 
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
 
     //================================ EVC_02_Volume_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Volume_at_Base_Condition,
-        setAudioEVC_02_Volume_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Volume_at_Base_Condition,
-        setHighEVC_02_Volume_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Volume_at_Base_Condition,
-        setLowEVC_02_Volume_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Volume_at_Base_Condition,
-        setExceedThresholdEVC_02_Volume_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [
-        maintainEVC_02_Volume_at_Base_Condition,
-        setMaintainEVC_02_Volume_at_Base_Condition,
-    ] = useState<boolean>(false);
 
+    const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
+    const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Volume_at_Base_Condition, setExceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false);
+    const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
+        const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_02_Volume_at_Base_Condition === "string" &&
-            typeof LowEVC_02_Volume_at_Base_Condition === "string" &&
-            EVC_02_Volume_at_Base_Condition !== null &&
-            maintainEVC_02_Volume_at_Base_Condition === false
+            !isNaN(EVC_02_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Base_Condition
         ) {
-            const highValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                HighEVC_02_Volume_at_Base_Condition
+            setExceedThresholdEVC_02_Volume_at_Base_Condition(
+                EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue
             );
-            const lowValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                LowEVC_02_Volume_at_Base_Condition
-            );
-            const ValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                EVC_02_Volume_at_Base_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Volume_at_Base_Condition) &&
-                !isNaN(lowValueEVC_02_Volume_at_Base_Condition) &&
-                !isNaN(ValueEVC_02_Volume_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Volume_at_Base_Condition <=
-                        ValueEVC_02_Volume_at_Base_Condition ||
-                    ValueEVC_02_Volume_at_Base_Condition <=
-                        lowValueEVC_02_Volume_at_Base_Condition
-                ) {
-                    if (!audioEVC_02_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Base_Condition(true);
-                        setExceedThresholdEVC_02_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Base_Condition(false);
-                    setExceedThresholdEVC_02_Volume_at_Base_Condition(false);
-                }
-            }
         }
-    }, [
-        HighEVC_02_Volume_at_Base_Condition,
-        EVC_02_Volume_at_Base_Condition,
-        audioEVC_02_Volume_at_Base_Condition,
-        LowEVC_02_Volume_at_Base_Condition,
-        maintainEVC_02_Volume_at_Base_Condition,
-    ]);
+    }, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
 
-    useEffect(() => {
-        if (audioEVC_02_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Volume_at_Base_Condition]);
 
-    //================================ EVC_02_Volume_at_Base_Condition FIQ 1901 ======================================================
+
 
     //================================ EVC_02_Volume_at_Measurement_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Volume_at_Measurement_Condition,
-        setAudioEVC_02_Volume_at_Measurement_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Volume_at_Measurement_Condition,
-        setHighEVC_02_Volume_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Volume_at_Measurement_Condition,
-        setLowEVC_02_Volume_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Volume_at_Measurement_Condition,
-        setExceedThresholdEVC_02_Volume_at_Measurement_Condition,
-    ] = useState(false);
-
-    const [
-        maintainEVC_02_Volume_at_Measurement_Condition,
-        setMaintainEVC_02_Volume_at_Measurement_Condition,
-    ] = useState<boolean>(false);
-
+    const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
+    const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+    const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setExceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false);
+    const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
     useEffect(() => {
+        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+        const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
+
         if (
-            typeof HighEVC_02_Volume_at_Measurement_Condition === "string" &&
-            typeof LowEVC_02_Volume_at_Measurement_Condition === "string" &&
-            EVC_02_Volume_at_Measurement_Condition !== null &&
-            maintainEVC_02_Volume_at_Measurement_Condition === false
+            !isNaN(EVC_02_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Measurement_Condition
         ) {
-            const highValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                HighEVC_02_Volume_at_Measurement_Condition
+            setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
+                EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue
             );
-            const lowValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                LowEVC_02_Volume_at_Measurement_Condition
-            );
-            const ValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                EVC_02_Volume_at_Measurement_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Volume_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_02_Volume_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_02_Volume_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Volume_at_Measurement_Condition <=
-                        ValueEVC_02_Volume_at_Measurement_Condition ||
-                    ValueEVC_02_Volume_at_Measurement_Condition <=
-                        lowValueEVC_02_Volume_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_02_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
         }
-    }, [
-        HighEVC_02_Volume_at_Measurement_Condition,
-        EVC_02_Volume_at_Measurement_Condition,
-        audioEVC_02_Volume_at_Measurement_Condition,
-        LowEVC_02_Volume_at_Measurement_Condition,
-        maintainEVC_02_Volume_at_Measurement_Condition,
-    ]);
-
-    useEffect(() => {
-        if (audioEVC_02_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Volume_at_Measurement_Condition]);
-
-    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
 
     //====================================================================
 
@@ -2967,7 +1927,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_2006 && !maintainPIT_2006
+                                        exceedThresholdPIT_2006 &&
+                                        !maintainPIT_2006
                                             ? "#ff5656"
                                             : maintainPIT_2006
                                             ? "orange"
@@ -3028,7 +1989,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_2007 && !maintainPIT_2007
+                                        exceedThresholdPIT_2007 &&
+                                        !maintainPIT_2007
                                             ? "#ff5656"
                                             : maintainPIT_2007
                                             ? "orange"
@@ -3090,7 +2052,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_2001 && !maintainPT_2001
+                                        exceedThresholdPT_2001 &&
+                                        !maintainPT_2001
                                             ? "#ff5656"
                                             : maintainPT_2001
                                             ? "orange"
@@ -3151,7 +2114,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_2002 && !maintainPT_2002
+                                        exceedThresholdPT_2002 &&
+                                        !maintainPT_2002
                                             ? "#ff5656"
                                             : maintainPT_2002
                                             ? "orange"
@@ -3214,7 +2178,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_02_Pressure &&
+                                        exceedThresholdEVC_02_Pressure &&
                                         !maintainEVC_02_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_02_Pressure
@@ -3251,7 +2215,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -3278,7 +2242,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_01_Pressure &&
+                                        exceedThresholdEVC_01_Pressure &&
                                         !maintainEVC_01_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_01_Pressure
@@ -3315,7 +2279,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -3343,7 +2307,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_01_Temperature &&
+                                        exceedThresholdEVC_01_Temperature &&
                                         !maintainEVC_01_Temperature
                                             ? "#ff5656"
                                             : maintainEVC_01_Temperature
@@ -3407,7 +2371,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_02_Temperature &&
+                                        exceedThresholdEVC_02_Temperature &&
                                         !maintainEVC_02_Temperature
                                             ? "#ff5656"
                                             : maintainEVC_02_Temperature
@@ -3474,7 +2438,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     {" "}
                                     {PCV_2001A}{" "}
                                 </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3503,7 +2467,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     {" "}
                                     {PCV_2001B}{" "}
                                 </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3532,7 +2496,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     {" "}
                                     {PCV_2002A}{" "}
                                 </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3555,13 +2519,13 @@ export default function Graphic_CNG_BINHDUONG() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PCV-2002B
+                                    PCV-2002B :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
                                     {PCV_2002B}{" "}
                                 </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3646,7 +2610,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTT_2001 && !maintainTT_2001
+                                        exceedThresholdTT_2001 &&
+                                        !maintainTT_2001
                                             ? "#ff5656"
                                             : maintainTT_2001
                                             ? "orange"
@@ -3708,7 +2673,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPT_2003 && !maintainPT_2003
+                                        exceedThresholdPT_2003 &&
+                                        !maintainPT_2003
                                             ? "#ff5656"
                                             : maintainPT_2003
                                             ? "orange"
@@ -3770,7 +2736,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorGD_2001 && !maintainGD_2001
+                                        exceedThresholdGD_2001 &&
+                                        !maintainGD_2001
                                             ? "#ff5656"
                                             : maintainGD_2001
                                             ? "orange"
@@ -3837,7 +2804,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     {" "}
                                     {PSV_2001A} :
                                 </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3863,7 +2830,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     PSV-2002A :
                                 </p>
                                 <p style={{ color: colorData }}> {PSV_2002A}</p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3889,7 +2856,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     PSV-2001B :
                                 </p>
                                 <p style={{ color: colorData }}> {PCV_2002A}</p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -3915,7 +2882,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     PSV-2002B :
                                 </p>
                                 <p style={{ color: colorData }}> {PSV_2002B}</p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
+                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -4134,6 +3101,7 @@ export default function Graphic_CNG_BINHDUONG() {
     //     ? JSON.parse(storedPositionString)
     //     : {
     const initialPositions = {
+        AlarmCenter: { x: -1244.529411972646, y: 762.0298862357979 },
         Arrow10: { x: -419.8018780792174, y: 1273.381523476552 },
         BallVavleLine2_Bottom: {
             x: -1661.682672878477,
@@ -4270,7 +3238,7 @@ export default function Graphic_CNG_BINHDUONG() {
         GD_IMG: { x: -1096.8954721391294, y: 1232.7407461451007 },
         Header: { x: -2375.4269666355694, y: 739.4302234279377 },
         PCV_2001A: { x: -1590.143839770737, y: 1466.187406343237 },
-        PCV_2001A_DATA: { x: -2120.636781865267, y: 986.2048880089947 },
+        PCV_2001A_DATA: { x: -2129.6272157235535, y: 991.5991483239666 },
         PCV_2001A_SmallBallVavle: {
             x: -1483.6177892854255,
             y: 1469.3848130414924,
@@ -4281,15 +3249,15 @@ export default function Graphic_CNG_BINHDUONG() {
             y: 1482.2617504326024,
         },
         PCV_2001B: { x: -1589.6280768037607, y: 1051.7950507090916 },
-        PCV_2001B_DATA: { x: -2124.789588576235, y: 1402.9439742063528 },
+        PCV_2001B_DATA: { x: -2131.981935662864, y: 1402.9439742063528 },
         PCV_2001B_SmallBallVavle: {
             x: -1486.9036877800625,
             y: 1056.0055835082862,
         },
         PCV_2001B_none: { x: -1559.0670889230703, y: 1066.5206445548827 },
         PCV_2001B_none2: { x: -1475.720019744693, y: 1104.4215156026714 },
-        PCV_2002A_DATA: { x: -1648.4407513108924, y: 983.9482732776437 },
-        PCV_2002B_DATA: { x: -1649.5209235672614, y: 1404.8908772927662 },
+        PCV_2002A_DATA: { x: -1670.0177925707806, y: 989.3425335926158 },
+        PCV_2002B_DATA: { x: -1669.2998780554922, y: 1403.0927905211088 },
         PCV_line1_Bottom: { x: -2059.46440478068, y: 1051.690596866844 },
         PCV_line1_Bottom_SmallBallVavle: {
             x: -1959.916081354473,
@@ -4454,15 +3422,8 @@ export default function Graphic_CNG_BINHDUONG() {
         line9none: { x: -713.1893118583799, y: 1298.7824600879364 },
         line10: { x: -449.9501828459661, y: 1298.5866709113047 },
         line10none: { x: -405.6683476271253, y: 1298.7587875755169 },
-
-        AlarmCenter: {x: -1244.529411972646, y: 762.0298862357979},
-
-
         percent: { x: -405.6683476271253, y: 1298.7587875755169 },
-
         timeUpdate3: { x: -2381.52648946302, y: 800.0866709113047 },
-
-        
     };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -4522,7 +3483,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -4542,7 +3503,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -4562,7 +3523,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -4582,7 +3543,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -5621,7 +4582,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -5642,7 +4603,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -5663,7 +4624,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -5684,7 +4645,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: 200,
+                width: 220,
                 height: 45,
 
                 background: borderBox,
@@ -5739,7 +4700,6 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             position: positions.PT_2001_IMG,
-            zIndex: 9999,
             style: {
                 background: background,
                 border: "none",
@@ -5757,7 +4717,6 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             position: positions.PT_2002_IMG,
-            zIndex: 9999,
 
             style: {
                 background: background,
@@ -5776,7 +4735,6 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             position: positions.EVC_01_Pressure_IMG,
-            zIndex: 9999,
             style: {
                 background: background,
                 border: "none",
@@ -5793,7 +4751,6 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             position: positions.EVC_02_Pressure_IMG,
-            zIndex: 9999,
 
             style: {
                 background: background,
