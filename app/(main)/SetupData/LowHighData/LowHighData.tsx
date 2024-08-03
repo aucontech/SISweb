@@ -665,7 +665,7 @@ const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_Low");
 setDO_SV1_Low(LowSOLENOID?.value || null);
 
 const MaintainSOLENOID = res.data.find(
-    (item: any) => item.key === "DO_SV_0_01_Maintain"
+    (item: any) => item.key === "DO_SV_01_Maintain"
 );
 setmaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================
@@ -3218,7 +3218,7 @@ const handleCheckboxChangePLC = (e:any) => {
                     DI_MAP_1_High:inputValueDI_MAP_1, DI_MAP_1_Low:inputValue2DI_MAP_1,
                    DI_ZSC_1_High:inputValueDI_ZSC_1, DI_ZSC_1_Low:inputValue2DI_ZSC_1,
                    DI_ZSO_1_High:inputValueDI_ZSO_1, DI_ZSO_1_Low:inputValue2DI_ZSO_1,
-                    DO_SV_0_01_High:inputValueDO_SV1, DO_SV_0_01_Low:inputValue2DO_SV1,
+                    DO_SV_01_High:inputValueDO_SV1, DO_SV_01_Low:inputValue2DO_SV1,
                     DO_BC_01_High:inputValueDO_BC_01, DO_BC_01_Low:inputValue2DO_BC_01,
 
 
