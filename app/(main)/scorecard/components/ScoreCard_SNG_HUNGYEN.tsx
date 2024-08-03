@@ -1744,9 +1744,9 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         PT_3006: "Pressure Transmitter PT-3006 (BarG)",
         TT_3003: "Temperature Transmitter TT-3003 (˚C)",
         TT_3004: "Temperature Transmitter TT-3004 (˚C) ",
-        TG_3005: "TG-2005 (˚C)",
+        TG_3005: "TG-3005 (˚C)",
 
-        WB_3001: "Wobbe Index WB-1001 (MJ/M3)",
+        WB_3001: "Wobbe Index WB-3001 (MJ/M3)",
 
       
 
