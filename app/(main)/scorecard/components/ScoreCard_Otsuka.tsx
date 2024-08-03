@@ -2214,7 +2214,10 @@ useEffect(() => {
 
     const DataRESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON" : null;
     const DataDO_SV1 = DO_SV1 === "0" ? "OFF" : DO_SV1 === "1" ? "ON" : null;
-    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
+
+
+
+    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 

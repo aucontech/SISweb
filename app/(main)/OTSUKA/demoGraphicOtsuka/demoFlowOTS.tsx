@@ -1694,7 +1694,7 @@ export default function DemoFlowOTS() {
                                                     color: "#25d125",
                                                 }}
                                             >
-                                                ACTIVE
+                                                Active
                                             </span>
                                         ) : (
                                             <span
@@ -1702,7 +1702,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                INACTIVE
+                                                Inactive
                                             </span>
                                         )}
                                     </p>
@@ -1713,7 +1713,7 @@ export default function DemoFlowOTS() {
                                                     color: "#25d125",
                                                 }}
                                             >
-                                                CONNECTED
+                                                Connected
                                             </span>
                                         ) : (
                                             <span
@@ -1721,7 +1721,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                DISCONNECT
+                                                Disconnect
                                             </span>
                                         )}
                                     </p>
@@ -1732,7 +1732,7 @@ export default function DemoFlowOTS() {
                                                     color: "#25d125",
                                                 }}
                                             >
-                                                CONNECTED
+                                                Connected
                                             </span>
                                         ) : (
                                             <span
@@ -1740,7 +1740,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                DISCONNECT
+                                                Disconnect
                                             </span>
                                         )}
                                     </p>
@@ -1751,7 +1751,7 @@ export default function DemoFlowOTS() {
                                                     color: "#25d125",
                                                 }}
                                             >
-                                                CONNECTED
+                                                Connected
                                             </span>
                                         ) : (
                                             <span
@@ -1759,7 +1759,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                DISCONNECT
+                                                Disconnect
                                             </span>
                                         )}
                                     </p>
@@ -1768,43 +1768,43 @@ export default function DemoFlowOTS() {
                                 <div>
                                     <p
                                         style={{
+                                            color: 'white',
+                                            
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                          {EVC_01_Conn_STTValue}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: background,
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        {/* {EVC_01_Conn_STTValue} */}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: background,
+
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    >
+                                        {/* {EVC_02_Conn_STTValue} */}
+                                    </p>
+                                    <p
+                                        style={{
                                             color: background,
 
                                             fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        null
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {EVC_01_Conn_STTValue}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {EVC_02_Conn_STTValue}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {PLC_Conn_STT}
+                                        {/* {PLC_Conn_STT} */}
                                     </p>
                                 </div>
                             </div>
