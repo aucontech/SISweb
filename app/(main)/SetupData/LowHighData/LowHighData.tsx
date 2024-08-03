@@ -675,9 +675,9 @@ setmaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================
 
 const HighZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_High");
-setinputValueDI_ZSC_1(HighZSC?.value || null);
+setDI_ZSC_1_High(HighZSC?.value || null);
 const LowZSC = res.data.find((item: any) => item.key === "DI_ZSC_1_Low");
-setinputValue2DI_ZSC_1(LowZSC?.value || null);
+setDI_ZSC_1_Low(LowZSC?.value || null);
 
 const MaintainZSC_0 = res.data.find(
     (item: any) => item.key === "DI_ZSC_1_Maintain"
@@ -3850,7 +3850,7 @@ const handleCheckboxChangePLC = (e:any) => {
     }
 
     const modbusEVC2 = {
-        SVF: "40010",
+        SVF: "40011",
         GVF: "40013",
         SVA: "40007",
         GVA: "40009",
