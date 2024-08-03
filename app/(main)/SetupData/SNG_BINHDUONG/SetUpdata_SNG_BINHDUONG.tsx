@@ -2983,7 +2983,7 @@ const ChangeMaintainSDV_2003 = async () => {
                     WB_Setpoint_High: inputValueWB_Setpoint,WB_Setpoint_Low:inputValue2WB_Setpoint,
                     RATIO_MODE_High: inputValueRATIO_MODE,RATIO_MODE_Low:inputValue2RATIO_MODE,
                     IOT_Gateway_Phone: inputGetwayPhone,
-                  
+                    PCV_01: inputPCV_01, PCV_02: inputPCV_02,
                 }
             );
      
@@ -5644,7 +5644,7 @@ checked={maintainPLC_Conn_STT}
     };
     const Configuration = [
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-2003) (BarG)</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-2003) (BarG)</span>,
 
             Value: (
                 <InputText 
@@ -5671,7 +5671,7 @@ checked={maintainPLC_Conn_STT}
         },
 
         {
-            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-2004) (BarG)</span>,
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-2004) (BarG)</span>,
             Value: (
                 <InputText 
                 disabled={AuthUpdatePCV}
