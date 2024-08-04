@@ -4827,7 +4827,7 @@ setmaintainSD_2002(newSD_2002);
   };
     
   const mainCategoryFC = {
-    EVC01: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>   EVC-01 -  Parameter & configuration
+    EVC01: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>   EVC-2001A -  Parameter & configuration
   {!AuthInput && (  <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}> 
         <Checkbox
             style={{ marginRight: 5 }}
@@ -4835,7 +4835,7 @@ setmaintainSD_2002(newSD_2002);
             checked={checkMaintainingEVC01}
         />
      <p style={{fontSize:15}}>Maintain EVC-2001A </p>  </div> )} </span>,
-    EVC02: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>   EVC-02 -  Parameter & configuration
+    EVC02: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>   EVC-2001B -  Parameter & configuration
   {!AuthInput && (  <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}> 
         <Checkbox
             style={{ marginRight: 5 }}
