@@ -350,7 +350,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     setPCV_2002A(ballValue2A);
 
                     const ballValueS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2001A
                             .value;
                     setPSV_2001A(ballValueS);
                     const ballValueSB =
@@ -2798,11 +2798,11 @@ export default function Graphic_CNG_BINHDUONG() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-2001B :
+                                    PSV-2001A :
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PSV_2001A} :
+                                    {PSV_2001A} 
                                 </p>
                                 <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
@@ -2855,7 +2855,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 <p style={{ color: colorNameValue }}>
                                     PSV-2001B :
                                 </p>
-                                <p style={{ color: colorData }}> {PCV_2002A}</p>
+                                <p style={{ color: colorData }}> {PSV_2001B}</p>
                                 <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),

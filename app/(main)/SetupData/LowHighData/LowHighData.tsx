@@ -659,13 +659,13 @@ setmaintainDO_HR_01(MaintainDIHorn?.value || false);
 
 //=====================================================================================
 
-const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_High");
+const HighSOLENOID = res.data.find((item: any) => item.key === "DO_SV1_High");
 setDO_SV1_High(HighSOLENOID?.value || null);
-const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV_01_Low");
+const LowSOLENOID = res.data.find((item: any) => item.key === "DO_SV1_Low");
 setDO_SV1_Low(LowSOLENOID?.value || null);
 
 const MaintainSOLENOID = res.data.find(
-    (item: any) => item.key === "DO_SV_01_Maintain"
+    (item: any) => item.key === "DO_SV1_Maintain"
 );
 setmaintainDO_SV1(MaintainSOLENOID?.value || false);
 //=====================================================================================

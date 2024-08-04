@@ -413,7 +413,7 @@ export default function SetAttribute() {
 
     const configurationName = {
 
-        PSV: "Pressure Safety Valve ( PSV-1901)" ,
+        PSV: "Pressure Safety Valve (PSV-1901)" ,
         PCV1: "Pressure Control Valve (PCV-1901)",
         PCV2: "Pressure Control Valve (PCV-1902)",
         IOT: "IOT gateway phone number",
