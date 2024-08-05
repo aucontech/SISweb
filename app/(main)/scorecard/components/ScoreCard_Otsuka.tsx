@@ -534,6 +534,8 @@ export default function ScoreCard_Otsuka() {
             const DO_SV1_Maintain = res.data.find(
                 (item: any) => item.key === "DO_SV1_Maintain"
             );
+
+            
             const DI_SD_1_High = res.data.find((item: any) => item.key === "DI_SD_1_High");
             setDI_SD_1_High(DI_SD_1_High?.value || null);
             const DI_SD_1_Low = res.data.find((item: any) => item.key === "DI_SD_1_Low");

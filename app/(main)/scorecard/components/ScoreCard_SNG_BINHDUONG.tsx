@@ -256,14 +256,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
 
-            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
-            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
-            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
-            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
-            const GD5_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD5_STATUS_Maintain"
-            );
-
+       
             const GD_2002_High = res.data.find((item: any) => item.key === "GD_2002_High");
             setGD_2002_High(GD_2002_High?.value || null);
             const GD_2002_Low = res.data.find((item: any) => item.key === "GD_2002_Low");
@@ -335,7 +328,13 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const SDV_2004_Maintain = res.data.find(
                 (item: any) => item.key === "SDV_2004_Maintain"
             );
-
+            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
+            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
+            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
+            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
+            const GD1_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD1_STATUS_Maintain"
+            );
             const GD2_STATUS_High = res.data.find((item: any) => item.key === "GD2_STATUS_High");
             setGD2_STATUS_High(GD2_STATUS_High?.value || null);
             const GD2_STATUS_Low = res.data.find((item: any) => item.key === "GD2_STATUS_Low");
@@ -343,6 +342,31 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const GD2_STATUS_Maintain = res.data.find(
                 (item: any) => item.key === "GD2_STATUS_Maintain"
             );
+            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
+            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
+            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
+            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
+            const GD3_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD3_STATUS_Maintain"
+            );
+
+            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
+            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
+            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
+            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
+            const GD4_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD4_STATUS_Maintain"
+            );
+            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
+            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
+            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
+            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
+            const GD5_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD5_STATUS_Maintain"
+            );
+
+
+            
             const TM_2003_SNG_High = res.data.find((item: any) => item.key === "TM_2003_SNG_High");
             setTM_2003_SNG_High(TM_2003_SNG_High?.value || null);
             const TM_2003_SNG_Low = res.data.find((item: any) => item.key === "TM_2003_SNG_Low");
@@ -351,13 +375,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 (item: any) => item.key === "TM_2003_SNG_Maintain"
             );
 
-            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
-            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
-            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
-            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
-            const GD1_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD1_STATUS_Maintain"
-            );
+     
 
             const SDV_2003_High = res.data.find((item: any) => item.key === "SDV_2003_High");
             setSDV_2003_High(SDV_2003_High?.value || null);
@@ -369,22 +387,9 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
      
 
-            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
-            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
-            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
-            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
-            const GD4_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD4_STATUS_Maintain"
-            );
+      
 
-            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
-            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
-            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
-            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
-            const GD3_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD3_STATUS_Maintain"
-            );
-
+          
 
             const ESD_High = res.data.find((item: any) => item.key === "ESD_High");
             setESD_High(ESD_High?.value || null);
