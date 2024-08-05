@@ -2,13 +2,11 @@
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
-import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import {
     getSeverAttributesByDeviceandKeys,
     getTimeseriesKeys,
 } from "@/api/telemetry.api";
-import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import styles from "./FilterDataTableReport.module.css";
@@ -17,6 +15,7 @@ import { MultiSelect } from "primereact/multiselect";
 import dayjs from "dayjs"; // Import dayjs
 
 import { DatePicker } from "antd"; // Import DatePicker from Ant Design
+import { co } from "@fullcalendar/core/internal-common";
 
 const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
 
@@ -52,7 +51,27 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
     const [unitAttribute, setUnitAttribute] = useState<any>({});
-    const [dateRangeFocused, setDateRangeFocused] = useState(true);
+
+    // useEffect(() => {
+    //     if (editFilter.dates) {
+    //         setDateRange([
+    //             dayjs(editFilter.dates[0]),
+    //             dayjs(editFilter.dates[1]),
+    //         ]);
+    //     }
+    // }, [editFilter.dates]);
+
+    const handleDateRangeChange = (dates: any) => {
+        console.log(dates);
+        if (dates) {
+            const startDate = dates[0] ? dates[0].toDate() : null;
+            const endDate = dates[1] ? dates[1].toDate() : null;
+            const dateRange = [startDate, endDate];
+            _processFilterChange("dates", dateRange);
+        } else {
+            _processFilterChange("dates", null);
+        }
+    };
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -62,10 +81,9 @@ const FilterDataTableReport: React.FC<Props> = ({
                 // Parse dates from localStorage
                 parsedFilter.dates = parsedFilter.dates
                     ? parsedFilter.dates.map((dateStr: string) =>
-                          Utils.parseDateFromStorage(dateStr)
+                          dayjs(dateStr)
                       )
                     : null;
-
                 setEditFilter(parsedFilter);
                 onAction(parsedFilter);
             }
@@ -290,6 +308,15 @@ const FilterDataTableReport: React.FC<Props> = ({
             tags: [...newTags],
         }));
     };
+    const handleDateRangeOk = (dates: any) => {
+        console.log(dates);
+        if (dates && dates.length === 2 && dates[0] && dates[1]) {
+            const [start, end] = dates;
+            const dateRange = [start.toDate(), end.toDate()];
+            _processFilterChange("dates", dateRange);
+            // setDateRangeFocused(true);
+        }
+    };
 
     useEffect(() => {
         if (editFilter.device && editFilter.device.id) {
@@ -338,29 +365,44 @@ const FilterDataTableReport: React.FC<Props> = ({
                 {showDate && (
                     <div className="col-12 lg:col-3 md:col-3">
                         <div className={styles.dateRangeWrapper}>
-                            <div
-                                className={`${styles.floatLabel} ${
-                                    dateRangeFocused ? styles.focused : ""
-                                } ${
-                                    editFilter.dates && editFilter.dates.length
-                                        ? styles.hasValue
-                                        : ""
-                                }`}
-                            >
+                            <div className={styles.floatLabel}>
                                 <RangePicker
                                     showTime
+                                    style={{ padding: "0.65rem" }}
                                     format="DD/MM/YYYY HH:mm"
-                                    //  value={editFilter.dates}
-                                    onChange={(dates) => {
-                                        _processFilterChange("dates", dates);
-                                    }}
-                                    onOk={(e) => {
-                                        console.log(e);
-                                    }}
-                                    onFocus={() => setDateRangeFocused(true)}
-                                    onBlur={() => setDateRangeFocused(false)}
+                                    placeholder={["Start Time", "End Time"]}
+                                    value={
+                                        editFilter.dates
+                                            ? // editFilter.dates.length === 2 &
+                                              // editFilter.dates[0] &&
+                                              // editFilter.dates[1]
+                                              [
+                                                  editFilter.dates[0]
+                                                      ? dayjs(
+                                                            editFilter.dates[0]
+                                                        )
+                                                      : null,
+                                                  editFilter.dates[1]
+                                                      ? dayjs(
+                                                            editFilter.dates[1]
+                                                        )
+                                                      : null,
+                                              ]
+                                            : null
+                                    }
+                                    onChange={(dates) =>
+                                        handleDateRangeChange(dates)
+                                    }
+                                    className={
+                                        editFilter.dates &&
+                                        editFilter.dates.length === 2 &&
+                                        editFilter.dates[0] &&
+                                        editFilter.dates[1]
+                                            ? "ant-picker-has-value"
+                                            : ""
+                                    }
                                 />
-                                <label>Select Date Range</label>
+                                <label>Select date</label>
                             </div>
                         </div>
                     </div>

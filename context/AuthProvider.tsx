@@ -71,6 +71,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             }
+        } finally {
+            setIsLoading(() => false);
         }
     }, []);
 

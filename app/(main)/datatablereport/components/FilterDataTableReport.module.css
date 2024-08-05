@@ -10,16 +10,16 @@
 
 .floatLabel label {
     position: absolute;
-    left: 0;
-    top: -20px; /* Điều chỉnh giá trị này để kiểm soát vị trí dọc của label */
-    z-index: 1;
+    left: 11px; /* Căn chỉnh với padding của Ant Design input */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
     padding: 0 4px;
-    background-color: transparent;
-    font-size: 14px; /* Giảm kích thước font để phù hợp hơn */
+    font-size: 14px;
     transition: all 0.2s;
     color: rgba(0, 0, 0, 0.65);
     pointer-events: none;
-    width: 100%;
+    width: calc(100% - 22px); /* Đảm bảo label không vượt quá biên của input */
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -29,17 +29,25 @@
     width: 100%;
 }
 
-.floatLabel :global(.ant-picker-focused) + label,
-.floatLabel :global(.ant-picker-has-value) + label {
-    font-size: 12px;
-    color: #1890ff;
+.floatLabel :global(.ant-picker.ant-picker-focused) + label,
+.floatLabel :global(.ant-picker.ant-picker-has-value) + label {
+    top: -20px;
+    transform: translateY(0);
+    font-size: 12px; /* Giữ nguyên font size */
+    width: auto; /* Cho phép label hiển thị đầy đủ khi di chuyển lên */
 }
 
-.floatLabel :global(.ant-picker-focused),
-.floatLabel :global(.ant-picker-has-value) {
+.floatLabel :global(.ant-picker.ant-picker-focused),
+.floatLabel :global(.ant-picker.ant-picker-has-value) {
     border-color: #1890ff;
 }
 
 .floatLabel :global(.ant-picker-input) > input {
-    opacity: 1; /* Luôn hiển thị văn bản đầu vào */
+    opacity: 0; /* Ẩn văn bản đầu vào khi không focus */
+    transition: opacity 0.2s;
+}
+
+.floatLabel :global(.ant-picker-focused) :global(.ant-picker-input) > input,
+.floatLabel :global(.ant-picker-has-value) :global(.ant-picker-input) > input {
+    opacity: 1; /* Hiển thị văn bản đầu vào khi focus hoặc có giá trị */
 }
