@@ -596,39 +596,6 @@ export default function SetUpdata_CNG_BINHDUONG() {
 
          
 
-            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
-            setHR_BC_High(HR_BC_High?.value || null);
-            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
-            setHR_BC_Low(HR_BC_Low?.value || null);
-            const HR_BC_Maintain = res.data.find(
-                (item: any) => item.key === "HR_BC_Maintain"
-            );
-
-
-            const ESD_2001_High = res.data.find((item: any) => item.key === "ESD_2001_High");
-            setESD_2001_High(ESD_2001_High?.value || null);
-            const ESD_2001_Low = res.data.find((item: any) => item.key === "ESD_2001_Low");
-            setESD_2001_Low(ESD_2001_Low?.value || null);
-            const ESD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "ESD_2001_Maintain"
-            );
-
-            const SD_2001_High = res.data.find((item: any) => item.key === "SD_2001_High");
-            setSD_2001_High(SD_2001_High?.value || null);
-            const SD_2001_Low = res.data.find((item: any) => item.key === "SD_2001_Low");
-            setSD_2001_Low(SD_2001_Low?.value || null);
-            const SD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "SD_2001_Maintain"
-            );
-
-            const SD_2002_High = res.data.find((item: any) => item.key === "SD_2002_High");
-            setSD_2002_High(SD_2002_High?.value || null);
-            const SD_2002_Low = res.data.find((item: any) => item.key === "SD_2002_Low");
-            setSD_2002_Low(SD_2002_Low?.value || null);
-            const SD_2002_Maintain = res.data.find(
-                (item: any) => item.key === "SD_2002_Maintain"
-            );
-
 
 
     
@@ -636,7 +603,7 @@ export default function SetUpdata_CNG_BINHDUONG() {
             setEVC_01_Remain_Battery_Service_Life_High(EVC_01_Remain_Battery_Service_Life_High?.value || null);
             const EVC_01_Remain_Battery_Service_Life_Low = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
             setEVC_01_Remain_Battery_Service_Life_Low(EVC_01_Remain_Battery_Service_Life_Low?.value || null);
-            const maintainEVC_01_Remain_Battery_Service_Life = res.data.find(
+            const EVC_01_Remain_Battery_Service_Life_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Maintain"
             );
 
@@ -820,6 +787,8 @@ export default function SetUpdata_CNG_BINHDUONG() {
             const EVC_02_Volume_at_Base_Condition_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
+
+
             const PIT_2006_High = res.data.find((item: any) => item.key === "PIT_2006_High");
             setPIT_2006_High(PIT_2006_High?.value || null);
             const PIT_2006_Low = res.data.find((item: any) => item.key === "PIT_2007_Low");
@@ -903,6 +872,13 @@ export default function SetUpdata_CNG_BINHDUONG() {
             const SDV_2001B_Maintain = res.data.find(
                 (item: any) => item.key === "SDV_2001B_Maintain"
             );
+            const SDV_2002_High = res.data.find((item: any) => item.key === "SDV_2002_High");
+            setSDV_2002_High(SDV_2002_High?.value || null);
+            const SDV_2002_Low = res.data.find((item: any) => item.key === "SDV_2002_Low");
+            setSDV_2002_Low(SDV_2002_Low?.value || null);
+            const SDV_2002_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_2002_Maintain"
+            );
 
             const Water_PG_High = res.data.find((item: any) => item.key === "Water_PG_High");
             setWater_PG_High(Water_PG_High?.value || null);
@@ -953,14 +929,6 @@ export default function SetUpdata_CNG_BINHDUONG() {
             );
 
 
-            const SDV_2002_High = res.data.find((item: any) => item.key === "SDV_2002_High");
-            setSDV_2002_High(SDV_2002_High?.value || null);
-            const SDV_2002_Low = res.data.find((item: any) => item.key === "SDV_2002_Low");
-            setSDV_2002_Low(SDV_2002_Low?.value || null);
-            const SDV_2002_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2002_Maintain"
-            );
-
             const BOILER_High = res.data.find((item: any) => item.key === "BOILER_High");
             setBOILER_High(BOILER_High?.value || null);
             const BOILER_Low = res.data.find((item: any) => item.key === "BOILER_Low");
@@ -976,134 +944,136 @@ export default function SetUpdata_CNG_BINHDUONG() {
             const GD_STATUS_Maintain = res.data.find(
                 (item: any) => item.key === "GD_STATUS_Maintain"
             );
+
+
+            const HR_BC_High = res.data.find((item: any) => item.key === "HR_BC_High");
+            setHR_BC_High(HR_BC_High?.value || null);
+            const HR_BC_Low = res.data.find((item: any) => item.key === "HR_BC_Low");
+            setHR_BC_Low(HR_BC_Low?.value || null);
+            const HR_BC_Maintain = res.data.find(
+                (item: any) => item.key === "HR_BC_Maintain"
+            );
+
+
+            const ESD_2001_High = res.data.find((item: any) => item.key === "ESD_2001_High");
+            setESD_2001_High(ESD_2001_High?.value || null);
+            const ESD_2001_Low = res.data.find((item: any) => item.key === "ESD_2001_Low");
+            setESD_2001_Low(ESD_2001_Low?.value || null);
+            const ESD_2001_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_2001_Maintain"
+            );
+
+            const SD_2001_High = res.data.find((item: any) => item.key === "SD_2001_High");
+            setSD_2001_High(SD_2001_High?.value || null);
+            const SD_2001_Low = res.data.find((item: any) => item.key === "SD_2001_Low");
+            setSD_2001_Low(SD_2001_Low?.value || null);
+            const SD_2001_Maintain = res.data.find(
+                (item: any) => item.key === "SD_2001_Maintain"
+            );
+
+            const SD_2002_High = res.data.find((item: any) => item.key === "SD_2002_High");
+            setSD_2002_High(SD_2002_High?.value || null);
+            const SD_2002_Low = res.data.find((item: any) => item.key === "SD_2002_Low");
+            setSD_2002_Low(SD_2002_Low?.value || null);
+            const SD_2002_Maintain = res.data.find(
+                (item: any) => item.key === "SD_2002_Maintain"
+            );
+
+
+
+            const EVC_01_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_High");
+            setEVC_01_Conn_STT_High(EVC_01_Conn_STT_High?.value || null);
+            const EVC_01_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_Low");
+            setEVC_01_Conn_STT_Low(EVC_01_Conn_STT_Low?.value || null);
+            const EVC_01_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Conn_STT_Maintain"
+            );
+
+            const EVC_02_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_High");
+            setEVC_02_Conn_STT_High(EVC_02_Conn_STT_High?.value || null);
+            const EVC_02_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_Low");
+            setEVC_02_Conn_STT_Low(EVC_02_Conn_STT_Low?.value || null);
+            const EVC_02_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Conn_STT_Maintain"
+            );
+
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
  // =================================================================================================================== 
 
 
 
-            setmaintainHR_BC(HR_BC_Maintain?.value || false);
-            setmaintainESD_2001(ESD_2001_Maintain?.value || false);
 
-
-            setmaintainSD_2001(SD_2001_Maintain?.value || false);
-
-
-            setmaintainSD_2002(SD_2002_Maintain?.value || false);
-
-            setmaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
-
-
-            setmaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
-
-            setmaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
-
-            setmaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
-
-
-            setmaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
-
-
-            setmaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
-
-
-            setmaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
-
-
-            setmaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false);
-
-            
-            setmaintainEVC_02_Pressure(EVC_02_Pressure_Maintain?.value || false);
-            
-            setmaintainEVC_02_Temperature(EVC_02_Temperature_Maintain?.value || false);
-
-            
-            setmaintainEVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_Life_Maintain?.value || false);
-
-            setmaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
-
-
-
-
-
-
-         
 
             setmaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
+            setmaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
+            setmaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
+            setmaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
+
+            setmaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
+            setmaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
+            setmaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false);
+            setmaintainEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_Condition_Maintain?.value || false);
+
+            setmaintainEVC_02_Pressure(EVC_02_Pressure_Maintain?.value || false);
+            setmaintainEVC_02_Temperature(EVC_02_Temperature_Maintain?.value || false);
+
+            setmaintainEVC_02_Remain_Battery_Service_Life(EVC_02_Remain_Battery_Service_Life_Maintain?.value || false);
 
 
+
+            setmaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
             setmaintainEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Maintain?.value || false);
-
             setmaintainEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_Day_Maintain?.value || false);
-
-
             setmaintainEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_Day_Maintain?.value || false);
 
 
             setmaintainEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false);
-
             setmaintainEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_Condition_Maintain?.value || false);
-
-
             setmaintainEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false);
-
             setmaintainEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_Condition_Maintain?.value || false);
 
             setmaintainEVC_01_Pressure(EVC_01_Pressure_Maintain?.value || false);
-
             setmaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
 
-            setmaintainEVC_01_Remain_Battery_Service_Life(maintainEVC_01_Remain_Battery_Service_Life?.value || false);
+            setmaintainEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Maintain?.value || false);
 
 
             setmaintainPIT_2006(MaintainPIT_2006?.value || false);
-
-
             setmaintainPIT_2007(PIT_2007_Maintain?.value || false);
-
             setmaintainPT_2001(PT_2001_Maintain?.value || false);
-
-
             setmaintainPT_2002(PT_2002_Maintain?.value || false);
-
-
             setmaintainPT_2003(PT_2003_Maintain?.value || false);
-
-
             setmaintainTT_2001(TT_2001_Maintain?.value || false);
-
-
-
-            
-            setmaintainBOILER(BOILER_Maintain?.value || false);
-            
-            setmaintainSDV_2002(SDV_2002_Maintain?.value || false);
-
-            
-            setmaintainHEATER_2(HEATER_2_Maintain?.value || false);
-
-            setmaintainHEATER_1(HEATER_1_Maintain?.value || false);
-
-
-            setmaintainPUMP_2(PUMP_2_Maintain?.value || false);
-
-            setmaintainPUMP_1(PUMP_1_Maintain?.value || false);
-
-            setmaintainWater_LSW(Water_LSW_Maintain?.value || false);
-
-
-            setmaintainWater_PG(Water_PG_Maintain?.value || false);
-
-            setmaintainSDV_2001B(SDV_2001B_Maintain?.value || false);
-
-
-            setmaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
-
-            setmaintainGD_2001(GD_2001_Maintain?.value || false);
-
-
             setmaintainTT_2002(TT_2002_Maintain?.value || false);
+            setmaintainGD_2001(GD_2001_Maintain?.value || false);
+            setmaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
+            setmaintainSDV_2001B(SDV_2001B_Maintain?.value || false);
+            setmaintainSDV_2002(SDV_2002_Maintain?.value || false);
+            setmaintainWater_LSW(Water_LSW_Maintain?.value || false);
+            setmaintainWater_PG(Water_PG_Maintain?.value || false);
+            setmaintainPUMP_2(PUMP_2_Maintain?.value || false);
+            setmaintainPUMP_1(PUMP_1_Maintain?.value || false);
+            setmaintainHEATER_2(HEATER_2_Maintain?.value || false);
+            setmaintainHEATER_1(HEATER_1_Maintain?.value || false);
+            setmaintainBOILER(BOILER_Maintain?.value || false);
+            setmaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
+            setmaintainHR_BC(HR_BC_Maintain?.value || false);
+            setmaintainESD_2001(ESD_2001_Maintain?.value || false);
+            setmaintainSD_2001(SD_2001_Maintain?.value || false);
+            setmaintainSD_2002(SD_2002_Maintain?.value || false);
 
 
 
+            setmaintainEVC_01_Conn_STT(EVC_01_Conn_STT_Maintain?.value || false);
+            setmaintainEVC_02_Conn_STT(EVC_02_Conn_STT_Maintain?.value || false);
+            setmaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -3249,10 +3219,8 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
                 {
                     
-                    HR_BC_High: inputValueHR_BC,HR_BC_Low:inputValue2HR_BC,
-                    ESD_2001_High: inputValueESD_2001,ESD_2001_Low:inputValue2ESD_2001,
-                    SD_2001_High: inputValueSD_2001,SD_2001_Low:inputValue2SD_2001,
-                    SD_2002_High: inputValueSD_2002,SD_2002_Low:inputValue2SD_2002,
+               
+
                     EVC_01_Temperature_High: inputValueEVC_01_Temperature,EVC_01_Temperature_Low:inputValue2EVC_01_Temperature,
                     EVC_01_Pressure_High: inputValueEVC_01_Pressure,EVC_01_Pressure_Low:inputValue2EVC_01_Pressure,
                     EVC_01_Remain_Battery_Service_Life_High: inputValueEVC_01_Remain_Battery_Service_Life,EVC_01_Remain_Battery_Service_Life_Low:inputValue2EVC_01_Remain_Battery_Service_Life,
@@ -3263,14 +3231,14 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
                     EVC_01_Flow_at_Measurement_Condition_High: inputValueEVC_01_Flow_at_Measurement_Condition,EVC_01_Flow_at_Measurement_Condition_Low:inputValue2EVC_01_Flow_at_Measurement_Condition,
                     EVC_01_Vb_of_Current_Day_High: inputValueEVC_01_Vb_of_Current_Day,EVC_01_Vb_of_Current_Day_Low:inputValue2EVC_01_Vb_of_Current_Day,
                     EVC_01_Vm_of_Current_Day_High: inputValueEVC_01_Vm_of_Current_Day,EVC_01_Vm_of_Current_Day_Low:inputValue2EVC_01_Vm_of_Current_Day,
-                    EVC_01_Vm_of_Last_Day_High: inputValueEVC_01_Vm_of_Last_Day,EVC_01_Vm_of_Last_Day_Low:inputValue2EVC_01_Vm_of_Last_Day,
+                    EVC_01_Vm_of_Last_Day_High: inputValueEVC_01_Vm_of_Last_Day,EVC_01_Vm_of_Last_Day_Low:inputValue2EVC_01_Vm_of_Last_Day,       
                     EVC_01_Vb_of_Last_Day_High: inputValueEVC_01_Vb_of_Last_Day,EVC_01_Vb_of_Last_Day_Low:inputValue2EVC_01_Vb_of_Last_Day,
+                   
                     EVC_02_Remain_Battery_Service_Life_High: inputValueEVC_02_Remain_Battery_Service_Life,EVC_02_Remain_Battery_Service_Life_Low:inputValue2EVC_02_Remain_Battery_Service_Life,
                     EVC_02_Temperature_High: inputValueEVC_02_Temperature,EVC_02_Temperature_Low:inputValue2EVC_02_Temperature,
                     EVC_02_Pressure_High: inputValueEVC_02_Pressure,EVC_02_Pressure_Low:inputValue2EVC_02_Pressure,
                     EVC_02_Volume_at_Base_Condition_High: inputValueEVC_02_Volume_at_Base_Condition,EVC_02_Volume_at_Base_Condition_Low:inputValue2EVC_02_Volume_at_Base_Condition,
                     EVC_02_Volume_at_Measurement_Condition_High: inputValueEVC_02_Volume_at_Measurement_Condition,EVC_02_Volume_at_Measurement_Condition_Low:inputValue2EVC_02_Volume_at_Measurement_Condition,
-                 
                  
                     EVC_02_Flow_at_Base_Condition_High: inputValueEVC_02_Flow_at_Base_Condition,EVC_02_Flow_at_Base_Condition_Low:inputValue2EVC_02_Flow_at_Base_Condition,
                     EVC_02_Flow_at_Measurement_Condition_High: inputValueEVC_02_Flow_at_Measurement_Condition,EVC_02_Flow_at_Measurement_Condition_Low:inputValue2EVC_02_Flow_at_Measurement_Condition,
@@ -3278,17 +3246,22 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
                     EVC_02_Vm_of_Current_Day_High: inputValueEVC_02_Vm_of_Current_Day,EVC_02_Vm_of_Current_Day_Low:inputValue2EVC_02_Vm_of_Current_Day,
                     EVC_02_Vb_of_Last_Day_High: inputValueEVC_02_Vb_of_Last_Day,EVC_02_Vb_of_Last_Day_Low:inputValue2EVC_02_Vb_of_Last_Day,
                     EVC_02_Vm_of_Last_Day_High: inputValueEVC_02_Vm_of_Last_Day,EVC_02_Vm_of_Last_Day_Low:inputValue2EVC_02_Vm_of_Last_Day,
+                 
                     PIT_2007_High: inputValuePIT_2007,PIT_2007_Low:inputValue2PIT_2007,
-                    PT_2001_High: inputValuePT_2001,PT_2001_Low:inputValue2PT_2001,
                     PIT_2006_High: inputValuePIT_2006,PIT_2006_Low:inputValue2PIT_2006,
-                    PT_2002_High: inputValuePT_2002,PT_2002_Low:inputValue2PT_2002,
 
+                    PT_2001_High: inputValuePT_2001,PT_2001_Low:inputValue2PT_2001,
+                    PT_2002_High: inputValuePT_2002,PT_2002_Low:inputValue2PT_2002,
                     PT_2003_High: inputValuePT_2003,PT_2003_Low:inputValue2PT_2003,
+
                     TT_2001_High: inputValueTT_2001,TT_2001_Low:inputValue2TT_2001,
                     TT_2002_High: inputValueTT_2002,TT_2002_Low:inputValue2TT_2002,
                     GD_2001_High: inputValueGD_2001,GD_2001_Low:inputValue2GD_2001,
+
                     SDV_2001B_High: inputValueSDV_2001B,SDV_2001B_Low:inputValue2SDV_2001B,
                     SDV_2001A_High: inputValueSDV_2001A,SDV_2001A_Low:inputValue2SDV_2001A,
+                    SDV_2002_High: inputValueSDV_2002,SDV_2002_Low:inputValue2SDV_2002,
+
                     Water_PG_High: inputValueWater_PG,Water_PG_Low:inputValue2Water_PG,
                     Water_LSW_High: inputValueWater_LSW,Water_LSW_Low:inputValue2Water_LSW,
                     PUMP_1_High: inputValuePUMP_1,PUMP_1_Low:inputValue2PUMP_1,
@@ -3296,11 +3269,14 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
                     HEATER_1_High: inputValueHEATER_1,HEATER_1_Low:inputValue2HEATER_1,
                     HEATER_2_High: inputValueHEATER_2,HEATER_2_Low:inputValue2HEATER_2,
-
-
-                    SDV_2002_High: inputValueSDV_2002,SDV_2002_Low:inputValue2SDV_2002,
                     BOILER_High: inputValueBOILER,BOILER_Low:inputValue2BOILER,
                     GD_STATUS_High: inputValueGD_STATUS,GD_STATUS_Low:inputValue2GD_STATUS,
+
+                    HR_BC_High: inputValueHR_BC,HR_BC_Low:inputValue2HR_BC,
+                    ESD_2001_High: inputValueESD_2001,ESD_2001_Low:inputValue2ESD_2001,
+                    SD_2001_High: inputValueSD_2001,SD_2001_Low:inputValue2SD_2001,
+                    SD_2002_High: inputValueSD_2002,SD_2002_Low:inputValue2SD_2002,
+
                     IOT_Gateway_Phone: inputGetwayPhone,
 
       //==========================================
@@ -3341,27 +3317,12 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setPSV_2002B(inputPSV_2002B)
             setGetWayPhoneOTSUKA(inputGetwayPhone);
 
-            setHR_BC_High(inputValueHR_BC);
-            setHR_BC_Low(inputValue2HR_BC);
-
-
-            setESD_2001_High(inputValueESD_2001);
-            setESD_2001_Low(inputValue2ESD_2001);
-
-            setSD_2001_High(inputValueSD_2001);
-            setSD_2001_Low(inputValue2SD_2001);
-
-            setSD_2002_High(inputValueSD_2002);
-            setSD_2002_Low(inputValue2SD_2002);
-
+        
             setEVC_01_Remain_Battery_Service_Life_High(inputValueEVC_01_Remain_Battery_Service_Life);
             setEVC_01_Remain_Battery_Service_Life_Low(inputValue2EVC_01_Remain_Battery_Service_Life);
 
             setEVC_01_Temperature_High(inputValueEVC_01_Temperature);
             setEVC_01_Temperature_Low(inputValue2EVC_01_Temperature);
-
-            setEVC_01_Pressure_High(inputValueEVC_01_Pressure);
-            setEVC_01_Pressure_Low(inputValue2EVC_01_Pressure);
 
             setEVC_01_Pressure_High(inputValueEVC_01_Pressure);
             setEVC_01_Pressure_Low(inputValue2EVC_01_Pressure);
@@ -3382,21 +3343,22 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setEVC_01_Vb_of_Current_Day_High(inputValueEVC_01_Vb_of_Current_Day);
             setEVC_01_Vb_of_Current_Day_Low(inputValue2EVC_01_Vb_of_Current_Day);
 
+            setEVC_01_Vb_of_Last_Day_High(inputValueEVC_01_Vb_of_Last_Day);
+            setEVC_01_Vb_of_Last_Day_Low(inputValue2EVC_01_Vb_of_Last_Day);
+
             setEVC_01_Vm_of_Current_Day_High(inputValueEVC_01_Vm_of_Current_Day);
             setEVC_01_Vm_of_Current_Day_Low(inputValue2EVC_01_Vm_of_Current_Day);
 
             setEVC_01_Vm_of_Last_Day_High(inputValueEVC_01_Vm_of_Last_Day);
             setEVC_01_Vm_of_Last_Day_Low(inputValue2EVC_01_Vm_of_Last_Day);
 
-            setEVC_01_Vb_of_Last_Day_High(inputValueEVC_01_Vb_of_Last_Day);
-            setEVC_01_Vb_of_Last_Day_Low(inputValue2EVC_01_Vb_of_Last_Day);
 
-
-            setEVC_02_Temperature_High(inputValueEVC_02_Temperature);
-            setEVC_02_Temperature_Low(inputValue2EVC_02_Temperature);
 
             setEVC_02_Remain_Battery_Service_Life_High(inputValueEVC_02_Remain_Battery_Service_Life);
             setEVC_02_Remain_Battery_Service_Life_Low(inputValue2EVC_02_Remain_Battery_Service_Life);
+
+            setEVC_02_Temperature_High(inputValueEVC_02_Temperature);
+            setEVC_02_Temperature_Low(inputValue2EVC_02_Temperature);
 
             setEVC_02_Pressure_High(inputValueEVC_02_Pressure);
             setEVC_02_Pressure_Low(inputValue2EVC_02_Pressure);
@@ -3404,6 +3366,11 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setEVC_02_Volume_at_Base_Condition_High(inputValueEVC_02_Volume_at_Base_Condition);
             setEVC_02_Volume_at_Base_Condition_Low(inputValue2EVC_02_Volume_at_Base_Condition);
 
+            setEVC_02_Volume_at_Measurement_Condition_High(inputValueEVC_02_Volume_at_Measurement_Condition);
+            setEVC_02_Volume_at_Measurement_Condition_Low(inputValue2EVC_02_Volume_at_Measurement_Condition);
+
+            setEVC_02_Flow_at_Base_Condition_High(inputValueEVC_02_Flow_at_Base_Condition);
+            setEVC_02_Flow_at_Base_Condition_Low(inputValue2EVC_02_Flow_at_Base_Condition);
 
 
             setEVC_02_Flow_at_Measurement_Condition_High(inputValueEVC_02_Flow_at_Measurement_Condition);
@@ -3412,15 +3379,14 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setEVC_02_Vb_of_Current_Day_High(inputValueEVC_02_Vb_of_Current_Day);
             setEVC_02_Vb_of_Current_Day_Low(inputValue2EVC_02_Vb_of_Current_Day);
 
+            setEVC_02_Vb_of_Last_Day_High(inputValueEVC_02_Vb_of_Last_Day);
+            setEVC_02_Vb_of_Last_Day_Low(inputValue2EVC_02_Vb_of_Last_Day);
+            
             setEVC_02_Vm_of_Current_Day_High(inputValueEVC_02_Vm_of_Current_Day);
             setEVC_02_Vm_of_Current_Day_Low(inputValue2EVC_02_Vm_of_Current_Day);
 
-            setEVC_02_Vb_of_Last_Day_High(inputValueEVC_02_Vb_of_Last_Day);
-            setEVC_02_Vb_of_Last_Day_Low(inputValue2EVC_02_Vb_of_Last_Day);
-
             setEVC_02_Vm_of_Last_Day_High(inputValueEVC_02_Vm_of_Last_Day);
             setEVC_02_Vm_of_Last_Day_Low(inputValue2EVC_02_Vm_of_Last_Day);
-
 
           
 
@@ -3432,8 +3398,8 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setPIT_2007_High(inputValuePIT_2007);
             setPIT_2007_Low(inputValue2PIT_2007);
 
-            setPT_2001_High(inputValuePT_2001);
-            setPT_2001_Low(inputValue2PT_2001);
+            setPIT_2006_High(inputValuePIT_2006);
+            setPIT_2006_Low(inputValue2PIT_2006);
 
             setPT_2001_High(inputValuePT_2001);
             setPT_2001_Low(inputValue2PT_2001);
@@ -3447,9 +3413,6 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setTT_2001_High(inputValueTT_2001);
             setTT_2001_Low(inputValue2TT_2001);
 
-
-
-
             setTT_2002_High(inputValueTT_2002);
             setTT_2002_Low(inputValue2TT_2002);
 
@@ -3462,6 +3425,8 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setSDV_2001A_High(inputValueSDV_2001A);
             setSDV_2001A_Low(inputValue2SDV_2001A);
 
+            setSDV_2002_High(inputValueSDV_2002);
+            setSDV_2002_Low(inputValue2SDV_2002);
 
             setWater_LSW_High(inputValueWater_LSW);
             setWater_LSW_Low(inputValue2Water_LSW);
@@ -3476,15 +3441,33 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
             setPUMP_2_Low(inputValue2PUMP_2);
 
 
+            setHEATER_1_High(inputValueHEATER_1);
+            setHEATER_1_Low(inputValue2HEATER_1)
+            
 
-            setSDV_2002_High(inputValueSDV_2002);
-            setSDV_2002_Low(inputValue2SDV_2002);
+            setHEATER_2_High(inputValueHEATER_2);
+            setHEATER_2_Low(inputValue2HEATER_2);
 
             setBOILER_High(inputValueBOILER);
             setBOILER_Low(inputValue2BOILER);
 
             setGD_STATUS_High(inputValueGD_STATUS);
             setGD_STATUS_Low(inputValue2GD_STATUS);
+
+            setHR_BC_High(inputValueHR_BC);
+            setHR_BC_Low(inputValue2HR_BC);
+
+            setESD_2001_High(inputValueESD_2001);
+            setESD_2001_Low(inputValue2ESD_2001);
+
+            setSD_2001_High(inputValueSD_2001);
+            setSD_2001_Low(inputValue2SD_2001);
+
+
+
+            setSD_2002_High(inputValueSD_2002);
+            setSD_2002_Low(inputValue2SD_2002);
+        
 
 
             setEVC_02_Conn_STT_High(inputValueEVC_02_Conn_STT);
@@ -3530,19 +3513,13 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 //========================================================
         setInputGetwayPhone(getWayPhoneOTSUKA)
    
-        setinputValueHR_BC(HR_BC_High); 
-        setinputValue2HR_BC(HR_BC_Low); 
+    
 
       
 
-        setinputValueESD_2001(ESD_2001_High); 
-        setinputValue2ESD_2001(ESD_2001_Low); 
 
-        setinputValueSD_2001(SD_2001_High); 
-        setinputValue2SD_2001(SD_2001_Low); 
 
-        setinputValueSD_2002(SD_2002_High); 
-        setinputValue2SD_2002(SD_2002_Low); 
+   
 
 
         setinputValueEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_High); 
@@ -3637,18 +3614,16 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
         setinputValuePT_2001(PT_2001_High); 
         setinputValue2PT_2001(PT_2001_Low); 
 
-
-
+        setinputValuePT_2002(PT_2002_High); 
+        setinputValue2PT_2002(PT_2002_Low); 
+        
         setinputValuePT_2003(PT_2003_High); 
         setinputValue2PT_2003(PT_2003_Low); 
 
         setinputValueTT_2001(TT_2001_High); 
         setinputValue2TT_2001(TT_2001_Low); 
 
-        setinputValuePT_2002(PT_2002_High); 
-        setinputValue2PT_2002(PT_2002_Low); 
-        
-
+  
         setinputValueTT_2002(TT_2002_High); 
         setinputValue2TT_2002(TT_2002_Low); 
 
@@ -3656,12 +3631,14 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
         setinputValue2GD_2001(GD_2001_Low); 
 
 
-
         setinputValueSDV_2001A(SDV_2001A_High); 
         setinputValue2SDV_2001A(SDV_2001A_Low); 
 
         setinputValueSDV_2001B(SDV_2001B_High); 
         setinputValue2SDV_2001B(SDV_2001B_Low); 
+
+        setinputValueSDV_2002(SDV_2002_High); 
+        setinputValue2SDV_2002(SDV_2002_Low); 
 
         setinputValueWater_PG(Water_PG_High); 
         setinputValue2Water_PG(Water_PG_Low); 
@@ -3683,16 +3660,28 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
         setinputValue2HEATER_2(HEATER_2_Low); 
 
 
-        setinputValueSDV_2002(SDV_2002_High); 
-        setinputValue2SDV_2002(SDV_2002_Low); 
+
 
 
         setinputValueBOILER(BOILER_High); 
-        setinputValue2BOILER(BOILER_Low); 
+        setinputValue2BOILER(BOILER_Low);
+        
+
 
         setinputValueGD_STATUS(GD_STATUS_High); 
         setinputValue2GD_STATUS(GD_STATUS_Low); 
 
+        setinputValueHR_BC(HR_BC_High); 
+        setinputValue2HR_BC(HR_BC_Low); 
+
+        setinputValueESD_2001(ESD_2001_High); 
+        setinputValue2ESD_2001(ESD_2001_Low); 
+
+        setinputValueSD_2001(SD_2001_High); 
+        setinputValue2SD_2001(SD_2001_Low); 
+
+        setinputValueSD_2002(SD_2002_High); 
+        setinputValue2SD_2002(SD_2002_Low); 
 
 
         setinputValueEVC_01_Conn_STT(EVC_01_Conn_STT_High)
@@ -3707,12 +3696,7 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
     }, [
         
-        HR_BC_High, HR_BC_Low ,
-
-
-        SD_2001_High,SD_2001_Low,
-         SD_2002_High,SD_2002_Low ,
-          ESD_2001_High,ESD_2001_Low,
+ 
         
         EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low ,
         EVC_01_Temperature_High, EVC_01_Temperature_Low 
@@ -3753,19 +3737,20 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
 
            PIT_2006_High, PIT_2006_Low ,
-        PIT_2007_High, PIT_2007_Low 
-        ,PT_2001_High, PT_2001_Low ,
+        PIT_2007_High, PIT_2007_Low ,
 
-
+        PT_2001_High, PT_2001_Low ,
+        PT_2002_High,PT_2002_Low,
         PT_2003_High,PT_2003_Low,
-         TT_2001_High,TT_2001_Low ,
-          PT_2002_High,PT_2002_Low,
 
+         TT_2001_High,TT_2001_Low ,
           TT_2002_High,TT_2002_Low,
+          
           GD_2001_High,GD_2001_Low ,
         
            SDV_2001A_High,SDV_2001A_Low,
            SDV_2001B_High,SDV_2001B_Low,
+           SDV_2002_High,SDV_2002_Low,
 
            Water_PG_High,Water_PG_Low,
            Water_LSW_High,Water_LSW_Low,
@@ -3775,11 +3760,15 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
 
            HEATER_2_High,HEATER_2_Low,
            HEATER_1_High,HEATER_1_Low,
-
-
-           SDV_2002_High,SDV_2002_Low,
            BOILER_High,BOILER_Low,
            GD_STATUS_High,GD_STATUS_Low,
+
+           HR_BC_High, HR_BC_Low ,
+           ESD_2001_High,ESD_2001_Low,
+
+           SD_2001_High,SD_2001_Low,
+            SD_2002_High,SD_2002_Low ,
+
            getWayPhoneOTSUKA,
            PCV_2001A,
            PCV_2001B,
@@ -3851,6 +3840,10 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
                 const newHR_BC = checked;
                 const newSD_2001 = checked;
                 const newSD_2002 = checked;
+                const newPLC_Conn_STT = checked;
+
+            
+
         
                 await httpApi.post(
                     `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
@@ -3903,7 +3896,9 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
                         ESD_2001_Maintain: newESD_2001,
                         HR_BC_Maintain: newHR_BC,
                         SD_2001_Maintain: newSD_2001,
-                        SD_2002_Maintain: newSD_2002
+                        SD_2002_Maintain: newSD_2002,
+                        PLC_Conn_STT_Maintain: newPLC_Conn_STT,
+
                     }
                 );
         
@@ -3920,6 +3915,9 @@ setmaintainEVC_01_Vm_of_Current_Day(newEVC_01_Vm_of_Current_Day);
 setmaintainEVC_01_Vb_of_Last_Day(newEVC_01_Vb_of_Last_Day);
 setmaintainEVC_01_Vm_of_Last_Day(newEVC_01_Vm_of_Last_Day);
 
+setmaintainEVC_01_Conn_STT(newEVC_01_Conn_STT);
+
+
 setmaintainEVC_02_Remain_Battery_Service_Life(newEVC_02_Remain_Battery_Service_Life);
 setmaintainEVC_02_Temperature(newEVC_02_Temperature);
 setmaintainEVC_02_Pressure(newEVC_02_Pressure);
@@ -3931,6 +3929,8 @@ setmaintainEVC_02_Vb_of_Current_Day(newEVC_02_Vb_of_Current_Day);
 setmaintainEVC_02_Vm_of_Current_Day(newEVC_02_Vm_of_Current_Day);
 setmaintainEVC_02_Vb_of_Last_Day(newEVC_02_Vb_of_Last_Day);
 setmaintainEVC_02_Vm_of_Last_Day(newEVC_02_Vm_of_Last_Day);
+setmaintainEVC_02_Conn_STT(newEVC_02_Conn_STT);
+
 
 setmaintainPIT_2006(newPIT_2006);
 setmaintainPIT_2007(newPIT_2007);
@@ -3955,6 +3955,9 @@ setmaintainESD_2001(newESD_2001);
 setmaintainHR_BC(newHR_BC);
 setmaintainSD_2001(newSD_2001);
 setmaintainSD_2002(newSD_2002);
+
+setmaintainPLC_Conn_STT(newPLC_Conn_STT);
+
 
             } catch (error) {
                 console.error('Error updating maintain values:', error);
@@ -4010,7 +4013,10 @@ setmaintainSD_2002(newSD_2002);
         maintainESD_2001 === true &&
         maintainHR_BC === true &&
         maintainSD_2001 === true &&
-        maintainSD_2002 === true;
+        maintainSD_2002 === true &&
+        maintainEVC_01_Conn_STT === true && 
+        maintainEVC_02_Conn_STT === true && 
+        maintainPLC_Conn_STT === true ;
 
         const handleCheckboxChange = (e:any) => {
             const isChecked = e.checked;
@@ -4070,6 +4076,7 @@ setmaintainEVC_01_Vb_of_Current_Day(newEVC_01_Vb_of_Current_Day);
 setmaintainEVC_01_Vm_of_Current_Day(newEVC_01_Vm_of_Current_Day);
 setmaintainEVC_01_Vb_of_Last_Day(newEVC_01_Vb_of_Last_Day);
 setmaintainEVC_01_Vm_of_Last_Day(newEVC_01_Vm_of_Last_Day);
+setmaintainEVC_01_Conn_STT(newEVC_01_Conn_STT);
 
 
 
@@ -4096,8 +4103,8 @@ setmaintainEVC_01_Vm_of_Last_Day(newEVC_01_Vm_of_Last_Day);
         maintainEVC_01_Vb_of_Current_Day === true &&
         maintainEVC_01_Vm_of_Current_Day === true &&
         maintainEVC_01_Vb_of_Last_Day === true &&
-        maintainEVC_01_Vm_of_Last_Day === true;
-
+        maintainEVC_01_Vm_of_Last_Day === true && 
+        maintainEVC_01_Conn_STT === true; 
 
 //=======================================================================================================
         const handleMainTainEVC02 = async (checked:any) => {
@@ -4154,6 +4161,7 @@ setmaintainEVC_02_Vb_of_Current_Day(newEVC_02_Vb_of_Current_Day);
 setmaintainEVC_02_Vm_of_Current_Day(newEVC_02_Vm_of_Current_Day);
 setmaintainEVC_02_Vb_of_Last_Day(newEVC_02_Vb_of_Last_Day);
 setmaintainEVC_02_Vm_of_Last_Day(newEVC_02_Vm_of_Last_Day);
+setmaintainEVC_02_Conn_STT(newEVC_02_Conn_STT);
 
 
 
@@ -4184,7 +4192,8 @@ setmaintainEVC_02_Vm_of_Last_Day(newEVC_02_Vm_of_Last_Day);
     maintainEVC_02_Vb_of_Current_Day === true &&
     maintainEVC_02_Vm_of_Current_Day === true &&
     maintainEVC_02_Vb_of_Last_Day === true &&
-    maintainEVC_02_Vm_of_Last_Day === true;
+    maintainEVC_02_Vm_of_Last_Day === true && 
+    maintainEVC_02_Conn_STT === true; 
         //===========================================================================
         const handleMainTainPLC = async (checked:any) => {
             try {
@@ -4213,6 +4222,7 @@ setmaintainEVC_02_Vm_of_Last_Day(newEVC_02_Vm_of_Last_Day);
                 const newHR_BC = checked;
                 const newSD_2001 = checked;
                 const newSD_2002 = checked;
+                const newPLC_Conn_STT = checked;
         
                 await httpApi.post(
                     `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
@@ -4241,7 +4251,9 @@ setmaintainEVC_02_Vm_of_Last_Day(newEVC_02_Vm_of_Last_Day);
                         ESD_2001_Maintain: newESD_2001,
                         HR_BC_Maintain: newHR_BC,
                         SD_2001_Maintain: newSD_2001,
-                        SD_2002_Maintain: newSD_2002
+                        SD_2002_Maintain: newSD_2002,
+                        PLC_Conn_STT_Maintain: newPLC_Conn_STT,
+
                     }
                 );
         
@@ -4269,6 +4281,7 @@ setmaintainESD_2001(newESD_2001);
 setmaintainHR_BC(newHR_BC);
 setmaintainSD_2001(newSD_2001);
 setmaintainSD_2002(newSD_2002);
+setmaintainPLC_Conn_STT(newPLC_Conn_STT);
 
             } catch (error) {
                 console.error('Error updating maintain values:', error);
@@ -4299,7 +4312,8 @@ setmaintainSD_2002(newSD_2002);
         maintainESD_2001 === true &&
         maintainHR_BC === true &&
         maintainSD_2001 === true &&
-        maintainSD_2002 === true;
+        maintainSD_2002 === true &&
+        maintainPLC_Conn_STT === true;
 
 
         const handleCheckboxChangePLC = (e:any) => {
@@ -4489,15 +4503,7 @@ setmaintainSD_2002(newSD_2002);
             fontWeight:400,
         },
 
-        CSSEVC_02_Volume_at_Base_Condition : {
-            color:exceedThresholdEVC_02_Volume_at_Base_Condition && !maintainEVC_02_Volume_at_Base_Condition
-            ? "#ff5656"
-            : maintainEVC_02_Volume_at_Base_Condition
-            ? "orange"
-            : "" ,
-            height:25,
-            fontWeight:400,
-        },
+     
 
         CSSEVC_02_Pressure : {
             color:exceedThresholdEVC_02_Pressure && !maintainEVC_02_Pressure
@@ -4508,7 +4514,15 @@ setmaintainSD_2002(newSD_2002);
             height:25,
             fontWeight:400,
         },
-
+   CSSEVC_02_Volume_at_Base_Condition : {
+            color:exceedThresholdEVC_02_Volume_at_Base_Condition && !maintainEVC_02_Volume_at_Base_Condition
+            ? "#ff5656"
+            : maintainEVC_02_Volume_at_Base_Condition
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
 
         CSSEVC_02_Volume_at_Measurement_Condition : {
             color:exceedThresholdEVC_02_Volume_at_Measurement_Condition && !maintainEVC_02_Volume_at_Measurement_Condition

@@ -2673,7 +2673,7 @@ const handleMainTainAll = async (checked:any) => {
                GD2_Maintain: newMaintainGD2,
                GD3_Maintain: newMaintainGD3,
                PT1_Maintain: newMaintainPT1,
-            DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
+                DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
                DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
                DI_MAP_1_Maintain: newmaintainDI_MAP_1,
                DI_UPS_CHARGING_Maintain: newmaintainDI_UPS_CHARGING,

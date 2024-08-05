@@ -421,7 +421,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const MaintainPIT_2006 = res.data.find(
                 (item: any) => item.key === "PIT_2006_Maintain"
             );
-            setMaintainPIT_2006(MaintainPIT_2006?.value || false);
+            setmaintainPIT_2006(MaintainPIT_2006?.value || false);
             //===========================================================================================
 
             const HighPIT_2007 = res.data.find(
@@ -436,7 +436,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const MaintainPIT_2007 = res.data.find(
                 (item: any) => item.key === "PIT_2007_Maintain"
             );
-            setMaintainPIT_2007(MaintainPIT_2007?.value || false);
+            setmaintainPIT_2007(MaintainPIT_2007?.value || false);
             //===========================================================================================
 
             const HighPT_2001 = res.data.find(
@@ -451,7 +451,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const PT_2001_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2001_Maintain"
             );
-            setMaintainPT_2001(PT_2001_Maintain?.value || false);
+            setmaintainPT_2001(PT_2001_Maintain?.value || false);
 
             //===========================================================================================
 
@@ -468,7 +468,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const PT_2002_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2002_Maintain"
             );
-            setMaintainPT_2002(PT_2002_Maintain?.value || false);
+            setmaintainPT_2002(PT_2002_Maintain?.value || false);
             //===========================================================================================
 
             const HighEVC_01_Pressure = res.data.find(
@@ -484,7 +484,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const EVC_01_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
-            setMaintainEVC_01_Pressure(
+            setmaintainEVC_01_Pressure(
                 EVC_01_Pressure_Maintain?.value || false
             );
 
@@ -502,7 +502,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const EVC_02_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
             );
-            setMaintainEVC_02_Pressure(
+            setmaintainEVC_02_Pressure(
                 EVC_02_Pressure_Maintain?.value || false
             );
 
@@ -520,7 +520,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const EVC_01_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
-            setMaintainEVC_01_Temperature(
+            setmaintainEVC_01_Temperature(
                 EVC_01_Temperature_Maintain?.value || false
             );
 
@@ -539,7 +539,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const EVC_02_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Maintain"
             );
-            setMaintainEVC_02_Temperature(
+            setmaintainEVC_02_Temperature(
                 EVC_02_Temperature_Maintain?.value || false
             );
             //===========================================================================================
@@ -559,7 +559,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const TT_2001_Maintain = res.data.find(
                 (item: any) => item.key === "TT_2001_Maintain"
             );
-            setMaintainTT_2001(TT_2001_Maintain?.value || false);
+            setmaintainTT_2001(TT_2001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
@@ -576,7 +576,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const PT_2003_Maintain = res.data.find(
                 (item: any) => item.key === "PT_2003_Maintain"
             );
-            setMaintainPT_2003(PT_2003_Maintain?.value || false);
+            setmaintainPT_2003(PT_2003_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
@@ -593,7 +593,7 @@ export default function Graphic_CNG_BINHDUONG() {
             const GD_2001_Maintain = res.data.find(
                 (item: any) => item.key === "GD_2001_Maintain"
             );
-            setMaintainGD_2001(GD_2001_Maintain?.value || false);
+            setmaintainGD_2001(GD_2001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
@@ -615,7 +615,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Base_Condition(
+            setmaintainEVC_01_Flow_at_Base_Condition(
                 EVC_01_Flow_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -642,7 +642,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Measurement_Condition(
+            setmaintainEVC_01_Flow_at_Measurement_Condition(
                 EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -669,7 +669,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Volume_at_Base_Condition(
+            setmaintainEVC_01_Volume_at_Base_Condition(
                 EVC_01_Volume_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -698,7 +698,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         item.key ===
                         "EVC_01_Volume_at_Measurement_Condition_Maintain"
                 );
-            setMaintainEVC_01_Volume_at_Measurement_Condition(
+            setmaintainEVC_01_Volume_at_Measurement_Condition(
                 EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -722,7 +722,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_02_Flow_at_Base_Condition(
+            setmaintainEVC_02_Flow_at_Base_Condition(
                 EVC_02_Flow_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -749,7 +749,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_02_Flow_at_Measurement_Condition(
+            setmaintainEVC_02_Flow_at_Measurement_Condition(
                 EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -775,7 +775,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_02_Volume_at_Base_Condition(
+            setmaintainEVC_02_Volume_at_Base_Condition(
                 EVC_02_Volume_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -804,7 +804,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         item.key ===
                         "EVC_02_Volume_at_Measurement_Condition_Maintain"
                 );
-            setMaintainEVC_02_Volume_at_Measurement_Condition(
+            setmaintainEVC_02_Volume_at_Measurement_Condition(
                 EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -845,297 +845,200 @@ export default function Graphic_CNG_BINHDUONG() {
 
     const [PIT_2006_High, setPIT_2006_High] = useState<number | null>(null);
     const [PIT_2006_Low, setPIT_2006_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_2006, setExceedThresholdPIT_2006] =
-        useState(false);
-    const [maintainPIT_2006, setMaintainPIT_2006] = useState<boolean>(false);
+    const [exceedThresholdPIT_2006, setexceedThresholdPIT_2006] = useState(false); 
+    
+    const [maintainPIT_2006, setmaintainPIT_2006] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const PIT_2006Value = parseFloat(PIT_2006 as any);
-        const highValue = PIT_2006_High ?? NaN;
-        const lowValue = PIT_2006_Low ?? NaN;
-
-        if (
-            !isNaN(PIT_2006Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPIT_2006
-        ) {
-            setExceedThresholdPIT_2006(
-                PIT_2006Value >= highValue || PIT_2006Value <= lowValue
-            );
-        }
-    }, [PIT_2006, PIT_2006_High, PIT_2006_Low, maintainPIT_2006]);
+     const PIT_2006Value = parseFloat(PIT_2006 as any);
+     const highValue = PIT_2006_High ?? NaN;
+     const lowValue = PIT_2006_Low ?? NaN;
+ 
+     if (!isNaN(PIT_2006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_2006) {
+         setexceedThresholdPIT_2006(PIT_2006Value >= highValue || PIT_2006Value <= lowValue);
+     }
+ }, [PIT_2006, PIT_2006_High, PIT_2006_Low, maintainPIT_2006]);
 
     //================================ PIT_2007================================
 
     const [PIT_2007, setPIT_2007] = useState<string | null>(null);
-
     const [PIT_2007_High, setPIT_2007_High] = useState<number | null>(null);
     const [PIT_2007_Low, setPIT_2007_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_2007, setExceedThresholdPIT_2007] =
-        useState(false);
-    const [maintainPIT_2007, setMaintainPIT_2007] = useState<boolean>(false);
+    const [exceedThresholdPIT_2007, setexceedThresholdPIT_2007] = useState(false); 
+    const [maintainPIT_2007, setmaintainPIT_2007] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const PIT_2007Value = parseFloat(PIT_2007 as any);
-        const highValue = PIT_2007_High ?? NaN;
-        const lowValue = PIT_2007_Low ?? NaN;
-
-        if (
-            !isNaN(PIT_2007Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPIT_2007
-        ) {
-            setExceedThresholdPIT_2007(
-                PIT_2007Value >= highValue || PIT_2007Value <= lowValue
-            );
-        }
-    }, [PIT_2007, PIT_2007_High, PIT_2007_Low, maintainPIT_2007]);
-
+      const PIT_2007Value = parseFloat(PIT_2007 as any);
+      const highValue = PIT_2007_High ?? NaN;
+      const lowValue = PIT_2007_Low ?? NaN;
+  
+      if (!isNaN(PIT_2007Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_2007) {
+          setexceedThresholdPIT_2007(PIT_2007Value >= highValue || PIT_2007Value <= lowValue);
+      }
+  }, [PIT_2007, PIT_2007_High, PIT_2007_Low, maintainPIT_2007]);
     //================================ PT_2001================================
+
 
     const [PT_2001, setPT_2001] = useState<string | null>(null);
     const [PT_2001_High, setPT_2001_High] = useState<number | null>(null);
     const [PT_2001_Low, setPT_2001_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_2001, setExceedThresholdPT_2001] = useState(false);
-    const [maintainPT_2001, setMaintainPT_2001] = useState<boolean>(false);
+    const [exceedThresholdPT_2001, setexceedThresholdPT_2001] = useState(false); 
+    const [maintainPT_2001, setmaintainPT_2001] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const PT_2001Value = parseFloat(PT_2001 as any);
-        const highValue = PT_2001_High ?? NaN;
-        const lowValue = PT_2001_Low ?? NaN;
-
-        if (
-            !isNaN(PT_2001Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_2001
-        ) {
-            setExceedThresholdPT_2001(
-                PT_2001Value >= highValue || PT_2001Value <= lowValue
-            );
-        }
-    }, [PT_2001, PT_2001_High, PT_2001_Low, maintainPT_2001]);
-
+     const PT_2001Value = parseFloat(PT_2001 as any);
+     const highValue = PT_2001_High ?? NaN;
+     const lowValue = PT_2001_Low ?? NaN;
+ 
+     if (!isNaN(PT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2001) {
+         setexceedThresholdPT_2001(PT_2001Value >= highValue || PT_2001Value <= lowValue);
+     }
+ }, [PT_2001, PT_2001_High, PT_2001_Low, maintainPT_2001]);
+ 
     //================================ PT_2002================================
+
     const [PT_2002, setPT_2002] = useState<string | null>(null);
     const [PT_2002_High, setPT_2002_High] = useState<number | null>(null);
     const [PT_2002_Low, setPT_2002_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_2002, setExceedThresholdPT_2002] = useState(false);
-    const [maintainPT_2002, setMaintainPT_2002] = useState<boolean>(false);
+    const [exceedThresholdPT_2002, setexceedThresholdPT_2002] = useState(false); 
+    const [maintainPT_2002, setmaintainPT_2002] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const PT_2002Value = parseFloat(PT_2002 as any);
-        const highValue = PT_2002_High ?? NaN;
-        const lowValue = PT_2002_Low ?? NaN;
-
-        if (
-            !isNaN(PT_2002Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_2002
-        ) {
-            setExceedThresholdPT_2002(
-                PT_2002Value >= highValue || PT_2002Value <= lowValue
-            );
-        }
-    }, [PT_2002, PT_2002_High, PT_2002_Low, maintainPT_2002]);
+     const PT_2002Value = parseFloat(PT_2002 as any);
+     const highValue = PT_2002_High ?? NaN;
+     const lowValue = PT_2002_Low ?? NaN;
+ 
+     if (!isNaN(PT_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2002) {
+         setexceedThresholdPT_2002(PT_2002Value >= highValue || PT_2002Value <= lowValue);
+     }
+ }, [PT_2002, PT_2002_High, PT_2002_Low, maintainPT_2002]);
+ 
 
     //================================ EVC_02_Pressure================================
     const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
-        number | null
-    >(null);
-    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
-        number | null
-    >(null);
-    const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] =
-        useState(false);
-    const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] =
-        useState<boolean>(false);
+ 
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] = useState(false); 
+    
+    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] = useState<boolean>(false);
+    
     useEffect(() => {
-        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
-        const highValue = EVC_02_Pressure_High ?? NaN;
-        const lowValue = EVC_02_Pressure_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_PressureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Pressure
-        ) {
-            setExceedThresholdEVC_02_Pressure(
-                EVC_02_PressureValue >= highValue ||
-                    EVC_02_PressureValue <= lowValue
-            );
-        }
-    }, [
-        EVC_02_Pressure,
-        EVC_02_Pressure_High,
-        EVC_02_Pressure_Low,
-        maintainEVC_02_Pressure,
-    ]);
+      const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+      const highValue = EVC_02_Pressure_High ?? NaN;
+      const lowValue = EVC_02_Pressure_Low ?? NaN;
+  
+      if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
+          setexceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
+      }
+  }, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
 
     //================================ EVC_01_Pressure================================
 
     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
-        number | null
-    >(null);
-    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
-        number | null
-    >(null);
-    const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] =
-        useState(false);
-    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] =
-        useState<boolean>(false);
+
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] = useState(false); 
+    
+    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
-        const highValue = EVC_01_Pressure_High ?? NaN;
-        const lowValue = EVC_01_Pressure_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_PressureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Pressure
-        ) {
-            setExceedThresholdEVC_01_Pressure(
-                EVC_01_PressureValue >= highValue ||
-                    EVC_01_PressureValue <= lowValue
-            );
-        }
-    }, [
-        EVC_01_Pressure,
-        EVC_01_Pressure_High,
-        EVC_01_Pressure_Low,
-        maintainEVC_01_Pressure,
-    ]);
-
+       const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+       const highValue = EVC_01_Pressure_High ?? NaN;
+       const lowValue = EVC_01_Pressure_Low ?? NaN;
+   
+       if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+           setexceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+       }
+   }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
     //================================ EVC_01_Temperature================================
 
-    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
-        null
-    );
-    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<
-        number | null
-    >(null);
-    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<
-        number | null
-    >(null);
-    const [
-        exceedThresholdEVC_01_Temperature,
-        setExceedThresholdEVC_01_Temperature,
-    ] = useState(false);
-    const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] =
-        useState<boolean>(false);
+
+    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
+
+    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
+    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); 
+    
+    const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
-        const highValue = EVC_01_Temperature_High ?? NaN;
-        const lowValue = EVC_01_Temperature_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_TemperatureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Temperature
-        ) {
-            setExceedThresholdEVC_01_Temperature(
-                EVC_01_TemperatureValue >= highValue ||
-                    EVC_01_TemperatureValue <= lowValue
-            );
-        }
-    }, [
-        EVC_01_Temperature,
-        EVC_01_Temperature_High,
-        EVC_01_Temperature_Low,
-        maintainEVC_01_Temperature,
-    ]);
-
+       const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+       const highValue = EVC_01_Temperature_High ?? NaN;
+       const lowValue = EVC_01_Temperature_Low ?? NaN;
+   
+       if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+           setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+       }
+   }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
+   
     //================================ EVC_02_Temperature================================
 
-    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
-        null
-    );
-    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
-        number | null
-    >(null);
-    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
-        number | null
-    >(null);
-    const [
-        exceedThresholdEVC_02_Temperature,
-        setExceedThresholdEVC_02_Temperature,
-    ] = useState(false);
-    const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] =
-        useState<boolean>(false);
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(null);
+ 
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<number | null>(null);
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<number | null>(null);
+    const [exceedThresholdEVC_02_Temperature, setexceedThresholdEVC_02_Temperature] = useState(false); 
+    
+    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] = useState<boolean>(false);
+    
     useEffect(() => {
-        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
-        const highValue = EVC_02_Temperature_High ?? NaN;
-        const lowValue = EVC_02_Temperature_Low ?? NaN;
+      const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+      const highValue = EVC_02_Temperature_High ?? NaN;
+      const lowValue = EVC_02_Temperature_Low ?? NaN;
+  
+      if (!isNaN(EVC_02_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Temperature) {
+          setexceedThresholdEVC_02_Temperature(EVC_02_TemperatureValue >= highValue || EVC_02_TemperatureValue <= lowValue);
+      }
+  }, [EVC_02_Temperature, EVC_02_Temperature_High, EVC_02_Temperature_Low, maintainEVC_02_Temperature]);
 
-        if (
-            !isNaN(EVC_02_TemperatureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Temperature
-        ) {
-            setExceedThresholdEVC_02_Temperature(
-                EVC_02_TemperatureValue >= highValue ||
-                    EVC_02_TemperatureValue <= lowValue
-            );
-        }
-    }, [
-        EVC_02_Temperature,
-        EVC_02_Temperature_High,
-        EVC_02_Temperature_Low,
-        maintainEVC_02_Temperature,
-    ]);
 
     //================================ EVC_02_Temperature================================
 
     const [TT_2001, setTT_2001] = useState<string | null>(null);
     const [TT_2001_High, setTT_2001_High] = useState<number | null>(null);
     const [TT_2001_Low, setTT_2001_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_2001, setExceedThresholdTT_2001] = useState(false);
-    const [maintainTT_2001, setMaintainTT_2001] = useState<boolean>(false);
+    const [exceedThresholdTT_2001, setexceedThresholdTT_2001] = useState(false); 
+    const [maintainTT_2001, setmaintainTT_2001] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        const TT_2001Value = parseFloat(TT_2001 as any);
-        const highValue = TT_2001_High ?? NaN;
-        const lowValue = TT_2001_Low ?? NaN;
-
-        if (
-            !isNaN(TT_2001Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainTT_2001
-        ) {
-            setExceedThresholdTT_2001(
-                TT_2001Value >= highValue || TT_2001Value <= lowValue
-            );
-        }
-    }, [TT_2001, TT_2001_High, TT_2001_Low, maintainTT_2001]);
+     const TT_2001Value = parseFloat(TT_2001 as any);
+     const highValue = TT_2001_High ?? NaN;
+     const lowValue = TT_2001_Low ?? NaN;
+ 
+     if (!isNaN(TT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2001) {
+         setexceedThresholdTT_2001(TT_2001Value >= highValue || TT_2001Value <= lowValue);
+     }
+ }, [TT_2001, TT_2001_High, TT_2001_Low, maintainTT_2001]);
+ 
 
     //================================ EVC_02_Temperature================================
 
     const [PT_2003, setPT_2003] = useState<string | null>(null);
+ 
     const [PT_2003_High, setPT_2003_High] = useState<number | null>(null);
     const [PT_2003_Low, setPT_2003_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_2003, setExceedThresholdPT_2003] = useState(false);
-    const [maintainPT_2003, setMaintainPT_2003] = useState<boolean>(false);
+    const [exceedThresholdPT_2003, setexceedThresholdPT_2003] = useState(false); 
+    
+    const [maintainPT_2003, setmaintainPT_2003] = useState<boolean>(false);
+    
     useEffect(() => {
-        const PT_2003Value = parseFloat(PT_2003 as any);
-        const highValue = PT_2003_High ?? NaN;
-        const lowValue = PT_2003_Low ?? NaN;
-
-        if (
-            !isNaN(PT_2003Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_2003
-        ) {
-            setExceedThresholdPT_2003(
-                PT_2003Value >= highValue || PT_2003Value <= lowValue
-            );
-        }
-    }, [PT_2003, PT_2003_High, PT_2003_Low, maintainPT_2003]);
+      const PT_2003Value = parseFloat(PT_2003 as any);
+      const highValue = PT_2003_High ?? NaN;
+      const lowValue = PT_2003_Low ?? NaN;
+  
+      if (!isNaN(PT_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2003) {
+          setexceedThresholdPT_2003(PT_2003Value >= highValue || PT_2003Value <= lowValue);
+      }
+  }, [PT_2003, PT_2003_High, PT_2003_Low, maintainPT_2003]);
 
     //================================ EVC_02_Temperature ======================================================
 
@@ -1143,7 +1046,7 @@ export default function Graphic_CNG_BINHDUONG() {
     const [GD_2001_High, setGD_2001_High] = useState<number | null>(null);
     const [GD_2001_Low, setGD_2001_Low] = useState<number | null>(null);
     const [exceedThresholdGD_2001, setExceedThresholdGD_2001] = useState(false);
-    const [maintainGD_2001, setMaintainGD_2001] = useState<boolean>(false);
+    const [maintainGD_2001, setmaintainGD_2001] = useState<boolean>(false);
     useEffect(() => {
         const GD_2001Value = parseFloat(GD_2001 as any);
         const highValue = GD_2001_High ?? NaN;
@@ -1163,213 +1066,171 @@ export default function Graphic_CNG_BINHDUONG() {
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-
     const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
+ 
     const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
     const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setExceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false);
-    const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
+    
+    const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
     useEffect(() => {
-        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
-        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
-        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Flow_at_Base_Condition
-        ) {
-            setExceedThresholdEVC_01_Flow_at_Base_Condition(
-                EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
-
-
+      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+      const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+      const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+  
+      if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+          setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+      }
+  }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
+  
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
     const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
     const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
     const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setExceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false);
-    const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
+    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
-        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
-        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Flow_at_Measurement_Condition
-        ) {
-            setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
-
-
+      const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+      const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+      const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+  
+      if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+          setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+      }
+  }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
+  
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
     const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
+
     const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
     const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false);
-    const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
+    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
+    const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
-        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
-        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Volume_at_Base_Condition
-        ) {
-            setExceedThresholdEVC_01_Volume_at_Base_Condition(
-                EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
-
+      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+      const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+      const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+  
+      if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+          setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+      }
+  }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+  
 
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
 
 
+   
     const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
     const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
     const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false);
-    const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
+    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
+    const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
+    
     useEffect(() => {
-        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
-        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
-        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Volume_at_Measurement_Condition
-        ) {
-            setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
-                EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
+      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+      const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+      const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+  
+      if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+          setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+      }
+  }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
+  
 
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
+ // =================================================================================================================== 
+ const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
+ 
+ const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
+ const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
+ const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); 
+ 
+ const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
+ 
+ useEffect(() => {
+   const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
+   const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+   const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+
+   if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
+       setexceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
+   }
+}, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
 
 
-    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
-    const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Flow_at_Base_Condition, setExceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false);
-    const [maintainEVC_02_Flow_at_Base_Condition, setMaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
-    useEffect(() => {
+
+      // =================================================================================================================== 
+      const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
+
+      const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
+      const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
+      const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); 
+      
+      const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
+      
+      useEffect(() => {
+        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+        const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
+            setexceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
+        }
+    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
+
+
+      
+
+ 
+      // =================================================================================================================== 
+      const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
+
+      const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
+      const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
+      const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); 
+      
+      const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
+      
+      useEffect(() => {
         const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
         const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
         const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_Flow_at_Base_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Flow_at_Base_Condition
-        ) {
-            setExceedThresholdEVC_02_Flow_at_Base_Condition(
-                EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue
-            );
+    
+        if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
+            setexceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
         }
     }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
 
 
-    //================================ EVC_02_Flow_at_Measurement_Condition FIQ 1901 ======================================================
+          // =================================================================================================================== 
 
+          const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
 
+          const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
+          const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
+          const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); 
+          
+          const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
+          
+          useEffect(() => {
+            const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
+            const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
+                setexceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
 
-    const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
-    const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setExceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false);
-    const [maintainEVC_02_Flow_at_Measurement_Condition, setMaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
-    useEffect(() => {
-        const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
-        const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
-        const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_Flow_at_Measurement_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Flow_at_Measurement_Condition
-        ) {
-            setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
-                EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
-
-
-
-    //================================ EVC_02_Volume_at_Base_Condition FIQ 1901 ======================================================
-
-
-    const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
-    const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Volume_at_Base_Condition, setExceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false);
-    const [maintainEVC_02_Volume_at_Base_Condition, setMaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
-    useEffect(() => {
-        const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
-        const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
-        const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_Volume_at_Base_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Volume_at_Base_Condition
-        ) {
-            setExceedThresholdEVC_02_Volume_at_Base_Condition(
-                EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
-
-
-
-
-    //================================ EVC_02_Volume_at_Measurement_Condition FIQ 1901 ======================================================
-    const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
-    const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setExceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false);
-    const [maintainEVC_02_Volume_at_Measurement_Condition, setMaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
-    useEffect(() => {
-        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
-        const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
-        const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_Volume_at_Measurement_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Volume_at_Measurement_Condition
-        ) {
-            setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
-                EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue
-            );
-        }
-    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
 
     //====================================================================
 
