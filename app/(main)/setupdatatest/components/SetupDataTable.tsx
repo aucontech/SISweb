@@ -7,6 +7,9 @@ import { debounce } from "lodash";
 import { saveOrUpdateSeverAttributesByDevice } from "@/api/telemetry.api";
 import { OTSUKA_DEVICE_ID } from "@/constants/constans";
 import { Utils } from "@/service/Utils";
+import { InputText } from "primereact/inputtext";
+import { Checkbox } from "primereact/checkbox";
+import { Button } from "antd";
 type DataItem = {
     [key: string]: any;
 };
@@ -237,9 +240,10 @@ const SetupDataTable: React.FC<Props> = ({
                                 low: lowData?.value ?? item.low,
                                 high: highData?.value ?? item.high,
                                 modbus: modbusData?.value ?? item.modBus,
-                                isMaintain:
-                                    isMaintainData?.value.toLowerCase() ===
-                                        "true" || false,
+                                isMaintain: isMaintainData?.value
+                                    ? isMaintainData.value.toLowerCase() ===
+                                      "true"
+                                    : item.isMaintain,
                             };
                         })
                     );
@@ -286,9 +290,7 @@ const SetupDataTable: React.FC<Props> = ({
         }
         setData((prevData) =>
             prevData.map((item) =>
-                item.key === rowKey
-                    ? { ...item, [field]: Number(newValue) }
-                    : item
+                item.key === rowKey ? { ...item, [field]: newValue } : item
             )
         );
     }, 100); // 300ms debounce
@@ -371,11 +373,9 @@ const SetupDataTable: React.FC<Props> = ({
                         field={header.key}
                         //header={header.headername}
                         body={(rowData) => {
-                            if (
-                                ["low", "high", "modBus"].includes(header.key)
-                            ) {
+                            if (["low", "high"].includes(header.key)) {
                                 return (
-                                    <input
+                                    <InputText
                                         type="number"
                                         value={rowData[header.key] || ""}
                                         onChange={(e) => {
@@ -391,8 +391,7 @@ const SetupDataTable: React.FC<Props> = ({
                                 );
                             } else if (header.key === "isMaintain") {
                                 return (
-                                    <input
-                                        type="checkbox"
+                                    <Checkbox
                                         checked={rowData.isMaintain || false}
                                         onChange={(e) => {
                                             handleValueChange(
@@ -428,12 +427,12 @@ const SetupDataTable: React.FC<Props> = ({
                                 );
                             } else if (header.key === "update") {
                                 return (
-                                    <button
+                                    <Button
                                         onClick={() => handleUpdate(rowData)}
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     >
                                         Update
-                                    </button>
+                                    </Button>
                                 );
                             } else if (header.key === "updatedTime") {
                                 return (
@@ -444,6 +443,20 @@ const SetupDataTable: React.FC<Props> = ({
                                             rowData.updatedTime
                                         )}
                                     </span>
+                                );
+                            } else if (header.key === "modBus") {
+                                return (
+                                    <InputText
+                                        value={rowData[header.key] || ""}
+                                        onChange={(e) => {
+                                            const newValue = e.target.value;
+                                            handleValueChange(
+                                                rowData.key,
+                                                header.key,
+                                                newValue
+                                            );
+                                        }}
+                                    />
                                 );
                             }
                             return (

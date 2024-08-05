@@ -6,6 +6,13 @@ import { Utils } from "@/service/Utils";
 import { Calendar } from "primereact/calendar";
 import { getTimeseriesKeys } from "@/api/telemetry.api";
 import { set } from "lodash";
+import { DatePicker } from "antd"; // Import DatePicker from Ant Design
+import styles from "./FilterDataTableReport.module.css";
+
+import { MultiSelect } from "primereact/multiselect";
+import dayjs from "dayjs"; // Import dayjs
+
+const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
 interface Props {
     showDevice: boolean;
     showDate?: boolean;
@@ -39,17 +46,17 @@ const FilterDataChartReport: React.FC<Props> = ({
         if (typeof window !== "undefined") {
             const storedFilter = localStorage.getItem("filterDataChartReport");
             if (storedFilter) {
-                const parsedFilter = JSON.parse(storedFilter);
-                console.log(parsedFilter);
-                // Parse dates from localStorage
-                parsedFilter.dates = parsedFilter.dates
-                    ? parsedFilter.dates.map((dateStr: string) =>
-                          Utils.parseDateFromStorage(dateStr)
-                      )
-                    : null;
-
-                setEditFilter(parsedFilter);
-                onAction(parsedFilter);
+                if (storedFilter) {
+                    const parsedFilter = JSON.parse(storedFilter);
+                    // Parse dates from localStorage
+                    parsedFilter.dates = parsedFilter.dates
+                        ? parsedFilter.dates.map((dateStr: string) =>
+                              dayjs(dateStr)
+                          )
+                        : null;
+                    setEditFilter(parsedFilter);
+                    onAction(parsedFilter);
+                }
             }
         }
     }, []);
@@ -104,7 +111,17 @@ const FilterDataChartReport: React.FC<Props> = ({
             { label: "NONE", value: "NONE" },
         ]);
     };
+    const handleDateRangeChange = (dates: any) => {
 
+        if (dates) {
+            const startDate = dates[0] ? dates[0].toDate() : null;
+            const endDate = dates[1] ? dates[1].toDate() : null;
+            const dateRange = [startDate, endDate];
+            _processFilterChange("dates", dateRange);
+        } else {
+            _processFilterChange("dates", null);
+        }
+    };
     const _onGroupInterval = () => {
         setSuggestGroupInterval([
             { label: "30 minutes", value: 1800000 },
@@ -164,19 +181,47 @@ const FilterDataChartReport: React.FC<Props> = ({
                 )}
                 {showDate && (
                     <div className="col-12 lg:col-3">
-                        <span className="p-float-label">
-                            <Calendar
-                                value={editFilter.dates}
-                                selectionMode="range"
-                                showTime
-                                hourFormat="24"
-                                onChange={(e) => {
-                                    _processFilterChange("dates", e.value);
-                                }}
-                                dateFormat="dd/mm/yy"
-                            />
-                            <label>Select Date</label>
-                        </span>
+                           <div className={styles.dateRangeWrapper}>
+                            <div className={styles.floatLabel}>
+                                <RangePicker
+                                    showTime
+                                    style={{ padding: "0.65rem" }}
+                                    format="DD/MM/YYYY HH:mm"
+                                    placeholder={["Start Time", "End Time"]}
+                                    value={
+                                        editFilter.dates
+                                            ? // editFilter.dates.length === 2 &
+                                              // editFilter.dates[0] &&
+                                              // editFilter.dates[1]
+                                              [
+                                                  editFilter.dates[0]
+                                                      ? dayjs(
+                                                            editFilter.dates[0]
+                                                        )
+                                                      : null,
+                                                  editFilter.dates[1]
+                                                      ? dayjs(
+                                                            editFilter.dates[1]
+                                                        )
+                                                      : null,
+                                              ]
+                                            : null
+                                    }
+                                    onChange={(dates) =>
+                                        handleDateRangeChange(dates)
+                                    }
+                                    className={
+                                        editFilter.dates &&
+                                        editFilter.dates.length === 2 &&
+                                        editFilter.dates[0] &&
+                                        editFilter.dates[1]
+                                            ? "ant-picker-has-value"
+                                            : ""
+                                    }
+                                />
+                                <label>Select date</label>
+                            </div>
+                        </div>
                     </div>
                 )}
                 {showTags && (

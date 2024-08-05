@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { id_CNG_BinhDuong } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_CNG_HungYen } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -21,7 +21,7 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
-export default function ScoreCard_CNG_BINHDUONG() {
+export default function ScoreCard_CNG_HUNGYEN() {
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
@@ -53,7 +53,7 @@ export default function ScoreCard_CNG_BINHDUONG() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_CNG_BinhDuong,
+                    entityId: id_CNG_HungYen,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -119,20 +119,20 @@ export default function ScoreCard_CNG_BINHDUONG() {
                         EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
 
 
-                        PIT_2006: setPIT_2006,
+                        PIT_3001A: setPIT_3006,
 
-                        PIT_2007: setPIT_2007,
-                        PT_2001: setPT_2001,
-                        PT_2002: setPT_2002,
-                        PT_2003: setPT_2003,
+                        PIT_3001B: setPIT_3007,
+                        PT_3001: setPT_3001,
+                        PT_3002: setPT_3002,
+                        PT_3003: setPT_3003,
 
-                        TT_2002: setTT_2002,
-                        TT_2001: setTT_2001,
+                        TT_3002: setTT_3002,
+                        TT_3001: setTT_3001,
 
-                        GD_2001: setGD_2001,
-                        SDV_2001A: setSDV_2001A,
-                        SDV_2001B: setSDV_2001B,
-                        SDV_2002: setSDV_2002,
+                        GD_3001: setGD_3001,
+                        SDV_3001A: setSDV_3001A,
+                        SDV_3001B: setSDV_3001B,
+                        SDV_3002: setSDV_3002,
                         
                         Water_PG: setWater_PG,
                         Water_LSW: setWater_LSW,
@@ -147,9 +147,9 @@ export default function ScoreCard_CNG_BINHDUONG() {
 
 
                         HR_BC: setHR_BC,
-                        ESD_2001: setESD_2001,
-                        SD_2001: setSD_2001,
-                        SD_2002: setSD_2002,
+                        ESD_3001: setESD_3001,
+                        SD_3001: setSD_3001,
+                        SD_3002: setSD_3002,
 
 
                         EVC_01_Conn_STT: setEVC_STT01,
@@ -201,7 +201,7 @@ export default function ScoreCard_CNG_BINHDUONG() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/values/attributes/SERVER_SCOPE`
             );
 
 
@@ -400,95 +400,95 @@ export default function ScoreCard_CNG_BINHDUONG() {
             );
 
 
-            const PIT_2006_High = res.data.find((item: any) => item.key === "PIT_2006_High");
-            setPIT_2006_High(PIT_2006_High?.value || null);
-            const PIT_2006_Low = res.data.find((item: any) => item.key === "PIT_2007_Low");
-            setPIT_2006_Low(PIT_2006_Low?.value || null);
-            const MaintainPIT_2006 = res.data.find(
-                (item: any) => item.key === "PIT_2006_Maintain"
+            const PIT_3006_High = res.data.find((item: any) => item.key === "PIT_3006_High");
+            setPIT_3006_High(PIT_3006_High?.value || null);
+            const PIT_3006_Low = res.data.find((item: any) => item.key === "PIT_3007_Low");
+            setPIT_3006_Low(PIT_3006_Low?.value || null);
+            const MaintainPIT_3006 = res.data.find(
+                (item: any) => item.key === "PIT_3006_Maintain"
             );
 
 
-            const PIT_2007_High = res.data.find((item: any) => item.key === "PIT_2007_High");
-            setPIT_2007_High(PIT_2007_High?.value || null);
-            const PIT_2007_Low = res.data.find((item: any) => item.key === "PIT_2007_Low");
-            setPIT_2007_Low(PIT_2007_Low?.value || null);
-            const PIT_2007_Maintain = res.data.find(
-                (item: any) => item.key === "PIT_2007_Maintain"
+            const PIT_3007_High = res.data.find((item: any) => item.key === "PIT_3007_High");
+            setPIT_3007_High(PIT_3007_High?.value || null);
+            const PIT_3007_Low = res.data.find((item: any) => item.key === "PIT_3007_Low");
+            setPIT_3007_Low(PIT_3007_Low?.value || null);
+            const PIT_3007_Maintain = res.data.find(
+                (item: any) => item.key === "PIT_3007_Maintain"
             );
 
-            const PT_2001_High = res.data.find((item: any) => item.key === "PT_2001_High");
-            setPT_2001_High(PT_2001_High?.value || null);
-            const PT_2001_Low = res.data.find((item: any) => item.key === "PT_2001_Low");
-            setPT_2001_Low(PT_2001_Low?.value || null);
-            const PT_2001_Maintain = res.data.find(
-                (item: any) => item.key === "PT_2001_Maintain"
-            );
-
-
-            const PT_2002_High = res.data.find((item: any) => item.key === "PT_2002_High");
-            setPT_2002_High(PT_2002_High?.value || null);
-            const PT_2002_Low = res.data.find((item: any) => item.key === "PT_2002_Low");
-            setPT_2002_Low(PT_2002_Low?.value || null);
-            const PT_2002_Maintain = res.data.find(
-                (item: any) => item.key === "PT_2002_Maintain"
-            );
-
-            const PT_2003_High = res.data.find((item: any) => item.key === "PT_2003_High");
-            setPT_2003_High(PT_2003_High?.value || null);
-            const PT_2003_Low = res.data.find((item: any) => item.key === "PT_2003_Low");
-            setPT_2003_Low(PT_2003_Low?.value || null);
-            const PT_2003_Maintain = res.data.find(
-                (item: any) => item.key === "PT_2003_Maintain"
-            );
-
-            const TT_2001_High = res.data.find((item: any) => item.key === "TT_2001_High");
-            setTT_2001_High(TT_2001_High?.value || null);
-            const TT_2001_Low = res.data.find((item: any) => item.key === "TT_2001_Low");
-            setTT_2001_Low(TT_2001_Low?.value || null);
-            const TT_2001_Maintain = res.data.find(
-                (item: any) => item.key === "TT_2001_Maintain"
+            const PT_3001_High = res.data.find((item: any) => item.key === "PT_3001_High");
+            setPT_3001_High(PT_3001_High?.value || null);
+            const PT_3001_Low = res.data.find((item: any) => item.key === "PT_3001_Low");
+            setPT_3001_Low(PT_3001_Low?.value || null);
+            const PT_3001_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3001_Maintain"
             );
 
 
-            const TT_2002_High = res.data.find((item: any) => item.key === "TT_2002_High");
-            setTT_2002_High(TT_2002_High?.value || null);
-            const TT_2002_Low = res.data.find((item: any) => item.key === "TT_2002_Low");
-            setTT_2002_Low(TT_2002_Low?.value || null);
-            const TT_2002_Maintain = res.data.find(
-                (item: any) => item.key === "TT_2002_Maintain"
+            const PT_3002_High = res.data.find((item: any) => item.key === "PT_3002_High");
+            setPT_3002_High(PT_3002_High?.value || null);
+            const PT_3002_Low = res.data.find((item: any) => item.key === "PT_3002_Low");
+            setPT_3002_Low(PT_3002_Low?.value || null);
+            const PT_3002_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3002_Maintain"
+            );
+
+            const PT_3003_High = res.data.find((item: any) => item.key === "PT_3003_High");
+            setPT_3003_High(PT_3003_High?.value || null);
+            const PT_3003_Low = res.data.find((item: any) => item.key === "PT_3003_Low");
+            setPT_3003_Low(PT_3003_Low?.value || null);
+            const PT_3003_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3003_Maintain"
+            );
+
+            const TT_3001_High = res.data.find((item: any) => item.key === "TT_3001_High");
+            setTT_3001_High(TT_3001_High?.value || null);
+            const TT_3001_Low = res.data.find((item: any) => item.key === "TT_3001_Low");
+            setTT_3001_Low(TT_3001_Low?.value || null);
+            const TT_3001_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3001_Maintain"
             );
 
 
-            const GD_2001_High = res.data.find((item: any) => item.key === "GD_2001_High");
-            setGD_2001_High(GD_2001_High?.value || null);
-            const GD_2001_Low = res.data.find((item: any) => item.key === "GD_2001_Low");
-            setGD_2001_Low(GD_2001_Low?.value || null);
-            const GD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "GD_2001_Maintain"
+            const TT_3002_High = res.data.find((item: any) => item.key === "TT_3002_High");
+            setTT_3002_High(TT_3002_High?.value || null);
+            const TT_3002_Low = res.data.find((item: any) => item.key === "TT_3002_Low");
+            setTT_3002_Low(TT_3002_Low?.value || null);
+            const TT_3002_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3002_Maintain"
             );
 
-            const SDV_2001A_High = res.data.find((item: any) => item.key === "SDV_2001A_High");
-            setSDV_2001A_High(SDV_2001A_High?.value || null);
-            const SDV_2001A_Low = res.data.find((item: any) => item.key === "SDV_2001A_Low");
-            setSDV_2001A_Low(SDV_2001A_Low?.value || null);
-            const SDV_2001A_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2001A_Maintain"
+
+            const GD_3001_High = res.data.find((item: any) => item.key === "GD_3001_High");
+            setGD_3001_High(GD_3001_High?.value || null);
+            const GD_3001_Low = res.data.find((item: any) => item.key === "GD_3001_Low");
+            setGD_3001_Low(GD_3001_Low?.value || null);
+            const GD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3001_Maintain"
             );
 
-            const SDV_2001B_High = res.data.find((item: any) => item.key === "SDV_2001B_High");
-            setSDV_2001B_High(SDV_2001B_High?.value || null);
-            const SDV_2001B_Low = res.data.find((item: any) => item.key === "SDV_2001B_Low");
-            setSDV_2001B_Low(SDV_2001B_Low?.value || null);
-            const SDV_2001B_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2001B_Maintain"
+            const SDV_3001A_High = res.data.find((item: any) => item.key === "SDV_3001A_High");
+            setSDV_3001A_High(SDV_3001A_High?.value || null);
+            const SDV_3001A_Low = res.data.find((item: any) => item.key === "SDV_3001A_Low");
+            setSDV_3001A_Low(SDV_3001A_Low?.value || null);
+            const SDV_3001A_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3001A_Maintain"
             );
-            const SDV_2002_High = res.data.find((item: any) => item.key === "SDV_2002_High");
-            setSDV_2002_High(SDV_2002_High?.value || null);
-            const SDV_2002_Low = res.data.find((item: any) => item.key === "SDV_2002_Low");
-            setSDV_2002_Low(SDV_2002_Low?.value || null);
-            const SDV_2002_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_2002_Maintain"
+
+            const SDV_3001B_High = res.data.find((item: any) => item.key === "SDV_3001B_High");
+            setSDV_3001B_High(SDV_3001B_High?.value || null);
+            const SDV_3001B_Low = res.data.find((item: any) => item.key === "SDV_3001B_Low");
+            setSDV_3001B_Low(SDV_3001B_Low?.value || null);
+            const SDV_3001B_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3001B_Maintain"
+            );
+            const SDV_3002_High = res.data.find((item: any) => item.key === "SDV_3002_High");
+            setSDV_3002_High(SDV_3002_High?.value || null);
+            const SDV_3002_Low = res.data.find((item: any) => item.key === "SDV_3002_Low");
+            setSDV_3002_Low(SDV_3002_Low?.value || null);
+            const SDV_3002_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3002_Maintain"
             );
 
             const Water_PG_High = res.data.find((item: any) => item.key === "Water_PG_High");
@@ -566,28 +566,28 @@ export default function ScoreCard_CNG_BINHDUONG() {
             );
 
 
-            const ESD_2001_High = res.data.find((item: any) => item.key === "ESD_2001_High");
-            setESD_2001_High(ESD_2001_High?.value || null);
-            const ESD_2001_Low = res.data.find((item: any) => item.key === "ESD_2001_Low");
-            setESD_2001_Low(ESD_2001_Low?.value || null);
-            const ESD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "ESD_2001_Maintain"
+            const ESD_3001_High = res.data.find((item: any) => item.key === "ESD_3001_High");
+            setESD_3001_High(ESD_3001_High?.value || null);
+            const ESD_3001_Low = res.data.find((item: any) => item.key === "ESD_3001_Low");
+            setESD_3001_Low(ESD_3001_Low?.value || null);
+            const ESD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_3001_Maintain"
             );
 
-            const SD_2001_High = res.data.find((item: any) => item.key === "SD_2001_High");
-            setSD_2001_High(SD_2001_High?.value || null);
-            const SD_2001_Low = res.data.find((item: any) => item.key === "SD_2001_Low");
-            setSD_2001_Low(SD_2001_Low?.value || null);
-            const SD_2001_Maintain = res.data.find(
-                (item: any) => item.key === "SD_2001_Maintain"
+            const SD_3001_High = res.data.find((item: any) => item.key === "SD_3001_High");
+            setSD_3001_High(SD_3001_High?.value || null);
+            const SD_3001_Low = res.data.find((item: any) => item.key === "SD_3001_Low");
+            setSD_3001_Low(SD_3001_Low?.value || null);
+            const SD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "SD_3001_Maintain"
             );
 
-            const SD_2002_High = res.data.find((item: any) => item.key === "SD_2002_High");
-            setSD_2002_High(SD_2002_High?.value || null);
-            const SD_2002_Low = res.data.find((item: any) => item.key === "SD_2002_Low");
-            setSD_2002_Low(SD_2002_Low?.value || null);
-            const SD_2002_Maintain = res.data.find(
-                (item: any) => item.key === "SD_2002_Maintain"
+            const SD_3002_High = res.data.find((item: any) => item.key === "SD_3002_High");
+            setSD_3002_High(SD_3002_High?.value || null);
+            const SD_3002_Low = res.data.find((item: any) => item.key === "SD_3002_Low");
+            setSD_3002_Low(SD_3002_Low?.value || null);
+            const SD_3002_Maintain = res.data.find(
+                (item: any) => item.key === "SD_3002_Maintain"
             );
 
  // =================================================================================================================== 
@@ -630,17 +630,17 @@ export default function ScoreCard_CNG_BINHDUONG() {
             setmaintainEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Maintain?.value || false);
 
 
-            setmaintainPIT_2006(MaintainPIT_2006?.value || false);
-            setmaintainPIT_2007(PIT_2007_Maintain?.value || false);
-            setmaintainPT_2001(PT_2001_Maintain?.value || false);
-            setmaintainPT_2002(PT_2002_Maintain?.value || false);
-            setmaintainPT_2003(PT_2003_Maintain?.value || false);
-            setmaintainTT_2001(TT_2001_Maintain?.value || false);
-            setmaintainTT_2002(TT_2002_Maintain?.value || false);
-            setmaintainGD_2001(GD_2001_Maintain?.value || false);
-            setmaintainSDV_2001A(SDV_2001A_Maintain?.value || false);
-            setmaintainSDV_2001B(SDV_2001B_Maintain?.value || false);
-            setmaintainSDV_2002(SDV_2002_Maintain?.value || false);
+            setmaintainPIT_3006(MaintainPIT_3006?.value || false);
+            setmaintainPIT_3007(PIT_3007_Maintain?.value || false);
+            setmaintainPT_3001(PT_3001_Maintain?.value || false);
+            setmaintainPT_3002(PT_3002_Maintain?.value || false);
+            setmaintainPT_3003(PT_3003_Maintain?.value || false);
+            setmaintainTT_3001(TT_3001_Maintain?.value || false);
+            setmaintainTT_3002(TT_3002_Maintain?.value || false);
+            setmaintainGD_3001(GD_3001_Maintain?.value || false);
+            setmaintainSDV_3001A(SDV_3001A_Maintain?.value || false);
+            setmaintainSDV_3001B(SDV_3001B_Maintain?.value || false);
+            setmaintainSDV_3002(SDV_3002_Maintain?.value || false);
             setmaintainWater_LSW(Water_LSW_Maintain?.value || false);
             setmaintainWater_PG(Water_PG_Maintain?.value || false);
             setmaintainPUMP_2(PUMP_2_Maintain?.value || false);
@@ -650,9 +650,9 @@ export default function ScoreCard_CNG_BINHDUONG() {
             setmaintainBOILER(BOILER_Maintain?.value || false);
             setmaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
             setmaintainHR_BC(HR_BC_Maintain?.value || false);
-            setmaintainESD_2001(ESD_2001_Maintain?.value || false);
-            setmaintainSD_2001(SD_2001_Maintain?.value || false);
-            setmaintainSD_2002(SD_2002_Maintain?.value || false);
+            setmaintainESD_3001(ESD_3001_Maintain?.value || false);
+            setmaintainSD_3001(SD_3001_Maintain?.value || false);
+            setmaintainSD_3002(SD_3002_Maintain?.value || false);
 
             } catch (error) {
             console.error("Error fetching data:", error);
@@ -910,132 +910,132 @@ useEffect(() => {
   // =================================================================================================================== 
  
  
-  const [PIT_2007, setPIT_2007] = useState<string | null>(null);
-  const [PIT_2007_High, setPIT_2007_High] = useState<number | null>(null);
-  const [PIT_2007_Low, setPIT_2007_Low] = useState<number | null>(null);
-  const [exceedThresholdPIT_2007, setexceedThresholdPIT_2007] = useState(false); 
-  const [maintainPIT_2007, setmaintainPIT_2007] = useState<boolean>(false);
+  const [PIT_3007, setPIT_3007] = useState<string | null>(null);
+  const [PIT_3007_High, setPIT_3007_High] = useState<number | null>(null);
+  const [PIT_3007_Low, setPIT_3007_Low] = useState<number | null>(null);
+  const [exceedThresholdPIT_3007, setexceedThresholdPIT_3007] = useState(false); 
+  const [maintainPIT_3007, setmaintainPIT_3007] = useState<boolean>(false);
   
   
   useEffect(() => {
-    const PIT_2007Value = parseFloat(PIT_2007 as any);
-    const highValue = PIT_2007_High ?? NaN;
-    const lowValue = PIT_2007_Low ?? NaN;
+    const PIT_3007Value = parseFloat(PIT_3007 as any);
+    const highValue = PIT_3007_High ?? NaN;
+    const lowValue = PIT_3007_Low ?? NaN;
 
-    if (!isNaN(PIT_2007Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_2007) {
-        setexceedThresholdPIT_2007(PIT_2007Value >= highValue || PIT_2007Value <= lowValue);
+    if (!isNaN(PIT_3007Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3007) {
+        setexceedThresholdPIT_3007(PIT_3007Value >= highValue || PIT_3007Value <= lowValue);
     }
-}, [PIT_2007, PIT_2007_High, PIT_2007_Low, maintainPIT_2007]);
+}, [PIT_3007, PIT_3007_High, PIT_3007_Low, maintainPIT_3007]);
 
 
   // =================================================================================================================== 
 
 
 
-       const [PT_2001, setPT_2001] = useState<string | null>(null);
-       const [PT_2001_High, setPT_2001_High] = useState<number | null>(null);
-       const [PT_2001_Low, setPT_2001_Low] = useState<number | null>(null);
-       const [exceedThresholdPT_2001, setexceedThresholdPT_2001] = useState(false); 
-       const [maintainPT_2001, setmaintainPT_2001] = useState<boolean>(false);
+       const [PT_3001, setPT_3001] = useState<string | null>(null);
+       const [PT_3001_High, setPT_3001_High] = useState<number | null>(null);
+       const [PT_3001_Low, setPT_3001_Low] = useState<number | null>(null);
+       const [exceedThresholdPT_3001, setexceedThresholdPT_3001] = useState(false); 
+       const [maintainPT_3001, setmaintainPT_3001] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const PT_2001Value = parseFloat(PT_2001 as any);
-        const highValue = PT_2001_High ?? NaN;
-        const lowValue = PT_2001_Low ?? NaN;
+        const PT_3001Value = parseFloat(PT_3001 as any);
+        const highValue = PT_3001_High ?? NaN;
+        const lowValue = PT_3001_Low ?? NaN;
     
-        if (!isNaN(PT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2001) {
-            setexceedThresholdPT_2001(PT_2001Value >= highValue || PT_2001Value <= lowValue);
+        if (!isNaN(PT_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3001) {
+            setexceedThresholdPT_3001(PT_3001Value >= highValue || PT_3001Value <= lowValue);
         }
-    }, [PT_2001, PT_2001_High, PT_2001_Low, maintainPT_2001]);
+    }, [PT_3001, PT_3001_High, PT_3001_Low, maintainPT_3001]);
     
 
   
        // =================================================================================================================== 
 
 
-       const [PT_2002, setPT_2002] = useState<string | null>(null);
-       const [PT_2002_High, setPT_2002_High] = useState<number | null>(null);
-       const [PT_2002_Low, setPT_2002_Low] = useState<number | null>(null);
-       const [exceedThresholdPT_2002, setexceedThresholdPT_2002] = useState(false); 
-       const [maintainPT_2002, setmaintainPT_2002] = useState<boolean>(false);
+       const [PT_3002, setPT_3002] = useState<string | null>(null);
+       const [PT_3002_High, setPT_3002_High] = useState<number | null>(null);
+       const [PT_3002_Low, setPT_3002_Low] = useState<number | null>(null);
+       const [exceedThresholdPT_3002, setexceedThresholdPT_3002] = useState(false); 
+       const [maintainPT_3002, setmaintainPT_3002] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const PT_2002Value = parseFloat(PT_2002 as any);
-        const highValue = PT_2002_High ?? NaN;
-        const lowValue = PT_2002_Low ?? NaN;
+        const PT_3002Value = parseFloat(PT_3002 as any);
+        const highValue = PT_3002_High ?? NaN;
+        const lowValue = PT_3002_Low ?? NaN;
     
-        if (!isNaN(PT_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2002) {
-            setexceedThresholdPT_2002(PT_2002Value >= highValue || PT_2002Value <= lowValue);
+        if (!isNaN(PT_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3002) {
+            setexceedThresholdPT_3002(PT_3002Value >= highValue || PT_3002Value <= lowValue);
         }
-    }, [PT_2002, PT_2002_High, PT_2002_Low, maintainPT_2002]);
+    }, [PT_3002, PT_3002_High, PT_3002_Low, maintainPT_3002]);
     
 
   
        // =================================================================================================================== 
 
 
-       const [PIT_2006, setPIT_2006] = useState<string | null>(null);
+       const [PIT_3006, setPIT_3006] = useState<string | null>(null);
 
-       const [PIT_2006_High, setPIT_2006_High] = useState<number | null>(null);
-       const [PIT_2006_Low, setPIT_2006_Low] = useState<number | null>(null);
-       const [exceedThresholdPIT_2006, setexceedThresholdPIT_2006] = useState(false); 
+       const [PIT_3006_High, setPIT_3006_High] = useState<number | null>(null);
+       const [PIT_3006_Low, setPIT_3006_Low] = useState<number | null>(null);
+       const [exceedThresholdPIT_3006, setexceedThresholdPIT_3006] = useState(false); 
        
-       const [maintainPIT_2006, setmaintainPIT_2006] = useState<boolean>(false);
+       const [maintainPIT_3006, setmaintainPIT_3006] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const PIT_2006Value = parseFloat(PIT_2006 as any);
-        const highValue = PIT_2006_High ?? NaN;
-        const lowValue = PIT_2006_Low ?? NaN;
+        const PIT_3006Value = parseFloat(PIT_3006 as any);
+        const highValue = PIT_3006_High ?? NaN;
+        const lowValue = PIT_3006_Low ?? NaN;
     
-        if (!isNaN(PIT_2006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_2006) {
-            setexceedThresholdPIT_2006(PIT_2006Value >= highValue || PIT_2006Value <= lowValue);
+        if (!isNaN(PIT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3006) {
+            setexceedThresholdPIT_3006(PIT_3006Value >= highValue || PIT_3006Value <= lowValue);
         }
-    }, [PIT_2006, PIT_2006_High, PIT_2006_Low, maintainPIT_2006]);
+    }, [PIT_3006, PIT_3006_High, PIT_3006_Low, maintainPIT_3006]);
 
   
        // =================================================================================================================== 
 
-       const [TT_2002, setTT_2002] = useState<string | null>(null);
-       const [TT_2002_High, setTT_2002_High] = useState<number | null>(null);
-       const [TT_2002_Low, setTT_2002_Low] = useState<number | null>(null);
-       const [exceedThresholdTT_2002, setexceedThresholdTT_2002] = useState(false); 
-       const [maintainTT_2002, setmaintainTT_2002] = useState<boolean>(false);
+       const [TT_3002, setTT_3002] = useState<string | null>(null);
+       const [TT_3002_High, setTT_3002_High] = useState<number | null>(null);
+       const [TT_3002_Low, setTT_3002_Low] = useState<number | null>(null);
+       const [exceedThresholdTT_3002, setexceedThresholdTT_3002] = useState(false); 
+       const [maintainTT_3002, setmaintainTT_3002] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const TT_2002Value = parseFloat(TT_2002 as any);
-        const highValue = TT_2002_High ?? NaN;
-        const lowValue = TT_2002_Low ?? NaN;
+        const TT_3002Value = parseFloat(TT_3002 as any);
+        const highValue = TT_3002_High ?? NaN;
+        const lowValue = TT_3002_Low ?? NaN;
     
-        if (!isNaN(TT_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2002) {
-            setexceedThresholdTT_2002(TT_2002Value >= highValue || TT_2002Value <= lowValue);
+        if (!isNaN(TT_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3002) {
+            setexceedThresholdTT_3002(TT_3002Value >= highValue || TT_3002Value <= lowValue);
         }
-    }, [TT_2002, TT_2002_High, TT_2002_Low, maintainTT_2002]);
+    }, [TT_3002, TT_3002_High, TT_3002_Low, maintainTT_3002]);
     
 
   
   
        // =================================================================================================================== 
 
-       const [TT_2001, setTT_2001] = useState<string | null>(null);
-       const [TT_2001_High, setTT_2001_High] = useState<number | null>(null);
-       const [TT_2001_Low, setTT_2001_Low] = useState<number | null>(null);
-       const [exceedThresholdTT_2001, setexceedThresholdTT_2001] = useState(false); 
-       const [maintainTT_2001, setmaintainTT_2001] = useState<boolean>(false);
+       const [TT_3001, setTT_3001] = useState<string | null>(null);
+       const [TT_3001_High, setTT_3001_High] = useState<number | null>(null);
+       const [TT_3001_Low, setTT_3001_Low] = useState<number | null>(null);
+       const [exceedThresholdTT_3001, setexceedThresholdTT_3001] = useState(false); 
+       const [maintainTT_3001, setmaintainTT_3001] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const TT_2001Value = parseFloat(TT_2001 as any);
-        const highValue = TT_2001_High ?? NaN;
-        const lowValue = TT_2001_Low ?? NaN;
+        const TT_3001Value = parseFloat(TT_3001 as any);
+        const highValue = TT_3001_High ?? NaN;
+        const lowValue = TT_3001_Low ?? NaN;
     
-        if (!isNaN(TT_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_2001) {
-            setexceedThresholdTT_2001(TT_2001Value >= highValue || TT_2001Value <= lowValue);
+        if (!isNaN(TT_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3001) {
+            setexceedThresholdTT_3001(TT_3001Value >= highValue || TT_3001Value <= lowValue);
         }
-    }, [TT_2001, TT_2001_High, TT_2001_Low, maintainTT_2001]);
+    }, [TT_3001, TT_3001_High, TT_3001_Low, maintainTT_3001]);
     
  
   
@@ -1066,22 +1066,22 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-     const [SDV_2001A, setSDV_2001A] = useState<string | null>(null);
-     const [SDV_2001A_High, setSDV_2001A_High] = useState<number | null>(null);
-     const [SDV_2001A_Low, setSDV_2001A_Low] = useState<number | null>(null);
-     const [exceedThresholdSDV_2001A, setexceedThresholdSDV_2001A] = useState(false); 
-     const [maintainSDV_2001A, setmaintainSDV_2001A] = useState<boolean>(false);
+     const [SDV_3001A, setSDV_3001A] = useState<string | null>(null);
+     const [SDV_3001A_High, setSDV_3001A_High] = useState<number | null>(null);
+     const [SDV_3001A_Low, setSDV_3001A_Low] = useState<number | null>(null);
+     const [exceedThresholdSDV_3001A, setexceedThresholdSDV_3001A] = useState(false); 
+     const [maintainSDV_3001A, setmaintainSDV_3001A] = useState<boolean>(false);
      
      
      useEffect(() => {
-        const SDV_2001AValue = parseFloat(SDV_2001A as any);
-        const highValue = SDV_2001A_High ?? NaN;
-        const lowValue = SDV_2001A_Low ?? NaN;
+        const SDV_3001AValue = parseFloat(SDV_3001A as any);
+        const highValue = SDV_3001A_High ?? NaN;
+        const lowValue = SDV_3001A_Low ?? NaN;
     
-        if (!isNaN(SDV_2001AValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2001A) {
-            setexceedThresholdSDV_2001A(SDV_2001AValue >= highValue || SDV_2001AValue <= lowValue);
+        if (!isNaN(SDV_3001AValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_3001A) {
+            setexceedThresholdSDV_3001A(SDV_3001AValue >= highValue || SDV_3001AValue <= lowValue);
         }
-    }, [SDV_2001A, SDV_2001A_High, SDV_2001A_Low, maintainSDV_2001A]);
+    }, [SDV_3001A, SDV_3001A_High, SDV_3001A_Low, maintainSDV_3001A]);
     
    
  
@@ -1089,23 +1089,23 @@ useEffect(() => {
 
          // =================================================================================================================== 
 
- const [SDV_2001B, setSDV_2001B] = useState<string | null>(null);
+ const [SDV_3001B, setSDV_3001B] = useState<string | null>(null);
 
- const [SDV_2001B_High, setSDV_2001B_High] = useState<number | null>(null);
- const [SDV_2001B_Low, setSDV_2001B_Low] = useState<number | null>(null);
- const [exceedThresholdSDV_2001B, setexceedThresholdSDV_2001B] = useState(false); 
- const [maintainSDV_2001B, setmaintainSDV_2001B] = useState<boolean>(false);
+ const [SDV_3001B_High, setSDV_3001B_High] = useState<number | null>(null);
+ const [SDV_3001B_Low, setSDV_3001B_Low] = useState<number | null>(null);
+ const [exceedThresholdSDV_3001B, setexceedThresholdSDV_3001B] = useState(false); 
+ const [maintainSDV_3001B, setmaintainSDV_3001B] = useState<boolean>(false);
  
  
  useEffect(() => {
-    const SDV_2001BValue = parseFloat(SDV_2001B as any);
-    const highValue = SDV_2001B_High ?? NaN;
-    const lowValue = SDV_2001B_Low ?? NaN;
+    const SDV_3001BValue = parseFloat(SDV_3001B as any);
+    const highValue = SDV_3001B_High ?? NaN;
+    const lowValue = SDV_3001B_Low ?? NaN;
 
-    if (!isNaN(SDV_2001BValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2001B) {
-        setexceedThresholdSDV_2001B(SDV_2001BValue >= highValue || SDV_2001BValue <= lowValue);
+    if (!isNaN(SDV_3001BValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_3001B) {
+        setexceedThresholdSDV_3001B(SDV_3001BValue >= highValue || SDV_3001BValue <= lowValue);
     }
-}, [SDV_2001B, SDV_2001B_High, SDV_2001B_Low, maintainSDV_2001B]);
+}, [SDV_3001B, SDV_3001B_High, SDV_3001B_Low, maintainSDV_3001B]);
 
 
 
@@ -1165,24 +1165,24 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-     const [GD_2001, setGD_2001] = useState<string | null>(null);
+     const [GD_3001, setGD_3001] = useState<string | null>(null);
     
-     const [GD_2001_High, setGD_2001_High] = useState<number | null>(null);
-     const [GD_2001_Low, setGD_2001_Low] = useState<number | null>(null);
-     const [exceedThresholdGD_2001, setexceedThresholdGD_2001] = useState(false); 
+     const [GD_3001_High, setGD_3001_High] = useState<number | null>(null);
+     const [GD_3001_Low, setGD_3001_Low] = useState<number | null>(null);
+     const [exceedThresholdGD_3001, setexceedThresholdGD_3001] = useState(false); 
      
-     const [maintainGD_2001, setmaintainGD_2001] = useState<boolean>(false);
+     const [maintainGD_3001, setmaintainGD_3001] = useState<boolean>(false);
      
      
      useEffect(() => {
-        const GD_2001Value = parseFloat(GD_2001 as any);
-        const highValue = GD_2001_High ?? NaN;
-        const lowValue = GD_2001_Low ?? NaN;
+        const GD_3001Value = parseFloat(GD_3001 as any);
+        const highValue = GD_3001_High ?? NaN;
+        const lowValue = GD_3001_Low ?? NaN;
     
-        if (!isNaN(GD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_2001) {
-            setexceedThresholdGD_2001(GD_2001Value >= highValue || GD_2001Value <= lowValue);
+        if (!isNaN(GD_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_3001) {
+            setexceedThresholdGD_3001(GD_3001Value >= highValue || GD_3001Value <= lowValue);
         }
-    }, [GD_2001, GD_2001_High, GD_2001_Low, maintainGD_2001]);
+    }, [GD_3001, GD_3001_High, GD_3001_Low, maintainGD_3001]);
     
  
      
@@ -1210,23 +1210,23 @@ useEffect(() => {
      
          // =================================================================================================================== 
      
-     const [SDV_2002, setSDV_2002] = useState<string | null>(null);
-     const [SDV_2002_High, setSDV_2002_High] = useState<number | null>(null);
-     const [SDV_2002_Low, setSDV_2002_Low] = useState<number | null>(null);
-     const [exceedThresholdSDV_2002, setexceedThresholdSDV_2002] = useState(false); 
+     const [SDV_3002, setSDV_3002] = useState<string | null>(null);
+     const [SDV_3002_High, setSDV_3002_High] = useState<number | null>(null);
+     const [SDV_3002_Low, setSDV_3002_Low] = useState<number | null>(null);
+     const [exceedThresholdSDV_3002, setexceedThresholdSDV_3002] = useState(false); 
      
-     const [maintainSDV_2002, setmaintainSDV_2002] = useState<boolean>(false);
+     const [maintainSDV_3002, setmaintainSDV_3002] = useState<boolean>(false);
      
      
      useEffect(() => {
-        const SDV_2002Value = parseFloat(SDV_2002 as any);
-        const highValue = SDV_2002_High ?? NaN;
-        const lowValue = SDV_2002_Low ?? NaN;
+        const SDV_3002Value = parseFloat(SDV_3002 as any);
+        const highValue = SDV_3002_High ?? NaN;
+        const lowValue = SDV_3002_Low ?? NaN;
     
-        if (!isNaN(SDV_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_2002) {
-            setexceedThresholdSDV_2002(SDV_2002Value >= highValue || SDV_2002Value <= lowValue);
+        if (!isNaN(SDV_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_3002) {
+            setexceedThresholdSDV_3002(SDV_3002Value >= highValue || SDV_3002Value <= lowValue);
         }
-    }, [SDV_2002, SDV_2002_High, SDV_2002_Low, maintainSDV_2002]);
+    }, [SDV_3002, SDV_3002_High, SDV_3002_Low, maintainSDV_3002]);
     
 
       // =================================================================================================================== 
@@ -1302,23 +1302,23 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [PT_2003, setPT_2003] = useState<string | null>(null);
+          const [PT_3003, setPT_3003] = useState<string | null>(null);
  
-          const [PT_2003_High, setPT_2003_High] = useState<number | null>(null);
-          const [PT_2003_Low, setPT_2003_Low] = useState<number | null>(null);
-          const [exceedThresholdPT_2003, setexceedThresholdPT_2003] = useState(false); 
+          const [PT_3003_High, setPT_3003_High] = useState<number | null>(null);
+          const [PT_3003_Low, setPT_3003_Low] = useState<number | null>(null);
+          const [exceedThresholdPT_3003, setexceedThresholdPT_3003] = useState(false); 
           
-          const [maintainPT_2003, setmaintainPT_2003] = useState<boolean>(false);
+          const [maintainPT_3003, setmaintainPT_3003] = useState<boolean>(false);
           
           useEffect(() => {
-            const PT_2003Value = parseFloat(PT_2003 as any);
-            const highValue = PT_2003_High ?? NaN;
-            const lowValue = PT_2003_Low ?? NaN;
+            const PT_3003Value = parseFloat(PT_3003 as any);
+            const highValue = PT_3003_High ?? NaN;
+            const lowValue = PT_3003_Low ?? NaN;
         
-            if (!isNaN(PT_2003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_2003) {
-                setexceedThresholdPT_2003(PT_2003Value >= highValue || PT_2003Value <= lowValue);
+            if (!isNaN(PT_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3003) {
+                setexceedThresholdPT_3003(PT_3003Value >= highValue || PT_3003Value <= lowValue);
             }
-        }, [PT_2003, PT_2003_High, PT_2003_Low, maintainPT_2003]);
+        }, [PT_3003, PT_3003_High, PT_3003_Low, maintainPT_3003]);
         
        
     
@@ -1627,65 +1627,65 @@ useEffect(() => {
     
     
     
-              const [ESD_2001, setESD_2001] = useState<string | null>(null);
+              const [ESD_3001, setESD_3001] = useState<string | null>(null);
    
-              const [ESD_2001_High, setESD_2001_High] = useState<number | null>(null);
-              const [ESD_2001_Low, setESD_2001_Low] = useState<number | null>(null);
-              const [exceedThresholdESD_2001, setexceedThresholdESD_2001] = useState(false); 
+              const [ESD_3001_High, setESD_3001_High] = useState<number | null>(null);
+              const [ESD_3001_Low, setESD_3001_Low] = useState<number | null>(null);
+              const [exceedThresholdESD_3001, setexceedThresholdESD_3001] = useState(false); 
               
-              const [maintainESD_2001, setmaintainESD_2001] = useState<boolean>(false);
+              const [maintainESD_3001, setmaintainESD_3001] = useState<boolean>(false);
               
               
               useEffect(() => {
-                const ESD_2001Value = parseFloat(ESD_2001 as any);
-                const highValue = ESD_2001_High ?? NaN;
-                const lowValue = ESD_2001_Low ?? NaN;
+                const ESD_3001Value = parseFloat(ESD_3001 as any);
+                const highValue = ESD_3001_High ?? NaN;
+                const lowValue = ESD_3001_Low ?? NaN;
             
-                if (!isNaN(ESD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD_2001) {
-                    setexceedThresholdESD_2001(ESD_2001Value >= highValue || ESD_2001Value <= lowValue);
+                if (!isNaN(ESD_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD_3001) {
+                    setexceedThresholdESD_3001(ESD_3001Value >= highValue || ESD_3001Value <= lowValue);
                 }
-            }, [ESD_2001, ESD_2001_High, ESD_2001_Low, maintainESD_2001]);
+            }, [ESD_3001, ESD_3001_High, ESD_3001_Low, maintainESD_3001]);
          
               // =================================================================================================================== 
-              const [SD_2001, setSD_2001] = useState<string | null>(null);
+              const [SD_3001, setSD_3001] = useState<string | null>(null);
    
-              const [SD_2001_High, setSD_2001_High] = useState<number | null>(null);
-              const [SD_2001_Low, setSD_2001_Low] = useState<number | null>(null);
-              const [exceedThresholdSD_2001, setexceedThresholdSD_2001] = useState(false); 
+              const [SD_3001_High, setSD_3001_High] = useState<number | null>(null);
+              const [SD_3001_Low, setSD_3001_Low] = useState<number | null>(null);
+              const [exceedThresholdSD_3001, setexceedThresholdSD_3001] = useState(false); 
               
-              const [maintainSD_2001, setmaintainSD_2001] = useState<boolean>(false);
+              const [maintainSD_3001, setmaintainSD_3001] = useState<boolean>(false);
               
               
               useEffect(() => {
-                const SD_2001Value = parseFloat(SD_2001 as any);
-                const highValue = SD_2001_High ?? NaN;
-                const lowValue = SD_2001_Low ?? NaN;
+                const SD_3001Value = parseFloat(SD_3001 as any);
+                const highValue = SD_3001_High ?? NaN;
+                const lowValue = SD_3001_Low ?? NaN;
             
-                if (!isNaN(SD_2001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSD_2001) {
-                    setexceedThresholdSD_2001(SD_2001Value >= highValue || SD_2001Value <= lowValue);
+                if (!isNaN(SD_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSD_3001) {
+                    setexceedThresholdSD_3001(SD_3001Value >= highValue || SD_3001Value <= lowValue);
                 }
-            }, [SD_2001, SD_2001_High, SD_2001_Low, maintainSD_2001]);
+            }, [SD_3001, SD_3001_High, SD_3001_Low, maintainSD_3001]);
               
               // =================================================================================================================== 
     
-              const [SD_2002, setSD_2002] = useState<string | null>(null);
+              const [SD_3002, setSD_3002] = useState<string | null>(null);
           
-              const [SD_2002_High, setSD_2002_High] = useState<number | null>(null);
-              const [SD_2002_Low, setSD_2002_Low] = useState<number | null>(null);
-              const [exceedThresholdSD_2002, setexceedThresholdSD_2002] = useState(false); 
+              const [SD_3002_High, setSD_3002_High] = useState<number | null>(null);
+              const [SD_3002_Low, setSD_3002_Low] = useState<number | null>(null);
+              const [exceedThresholdSD_3002, setexceedThresholdSD_3002] = useState(false); 
               
-              const [maintainSD_2002, setmaintainSD_2002] = useState<boolean>(false);
+              const [maintainSD_3002, setmaintainSD_3002] = useState<boolean>(false);
               
               
               useEffect(() => {
-                const SD_2002Value = parseFloat(SD_2002 as any);
-                const highValue = SD_2002_High ?? NaN;
-                const lowValue = SD_2002_Low ?? NaN;
+                const SD_3002Value = parseFloat(SD_3002 as any);
+                const highValue = SD_3002_High ?? NaN;
+                const lowValue = SD_3002_Low ?? NaN;
             
-                if (!isNaN(SD_2002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSD_2002) {
-                    setexceedThresholdSD_2002(SD_2002Value >= highValue || SD_2002Value <= lowValue);
+                if (!isNaN(SD_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSD_3002) {
+                    setexceedThresholdSD_3002(SD_3002Value >= highValue || SD_3002Value <= lowValue);
                 }
-            }, [SD_2002, SD_2002_High, SD_2002_Low, maintainSD_2002]);
+            }, [SD_3002, SD_3002_High, SD_3002_Low, maintainSD_3002]);
             
               
          
@@ -1707,22 +1707,22 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PIT_2006: "Pressure Indicator Transmitter PIT-2006 (BarG)",
-        PIT_2007: "Pressure Indicator Transmitter PIT-2007 (BarG)",
-        PT_2001: "Pressure Transmitter PT-2001 (BarG)",
-        PT_2002: "Pressure Transmitter PT-2002 (BarG)",
-        PT_2003: "Pressure Transmitter PT-2003 (BarG)",
+        PIT_3006: "Pressure Indicator Transmitter PIT-3001A (BarG)",
+        PIT_3007: "Pressure Indicator Transmitter PIT-3001B (BarG)",
+        PT_3001: "Pressure Transmitter PT-3001 (BarG)",
+        PT_3002: "Pressure Transmitter PT-3002 (BarG)",
+        PT_3003: "Pressure Transmitter PT-3003 (BarG)",
 
-        TT_2001: "Temperature Transmitter TT-2001 (˚C)",
-        TT_2002: "Temperature Transmitter TT-2002 (˚C)",
-        GD_2001: "Gas Detector GD-2001 (%LEL)",
-        SDV_2001A: "Shutdown Valve SDV-2001A (0: Close - 1: Open)",
-        SDV_2001B: "Shutdown Valve SDV-2001B (0: Close - 1: Open)",
+        TT_3001: "Temperature Transmitter TT-3001 (˚C)",
+        TT_3002: "Temperature Transmitter TT-3002 (˚C)",
+        GD_3001: "Gas Detector GD-3001 (%LEL)",
+        SDV_3001A: "Shutdown Valve SDV-3001A (0: Close - 1: Open)",
+        SDV_3001B: "Shutdown Valve SDV-3001B (0: Close - 1: Open)",
 
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
 
-        SDV_2002:
-            "Shutdown Valve SDV-2002 (0: Close - 1: Open)",
+        SDV_3002:
+            "Shutdown Valve SDV-3002 (0: Close - 1: Open)",
         Water_PG: "Water Pressure (0: Normal - 1: Pressure Low)",
         Water_LSW: "Water Level (0: Normal - 1: Water Low)",
         PUMP_1: "Pump 1 (0: Stop - 1: Run)",
@@ -1733,11 +1733,11 @@ useEffect(() => {
 
 
         GD_STATUS: "Gas Detector Status (0: Normal - 1: Alarm)",
-        ESD_2001: "Emergency Shut ESD-2001 (0: Not Active - 1: Active)",
+        ESD_3001: "Emergency Shut ESD-3001 (0: Not Active - 1: Active)",
 
         HR_BC: "Horn And Beacon (0: Normal - 1: Alarm)",
-        SD_2001: "Smoke Detector SD-2001 (0: Normal - 1: Smoker Detected)",
-        SD_2002: "Smoke Detector SD-2002 (0: Normal - 1: Smoker Detected)",
+        SD_3001: "Smoke Detector SD-3001 (0: Normal - 1: Smoker Detected)",
+        SD_3002: "Smoke Detector SD-3002 (0: Normal - 1: Smoker Detected)",
 
     };
 
@@ -1745,29 +1745,29 @@ useEffect(() => {
 
     const DataGD_STATUS = GD_STATUS === "0" ? "Normal" : GD_STATUS === "1" ? "Alarm" : null;
     const DataHR_BC = HR_BC === "0" ? "Normal" : HR_BC === "1" ? "Alarm" : null;
-    const DataESD_2001 = ESD_2001 === "0" ? "Not Active" : ESD_2001 === "1" ? "Active" : null;
-    const DataSD_2001 = SD_2001 === "0" ? "Normal" : SD_2001 === "1" ? "Smoker Detected" : null;
+    const DataESD_3001 = ESD_3001 === "0" ? "Not Active" : ESD_3001 === "1" ? "Active" : null;
+    const DataSD_3001 = SD_3001 === "0" ? "Normal" : SD_3001 === "1" ? "Smoker Detected" : null;
 
-    const DataSD_2002 = SD_2002 === "0" ? "Normal" : SD_2002 === "1" ? "Smoker Detected" : null;
+    const DataSD_3002 = SD_3002 === "0" ? "Normal" : SD_3002 === "1" ? "Smoker Detected" : null;
 
     const DataWater_LSW = Water_LSW === "0" ? "Normal" : Water_LSW === "1" ? "Water Low" : null;
-    const DataPT_2003 = PT_2003 === "0" ? "OFF" : PT_2003 === "1" ? "ON" : null;
+    const DataPT_3003 = PT_3003 === "0" ? "OFF" : PT_3003 === "1" ? "ON" : null;
     const DataBOILER = BOILER === "0" ? "Manual" : BOILER === "1" ? "Auto" : null;
-    const DataTT_2001 = TT_2001 === "0" ? "ON" : TT_2001 === "1" ? "OFF" : null;
-    const DataTT_2002 = TT_2002 === "0" ? "OFF" : TT_2002 === "1" ? "ON" : null;
+    const DataTT_3001 = TT_3001 === "0" ? "ON" : TT_3001 === "1" ? "OFF" : null;
+    const DataTT_3002 = TT_3002 === "0" ? "OFF" : TT_3002 === "1" ? "ON" : null;
 
     const DataCharging =
-        SDV_2001A === "0"
+        SDV_3001A === "0"
             ? "Close"
-            : SDV_2001A === "1"
+            : SDV_3001A === "1"
             ? "Open"
             : null;
     const DataBattery =
-        GD_2001 === "0" ? "Normal" : GD_2001 === "1" ? "Battery" : null;
+        GD_3001 === "0" ? "Normal" : GD_3001 === "1" ? "Battery" : null;
     const DataAlarm =
-        SDV_2001B === "0" ? "Close" : SDV_2001B === "1" ? "Open" : null;
+        SDV_3001B === "0" ? "Close" : SDV_3001B === "1" ? "Open" : null;
     const DataMode =
-    SDV_2002 === "0" ? "Close" : SDV_2002 === "1" ? "Open" : null;
+    SDV_3002 === "0" ? "Close" : SDV_3002 === "1" ? "Open" : null;
 
 
     const DataWater_PG =
@@ -2170,73 +2170,73 @@ useEffect(() => {
         ? 18
         : ""
     },
-                CSSPIT_2007 : {
-                    color:exceedThresholdPIT_2007 && !maintainPIT_2007
+                CSSPIT_3007 : {
+                    color:exceedThresholdPIT_3007 && !maintainPIT_3007
                     ? "#ff5656"
-                    : maintainPIT_2007
+                    : maintainPIT_3007
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPIT_2007 || maintainPIT_2007)
+                    fontWeight: (exceedThresholdPIT_3007 || maintainPIT_3007)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPIT_2007 || maintainPIT_2007)
+                    fontSize: (exceedThresholdPIT_3007 || maintainPIT_3007)
                     ? 18
                     : ""
                 },
         
         
-                CSSPT_2001 : {
-                    color:exceedThresholdPT_2001 && !maintainPT_2001
+                CSSPT_3001 : {
+                    color:exceedThresholdPT_3001 && !maintainPT_3001
                     ? "#ff5656"
-                    : maintainPT_2001
+                    : maintainPT_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPT_2001 || maintainPT_2001)
+                    fontWeight: (exceedThresholdPT_3001 || maintainPT_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPT_2001 || maintainPT_2001)
+                    fontSize: (exceedThresholdPT_3001 || maintainPT_3001)
                     ? 18
                     : ""
                 },
 
-                CSSPT_2002 : {
-                    color:exceedThresholdPT_2002 && !maintainPT_2002
+                CSSPT_3002 : {
+                    color:exceedThresholdPT_3002 && !maintainPT_3002
                     ? "#ff5656"
-                    : maintainPT_2002
+                    : maintainPT_3002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPT_2002 || maintainPT_2002)
+                    fontWeight: (exceedThresholdPT_3002 || maintainPT_3002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPT_2002 || maintainPT_2002)
+                    fontSize: (exceedThresholdPT_3002 || maintainPT_3002)
                     ? 18
                     : ""
                 },
         
         
-                CSSPIT_2006 : {
-                    color:exceedThresholdPIT_2006 && !maintainPIT_2006
+                CSSPIT_3006 : {
+                    color:exceedThresholdPIT_3006 && !maintainPIT_3006
                     ? "#ff5656"
-                    : maintainPIT_2006
+                    : maintainPIT_3006
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPIT_2006 || maintainPIT_2006)
+                    fontWeight: (exceedThresholdPIT_3006 || maintainPIT_3006)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPIT_2006 || maintainPIT_2006)
+                    fontSize: (exceedThresholdPIT_3006 || maintainPIT_3006)
                     ? 18
                     : ""
                 },
-                CSSTT_2002 : {
-                    color:exceedThresholdTT_2002 && !maintainTT_2002
+                CSSTT_3002 : {
+                    color:exceedThresholdTT_3002 && !maintainTT_3002
                     ? "#ff5656"
-                    : maintainTT_2002
+                    : maintainTT_3002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTT_2002 || maintainTT_2002)
+                    fontWeight: (exceedThresholdTT_3002 || maintainTT_3002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTT_2002 || maintainTT_2002)
+                    fontSize: (exceedThresholdTT_3002 || maintainTT_3002)
                     ? 18
                     : ""
                 },
@@ -2245,16 +2245,16 @@ useEffect(() => {
              
         
         
-                CSSTT_2001 : {
-                    color:exceedThresholdTT_2001 && !maintainTT_2001
+                CSSTT_3001 : {
+                    color:exceedThresholdTT_3001 && !maintainTT_3001
                     ? "#ff5656"
-                    : maintainTT_2001
+                    : maintainTT_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdTT_2001 || maintainTT_2001)
+                    fontWeight: (exceedThresholdTT_3001 || maintainTT_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdTT_2001 || maintainTT_2001)
+                    fontSize: (exceedThresholdTT_3001 || maintainTT_3001)
                     ? 18
                     : ""
                 },
@@ -2274,30 +2274,30 @@ useEffect(() => {
                     : ""
                 },
         
-                CSSSDV_2001A : {
-                    color:exceedThresholdSDV_2001A && !maintainSDV_2001A
+                CSSSDV_3001A : {
+                    color:exceedThresholdSDV_3001A && !maintainSDV_3001A
                     ? "#ff5656"
-                    : maintainSDV_2001A
+                    : maintainSDV_3001A
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSDV_2001A || maintainSDV_2001A)
+                    fontWeight: (exceedThresholdSDV_3001A || maintainSDV_3001A)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSDV_2001A || maintainSDV_2001A)
+                    fontSize: (exceedThresholdSDV_3001A || maintainSDV_3001A)
                     ? 18
                     : ""
                 },
         
-                CSSSDV_2001B : {
-                    color:exceedThresholdSDV_2001B && !maintainSDV_2001B
+                CSSSDV_3001B : {
+                    color:exceedThresholdSDV_3001B && !maintainSDV_3001B
                     ? "#ff5656"
-                    : maintainSDV_2001B
+                    : maintainSDV_3001B
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSDV_2001B || maintainSDV_2001B)
+                    fontWeight: (exceedThresholdSDV_3001B || maintainSDV_3001B)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSDV_2001B || maintainSDV_2001B)
+                    fontSize: (exceedThresholdSDV_3001B || maintainSDV_3001B)
                     ? 18
                     : ""
                 },
@@ -2348,16 +2348,16 @@ useEffect(() => {
         
         
         
-                CSSGD_2001 : {
-                    color:exceedThresholdGD_2001 && !maintainGD_2001
+                CSSGD_3001 : {
+                    color:exceedThresholdGD_3001 && !maintainGD_3001
                     ? "#ff5656"
-                    : maintainGD_2001
+                    : maintainGD_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdGD_2001 || maintainGD_2001)
+                    fontWeight: (exceedThresholdGD_3001 || maintainGD_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdGD_2001 || maintainGD_2001)
+                    fontSize: (exceedThresholdGD_3001 || maintainGD_3001)
                     ? 18
                     : ""
                 },
@@ -2377,30 +2377,30 @@ useEffect(() => {
                     : ""
                 },
         
-                CSSSDV_2002 : {
-                    color:exceedThresholdSDV_2002 && !maintainSDV_2002
+                CSSSDV_3002 : {
+                    color:exceedThresholdSDV_3002 && !maintainSDV_3002
                     ? "#ff5656"
-                    : maintainSDV_2002
+                    : maintainSDV_3002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSDV_2002 || maintainSDV_2002)
+                    fontWeight: (exceedThresholdSDV_3002 || maintainSDV_3002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSDV_2002 || maintainSDV_2002)
+                    fontSize: (exceedThresholdSDV_3002 || maintainSDV_3002)
                     ? 18
                     : ""
                 },
         
-                CSSPT_2003 : {
-                    color:exceedThresholdPT_2003 && !maintainPT_2003
+                CSSPT_3003 : {
+                    color:exceedThresholdPT_3003 && !maintainPT_3003
                     ? "#ff5656"
-                    : maintainPT_2003
+                    : maintainPT_3003
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPT_2003 || maintainPT_2003)
+                    fontWeight: (exceedThresholdPT_3003 || maintainPT_3003)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPT_2003 || maintainPT_2003)
+                    fontSize: (exceedThresholdPT_3003 || maintainPT_3003)
                     ? 18
                     : ""
                 },
@@ -2463,42 +2463,42 @@ useEffect(() => {
                 },
   
         
-                CSSESD_2001 : {
-                    color:exceedThresholdESD_2001 && !maintainESD_2001
+                CSSESD_3001 : {
+                    color:exceedThresholdESD_3001 && !maintainESD_3001
                     ? "#ff5656"
-                    : maintainESD_2001
+                    : maintainESD_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdESD_2001 || maintainESD_2001)
+                    fontWeight: (exceedThresholdESD_3001 || maintainESD_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdESD_2001 || maintainESD_2001)
+                    fontSize: (exceedThresholdESD_3001 || maintainESD_3001)
                     ? 18
                     : ""
                 },
-                CSSSD_2001 : {
-                    color:exceedThresholdSD_2001 && !maintainSD_2001
+                CSSSD_3001 : {
+                    color:exceedThresholdSD_3001 && !maintainSD_3001
                     ? "#ff5656"
-                    : maintainSD_2001
+                    : maintainSD_3001
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSD_2001 || maintainSD_2001)
+                    fontWeight: (exceedThresholdSD_3001 || maintainSD_3001)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSD_2001 || maintainSD_2001)
+                    fontSize: (exceedThresholdSD_3001 || maintainSD_3001)
                     ? 18
                     : ""
                 },
-                CSSSD_2002 : {
-                    color:exceedThresholdSD_2002 && !maintainSD_2002
+                CSSSD_3002 : {
+                    color:exceedThresholdSD_3002 && !maintainSD_3002
                     ? "#ff5656"
-                    : maintainSD_2002
+                    : maintainSD_3002
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdSD_2002 || maintainSD_2002)
+                    fontWeight: (exceedThresholdSD_3002 || maintainSD_3002)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdSD_2002 || maintainSD_2002)
+                    fontSize: (exceedThresholdSD_3002 || maintainSD_3002)
                     ? 18
                     : ""
                 },
@@ -2580,50 +2580,50 @@ useEffect(() => {
 
     const dataPLC = [
         {
-            name: <span>{tagNamePLC.PIT_2006}</span>,
-            PLC: <span style={combineCss.CSSPIT_2006}> {PIT_2006}</span>,
+            name: <span>{tagNamePLC.PIT_3006}</span>,
+            PLC: <span style={combineCss.CSSPIT_3006}> {PIT_3006}</span>,
         },
         {
-            name: <span>{tagNamePLC.PIT_2007}</span>,
-            PLC: <span style={combineCss.CSSPIT_2007}>{} {PIT_2007}</span>,
+            name: <span>{tagNamePLC.PIT_3007}</span>,
+            PLC: <span style={combineCss.CSSPIT_3007}>{} {PIT_3007}</span>,
         },
         {
-            name: <span>{tagNamePLC.PT_2001}</span>,
-            PLC: <span style={combineCss.CSSPT_2001}> {PT_2001}</span>,
+            name: <span>{tagNamePLC.PT_3001}</span>,
+            PLC: <span style={combineCss.CSSPT_3001}> {PT_3001}</span>,
         },
         {
-            name: <span>{tagNamePLC.PT_2002}</span>,
-            PLC: <span style={combineCss.CSSPT_2002}> {PT_2002}</span>,
+            name: <span>{tagNamePLC.PT_3002}</span>,
+            PLC: <span style={combineCss.CSSPT_3002}> {PT_3002}</span>,
         },
         {
-            name: <span>{tagNamePLC.PT_2003}</span>,
-            PLC: <span style={combineCss.CSSPT_2003}> {PT_2003} {DataPT_2003}</span>,
+            name: <span>{tagNamePLC.PT_3003}</span>,
+            PLC: <span style={combineCss.CSSPT_3003}> {PT_3003} {DataPT_3003}</span>,
         },
       
 
         {
-            name: <span>{tagNamePLC.TT_2002}</span>,
-            PLC: <span style={combineCss.CSSTT_2002}>{TT_2002} {DataTT_2002}</span>,
+            name: <span>{tagNamePLC.TT_3002}</span>,
+            PLC: <span style={combineCss.CSSTT_3002}>{TT_3002} {DataTT_3002}</span>,
         },
       
         {
-            name: <span>{tagNamePLC.TT_2001}</span>,
-            PLC: <span style={combineCss.CSSTT_2001}>{TT_2001} {DataTT_2001}</span>,
+            name: <span>{tagNamePLC.TT_3001}</span>,
+            PLC: <span style={combineCss.CSSTT_3001}>{TT_3001} {DataTT_3001}</span>,
         },
       
         {
-            name: <span>{tagNamePLC.GD_2001}</span>,
-            PLC: <span style={combineCss.CSSGD_2001}> {GD_2001} {DataBattery}</span>,
+            name: <span>{tagNamePLC.GD_3001}</span>,
+            PLC: <span style={combineCss.CSSGD_3001}> {GD_3001} {DataBattery}</span>,
         },
         {
-            name: <span>{tagNamePLC.SDV_2001A}</span>,
-            PLC: <span style={combineCss.CSSSDV_2001A}> {SDV_2001A} {DataCharging}</span>,
+            name: <span>{tagNamePLC.SDV_3001A}</span>,
+            PLC: <span style={combineCss.CSSSDV_3001A}> {SDV_3001A} {DataCharging}</span>,
         },
 
      
         {
-            name: <span>{tagNamePLC.SDV_2001B}</span>,
-            PLC: <span style={combineCss.CSSSDV_2001B}>{SDV_2001B} {DataAlarm}</span>,
+            name: <span>{tagNamePLC.SDV_3001B}</span>,
+            PLC: <span style={combineCss.CSSSDV_3001B}>{SDV_3001B} {DataAlarm}</span>,
         },
 
         // {
@@ -2631,8 +2631,8 @@ useEffect(() => {
         //     PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
         // },
         {
-            name: <span>{tagNamePLC.SDV_2002}</span>,
-            PLC: <span style={combineCss.CSSSDV_2002}> {SDV_2002} {DataMode}</span>,
+            name: <span>{tagNamePLC.SDV_3002}</span>,
+            PLC: <span style={combineCss.CSSSDV_3002}> {SDV_3002} {DataMode}</span>,
         },
 
 
@@ -2686,19 +2686,19 @@ useEffect(() => {
      
 
         {
-            name: <span>{tagNamePLC.ESD_2001}</span>,
-            PLC: <span style={combineCss.CSSESD_2001}>{ESD_2001} {DataESD_2001}</span>,
+            name: <span>{tagNamePLC.ESD_3001}</span>,
+            PLC: <span style={combineCss.CSSESD_3001}>{ESD_3001} {DataESD_3001}</span>,
         },
         {
-            name: <span>{tagNamePLC.SD_2001}</span>,
-            PLC: <span style={combineCss.CSSSD_2001}> {SD_2001} {DataSD_2001}</span>,
+            name: <span>{tagNamePLC.SD_3001}</span>,
+            PLC: <span style={combineCss.CSSSD_3001}> {SD_3001} {DataSD_3001}</span>,
         },
    
 
     
         {
-            name: <span>{tagNamePLC.SD_2002}</span>,
-            PLC: <span style={combineCss.CSSSD_2002}> {SD_2002} {DataSD_2002}</span>,
+            name: <span>{tagNamePLC.SD_3002}</span>,
+            PLC: <span style={combineCss.CSSSD_3002}> {SD_3002} {DataSD_3002}</span>,
         },
     ];
 
@@ -2724,7 +2724,7 @@ useEffect(() => {
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            CNG BINH DUONG
+                            CNG HUNG YEN
                         </div>
 
                      
@@ -2755,13 +2755,13 @@ useEffect(() => {
                             header={EVC_STT01 === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-2001A</p>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-3001A</p>
    
                                </div>
                                
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>EVC-2001A</p>
+                                   {DotRed}  <p style={{marginLeft:5}}>EVC-3001A</p>
                                 </div>
                             )}
                         ></Column>
@@ -2772,13 +2772,13 @@ useEffect(() => {
                             header={EVC_STT02 === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-2001B</p>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-3001B</p>
    
                                </div>
                               
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>EVC-2001B</p>
+                                {DotRed}  <p style={{marginLeft:5}}>EVC-3001B</p>
                              </div>
                             )}
                         ></Column>

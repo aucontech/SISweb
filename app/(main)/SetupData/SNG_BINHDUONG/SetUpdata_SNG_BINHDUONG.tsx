@@ -455,13 +455,6 @@ export default function SetUpdata_SNG_BINHDUONG() {
                 (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
             );
 
-         
-
-       
-
-          
-
-     
 
             const GD_2006_High = res.data.find((item: any) => item.key === "GD_2006_High");
             setGD_2006_High(GD_2006_High?.value || null);

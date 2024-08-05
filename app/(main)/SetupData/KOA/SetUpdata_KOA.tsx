@@ -252,21 +252,21 @@ export default function SetUpdata_KOA() {
                         PT1: setPT1,
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
+
                         DI_ZSO_2: setDI_ZSO_2,
                         DI_ZSC_2: setDI_ZSC_2,
                         DI_MAP_1: setDI_MAP_1,
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
+
                         DI_UPS_ALARM: setDI_UPS_ALARM,
                         DI_SELECT_SW: setDI_SELECT_SW,
                         DI_RESET: setDI_RESET,
                         Emergency_NO: setEmergency_NO,
                         Emergency_NC: setEmergency_NC,
+
                         UPS_Mode: setUPS_Mode,
-
-
                         DO_HR_01: setDO_HR_01,
-                        SD: setSD,
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
@@ -377,50 +377,6 @@ export default function SetUpdata_KOA() {
                 `/plugins/telemetry/DEVICE/${id_KOA}/values/attributes/SERVER_SCOPE`
             );
 
-
-         
-
-            const DO_HR_01_High = res.data.find((item: any) => item.key === "DO_HR_01_High");
-            setDO_HR_01_High(DO_HR_01_High?.value || null);
-            const DO_HR_01_Low = res.data.find((item: any) => item.key === "DO_HR_01_Low");
-            setDO_HR_01_Low(DO_HR_01_Low?.value || null);
-            const DO_HR_01_Maintain = res.data.find(
-                (item: any) => item.key === "DO_HR_01_Maintain"
-            );
-
-            const SD_High = res.data.find((item: any) => item.key === "SD_High");
-            setSD_High(SD_High?.value || null);
-            const SD_Low = res.data.find((item: any) => item.key === "SD_Low");
-            setSD_Low(SD_Low?.value || null);
-            const SD_Maintain = res.data.find(
-                (item: any) => item.key === "SD_Maintain"
-            );
-
-
-            const DO_BC_01_High = res.data.find((item: any) => item.key === "DO_BC_01_High");
-            setDO_BC_01_High(DO_BC_01_High?.value || null);
-            const DO_BC_01_Low = res.data.find((item: any) => item.key === "DO_BC_01_Low");
-            setDO_BC_01_Low(DO_BC_01_Low?.value || null);
-            const DO_BC_01_Maintain = res.data.find(
-                (item: any) => item.key === "DO_BC_01_Maintain"
-            );
-
-            const DO_SV_01_High = res.data.find((item: any) => item.key === "DO_SV_01_High");
-            setDO_SV_01_High(DO_SV_01_High?.value || null);
-            const DO_SV_01_Low = res.data.find((item: any) => item.key === "DO_SV_01_Low");
-            setDO_SV_01_Low(DO_SV_01_Low?.value || null);
-            const DO_SV_01_Maintain = res.data.find(
-                (item: any) => item.key === "DO_SV_01_Maintain"
-            );
-
-            const DO_SV_02_High = res.data.find((item: any) => item.key === "DO_SV_02_High");
-            setDO_SV_02_High(DO_SV_02_High?.value || null);
-            const DO_SV_02_Low = res.data.find((item: any) => item.key === "DO_SV_02_Low");
-            setDO_SV_02_Low(DO_SV_02_Low?.value || null);
-            const DO_SV_02_Maintain = res.data.find(
-                (item: any) => item.key === "DO_SV_02_Maintain"
-            );
-
             const FC_Lithium_Battery_Status_High = res.data.find((item: any) => item.key === "FC_Lithium_Battery_Status_High");
             setFC_Lithium_Battery_Status_High(FC_Lithium_Battery_Status_High?.value || null);
             const FC_Lithium_Battery_Status_Low = res.data.find((item: any) => item.key === "FC_Lithium_Battery_Status_Low");
@@ -453,6 +409,42 @@ export default function SetUpdata_KOA() {
             const FC_Charger_Voltage_Maintain = res.data.find(
                 (item: any) => item.key === "FC_Charger_Voltage_Maintain"
             );
+
+
+
+
+            const FC_01_Today_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Today_Values_Volume_High");
+            setFC_01_Today_Values_Volume_High(FC_01_Today_Values_Volume_High?.value || null);
+            const FC_01_Today_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Today_Values_Volume_Low");
+            setFC_01_Today_Values_Volume_Low(FC_01_Today_Values_Volume_Low?.value || null);
+            const FC_01_Today_Values_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Today_Values_Volume_Maintain"
+            );
+
+            const FC_01_Today_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_High");
+            setFC_01_Today_Values_Uncorrected_Volume_High(FC_01_Today_Values_Uncorrected_Volume_High?.value || null);
+            const FC_01_Today_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_Low");
+            setFC_01_Today_Values_Uncorrected_Volume_Low(FC_01_Today_Values_Uncorrected_Volume_Low?.value || null);
+            const FC_01_Today_Values_Uncorrected_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_Maintain"
+            );
+
+            const FC_01_Yesterday_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Volume_High");
+            setFC_01_Yesterday_Values_Volume_High(FC_01_Yesterday_Values_Volume_High?.value || null);
+            const FC_01_Yesterday_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Volume_Low");
+            setFC_01_Yesterday_Values_Volume_Low(FC_01_Yesterday_Values_Volume_Low?.value || null);
+            const FC_01_Yesterday_Values_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Yesterday_Values_Volume_Maintain"
+            );
+
+            const FC_01_Yesterday_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_High");
+            setFC_01_Yesterday_Values_Uncorrected_Volume_High(FC_01_Yesterday_Values_Uncorrected_Volume_High?.value || null);
+            const FC_01_Yesterday_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Low");
+            setFC_01_Yesterday_Values_Uncorrected_Volume_Low(FC_01_Yesterday_Values_Uncorrected_Volume_Low?.value || null);
+            const FC_01_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Maintain"
+            );
+
 
             const FC_01_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_High");
             setFC_01_Accumulated_Values_Uncorrected_Volume_High(FC_01_Accumulated_Values_Uncorrected_Volume_High?.value || null);
@@ -518,39 +510,6 @@ export default function SetUpdata_KOA() {
           
 
      
-
-            const FC_01_Today_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Today_Values_Volume_High");
-            setFC_01_Today_Values_Volume_High(FC_01_Today_Values_Volume_High?.value || null);
-            const FC_01_Today_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Today_Values_Volume_Low");
-            setFC_01_Today_Values_Volume_Low(FC_01_Today_Values_Volume_Low?.value || null);
-            const FC_01_Today_Values_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Today_Values_Volume_Maintain"
-            );
-
-            const FC_01_Today_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_High");
-            setFC_01_Today_Values_Uncorrected_Volume_High(FC_01_Today_Values_Uncorrected_Volume_High?.value || null);
-            const FC_01_Today_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_Low");
-            setFC_01_Today_Values_Uncorrected_Volume_Low(FC_01_Today_Values_Uncorrected_Volume_Low?.value || null);
-            const FC_01_Today_Values_Uncorrected_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_Maintain"
-            );
-
-            const FC_01_Yesterday_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Volume_High");
-            setFC_01_Yesterday_Values_Volume_High(FC_01_Yesterday_Values_Volume_High?.value || null);
-            const FC_01_Yesterday_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Volume_Low");
-            setFC_01_Yesterday_Values_Volume_Low(FC_01_Yesterday_Values_Volume_Low?.value || null);
-            const FC_01_Yesterday_Values_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Yesterday_Values_Volume_Maintain"
-            );
-
-            const FC_01_Yesterday_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_High");
-            setFC_01_Yesterday_Values_Uncorrected_Volume_High(FC_01_Yesterday_Values_Uncorrected_Volume_High?.value || null);
-            const FC_01_Yesterday_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Low");
-            setFC_01_Yesterday_Values_Uncorrected_Volume_Low(FC_01_Yesterday_Values_Uncorrected_Volume_Low?.value || null);
-            const FC_01_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Maintain"
-            );
-
             const FC_02_Accumulated_Values_Volume_High = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_High");
             setFC_02_Accumulated_Values_Volume_High(FC_02_Accumulated_Values_Volume_High?.value || null);
             const FC_02_Accumulated_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_Low");
@@ -625,6 +584,43 @@ export default function SetUpdata_KOA() {
             const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                 (item: any) => item.key === "FC_02_Yesterday_Values_Uncorrected_Volume_Maintain"
             );
+
+
+            const DO_HR_01_High = res.data.find((item: any) => item.key === "DO_HR_01_High");
+            setDO_HR_01_High(DO_HR_01_High?.value || null);
+            const DO_HR_01_Low = res.data.find((item: any) => item.key === "DO_HR_01_Low");
+            setDO_HR_01_Low(DO_HR_01_Low?.value || null);
+            const DO_HR_01_Maintain = res.data.find(
+                (item: any) => item.key === "DO_HR_01_Maintain"
+            );
+
+       
+
+
+            const DO_BC_01_High = res.data.find((item: any) => item.key === "DO_BC_01_High");
+            setDO_BC_01_High(DO_BC_01_High?.value || null);
+            const DO_BC_01_Low = res.data.find((item: any) => item.key === "DO_BC_01_Low");
+            setDO_BC_01_Low(DO_BC_01_Low?.value || null);
+            const DO_BC_01_Maintain = res.data.find(
+                (item: any) => item.key === "DO_BC_01_Maintain"
+            );
+
+            const DO_SV_01_High = res.data.find((item: any) => item.key === "DO_SV_01_High");
+            setDO_SV_01_High(DO_SV_01_High?.value || null);
+            const DO_SV_01_Low = res.data.find((item: any) => item.key === "DO_SV_01_Low");
+            setDO_SV_01_Low(DO_SV_01_Low?.value || null);
+            const DO_SV_01_Maintain = res.data.find(
+                (item: any) => item.key === "DO_SV_01_Maintain"
+            );
+
+            const DO_SV_02_High = res.data.find((item: any) => item.key === "DO_SV_02_High");
+            setDO_SV_02_High(DO_SV_02_High?.value || null);
+            const DO_SV_02_Low = res.data.find((item: any) => item.key === "DO_SV_02_Low");
+            setDO_SV_02_Low(DO_SV_02_Low?.value || null);
+            const DO_SV_02_Maintain = res.data.find(
+                (item: any) => item.key === "DO_SV_02_Maintain"
+            );
+
 
             const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
             setGD1_High(GD1_High?.value || null);
@@ -762,17 +758,6 @@ export default function SetUpdata_KOA() {
 
 
 
-            setMaintainDO_HR_01(DO_HR_01_Maintain?.value || false);
-
-            setMaintainSD(SD_Maintain?.value || false);
-
-            setMaintainDO_BC_01(DO_BC_01_Maintain?.value || false);
-
-
-            setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
-
-
-            setMaintainDO_SV_02(DO_SV_02_Maintain?.value || false);
 
 
 
@@ -795,25 +780,24 @@ export default function SetUpdata_KOA() {
             setMaintainFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_Volume_Maintain?.value || false);
 
             
-            setMaintainFC_01_Yesterday_Values_Uncorrected_Volume(FC_01_Yesterday_Values_Uncorrected_Volume_Maintain?.value || false);
             
-            setMaintainFC_01_Yesterday_Values_Volume(FC_01_Yesterday_Values_Volume_Maintain?.value || false);
-
-            
-            setMaintainFC_01_Today_Values_Uncorrected_Volume(FC_01_Today_Values_Uncorrected_Volume_Maintain?.value || false);
-
-            setMaintainFC_01_Today_Values_Volume(FC_01_Today_Values_Volume_Maintain?.value || false);
-
-
-
-
-
-
-         
 
             setMaintainFC_02_Today_Values_Uncorrected_Volume(FC_02_Today_Values_Uncorrected_Volume_Maintain?.value || false);
 
+            setMaintainFC_02_Yesterday_Values_Volume(MaintainFC_02_Yesterday_Values_Volume?.value || false);
 
+
+            setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_Maintain?.value || false);
+
+
+
+            setMaintainFC_01_Yesterday_Values_Uncorrected_Volume(FC_01_Yesterday_Values_Uncorrected_Volume_Maintain?.value || false);
+
+            setMaintainFC_01_Yesterday_Values_Volume(FC_01_Yesterday_Values_Volume_Maintain?.value || false);
+
+            setMaintainFC_01_Today_Values_Uncorrected_Volume(FC_01_Today_Values_Uncorrected_Volume_Maintain?.value || false);
+
+            setMaintainFC_01_Today_Values_Volume(FC_01_Today_Values_Volume_Maintain?.value || false);
             setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain?.value || false);
 
             setMaintainFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_Rate_Maintain?.value || false);
@@ -829,6 +813,8 @@ export default function SetUpdata_KOA() {
 
             setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
 
+
+
             setMaintainFC_Charger_Voltage(FC_Charger_Voltage_Maintain?.value || false);
 
             setMaintainFC_System_Voltage(FC_System_Voltage_Maintain?.value || false);
@@ -838,10 +824,17 @@ export default function SetUpdata_KOA() {
             setMaintainFC_Lithium_Battery_Status(MaintainFC_Lithium_Battery_Status?.value || false);
 
 
-            setMaintainFC_02_Yesterday_Values_Volume(MaintainFC_02_Yesterday_Values_Volume?.value || false);
+     
+            setMaintainDO_HR_01(DO_HR_01_Maintain?.value || false);
 
 
-            setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_Maintain?.value || false);
+            setMaintainDO_BC_01(DO_BC_01_Maintain?.value || false);
+
+
+            setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+
+
+            setMaintainDO_SV_02(DO_SV_02_Maintain?.value || false);
 
             setMaintainGD1(GD1_Maintain?.value || false);
 
@@ -898,7 +891,6 @@ export default function SetUpdata_KOA() {
  // =================================================================================================================== 
 
     const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
-const [audioPlayingFC_Lithium_Battery_Status, setAudioPlayingFC_Lithium_Battery_Status] = useState(false);
 const [inputValueFC_Lithium_Battery_Status, setInputValueFC_Lithium_Battery_Status] = useState<any>();
 const [inputValue2FC_Lithium_Battery_Status, setInputValue2FC_Lithium_Battery_Status] = useState<any>();
 const [FC_Lithium_Battery_Status_High, setFC_Lithium_Battery_Status_High] = useState<number | null>(null);
@@ -908,39 +900,16 @@ const [exceedThresholdFC_Lithium_Battery_Status, setExceedThresholdFC_Lithium_Ba
 const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_Lithium_Battery_Status_High === 'string' && typeof FC_Lithium_Battery_Status_Low === 'string' && FC_Lithium_Battery_Status !== null && maintainFC_Lithium_Battery_Status === false
-        ) {
-            const highValue = parseFloat(FC_Lithium_Battery_Status_High);
-            const lowValue = parseFloat(FC_Lithium_Battery_Status_Low);
-            const FC_Lithium_Battery_StatusValue = parseFloat(FC_Lithium_Battery_Status);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Lithium_Battery_StatusValue)) {
-                if (highValue <= FC_Lithium_Battery_StatusValue || FC_Lithium_Battery_StatusValue <= lowValue) {
-                    if (!audioPlayingFC_Lithium_Battery_Status) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_Lithium_Battery_Status(true);
-                        setExceedThresholdFC_Lithium_Battery_Status(true);
-                    }
-                } else {
-                    setAudioPlayingFC_Lithium_Battery_Status(false);
-                    setExceedThresholdFC_Lithium_Battery_Status(false);
-                }
-            } 
-        } 
-    }, [FC_Lithium_Battery_Status_High, FC_Lithium_Battery_Status, audioPlayingFC_Lithium_Battery_Status, FC_Lithium_Battery_Status_Low,maintainFC_Lithium_Battery_Status]);
+useEffect(() => {
+    const FC_Lithium_Battery_StatusValue = parseFloat(FC_Lithium_Battery_Status as any);
+    const highValue = FC_Lithium_Battery_Status_High ?? NaN;
+    const lowValue = FC_Lithium_Battery_Status_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_Lithium_Battery_Status) {
-            const audioEnded = () => {
-                setAudioPlayingFC_Lithium_Battery_Status(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_Lithium_Battery_Status]);
+    if (!isNaN(FC_Lithium_Battery_StatusValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Lithium_Battery_Status) {
+        setExceedThresholdFC_Lithium_Battery_Status(FC_Lithium_Battery_StatusValue >= highValue || FC_Lithium_Battery_StatusValue <= lowValue);
+    }
+}, [FC_Lithium_Battery_Status, FC_Lithium_Battery_Status_High, FC_Lithium_Battery_Status_Low, maintainFC_Lithium_Battery_Status]);
+
 
     const handleInputChangeFC_Lithium_Battery_Status = (event: any) => {
         const newValue = event.target.value;
@@ -967,49 +936,25 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
      // =================================================================================================================== 
 
      const [FC_Battery_Voltage, setFC_Battery_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_Battery_Voltage, setAudioPlayingFC_Battery_Voltage] = useState(false);
      const [inputValueFC_Battery_Voltage, setInputValueFC_Battery_Voltage] = useState<any>();
      const [inputValue2FC_Battery_Voltage, setInputValue2FC_Battery_Voltage] = useState<any>();
      const [FC_Battery_Voltage_High, setFC_Battery_Voltage_High] = useState<number | null>(null);
      const [FC_Battery_Voltage_Low, setFC_Battery_Voltage_Low] = useState<number | null>(null);
-     const [exceedThresholdTemperature, setExceedThresholdTemperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdFC_Battery_Voltage, setExceedThresholdFC_Battery_Voltage] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainFC_Battery_Voltage, setMaintainFC_Battery_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_Battery_Voltage_High === 'string' && typeof FC_Battery_Voltage_Low === 'string' && FC_Battery_Voltage !== null && maintainFC_Battery_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_Battery_Voltage_High);
-                 const lowValue = parseFloat(FC_Battery_Voltage_Low);
-                 const FC_Battery_VoltageValue = parseFloat(FC_Battery_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Battery_VoltageValue)) {
-                     if (highValue <= FC_Battery_VoltageValue || FC_Battery_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_Battery_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_Battery_Voltage(true);
-                             setExceedThresholdTemperature(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_Battery_Voltage(false);
-                         setExceedThresholdTemperature(false);
-                     }
-                 } 
-             } 
-         }, [FC_Battery_Voltage_High, FC_Battery_Voltage, audioPlayingFC_Battery_Voltage, FC_Battery_Voltage_Low,maintainFC_Battery_Voltage]);
-     
-         useEffect(() => {
-             if (audioPlayingFC_Battery_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_Battery_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_Battery_Voltage]);
+     useEffect(() => {
+        const FC_Battery_VoltageValue = parseFloat(FC_Battery_Voltage as any);
+        const highValue = FC_Battery_Voltage_High ?? NaN;
+        const lowValue = FC_Battery_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_Battery_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Battery_Voltage) {
+            setExceedThresholdFC_Battery_Voltage(FC_Battery_VoltageValue >= highValue || FC_Battery_VoltageValue <= lowValue);
+        }
+    }, [FC_Battery_Voltage, FC_Battery_Voltage_High, FC_Battery_Voltage_Low, maintainFC_Battery_Voltage]);
+
      
          const handleInputChangeFC_Battery_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -1037,7 +982,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
      const [FC_System_Voltage, setFC_System_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_System_Voltage, setAudioPlayingFC_System_Voltage] = useState(false);
      const [inputValueFC_System_Voltage, setInputValueFC_System_Voltage] = useState<any>();
      const [inputValue2FC_System_Voltage, setInputValue2FC_System_Voltage] = useState<any>();
      const [FC_System_Voltage_High, setFC_System_Voltage_High] = useState<number | null>(null);
@@ -1047,39 +991,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
      const [maintainFC_System_Voltage, setMaintainFC_System_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_System_Voltage_High === 'string' && typeof FC_System_Voltage_Low === 'string' && FC_System_Voltage !== null && maintainFC_System_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_System_Voltage_High);
-                 const lowValue = parseFloat(FC_System_Voltage_Low);
-                 const FC_System_VoltageValue = parseFloat(FC_System_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_System_VoltageValue)) {
-                     if (highValue <= FC_System_VoltageValue || FC_System_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_System_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_System_Voltage(true);
-                             setExceedThresholdFC_System_Voltage(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_System_Voltage(false);
-                        setExceedThresholdFC_System_Voltage(false);
-                     }
-                 } 
-             } 
-         }, [FC_System_Voltage_High, FC_System_Voltage, audioPlayingFC_System_Voltage, FC_System_Voltage_Low,maintainFC_System_Voltage]);
+     useEffect(() => {
+        const FC_System_VoltageValue = parseFloat(FC_System_Voltage as any);
+        const highValue = FC_System_Voltage_High ?? NaN;
+        const lowValue = FC_System_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_System_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_System_Voltage) {
+            setExceedThresholdFC_System_Voltage(FC_System_VoltageValue >= highValue || FC_System_VoltageValue <= lowValue);
+        }
+    }, [FC_System_Voltage, FC_System_Voltage_High, FC_System_Voltage_Low, maintainFC_System_Voltage]);
      
-         useEffect(() => {
-             if (audioPlayingFC_System_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_System_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_System_Voltage]);
+
      
          const handleInputChangeFC_System_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -1108,7 +1030,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
           const [FC_Charger_Voltage, setFC_Charger_Voltage] = useState<string | null>(null);
-          const [audioPlayingFC_Charger_Voltage, setAudioPlayingFC_Charger_Voltage] = useState(false);
           const [inputValueFC_Charger_Voltage, setInputValueFC_Charger_Voltage] = useState<any>();
           const [inputValue2FC_Charger_Voltage, setInputValue2FC_Charger_Voltage] = useState<any>();
           const [FC_Charger_Voltage_High, setFC_Charger_Voltage_High] = useState<number | null>(null);
@@ -1118,39 +1039,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_Charger_Voltage, setMaintainFC_Charger_Voltage] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_Charger_Voltage_High === 'string' && typeof FC_Charger_Voltage_Low === 'string' && FC_Charger_Voltage !== null && maintainFC_Charger_Voltage === false
-                  ) {
-                      const highValue = parseFloat(FC_Charger_Voltage_High);
-                      const lowValue = parseFloat(FC_Charger_Voltage_Low);
-                      const FC_Charger_VoltageValue = parseFloat(FC_Charger_Voltage);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Charger_VoltageValue)) {
-                          if (highValue <= FC_Charger_VoltageValue || FC_Charger_VoltageValue <= lowValue) {
-                              if (!audioPlayingFC_Charger_Voltage) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_Charger_Voltage(true);
-                                  setExceedThresholdFC_Charger_Voltage(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_Charger_Voltage(false);
-                             setExceedThresholdFC_Charger_Voltage(false);
-                          }
-                      } 
-                  } 
-              }, [FC_Charger_Voltage_High, FC_Charger_Voltage, audioPlayingFC_Charger_Voltage, FC_Charger_Voltage_Low,maintainFC_Charger_Voltage]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_Charger_Voltage) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_Charger_Voltage(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_Charger_Voltage]);
+          useEffect(() => {
+            const FC_Charger_VoltageValue = parseFloat(FC_Charger_Voltage as any);
+            const highValue = FC_Charger_Voltage_High ?? NaN;
+            const lowValue = FC_Charger_Voltage_Low ?? NaN;
+        
+            if (!isNaN(FC_Charger_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Charger_Voltage) {
+                setExceedThresholdFC_Charger_Voltage(FC_Charger_VoltageValue >= highValue || FC_Charger_VoltageValue <= lowValue);
+            }
+        }, [FC_Charger_Voltage, FC_Charger_Voltage_High, FC_Charger_Voltage_Low, maintainFC_Charger_Voltage]);
+   
           
               const handleInputChangeFC_Charger_Voltage = (event: any) => {
                   const newValue = event.target.value;
@@ -1178,7 +1076,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
           const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-          const [audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume, setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume] = useState(false);
           const [inputValueFC_01_Accumulated_Values_Uncorrected_Volume, setInputValueFC_01_Accumulated_Values_Uncorrected_Volume] = useState<any>();
           const [inputValue2FC_01_Accumulated_Values_Uncorrected_Volume, setInputValue2FC_01_Accumulated_Values_Uncorrected_Volume] = useState<any>();
           const [FC_01_Accumulated_Values_Uncorrected_Volume_High, setFC_01_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1188,39 +1085,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Accumulated_Values_Uncorrected_Volume, setMaintainFC_01_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Accumulated_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Accumulated_Values_Uncorrected_Volume_Low === 'string' && FC_01_Accumulated_Values_Uncorrected_Volume !== null && maintainFC_01_Accumulated_Values_Uncorrected_Volume === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume_High);
-                      const lowValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume_Low);
-                      const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue)) {
-                          if (highValue <= FC_01_Accumulated_Values_Uncorrected_VolumeValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue) {
-                              if (!audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(true);
-                                  setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                             setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume, audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume , FC_01_Accumulated_Values_Uncorrected_Volume_Low,maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
+          useEffect(() => {
+            const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume as any);
+            const highValue = FC_01_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+            const lowValue = FC_01_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) {
+                setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Accumulated_Values_Uncorrected_Volume, FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume]);
+         
           
               const handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume = (event: any) => {
                   const newValue = event.target.value;
@@ -1247,7 +1122,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<string | null>(null);
-          const [audioPlayingFC_01_Accumulated_Values_Volume, setAudioPlayingFC_01_Accumulated_Values_Volume] = useState(false);
           const [inputValueFC_01_Accumulated_Values_Volume, setInputValueFC_01_Accumulated_Values_Volume] = useState<any>();
           const [inputValue2FC_01_Accumulated_Values_Volume, setInputValue2FC_01_Accumulated_Values_Volume] = useState<any>();
           const [FC_01_Accumulated_Values_Volume_High, setFC_01_Accumulated_Values_Volume_High] = useState<number | null>(null);
@@ -1257,39 +1131,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Accumulated_Values_Volume, setMaintainFC_01_Accumulated_Values_Volume] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Accumulated_Values_Volume_High === 'string' && typeof FC_01_Accumulated_Values_Volume_Low === 'string' && FC_01_Accumulated_Values_Volume !== null && maintainFC_01_Accumulated_Values_Volume === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Accumulated_Values_Volume_High);
-                      const lowValue = parseFloat(FC_01_Accumulated_Values_Volume_Low);
-                      const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Accumulated_Values_VolumeValue)) {
-                          if (highValue <= FC_01_Accumulated_Values_VolumeValue || FC_01_Accumulated_Values_VolumeValue <= lowValue) {
-                              if (!audioPlayingFC_01_Accumulated_Values_Volume) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Accumulated_Values_Volume(true);
-                                  setExceedThresholdFC_01_Accumulated_Values_Volume(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Accumulated_Values_Volume(false);
-                             setExceedThresholdFC_01_Accumulated_Values_Volume(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume, audioPlayingFC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_Low,maintainFC_01_Accumulated_Values_Volume]);
+          useEffect(() => {
+            const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume as any);
+            const highValue = FC_01_Accumulated_Values_Volume_High ?? NaN;
+            const lowValue = FC_01_Accumulated_Values_Volume_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Volume) {
+                setExceedThresholdFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_VolumeValue >= highValue || FC_01_Accumulated_Values_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume_Low, maintainFC_01_Accumulated_Values_Volume]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Accumulated_Values_Volume) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Accumulated_Values_Volume(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Accumulated_Values_Volume]);
+      
           
               const handleInputChangeFC_01_Accumulated_Values_Volume = (event: any) => {
                   const newValue = event.target.value;
@@ -1327,27 +1179,15 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Flow_Rate, setMaintainFC_01_Current_Values_Flow_Rate] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Flow_Rate_High === 'string' && typeof FC_01_Current_Values_Flow_Rate_Low === 'string' && FC_01_Current_Values_Flow_Rate !== null && maintainFC_01_Current_Values_Flow_Rate === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Flow_Rate_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Flow_Rate_Low);
-                      const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Flow_RateValue)) {
-                          if (highValue <= FC_01_Current_Values_Flow_RateValue || FC_01_Current_Values_Flow_RateValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Flow_Rate) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Flow_Rate(true);
-                                  setExceedThresholdFC_01_Current_Values_Flow_Rate(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Flow_Rate(false);
-                             setExceedThresholdFC_01_Current_Values_Flow_Rate(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate, audioPlayingFC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_Low,maintainFC_01_Current_Values_Flow_Rate]);
+          useEffect(() => {
+            const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate as any);
+            const highValue = FC_01_Current_Values_Flow_Rate_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Flow_Rate_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Flow_Rate) {
+                setExceedThresholdFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_RateValue >= highValue || FC_01_Current_Values_Flow_RateValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate_Low, maintainFC_01_Current_Values_Flow_Rate]);
           
               useEffect(() => {
                   if (audioPlayingFC_01_Current_Values_Flow_Rate) {
@@ -1386,7 +1226,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Temperature, setFC_01_Current_Values_Temperature] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Temperature, setAudioPlayingFC_01_Current_Values_Temperature] = useState(false);
           const [inputValueFC_01_Current_Values_Temperature, setInputValueFC_01_Current_Values_Temperature] = useState<any>();
           const [inputValue2FC_01_Current_Values_Temperature, setInputValue2FC_01_Current_Values_Temperature] = useState<any>();
           const [FC_01_Current_Values_Temperature_High, setFC_01_Current_Values_Temperature_High] = useState<number | null>(null);
@@ -1396,39 +1235,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Temperature, setMaintainFC_01_Current_Values_Temperature] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Temperature_High === 'string' && typeof FC_01_Current_Values_Temperature_Low === 'string' && FC_01_Current_Values_Temperature !== null && maintainFC_01_Current_Values_Temperature === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Temperature_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Temperature_Low);
-                      const FC_01_Current_Values_TemperatureValue = parseFloat(FC_01_Current_Values_Temperature);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_TemperatureValue)) {
-                          if (highValue <= FC_01_Current_Values_TemperatureValue || FC_01_Current_Values_TemperatureValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Temperature) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Temperature(true);
-                                  setExceedThresholdFC_01_Current_Values_Temperature(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Temperature(false);
-                             setExceedThresholdFC_01_Current_Values_Temperature(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Temperature_High, FC_01_Current_Values_Temperature, audioPlayingFC_01_Current_Values_Temperature, FC_01_Current_Values_Temperature_Low,maintainFC_01_Current_Values_Temperature]);
+          useEffect(() => {
+            const FC_01_Current_Values_TemperatureValue = parseFloat(FC_01_Current_Values_Temperature as any);
+            const highValue = FC_01_Current_Values_Temperature_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Temperature_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Temperature) {
+                setExceedThresholdFC_01_Current_Values_Temperature(FC_01_Current_Values_TemperatureValue >= highValue || FC_01_Current_Values_TemperatureValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Temperature, FC_01_Current_Values_Temperature_High, FC_01_Current_Values_Temperature_Low, maintainFC_01_Current_Values_Temperature]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Temperature) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Temperature(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Temperature]);
+        
           
               const handleInputChangeFC_01_Current_Values_Temperature = (event: any) => {
                   const newValue = event.target.value;
@@ -1455,7 +1272,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Static_Pressure, setAudioPlayingFC_01_Current_Values_Static_Pressure] = useState(false);
           const [inputValueFC_01_Current_Values_Static_Pressure, setInputValueFC_01_Current_Values_Static_Pressure] = useState<any>();
           const [inputValue2FC_01_Current_Values_Static_Pressure, setInputValue2FC_01_Current_Values_Static_Pressure] = useState<any>();
           const [FC_01_Current_Values_Static_Pressure_High, setFC_01_Current_Values_Static_Pressure_High] = useState<number | null>(null);
@@ -1465,39 +1281,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Static_Pressure, setMaintainFC_01_Current_Values_Static_Pressure] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Static_Pressure_High === 'string' && typeof FC_01_Current_Values_Static_Pressure_Low === 'string' && FC_01_Current_Values_Static_Pressure !== null && maintainFC_01_Current_Values_Static_Pressure === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Static_Pressure_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Static_Pressure_Low);
-                      const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Static_PressureValue)) {
-                          if (highValue <= FC_01_Current_Values_Static_PressureValue || FC_01_Current_Values_Static_PressureValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Static_Pressure) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Static_Pressure(true);
-                                  setExceedThresholdFC_01_Current_Values_Static_Pressure(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Static_Pressure(false);
-                             setExceedThresholdFC_01_Current_Values_Static_Pressure(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure, audioPlayingFC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_Low,maintainFC_01_Current_Values_Static_Pressure]);
+          useEffect(() => {
+            const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure as any);
+            const highValue = FC_01_Current_Values_Static_Pressure_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Static_Pressure_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Static_Pressure) {
+                setExceedThresholdFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_PressureValue >= highValue || FC_01_Current_Values_Static_PressureValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure_Low, maintainFC_01_Current_Values_Static_Pressure]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Static_Pressure) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Static_Pressure(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Static_Pressure]);
           
               const handleInputChangeFC_01_Current_Values_Static_Pressure = (event: any) => {
                   const newValue = event.target.value;
@@ -1524,7 +1317,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate, setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate] = useState(false);
           const [inputValueFC_01_Current_Values_Uncorrected_Flow_Rate, setInputValueFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
           const [inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate, setInputValue2FC_01_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
           const [FC_01_Current_Values_Uncorrected_Flow_Rate_High, setFC_01_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
@@ -1533,40 +1325,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           
           const [maintainFC_01_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
           
+          useEffect(() => {
+            const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate as any);
+            const highValue = FC_01_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) {
+                setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Uncorrected_Flow_Rate_High === 'string' && typeof FC_01_Current_Values_Uncorrected_Flow_Rate_Low === 'string' && FC_01_Current_Values_Uncorrected_Flow_Rate !== null && maintainFC_01_Current_Values_Uncorrected_Flow_Rate === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate_Low);
-                      const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue)) {
-                          if (highValue <= FC_01_Current_Values_Uncorrected_Flow_RateValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(true);
-                                  setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                             setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate, audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_Low,maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate]);
           
               const handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate = (event: any) => {
                   const newValue = event.target.value;
@@ -1595,7 +1363,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     // =================================================================================================================== 
 
     const [FC_01_Today_Values_Volume, setFC_01_Today_Values_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Today_Values_Volume, setAudioPlayingFC_01_Today_Values_Volume] = useState(false);
     const [inputValueFC_01_Today_Values_Volume, setInputValueFC_01_Today_Values_Volume] = useState<any>();
     const [inputValue2FC_01_Today_Values_Volume, setInputValue2FC_01_Today_Values_Volume] = useState<any>();
     const [FC_01_Today_Values_Volume_High, setFC_01_Today_Values_Volume_High] = useState<number | null>(null);
@@ -1605,40 +1372,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Today_Values_Volume, setMaintainFC_01_Today_Values_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Today_Values_Volume_High === 'string' && typeof FC_01_Today_Values_Volume_Low === 'string' && FC_01_Today_Values_Volume !== null && maintainFC_01_Today_Values_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Today_Values_Volume_High);
-                const lowValue = parseFloat(FC_01_Today_Values_Volume_Low);
-                const FC_01_Today_Values_VolumeValue = parseFloat(FC_01_Today_Values_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Today_Values_VolumeValue)) {
-                    if (highValue <= FC_01_Today_Values_VolumeValue || FC_01_Today_Values_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Today_Values_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Today_Values_Volume(true);
-                            setExceedThresholdFC_01_Today_Values_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Today_Values_Volume(false);
-                       setExceedThresholdFC_01_Today_Values_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Today_Values_Volume_High, FC_01_Today_Values_Volume, audioPlayingFC_01_Today_Values_Volume, FC_01_Today_Values_Volume_Low,maintainFC_01_Today_Values_Volume]);
+    useEffect(() => {
+        const FC_01_Today_Values_VolumeValue = parseFloat(FC_01_Today_Values_Volume as any);
+        const highValue = FC_01_Today_Values_Volume_High ?? NaN;
+        const lowValue = FC_01_Today_Values_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Today_Values_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Today_Values_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Today_Values_Volume]);
-    
+        if (!isNaN(FC_01_Today_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Today_Values_Volume) {
+            setExceedThresholdFC_01_Today_Values_Volume(FC_01_Today_Values_VolumeValue >= highValue || FC_01_Today_Values_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Today_Values_Volume, FC_01_Today_Values_Volume_High, FC_01_Today_Values_Volume_Low, maintainFC_01_Today_Values_Volume]);
+   
         const handleInputChangeFC_01_Today_Values_Volume = (event: any) => {
             const newValue = event.target.value;
             setInputValueFC_01_Today_Values_Volume(newValue);
@@ -1666,7 +1409,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         // =================================================================================================================== 
 
         const [FC_01_Today_Values_Uncorrected_Volume, setFC_01_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
-        const [audioPlayingFC_01_Today_Values_Uncorrected_Volume, setAudioPlayingFC_01_Today_Values_Uncorrected_Volume] = useState(false);
         const [inputValueFC_01_Today_Values_Uncorrected_Volume, setInputValueFC_01_Today_Values_Uncorrected_Volume] = useState<any>();
         const [inputValue2FC_01_Today_Values_Uncorrected_Volume, setInputValue2FC_01_Today_Values_Uncorrected_Volume] = useState<any>();
         const [FC_01_Today_Values_Uncorrected_Volume_High, setFC_01_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1676,40 +1418,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         const [maintainFC_01_Today_Values_Uncorrected_Volume, setMaintainFC_01_Today_Values_Uncorrected_Volume] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_01_Today_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Today_Values_Uncorrected_Volume_Low === 'string' && FC_01_Today_Values_Uncorrected_Volume !== null && maintainFC_01_Today_Values_Uncorrected_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume_High);
-                    const lowValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume_Low);
-                    const FC_01_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Today_Values_Uncorrected_VolumeValue)) {
-                        if (highValue <= FC_01_Today_Values_Uncorrected_VolumeValue || FC_01_Today_Values_Uncorrected_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_01_Today_Values_Uncorrected_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(true);
-                                setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(false);
-                           setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_01_Today_Values_Uncorrected_Volume_High, FC_01_Today_Values_Uncorrected_Volume, audioPlayingFC_01_Today_Values_Uncorrected_Volume, FC_01_Today_Values_Uncorrected_Volume_Low,maintainFC_01_Today_Values_Uncorrected_Volume]);
+        useEffect(() => {
+            const FC_01_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume as any);
+            const highValue = FC_01_Today_Values_Uncorrected_Volume_High ?? NaN;
+            const lowValue = FC_01_Today_Values_Uncorrected_Volume_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingFC_01_Today_Values_Uncorrected_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingFC_01_Today_Values_Uncorrected_Volume]);
-        
+            if (!isNaN(FC_01_Today_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Today_Values_Uncorrected_Volume) {
+                setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(FC_01_Today_Values_Uncorrected_VolumeValue >= highValue || FC_01_Today_Values_Uncorrected_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Today_Values_Uncorrected_Volume, FC_01_Today_Values_Uncorrected_Volume_High, FC_01_Today_Values_Uncorrected_Volume_Low, maintainFC_01_Today_Values_Uncorrected_Volume]);
+         
             const handleInputChangeFC_01_Today_Values_Uncorrected_Volume = (event: any) => {
                 const newValue = event.target.value;
                 setInputValueFC_01_Today_Values_Uncorrected_Volume(newValue);
@@ -1737,7 +1455,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
             // =================================================================================================================== 
 
     const [FC_01_Yesterday_Values_Volume, setFC_01_Yesterday_Values_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Yesterday_Values_Volume, setAudioPlayingFC_01_Yesterday_Values_Volume] = useState(false);
     const [inputValueFC_01_Yesterday_Values_Volume, setInputValueFC_01_Yesterday_Values_Volume] = useState<any>();
     const [inputValue2FC_01_Yesterday_Values_Volume, setInputValue2FC_01_Yesterday_Values_Volume] = useState<any>();
     const [FC_01_Yesterday_Values_Volume_High, setFC_01_Yesterday_Values_Volume_High] = useState<number | null>(null);
@@ -1747,39 +1464,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Yesterday_Values_Volume, setMaintainFC_01_Yesterday_Values_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Yesterday_Values_Volume_High === 'string' && typeof FC_01_Yesterday_Values_Volume_Low === 'string' && FC_01_Yesterday_Values_Volume !== null && maintainFC_01_Yesterday_Values_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Yesterday_Values_Volume_High);
-                const lowValue = parseFloat(FC_01_Yesterday_Values_Volume_Low);
-                const FC_01_Yesterday_Values_VolumeValue = parseFloat(FC_01_Yesterday_Values_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Yesterday_Values_VolumeValue)) {
-                    if (highValue <= FC_01_Yesterday_Values_VolumeValue || FC_01_Yesterday_Values_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Yesterday_Values_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Yesterday_Values_Volume(true);
-                            setExceedThresholdFC_01_Yesterday_Values_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Yesterday_Values_Volume(false);
-                       setExceedThresholdFC_01_Yesterday_Values_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Yesterday_Values_Volume_High, FC_01_Yesterday_Values_Volume, audioPlayingFC_01_Yesterday_Values_Volume, FC_01_Yesterday_Values_Volume_Low,maintainFC_01_Yesterday_Values_Volume]);
+    useEffect(() => {
+        const FC_01_Yesterday_Values_VolumeValue = parseFloat(FC_01_Yesterday_Values_Volume as any);
+        const highValue = FC_01_Yesterday_Values_Volume_High ?? NaN;
+        const lowValue = FC_01_Yesterday_Values_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Yesterday_Values_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Yesterday_Values_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Yesterday_Values_Volume]);
+        if (!isNaN(FC_01_Yesterday_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Yesterday_Values_Volume) {
+            setExceedThresholdFC_01_Yesterday_Values_Volume(FC_01_Yesterday_Values_VolumeValue >= highValue || FC_01_Yesterday_Values_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Yesterday_Values_Volume, FC_01_Yesterday_Values_Volume_High, FC_01_Yesterday_Values_Volume_Low, maintainFC_01_Yesterday_Values_Volume]);
+     
+ 
     
         const handleInputChangeFC_01_Yesterday_Values_Volume = (event: any) => {
             const newValue = event.target.value;
@@ -1807,7 +1502,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
     const [FC_01_Yesterday_Values_Uncorrected_Volume, setFC_01_Yesterday_Values_Uncorrected_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume, setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume] = useState(false);
     const [inputValueFC_01_Yesterday_Values_Uncorrected_Volume, setInputValueFC_01_Yesterday_Values_Uncorrected_Volume] = useState<any>();
     const [inputValue2FC_01_Yesterday_Values_Uncorrected_Volume, setInputValue2FC_01_Yesterday_Values_Uncorrected_Volume] = useState<any>();
     const [FC_01_Yesterday_Values_Uncorrected_Volume_High, setFC_01_Yesterday_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1817,39 +1511,18 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Yesterday_Values_Uncorrected_Volume, setMaintainFC_01_Yesterday_Values_Uncorrected_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Yesterday_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Yesterday_Values_Uncorrected_Volume_Low === 'string' && FC_01_Yesterday_Values_Uncorrected_Volume !== null && maintainFC_01_Yesterday_Values_Uncorrected_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume_High);
-                const lowValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume_Low);
-                const FC_01_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Yesterday_Values_Uncorrected_VolumeValue)) {
-                    if (highValue <= FC_01_Yesterday_Values_Uncorrected_VolumeValue || FC_01_Yesterday_Values_Uncorrected_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(true);
-                            setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                       setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Yesterday_Values_Uncorrected_Volume_High, FC_01_Yesterday_Values_Uncorrected_Volume, audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume, FC_01_Yesterday_Values_Uncorrected_Volume_Low,maintainFC_01_Yesterday_Values_Uncorrected_Volume]);
+    useEffect(() => {
+        const FC_01_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume as any);
+        const highValue = FC_01_Yesterday_Values_Uncorrected_Volume_High ?? NaN;
+        const lowValue = FC_01_Yesterday_Values_Uncorrected_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume]);
+        if (!isNaN(FC_01_Yesterday_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Yesterday_Values_Uncorrected_Volume) {
+            setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(FC_01_Yesterday_Values_Uncorrected_VolumeValue >= highValue || FC_01_Yesterday_Values_Uncorrected_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Yesterday_Values_Uncorrected_Volume, FC_01_Yesterday_Values_Uncorrected_Volume_High, FC_01_Yesterday_Values_Uncorrected_Volume_Low, maintainFC_01_Yesterday_Values_Uncorrected_Volume]);
+     
+ 
+
     
         const handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume = (event: any) => {
             const newValue = event.target.value;
@@ -1878,7 +1551,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         // =================================================================================================================== 
 
 const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-const [audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume, setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume] = useState(false);
 const [inputValueFC_02_Accumulated_Values_Uncorrected_Volume, setInputValueFC_02_Accumulated_Values_Uncorrected_Volume] = useState<any>();
 const [inputValue2FC_02_Accumulated_Values_Uncorrected_Volume, setInputValue2FC_02_Accumulated_Values_Uncorrected_Volume] = useState<any>();
 const [FC_02_Accumulated_Values_Uncorrected_Volume_High, setFC_02_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1888,39 +1560,17 @@ const [exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume, setExceedThre
 const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_02_Accumulated_Values_Uncorrected_Volume_High === 'string' && typeof FC_02_Accumulated_Values_Uncorrected_Volume_Low === 'string' && FC_02_Accumulated_Values_Uncorrected_Volume !== null && maintainFC_02_Accumulated_Values_Uncorrected_Volume === false
-        ) {
-            const highValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume_High);
-            const lowValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume_Low);
-            const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue)) {
-                if (highValue <= FC_02_Accumulated_Values_Uncorrected_VolumeValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue) {
-                    if (!audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(true);
-                        setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(true);
-                    }
-                } else {
-                   setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(false);
-                   setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(false);
-                }
-            } 
-        } 
-    }, [FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume, audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_Low,maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
+useEffect(() => {
+    const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume as any);
+    const highValue = FC_02_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+    const lowValue = FC_02_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume) {
-            const audioEnded = () => {
-               setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume]);
+    if (!isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) {
+        setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+    }
+}, [FC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
+ 
+
 
     const handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume = (event: any) => {
         const newValue = event.target.value;
@@ -1948,7 +1598,6 @@ const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Acc
 
 
 const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<string | null>(null);
-const [audioPlayingFC_02_Accumulated_Values_Volume, setAudioPlayingFC_02_Accumulated_Values_Volume] = useState(false);
 const [inputValueFC_02_Accumulated_Values_Volume, setInputValueFC_02_Accumulated_Values_Volume] = useState<any>();
 const [inputValue2FC_02_Accumulated_Values_Volume, setInputValue2FC_02_Accumulated_Values_Volume] = useState<any>();
 const [FC_02_Accumulated_Values_Volume_High, setFC_02_Accumulated_Values_Volume_High] = useState<number | null>(null);
@@ -1958,39 +1607,17 @@ const [exceedThresholdFC_02_Accumulated_Values_Volume, setExceedThresholdFC_02_A
 const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Values_Volume] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_02_Accumulated_Values_Volume_High === 'string' && typeof FC_02_Accumulated_Values_Volume_Low === 'string' && FC_02_Accumulated_Values_Volume !== null && maintainFC_02_Accumulated_Values_Volume === false
-        ) {
-            const highValue = parseFloat(FC_02_Accumulated_Values_Volume_High);
-            const lowValue = parseFloat(FC_02_Accumulated_Values_Volume_Low);
-            const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Accumulated_Values_VolumeValue)) {
-                if (highValue <= FC_02_Accumulated_Values_VolumeValue || FC_02_Accumulated_Values_VolumeValue <= lowValue) {
-                    if (!audioPlayingFC_02_Accumulated_Values_Volume) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_02_Accumulated_Values_Volume(true);
-                        setExceedThresholdFC_02_Accumulated_Values_Volume(true);
-                    }
-                } else {
-                   setAudioPlayingFC_02_Accumulated_Values_Volume(false);
-                   setExceedThresholdFC_02_Accumulated_Values_Volume(false);
-                }
-            } 
-        } 
-    }, [FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume, audioPlayingFC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_Low,maintainFC_02_Accumulated_Values_Volume]);
+useEffect(() => {
+    const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume as any);
+    const highValue = FC_02_Accumulated_Values_Volume_High ?? NaN;
+    const lowValue = FC_02_Accumulated_Values_Volume_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_02_Accumulated_Values_Volume) {
-            const audioEnded = () => {
-               setAudioPlayingFC_02_Accumulated_Values_Volume(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_02_Accumulated_Values_Volume]);
+    if (!isNaN(FC_02_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Volume) {
+        setExceedThresholdFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_VolumeValue >= highValue || FC_02_Accumulated_Values_VolumeValue <= lowValue);
+    }
+}, [FC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume_Low, maintainFC_02_Accumulated_Values_Volume]);
+ 
+
 
     const handleInputChangeFC_02_Accumulated_Values_Volume = (event: any) => {
         const newValue = event.target.value;
@@ -2019,7 +1646,6 @@ const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Val
     // =================================================================================================================== 
 
 const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<string | null>(null);
-const [audioPlayingFC_02_Current_Values_Static_Pressure, setAudioPlayingFC_02_Current_Values_Static_Pressure] = useState(false);
 const [inputValueFC_02_Current_Values_Static_Pressure, setInputValueFC_02_Current_Values_Static_Pressure] = useState<any>();
 const [inputValue2FC_02_Current_Values_Static_Pressure, setInputValue2FC_02_Current_Values_Static_Pressure] = useState<any>();
 const [FC_02_Current_Values_Static_Pressure_High, setFC_02_Current_Values_Static_Pressure_High] = useState<number | null>(null);
@@ -2029,39 +1655,18 @@ const [exceedThresholdFC_02_Current_Values_Static_Pressure, setExceedThresholdFC
 const [maintainFC_02_Current_Values_Static_Pressure, setMaintainFC_02_Current_Values_Static_Pressure] = useState<boolean>(false);
 
 
-useEffect(() => {
-    if (typeof FC_02_Current_Values_Static_Pressure_High === 'string' && typeof FC_02_Current_Values_Static_Pressure_Low === 'string' && FC_02_Current_Values_Static_Pressure !== null && maintainFC_02_Current_Values_Static_Pressure === false
-    ) {
-        const highValue = parseFloat(FC_02_Current_Values_Static_Pressure_High);
-        const lowValue = parseFloat(FC_02_Current_Values_Static_Pressure_Low);
-        const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure);
-
-        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Static_PressureValue)) {
-            if (highValue <= FC_02_Current_Values_Static_PressureValue || FC_02_Current_Values_Static_PressureValue <= lowValue) {
-                if (!audioPlayingFC_02_Current_Values_Static_Pressure) {
-                    audioRef.current?.play();
-                    setAudioPlayingFC_02_Current_Values_Static_Pressure(true);
-                    setExceedThresholdFC_02_Current_Values_Static_Pressure(true);
-                }
-            } else {
-               setAudioPlayingFC_02_Current_Values_Static_Pressure(false);
-               setExceedThresholdFC_02_Current_Values_Static_Pressure(false);
-            }
-        } 
-    } 
-}, [FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure, audioPlayingFC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_Low,maintainFC_02_Current_Values_Static_Pressure]);
 
 useEffect(() => {
-    if (audioPlayingFC_02_Current_Values_Static_Pressure) {
-        const audioEnded = () => {
-           setAudioPlayingFC_02_Current_Values_Static_Pressure(false);
-        };
-        audioRef.current?.addEventListener('ended', audioEnded);
-        return () => {
-            audioRef.current?.removeEventListener('ended', audioEnded);
-        };
+    const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure as any);
+    const highValue = FC_02_Current_Values_Static_Pressure_High ?? NaN;
+    const lowValue = FC_02_Current_Values_Static_Pressure_Low ?? NaN;
+
+    if (!isNaN(FC_02_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Static_Pressure) {
+        setExceedThresholdFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_PressureValue >= highValue || FC_02_Current_Values_Static_PressureValue <= lowValue);
     }
-}, [audioPlayingFC_02_Current_Values_Static_Pressure]);
+}, [FC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure_Low, maintainFC_02_Current_Values_Static_Pressure]);
+ 
+
 
 const handleInputChangeFC_02_Current_Values_Static_Pressure = (event: any) => {
     const newValue = event.target.value;
@@ -2091,7 +1696,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         // =================================================================================================================== 
 
         const [FC_02_Current_Values_Temperature, setFC_02_Current_Values_Temperature] = useState<string | null>(null);
-        const [audioPlayingFC_02_Current_Values_Temperature, setAudioPlayingFC_02_Current_Values_Temperature] = useState(false);
         const [inputValueFC_02_Current_Values_Temperature, setInputValueFC_02_Current_Values_Temperature] = useState<any>();
         const [inputValue2FC_02_Current_Values_Temperature, setInputValue2FC_02_Current_Values_Temperature] = useState<any>();
         const [FC_02_Current_Values_Temperature_High, setFC_02_Current_Values_Temperature_High] = useState<number | null>(null);
@@ -2101,39 +1705,17 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         const [maintainFC_02_Current_Values_Temperature, setMaintainFC_02_Current_Values_Temperature] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_02_Current_Values_Temperature_High === 'string' && typeof FC_02_Current_Values_Temperature_Low === 'string' && FC_02_Current_Values_Temperature !== null && maintainFC_02_Current_Values_Temperature === false
-                ) {
-                    const highValue = parseFloat(FC_02_Current_Values_Temperature_High);
-                    const lowValue = parseFloat(FC_02_Current_Values_Temperature_Low);
-                    const FC_02_Current_Values_TemperatureValue = parseFloat(FC_02_Current_Values_Temperature);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_TemperatureValue)) {
-                        if (highValue <= FC_02_Current_Values_TemperatureValue || FC_02_Current_Values_TemperatureValue <= lowValue) {
-                            if (!audioPlayingFC_02_Current_Values_Temperature) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Current_Values_Temperature(true);
-                                setExceedThresholdFC_02_Current_Values_Temperature(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Current_Values_Temperature(false);
-                           setExceedThresholdFC_02_Current_Values_Temperature(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Current_Values_Temperature_High, FC_02_Current_Values_Temperature, audioPlayingFC_02_Current_Values_Temperature, FC_02_Current_Values_Temperature_Low,maintainFC_02_Current_Values_Temperature]);
+        useEffect(() => {
+            const FC_02_Current_Values_TemperatureValue = parseFloat(FC_02_Current_Values_Temperature as any);
+            const highValue = FC_02_Current_Values_Temperature_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Temperature_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingFC_02_Current_Values_Temperature) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Current_Values_Temperature(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingFC_02_Current_Values_Temperature]);
+            if (!isNaN(FC_02_Current_Values_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Temperature) {
+                setExceedThresholdFC_02_Current_Values_Temperature(FC_02_Current_Values_TemperatureValue >= highValue || FC_02_Current_Values_TemperatureValue <= lowValue);
+            }
+        }, [FC_02_Current_Values_Temperature, FC_02_Current_Values_Temperature_High, FC_02_Current_Values_Temperature_Low, maintainFC_02_Current_Values_Temperature]);
+         
+      
         
             const handleInputChangeFC_02_Current_Values_Temperature = (event: any) => {
                 const newValue = event.target.value;
@@ -2171,28 +1753,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         const [maintainFC_02_Current_Values_Flow_Rate, setMaintainFC_02_Current_Values_Flow_Rate] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_02_Current_Values_Flow_Rate_High === 'string' && typeof FC_02_Current_Values_Flow_Rate_Low === 'string' && FC_02_Current_Values_Flow_Rate !== null && maintainFC_02_Current_Values_Flow_Rate === false
-                ) {
-                    const highValue = parseFloat(FC_02_Current_Values_Flow_Rate_High);
-                    const lowValue = parseFloat(FC_02_Current_Values_Flow_Rate_Low);
-                    const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Flow_RateValue)) {
-                        if (highValue <= FC_02_Current_Values_Flow_RateValue || FC_02_Current_Values_Flow_RateValue <= lowValue) {
-                            if (!audioPlayingFC_02_Current_Values_Flow_Rate) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Current_Values_Flow_Rate(true);
-                                setExceedThresholdFC_02_Current_Values_Flow_Rate(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Current_Values_Flow_Rate(false);
-                           setExceedThresholdFC_02_Current_Values_Flow_Rate(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate, audioPlayingFC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_Low,maintainFC_02_Current_Values_Flow_Rate]);
+        useEffect(() => {
+            const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate as any);
+            const highValue = FC_02_Current_Values_Flow_Rate_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Flow_Rate_Low ?? NaN;
         
+            if (!isNaN(FC_02_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Flow_Rate) {
+                setExceedThresholdFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_RateValue >= highValue || FC_02_Current_Values_Flow_RateValue <= lowValue);
+            }
+        }, [FC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate_Low, maintainFC_02_Current_Values_Flow_Rate]);
+         
             useEffect(() => {
                 if (audioPlayingFC_02_Current_Values_Flow_Rate) {
                     const audioEnded = () => {
@@ -2232,7 +1802,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
         const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-        const [audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate, setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate] = useState(false);
         const [inputValueFC_02_Current_Values_Uncorrected_Flow_Rate, setInputValueFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
         const [inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate, setInputValue2FC_02_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
         const [FC_02_Current_Values_Uncorrected_Flow_Rate_High, setFC_02_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
@@ -2243,38 +1812,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         
         
         useEffect(() => {
-            if (typeof FC_02_Current_Values_Uncorrected_Flow_Rate_High === 'string' && typeof FC_02_Current_Values_Uncorrected_Flow_Rate_Low === 'string' && FC_02_Current_Values_Uncorrected_Flow_Rate !== null && maintainFC_02_Current_Values_Uncorrected_Flow_Rate === false
-            ) {
-                const highValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate_High);
-                const lowValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate_Low);
-                const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate);
+            const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate as any);
+            const highValue = FC_02_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
         
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue)) {
-                    if (highValue <= FC_02_Current_Values_Uncorrected_Flow_RateValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue) {
-                        if (!audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(true);
-                            setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                       setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                    }
-                } 
-            } 
-        }, [FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate, audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_Low,maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
-        
-        useEffect(() => {
-            if (audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
+            if (!isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) {
+                setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
             }
-        }, [audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate]);
+        }, [FC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
+         
+    
         
         const handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate = (event: any) => {
             const newValue = event.target.value;
@@ -2304,7 +1851,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
             const [FC_02_Today_Values_Volume, setFC_02_Today_Values_Volume] = useState<string | null>(null);
-            const [audioPlayingFC_02_Today_Values_Volume, setAudioPlayingFC_02_Today_Values_Volume] = useState(false);
             const [inputValueFC_02_Today_Values_Volume, setInputValueFC_02_Today_Values_Volume] = useState<any>();
             const [inputValue2FC_02_Today_Values_Volume, setInputValue2FC_02_Today_Values_Volume] = useState<any>();
             const [FC_02_Today_Values_Volume_High, setFC_02_Today_Values_Volume_High] = useState<number | null>(null);
@@ -2315,38 +1861,17 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             
             
             useEffect(() => {
-                if (typeof FC_02_Today_Values_Volume_High === 'string' && typeof FC_02_Today_Values_Volume_Low === 'string' && FC_02_Today_Values_Volume !== null && maintainFC_02_Today_Values_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_02_Today_Values_Volume_High);
-                    const lowValue = parseFloat(FC_02_Today_Values_Volume_Low);
-                    const FC_02_Today_Values_VolumeValue = parseFloat(FC_02_Today_Values_Volume);
+                const FC_02_Today_Values_VolumeValue = parseFloat(FC_02_Today_Values_Volume as any);
+                const highValue = FC_02_Today_Values_Volume_High ?? NaN;
+                const lowValue = FC_02_Today_Values_Volume_Low ?? NaN;
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Today_Values_VolumeValue)) {
-                        if (highValue <= FC_02_Today_Values_VolumeValue || FC_02_Today_Values_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_02_Today_Values_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Today_Values_Volume(true);
-                                setExceedThresholdFC_02_Today_Values_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Today_Values_Volume(false);
-                           setExceedThresholdFC_02_Today_Values_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Today_Values_Volume_High, FC_02_Today_Values_Volume, audioPlayingFC_02_Today_Values_Volume, FC_02_Today_Values_Volume_Low,maintainFC_02_Today_Values_Volume]);
-            
-            useEffect(() => {
-                if (audioPlayingFC_02_Today_Values_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Today_Values_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
+                if (!isNaN(FC_02_Today_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Today_Values_Volume) {
+                    setExceedThresholdFC_02_Today_Values_Volume(FC_02_Today_Values_VolumeValue >= highValue || FC_02_Today_Values_VolumeValue <= lowValue);
                 }
-            }, [audioPlayingFC_02_Today_Values_Volume]);
+            }, [FC_02_Today_Values_Volume, FC_02_Today_Values_Volume_High, FC_02_Today_Values_Volume_Low, maintainFC_02_Today_Values_Volume]);
+             
+        
+    
             
             const handleInputChangeFC_02_Today_Values_Volume = (event: any) => {
                 const newValue = event.target.value;
@@ -2377,7 +1902,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
             const [FC_02_Today_Values_Uncorrected_Volume, setFC_02_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
-            const [audioPlayingFC_02_Today_Values_Uncorrected_Volume, setAudioPlayingFC_02_Today_Values_Uncorrected_Volume] = useState(false);
             const [inputValueFC_02_Today_Values_Uncorrected_Volume, setInputValueFC_02_Today_Values_Uncorrected_Volume] = useState<any>();
             const [inputValue2FC_02_Today_Values_Uncorrected_Volume, setInputValue2FC_02_Today_Values_Uncorrected_Volume] = useState<any>();
             const [FC_02_Today_Values_Uncorrected_Volume_High, setFC_02_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -2388,38 +1912,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             
             
             useEffect(() => {
-                if (typeof FC_02_Today_Values_Uncorrected_Volume_High === 'string' && typeof FC_02_Today_Values_Uncorrected_Volume_Low === 'string' && FC_02_Today_Values_Uncorrected_Volume !== null && maintainFC_02_Today_Values_Uncorrected_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume_High);
-                    const lowValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume_Low);
-                    const FC_02_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume);
+                const FC_02_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume as any);
+                const highValue = FC_02_Today_Values_Uncorrected_Volume_High ?? NaN;
+                const lowValue = FC_02_Today_Values_Uncorrected_Volume_Low ?? NaN;
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Today_Values_Uncorrected_VolumeValue)) {
-                        if (highValue <= FC_02_Today_Values_Uncorrected_VolumeValue || FC_02_Today_Values_Uncorrected_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_02_Today_Values_Uncorrected_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(true);
-                                setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(false);
-                           setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Today_Values_Uncorrected_Volume_High, FC_02_Today_Values_Uncorrected_Volume, audioPlayingFC_02_Today_Values_Uncorrected_Volume, FC_02_Today_Values_Uncorrected_Volume_Low,maintainFC_02_Today_Values_Uncorrected_Volume]);
-            
-            useEffect(() => {
-                if (audioPlayingFC_02_Today_Values_Uncorrected_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
+                if (!isNaN(FC_02_Today_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Today_Values_Uncorrected_Volume) {
+                    setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(FC_02_Today_Values_Uncorrected_VolumeValue >= highValue || FC_02_Today_Values_Uncorrected_VolumeValue <= lowValue);
                 }
-            }, [audioPlayingFC_02_Today_Values_Uncorrected_Volume]);
+            }, [FC_02_Today_Values_Uncorrected_Volume, FC_02_Today_Values_Uncorrected_Volume_High, FC_02_Today_Values_Uncorrected_Volume_Low, maintainFC_02_Today_Values_Uncorrected_Volume]);
+             
+     
             
             const handleInputChangeFC_02_Today_Values_Uncorrected_Volume = (event: any) => {
                 const newValue = event.target.value;
@@ -2448,7 +1950,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  // =================================================================================================================== 
 
  const [FC_02_Yesterday_Values_Volume, setFC_02_Yesterday_Values_Volume] = useState<string | null>(null);
- const [audioPlayingFC_02_Yesterday_Values_Volume, setAudioPlayingFC_02_Yesterday_Values_Volume] = useState(false);
  const [inputValueFC_02_Yesterday_Values_Volume, setInputValueFC_02_Yesterday_Values_Volume] = useState<any>();
  const [inputValue2FC_02_Yesterday_Values_Volume, setInputValue2FC_02_Yesterday_Values_Volume] = useState<any>();
  const [FC_02_Yesterday_Values_Volume_High, setFC_02_Yesterday_Values_Volume_High] = useState<number | null>(null);
@@ -2457,40 +1958,18 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  
  const [maintainFC_02_Yesterday_Values_Volume, setMaintainFC_02_Yesterday_Values_Volume] = useState<boolean>(false);
  
+ useEffect(() => {
+    const FC_02_Yesterday_Values_VolumeValue = parseFloat(FC_02_Yesterday_Values_Volume as any);
+    const highValue = FC_02_Yesterday_Values_Volume_High ?? NaN;
+    const lowValue = FC_02_Yesterday_Values_Volume_Low ?? NaN;
+
+    if (!isNaN(FC_02_Yesterday_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Yesterday_Values_Volume) {
+        setExceedThresholdFC_02_Yesterday_Values_Volume(FC_02_Yesterday_Values_VolumeValue >= highValue || FC_02_Yesterday_Values_VolumeValue <= lowValue);
+    }
+
+}, [FC_02_Yesterday_Values_Volume, FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume_Low, maintainFC_02_Yesterday_Values_Volume]);
  
-     useEffect(() => {
-         if (typeof FC_02_Yesterday_Values_Volume_High === 'string' && typeof FC_02_Yesterday_Values_Volume_Low === 'string' && FC_02_Yesterday_Values_Volume !== null && maintainFC_02_Yesterday_Values_Volume === false
-         ) {
-             const highValue = parseFloat(FC_02_Yesterday_Values_Volume_High);
-             const lowValue = parseFloat(FC_02_Yesterday_Values_Volume_Low);
-             const FC_02_Yesterday_Values_VolumeValue = parseFloat(FC_02_Yesterday_Values_Volume);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Yesterday_Values_VolumeValue)) {
-                 if (highValue <= FC_02_Yesterday_Values_VolumeValue || FC_02_Yesterday_Values_VolumeValue <= lowValue) {
-                     if (!audioPlayingFC_02_Yesterday_Values_Volume) {
-                         audioRef.current?.play();
-                         setAudioPlayingFC_02_Yesterday_Values_Volume(true);
-                         setExceedThresholdFC_02_Yesterday_Values_Volume(true);
-                     }
-                 } else {
-                     setAudioPlayingFC_02_Yesterday_Values_Volume(false);
-                     setExceedThresholdFC_02_Yesterday_Values_Volume(false);
-                 }
-             } 
-         } 
-     }, [FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume, audioPlayingFC_02_Yesterday_Values_Volume, FC_02_Yesterday_Values_Volume_Low,maintainFC_02_Yesterday_Values_Volume]);
- 
-     useEffect(() => {
-         if (audioPlayingFC_02_Yesterday_Values_Volume) {
-             const audioEnded = () => {
-                 setAudioPlayingFC_02_Yesterday_Values_Volume(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingFC_02_Yesterday_Values_Volume]);
+
  
      const handleInputChangeFC_02_Yesterday_Values_Volume = (event: any) => {
          const newValue = event.target.value;
@@ -3783,72 +3262,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          // =================================================================================================================== 
     
     
-         const [SD, setSD] = useState<string | null>(null);
-         const [audioPlayingSD, setAudioPlayingSD] = useState(false);
-         const [inputValueSD, setInputValueSD] = useState<any>();
-         const [inputValue2SD, setInputValue2SD] = useState<any>();
-         const [SD_High, setSD_High] = useState<number | null>(null);
-         const [SD_Low, setSD_Low] = useState<number | null>(null);
-         const [exceedThresholdSD, setExceedThresholdSD] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-         
-         const [maintainSD, setMaintainSD] = useState<boolean>(false);
-         
-         
-             useEffect(() => {
-                 if (typeof SD_High === 'string' && typeof SD_Low === 'string' && SD !== null && maintainSD === false
-                 ) {
-                     const highValue = parseFloat(SD_High);
-                     const lowValue = parseFloat(SD_Low);
-                     const SDValue = parseFloat(SD);
-             
-                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDValue)) {
-                         if (highValue <= SDValue || SDValue <= lowValue) {
-                             if (!audioPlayingSD) {
-                                 audioRef.current?.play();
-                                 setAudioPlayingSD(true);
-                                 setExceedThresholdSD(true);
-                             }
-                         } else {
-                            setAudioPlayingSD(false);
-                            setExceedThresholdSD(false);
-                         }
-                     } 
-                 } 
-             }, [SD_High, SD, audioPlayingSD, SD_Low,maintainSD]);
-         
-             useEffect(() => {
-                 if (audioPlayingSD) {
-                     const audioEnded = () => {
-                        setAudioPlayingSD(false);
-                     };
-                     audioRef.current?.addEventListener('ended', audioEnded);
-                     return () => {
-                         audioRef.current?.removeEventListener('ended', audioEnded);
-                     };
-                 }
-             }, [audioPlayingSD]);
-         
-             const handleInputChangeSD = (event: any) => {
-                 const newValue = event.target.value;
-                 setInputValueSD(newValue);
-             };
-         
-             const handleInputChange2SD = (event: any) => {
-                 const newValue2 = event.target.value;
-                 setInputValue2SD(newValue2);
-             };
-             const ChangeMaintainSD = async () => {
-                 try {
-                     const newValue = !maintainSD;
-                     await httpApi.post(
-                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
-                         { SD_Maintain: newValue }
-                     );
-                     setMaintainSD(newValue);
-                     
-                 } catch (error) {}
-             };
-    
+   
     
          // =================================================================================================================== 
     
@@ -3926,7 +3340,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
               const [DO_SV_01, setDO_SV_01] = useState<string | null>(null);
               const [audioPlayingDO_SV_01, setAudioPlayingDO_SV_01] = useState(false);
-              const [inputValuDO_BC_01, setInputValuDO_BC_01] = useState<any>();
+              const [inputValueDO_SV_01, setInputValueDO_SV_01] = useState<any>();
               const [inputValue2DO_SV_01, setInputValue2DO_SV_01] = useState<any>();
               const [DO_SV_01_High, setDO_SV_01_High] = useState<number | null>(null);
               const [DO_SV_01_Low, setDO_SV_01_Low] = useState<number | null>(null);
@@ -3969,9 +3383,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                       }
                   }, [audioPlayingDO_SV_01]);
               
-                  const handleInputChangDO_BC_01 = (event: any) => {
+                  const handleInputChangDO_SV_01 = (event: any) => {
                       const newValue = event.target.value;
-                      setInputValuDO_BC_01(newValue);
+                      setInputValueDO_SV_01(newValue);
                   };
               
                   const handleInputChange2DO_SV_01 = (event: any) => {
@@ -4058,6 +3472,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                           
                       } catch (error) {}
                   };
+
+
+              // =================================================================================================================== 
+
          
          
               // =================================================================================================================== 
@@ -4272,264 +3690,267 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
 
-    const handleButtonClick = async () => {
-        try {
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
-
-
-
-                {
-                    
-                    DO_HR_01_High: inputValueDO_HR_01,DO_HR_01_Low:inputValue2DO_HR_01,
-                    SD_High: inputValueSD,SD_Low:inputValue2SD,
-
-
-                    DO_BC_01_High: inputValueDO_BC_01,DO_BC_01_Low:inputValue2DO_BC_01,
-                    DO_SV_01_High: inputValuDO_BC_01,DO_SV_01_Low:inputValue2DO_SV_01,
-                    DO_SV_02_High: inputValueDO_SV_02,DO_SV_02_Low:inputValue2DO_SV_02,
-
-                    FC_Battery_Voltage_High: inputValueFC_Battery_Voltage,FC_Battery_Voltage_Low:inputValue2FC_Battery_Voltage,
-                    FC_System_Voltage_High: inputValueFC_System_Voltage,FC_System_Voltage_Low:inputValue2FC_System_Voltage,
-                    FC_Lithium_Battery_Status_High: inputValueFC_Lithium_Battery_Status,FC_Lithium_Battery_Status_Low:inputValue2FC_Lithium_Battery_Status,
-
-
-                    FC_Charger_Voltage_High: inputValueFC_Charger_Voltage,FC_Charger_Voltage_Low:inputValue2FC_Charger_Voltage,
-                    FC_01_Accumulated_Values_Uncorrected_Volume_High: inputValueFC_01_Accumulated_Values_Uncorrected_Volume,FC_01_Accumulated_Values_Uncorrected_Volume_Low:inputValue2FC_01_Accumulated_Values_Uncorrected_Volume,
-                    FC_01_Accumulated_Values_Volume_High: inputValueFC_01_Accumulated_Values_Volume,FC_01_Accumulated_Values_Volume_Low:inputValue2FC_01_Accumulated_Values_Volume,
-
-                    FC_01_Current_Values_Static_Pressure_High: inputValueFC_01_Current_Values_Static_Pressure,FC_01_Current_Values_Static_Pressure_Low:inputValue2FC_01_Current_Values_Static_Pressure,
-                    FC_01_Current_Values_Temperature_High: inputValueFC_01_Current_Values_Temperature,FC_01_Current_Values_Temperature_Low:inputValue2FC_01_Current_Values_Temperature,
-                    FC_01_Current_Values_Flow_Rate_High: inputValueFC_01_Current_Values_Flow_Rate,FC_01_Current_Values_Flow_Rate_Low:inputValue2FC_01_Current_Values_Flow_Rate,
-
-
-                    FC_01_Today_Values_Volume_High: inputValueFC_01_Today_Values_Volume,FC_01_Today_Values_Volume_Low:inputValue2FC_01_Today_Values_Volume,
-                    FC_01_Current_Values_Uncorrected_Flow_Rate_High: inputValueFC_01_Current_Values_Uncorrected_Flow_Rate,FC_01_Current_Values_Uncorrected_Flow_Rate_Low:inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate,
-
-
-                    FC_01_Today_Values_Uncorrected_Volume_High: inputValueFC_01_Today_Values_Uncorrected_Volume,FC_01_Today_Values_Uncorrected_Volume_Low:inputValue2FC_01_Today_Values_Uncorrected_Volume,
-                    FC_01_Yesterday_Values_Volume_High: inputValueFC_01_Yesterday_Values_Volume,FC_01_Yesterday_Values_Volume_Low:inputValue2FC_01_Yesterday_Values_Volume,
-
-                    FC_01_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_01_Yesterday_Values_Uncorrected_Volume,FC_01_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_01_Yesterday_Values_Uncorrected_Volume,
-                    FC_02_Accumulated_Values_Uncorrected_Volume_High: inputValueFC_02_Accumulated_Values_Uncorrected_Volume,FC_02_Accumulated_Values_Uncorrected_Volume_Low:inputValue2FC_02_Accumulated_Values_Uncorrected_Volume,
-
-                    FC_02_Accumulated_Values_Volume_High: inputValueFC_02_Accumulated_Values_Volume,FC_02_Accumulated_Values_Volume_Low:inputValue2FC_02_Accumulated_Values_Volume,
-                    FC_02_Current_Values_Static_Pressure_High: inputValueFC_02_Current_Values_Static_Pressure,FC_02_Current_Values_Static_Pressure_Low:inputValue2FC_02_Current_Values_Static_Pressure,
-
-
-                    FC_02_Current_Values_Temperature_High: inputValueFC_02_Current_Values_Temperature,FC_02_Current_Values_Temperature_Low:inputValue2FC_02_Current_Values_Temperature,
-                    FC_02_Current_Values_Flow_Rate_High: inputValueFC_02_Current_Values_Flow_Rate,FC_02_Current_Values_Flow_Rate_Low:inputValue2FC_02_Current_Values_Flow_Rate,
-                    FC_02_Current_Values_Uncorrected_Flow_Rate_High: inputValueFC_02_Current_Values_Uncorrected_Flow_Rate,FC_02_Current_Values_Uncorrected_Flow_Rate_Low:inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate,
-
-                    FC_02_Today_Values_Volume_High: inputValueFC_02_Today_Values_Volume,FC_02_Today_Values_Volume_Low:inputValue2FC_02_Today_Values_Volume,
-
-                    FC_02_Today_Values_Uncorrected_Volume_High: inputValueFC_02_Today_Values_Uncorrected_Volume,FC_02_Today_Values_Uncorrected_Volume_Low:inputValue2FC_02_Today_Values_Uncorrected_Volume,
-
-
-
-
-
-
-
-                    FC_02_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_02_Yesterday_Values_Uncorrected_Volume,FC_02_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_02_Yesterday_Values_Uncorrected_Volume,
-                    GD1_High: inputValueGD1,GD1_Low:inputValue2GD1,
-                    FC_02_Yesterday_Values_Volume_High: inputValueFC_02_Yesterday_Values_Volume,FC_02_Yesterday_Values_Volume_Low:inputValue2FC_02_Yesterday_Values_Volume,
-
-
-                    GD2_High: inputValueGD2,GD2_Low:inputValue2GD2,
-                    PT1_High: inputValuePT1,PT1_Low:inputValue2PT1,
-                    DI_ZSO_1_High: inputValueDI_ZSO_1,DI_ZSO_1_Low:inputValue2DI_ZSO_1,
-
-                    DI_ZSC_1_High: inputValueDI_ZSC_1,DI_ZSC_1_Low:inputValue2DI_ZSC_1,
-                    DI_ZSO_2_High: inputValueDI_ZSO_2,DI_ZSO_2_Low:inputValue2DI_ZSO_2,
-
-
-                    DI_MAP_1_High: inputValueDI_MAP_1,DI_MAP_1_Low:inputValue2DI_MAP_1,
-                    DI_ZSC_2_High: inputValueDI_ZSC_2,DI_ZSC_2_Low:inputValue2DI_ZSC_2,
-
-
-                    DI_UPS_CHARGING_High: inputValueDI_UPS_CHARGING,DI_UPS_CHARGING_Low:inputValue2DI_UPS_CHARGING,
-                    DI_UPS_ALARM_High: inputValueDI_UPS_ALARM,DI_UPS_ALARM_Low:inputValue2DI_UPS_ALARM,
-
-                  
-                    DI_SELECT_SW_High: inputValueDI_SELECT_SW,DI_SELECT_SW_Low:inputValue2DI_SELECT_SW,
-
-                    DI_RESET_High: inputValueDI_RESET,DI_RESET_Low:inputValue2DI_RESET,
-                    Emergency_NO_High: inputValueEmergency_NO,Emergency_NO_Low:inputValue2Emergency_NO,
-
-
-                    DI_UPS_BATTERY_High: inputValueDI_UPS_BATTERY,DI_UPS_BATTERY_Low:inputValue2DI_UPS_BATTERY,
-                    Emergency_NC_High: inputValueEmergency_NC,Emergency_NC_Low:inputValue2Emergency_NC,
-                    UPS_Mode_High: inputValueUPS_Mode,UPS_Mode_Low:inputValue2UPS_Mode,
-                    IOT_Gateway_Phone: inputGetwayPhone,
-                    PCV_01: inputPCV_01,
-                    PCV_02: inputPCV_02,
-                    PSV_01: inputPSV_01,
-                }
-            );
-            setPSV_01(inputPSV_01)
-            setPCV_02(inputPCV_02)
-            setPCV_01(inputPCV_01)
-            setGetWayPhoneOTSUKA(inputGetwayPhone);
-
-            setDO_HR_01_High(inputValueDO_HR_01);
-            setDO_HR_01_Low(inputValue2DO_HR_01);
-
-            setSD_High(inputValueSD);
-            setSD_Low(inputValue2SD);
-
-            setSD_High(inputValueSD);
-            setSD_Low(inputValue2SD);
-
-            setDO_BC_01_High(inputValueDO_BC_01);
-            setDO_BC_01_Low(inputValue2DO_BC_01);
-
-            setDO_SV_01_High(inputValuDO_BC_01);
-            setDO_SV_01_Low(inputValue2DO_SV_01);
-
-            setDO_SV_02_High(inputValueDO_SV_02);
-            setDO_SV_02_Low(inputValue2DO_SV_02);
-
-            setFC_Lithium_Battery_Status_High(inputValueFC_Lithium_Battery_Status);
-            setFC_Lithium_Battery_Status_Low(inputValue2FC_Lithium_Battery_Status);
-
-            setFC_Battery_Voltage_High(inputValueFC_Battery_Voltage);
-            setFC_Battery_Voltage_Low(inputValue2FC_Battery_Voltage);
-
-            setFC_System_Voltage_High(inputValueFC_System_Voltage);
-            setFC_System_Voltage_Low(inputValue2FC_System_Voltage);
-
-            setFC_System_Voltage_High(inputValueFC_System_Voltage);
-            setFC_System_Voltage_Low(inputValue2FC_System_Voltage);
-
-            setFC_Charger_Voltage_High(inputValueFC_Charger_Voltage);
-            setFC_Charger_Voltage_Low(inputValue2FC_Charger_Voltage);
-
-            setFC_01_Accumulated_Values_Uncorrected_Volume_High(inputValueFC_01_Accumulated_Values_Uncorrected_Volume);
-            setFC_01_Accumulated_Values_Uncorrected_Volume_Low(inputValue2FC_01_Accumulated_Values_Uncorrected_Volume);
-
-            setFC_01_Accumulated_Values_Volume_High(inputValueFC_01_Accumulated_Values_Volume);
-            setFC_01_Accumulated_Values_Volume_Low(inputValue2FC_01_Accumulated_Values_Volume);
-
-
-            setFC_01_Current_Values_Static_Pressure_High(inputValueFC_01_Current_Values_Static_Pressure);
-            setFC_01_Current_Values_Static_Pressure_Low(inputValue2FC_01_Current_Values_Static_Pressure);
-
-            setFC_01_Current_Values_Temperature_High(inputValueFC_01_Current_Values_Temperature);
-            setFC_01_Current_Values_Temperature_Low(inputValue2FC_01_Current_Values_Temperature);
-
-            setFC_01_Current_Values_Flow_Rate_High(inputValueFC_01_Current_Values_Flow_Rate);
-            setFC_01_Current_Values_Flow_Rate_Low(inputValue2FC_01_Current_Values_Flow_Rate);
-
-            setFC_01_Today_Values_Volume_High(inputValueFC_01_Today_Values_Volume);
-            setFC_01_Today_Values_Volume_Low(inputValue2FC_01_Today_Values_Volume);
-
-            setFC_01_Current_Values_Uncorrected_Flow_Rate_High(inputValueFC_01_Current_Values_Uncorrected_Flow_Rate);
-            setFC_01_Current_Values_Uncorrected_Flow_Rate_Low(inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate);
-
-
-            setFC_01_Yesterday_Values_Volume_High(inputValueFC_01_Yesterday_Values_Volume);
-            setFC_01_Yesterday_Values_Volume_Low(inputValue2FC_01_Yesterday_Values_Volume);
-
-            setFC_01_Today_Values_Uncorrected_Volume_High(inputValueFC_01_Today_Values_Uncorrected_Volume);
-            setFC_01_Today_Values_Uncorrected_Volume_Low(inputValue2FC_01_Today_Values_Uncorrected_Volume);
-
-            setFC_01_Yesterday_Values_Uncorrected_Volume_High(inputValueFC_01_Yesterday_Values_Uncorrected_Volume);
-            setFC_01_Yesterday_Values_Uncorrected_Volume_Low(inputValue2FC_01_Yesterday_Values_Uncorrected_Volume);
-
-            setFC_02_Accumulated_Values_Uncorrected_Volume_High(inputValueFC_02_Accumulated_Values_Uncorrected_Volume);
-            setFC_02_Accumulated_Values_Uncorrected_Volume_Low(inputValue2FC_02_Accumulated_Values_Uncorrected_Volume);
-
-
-
-            setFC_02_Current_Values_Temperature_High(inputValueFC_02_Current_Values_Temperature);
-            setFC_02_Current_Values_Temperature_Low(inputValue2FC_02_Current_Values_Temperature);
-
-            setFC_02_Current_Values_Flow_Rate_High(inputValueFC_02_Current_Values_Flow_Rate);
-            setFC_02_Current_Values_Flow_Rate_Low(inputValue2FC_02_Current_Values_Flow_Rate);
-
-            setFC_02_Current_Values_Uncorrected_Flow_Rate_High(inputValueFC_02_Current_Values_Uncorrected_Flow_Rate);
-            setFC_02_Current_Values_Uncorrected_Flow_Rate_Low(inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate);
-
-            setFC_02_Today_Values_Volume_High(inputValueFC_02_Today_Values_Volume);
-            setFC_02_Today_Values_Volume_Low(inputValue2FC_02_Today_Values_Volume);
-
-            setFC_02_Today_Values_Uncorrected_Volume_High(inputValueFC_02_Today_Values_Uncorrected_Volume);
-            setFC_02_Today_Values_Uncorrected_Volume_Low(inputValue2FC_02_Today_Values_Uncorrected_Volume);
-
-
-          
-
+         const handleButtonClick = async () => {
+            try {
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
     
-
     
-
-
-            setFC_02_Yesterday_Values_Uncorrected_Volume_High(inputValueFC_02_Yesterday_Values_Uncorrected_Volume);
-            setFC_02_Yesterday_Values_Uncorrected_Volume_Low(inputValue2FC_02_Yesterday_Values_Uncorrected_Volume);
-
-            setGD1_High(inputValueGD1);
-            setGD1_Low(inputValue2GD1);
-
-            setGD1_High(inputValueGD1);
-            setGD1_Low(inputValue2GD1);
-
-            setGD2_High(inputValueGD2);
-            setGD2_Low(inputValue2GD2);
-
-            setPT1_High(inputValuePT1);
-            setPT1_Low(inputValue2PT1);
-
-            setDI_ZSO_1_High(inputValueDI_ZSO_1);
-            setDI_ZSO_1_Low(inputValue2DI_ZSO_1);
-
-
-
-
-            setDI_ZSC_1_High(inputValueDI_ZSC_1);
-            setDI_ZSC_1_Low(inputValue2DI_ZSC_1);
-
-            setDI_ZSO_2_High(inputValueDI_ZSO_2);
-            setDI_ZSO_2_Low(inputValue2DI_ZSO_2);
-
-            setDI_MAP_1_High(inputValueDI_MAP_1);
-            setDI_MAP_1_Low(inputValue2DI_MAP_1);
-
-            setDI_ZSC_2_High(inputValueDI_ZSC_2);
-            setDI_ZSC_2_Low(inputValue2DI_ZSC_2);
-
-
-            setDI_UPS_ALARM_High(inputValueDI_UPS_ALARM);
-            setDI_UPS_ALARM_Low(inputValue2DI_UPS_ALARM);
-
-            setDI_UPS_CHARGING_High(inputValueDI_UPS_CHARGING);
-            setDI_UPS_CHARGING_Low(inputValue2DI_UPS_CHARGING);
-
-     
-            setDI_SELECT_SW_High(inputValueDI_SELECT_SW);
-            setDI_SELECT_SW_Low(inputValue2DI_SELECT_SW);
-
-
-
-            setDI_UPS_BATTERY_High(inputValueDI_UPS_BATTERY);
-            setDI_UPS_BATTERY_Low(inputValue2DI_UPS_BATTERY);
-
-            setEmergency_NC_High(inputValueEmergency_NC);
-            setEmergency_NC_Low(inputValue2Emergency_NC);
-
-            setUPS_Mode_High(inputValueUPS_Mode);
-            setUPS_Mode_Low(inputValue2UPS_Mode);
-
-            toast.current?.show({
-                severity: "info",
-                detail: "Success ",
-                life: 3000,
-            });
-        } catch (error) {
-            console.log("error: ", error);
-            toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
-        }
-    };
+    
+                    {
+                        
+                        DO_HR_01_High: inputValueDO_HR_01,DO_HR_01_Low:inputValue2DO_HR_01,
+    
+    
+                        DO_BC_01_High: inputValueDO_BC_01,DO_BC_01_Low:inputValue2DO_BC_01,
+                        DO_SV_01_High: inputValueDO_SV_01,DO_SV_01_Low:inputValue2DO_SV_01,
+                        DO_SV_02_High: inputValueDO_SV_02,DO_SV_02_Low:inputValue2DO_SV_02,
+    
+                        FC_Battery_Voltage_High: inputValueFC_Battery_Voltage,FC_Battery_Voltage_Low:inputValue2FC_Battery_Voltage,
+                        FC_System_Voltage_High: inputValueFC_System_Voltage,FC_System_Voltage_Low:inputValue2FC_System_Voltage,
+                        FC_Lithium_Battery_Status_High: inputValueFC_Lithium_Battery_Status,FC_Lithium_Battery_Status_Low:inputValue2FC_Lithium_Battery_Status,
+    
+    
+                        FC_Charger_Voltage_High: inputValueFC_Charger_Voltage,FC_Charger_Voltage_Low:inputValue2FC_Charger_Voltage,
+                        FC_01_Accumulated_Values_Uncorrected_Volume_High: inputValueFC_01_Accumulated_Values_Uncorrected_Volume,FC_01_Accumulated_Values_Uncorrected_Volume_Low:inputValue2FC_01_Accumulated_Values_Uncorrected_Volume,
+                        FC_01_Accumulated_Values_Volume_High: inputValueFC_01_Accumulated_Values_Volume,FC_01_Accumulated_Values_Volume_Low:inputValue2FC_01_Accumulated_Values_Volume,
+    
+                        FC_01_Current_Values_Static_Pressure_High: inputValueFC_01_Current_Values_Static_Pressure,FC_01_Current_Values_Static_Pressure_Low:inputValue2FC_01_Current_Values_Static_Pressure,
+                        FC_01_Current_Values_Temperature_High: inputValueFC_01_Current_Values_Temperature,FC_01_Current_Values_Temperature_Low:inputValue2FC_01_Current_Values_Temperature,
+                        FC_01_Current_Values_Flow_Rate_High: inputValueFC_01_Current_Values_Flow_Rate,FC_01_Current_Values_Flow_Rate_Low:inputValue2FC_01_Current_Values_Flow_Rate,
+    
+    
+                        FC_01_Today_Values_Volume_High: inputValueFC_01_Today_Values_Volume,FC_01_Today_Values_Volume_Low:inputValue2FC_01_Today_Values_Volume,
+                        FC_01_Current_Values_Uncorrected_Flow_Rate_High: inputValueFC_01_Current_Values_Uncorrected_Flow_Rate,FC_01_Current_Values_Uncorrected_Flow_Rate_Low:inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate,
+    
+    
+                        FC_01_Today_Values_Uncorrected_Volume_High: inputValueFC_01_Today_Values_Uncorrected_Volume,FC_01_Today_Values_Uncorrected_Volume_Low:inputValue2FC_01_Today_Values_Uncorrected_Volume,
+                        FC_01_Yesterday_Values_Volume_High: inputValueFC_01_Yesterday_Values_Volume,FC_01_Yesterday_Values_Volume_Low:inputValue2FC_01_Yesterday_Values_Volume,
+    
+                        FC_01_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_01_Yesterday_Values_Uncorrected_Volume,FC_01_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_01_Yesterday_Values_Uncorrected_Volume,
+                        FC_02_Accumulated_Values_Uncorrected_Volume_High: inputValueFC_02_Accumulated_Values_Uncorrected_Volume,FC_02_Accumulated_Values_Uncorrected_Volume_Low:inputValue2FC_02_Accumulated_Values_Uncorrected_Volume,
+    
+                        FC_02_Accumulated_Values_Volume_High: inputValueFC_02_Accumulated_Values_Volume,FC_02_Accumulated_Values_Volume_Low:inputValue2FC_02_Accumulated_Values_Volume,
+                        FC_02_Current_Values_Static_Pressure_High: inputValueFC_02_Current_Values_Static_Pressure,FC_02_Current_Values_Static_Pressure_Low:inputValue2FC_02_Current_Values_Static_Pressure,
+    
+    
+                        FC_02_Current_Values_Temperature_High: inputValueFC_02_Current_Values_Temperature,FC_02_Current_Values_Temperature_Low:inputValue2FC_02_Current_Values_Temperature,
+                        FC_02_Current_Values_Flow_Rate_High: inputValueFC_02_Current_Values_Flow_Rate,FC_02_Current_Values_Flow_Rate_Low:inputValue2FC_02_Current_Values_Flow_Rate,
+                        FC_02_Current_Values_Uncorrected_Flow_Rate_High: inputValueFC_02_Current_Values_Uncorrected_Flow_Rate,FC_02_Current_Values_Uncorrected_Flow_Rate_Low:inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate,
+    
+                        FC_02_Today_Values_Volume_High: inputValueFC_02_Today_Values_Volume,FC_02_Today_Values_Volume_Low:inputValue2FC_02_Today_Values_Volume,
+    
+                        FC_02_Today_Values_Uncorrected_Volume_High: inputValueFC_02_Today_Values_Uncorrected_Volume,FC_02_Today_Values_Uncorrected_Volume_Low:inputValue2FC_02_Today_Values_Uncorrected_Volume,
+    
+    
+    
+    
+    
+    
+    
+                        FC_02_Yesterday_Values_Uncorrected_Volume_High: inputValueFC_02_Yesterday_Values_Uncorrected_Volume,FC_02_Yesterday_Values_Uncorrected_Volume_Low:inputValue2FC_02_Yesterday_Values_Uncorrected_Volume,
+                        FC_02_Yesterday_Values_Volume_High: inputValueFC_02_Yesterday_Values_Volume,FC_02_Yesterday_Values_Volume_Low:inputValue2FC_02_Yesterday_Values_Volume,
+    
+                        GD1_High: inputValueGD1,GD1_Low:inputValue2GD1,
+    
+                        GD2_High: inputValueGD2,GD2_Low:inputValue2GD2,
+                        PT1_High: inputValuePT1,PT1_Low:inputValue2PT1,
+                        DI_ZSO_1_High: inputValueDI_ZSO_1,DI_ZSO_1_Low:inputValue2DI_ZSO_1,
+    
+                        DI_ZSC_1_High: inputValueDI_ZSC_1,DI_ZSC_1_Low:inputValue2DI_ZSC_1,
+                        DI_ZSO_2_High: inputValueDI_ZSO_2,DI_ZSO_2_Low:inputValue2DI_ZSO_2,
+    
+    
+                        DI_MAP_1_High: inputValueDI_MAP_1,DI_MAP_1_Low:inputValue2DI_MAP_1,
+                        DI_ZSC_2_High: inputValueDI_ZSC_2,DI_ZSC_2_Low:inputValue2DI_ZSC_2,
+    
+    
+                        DI_UPS_CHARGING_High: inputValueDI_UPS_CHARGING,DI_UPS_CHARGING_Low:inputValue2DI_UPS_CHARGING,
+                        DI_UPS_ALARM_High: inputValueDI_UPS_ALARM,DI_UPS_ALARM_Low:inputValue2DI_UPS_ALARM,
+    
+                      
+                        DI_SELECT_SW_High: inputValueDI_SELECT_SW,DI_SELECT_SW_Low:inputValue2DI_SELECT_SW,
+    
+                        DI_RESET_High: inputValueDI_RESET,DI_RESET_Low:inputValue2DI_RESET,
+                        Emergency_NO_High: inputValueEmergency_NO,Emergency_NO_Low:inputValue2Emergency_NO,
+    
+    
+                        DI_UPS_BATTERY_High: inputValueDI_UPS_BATTERY,DI_UPS_BATTERY_Low:inputValue2DI_UPS_BATTERY,
+                        Emergency_NC_High: inputValueEmergency_NC,Emergency_NC_Low:inputValue2Emergency_NC,
+                        UPS_Mode_High: inputValueUPS_Mode,UPS_Mode_Low:inputValue2UPS_Mode,
+    
+    
+    
+    
+    
+                        IOT_Gateway_Phone: inputGetwayPhone,
+                        PCV_01: inputPCV_01,
+                        PCV_02: inputPCV_02,
+                        PSV_01: inputPSV_01,
+                    }
+                );
+                setPSV_01(inputPSV_01)
+                setPCV_02(inputPCV_02)
+                setPCV_01(inputPCV_01)
+                setGetWayPhoneOTSUKA(inputGetwayPhone);
+    
+    
+                setFC_Battery_Voltage_High(inputValueFC_Battery_Voltage);
+                setFC_Battery_Voltage_Low(inputValue2FC_Battery_Voltage);
+    
+                setFC_System_Voltage_High(inputValueFC_System_Voltage);
+                setFC_System_Voltage_Low(inputValue2FC_System_Voltage);
+    
+                setFC_System_Voltage_High(inputValueFC_System_Voltage);
+                setFC_System_Voltage_Low(inputValue2FC_System_Voltage);
+    
+                setFC_Charger_Voltage_High(inputValueFC_Charger_Voltage);
+                setFC_Charger_Voltage_Low(inputValue2FC_Charger_Voltage);
+    
+         
+                
+             
+    
+                setFC_01_Accumulated_Values_Uncorrected_Volume_High(inputValueFC_01_Accumulated_Values_Uncorrected_Volume);
+                setFC_01_Accumulated_Values_Uncorrected_Volume_Low(inputValue2FC_01_Accumulated_Values_Uncorrected_Volume);
+    
+                setFC_01_Accumulated_Values_Volume_High(inputValueFC_01_Accumulated_Values_Volume);
+                setFC_01_Accumulated_Values_Volume_Low(inputValue2FC_01_Accumulated_Values_Volume);
+    
+    
+                setFC_01_Current_Values_Static_Pressure_High(inputValueFC_01_Current_Values_Static_Pressure);
+                setFC_01_Current_Values_Static_Pressure_Low(inputValue2FC_01_Current_Values_Static_Pressure);
+    
+                setFC_01_Current_Values_Temperature_High(inputValueFC_01_Current_Values_Temperature);
+                setFC_01_Current_Values_Temperature_Low(inputValue2FC_01_Current_Values_Temperature);
+    
+                setFC_01_Current_Values_Flow_Rate_High(inputValueFC_01_Current_Values_Flow_Rate);
+                setFC_01_Current_Values_Flow_Rate_Low(inputValue2FC_01_Current_Values_Flow_Rate);
+    
+                setFC_01_Today_Values_Volume_High(inputValueFC_01_Today_Values_Volume);
+                setFC_01_Today_Values_Volume_Low(inputValue2FC_01_Today_Values_Volume);
+    
+                setFC_01_Current_Values_Uncorrected_Flow_Rate_High(inputValueFC_01_Current_Values_Uncorrected_Flow_Rate);
+                setFC_01_Current_Values_Uncorrected_Flow_Rate_Low(inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate);
+    
+                setFC_01_Yesterday_Values_Volume_High(inputValueFC_01_Yesterday_Values_Volume);
+                setFC_01_Yesterday_Values_Volume_Low(inputValue2FC_01_Yesterday_Values_Volume);
+    
+                setFC_01_Today_Values_Uncorrected_Volume_High(inputValueFC_01_Today_Values_Uncorrected_Volume);
+                setFC_01_Today_Values_Uncorrected_Volume_Low(inputValue2FC_01_Today_Values_Uncorrected_Volume);
+    
+                setFC_01_Yesterday_Values_Uncorrected_Volume_High(inputValueFC_01_Yesterday_Values_Uncorrected_Volume);
+                setFC_01_Yesterday_Values_Uncorrected_Volume_Low(inputValue2FC_01_Yesterday_Values_Uncorrected_Volume);
+    
+    
+    
+    
+                setFC_02_Accumulated_Values_Uncorrected_Volume_High(inputValueFC_02_Accumulated_Values_Uncorrected_Volume);
+                setFC_02_Accumulated_Values_Uncorrected_Volume_Low(inputValue2FC_02_Accumulated_Values_Uncorrected_Volume);
+    
+                setFC_02_Accumulated_Values_Volume_High(inputValueFC_02_Accumulated_Values_Volume);
+                setFC_02_Accumulated_Values_Volume_Low(inputValue2FC_02_Accumulated_Values_Volume);
+    
+    
+                setFC_02_Current_Values_Static_Pressure_High(inputValueFC_02_Current_Values_Static_Pressure);
+                setFC_02_Current_Values_Static_Pressure_Low(inputValue2FC_02_Current_Values_Static_Pressure);
+    
+                setFC_02_Current_Values_Temperature_High(inputValueFC_02_Current_Values_Temperature);
+                setFC_02_Current_Values_Temperature_Low(inputValue2FC_02_Current_Values_Temperature);
+    
+                setFC_02_Current_Values_Flow_Rate_High(inputValueFC_02_Current_Values_Flow_Rate);
+                setFC_02_Current_Values_Flow_Rate_Low(inputValue2FC_02_Current_Values_Flow_Rate);
+    
+                setFC_02_Today_Values_Volume_High(inputValueFC_02_Today_Values_Volume);
+                setFC_02_Today_Values_Volume_Low(inputValue2FC_02_Today_Values_Volume);
+    
+                setFC_02_Current_Values_Uncorrected_Flow_Rate_High(inputValueFC_02_Current_Values_Uncorrected_Flow_Rate);
+                setFC_02_Current_Values_Uncorrected_Flow_Rate_Low(inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate);
+    
+                setFC_02_Yesterday_Values_Volume_High(inputValueFC_02_Yesterday_Values_Volume);
+                setFC_02_Yesterday_Values_Volume_Low(inputValue2FC_02_Yesterday_Values_Volume);
+    
+                setFC_02_Today_Values_Uncorrected_Volume_High(inputValueFC_02_Today_Values_Uncorrected_Volume);
+                setFC_02_Today_Values_Uncorrected_Volume_Low(inputValue2FC_02_Today_Values_Uncorrected_Volume);
+    
+                setFC_02_Yesterday_Values_Uncorrected_Volume_High(inputValueFC_02_Yesterday_Values_Uncorrected_Volume);
+                setFC_02_Yesterday_Values_Uncorrected_Volume_Low(inputValue2FC_02_Yesterday_Values_Uncorrected_Volume);
+    
+    
+    
+                setFC_Lithium_Battery_Status_High(inputValueFC_Lithium_Battery_Status);
+                setFC_Lithium_Battery_Status_Low(inputValue2FC_Lithium_Battery_Status);
+    
+    
+                setDO_HR_01_High(inputValueDO_HR_01);
+                setDO_HR_01_Low(inputValue2DO_HR_01);
+    
+    
+                setDO_BC_01_High(inputValueDO_BC_01);
+                setDO_BC_01_Low(inputValue2DO_BC_01);
+    
+                setDO_SV_01_High(inputValueDO_SV_01);
+                setDO_SV_01_Low(inputValue2DO_SV_01);
+    
+                setDO_SV_02_High(inputValueDO_SV_02);
+                setDO_SV_02_Low(inputValue2DO_SV_02);
+    
+                setGD1_High(inputValueGD1);
+                setGD1_Low(inputValue2GD1);
+    
+                setGD2_High(inputValueGD2);
+                setGD2_Low(inputValue2GD2);
+    
+                setPT1_High(inputValuePT1);
+                setPT1_Low(inputValue2PT1);
+    
+                setDI_ZSO_1_High(inputValueDI_ZSO_1);
+                setDI_ZSO_1_Low(inputValue2DI_ZSO_1);
+    
+                setDI_ZSC_1_High(inputValueDI_ZSC_1);
+                setDI_ZSC_1_Low(inputValue2DI_ZSC_1);
+    
+                setDI_ZSO_2_High(inputValueDI_ZSO_2);
+                setDI_ZSO_2_Low(inputValue2DI_ZSO_2);
+    
+         
+                setDI_ZSC_2_High(inputValueDI_ZSC_2);
+                setDI_ZSC_2_Low(inputValue2DI_ZSC_2);
+    
+                setDI_MAP_1_High(inputValueDI_MAP_1);
+                setDI_MAP_1_Low(inputValue2DI_MAP_1);
+    
+                setDI_UPS_ALARM_High(inputValueDI_UPS_ALARM);
+                setDI_UPS_ALARM_Low(inputValue2DI_UPS_ALARM);
+    
+                setDI_UPS_CHARGING_High(inputValueDI_UPS_CHARGING);
+                setDI_UPS_CHARGING_Low(inputValue2DI_UPS_CHARGING);
+    
+                setDI_SELECT_SW_High(inputValueDI_SELECT_SW);
+                setDI_SELECT_SW_Low(inputValue2DI_SELECT_SW);
+    
+                setDI_UPS_BATTERY_High(inputValueDI_UPS_BATTERY);
+                setDI_UPS_BATTERY_Low(inputValue2DI_UPS_BATTERY);
+    
+                setEmergency_NC_High(inputValueEmergency_NC);
+                setEmergency_NC_Low(inputValue2Emergency_NC);
+    
+                setEmergency_NO_High(inputValueEmergency_NO);
+                setEmergency_NO_Low(inputValue2Emergency_NO);
+    
+                setUPS_Mode_High(inputValueUPS_Mode);
+                setUPS_Mode_Low(inputValue2UPS_Mode);
+    
+                toast.current?.show({
+                    severity: "info",
+                    detail: "Success ",
+                    life: 3000,
+                });
+            } catch (error) {
+                console.log("error: ", error);
+                toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
+            }
+        };
     const confirmUpData = () => {
         confirmDialog({
             message: "Are you sure you updated the data?",
@@ -4545,20 +3966,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputPSV_01(PSV_01)
         setInputGetwayPhone(getWayPhoneOTSUKA)
    
-        setInputValueDO_HR_01(DO_HR_01_High); 
-        setInputValue2DO_HR_01(DO_HR_01_Low); 
-
-        setInputValueSD(SD_High); 
-        setInputValue2SD(SD_Low); 
-
-        setInputValueDO_BC_01(DO_BC_01_High); 
-        setInputValue2DO_BC_01(DO_BC_01_Low); 
-
-        setInputValuDO_BC_01(DO_SV_01_High); 
-        setInputValue2DO_SV_01(DO_SV_01_Low); 
-
-        setInputValueDO_SV_02(DO_SV_02_High); 
-        setInputValue2DO_SV_02(DO_SV_02_Low); 
 
 
         setInputValueFC_Lithium_Battery_Status(FC_Lithium_Battery_Status_High); 
@@ -4566,6 +3973,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
         setInputValueFC_Battery_Voltage(FC_Battery_Voltage_High); 
         setInputValue2FC_Battery_Voltage(FC_Battery_Voltage_Low); 
+
+        setInputValueFC_Charger_Voltage(FC_Charger_Voltage_High); 
+        setInputValue2FC_Charger_Voltage(FC_Charger_Voltage_Low); 
 
         setInputValueFC_System_Voltage(FC_System_Voltage_High); 
         setInputValue2FC_System_Voltage(FC_System_Voltage_Low); 
@@ -4578,8 +3988,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_Volume_High); 
         setInputValue2FC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_Volume_Low); 
 
-        setInputValueFC_Charger_Voltage(FC_Charger_Voltage_High); 
-        setInputValue2FC_Charger_Voltage(FC_Charger_Voltage_Low); 
         
 
         setInputValueFC_01_Current_Values_Temperature(FC_01_Current_Values_Temperature_High); 
@@ -4634,36 +4042,38 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueFC_02_Today_Values_Uncorrected_Volume(FC_02_Today_Values_Uncorrected_Volume_High); 
         setInputValue2FC_02_Today_Values_Uncorrected_Volume(FC_02_Today_Values_Uncorrected_Volume_Low); 
 
-
-
-
-     
-
-
-
-
-
-
         setInputValueFC_02_Yesterday_Values_Volume(FC_02_Yesterday_Values_Volume_High); 
         setInputValue2FC_02_Yesterday_Values_Volume(FC_02_Yesterday_Values_Volume_Low); 
 
         setInputValueFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_High); 
         setInputValue2FC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_Volume_Low); 
 
+
+     
+
+  
+
+        setInputValueDO_HR_01(DO_HR_01_High); 
+        setInputValue2DO_HR_01(DO_HR_01_Low); 
+
+        setInputValueDO_BC_01(DO_BC_01_High); 
+        setInputValue2DO_BC_01(DO_BC_01_Low); 
+
+
+        setInputValueDO_SV_02(DO_SV_02_High); 
+        setInputValue2DO_SV_02(DO_SV_02_Low); 
+
+        setInputValueDO_SV_01(DO_SV_01_High); 
+        setInputValue2DO_SV_01(DO_SV_01_Low); 
+
         setInputValueGD1(GD1_High); 
         setInputValue2GD1(GD1_Low); 
-
-
-
-        setInputValuePT1(PT1_High); 
-        setInputValue2PT1(PT1_Low); 
-
-        setInputValueDI_ZSO_1(DI_ZSO_1_High); 
-        setInputValue2DI_ZSO_1(DI_ZSO_1_Low); 
 
         setInputValueGD2(GD2_High); 
         setInputValue2GD2(GD2_Low); 
         
+        setInputValuePT1(PT1_High); 
+        setInputValue2PT1(PT1_Low); 
 
         setInputValueDI_ZSC_1(DI_ZSC_1_High); 
         setInputValue2DI_ZSC_1(DI_ZSC_1_Low); 
@@ -4671,7 +4081,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueDI_ZSO_2(DI_ZSO_2_High); 
         setInputValue2DI_ZSO_2(DI_ZSO_2_Low); 
 
-
+        setInputValueDI_ZSO_1(DI_ZSO_1_High); 
+        setInputValue2DI_ZSO_1(DI_ZSO_1_Low); 
 
         setInputValueDI_ZSC_2(DI_ZSC_2_High); 
         setInputValue2DI_ZSC_2(DI_ZSC_2_Low); 
@@ -4709,81 +4120,65 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
      
     }, [
         
-        DO_HR_01_High, DO_HR_01_Low 
-        ,SD_High, SD_Low ,
-
-
-        DO_SV_01_High,DO_SV_01_Low,
-         DO_SV_02_High,DO_SV_02_Low ,
-          DO_BC_01_High,DO_BC_01_Low,
         
         FC_Lithium_Battery_Status_High, FC_Lithium_Battery_Status_Low ,
         FC_Battery_Voltage_High, FC_Battery_Voltage_Low 
         ,FC_System_Voltage_High, FC_System_Voltage_Low ,
+        FC_Charger_Voltage_High,FC_Charger_Voltage_Low,
 
 
         FC_01_Accumulated_Values_Uncorrected_Volume_High,FC_01_Accumulated_Values_Uncorrected_Volume_Low,
          FC_01_Accumulated_Values_Volume_High,FC_01_Accumulated_Values_Volume_Low ,
-          FC_Charger_Voltage_High,FC_Charger_Voltage_Low,
-
           FC_01_Current_Values_Temperature_High,FC_01_Current_Values_Temperature_Low,
           FC_01_Current_Values_Flow_Rate_High,FC_01_Current_Values_Flow_Rate_Low ,
            FC_01_Current_Values_Static_Pressure_High,FC_01_Current_Values_Static_Pressure_Low,
-        
            FC_01_Current_Values_Uncorrected_Flow_Rate_High,FC_01_Current_Values_Uncorrected_Flow_Rate_Low,
            FC_01_Today_Values_Volume_High,FC_01_Today_Values_Volume_Low,
-
            FC_01_Today_Values_Uncorrected_Volume_High,FC_01_Today_Values_Uncorrected_Volume_Low,
            FC_01_Yesterday_Values_Volume_High,FC_01_Yesterday_Values_Volume_Low,
-
            FC_01_Yesterday_Values_Uncorrected_Volume_High,FC_01_Yesterday_Values_Uncorrected_Volume_Low,
-           FC_02_Accumulated_Values_Uncorrected_Volume_High,FC_02_Accumulated_Values_Uncorrected_Volume_Low,
 
+
+
+           FC_02_Accumulated_Values_Uncorrected_Volume_High,FC_02_Accumulated_Values_Uncorrected_Volume_Low,
            FC_02_Current_Values_Static_Pressure_High,FC_02_Current_Values_Static_Pressure_Low,
            FC_02_Accumulated_Values_Volume_High,FC_02_Accumulated_Values_Volume_Low,
-
-
            FC_02_Current_Values_Temperature_High,FC_02_Current_Values_Temperature_Low,
            FC_02_Current_Values_Flow_Rate_High,FC_02_Current_Values_Flow_Rate_Low,
            FC_02_Current_Values_Uncorrected_Flow_Rate_High,FC_02_Current_Values_Uncorrected_Flow_Rate_Low,
-
            FC_02_Today_Values_Volume_High,FC_02_Today_Values_Volume_Low,
-
            FC_02_Today_Values_Uncorrected_Volume_High,FC_02_Today_Values_Uncorrected_Volume_Low,
-
-
-
-
-
            FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume_Low ,
-        FC_02_Yesterday_Values_Uncorrected_Volume_High, FC_02_Yesterday_Values_Uncorrected_Volume_Low 
-        ,GD1_High, GD1_Low ,
+           FC_02_Yesterday_Values_Uncorrected_Volume_High, FC_02_Yesterday_Values_Uncorrected_Volume_Low,
 
+           DO_HR_01_High, DO_HR_01_Low ,
+           DO_BC_01_High,DO_BC_01_Low,
+           GD1_High, GD1_Low ,
+           GD2_High,GD2_Low,
+           PT1_High,PT1_Low,
 
-        PT1_High,PT1_Low,
-         DI_ZSO_1_High,DI_ZSO_1_Low ,
-          GD2_High,GD2_Low,
-
-          DI_ZSC_1_High,DI_ZSC_1_Low,
-          DI_ZSO_2_High,DI_ZSO_2_Low ,
-        
+           DI_ZSC_1_High,DI_ZSC_1_Low,
+           DI_ZSO_1_High,DI_ZSO_1_Low ,
+           DI_ZSO_2_High,DI_ZSO_2_Low ,
            DI_ZSC_2_High,DI_ZSC_2_Low,
-           DI_MAP_1_High,DI_MAP_1_Low,
-
            DI_UPS_CHARGING_High,DI_UPS_CHARGING_Low,
+
            DI_UPS_ALARM_High,DI_UPS_ALARM_Low,
-
-     
            DI_SELECT_SW_High,DI_SELECT_SW_Low,
-
-           Emergency_NO_High,Emergency_NO_Low,
            DI_RESET_High,DI_RESET_Low,
-
-
+           Emergency_NO_High,Emergency_NO_Low,
            DI_UPS_BATTERY_High,DI_UPS_BATTERY_Low,
+
            Emergency_NC_High,Emergency_NC_Low,
            UPS_Mode_High,UPS_Mode_Low,
+           DI_MAP_1_High,DI_MAP_1_Low,
+           DO_SV_02_High,DO_SV_02_Low ,
+           DO_SV_01_High,DO_SV_01_Low,
+
            getWayPhoneOTSUKA,
+
+
+
            PCV_01,
            PCV_02,
            PSV_01
@@ -4804,15 +4199,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             height:25,
             fontWeight:400,
         },
-        CSSSD : {
-            color:exceedThresholdSD && !maintainSD
-            ? "#ff5656"
-            : maintainSD
-            ? "orange"
-            : "" ,
-            height:25,
-            fontWeight:400,
-        },
+    
 
 
         CSSDO_BC_01 : {
@@ -4857,7 +4244,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             fontWeight:400,
         },
         CSSFC_Battery_Voltage : {
-            color:exceedThresholdTemperature && !maintainFC_Battery_Voltage
+            color:exceedThresholdFC_Battery_Voltage && !maintainFC_Battery_Voltage
             ? "#ff5656"
             : maintainFC_Battery_Voltage
             ? "orange"
@@ -6126,7 +5513,7 @@ name: <span style={combineCss.CSSDO_SV_01}>SDV-1201 SOLENOID</span> ,
 modbus: <span style={combineCss.CSSDO_SV_01}>DB5W54	 </span> ,
 
 value: <span style={combineCss.CSSDO_SV_01} > {DO_SV_01} {DataDO_SV_01}</span> , 
-high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValuDO_BC_01} onChange={handleInputChangDO_BC_01} inputMode="decimal" />, 
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_SV_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV_01} onChange={handleInputChangDO_SV_01} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_SV_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV_01} onChange={handleInputChange2DO_SV_01} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox
