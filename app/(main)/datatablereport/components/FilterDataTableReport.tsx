@@ -11,7 +11,14 @@ import {
 import { Utils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import styles from "./FilterDataTableReport.module.css";
+
 import { MultiSelect } from "primereact/multiselect";
+import dayjs from "dayjs"; // Import dayjs
+
+import { DatePicker } from "antd"; // Import DatePicker from Ant Design
+
+const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
 
 interface Props {
     showDevice: boolean;
@@ -45,6 +52,8 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
     const [unitAttribute, setUnitAttribute] = useState<any>({});
+    const [dateRangeFocused, setDateRangeFocused] = useState(true);
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedFilter = localStorage.getItem("filterDataTableReport");
@@ -328,19 +337,32 @@ const FilterDataTableReport: React.FC<Props> = ({
                 )}
                 {showDate && (
                     <div className="col-12 lg:col-3 md:col-3">
-                        <span className="p-float-label">
-                            <Calendar
-                                value={editFilter.dates}
-                                selectionMode="range"
-                                onChange={(e) => {
-                                    _processFilterChange("dates", e.value);
-                                }}
-                                showTime
-                                hourFormat="24"
-                                dateFormat="dd/mm/yy"
-                            />
-                            <label>Select Date</label>
-                        </span>
+                        <div className={styles.dateRangeWrapper}>
+                            <div
+                                className={`${styles.floatLabel} ${
+                                    dateRangeFocused ? styles.focused : ""
+                                } ${
+                                    editFilter.dates && editFilter.dates.length
+                                        ? styles.hasValue
+                                        : ""
+                                }`}
+                            >
+                                <RangePicker
+                                    showTime
+                                    format="DD/MM/YYYY HH:mm"
+                                    //  value={editFilter.dates}
+                                    onChange={(dates) => {
+                                        _processFilterChange("dates", dates);
+                                    }}
+                                    onOk={(e) => {
+                                        console.log(e);
+                                    }}
+                                    onFocus={() => setDateRangeFocused(true)}
+                                    onBlur={() => setDateRangeFocused(false)}
+                                />
+                                <label>Select Date Range</label>
+                            </div>
+                        </div>
                     </div>
                 )}
                 {showTags && (

@@ -1,0 +1,45 @@
+.dateRangeWrapper {
+    position: relative;
+}
+
+.floatLabel {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.floatLabel label {
+    position: absolute;
+    left: 0;
+    top: -20px; /* Điều chỉnh giá trị này để kiểm soát vị trí dọc của label */
+    z-index: 1;
+    padding: 0 4px;
+    background-color: transparent;
+    font-size: 14px; /* Giảm kích thước font để phù hợp hơn */
+    transition: all 0.2s;
+    color: rgba(0, 0, 0, 0.65);
+    pointer-events: none;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.floatLabel :global(.ant-picker) {
+    width: 100%;
+}
+
+.floatLabel :global(.ant-picker-focused) + label,
+.floatLabel :global(.ant-picker-has-value) + label {
+    font-size: 12px;
+    color: #1890ff;
+}
+
+.floatLabel :global(.ant-picker-focused),
+.floatLabel :global(.ant-picker-has-value) {
+    border-color: #1890ff;
+}
+
+.floatLabel :global(.ant-picker-input) > input {
+    opacity: 1; /* Luôn hiển thị văn bản đầu vào */
+}
