@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setIsRedirectToLogin(() => true);
             }
         } finally {
-            setIsLoading(() => false);
+           // setIsLoading(() => false);
         }
     }, []);
 
