@@ -10,6 +10,10 @@ import { readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold } from "react-icons/pi";
+import {
+    getSeverAttributesByDeviceandKeys,
+    saveOrUpdateSeverAttributesByDevice,
+} from "@/api/telemetry.api";
 import { Utils } from "@/service/Utils";
 import {
     OTSUKA_DEVICE_ID,
@@ -45,12 +49,14 @@ export default function Alarmbell() {
     const token = useToken();
     const audioRef = useRef<HTMLAudioElement>(null);
     const router = useRouter();
+    const audioRefs = useRef<HTMLAudioElement[]>([]);
     const op = useRef<OverlayPanel>(null);
     const ws = useRef<WebSocket | null>(null);
     const [loading, setLoading] = useState(true); // State để kiểm soát loading
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
+    const [notificationsQueue, setNotificationsQueue] = useState<any[]>([]); // Hàng đợi thông báo
     useEffect(() => {
         const user = readUser();
         if (user) {
@@ -62,6 +68,22 @@ export default function Alarmbell() {
             ws.current.send(data);
         }
     }, []);
+    const _fetchAttributeData = useCallback(
+        async (deviceId: string, key: string) => {
+            return getSeverAttributesByDeviceandKeys(deviceId, key).then(
+                (resp) => {
+                    const res = resp.data;
+                    if (res && res.length === 0) {
+                        return saveOrUpdateSeverAttributesByDevice(deviceId, {
+                            [key]: false,
+                        }).then(() => true);
+                    }
+                    return res[0].value;
+                }
+            );
+        },
+        []
+    );
     const connectWebSocket = useCallback(
         (token: string) => {
             ws.current = new WebSocket(
@@ -179,35 +201,39 @@ export default function Alarmbell() {
                         dataReceive.data.data.length > 0 &&
                         dataReceive.update === null
                     ) {
-                        let alarms = dataReceive.data.data;
-                        let alarmsCount = dataReceive.data.totalElements;
-                        let criticalAlarm = alarms.filter(
-                            (alarm: any) => alarm.severity === "CRITICAL"
-                        );
-                        let majorAlarm = alarms.filter(
-                            (alarm: any) => alarm.severity === "MAJOR"
-                        );
-
-                        if (criticalAlarm.length > majorAlarm.length) {
-                            const promise = audioRef.current?.play();
-                            if (promise !== undefined) {
-                                promise
-                                    .then(() => {
-                                        // Autoplay started!
-                                    })
-                                    .catch((error) => {
-                                        console.error(
-                                            "Autoplay was prevented.",
-                                            error
-                                        );
-                                    });
-                            }
-                        } else {
-                            handleStopAudio();
-                        }
-                        setNotifications(alarms);
-                        setAlarmCount(alarmsCount);
+                        console.log(dataReceive.data.data);
+                        setNotificationsQueue(() => [...dataReceive.data.data]);
                         setLoading(false);
+                        let alarmsCount = dataReceive.data.totalElements;
+                        setAlarmCount(alarmsCount);
+                        // let alarms = dataReceive.data.data;
+                        //
+                        // let criticalAlarm = alarms.filter(
+                        //     (alarm: any) => alarm.severity === "CRITICAL"
+                        // );
+                        // let majorAlarm = alarms.filter(
+                        //     (alarm: any) => alarm.severity === "MAJOR"
+                        // );
+                        // if (criticalAlarm.length > majorAlarm.length) {
+                        //     const promise = audioRef.current?.play();
+                        //     if (promise !== undefined) {
+                        //         promise
+                        //             .then(() => {
+                        //                 // Autoplay started!
+                        //             })
+                        //             .catch((error) => {
+                        //                 console.error(
+                        //                     "Autoplay was prevented.",
+                        //                     error
+                        //                 );
+                        //             });
+                        //     }
+                        // } else {
+                        //     handleStopAudio();
+                        // }
+                        // setNotifications(alarms);
+                        //
+                        // setLoading(false);
                     } else if (
                         dataReceive.data &&
                         dataReceive.data.data &&
@@ -237,6 +263,50 @@ export default function Alarmbell() {
         [sendData]
     );
 
+    const processNotification = async (dataAlarm: any[]) => {
+        // Xử lý logic tại đây, ví dụ như gửi yêu cầu API hoặc cập nhật cơ sở dữ liệu
+        console.log("Processing notification:", dataAlarm);
+
+        // let dataAlarmIds = [...dataAlarm].map((item: any) => item.id.id);
+        // let newNotifications = notifications.filter((item: any) =>
+        //     dataAlarmIds.includes(item.id.id)
+        // ); //
+        // let newNotificationsIds = [...newNotifications].map(
+        //     (item: any) => item.id.id
+        // );
+        // let newAlarm = [...dataAlarm].filter(
+        //     (item: any) => !newNotificationsIds.includes(item.id.id)
+        // );
+
+        let updatedAlarms = await Promise.all(
+            [...dataAlarm].map(async (alarm: any) => {
+                if (alarm.severity === "MAJOR") {
+                    return alarm; // Nếu đã có, trả về nguyên đối tượng không thay đổi
+                }
+                let tag = alarm?.details?.data?.split(",")[0];
+                let shouldRing = true;
+                let maintained = null;
+                if (tag !== null && tag !== undefined) {
+                    maintained = await _fetchAttributeData(
+                        alarm.entityId.id,
+                        tag + "_Maintain"
+                    );
+                }
+                return {
+                    ...alarm,
+                    shouldPlaySound:
+                        maintained !== null ? !maintained : shouldRing,
+                };
+            })
+        );
+        // setNotifications([...updatedAlarms, ...newNotifications]);
+        setNotifications([...updatedAlarms]);
+    };
+
+    useEffect(() => {
+        processNotification(notificationsQueue);
+    }, [notificationsQueue]);
+
     useEffect(() => {
         if (token) {
             connectWebSocket(token);
@@ -248,6 +318,36 @@ export default function Alarmbell() {
         };
     }, [connectWebSocket, token]);
 
+    useEffect(() => {
+        console.log("notifications", notifications);
+        notifications.forEach((notif: any, index) => {
+            if (notif.shouldPlaySound === true) {
+                const audioEl = audioRefs.current[notif.id.id];
+                console.log("audioEl", audioEl);
+                if (audioEl) {
+                    const playPromise = audioEl.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .catch((error) => {
+                                // Auto-play was prevented
+                                // Show a UI element to let the user manually start playback
+                            })
+                            .then(() => {
+                                // Auto-play started
+                            });
+                    }
+                }
+            } else {
+                console.log("turn alarm off");
+                const audioEl = audioRefs.current[notif.id.id];
+                console.log("audioEl", audioEl);
+                if (audioEl) {
+                    audioEl.pause();
+                    audioEl.currentTime = 0; // Đặt thời gian trở về đầu để chuẩn bị cho lần phát tiếp theo nếu cần
+                }
+            }
+        });
+    }, [notifications]);
     // useEffect(() => {
     //     if (
     //         notifications.length > 0 &&
@@ -409,10 +509,14 @@ export default function Alarmbell() {
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
     const handleStopAudio = () => {
-        if (audioRef.current && !audioRef.current.paused) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0; // Đưa thời gian về 0 để reset audio
-        }
+        notifications.forEach((notif: any, index) => {
+            const audioEl = audioRefs.current[notif.id.id];
+            console.log("audioEl", audioEl);
+            if (audioEl) {
+                audioEl.pause();
+                audioEl.currentTime = 0; // Đặt thời gian trở về đầu để chuẩn bị cho lần phát tiếp theo nếu cần
+            }
+        });
     };
 
     return (
@@ -423,6 +527,20 @@ export default function Alarmbell() {
                     type="audio/mpeg"
                 />
             </audio>
+            {notifications &&
+                notifications.length > 0 &&
+                notifications.map((item: any, index: number) => (
+                    <div key={index}>
+                        <audio
+                            loop={true}
+                            ref={(el: HTMLAudioElement) => {
+                                audioRefs.current[item.id.id] = el;
+                            }}
+                            src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
+                            preload="auto"
+                        ></audio>
+                    </div>
+                ))}
 
             <div className="flex">
                 {alarmCount > 0 && (
