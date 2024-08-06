@@ -593,12 +593,6 @@ export default function SetUpdata_CNG_BINHDUONG() {
                 `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/values/attributes/SERVER_SCOPE`
             );
 
-
-         
-
-
-
-    
             const EVC_01_Remain_Battery_Service_Life_High = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_High");
             setEVC_01_Remain_Battery_Service_Life_High(EVC_01_Remain_Battery_Service_Life_High?.value || null);
             const EVC_01_Remain_Battery_Service_Life_Low = res.data.find((item: any) => item.key === "EVC_01_Remain_Battery_Service_Life_Low");
@@ -4170,12 +4164,6 @@ setmaintainEVC_02_Conn_STT(newEVC_02_Conn_STT);
             }
         };
 
-
-      
-
-      
-
-
     const handleCheckboxChangeEVC02 = (e:any) => {
         const isChecked = e.checked;
     
@@ -4825,7 +4813,6 @@ setmaintainPLC_Conn_STT(newPLC_Conn_STT);
             : "" ,
             height:25,
             fontWeight:400,
-            
         },
 
         CSS_EVC_02_Conn_STT: {
@@ -4836,7 +4823,6 @@ setmaintainPLC_Conn_STT(newPLC_Conn_STT);
             : "" ,
             height:25,
             fontWeight:400,
-            
         },
   };
     
@@ -4856,7 +4842,7 @@ setmaintainPLC_Conn_STT(newPLC_Conn_STT);
             onChange={handleCheckboxChangeEVC02}
             checked={checkMaintainingEVC02}
         />
-     <p style={{fontSize:15}}>Maintain EVC-2001A </p>  </div> )} </span>,
+     <p style={{fontSize:15}}>Maintain EVC-2001B </p>  </div> )} </span>,
     PLC: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameters & Configurations  {!AuthInput && (  <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}> 
         <Checkbox
             style={{ marginRight: 5 }}
@@ -4866,10 +4852,7 @@ setmaintainPLC_Conn_STT(newPLC_Conn_STT);
      <p style={{fontSize:15}}>Maintain PLC</p>  </div> )} </span>
 };
 
-
-
 const valueCNGbd = {
-
     C_O : "0: Close - 1: Open",
     N_P:"0: Normal - 1: Pressure Low",
     N_W:"0: Normal - 1: Water Low",
@@ -4879,19 +4862,17 @@ const valueCNGbd = {
     N_A:"0: Not Active - 1: Active",
     N_S:"0: Normal - 1: Smoker Detected",
     N_C_E:"0: Not Init - 1: COM OK - 2: Error",
-
 }
-
 
 const dataSDV_2001A = SDV_2001A === "0" ? "Close" : SDV_2001A === "1" ? "Open" : null;
 const dataSDV_2001B = SDV_2001B === "0" ? "Close" : SDV_2001B === "1" ? "Open" : null;
 const dataSDV_2002 = SDV_2002 === "0" ? "Close" : SDV_2002 === "1" ? "Open" : null;
 const dataWater_PG = Water_PG === "0" ? "Normal" : Water_PG === "1" ? "Pressure Low" : null;
 const dataWater_LSW = Water_LSW === "0" ? "Normal" : Water_LSW === "1" ? "Water Low" : null;
-const dataPUMP_1 = PUMP_1 === "0" ? "Stop" : PUMP_1 === "1" ? "Rune" : null;
-const dataPUMP_2 = PUMP_2 === "0" ? "Stop" : PUMP_2 === "1" ? "Rune" : null;
-const dataHEATER_1 = HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Rune" : null;
-const dataHEATER_2 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Rune" : null;
+const dataPUMP_1 = PUMP_1 === "0" ? "Stop" : PUMP_1 === "1" ? "Run" : null;
+const dataPUMP_2 = PUMP_2 === "0" ? "Stop" : PUMP_2 === "1" ? "Run" : null;
+const dataHEATER_1 = HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Run" : null;
+const dataHEATER_2 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Run" : null;
 const dataBOILER = BOILER === "0" ? "Manual" : BOILER === "1" ? "Auto" : null;
 const dataGD_STATUS = GD_STATUS === "0" ? "Normal" : GD_STATUS === "1" ? "Alarm" : null;
 const dataESD_2001 = ESD_2001 === "0" ? "Not Active" : ESD_2001 === "1" ? "Active" : null;

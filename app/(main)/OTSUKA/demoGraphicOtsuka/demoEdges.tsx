@@ -232,16 +232,16 @@ export const DemoEdges = [
             ...styleLine,
         },
     }, 
-    {
-        id: "PSV_None04-PSV01",
-        source: "PSV_None04",
-        target: "PSV01",
-        // animated: true,
-        type: "smoothstep",
+    // {
+    //     id: "PSV_None04-PSV01",
+    //     source: "PSV_None04",
+    //     target: "PSV01",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    }, 
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // }, 
      {
         id: "FIQ_none11-data1",
         source: "FIQ_none11",
