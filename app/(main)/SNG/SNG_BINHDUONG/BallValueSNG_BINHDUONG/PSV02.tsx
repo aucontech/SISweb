@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
 import { colorData, colorNameValue } from "../Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG";
+import { id_SNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 
 export default function PSV02() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -31,7 +32,7 @@ export default function PSV02() {
                         keys: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV02",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -40,7 +41,7 @@ export default function PSV02() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: "28f7e830-a3ce-11ee-9ca1-8f006c3fce43",
+                                id: id_SNG_BinhDuong,
                             },
                         },
                         pageLink: {
@@ -71,7 +72,7 @@ export default function PSV02() {
                         latestValues: [
                             {
                                 type: "ATTRIBUTE",
-                                key: "PSV02",
+                                key: "PCV_02",
                             },
                         ],
                     },
@@ -104,20 +105,20 @@ export default function PSV02() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.data && dataReceived.data.data.length > 0) {
                     const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV02.value;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.value;
                     setUpData(ballValue);
 
                     const ballTS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV02.ts;
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02.ts;
                     setUpTS(ballTS);
                 } else if (
                     dataReceived.update &&
                     dataReceived.update.length > 0
                 ) {
                     const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV02.value;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.value;
                     const updateTS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV02.ts;
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02.ts;
 
                     setUpData(updatedData);
                     setUpTS(updateTS);
