@@ -1359,7 +1359,7 @@ const ChangemaintainEVC_02_Volume_at_Measurement_Condition = async () => {
     }
 };
 
-
+//=======================================================================================
 
 const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
 const [inputValueEVC_01_Temperature, setinputValueEVC_01_Temperature] = useState<any>();
@@ -1557,7 +1557,7 @@ const ChangemaintainEVC_02_Vm_of_Last_Day = async () => {
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
             { EVC_02_Vm_of_Last_Day_Maintain: newValue }
         );
-        setmaintainEVC_01_Vm_of_Last_Day(newValue);
+        setmaintainEVC_02_Vm_of_Last_Day(newValue);
     } catch (error) {
         console.error(error);
     }
@@ -1597,7 +1597,7 @@ const ChangemaintainEVC_01_Vb_of_Last_Day = async () => {
             `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
             { EVC_01_Vb_of_Last_Day_Maintain: newValue }
         );
-        setmaintainEVC_01_Vm_of_Last_Day(newValue);
+        setmaintainEVC_01_Vb_of_Last_Day(newValue);
     } catch (error) {
         console.error(error);
     }

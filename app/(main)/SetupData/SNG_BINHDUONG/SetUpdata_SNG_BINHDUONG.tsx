@@ -5330,7 +5330,7 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSHV_1001} >{PLC_STTValue}</span>,
-      name: <span style={combineCss.CSSHV_1001}>Heat Value HV-2001</span> ,
+      name: <span style={combineCss.CSSHV_1001}>Heat Value HV-1001</span> ,
 
       modbus: <span style={combineCss.CSSHV_1001}>40065	 </span> ,
 
@@ -5415,7 +5415,7 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSTOTAL_CNG} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSTOTAL_CNG}>Total SNG</span> ,
+    name: <span style={combineCss.CSSTOTAL_CNG}>Total CNG</span> ,
 
     modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
 

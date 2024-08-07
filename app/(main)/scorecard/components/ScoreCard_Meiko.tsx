@@ -465,22 +465,15 @@ export default function ScoreCard_Meiko() {
   const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
   
   
-      useEffect(() => {
-          if (typeof VP_303_High === 'string' && typeof VP_303_Low === 'string' && VP_303 !== null && maintainVP_303 === false
-          ) {
-              const highValue = parseFloat(VP_303_High);
-              const lowValue = parseFloat(VP_303_Low);
-              const VP_303Value = parseFloat(VP_303);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_303Value)) {
-                  if (highValue <= VP_303Value || VP_303Value <= lowValue) {
-                          setExceedThresholdVP_303(true);
-                  } else {
-                     setExceedThresholdVP_303(false);
-                  }
-              } 
-          } 
-      }, [VP_303_High, VP_303, VP_303_Low,maintainVP_303]);
+  useEffect(() => {
+    const VP_303Value = parseFloat(VP_303 as any);
+    const highValue = VP_303_High ?? NaN;
+    const lowValue = VP_303_Low ?? NaN;
+
+    if (!isNaN(VP_303Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_303) {
+        setExceedThresholdVP_303(VP_303Value >= highValue || VP_303Value <= lowValue);
+    }
+}, [VP_303, VP_303_High, VP_303_Low, maintainVP_303]);
 
 
   // =================================================================================================================== 
@@ -493,23 +486,16 @@ export default function ScoreCard_Meiko() {
        const [exceedThresholdVP_302, setExceedThresholdVP_302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
        const [maintainVP_302, setMaintainVP_302] = useState<boolean>(false);
        
-       
-           useEffect(() => {
-               if (typeof VP_302_High === 'string' && typeof VP_302_Low === 'string' && VP_302 !== null && maintainVP_302 === false
-               ) {
-                   const highValue = parseFloat(VP_302_High);
-                   const lowValue = parseFloat(VP_302_Low);
-                   const VP_302Value = parseFloat(VP_302);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_302Value)) {
-                       if (highValue <= VP_302Value || VP_302Value <= lowValue) {
-                               setExceedThresholdVP_302(true);
-                       } else {
-                          setExceedThresholdVP_302(false);
-                       }
-                   } 
-               } 
-           }, [VP_302_High, VP_302, VP_302_Low,maintainVP_302]);
+  
+       useEffect(() => {
+        const VP_302Value = parseFloat(VP_302 as any);
+        const highValue = VP_302_High ?? NaN;
+        const lowValue = VP_302_Low ?? NaN;
+    
+        if (!isNaN(VP_302Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_302) {
+            setExceedThresholdVP_302(VP_302Value >= highValue || VP_302Value <= lowValue);
+        }
+    }, [VP_302, VP_302_High, VP_302_Low, maintainVP_302]);
        
 
   
@@ -525,22 +511,15 @@ export default function ScoreCard_Meiko() {
        const [maintainVP_301, setMaintainVP_301] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof VP_301_High === 'string' && typeof VP_301_Low === 'string' && VP_301 !== null && maintainVP_301 === false
-               ) {
-                   const highValue = parseFloat(VP_301_High);
-                   const lowValue = parseFloat(VP_301_Low);
-                   const VP_301Value = parseFloat(VP_301);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_301Value)) {
-                       if (highValue <= VP_301Value || VP_301Value <= lowValue) {
-                               setExceedThresholdVP_301(true);
-                       } else {
-                          setExceedThresholdVP_301(false);
-                       }
-                   } 
-               } 
-           }, [VP_301_High, VP_301 , VP_301_Low,maintainVP_301]);
+       useEffect(() => {
+        const VP_301Value = parseFloat(VP_301 as any);
+        const highValue = VP_301_High ?? NaN;
+        const lowValue = VP_301_Low ?? NaN;
+    
+        if (!isNaN(VP_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_301) {
+            setExceedThresholdVP_301(VP_301Value >= highValue || VP_301Value <= lowValue);
+        }
+    }, [VP_301, VP_301_High, VP_301_Low, maintainVP_301]);
        
 
   
@@ -553,23 +532,15 @@ export default function ScoreCard_Meiko() {
        const [maintainGD_103_High, setMaintainGD_103_High] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof GD_103_High_High === 'string' && typeof GD_103_High_Low === 'string' && GD_103_High !== null && maintainGD_103_High === false
-               ) {
-                   const highValue = parseFloat(GD_103_High_High);
-                   const lowValue = parseFloat(GD_103_High_Low);
-                   const GD_103_HighValue = parseFloat(GD_103_High);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_HighValue)) {
-                       if (highValue <= GD_103_HighValue || GD_103_HighValue <= lowValue) {
-                               setExceedThresholdGD_103_High(true);
-                       } else {
-                          setExceedThresholdGD_103_High(false);
-                       }
-                   } 
-               } 
-           }, [GD_103_High_High, GD_103_High, GD_103_High_Low,maintainGD_103_High]);
-       
+       useEffect(() => {
+        const GD_103_HighValue = parseFloat(GD_103_High as any);
+        const highValue = GD_103_High_High ?? NaN;
+        const lowValue = GD_103_High_Low ?? NaN;
+    
+        if (!isNaN(GD_103_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_103_High) {
+            setExceedThresholdGD_103_High(GD_103_HighValue >= highValue || GD_103_HighValue <= lowValue);
+        }
+    }, [GD_103_High, GD_103_High_High, GD_103_High_Low, maintainGD_103_High]);
 
   
   
@@ -582,22 +553,15 @@ export default function ScoreCard_Meiko() {
        const [maintainGD_102_High, setMaintainGD_102_High] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof GD_102_High_High === 'string' && typeof GD_102_High_Low === 'string' && GD_102_High !== null && maintainGD_102_High === false
-               ) {
-                   const highValue = parseFloat(GD_102_High_High);
-                   const lowValue = parseFloat(GD_102_High_Low);
-                   const GD_102_HighValue = parseFloat(GD_102_High);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_HighValue)) {
-                       if (highValue <= GD_102_HighValue || GD_102_HighValue <= lowValue) {
-                               setExceedThresholdGD_102_High(true);
-                       } else {
-                          setExceedThresholdGD_102_High(false);
-                       }
-                   } 
-               } 
-           }, [GD_102_High_High, GD_102_High, GD_102_High_Low,maintainGD_102_High]);
+       useEffect(() => {
+        const GD_102_HighValue = parseFloat(GD_102_High as any);
+        const highValue = GD_102_High_High ?? NaN;
+        const lowValue = GD_102_High_Low ?? NaN;
+    
+        if (!isNaN(GD_102_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_102_High) {
+            setExceedThresholdGD_102_High(GD_102_HighValue >= highValue || GD_102_HighValue <= lowValue);
+        }
+    }, [GD_102_High, GD_102_High_High, GD_102_High_Low, maintainGD_102_High]);
        
  
   
@@ -614,22 +578,15 @@ export default function ScoreCard_Meiko() {
  const [maintainGD_101_High, setMaintainGD_101_High] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof GD_101_High_High === 'string' && typeof GD_101_High_Low === 'string' && GD_101_High !== null && maintainGD_101_High === false
-         ) {
-             const highValue = parseFloat(GD_101_High_High);
-             const lowValue = parseFloat(GD_101_High_Low);
-             const GD_101_HighValue = parseFloat(GD_101_High);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_HighValue)) {
-                 if (highValue <= GD_101_HighValue || GD_101_HighValue <= lowValue) {
-                         setExceedThresholdGD_101_High(true);
-                 } else {
-                    setExceedThresholdGD_101_High(false);
-                 }
-             } 
-         } 
-     }, [GD_101_High_High, GD_101_High, GD_101_High_Low,maintainGD_101_High]);
+ useEffect(() => {
+    const GD_101_HighValue = parseFloat(GD_101_High as any);
+    const highValue = GD_101_High_High ?? NaN;
+    const lowValue = GD_101_High_Low ?? NaN;
+
+    if (!isNaN(GD_101_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_101_High) {
+        setExceedThresholdGD_101_High(GD_101_HighValue >= highValue || GD_101_HighValue <= lowValue);
+    }
+}, [GD_101_High, GD_101_High_High, GD_101_High_Low, maintainGD_101_High]);
  
 
 
@@ -642,22 +599,16 @@ export default function ScoreCard_Meiko() {
      const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
-             ) {
-                 const highValue = parseFloat(GD_103_Low_High);
-                 const lowValue = parseFloat(GD_103_Low_Low);
-                 const GD_103_LowValue = parseFloat(GD_103_Low);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
-                     if (highValue <= GD_103_LowValue || GD_103_LowValue <= lowValue) {
-                             setExceedThresholdGD_103_Low(true);
-                     } else {
-                        setExceedThresholdGD_103_Low(false);
-                     }
-                 } 
-             } 
-         }, [GD_103_Low_High, GD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
+     useEffect(() => {
+        const GD_103_LowValue = parseFloat(GD_103_Low as any);
+        const highValue = GD_103_Low_High ?? NaN;
+        const lowValue = GD_103_Low_Low ?? NaN;
+    
+        if (!isNaN(GD_103_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_103_Low) {
+            setExceedThresholdGD_103_Low(GD_103_LowValue >= highValue || GD_103_LowValue <= lowValue);
+        }
+    }, [GD_103_Low, GD_103_Low_High, GD_103_Low_Low, maintainGD_103_Low]);
+      
      
    
  
@@ -673,21 +624,15 @@ export default function ScoreCard_Meiko() {
             
             
             useEffect(() => {
-                if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
-                ) {
-                    const highValue = parseFloat(GD_102_Low_High);
-                    const lowValue = parseFloat(GD_102_Low_Low);
-                    const GD_102_LowValue = parseFloat(GD_102_Low);
+                const GD_102_LowValue = parseFloat(GD_102_Low as any);
+                const highValue = GD_102_Low_High ?? NaN;
+                const lowValue = GD_102_Low_Low ?? NaN;
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
-                        if (highValue <= GD_102_LowValue || GD_102_LowValue <= lowValue) {
-                                setExceedThresholdGD_102_Low(true);
-                        } else {
-                           setExceedThresholdGD_102_Low(false);
-                        }
-                    } 
-                } 
-            }, [GD_102_Low_High, GD_102_Low, , GD_102_Low_Low,maintainGD_102_Low]);
+                if (!isNaN(GD_102_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_102_Low) {
+                    setExceedThresholdGD_102_Low(GD_102_LowValue >= highValue || GD_102_LowValue <= lowValue);
+                }
+            }, [GD_102_Low, GD_102_Low_High, GD_102_Low_Low, maintainGD_102_Low]);
+              
             
          // =================================================================================================================== 
 
@@ -699,22 +644,15 @@ export default function ScoreCard_Meiko() {
          const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
          
          
-             useEffect(() => {
-                 if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
-                 ) {
-                     const highValue = parseFloat(GD_101_Low_High);
-                     const lowValue = parseFloat(GD_101_Low_Low);
-                     const GD_101_LowValue = parseFloat(GD_101_Low);
-             
-                     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
-                         if (highValue <= GD_101_LowValue || GD_101_LowValue <= lowValue) {
-                                 setExceedThresholdGD_101_Low(true);
-                         } else {
-                            setExceedThresholdGD_101_Low(false);
-                         }
-                     } 
-                 } 
-             }, [GD_101_Low_High, GD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
+         useEffect(() => {
+            const GD_101_LowValue = parseFloat(GD_101_Low as any);
+            const highValue = GD_101_Low_High ?? NaN;
+            const lowValue = GD_101_Low_Low ?? NaN;
+        
+            if (!isNaN(GD_101_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_101_Low) {
+                setExceedThresholdGD_101_Low(GD_101_LowValue >= highValue || GD_101_LowValue <= lowValue);
+            }
+        }, [GD_101_Low, GD_101_Low_High, GD_101_Low_Low, maintainGD_101_Low]);
          
         
         
@@ -730,22 +668,16 @@ export default function ScoreCard_Meiko() {
  const [maintainSDV_301, setMaintainSDV_301] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof SDV_301_High === 'string' && typeof SDV_301_Low === 'string' && SDV_301 !== null && maintainSDV_301 === false
-         ) {
-             const highValue = parseFloat(SDV_301_High);
-             const lowValue = parseFloat(SDV_301_Low);
-             const SDV_301Value = parseFloat(SDV_301);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_301Value)) {
-                 if (highValue <= SDV_301Value || SDV_301Value <= lowValue) {
-                         setExceedThresholdSDV_301(true);
-                 } else {
-                    setExceedThresholdSDV_301(false);
-                 }
-             } 
-         } 
-     }, [SDV_301_High, SDV_301, SDV_301_Low,maintainSDV_301]);
+ useEffect(() => {
+    const SDV_301Value = parseFloat(SDV_301 as any);
+    const highValue = SDV_301_High ?? NaN;
+    const lowValue = SDV_301_Low ?? NaN;
+
+    if (!isNaN(SDV_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_301) {
+        setExceedThresholdSDV_301(SDV_301Value >= highValue || SDV_301Value <= lowValue);
+    }
+}, [SDV_301, SDV_301_High, SDV_301_Low, maintainSDV_301]);
+  
  
 
 
@@ -768,23 +700,15 @@ const [exceedThresholdSDV_302, setExceedThresholdSDV_302] = useState(false); // 
 const [maintainSDV_302, setMaintainSDV_302] = useState<boolean>(false);
 
 
- useEffect(() => {
-     if (typeof SDV_302_High === 'string' && typeof SDV_302_Low === 'string' && SDV_302 !== null && maintainSDV_302 === false
-     ) {
-         const highValue = parseFloat(SDV_302_High);
-         const lowValue = parseFloat(SDV_302_Low);
-         const SDV_302Value = parseFloat(SDV_302);
- 
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_302Value)) {
-             if (highValue <= SDV_302Value || SDV_302Value <= lowValue) {
-            
-                     setExceedThresholdSDV_302(true);
-             } else {
-                setExceedThresholdSDV_302(false);
-             }
-         } 
-     } 
- }, [SDV_302_High, SDV_302, SDV_302_Low,maintainSDV_302]);
+useEffect(() => {
+    const SDV_302Value = parseFloat(SDV_302 as any);
+    const highValue = SDV_302_High ?? NaN;
+    const lowValue = SDV_302_Low ?? NaN;
+
+    if (!isNaN(SDV_302Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_302) {
+        setExceedThresholdSDV_302(SDV_302Value >= highValue || SDV_302Value <= lowValue);
+    }
+}, [SDV_302, SDV_302_High, SDV_302_Low, maintainSDV_302]);
 
 
 
@@ -803,23 +727,15 @@ const [Pipe_Temp_Low, setPipe_Temp_Low] = useState<number | null>(null);
 const [exceedThresholdPipe_Temp, setExceedThresholdPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
 
-
 useEffect(() => {
- if (typeof Pipe_Temp_High === 'string' && typeof Pipe_Temp_Low === 'string' && Pipe_Temp !== null && maintainPipe_Temp === false
- ) {
-     const highValue = parseFloat(Pipe_Temp_High);
-     const lowValue = parseFloat(Pipe_Temp_Low);
-     const Pipe_TempValue = parseFloat(Pipe_Temp);
+    const Pipe_TempValue = parseFloat(Pipe_Temp as any);
+    const highValue = Pipe_Temp_High ?? NaN;
+    const lowValue = Pipe_Temp_Low ?? NaN;
 
-     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_TempValue)) {
-         if (highValue <= Pipe_TempValue || Pipe_TempValue <= lowValue) {
-                 setExceedThresholdPipe_Temp(true);
-         } else {
-            setExceedThresholdPipe_Temp(false);
-         }
-     } 
- } 
-}, [Pipe_Temp_High, Pipe_Temp, Pipe_Temp_Low,maintainPipe_Temp]);
+    if (!isNaN(Pipe_TempValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Temp) {
+        setExceedThresholdPipe_Temp(Pipe_TempValue >= highValue || Pipe_TempValue <= lowValue);
+    }
+}, [Pipe_Temp, Pipe_Temp_High, Pipe_Temp_Low, maintainPipe_Temp]);
 
 
 
@@ -841,23 +757,15 @@ useEffect(() => {
      const [maintainV2_Flow_Meter, setMaintainV2_Flow_Meter] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof V2_Flow_Meter_High === 'string' && typeof V2_Flow_Meter_Low === 'string' && V2_Flow_Meter !== null && maintainV2_Flow_Meter === false
-             ) {
-                 const highValue = parseFloat(V2_Flow_Meter_High);
-                 const lowValue = parseFloat(V2_Flow_Meter_Low);
-                 const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V2_Flow_MeterValue)) {
-                     if (highValue <= V2_Flow_MeterValue || V2_Flow_MeterValue <= lowValue) {
-                         
-                             setExceedThresholdV2_Flow_Meter(true);
-                     } else {
-                        setExceedThresholdV2_Flow_Meter(false);
-                     }
-                 } 
-             } 
-         }, [V2_Flow_Meter_High, V2_Flow_Meter, , V2_Flow_Meter_Low,maintainV2_Flow_Meter]);
+     useEffect(() => {
+        const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter as any);
+        const highValue = V2_Flow_Meter_High ?? NaN;
+        const lowValue = V2_Flow_Meter_Low ?? NaN;
+    
+        if (!isNaN(V2_Flow_MeterValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainV2_Flow_Meter) {
+            setExceedThresholdV2_Flow_Meter(V2_Flow_MeterValue >= highValue || V2_Flow_MeterValue <= lowValue);
+        }
+    }, [V2_Flow_Meter, V2_Flow_Meter_High, V2_Flow_Meter_Low, maintainV2_Flow_Meter]);
      
      
      
@@ -877,23 +785,15 @@ useEffect(() => {
      const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof Tank_TT_301_High === 'string' && typeof Tank_TT_301_Low === 'string' && Tank_TT_301 !== null && maintainTank_TT_301 === false
-             ) {
-                 const highValue = parseFloat(Tank_TT_301_High);
-                 const lowValue = parseFloat(Tank_TT_301_Low);
-                 const Tank_TT_301Value = parseFloat(Tank_TT_301);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_TT_301Value)) {
-                     if (highValue <= Tank_TT_301Value || Tank_TT_301Value <= lowValue) {
-                             setExceedThresholdTank_TT_301(true);
-                     } else {
-                         setExceedThresholdTank_TT_301(false);
-                     }
-                 } 
-             } 
-         }, [Tank_TT_301_High, Tank_TT_301, Tank_TT_301_Low,maintainTank_TT_301]);
-     
+     useEffect(() => {
+        const Tank_TT_301Value = parseFloat(Tank_TT_301 as any);
+        const highValue = Tank_TT_301_High ?? NaN;
+        const lowValue = Tank_TT_301_Low ?? NaN;
+    
+        if (!isNaN(Tank_TT_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_TT_301) {
+            setExceedThresholdTank_TT_301(Tank_TT_301Value >= highValue || Tank_TT_301Value <= lowValue);
+        }
+    }, [Tank_TT_301, Tank_TT_301_High, Tank_TT_301_Low, maintainTank_TT_301]);
       
 
      // =================================================================================================================== 
@@ -907,23 +807,15 @@ useEffect(() => {
      
      const [maintainV1_Flow_Meter, setMaintainV1_Flow_Meter] = useState<boolean>(false);
      
-     
-      useEffect(() => {
-          if (typeof V1_Flow_Meter_High === 'string' && typeof V1_Flow_Meter_Low === 'string' && V1_Flow_Meter !== null && maintainV1_Flow_Meter === false
-          ) {
-              const highValue = parseFloat(V1_Flow_Meter_High);
-              const lowValue = parseFloat(V1_Flow_Meter_Low);
-              const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V1_Flow_MeterValue)) {
-                  if (highValue <= V1_Flow_MeterValue || V1_Flow_MeterValue <= lowValue) {
-                          setExceedThresholdV1_Flow_Meter(true);
-                  } else {
-                     setExceedThresholdV1_Flow_Meter(false);
-                  }
-              } 
-          } 
-      }, [V1_Flow_Meter_High, V1_Flow_Meter, V1_Flow_Meter_Low,maintainV1_Flow_Meter]);
+     useEffect(() => {
+        const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter as any);
+        const highValue = V1_Flow_Meter_High ?? NaN;
+        const lowValue = V1_Flow_Meter_Low ?? NaN;
+    
+        if (!isNaN(V1_Flow_MeterValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainV1_Flow_Meter) {
+            setExceedThresholdV1_Flow_Meter(V1_Flow_MeterValue >= highValue || V1_Flow_MeterValue <= lowValue);
+        }
+    }, [V1_Flow_Meter, V1_Flow_Meter_High, V1_Flow_Meter_Low, maintainV1_Flow_Meter]);
      
    
      
@@ -942,22 +834,15 @@ useEffect(() => {
           const [maintainTank_PT_301, setMaintainTank_PT_301] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof Tank_PT_301_High === 'string' && typeof Tank_PT_301_Low === 'string' && Tank_PT_301 !== null && maintainTank_PT_301 === false
-                  ) {
-                      const highValue = parseFloat(Tank_PT_301_High);
-                      const lowValue = parseFloat(Tank_PT_301_Low);
-                      const Tank_PT_301Value = parseFloat(Tank_PT_301);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_PT_301Value)) {
-                          if (highValue <= Tank_PT_301Value || Tank_PT_301Value <= lowValue) {
-                                  setExceedThresholdTank_PT_301(true);
-                          } else {
-                             setExceedThresholdTank_PT_301(false);
-                          }
-                      } 
-                  } 
-              }, [Tank_PT_301_High, Tank_PT_301, Tank_PT_301_Low,maintainTank_PT_301]);
+          useEffect(() => {
+            const Tank_PT_301Value = parseFloat(Tank_PT_301 as any);
+            const highValue = Tank_PT_301_High ?? NaN;
+            const lowValue = Tank_PT_301_Low ?? NaN;
+        
+            if (!isNaN(Tank_PT_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_PT_301) {
+                setExceedThresholdTank_PT_301(Tank_PT_301Value >= highValue || Tank_PT_301Value <= lowValue);
+            }
+        }, [Tank_PT_301, Tank_PT_301_High, Tank_PT_301_Low, maintainTank_PT_301]);
           
            
      
@@ -973,22 +858,15 @@ useEffect(() => {
           const [maintainTank_01_Volume, setMaintainTank_01_Volume] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof Tank_01_Volume_High === 'string' && typeof Tank_01_Volume_Low === 'string' && Tank_01_Volume !== null && maintainTank_01_Volume === false
-                  ) {
-                      const highValue = parseFloat(Tank_01_Volume_High);
-                      const lowValue = parseFloat(Tank_01_Volume_Low);
-                      const Tank_01_VolumeValue = parseFloat(Tank_01_Volume);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_VolumeValue)) {
-                          if (highValue <= Tank_01_VolumeValue || Tank_01_VolumeValue <= lowValue) {
-                                  setExceedThresholdTank_01_Volume(true);
-                          } else {
-                             setExceedThresholdTank_01_Volume(false);
-                          }
-                      } 
-                  } 
-              }, [Tank_01_Volume_High, Tank_01_Volume , Tank_01_Volume_Low,maintainTank_01_Volume]);
+          useEffect(() => {
+            const Tank_01_VolumeValue = parseFloat(Tank_01_Volume as any);
+            const highValue = Tank_01_Volume_High ?? NaN;
+            const lowValue = Tank_01_Volume_Low ?? NaN;
+        
+            if (!isNaN(Tank_01_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Volume) {
+                setExceedThresholdTank_01_Volume(Tank_01_VolumeValue >= highValue || Tank_01_VolumeValue <= lowValue);
+            }
+        }, [Tank_01_Volume, Tank_01_Volume_High, Tank_01_Volume_Low, maintainTank_01_Volume]);
           
        
     
@@ -1003,22 +881,16 @@ useEffect(() => {
         const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof Pipe_Press_High === 'string' && typeof Pipe_Press_Low === 'string' && Pipe_Press !== null && maintainPipe_Press === false
-         ) {
-             const highValue = parseFloat(Pipe_Press_High);
-             const lowValue = parseFloat(Pipe_Press_Low);
-             const Pipe_PressValue = parseFloat(Pipe_Press);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_PressValue)) {
-                 if (highValue <= Pipe_PressValue || Pipe_PressValue <= lowValue) {
-                         setExceedThresholdPipe_Press(true);
-                 } else {
-                    setExceedThresholdPipe_Press(false);
-                 }
-             } 
-         } 
-     }, [Pipe_Press_High, Pipe_Press, Pipe_Press_Low,maintainPipe_Press]);
+        useEffect(() => {
+            const Pipe_PressValue = parseFloat(Pipe_Press as any);
+            const highValue = Pipe_Press_High ?? NaN;
+            const lowValue = Pipe_Press_Low ?? NaN;
+        
+            if (!isNaN(Pipe_PressValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Press) {
+                setExceedThresholdPipe_Press(Pipe_PressValue >= highValue || Pipe_PressValue <= lowValue);
+            }
+        }, [Pipe_Press, Pipe_Press_High, Pipe_Press_Low, maintainPipe_Press]);
+        
          // =================================================================================================================== 
         
         
@@ -1031,22 +903,15 @@ useEffect(() => {
         const [maintainTank_01_Mass, setMaintainTank_01_Mass] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof Tank_01_Mass_High === 'string' && typeof Tank_01_Mass_Low === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
-                ) {
-                    const highValue = parseFloat(Tank_01_Mass_High);
-                    const lowValue = parseFloat(Tank_01_Mass_Low);
-                    const Tank_01_MassValue = parseFloat(Tank_01_Mass);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_MassValue)) {
-                        if (highValue <= Tank_01_MassValue || Tank_01_MassValue <= lowValue) {
-                                setExceedThresholdTank_01_Mass(true);
-                        } else {
-                           setExceedThresholdTank_01_Mass(false);
-                        }
-                    } 
-                } 
-            }, [Tank_01_Mass_High, Tank_01_Mass, Tank_01_Mass_Low,maintainTank_01_Mass]);
+        useEffect(() => {
+            const Tank_01_MassValue = parseFloat(Tank_01_Mass as any);
+            const highValue = Tank_01_Mass_High ?? NaN;
+            const lowValue = Tank_01_Mass_Low ?? NaN;
+        
+            if (!isNaN(Tank_01_MassValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Mass) {
+                setExceedThresholdTank_01_Mass(Tank_01_MassValue >= highValue || Tank_01_MassValue <= lowValue);
+            }
+        }, [Tank_01_Mass, Tank_01_Mass_High, Tank_01_Mass_Low, maintainTank_01_Mass]);
         
          
         
@@ -1065,21 +930,14 @@ useEffect(() => {
         
         
         useEffect(() => {
-            if (typeof Tank_01_Level_High === 'string' && typeof Tank_01_Level_Low === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
-            ) {
-                const highValue = parseFloat(Tank_01_Level_High);
-                const lowValue = parseFloat(Tank_01_Level_Low);
-                const Tank_01_LevelValue = parseFloat(Tank_01_Level);
+            const Tank_01_LevelValue = parseFloat(Tank_01_Level as any);
+            const highValue = Tank_01_Level_High ?? NaN;
+            const lowValue = Tank_01_Level_Low ?? NaN;
         
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_LevelValue)) {
-                    if (highValue <= Tank_01_LevelValue || Tank_01_LevelValue <= lowValue) {
-                            setExceedThresholdTank_01_Level(true);
-                    } else {
-                       setExceedThresholdTank_01_Level(false);
-                    }
-                } 
-            } 
-        }, [Tank_01_Level_High, Tank_01_Level, Tank_01_Level_Low,maintainTank_01_Level]);
+            if (!isNaN(Tank_01_LevelValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Level) {
+                setExceedThresholdTank_01_Level(Tank_01_LevelValue >= highValue || Tank_01_LevelValue <= lowValue);
+            }
+        }, [Tank_01_Level, Tank_01_Level_High, Tank_01_Level_Low, maintainTank_01_Level]);
         
  
         // =================================================================================================================== 
@@ -1128,23 +986,17 @@ useEffect(() => {
                   
                   const [maintainConsumption_Flow, setMaintainConsumption_Flow] = useState<boolean>(false);
                   
-                  
                   useEffect(() => {
-                      if (typeof Consumption_Flow_High === 'string' && typeof Consumption_Flow_Low === 'string' && Consumption_Flow !== null && maintainConsumption_Flow === false
-                      ) {
-                          const highValue = parseFloat(Consumption_Flow_High);
-                          const lowValue = parseFloat(Consumption_Flow_Low);
-                          const Consumption_FlowValue = parseFloat(Consumption_Flow);
+                    const Consumption_FlowValue = parseFloat(Consumption_Flow as any);
+                    const highValue = Consumption_Flow_High ?? NaN;
+                    const lowValue = Consumption_Flow_Low ?? NaN;
+                
+                    if (!isNaN(Consumption_FlowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainConsumption_Flow) {
+                        setExceedThresholdConsumption_Flow(Consumption_FlowValue >= highValue || Consumption_FlowValue <= lowValue);
+                    }
+                }, [Consumption_Flow, Consumption_Flow_High, Consumption_Flow_Low, maintainConsumption_Flow]);
+                
                   
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Consumption_FlowValue)) {
-                              if (highValue <= Consumption_FlowValue || Consumption_FlowValue <= lowValue) {
-                                      setExceedThresholdConsumption_Flow(true);
-                              } else {
-                                 setExceedThresholdConsumption_Flow(false);
-                              }
-                          } 
-                      } 
-                  }, [Consumption_Flow_High, Consumption_Flow, Consumption_Flow_Low,maintainConsumption_Flow]);
                   
       
                   
@@ -1163,21 +1015,14 @@ useEffect(() => {
                          
                          
                          useEffect(() => {
-                             if (typeof Flow_Velocity_High === 'string' && typeof Flow_Velocity_Low === 'string' && Flow_Velocity !== null && maintainFlow_Velocity === false
-                             ) {
-                                 const highValue = parseFloat(Flow_Velocity_High);
-                                 const lowValue = parseFloat(Flow_Velocity_Low);
-                                 const Flow_VelocityValue = parseFloat(Flow_Velocity);
-                         
-                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_VelocityValue)) {
-                                     if (highValue <= Flow_VelocityValue || Flow_VelocityValue <= lowValue) {
-                                             setExceedThresholdFlow_Velocity(true);
-                                     } else {
-                                        setExceedThresholdFlow_Velocity(false);
-                                     }
-                                 } 
-                             } 
-                         }, [Flow_Velocity_High, Flow_Velocity, Flow_Velocity_Low,maintainFlow_Velocity]);
+                            const Flow_VelocityValue = parseFloat(Flow_Velocity as any);
+                            const highValue = Flow_Velocity_High ?? NaN;
+                            const lowValue = Flow_Velocity_Low ?? NaN;
+                        
+                            if (!isNaN(Flow_VelocityValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFlow_Velocity) {
+                                setExceedThresholdFlow_Velocity(Flow_VelocityValue >= highValue || Flow_VelocityValue <= lowValue);
+                            }
+                        }, [Flow_Velocity, Flow_Velocity_High, Flow_Velocity_Low, maintainFlow_Velocity]);
                          
                      
                          
@@ -1704,8 +1549,7 @@ useEffect(() => {
     ];
 
     return (
-        <div >
-            <div  >
+        <div style={{width:'60%'}} >
                 <div
                     style={{
                         background: "#64758B",
@@ -1770,10 +1614,7 @@ useEffect(() => {
                 
             </div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+        
 
-        </div>
     );
 }
