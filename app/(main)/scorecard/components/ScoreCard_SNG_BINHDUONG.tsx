@@ -366,7 +366,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
             );
 
 
-            
+
             const TM_2003_SNG_High = res.data.find((item: any) => item.key === "TM_2003_SNG_High");
             setTM_2003_SNG_High(TM_2003_SNG_High?.value || null);
             const TM_2003_SNG_Low = res.data.find((item: any) => item.key === "TM_2003_SNG_Low");
@@ -1864,7 +1864,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         TT_2004: "Temperature Transmitter TT-2004 (˚C) ",
         TG_2005: "TG-2005 (˚C)",
 
-        WB_1001: "Wobbe Index WB-1001 (MJ/M3)",
+        WB_1001: "Wobbe Index WB-1001 (MJ/Sm³)",
 
       
 
@@ -1875,9 +1875,9 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_2005: `Gas Detector GD-2005 (%LEL)`,
         GD_2006: `Gas Detector GD-2006 (%LEL)`,
 
-        TM_2002_SNG:`Tubine Meter TM2002-SNG`,
-        TM_2003_SNG:`Tubine Meter TM2003-SNG`,
-        TOTAL_SNG: `Total SNG`,
+        TM_2002_SNG:`Tubine Meter TM2002-SNG${nameValue.Sm3h}`,
+        TM_2003_SNG:`Tubine Meter TM2003-SNG${nameValue.Sm3h}`,
+        TOTAL_SNG: `Total SNG ${nameValue.m3}`,
 
         SDV_2004:"Shutdown Valve SDV-2004 (0: Close - 1: Open)",
         SDV_2003:"Shutdown Valve SDV-2003 (0: Close - 1: Open)",
@@ -1893,7 +1893,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD5_STATUS:"GD-2006 Status (0: Normal - 1: Alarm)",
 
 
-        SD: "Emergency Shutdown (0: Normal - 1: Smoker Detected) ",
+        SD: "Smoke Detector (0: Normal - 1: Smoker Detected) ",
         HR_BC: "Horn And Beacon (0: OFF - 1: ON)",
         ESD: "Emergency Shutdown (0: No Active - 1: Active)",
         VAPORIZER_3: "VAPORIZER 3 (0: Stop - 1: Run)",
@@ -2742,11 +2742,11 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSESD}>{} {ESD} {DataESD}</span>,
         },
         {
-            name: <span>{tagNamePLC.VAPORIZER_2}</span>,
+            name: <span>{tagNamePLC.VAPORIZER_1}</span>,
             PLC: <span style={combineCss.CSSVAPORIZER_1}>{VAPORIZER_1} {DataVAPORIZER_1}</span>,
         },
         {
-            name: <span>{tagNamePLC.VAPORIZER_1}</span>,
+            name: <span>{tagNamePLC.VAPORIZER_2}</span>,
             PLC: <span style={combineCss.CSSVAPORIZER_2}>{VAPORIZER_2} {DataVAPORIZER_2}</span>,
         },
    
@@ -2786,7 +2786,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
    
         {
             name: <span>{tagNamePLC.TOTAL_CNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG}</span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
         },
         {
             name: <span>{tagNamePLC.RATIO_MODE}</span>,

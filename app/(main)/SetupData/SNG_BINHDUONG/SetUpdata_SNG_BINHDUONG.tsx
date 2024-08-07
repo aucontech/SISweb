@@ -4569,7 +4569,7 @@ disabled={AuthInputHighLow}
 
          modbus: <span style={combineCss.CSSWB_1001}>40011	 </span> ,
 
-        value: <span style={combineCss.CSSWB_1001} > {WB_1001} ( MJ/Sm³ )</span> , 
+        value: <span style={combineCss.CSSWB_1001} > {WB_1001} (MJ/Sm³)</span> , 
          high: <InputText 
 disabled={AuthInputHighLow}
          

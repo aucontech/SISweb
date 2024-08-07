@@ -1702,7 +1702,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Inactive
+                                                InActive
                                             </span>
                                         )}
                                     </p>
@@ -2016,12 +2016,12 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    const storedPositionString = localStorage.getItem("positionsDemo");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-              const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+              // const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
@@ -3960,9 +3960,8 @@ export default function DemoFlowOTS() {
             targetPosition: Position.Bottom,
             style: {
                 border: background,
-                width:'auto',
-               
-                background: 'none',
+                width: 260,
+                background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -5631,18 +5630,18 @@ export default function DemoFlowOTS() {
     const toggleEditing = () => {
         seteditingEnabled(!editingEnabled);
     };
-    useEffect(() => {
-        localStorage.setItem("positionsDemo", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    // }, [positions]);
 
 
     
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
       
 
             <Toast ref={toast} />
@@ -5706,8 +5705,8 @@ export default function DemoFlowOTS() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                 >
                     <Controls style={{ position: "absolute", top: 0 }} />
