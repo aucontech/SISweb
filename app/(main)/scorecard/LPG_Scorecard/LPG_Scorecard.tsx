@@ -3,10 +3,10 @@ import ScoreCard_Meiko from '../components/ScoreCard_Meiko'
 
 export default function LPG_Scorecard() {
   return (
-    <>
+    <div style={{width:'50%'}}>
     <ScoreCard_Meiko/>
+    </div>
 
     
-    </>
   )
 }

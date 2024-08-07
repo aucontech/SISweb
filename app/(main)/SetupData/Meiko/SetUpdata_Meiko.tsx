@@ -178,7 +178,7 @@ export default function SetUpdata_Meiko() {
 
                         Consumption_Flow: setConsumption_Flow,
                         Flow_Velocity: setFlow_Velocity,
-
+                        PLC_Conn_STT:setPLC_Conn_STT
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -429,6 +429,16 @@ export default function SetUpdata_Meiko() {
                 (item: any) => item.key === "Consumption_Flow_Maintain"
             );
 
+
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
+
  // =================================================================================================================== 
 
  setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
@@ -490,6 +500,7 @@ export default function SetUpdata_Meiko() {
             setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
 
             setMaintainFlow_Meter_Total(Flow_Meter_Total_Maintain?.value || false);
+            setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
 
             } catch (error) {
@@ -500,7 +511,6 @@ export default function SetUpdata_Meiko() {
  // =================================================================================================================== 
 
     const [VP_303, setVP_303] = useState<string | null>(null);
-const [audioPlayingVP_303, setAudioPlayingVP_303] = useState(false);
 const [inputValueVP_303, setInputValueVP_303] = useState<any>();
 const [inputValue2VP_303, setInputValue2VP_303] = useState<any>();
 const [VP_303_High, setVP_303_High] = useState<number | null>(null);
@@ -510,39 +520,15 @@ const [exceedThresholdVP_303, setExceedThresholdVP_303] = useState(false); // St
 const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof VP_303_High === 'string' && typeof VP_303_Low === 'string' && VP_303 !== null && maintainVP_303 === false
-        ) {
-            const highValue = parseFloat(VP_303_High);
-            const lowValue = parseFloat(VP_303_Low);
-            const VP_303Value = parseFloat(VP_303);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_303Value)) {
-                if (highValue <= VP_303Value || VP_303Value <= lowValue) {
-                    if (!audioPlayingVP_303) {
-                        audioRef.current?.play();
-                        setAudioPlayingVP_303(true);
-                        setExceedThresholdVP_303(true);
-                    }
-                } else {
-                    setAudioPlayingVP_303(false);
-                    setExceedThresholdVP_303(false);
-                }
-            } 
-        } 
-    }, [VP_303_High, VP_303, audioPlayingVP_303, VP_303_Low,maintainVP_303]);
+useEffect(() => {
+    const VP_303Value = parseFloat(VP_303 as any);
+    const highValue = VP_303_High ?? NaN;
+    const lowValue = VP_303_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingVP_303) {
-            const audioEnded = () => {
-                setAudioPlayingVP_303(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingVP_303]);
+    if (!isNaN(VP_303Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_303) {
+        setExceedThresholdVP_303(VP_303Value >= highValue || VP_303Value <= lowValue);
+    }
+}, [VP_303, VP_303_High, VP_303_Low, maintainVP_303]);
 
     const handleInputChangeVP_303 = (event: any) => {
         const newValue = event.target.value;
@@ -566,6 +552,8 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     };
 
 
+    
+
      // =================================================================================================================== 
 
      const [VP_302, setVP_302] = useState<string | null>(null);
@@ -574,44 +562,21 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      const [inputValue2VP_302, setInputValue2VP_302] = useState<any>();
      const [VP_302_High, setVP_302_High] = useState<number | null>(null);
      const [VP_302_Low, setVP_302_Low] = useState<number | null>(null);
-     const [exceedThreshold302, setExceedThreshold302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThreshold302, setExceedThresholdVP_302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainVP_302, setMaintainVP_302] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof VP_302_High === 'string' && typeof VP_302_Low === 'string' && VP_302 !== null && maintainVP_302 === false
-             ) {
-                 const highValue = parseFloat(VP_302_High);
-                 const lowValue = parseFloat(VP_302_Low);
-                 const VP_302Value = parseFloat(VP_302);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_302Value)) {
-                     if (highValue <= VP_302Value || VP_302Value <= lowValue) {
-                         if (!audioPlayingVP_302) {
-                             audioRef.current?.play();
-                             setAudioPlayingVP_302(true);
-                             setExceedThreshold302(true);
-                         }
-                     } else {
-                        setAudioPlayingVP_302(false);
-                         setExceedThreshold302(false);
-                     }
-                 } 
-             } 
-         }, [VP_302_High, VP_302, audioPlayingVP_302, VP_302_Low,maintainVP_302]);
-     
-         useEffect(() => {
-             if (audioPlayingVP_302) {
-                 const audioEnded = () => {
-                    setAudioPlayingVP_302(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingVP_302]);
+  
+useEffect(() => {
+    const VP_302Value = parseFloat(VP_302 as any);
+    const highValue = VP_302_High ?? NaN;
+    const lowValue = VP_302_Low ?? NaN;
+
+    if (!isNaN(VP_302Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_302) {
+        setExceedThresholdVP_302(VP_302Value >= highValue || VP_302Value <= lowValue);
+    }
+}, [VP_302, VP_302_High, VP_302_Low, maintainVP_302]);
      
          const handleInputChangeVP_302 = (event: any) => {
              const newValue = event.target.value;
@@ -649,39 +614,16 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
      const [maintainVP_301, setMaintainVP_301] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof VP_301_High === 'string' && typeof VP_301_Low === 'string' && VP_301 !== null && maintainVP_301 === false
-             ) {
-                 const highValue = parseFloat(VP_301_High);
-                 const lowValue = parseFloat(VP_301_Low);
-                 const VP_301Value = parseFloat(VP_301);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(VP_301Value)) {
-                     if (highValue <= VP_301Value || VP_301Value <= lowValue) {
-                         if (!audioPlayingVP_301) {
-                             audioRef.current?.play();
-                             setAudioPlayingVP_301(true);
-                             setExceedThresholdVP_301(true);
-                         }
-                     } else {
-                        setAudioPlayingVP_301(false);
-                        setExceedThresholdVP_301(false);
-                     }
-                 } 
-             } 
-         }, [VP_301_High, VP_301, audioPlayingVP_301, VP_301_Low,maintainVP_301]);
      
-         useEffect(() => {
-             if (audioPlayingVP_301) {
-                 const audioEnded = () => {
-                    setAudioPlayingVP_301(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingVP_301]);
+useEffect(() => {
+    const VP_301Value = parseFloat(VP_301 as any);
+    const highValue = VP_301_High ?? NaN;
+    const lowValue = VP_301_Low ?? NaN;
+
+    if (!isNaN(VP_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainVP_301) {
+        setExceedThresholdVP_301(VP_301Value >= highValue || VP_301Value <= lowValue);
+    }
+}, [VP_301, VP_301_High, VP_301_Low, maintainVP_301]);
      
          const handleInputChangeVP_301 = (event: any) => {
              const newValue = event.target.value;
@@ -720,39 +662,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_103_High, setMaintainGD_103_High] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_103_High_High === 'string' && typeof GD_103_High_Low === 'string' && GD_103_High !== null && maintainGD_103_High === false
-                  ) {
-                      const highValue = parseFloat(GD_103_High_High);
-                      const lowValue = parseFloat(GD_103_High_Low);
-                      const GD_103_HighValue = parseFloat(GD_103_High);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_HighValue)) {
-                          if (highValue <= GD_103_HighValue || GD_103_HighValue <= lowValue) {
-                              if (!audioPlayingGD_103_High) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_103_High(true);
-                                  setExceedThresholdGD_103_High(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_103_High(false);
-                             setExceedThresholdGD_103_High(false);
-                          }
-                      } 
-                  } 
-              }, [GD_103_High_High, GD_103_High, audioPlayingGD_103_High, GD_103_High_Low,maintainGD_103_High]);
-          
-              useEffect(() => {
-                  if (audioPlayingGD_103_High) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_103_High(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_103_High]);
+          useEffect(() => {
+            const GD_103_HighValue = parseFloat(GD_103_High as any);
+            const highValue = GD_103_High_High ?? NaN;
+            const lowValue = GD_103_High_Low ?? NaN;
+        
+            if (!isNaN(GD_103_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_103_High) {
+                setExceedThresholdGD_103_High(GD_103_HighValue >= highValue || GD_103_HighValue <= lowValue);
+            }
+        }, [GD_103_High, GD_103_High_High, GD_103_High_Low, maintainGD_103_High]);
           
               const handleInputChangeGD_103_High = (event: any) => {
                   const newValue = event.target.value;
@@ -780,7 +698,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
 
 
           const [GD_102_High, setGD_102_High] = useState<string | null>(null);
-          const [audioPlayingGD_102_High, setAudioPlayingGD_102_High] = useState(false);
           const [inputValueGD_102_High, setInputValueGD_102_High] = useState<any>();
           const [inputValue2GD_102_High, setInputValue2GD_102_High] = useState<any>();
           const [GD_102_High_High, setGD_102_High_High] = useState<number | null>(null);
@@ -790,39 +707,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_102_High, setMaintainGD_102_High] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_102_High_High === 'string' && typeof GD_102_High_Low === 'string' && GD_102_High !== null && maintainGD_102_High === false
-                  ) {
-                      const highValue = parseFloat(GD_102_High_High);
-                      const lowValue = parseFloat(GD_102_High_Low);
-                      const GD_102_HighValue = parseFloat(GD_102_High);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_HighValue)) {
-                          if (highValue <= GD_102_HighValue || GD_102_HighValue <= lowValue) {
-                              if (!audioPlayingGD_102_High) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_102_High(true);
-                                  setExceedThresholdGD_102_High(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_102_High(false);
-                             setExceedThresholdGD_102_High(false);
-                          }
-                      } 
-                  } 
-              }, [GD_102_High_High, GD_102_High, audioPlayingGD_102_High , GD_102_High_Low,maintainGD_102_High]);
-          
-              useEffect(() => {
-                  if (audioPlayingGD_102_High) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_102_High(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_102_High]);
+          useEffect(() => {
+            const GD_102_HighValue = parseFloat(GD_102_High as any);
+            const highValue = GD_102_High_High ?? NaN;
+            const lowValue = GD_102_High_Low ?? NaN;
+        
+            if (!isNaN(GD_102_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_102_High) {
+                setExceedThresholdGD_102_High(GD_102_HighValue >= highValue || GD_102_HighValue <= lowValue);
+            }
+        }, [GD_102_High, GD_102_High_High, GD_102_High_Low, maintainGD_102_High]);
           
               const handleInputChangeGD_102_High = (event: any) => {
                   const newValue = event.target.value;
@@ -849,7 +742,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           // =================================================================================================================== 
 
           const [GD_101_High, setGD_101_High] = useState<string | null>(null);
-          const [audioPlayingGD_101_High, setAudioPlayingGD_101_High] = useState(false);
           const [inputValueGD_101_High, setInputValueGD_101_High] = useState<any>();
           const [inputValue2GD_101_High, setInputValue2GD_101_High] = useState<any>();
           const [GD_101_High_High, setGD_101_High_High] = useState<number | null>(null);
@@ -859,39 +751,17 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_101_High, setMaintainGD_101_High] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_101_High_High === 'string' && typeof GD_101_High_Low === 'string' && GD_101_High !== null && maintainGD_101_High === false
-                  ) {
-                      const highValue = parseFloat(GD_101_High_High);
-                      const lowValue = parseFloat(GD_101_High_Low);
-                      const GD_101_HighValue = parseFloat(GD_101_High);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_HighValue)) {
-                          if (highValue <= GD_101_HighValue || GD_101_HighValue <= lowValue) {
-                              if (!audioPlayingGD_101_High) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_101_High(true);
-                                  setExceedThresholdGD_101_High(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_101_High(false);
-                             setExceedThresholdGD_101_High(false);
-                          }
-                      } 
-                  } 
-              }, [GD_101_High_High, GD_101_High, audioPlayingGD_101_High, GD_101_High_Low,maintainGD_101_High]);
+          useEffect(() => {
+            const GD_101_HighValue = parseFloat(GD_101_High as any);
+            const highValue = GD_101_High_High ?? NaN;
+            const lowValue = GD_101_High_Low ?? NaN;
+        
+            if (!isNaN(GD_101_HighValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_101_High) {
+                setExceedThresholdGD_101_High(GD_101_HighValue >= highValue || GD_101_HighValue <= lowValue);
+            }
+        }, [GD_101_High, GD_101_High_High, GD_101_High_Low, maintainGD_101_High]);
           
-              useEffect(() => {
-                  if (audioPlayingGD_101_High) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_101_High(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_101_High]);
+           
           
               const handleInputChangeGD_101_High = (event: any) => {
                   const newValue = event.target.value;
@@ -919,7 +789,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
 
 
           const [GD_101_Low, setGD_101_Low] = useState<string | null>(null);
-          const [audioPlayingGD_101_Low, setAudioPlayingGD_101_Low] = useState(false);
           const [inputValueGD_101_Low, setInputValueGD_101_Low] = useState<any>();
           const [inputValue2GD_101_Low, setInputValue2GD_101_Low] = useState<any>();
           const [GD_101_Low_High, setGD_101_Low_High] = useState<number | null>(null);
@@ -929,39 +798,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_101_Low, setMaintainGD_101_Low] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_101_Low_High === 'string' && typeof GD_101_Low_Low === 'string' && GD_101_Low !== null && maintainGD_101_Low === false
-                  ) {
-                      const highValue = parseFloat(GD_101_Low_High);
-                      const lowValue = parseFloat(GD_101_Low_Low);
-                      const GD_101_LowValue = parseFloat(GD_101_Low);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_101_LowValue)) {
-                          if (highValue <= GD_101_LowValue || GD_101_LowValue <= lowValue) {
-                              if (!audioPlayingGD_101_Low) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_101_Low(true);
-                                  setExceedThresholdGD_101_Low(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_101_Low(false);
-                             setExceedThresholdGD_101_Low(false);
-                          }
-                      } 
-                  } 
-              }, [GD_101_Low_High, GD_101_Low, audioPlayingGD_101_Low, GD_101_Low_Low,maintainGD_101_Low]);
-          
-              useEffect(() => {
-                  if (audioPlayingGD_101_Low) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_101_Low(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_101_Low]);
+          useEffect(() => {
+            const GD_101_LowValue = parseFloat(GD_101_Low as any);
+            const highValue = GD_101_Low_High ?? NaN;
+            const lowValue = GD_101_Low_Low ?? NaN;
+        
+            if (!isNaN(GD_101_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_101_Low) {
+                setExceedThresholdGD_101_Low(GD_101_LowValue >= highValue || GD_101_LowValue <= lowValue);
+            }
+        }, [GD_101_Low, GD_101_Low_High, GD_101_Low_Low, maintainGD_101_Low]);
           
               const handleInputChangeGD_101_Low = (event: any) => {
                   const newValue = event.target.value;
@@ -988,7 +833,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           // =================================================================================================================== 
 
           const [GD_102_Low, setGD_102_Low] = useState<string | null>(null);
-          const [audioPlayingGD_102_Low, setAudioPlayingGD_102_Low] = useState(false);
           const [inputValueGD_102_Low, setInputValueGD_102_Low] = useState<any>();
           const [inputValue2GD_102_Low, setInputValue2GD_102_Low] = useState<any>();
           const [GD_102_Low_High, setGD_102_Low_High] = useState<number | null>(null);
@@ -998,39 +842,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_102_Low, setMaintainGD_102_Low] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_102_Low_High === 'string' && typeof GD_102_Low_Low === 'string' && GD_102_Low !== null && maintainGD_102_Low === false
-                  ) {
-                      const highValue = parseFloat(GD_102_Low_High);
-                      const lowValue = parseFloat(GD_102_Low_Low);
-                      const GD_102_LowValue = parseFloat(GD_102_Low);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_102_LowValue)) {
-                          if (highValue <= GD_102_LowValue || GD_102_LowValue <= lowValue) {
-                              if (!audioPlayingGD_102_Low) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_102_Low(true);
-                                  setExceedThresholdGD_102_Low(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_102_Low(false);
-                             setExceedThresholdGD_102_Low(false);
-                          }
-                      } 
-                  } 
-              }, [GD_102_Low_High, GD_102_Low, audioPlayingGD_102_Low, GD_102_Low_Low,maintainGD_102_Low]);
-          
-              useEffect(() => {
-                  if (audioPlayingGD_102_Low) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_102_Low(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_102_Low]);
+          useEffect(() => {
+            const GD_102_LowValue = parseFloat(GD_102_Low as any);
+            const highValue = GD_102_Low_High ?? NaN;
+            const lowValue = GD_102_Low_Low ?? NaN;
+        
+            if (!isNaN(GD_102_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_102_Low) {
+                setExceedThresholdGD_102_Low(GD_102_LowValue >= highValue || GD_102_LowValue <= lowValue);
+            }
+        }, [GD_102_Low, GD_102_Low_High, GD_102_Low_Low, maintainGD_102_Low]);
           
               const handleInputChangeGD_102_Low = (event: any) => {
                   const newValue = event.target.value;
@@ -1057,7 +877,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           // =================================================================================================================== 
 
           const [GD_103_Low, setGD_103_Low] = useState<string | null>(null);
-          const [audioPlayingGD_103_Low, setAudioPlayingGD_103_Low] = useState(false);
           const [inputValueGD_103_Low, setInputValueGD_103_Low] = useState<any>();
           const [inputValue2GD_103_Low, setInputValue2GD_103_Low] = useState<any>();
           const [GD_103_Low_High, setGD_103_Low_High] = useState<number | null>(null);
@@ -1067,39 +886,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainGD_103_Low, setMaintainGD_103_Low] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof GD_103_Low_High === 'string' && typeof GD_103_Low_Low === 'string' && GD_103_Low !== null && maintainGD_103_Low === false
-                  ) {
-                      const highValue = parseFloat(GD_103_Low_High);
-                      const lowValue = parseFloat(GD_103_Low_Low);
-                      const GD_103_LowValue = parseFloat(GD_103_Low);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_103_LowValue)) {
-                          if (highValue <= GD_103_LowValue || GD_103_LowValue <= lowValue) {
-                              if (!audioPlayingGD_103_Low) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingGD_103_Low(true);
-                                  setExceedThresholdGD_103_Low(true);
-                              }
-                          } else {
-                             setAudioPlayingGD_103_Low(false);
-                             setExceedThresholdGD_103_Low(false);
-                          }
-                      } 
-                  } 
-              }, [GD_103_Low_High, GD_103_Low, audioPlayingGD_103_Low, GD_103_Low_Low,maintainGD_103_Low]);
-          
-              useEffect(() => {
-                  if (audioPlayingGD_103_Low) {
-                      const audioEnded = () => {
-                         setAudioPlayingGD_103_Low(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingGD_103_Low]);
+          useEffect(() => {
+            const GD_103_LowValue = parseFloat(GD_103_Low as any);
+            const highValue = GD_103_Low_High ?? NaN;
+            const lowValue = GD_103_Low_Low ?? NaN;
+        
+            if (!isNaN(GD_103_LowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD_103_Low) {
+                setExceedThresholdGD_103_Low(GD_103_LowValue >= highValue || GD_103_LowValue <= lowValue);
+            }
+        }, [GD_103_Low, GD_103_Low_High, GD_103_Low_Low, maintainGD_103_Low]);
           
               const handleInputChangeGD_103_Low = (event: any) => {
                   const newValue = event.target.value;
@@ -1126,7 +921,6 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           // =================================================================================================================== 
 
           const [SDV_301, setSDV_301] = useState<string | null>(null);
-          const [audioPlayingSDV_301, setAudioPlayingSDV_301] = useState(false);
           const [inputValueSDV_301, setInputValueSDV_301] = useState<any>();
           const [inputValue2SDV_301, setInputValue2SDV_301] = useState<any>();
           const [SDV_301_High, setSDV_301_High] = useState<number | null>(null);
@@ -1136,39 +930,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
           const [maintainSDV_301, setMaintainSDV_301] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof SDV_301_High === 'string' && typeof SDV_301_Low === 'string' && SDV_301 !== null && maintainSDV_301 === false
-                  ) {
-                      const highValue = parseFloat(SDV_301_High);
-                      const lowValue = parseFloat(SDV_301_Low);
-                      const SDV_301Value = parseFloat(SDV_301);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_301Value)) {
-                          if (highValue <= SDV_301Value || SDV_301Value <= lowValue) {
-                              if (!audioPlayingSDV_301) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingSDV_301(true);
-                                  setExceedThresholdSDV_301(true);
-                              }
-                          } else {
-                             setAudioPlayingSDV_301(false);
-                             setExceedThresholdSDV_301(false);
-                          }
-                      } 
-                  } 
-              }, [SDV_301_High, SDV_301, audioPlayingSDV_301, SDV_301_Low,maintainSDV_301]);
-          
-              useEffect(() => {
-                  if (audioPlayingSDV_301) {
-                      const audioEnded = () => {
-                         setAudioPlayingSDV_301(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingSDV_301]);
+          useEffect(() => {
+            const SDV_301Value = parseFloat(SDV_301 as any);
+            const highValue = SDV_301_High ?? NaN;
+            const lowValue = SDV_301_Low ?? NaN;
+        
+            if (!isNaN(SDV_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_301) {
+                setExceedThresholdSDV_301(SDV_301Value >= highValue || SDV_301Value <= lowValue);
+            }
+        }, [SDV_301, SDV_301_High, SDV_301_Low, maintainSDV_301]);
           
               const handleInputChangeSDV_301 = (event: any) => {
                   const newValue = event.target.value;
@@ -1207,39 +977,16 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [maintainSDV_302, setMaintainSDV_302] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof SDV_302_High === 'string' && typeof SDV_302_Low === 'string' && SDV_302 !== null && maintainSDV_302 === false
-            ) {
-                const highValue = parseFloat(SDV_302_High);
-                const lowValue = parseFloat(SDV_302_Low);
-                const SDV_302Value = parseFloat(SDV_302);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(SDV_302Value)) {
-                    if (highValue <= SDV_302Value || SDV_302Value <= lowValue) {
-                        if (!audioPlayingSDV_302) {
-                            audioRef.current?.play();
-                            setAudioPlayingSDV_302(true);
-                            setExceedThresholdSDV_302(true);
-                        }
-                    } else {
-                       setAudioPlayingSDV_302(false);
-                       setExceedThresholdSDV_302(false);
-                    }
-                } 
-            } 
-        }, [SDV_302_High, SDV_302, audioPlayingSDV_302, SDV_302_Low,maintainSDV_302]);
+            
+    useEffect(() => {
+        const SDV_302Value = parseFloat(SDV_302 as any);
+        const highValue = SDV_302_High ?? NaN;
+        const lowValue = SDV_302_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingSDV_302) {
-                const audioEnded = () => {
-                   setAudioPlayingSDV_302(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingSDV_302]);
+        if (!isNaN(SDV_302Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainSDV_302) {
+            setExceedThresholdSDV_302(SDV_302Value >= highValue || SDV_302Value <= lowValue);
+        }
+    }, [SDV_302, SDV_302_High, SDV_302_Low, maintainSDV_302]);
     
         const handleInputChangeSDV_302 = (event: any) => {
             const newValue = event.target.value;
@@ -1278,39 +1025,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
         const [maintainV1_Flow_Meter, setMaintainV1_Flow_Meter] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof V1_Flow_Meter_High === 'string' && typeof V1_Flow_Meter_Low === 'string' && V1_Flow_Meter !== null && maintainV1_Flow_Meter === false
-                ) {
-                    const highValue = parseFloat(V1_Flow_Meter_High);
-                    const lowValue = parseFloat(V1_Flow_Meter_Low);
-                    const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V1_Flow_MeterValue)) {
-                        if (highValue <= V1_Flow_MeterValue || V1_Flow_MeterValue <= lowValue) {
-                            if (!audioPlayingV1_Flow_Meter) {
-                                audioRef.current?.play();
-                                setAudioPlayingV1_Flow_Meter(true);
-                                setExceedThresholdV1_Flow_Meter(true);
-                            }
-                        } else {
-                           setAudioPlayingV1_Flow_Meter(false);
-                           setExceedThresholdV1_Flow_Meter(false);
-                        }
-                    } 
-                } 
-            }, [V1_Flow_Meter_High, V1_Flow_Meter, audioPlayingV1_Flow_Meter, V1_Flow_Meter_Low,maintainV1_Flow_Meter]);
+        useEffect(() => {
+            const V1_Flow_MeterValue = parseFloat(V1_Flow_Meter as any);
+            const highValue = V1_Flow_Meter_High ?? NaN;
+            const lowValue = V1_Flow_Meter_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingV1_Flow_Meter) {
-                    const audioEnded = () => {
-                       setAudioPlayingV1_Flow_Meter(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingV1_Flow_Meter]);
+            if (!isNaN(V1_Flow_MeterValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainV1_Flow_Meter) {
+                setExceedThresholdV1_Flow_Meter(V1_Flow_MeterValue >= highValue || V1_Flow_MeterValue <= lowValue);
+            }
+        }, [V1_Flow_Meter, V1_Flow_Meter_High, V1_Flow_Meter_Low, maintainV1_Flow_Meter]);
         
             const handleInputChangeV1_Flow_Meter = (event: any) => {
                 const newValue = event.target.value;
@@ -1349,39 +1072,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [maintainV2_Flow_Meter, setMaintainV2_Flow_Meter] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof V2_Flow_Meter_High === 'string' && typeof V2_Flow_Meter_Low === 'string' && V2_Flow_Meter !== null && maintainV2_Flow_Meter === false
-            ) {
-                const highValue = parseFloat(V2_Flow_Meter_High);
-                const lowValue = parseFloat(V2_Flow_Meter_Low);
-                const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(V2_Flow_MeterValue)) {
-                    if (highValue <= V2_Flow_MeterValue || V2_Flow_MeterValue <= lowValue) {
-                        if (!audioPlayingV2_Flow_Meter) {
-                            audioRef.current?.play();
-                            setAudioPlayingV2_Flow_Meter(true);
-                            setExceedThresholdV2_Flow_Meter(true);
-                        }
-                    } else {
-                       setAudioPlayingV2_Flow_Meter(false);
-                       setExceedThresholdV2_Flow_Meter(false);
-                    }
-                } 
-            } 
-        }, [V2_Flow_Meter_High, V2_Flow_Meter, audioPlayingV2_Flow_Meter, V2_Flow_Meter_Low,maintainV2_Flow_Meter]);
+    useEffect(() => {
+        const V2_Flow_MeterValue = parseFloat(V2_Flow_Meter as any);
+        const highValue = V2_Flow_Meter_High ?? NaN;
+        const lowValue = V2_Flow_Meter_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingV2_Flow_Meter) {
-                const audioEnded = () => {
-                   setAudioPlayingV2_Flow_Meter(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingV2_Flow_Meter]);
+        if (!isNaN(V2_Flow_MeterValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainV2_Flow_Meter) {
+            setExceedThresholdV2_Flow_Meter(V2_Flow_MeterValue >= highValue || V2_Flow_MeterValue <= lowValue);
+        }
+    }, [V2_Flow_Meter, V2_Flow_Meter_High, V2_Flow_Meter_Low, maintainV2_Flow_Meter]);
     
         const handleInputChangeV2_Flow_Meter = (event: any) => {
             const newValue = event.target.value;
@@ -1419,39 +1118,15 @@ const [maintainVP_303, setMaintainVP_303] = useState<boolean>(false);
     const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof Pipe_Temp_High === 'string' && typeof Pipe_Temp_Low === 'string' && Pipe_Temp !== null && maintainPipe_Temp === false
-            ) {
-                const highValue = parseFloat(Pipe_Temp_High);
-                const lowValue = parseFloat(Pipe_Temp_Low);
-                const Pipe_TempValue = parseFloat(Pipe_Temp);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_TempValue)) {
-                    if (highValue <= Pipe_TempValue || Pipe_TempValue <= lowValue) {
-                        if (!audioPlayingPipe_Temp) {
-                            audioRef.current?.play();
-                            setAudioPlayingPipe_Temp(true);
-                            setExceedThresholdPipe_Temp(true);
-                        }
-                    } else {
-                       setAudioPlayingPipe_Temp(false);
-                       setExceedThresholdPipe_Temp(false);
-                    }
-                } 
-            } 
-        }, [Pipe_Temp_High, Pipe_Temp, audioPlayingPipe_Temp, Pipe_Temp_Low,maintainPipe_Temp]);
+    useEffect(() => {
+        const Pipe_TempValue = parseFloat(Pipe_Temp as any);
+        const highValue = Pipe_Temp_High ?? NaN;
+        const lowValue = Pipe_Temp_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingPipe_Temp) {
-                const audioEnded = () => {
-                   setAudioPlayingPipe_Temp(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingPipe_Temp]);
+        if (!isNaN(Pipe_TempValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Temp) {
+            setExceedThresholdPipe_Temp(Pipe_TempValue >= highValue || Pipe_TempValue <= lowValue);
+        }
+    }, [Pipe_Temp, Pipe_Temp_High, Pipe_Temp_Low, maintainPipe_Temp]);
     
         const handleInputChangePipe_Temp = (event: any) => {
             const newValue = event.target.value;
@@ -1490,39 +1165,15 @@ const [exceedThresholdPipe_Press, setExceedThresholdPipe_Press] = useState(false
 const [maintainPipe_Press, setMaintainPipe_Press] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof Pipe_Press_High === 'string' && typeof Pipe_Press_Low === 'string' && Pipe_Press !== null && maintainPipe_Press === false
-        ) {
-            const highValue = parseFloat(Pipe_Press_High);
-            const lowValue = parseFloat(Pipe_Press_Low);
-            const Pipe_PressValue = parseFloat(Pipe_Press);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Pipe_PressValue)) {
-                if (highValue <= Pipe_PressValue || Pipe_PressValue <= lowValue) {
-                    if (!audioPlayingPipe_Press) {
-                        audioRef.current?.play();
-                        setAudioPlayingPipe_Press(true);
-                        setExceedThresholdPipe_Press(true);
-                    }
-                } else {
-                   setAudioPlayingPipe_Press(false);
-                   setExceedThresholdPipe_Press(false);
-                }
-            } 
-        } 
-    }, [Pipe_Press_High, Pipe_Press, audioPlayingPipe_Press, Pipe_Press_Low,maintainPipe_Press]);
+useEffect(() => {
+    const Pipe_PressValue = parseFloat(Pipe_Press as any);
+    const highValue = Pipe_Press_High ?? NaN;
+    const lowValue = Pipe_Press_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingPipe_Press) {
-            const audioEnded = () => {
-               setAudioPlayingPipe_Press(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingPipe_Press]);
+    if (!isNaN(Pipe_PressValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Press) {
+        setExceedThresholdPipe_Press(Pipe_PressValue >= highValue || Pipe_PressValue <= lowValue);
+    }
+}, [Pipe_Press, Pipe_Press_High, Pipe_Press_Low, maintainPipe_Press]);
 
     const handleInputChangePipe_Press = (event: any) => {
         const newValue = event.target.value;
@@ -1560,39 +1211,16 @@ const [exceedThresholdTank_TT_301, setExceedThresholdTank_TT_301] = useState(fal
 const [maintainTank_TT_301, setMaintainTank_TT_301] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof Tank_TT_301_High === 'string' && typeof Tank_TT_301_Low === 'string' && Tank_TT_301 !== null && maintainTank_TT_301 === false
-        ) {
-            const highValue = parseFloat(Tank_TT_301_High);
-            const lowValue = parseFloat(Tank_TT_301_Low);
-            const Tank_TT_301Value = parseFloat(Tank_TT_301);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_TT_301Value)) {
-                if (highValue <= Tank_TT_301Value || Tank_TT_301Value <= lowValue) {
-                    if (!audioPlayingTank_TT_301) {
-                        audioRef.current?.play();
-                        setAudioPlayingTank_TT_301(true);
-                        setExceedThresholdTank_TT_301(true);
-                    }
-                } else {
-                   setAudioPlayingTank_TT_301(false);
-                   setExceedThresholdTank_TT_301(false);
-                }
-            } 
-        } 
-    }, [Tank_TT_301_High, Tank_TT_301, audioPlayingTank_TT_301, Tank_TT_301_Low,maintainTank_TT_301]);
 
-    useEffect(() => {
-        if (audioPlayingTank_TT_301) {
-            const audioEnded = () => {
-               setAudioPlayingTank_TT_301(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingTank_TT_301]);
+useEffect(() => {
+    const Tank_TT_301Value = parseFloat(Tank_TT_301 as any);
+    const highValue = Tank_TT_301_High ?? NaN;
+    const lowValue = Tank_TT_301_Low ?? NaN;
+
+    if (!isNaN(Tank_TT_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_TT_301) {
+        setExceedThresholdTank_TT_301(Tank_TT_301Value >= highValue || Tank_TT_301Value <= lowValue);
+    }
+}, [Tank_TT_301, Tank_TT_301_High, Tank_TT_301_Low, maintainTank_TT_301]);
 
     const handleInputChangeTank_TT_301 = (event: any) => {
         const newValue = event.target.value;
@@ -1632,38 +1260,14 @@ const [maintainTank_PT_301, setMaintainTank_PT_301] = useState<boolean>(false);
 
 
 useEffect(() => {
-    if (typeof Tank_PT_301_High === 'string' && typeof Tank_PT_301_Low === 'string' && Tank_PT_301 !== null && maintainTank_PT_301 === false
-    ) {
-        const highValue = parseFloat(Tank_PT_301_High);
-        const lowValue = parseFloat(Tank_PT_301_Low);
-        const Tank_PT_301Value = parseFloat(Tank_PT_301);
+    const Tank_PT_301Value = parseFloat(Tank_PT_301 as any);
+    const highValue = Tank_PT_301_High ?? NaN;
+    const lowValue = Tank_PT_301_Low ?? NaN;
 
-        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_PT_301Value)) {
-            if (highValue <= Tank_PT_301Value || Tank_PT_301Value <= lowValue) {
-                if (!audioPlayingTank_PT_301) {
-                    audioRef.current?.play();
-                    setAudioPlayingTank_PT_301(true);
-                    setExceedThresholdTank_PT_301(true);
-                }
-            } else {
-               setAudioPlayingTank_PT_301(false);
-               setExceedThresholdTank_PT_301(false);
-            }
-        } 
-    } 
-}, [Tank_PT_301_High, Tank_PT_301, audioPlayingTank_PT_301, Tank_PT_301_Low,maintainTank_PT_301]);
-
-useEffect(() => {
-    if (audioPlayingTank_PT_301) {
-        const audioEnded = () => {
-           setAudioPlayingTank_PT_301(false);
-        };
-        audioRef.current?.addEventListener('ended', audioEnded);
-        return () => {
-            audioRef.current?.removeEventListener('ended', audioEnded);
-        };
+    if (!isNaN(Tank_PT_301Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_PT_301) {
+        setExceedThresholdTank_PT_301(Tank_PT_301Value >= highValue || Tank_PT_301Value <= lowValue);
     }
-}, [audioPlayingTank_PT_301]);
+}, [Tank_PT_301, Tank_PT_301_High, Tank_PT_301_Low, maintainTank_PT_301]);
 
 const handleInputChangeTank_PT_301 = (event: any) => {
     const newValue = event.target.value;
@@ -1703,39 +1307,15 @@ const ChangeMaintainTank_PT_301 = async () => {
         const [maintainTank_01_Volume, setMaintainTank_01_Volume] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof Tank_01_Volume_High === 'string' && typeof Tank_01_Volume_Low === 'string' && Tank_01_Volume !== null && maintainTank_01_Volume === false
-                ) {
-                    const highValue = parseFloat(Tank_01_Volume_High);
-                    const lowValue = parseFloat(Tank_01_Volume_Low);
-                    const Tank_01_VolumeValue = parseFloat(Tank_01_Volume);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_VolumeValue)) {
-                        if (highValue <= Tank_01_VolumeValue || Tank_01_VolumeValue <= lowValue) {
-                            if (!audioPlayingTank_01_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingTank_01_Volume(true);
-                                setExceedThresholdTank_01_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingTank_01_Volume(false);
-                           setExceedThresholdTank_01_Volume(false);
-                        }
-                    } 
-                } 
-            }, [Tank_01_Volume_High, Tank_01_Volume, audioPlayingTank_01_Volume, Tank_01_Volume_Low,maintainTank_01_Volume]);
+        useEffect(() => {
+            const Tank_01_VolumeValue = parseFloat(Tank_01_Volume as any);
+            const highValue = Tank_01_Volume_High ?? NaN;
+            const lowValue = Tank_01_Volume_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingTank_01_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingTank_01_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingTank_01_Volume]);
+            if (!isNaN(Tank_01_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Volume) {
+                setExceedThresholdTank_01_Volume(Tank_01_VolumeValue >= highValue || Tank_01_VolumeValue <= lowValue);
+            }
+        }, [Tank_01_Volume, Tank_01_Volume_High, Tank_01_Volume_Low, maintainTank_01_Volume]);
         
             const handleInputChangeTank_01_Volume = (event: any) => {
                 const newValue = event.target.value;
@@ -1773,39 +1353,15 @@ const ChangeMaintainTank_PT_301 = async () => {
         const [maintainTank_01_Mass, setMaintainTank_01_Mass] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof Tank_01_Mass_High === 'string' && typeof Tank_01_Mass_Low === 'string' && Tank_01_Mass !== null && maintainTank_01_Mass === false
-                ) {
-                    const highValue = parseFloat(Tank_01_Mass_High);
-                    const lowValue = parseFloat(Tank_01_Mass_Low);
-                    const Tank_01_MassValue = parseFloat(Tank_01_Mass);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_MassValue)) {
-                        if (highValue <= Tank_01_MassValue || Tank_01_MassValue <= lowValue) {
-                            if (!audioPlayingTank_01_Mass) {
-                                audioRef.current?.play();
-                                setAudioPlayingTank_01_Mass(true);
-                                setExceedThresholdTank_01_Mass(true);
-                            }
-                        } else {
-                           setAudioPlayingTank_01_Mass(false);
-                           setExceedThresholdTank_01_Mass(false);
-                        }
-                    } 
-                } 
-            }, [Tank_01_Mass_High, Tank_01_Mass, audioPlayingTank_01_Mass, Tank_01_Mass_Low,maintainTank_01_Mass]);
+        useEffect(() => {
+            const Tank_01_MassValue = parseFloat(Tank_01_Mass as any);
+            const highValue = Tank_01_Mass_High ?? NaN;
+            const lowValue = Tank_01_Mass_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingTank_01_Mass) {
-                    const audioEnded = () => {
-                       setAudioPlayingTank_01_Mass(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingTank_01_Mass]);
+            if (!isNaN(Tank_01_MassValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Mass) {
+                setExceedThresholdTank_01_Mass(Tank_01_MassValue >= highValue || Tank_01_MassValue <= lowValue);
+            }
+        }, [Tank_01_Mass, Tank_01_Mass_High, Tank_01_Mass_Low, maintainTank_01_Mass]);
         
             const handleInputChangeTank_01_Mass = (event: any) => {
                 const newValue = event.target.value;
@@ -1834,7 +1390,6 @@ const ChangeMaintainTank_PT_301 = async () => {
             // =================================================================================================================== 
         
         const [Tank_01_Level, setTank_01_Level] = useState<string | null>(null);
-        const [audioPlayingTank_01_Level, setAudioPlayingTank_01_Level] = useState(false);
         const [inputValueTank_01_Level, setInputValueTank_01_Level] = useState<any>();
         const [inputValue2Tank_01_Level, setInputValue2Tank_01_Level] = useState<any>();
         const [Tank_01_Level_High, setTank_01_Level_High] = useState<number | null>(null);
@@ -1845,38 +1400,14 @@ const ChangeMaintainTank_PT_301 = async () => {
         
         
         useEffect(() => {
-            if (typeof Tank_01_Level_High === 'string' && typeof Tank_01_Level_Low === 'string' && Tank_01_Level !== null && maintainTank_01_Level === false
-            ) {
-                const highValue = parseFloat(Tank_01_Level_High);
-                const lowValue = parseFloat(Tank_01_Level_Low);
-                const Tank_01_LevelValue = parseFloat(Tank_01_Level);
+            const Tank_01_LevelValue = parseFloat(Tank_01_Level as any);
+            const highValue = Tank_01_Level_High ?? NaN;
+            const lowValue = Tank_01_Level_Low ?? NaN;
         
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Tank_01_LevelValue)) {
-                    if (highValue <= Tank_01_LevelValue || Tank_01_LevelValue <= lowValue) {
-                        if (!audioPlayingTank_01_Level) {
-                            audioRef.current?.play();
-                            setAudioPlayingTank_01_Level(true);
-                            setExceedThresholdTank_01_Level(true);
-                        }
-                    } else {
-                       setAudioPlayingTank_01_Level(false);
-                       setExceedThresholdTank_01_Level(false);
-                    }
-                } 
-            } 
-        }, [Tank_01_Level_High, Tank_01_Level, audioPlayingTank_01_Level, Tank_01_Level_Low,maintainTank_01_Level]);
-        
-        useEffect(() => {
-            if (audioPlayingTank_01_Level) {
-                const audioEnded = () => {
-                   setAudioPlayingTank_01_Level(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
+            if (!isNaN(Tank_01_LevelValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTank_01_Level) {
+                setExceedThresholdTank_01_Level(Tank_01_LevelValue >= highValue || Tank_01_LevelValue <= lowValue);
             }
-        }, [audioPlayingTank_01_Level]);
+        }, [Tank_01_Level, Tank_01_Level_High, Tank_01_Level_Low, maintainTank_01_Level]);
         
         const handleInputChangeTank_01_Level = (event: any) => {
             const newValue = event.target.value;
@@ -1987,40 +1518,16 @@ const ChangeMaintainTank_PT_301 = async () => {
                   
                   const [maintainConsumption_Flow, setMaintainConsumption_Flow] = useState<boolean>(false);
                   
-                  
                   useEffect(() => {
-                      if (typeof Consumption_Flow_High === 'string' && typeof Consumption_Flow_Low === 'string' && Consumption_Flow !== null && maintainConsumption_Flow === false
-                      ) {
-                          const highValue = parseFloat(Consumption_Flow_High);
-                          const lowValue = parseFloat(Consumption_Flow_Low);
-                          const Consumption_FlowValue = parseFloat(Consumption_Flow);
-                  
-                          if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Consumption_FlowValue)) {
-                              if (highValue <= Consumption_FlowValue || Consumption_FlowValue <= lowValue) {
-                                  if (!audioPlayingConsumption_Flow) {
-                                      audioRef.current?.play();
-                                      setAudioPlayingConsumption_Flow(true);
-                                      setExceedThresholdConsumption_Flow(true);
-                                  }
-                              } else {
-                                 setAudioPlayingConsumption_Flow(false);
-                                 setExceedThresholdConsumption_Flow(false);
-                              }
-                          } 
-                      } 
-                  }, [Consumption_Flow_High, Consumption_Flow, audioPlayingConsumption_Flow, Consumption_Flow_Low,maintainConsumption_Flow]);
-                  
-                  useEffect(() => {
-                      if (audioPlayingConsumption_Flow) {
-                          const audioEnded = () => {
-                             setAudioPlayingConsumption_Flow(false);
-                          };
-                          audioRef.current?.addEventListener('ended', audioEnded);
-                          return () => {
-                              audioRef.current?.removeEventListener('ended', audioEnded);
-                          };
-                      }
-                  }, [audioPlayingConsumption_Flow]);
+                    const Consumption_FlowValue = parseFloat(Consumption_Flow as any);
+                    const highValue = Consumption_Flow_High ?? NaN;
+                    const lowValue = Consumption_Flow_Low ?? NaN;
+                
+                    if (!isNaN(Consumption_FlowValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainConsumption_Flow) {
+                        setExceedThresholdConsumption_Flow(Consumption_FlowValue >= highValue || Consumption_FlowValue <= lowValue);
+                    }
+                }, [Consumption_Flow, Consumption_Flow_High, Consumption_Flow_Low, maintainConsumption_Flow]);
+                
                   
                   const handleInputChangeConsumption_Flow = (event: any) => {
                       const newValue = event.target.value;
@@ -2061,38 +1568,14 @@ const ChangeMaintainTank_PT_301 = async () => {
                          
                          
                          useEffect(() => {
-                             if (typeof Flow_Velocity_High === 'string' && typeof Flow_Velocity_Low === 'string' && Flow_Velocity !== null && maintainFlow_Velocity === false
-                             ) {
-                                 const highValue = parseFloat(Flow_Velocity_High);
-                                 const lowValue = parseFloat(Flow_Velocity_Low);
-                                 const Flow_VelocityValue = parseFloat(Flow_Velocity);
-                         
-                                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Flow_VelocityValue)) {
-                                     if (highValue <= Flow_VelocityValue || Flow_VelocityValue <= lowValue) {
-                                         if (!audioPlayingFlow_Velocity) {
-                                             audioRef.current?.play();
-                                             setAudioPlayingFlow_Velocity(true);
-                                             setExceedThresholdFlow_Velocity(true);
-                                         }
-                                     } else {
-                                        setAudioPlayingFlow_Velocity(false);
-                                        setExceedThresholdFlow_Velocity(false);
-                                     }
-                                 } 
-                             } 
-                         }, [Flow_Velocity_High, Flow_Velocity, audioPlayingFlow_Velocity, Flow_Velocity_Low,maintainFlow_Velocity]);
-                         
-                         useEffect(() => {
-                             if (audioPlayingFlow_Velocity) {
-                                 const audioEnded = () => {
-                                    setAudioPlayingFlow_Velocity(false);
-                                 };
-                                 audioRef.current?.addEventListener('ended', audioEnded);
-                                 return () => {
-                                     audioRef.current?.removeEventListener('ended', audioEnded);
-                                 };
-                             }
-                         }, [audioPlayingFlow_Velocity]);
+                            const Flow_VelocityValue = parseFloat(Flow_Velocity as any);
+                            const highValue = Flow_Velocity_High ?? NaN;
+                            const lowValue = Flow_Velocity_Low ?? NaN;
+                        
+                            if (!isNaN(Flow_VelocityValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFlow_Velocity) {
+                                setExceedThresholdFlow_Velocity(Flow_VelocityValue >= highValue || Flow_VelocityValue <= lowValue);
+                            }
+                        }, [Flow_Velocity, Flow_Velocity_High, Flow_Velocity_Low, maintainFlow_Velocity]);
                          
                          const handleInputChangeFlow_Velocity = (event: any) => {
                              const newValue = event.target.value;
@@ -2114,6 +1597,52 @@ const ChangeMaintainTank_PT_301 = async () => {
                                  
                              } catch (error) {}
                          };
+                         
+
+                         // =================================================================================================================== 
+        
+                         const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+                         const [audioPlayingPLC_Conn_STT, setAudioPlayingPLC_Conn_STT] = useState(false);
+                         const [inputValuePLC_Conn_STT, setInputValuePLC_Conn_STT] = useState<any>();
+                         const [inputValue2PLC_Conn_STT, setInputValue2PLC_Conn_STT] = useState<any>();
+                         const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+                         const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+                         const [exceedThresholdPLC_Conn_STT, setExceedThresholdPLC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+                         
+                         const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+                         
+                         
+                         useEffect(() => {
+                            const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+                            const highValue = PLC_Conn_STT_High ?? NaN;
+                            const lowValue = PLC_Conn_STT_Low ?? NaN;
+                        
+                            if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+                                setExceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+                            }
+                        }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+                         
+                         const handleInputChangePLC_Conn_STT = (event: any) => {
+                             const newValue = event.target.value;
+                             setInputValuePLC_Conn_STT(newValue);
+                         };
+                         
+                         const handleInputChange2PLC_Conn_STT = (event: any) => {
+                             const newValue2 = event.target.value;
+                             setInputValue2PLC_Conn_STT(newValue2);
+                         };
+                         const ChangeMaintainPLC_Conn_STT = async () => {
+                             try {
+                                 const newValue = !maintainPLC_Conn_STT;
+                                 await httpApi.post(
+                                     `/plugins/telemetry/DEVICE/${id_THACHTHAT}/SERVER_SCOPE`,
+                                     { PLC_Conn_STT_Maintain: newValue }
+                                 );
+                                 setMaintainPLC_Conn_STT(newValue);
+                                 
+                             } catch (error) {}
+                         };
+                         
                          
                          
                          // =================================================================================================================== 
@@ -2161,6 +1690,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
                     Consumption_Flow_High: inputValueConsumption_Flow,Consumption_Flow_Low:inputValue2Consumption_Flow,
                     Flow_Velocity_High: inputValueFlow_Velocity,Flow_Velocity_Low:inputValue2Flow_Velocity,
+                    PLC_Conn_STT_High: inputValuePLC_Conn_STT,PLC_Conn_STT_Low:inputValue2PLC_Conn_STT,
 
                 }
             );
@@ -2237,7 +1767,8 @@ const ChangeMaintainTank_PT_301 = async () => {
             setTank_01_Level_High(inputValueTank_01_Level);
             setTank_01_Level_Low(inputValue2Tank_01_Level);
 
-
+            setPLC_Conn_STT_High(inputValuePLC_Conn_STT);
+            setPLC_Conn_STT_Low(inputValue2PLC_Conn_STT);
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
@@ -2337,6 +1868,10 @@ const ChangeMaintainTank_PT_301 = async () => {
         setInputValueTank_01_Level(Tank_01_Level_High); 
         setInputValue2Tank_01_Level(Tank_01_Level_Low); 
 
+
+        setInputValuePLC_Conn_STT(PLC_Conn_STT_High); 
+        setInputValue2PLC_Conn_STT(PLC_Conn_STT_Low); 
+
     }, [VP_303_High, VP_303_Low ,
         VP_302_High, VP_302_Low 
         ,VP_301_High, VP_301_Low ,
@@ -2370,6 +1905,8 @@ const ChangeMaintainTank_PT_301 = async () => {
            Tank_01_Volume_High,Tank_01_Volume_Low,
            Tank_01_Mass_High,Tank_01_Mass_Low,
            Tank_01_Level_High,Tank_01_Level_Low,
+           PLC_Conn_STT_High,PLC_Conn_STT_Low,
+
            getWayPhoneOTSUKA,
 
         ]);
@@ -2613,9 +2150,35 @@ const ChangeMaintainTank_PT_301 = async () => {
             height:25,
             fontWeight:400,
         },
+
+
+        CSSPLC_Conn_STT : {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+        },
   };
          
     
+  const DataVP_303  = VP_303 === "0" ? "Stop" : VP_303 === "1" ? "Run" : null;
+  const DataVP_302  = VP_302 === "0" ? "Stop" : VP_302 === "1" ? "Run" : null;
+  const DataVP_301  = VP_301 === "0" ? "Stop" : VP_301 === "1" ? "Run" : null;
+  const DataGD_103_High  = GD_103_High === "0" ? "Normal" : GD_103_High === "1" ? "Alarm" : null;
+  const DataGD_102_High  = GD_102_High === "0" ? "Normal" : GD_102_High === "1" ? "Alarm" : null;
+
+  const DataGD_101_High  = GD_101_High === "0" ? "Normal" : GD_101_High === "1" ? "Alarm" : null;
+  const DataGD_103_Low  = GD_103_Low === "0" ? "Normal" : GD_103_Low === "1" ? "Alarm" : null;
+
+  const DataGD_102_Low  = GD_102_Low === "0" ? "Normal" : GD_102_Low === "1" ? "Alarm" : null;
+  const DataGD_101_Low  = GD_101_Low === "0" ? "Normal" : GD_101_Low === "1" ? "Alarm" : null;
+  const DataSDV_301  = SDV_301 === "0" ? "OFF" : SDV_301 === "1" ? "ON" : null;
+
+  const DataSDV_302  = SDV_302 === "0" ? "OFF" : SDV_302 === "1" ? "ON" : null;
+  const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;;
          
   const mainCategoryFC = {
     EVC: 'EVC01 -  Parameter & Configuration',
@@ -2624,7 +2187,6 @@ const ChangeMaintainTank_PT_301 = async () => {
 };
 
         const dataEVC01 = [
-
 
      {
         mainCategory: mainCategoryFC.PLC ,
@@ -2864,9 +2426,9 @@ const ChangeMaintainTank_PT_301 = async () => {
                 timeUpdate: <span style={combineCss.CSSVP_303} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_303}> VP 303</span> ,
     
-             modbus: <span style={combineCss.CSSVP_303}>000009	 </span> ,
+             modbus: <span style={combineCss.CSSVP_303}>500009	 </span> ,
     
-            value: <span style={combineCss.CSSVP_303} > {VP_303}</span> , 
+            value: <span style={combineCss.CSSVP_303} > {VP_303} {DataVP_303}</span> , 
              high: <InputText style={combineCss.CSSVP_303}   placeholder='High' step="0.1" type='number' value={inputValueVP_303} onChange={handleInputChangeVP_303} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSVP_303}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_303} onChange={handleInputChange2VP303} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2885,9 +2447,9 @@ const ChangeMaintainTank_PT_301 = async () => {
                 timeUpdate: <span style={combineCss.CSSVP_302} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_302}> VP 302</span> ,
     
-             modbus: <span style={combineCss.CSSVP_302}>000011	 </span> ,
+             modbus: <span style={combineCss.CSSVP_302}>500011	 </span> ,
     
-            value: <span style={combineCss.CSSVP_302} > {VP_302}</span> , 
+            value: <span style={combineCss.CSSVP_302} > {VP_302} {DataVP_302}</span> , 
              high: <InputText style={combineCss.CSSVP_302}   placeholder='High' step="0.1" type='number' value={inputValueVP_302} onChange={handleInputChangeVP_302} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSVP_302}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_302} onChange={handleInputChange2VP_302} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2905,9 +2467,9 @@ const ChangeMaintainTank_PT_301 = async () => {
                 timeUpdate: <span style={combineCss.CSSVP_301} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSVP_301}> VP 301</span> ,
     
-             modbus: <span style={combineCss.CSSVP_301}>000013	 </span> ,
+             modbus: <span style={combineCss.CSSVP_301}>500013	 </span> ,
     
-            value: <span style={combineCss.CSSVP_301} > {VP_301}</span> , 
+            value: <span style={combineCss.CSSVP_301} > {VP_301} {DataVP_301}</span> , 
              high: <InputText style={combineCss.CSSVP_301}   placeholder='High' step="0.1" type='number' value={inputValueVP_301} onChange={handleInputChangeVP_301} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSVP_301}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_301} onChange={handleInputChange2VP_301} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2926,9 +2488,9 @@ const ChangeMaintainTank_PT_301 = async () => {
                 timeUpdate: <span style={combineCss.CSSGD_103_High} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSGD_103_High}>GD-103 High </span> ,
     
-             modbus: <span style={combineCss.CSSGD_103_High}>000015	 </span> ,
+             modbus: <span style={combineCss.CSSGD_103_High}>300015	 </span> ,
     
-            value: <span style={combineCss.CSSGD_103_High} > {GD_103_High}</span> , 
+            value: <span style={combineCss.CSSGD_103_High} > {GD_103_High} {DataGD_103_High}</span> , 
              high: <InputText style={combineCss.CSSGD_103_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_High} onChange={handleInputChangeGD_103_High} inputMode="decimal" />, 
              low:  <InputText style={combineCss.CSSGD_103_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_High} onChange={handleInputChange2GD_103_High} inputMode="decimal" />,
              update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2946,9 +2508,9 @@ const ChangeMaintainTank_PT_301 = async () => {
                 timeUpdate: <span style={combineCss.CSSGD_102_High} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSGD_102_High}>GD-102 High </span> ,
    
-            modbus: <span style={combineCss.CSSGD_102_High}>000017	 </span> ,
+            modbus: <span style={combineCss.CSSGD_102_High}>300017	 </span> ,
    
-           value: <span style={combineCss.CSSGD_102_High} > {GD_102_High}</span> , 
+           value: <span style={combineCss.CSSGD_102_High} > {GD_102_High} {DataGD_102_High}</span> , 
             high: <InputText style={combineCss.CSSGD_102_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_High} onChange={handleInputChangeGD_102_High} inputMode="decimal" />, 
             low:  <InputText style={combineCss.CSSGD_102_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_High} onChange={handleInputChange2GD_102_High} inputMode="decimal" />,
             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2969,7 +2531,7 @@ const ChangeMaintainTank_PT_301 = async () => {
   
            modbus: <span style={combineCss.CSSGD_101_High}>000019	 </span> ,
   
-          value: <span style={combineCss.CSSGD_101_High} > {GD_101_High}</span> , 
+          value: <span style={combineCss.CSSGD_101_High} > {GD_101_High} {DataGD_101_High}</span> , 
            high: <InputText style={combineCss.CSSGD_101_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_High} onChange={handleInputChangeGD_101_High} inputMode="decimal" />, 
            low:  <InputText style={combineCss.CSSGD_101_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_High} onChange={handleInputChange2GD_101_High} inputMode="decimal" />,
            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -2990,9 +2552,9 @@ const ChangeMaintainTank_PT_301 = async () => {
             timeUpdate: <span style={combineCss.CSSGD_103_Low} >{PLC_STTValue}</span>,
           name: <span style={combineCss.CSSGD_103_Low}>GD-103 Low </span> ,
  
-          modbus: <span style={combineCss.CSSGD_103_Low}>000021	 </span> ,
+          modbus: <span style={combineCss.CSSGD_103_Low}>300021	 </span> ,
  
-         value: <span style={combineCss.CSSGD_103_Low} > {GD_103_Low}</span> , 
+         value: <span style={combineCss.CSSGD_103_Low} > {GD_103_Low} {DataGD_103_Low}</span> , 
           high: <InputText style={combineCss.CSSGD_103_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_Low} onChange={handleInputChangeGD_103_Low} inputMode="decimal" />, 
           low:  <InputText style={combineCss.CSSGD_103_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_Low} onChange={handleInputChange2GD_103_Low} inputMode="decimal" />,
           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3010,9 +2572,9 @@ const ChangeMaintainTank_PT_301 = async () => {
             timeUpdate: <span style={combineCss.CSSGD_102_Low} >{PLC_STTValue}</span>,
          name: <span style={combineCss.CSSGD_102_Low}>GD-102 Low </span> ,
 
-         modbus: <span style={combineCss.CSSGD_102_Low}>000023	 </span> ,
+         modbus: <span style={combineCss.CSSGD_102_Low}>300023	 </span> ,
 
-        value: <span style={combineCss.CSSGD_102_Low} > {GD_102_Low}</span> , 
+        value: <span style={combineCss.CSSGD_102_Low} > {GD_102_Low} {DataGD_102_Low}</span> , 
          high: <InputText style={combineCss.CSSGD_102_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_Low} onChange={handleInputChangeGD_102_Low} inputMode="decimal" />, 
          low:  <InputText style={combineCss.CSSGD_102_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_Low} onChange={handleInputChange2GD_102_Low} inputMode="decimal" />,
          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3031,9 +2593,9 @@ const ChangeMaintainTank_PT_301 = async () => {
             timeUpdate: <span style={combineCss.CSSGD_101_Low} >{PLC_STTValue}</span>,
         name: <span style={combineCss.CSSGD_101_Low}>GD-101 Low </span> ,
 
-        modbus: <span style={combineCss.CSSGD_101_Low}>000025	 </span> ,
+        modbus: <span style={combineCss.CSSGD_101_Low}>300025	 </span> ,
 
-       value: <span style={combineCss.CSSGD_101_Low} > {GD_101_Low}</span> , 
+       value: <span style={combineCss.CSSGD_101_Low} > {GD_101_Low} {DataGD_101_Low}</span> , 
         high: <InputText style={combineCss.CSSGD_101_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_Low} onChange={handleInputChangeGD_101_Low} inputMode="decimal" />, 
         low:  <InputText style={combineCss.CSSGD_101_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_Low} onChange={handleInputChange2GD_101_Low} inputMode="decimal" />,
         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3053,9 +2615,9 @@ const ChangeMaintainTank_PT_301 = async () => {
         timeUpdate: <span style={combineCss.CSSSDV_301} >{PLC_STTValue}</span>,
        name: <span style={combineCss.CSSSDV_301}> SDV 301  </span> ,
 
-       modbus: <span style={combineCss.CSSSDV_301}>000001	 </span> ,
+       modbus: <span style={combineCss.CSSSDV_301}>500001	 </span> ,
 
-      value: <span style={combineCss.CSSSDV_301} > {SDV_301}</span> , 
+      value: <span style={combineCss.CSSSDV_301} > {SDV_301} {DataSDV_301}</span> , 
        high: <InputText style={combineCss.CSSSDV_301}   placeholder='High' step="0.1" type='number' value={inputValueSDV_301} onChange={handleInputChangeSDV_301} inputMode="decimal" />, 
        low:  <InputText style={combineCss.CSSSDV_301}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_301} onChange={handleInputChange2SDV_301} inputMode="decimal" />,
        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3074,9 +2636,9 @@ const ChangeMaintainTank_PT_301 = async () => {
         timeUpdate: <span style={combineCss.CSSSDV_302} >{PLC_STTValue}</span>,
       name: <span style={combineCss.CSSSDV_302}>SDV 302</span> ,
 
-      modbus: <span style={combineCss.CSSSDV_302}>000003	 </span> ,
+      modbus: <span style={combineCss.CSSSDV_302}>500003	 </span> ,
 
-     value: <span style={combineCss.CSSSDV_302} > {SDV_302}</span> , 
+     value: <span style={combineCss.CSSSDV_302} > {SDV_302} {DataSDV_302}</span> , 
       high: <InputText style={combineCss.CSSSDV_302}   placeholder='High' step="0.1" type='number' value={inputValueSDV_302} onChange={handleInputChangeSDV_302} inputMode="decimal" />, 
       low:  <InputText style={combineCss.CSSSDV_302}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_302} onChange={handleInputChange2SDV_302} inputMode="decimal" />,
       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
@@ -3087,7 +2649,25 @@ const ChangeMaintainTank_PT_301 = async () => {
   ></Checkbox>
 
      },
-
+     {
+        mainCategory: mainCategoryFC.PLC ,
+               
+               timeUpdate: <span style={combineCss.CSSPLC_Conn_STT} >{PLC_STTValue}</span>,
+             name: <span style={combineCss.CSSPLC_Conn_STT}>PLC Connection Status</span> ,
+       
+             modbus: <span style={combineCss.CSSPLC_Conn_STT}>Status	 </span> ,
+       
+            value: <span style={combineCss.CSSPLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span> , 
+             high: <InputText style={combineCss.CSSPLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
+             low:  <InputText style={combineCss.CSSPLC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
+             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             Maintain:   <Checkbox
+             style={{ marginRight: 20, }}
+             onChange={ChangeMaintainPLC_Conn_STT}
+             checked={maintainPLC_Conn_STT}
+         ></Checkbox>
+       
+            },
 
 
           ]
