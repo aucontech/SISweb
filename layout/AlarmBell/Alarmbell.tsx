@@ -287,10 +287,14 @@ export default function Alarmbell() {
                 let shouldRing = true;
                 let maintained = null;
                 if (tag !== null && tag !== undefined) {
-                    maintained = await _fetchAttributeData(
-                        alarm.entityId.id,
-                        tag + "_Maintain"
-                    );
+                    try {
+                        maintained = await _fetchAttributeData(
+                            alarm.entityId.id,
+                            tag + "_Maintain"
+                        );
+                    } catch (error) {
+                        console.log("error", error);
+                    }
                 }
                 return {
                     ...alarm,
