@@ -1702,7 +1702,7 @@ export default function DemoFlowOTS() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Inactive
+                                                InActive
                                             </span>
                                         )}
                                     </p>

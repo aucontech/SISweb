@@ -548,7 +548,7 @@ export default function SetUpdata_SNG_BINHDUONG() {
             );
             const ESD_High = res.data.find((item: any) => item.key === "ESD_High");
             setESD_High(ESD_High?.value || null);
-            const ESD_Low = res.data.find((item: any) => item.key === "VAPORIZER_1_Low");
+            const ESD_Low = res.data.find((item: any) => item.key === "ESD_Low");
             setESD_Low(ESD_Low?.value || null);
             const MaintainESD = res.data.find(
                 (item: any) => item.key === "ESD_Maintain"
@@ -2904,17 +2904,11 @@ const ChangeMaintainSDV_2003 = async () => {
                         
                              // =================================================================================================================== 
          // =================================================================================================================== 
-         
-
-
-
 
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
-
-
 
                 {
                     TD_4072_Conn_STT_High: inputValueTD_4072_Conn_STT,TD_4072_Conn_STT_Low:inputValue2TD_4072_Conn_STT,
@@ -2927,7 +2921,6 @@ const ChangeMaintainSDV_2003 = async () => {
                     ESD_2001_High: inputValueESD_2001,ESD_2001_Low:inputValue2ESD_2001,
                     PT_2005_High: inputValuePT_2005,PT_2005_Low:inputValue2PT_2005,
                     TT_2003_High: inputValueTT_2003,TT_2003_Low:inputValue2TT_2003,
-
 
                     PT_2004_High: inputValuePT_2004,PT_2004_Low:inputValue2PT_2004,
                     TT_2004_High: inputValueTT_2004,TT_2004_Low:inputValue2TT_2004,
@@ -2942,7 +2935,11 @@ const ChangeMaintainSDV_2003 = async () => {
 
                     TM_2003_SNG_High: inputValueTM_2003_SNG,TM_2003_SNG_Low:inputValue2TM_2003_SNG,
                     TOTAL_SNG_High: inputValueTOTAL_SNG,TOTAL_SNG_Low:inputValue2TOTAL_SNG,
-                    SDV_2004_High: inputValueSDV_2004,SDV_2004_Low:inputValue2SDV_2004,
+                    SDV_2004_High: inputValueSDV_2004,SDV_2004_Low:inputValue2SDV_2004,         
+
+
+
+
                     SDV_2003_High: inputValueSDV_2003,SDV_2003_Low:inputValue2SDV_2003,
                     GD1_STATUS_High: inputValueGD1_STATUS,GD1_STATUS_Low:inputValue2GD1_STATUS,
                     GD2_STATUS_High: inputValueGD2_STATUS,GD2_STATUS_Low:inputValue2GD2_STATUS,
@@ -2950,12 +2947,6 @@ const ChangeMaintainSDV_2003 = async () => {
                     GD4_STATUS_High: inputValueGD4_STATUS,GD4_STATUS_Low:inputValue2GD4_STATUS,
                     GD5_STATUS_High: inputValueGD5_STATUS,GD5_STATUS_Low:inputValue2GD5_STATUS,
                     EVC_02_Vm_of_Last_Day_High: inputValueEVC_02_Vm_of_Last_Day,EVC_02_Vm_of_Last_Day_Low:inputValue2EVC_02_Vm_of_Last_Day,
-
-
-
-
-
-
 
                     VAPORIZER_1_High: inputValueVAPORIZER_1,VAPORIZER_1_Low:inputValue2VAPORIZER_1,
                     VAPORIZER_2_High: inputValueVAPORIZER_2,VAPORIZER_2_Low:inputValue2VAPORIZER_2,
@@ -2979,8 +2970,6 @@ const ChangeMaintainSDV_2003 = async () => {
                     PCV_01: inputPCV_01, PCV_02: inputPCV_02,
                 }
             );
-     
-      
 
             setGetWayPhoneOTSUKA(inputGetwayPhone);
             setPCV_02(inputPCV_02)
@@ -3595,22 +3584,7 @@ const ChangeMaintainSDV_2003 = async () => {
             handleMainTainAll(isChecked);
         };
 
-        const maintainHeader = (
-            <div>
     
-                {!AuthInput && (
-                    <Checkbox  
-                    disabled={AuthInput} 
-                        style={{ marginRight: 5 }}
-                        onChange={handleCheckboxChange}
-                        checked={maintainPT_2005}
-                    />
-                )} 
-                Maintain
-    
-            </div>
-        );
-
 
 
         const handleMainTainPLC = async (checked:any) => {
@@ -3768,6 +3742,51 @@ const ChangeMaintainSDV_2003 = async () => {
             handleMainTainPLC(isChecked);
         };
 
+        const checkMaintainingPLC = 
+    maintainPT_2004 === true &&
+    maintainPT_2005 === true &&
+    maintainTT_2003 === true &&
+    maintainTT_2004 === true &&
+    maintainTG_2005 === true &&
+    maintainWB_1001 === true &&
+    maintainGD_2002 === true &&
+    maintainGD_2003 === true &&
+    maintainGD_2004 === true &&
+    maintainGD_2005 === true &&
+    maintainGD_2006 === true &&
+    maintainTM_2002_SNG === true &&
+    maintainTM_2003_SNG === true &&
+    maintainTOTAL_SNG === true &&
+    maintainSDV_2004 === true &&
+    maintainSDV_2003 === true &&
+    maintainGD1_STATUS === true &&
+    maintainGD2_STATUS === true &&
+    maintainGD3_STATUS === true &&
+    maintainGD4_STATUS === true &&
+    maintainGD5_STATUS === true &&
+    maintainESD === true &&
+    maintainHR_BC === true &&
+    maintainSD === true &&
+    maintainVAPORIZER_1 === true &&
+    maintainVAPORIZER_2 === true &&
+    maintainVAPORIZER_3 === true &&
+    maintainVAPORIZER_4 === true &&
+    maintainCOOLING_V === true &&
+    maintainFCV_2001 === true &&
+    maintainPERCENT_LPG === true &&
+    maintainPERCENT_AIR === true &&
+    maintainHV_1001 === true &&
+    maintainRATIO_MODE === true &&
+    maintainFCV_MODE === true &&
+    maintainTOTAL_CNG === true &&
+    maintainTM2002_CNG === true &&
+    maintainTM2003_CNG === true &&
+    maintainWB_Setpoint === true &&
+    maintainPLC_Conn_STT === true;
+
+
+        //=============================================================================
+
         const handleMainTainTD = async (checked:any) => {
             try {
              
@@ -3805,8 +3824,58 @@ const ChangeMaintainSDV_2003 = async () => {
             handleMainTainTD(isChecked);
         };
 
-
-
+        const checkMaintainingTD = 
+        maintainWIS_Calorimeter === true &&
+        maintainCVS_Calorimeter === true &&
+        maintainSG_Calorimeter === true &&
+        maintainTD_4072_Conn_STT === true;
+    
+        //=============================================================================
+       const handleCheckboxChangeALL = maintainPT_2004 === true &&
+       maintainPT_2005 === true &&
+       maintainTT_2003 === true &&
+       maintainTT_2004 === true &&
+       maintainTG_2005 === true &&
+       maintainWB_1001 === true &&
+       maintainGD_2002 === true &&
+       maintainGD_2003 === true &&
+       maintainGD_2004 === true &&
+       maintainGD_2005 === true &&
+       maintainGD_2006 === true &&
+       maintainTM_2002_SNG === true &&
+       maintainTM_2003_SNG === true &&
+       maintainTOTAL_SNG === true &&
+       maintainSDV_2004 === true &&
+       maintainSDV_2003 === true &&
+       maintainGD1_STATUS === true &&
+       maintainGD2_STATUS === true &&
+       maintainGD3_STATUS === true &&
+       maintainGD4_STATUS === true &&
+       maintainGD5_STATUS === true &&
+       maintainESD === true &&
+       maintainHR_BC === true &&
+       maintainSD === true &&
+       maintainVAPORIZER_1 === true &&
+       maintainVAPORIZER_2 === true &&
+       maintainVAPORIZER_3 === true &&
+       maintainVAPORIZER_4 === true &&
+       maintainCOOLING_V === true &&
+       maintainFCV_2001 === true &&
+       maintainPERCENT_LPG === true &&
+       maintainPERCENT_AIR === true &&
+       maintainHV_1001 === true &&
+       maintainRATIO_MODE === true &&
+       maintainFCV_MODE === true &&
+       maintainTOTAL_CNG === true &&
+       maintainTM2002_CNG === true &&
+       maintainTM2003_CNG === true &&
+       maintainWB_Setpoint === true &&
+       maintainPLC_Conn_STT === true &&
+         maintainWIS_Calorimeter === true &&
+       maintainCVS_Calorimeter === true &&
+       maintainSG_Calorimeter === true &&
+       maintainTD_4072_Conn_STT === true;
+        //=============================================================================
 
         const DataGD5_STATUS  = GD5_STATUS === "0" ? "Normal" : GD5_STATUS === "1" ? "Alarm" : null;
         const DataGD4_STATUS  = GD4_STATUS === "0" ? "Normal" : GD4_STATUS === "1" ? "Alarm" : null;
@@ -4336,28 +4405,25 @@ const ChangeMaintainSDV_2003 = async () => {
         },
   };
          
-    
   const mainCategoryFC = {
     EVC01: 'EVC01 -  Parameter & Configuration',
     Calorimeter: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> Calorimeter -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
     <Checkbox
         style={{ marginRight: 5 }}
         onChange={handleCheckboxChangeTD}
-        checked={maintainTD_4072_Conn_STT}
+        checked={checkMaintainingTD}
     />
-<p style={{fontSize:15}}>Maintain PLC</p>  </div> )}  </span>   ,
+<p style={{fontSize:15}}>Maintain Calorimeter</p>  </div> )}  </span>   ,
     PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
     <Checkbox
         style={{ marginRight: 5 }}
         onChange={handleCheckboxChangePLC}
-        checked={maintainPLC_Conn_STT}
+        checked={checkMaintainingPLC}
     />
-<p style={{fontSize:15}}>Maintain Calorimeter </p>  </div> )}  </span> ,
+<p style={{fontSize:15}}>Maintain PLC </p>  </div> )}  </span> ,
 };
 
           const PLC01 = [
-      
-
             {
                 mainCategory: mainCategoryFC.PLC,
                 
@@ -4385,7 +4451,6 @@ disabled={AuthInputHighLow}
     
             },
     
-         
             {
                 mainCategory: mainCategoryFC.PLC,
                 
@@ -4504,7 +4569,7 @@ disabled={AuthInputHighLow}
 
          modbus: <span style={combineCss.CSSWB_1001}>40011	 </span> ,
 
-        value: <span style={combineCss.CSSWB_1001} > {WB_1001} ( MJ/Sm³ )</span> , 
+        value: <span style={combineCss.CSSWB_1001} > {WB_1001} (MJ/Sm³)</span> , 
          high: <InputText 
 disabled={AuthInputHighLow}
          
@@ -5350,7 +5415,7 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSTOTAL_CNG} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSTOTAL_CNG}>Total CNG</span> ,
+    name: <span style={combineCss.CSSTOTAL_CNG}>Total SNG</span> ,
 
     modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
 
@@ -5717,6 +5782,23 @@ checked={maintainPLC_Conn_STT}
         },
 
     ];
+
+    const maintainHeader = (
+        <div>
+
+            {!AuthInput && (
+                <Checkbox  
+                disabled={AuthInput} 
+                    style={{ marginRight: 5 }}
+                    onChange={handleCheckboxChange}
+                    checked={handleCheckboxChangeALL}
+                />
+            )} 
+            Maintain
+
+        </div>
+    );
+
 
        //=========================================================================
   return (

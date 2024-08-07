@@ -282,26 +282,26 @@ export const DemoPRU = [
     },
 
    
-    {
-        id: "PCV_none1-PCV_NUM01",
-        source: "PCV_none1",
-        target: "PCV_NUM01",
-        // animated: true,
-        type: "smoothstep",
+    // {
+    //     id: "PCV_none1-PCV_NUM01",
+    //     source: "PCV_none1",
+    //     target: "PCV_NUM01",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
-    {
-        id: "PCV_none2-PCV_NUM02",
-        source: "PCV_none2",
-        target: "PCV_NUM02",
-        // animated: true,
-        type: "smoothstep",
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
+    // {
+    //     id: "PCV_none2-PCV_NUM02",
+    //     source: "PCV_none2",
+    //     target: "PCV_NUM02",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
 
     {
         id: "FIQ_none22-FIQ_1902",
@@ -314,26 +314,26 @@ export const DemoPRU = [
         stroke: "gray",
     },
    
-    {
-        id: "PCV_none1-PCV_NUM01",
-        source: "PCV_none1",
-        target: "PCV_NUM01",
-        // animated: true,
-        type: "smoothstep",
+    // {
+    //     id: "PCV_none1-PCV_NUM01",
+    //     source: "PCV_none1",
+    //     target: "PCV_NUM01",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
-    {
-        id: "PCV_none2-PCV_NUM02",
-        source: "PCV_none2",
-        target: "PCV_NUM02",
-        // animated: true,
-        type: "smoothstep",
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
+    // {
+    //     id: "PCV_none2-PCV_NUM02",
+    //     source: "PCV_none2",
+    //     target: "PCV_NUM02",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
 
     {
         id: "GD_none1-GD1_Value1901",

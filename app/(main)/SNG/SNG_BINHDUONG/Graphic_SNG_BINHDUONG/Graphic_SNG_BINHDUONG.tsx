@@ -88,7 +88,6 @@ export default function Graphic_SNG_BINHDUONG() {
     const [SDV, setSDV] = useState<string | null>(null);
 
 
-    const [TOTAL_SNG, setTOTAL_SNG] = useState<any>();
  
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
 
@@ -491,9 +490,24 @@ export default function Graphic_SNG_BINHDUONG() {
                 (item: any) => item.key === "FCV_MODE_Maintain"
             );
             setMaintainFCV_MODE(MaintainFCV_MODE?.value || false);
+
+
+
             //===========================================================================================
 
+   const HighTOTAL_SNG = res.data.find(
+                (item: any) => item.key === "TOTAL_SNG_High"
+            );
+            setTOTAL_SNG_High(HighTOTAL_SNG?.value || null);
+            const LowTOTAL_SNG = res.data.find(
+                (item: any) => item.key === "TOTAL_SNG_Low"
+            );
+            setTOTAL_SNG_Low(LowTOTAL_SNG?.value || null);
 
+            const MaintainTOTAL_SNG = res.data.find(
+                (item: any) => item.key === "TOTAL_SNG_Maintain"
+            );
+            setMaintainTOTAL_SNG(MaintainTOTAL_SNG?.value || false);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -737,6 +751,33 @@ useEffect(() => {
             setExceedThresholdFCV_MODE(FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue);
         }
     }, [FCV_MODE, FCV_MODE_High, FCV_MODE_Low, maintainFCV_MODE]);
+
+
+
+    
+   
+    //================================ FCV_MODE======================================================
+
+
+    const [TOTAL_SNG, setTOTAL_SNG] = useState<string | null>(null);
+    const [TOTAL_SNG_High, setTOTAL_SNG_High] = useState<number | null>(null);
+    const [TOTAL_SNG_Low, setTOTAL_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTOTAL_SNG, setExceedThresholdTOTAL_SNG] = useState(false); 
+    const [maintainTOTAL_SNG, setMaintainTOTAL_SNG] = useState<boolean>(false);
+    
+    useEffect(() => {
+        const TOTAL_SNGValue = parseFloat(TOTAL_SNG as any);
+        const highValue = TOTAL_SNG_High ?? NaN;
+        const lowValue = TOTAL_SNG_Low ?? NaN;
+    
+        if (!isNaN(TOTAL_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTOTAL_SNG) {
+            setExceedThresholdTOTAL_SNG(TOTAL_SNGValue >= highValue || TOTAL_SNGValue <= lowValue);
+        }
+    }, [TOTAL_SNG, TOTAL_SNG_High, TOTAL_SNG_Low, maintainTOTAL_SNG]);
+
+
+
+    
    
     //================================ FCV_MODE======================================================
     useEffect(() => {
@@ -1350,10 +1391,10 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdWB_Setpoint &&
-                                        !maintainWB_Setpoint
+                                        exceedThresholdTOTAL_SNG &&
+                                        !maintainTOTAL_SNG
                                             ? "#ff5656"
-                                            : maintainWB_Setpoint
+                                            : maintainTOTAL_SNG
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1385,7 +1426,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                                                          {TOTAL_SNG}
+                                    {TOTAL_SNG}
 
                                     </p>
                                     <p
