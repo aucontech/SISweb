@@ -1746,7 +1746,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         TT_3004: "Temperature Transmitter TT-3004 (˚C) ",
         TG_3005: "TG-3005 (˚C)",
 
-        WB_3001: "Wobbe Index WB-3001 (MJ/M3)",
+        WB_3001: "Wobbe Index WB-3001 (MJ/Sm³)",
 
       
 
@@ -1757,9 +1757,9 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_3005: `Gas Detector GD-3005 (%LEL)`,
         GD_3006: `Gas Detector GD-3006 (%LEL)`,
 
-        TM_3002_SNG:`Tubine Meter TM3002-SNG`,
-        TM_3003_SNG:`Tubine Meter TM3003-SNG`,
-        TOTAL_SNG: `Total SNG`,
+        TM_3002_SNG:`Tubine Meter TM3002-SNG (Sm³/h)`,
+        TM_3003_SNG:`Tubine Meter TM3003-SNG (Sm³/h)`,
+        TOTAL_SNG: `Total SNG (Sm³)`,
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
         SDV_3003:"Shutdown Valve SDV-3003 (0: Close - 1: Open)",
@@ -1772,7 +1772,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD5_STATUS:"GD-3006 Status (0: Normal - 1: Alarm)",
 
 
-        SD: "Emergency Shutdown (0: Normal - 1: Smoker Detected) ",
+        SD: "Smoke Detector (0: Normal - 1: Smoker Detected) ",
         HR_BC: "Horn And Beacon (0: OFF - 1: ON)",
         ESD: "Emergency Shutdown (0: No Active - 1: Active)",
         VAPORIZER_3: "VAPORIZER 3 (0: Stop - 1: Run)",
@@ -1787,12 +1787,12 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     
         PERCENT_LPG:"% LPG (%)",
         PERCENT_AIR:"% AIR (%)",
-        HV_3001:"Heat Value HV-1001 (MJ/Sm³)",
+        HV_3001:"Heat Value HV-3001 (MJ/Sm³)",
         RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
         FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
-        TOTAL_CNG: "Total CNG",
-        TM3002_CNG: "Tubine Meter TM3002-CNG",
-        TM3003_CNG: "Tubine Meter TM3003-CNG",
+        TOTAL_CNG: "Total CNG (Sm³)",
+        TM3002_CNG: "Tubine Meter TM3002-CNG (Sm³/h)",
+        TM3003_CNG: "Tubine Meter TM3003-CNG (Sm³/h)",
         WB_Setpoint: "Wobbe Index Setpoint (MJ/Sm³)",
         WIS_Calorimeter: "WIS Calorimeter (MJ/Sm³)", 
         CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
@@ -2621,11 +2621,11 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSESD}>{} {ESD} {DataESD}</span>,
         },
         {
-            name: <span>{tagNamePLC.VAPORIZER_2}</span>,
+            name: <span>{tagNamePLC.VAPORIZER_1}</span>,
             PLC: <span style={combineCss.CSSVAPORIZER_1}>{VAPORIZER_1} {DataVAPORIZER_1}</span>,
         },
         {
-            name: <span>{tagNamePLC.VAPORIZER_1}</span>,
+            name: <span>{tagNamePLC.VAPORIZER_2}</span>,
             PLC: <span style={combineCss.CSSVAPORIZER_2}>{VAPORIZER_2} {DataVAPORIZER_2}</span>,
         },
    
