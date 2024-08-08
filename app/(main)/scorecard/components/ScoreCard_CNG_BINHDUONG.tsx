@@ -1772,9 +1772,8 @@ useEffect(() => {
 
     const DataWater_PG =
         Water_PG === "0" ? "Normal" : Water_PG === "1" ? " Pressure Low" : null;
-    const DataHEATER_1 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Run" : null;
-    const DataHEATER_2 =
-        HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Run" : null;
+    const DataHEATER_1 = HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Run" : null;
+    const DataHEATER_2 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Run" : null;
     const DataPUMP_1 =
         PUMP_1 === "0"
             ? "Stop"

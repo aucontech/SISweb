@@ -1085,7 +1085,6 @@ useEffect(() => {
 
 
           const [EVC_01_Vm_of_Current_Day, setEVC_01_Vm_of_Current_Day] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Vm_of_Current_Day, setAudioPlayingEVC_01_Vm_of_Current_Day] = useState(false);
           const [inputValueEVC_01_Vm_of_Current_Day, setInputValueEVC_01_Vm_of_Current_Day] = useState<any>();
           const [inputValue2EVC_01_Vm_of_Current_Day, setInputValue2EVC_01_Vm_of_Current_Day] = useState<any>();
           const [EVC_01_Vm_of_Current_Day_High, setEVC_01_Vm_of_Current_Day_High] = useState<number | null>(null);
@@ -1131,50 +1130,23 @@ useEffect(() => {
           // =================================================================================================================== 
 
           const [EVC_01_Vb_of_Current_Day, setEVC_01_Vb_of_Current_Day] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Vb_of_Current_Day, setAudioPlayingEVC_01_Vb_of_Current_Day] = useState(false);
           const [inputValueEVC_01_Vb_of_Current_Day, setInputValueEVC_01_Vb_of_Current_Day] = useState<any>();
           const [inputValue2EVC_01_Vb_of_Current_Day, setInputValue2EVC_01_Vb_of_Current_Day] = useState<any>();
           const [EVC_01_Vb_of_Current_Day_High, setEVC_01_Vb_of_Current_Day_High] = useState<number | null>(null);
           const [EVC_01_Vb_of_Current_Day_Low, setEVC_01_Vb_of_Current_Day_Low] = useState<number | null>(null);
           const [exceedThresholdEVC_01_Vb_of_Current_Day, setExceedThresholdEVC_01_Vb_of_Current_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-          
           const [maintainEVC_01_Vb_of_Current_Day, setMaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
           
-          
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Current_Day_High === 'string' && typeof EVC_01_Vb_of_Current_Day_Low === 'string' && EVC_01_Vb_of_Current_Day !== null && maintainEVC_01_Vb_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Current_Day_Low);
-                      const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vb_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vb_of_Current_Day(true);
-                                  setExceedThresholdEVC_01_Vb_of_Current_Day(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Vb_of_Current_Day(false);
-                             setExceedThresholdEVC_01_Vb_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, audioPlayingEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vb_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vb_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vb_of_Current_Day]);
-          
+          useEffect(() => {
+            const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day as any);
+            const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Current_Day) {
+                setExceedThresholdEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_DayValue >= highValue || EVC_01_Vb_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low, maintainEVC_01_Vb_of_Current_Day]);
+        
               const handleInputChangeEVC_01_Vb_of_Current_Day = (event: any) => {
                   const newValue = event.target.value;
                   setInputValueEVC_01_Vb_of_Current_Day(newValue);
@@ -1431,7 +1403,6 @@ useEffect(() => {
 
 
        const [PT1, setPT1] = useState<string | null>(null);
-       const [audioPlayingPT1, setAudioPlayingPT1] = useState(false);
        const [inputValuePT1, setInputValuePT1] = useState<any>();
        const [inputValue2PT1, setInputValue2PT1] = useState<any>();
        const [PT1_High, setPT1_High] = useState<number | null>(null);
@@ -1441,6 +1412,7 @@ useEffect(() => {
        const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
        
        
+        
        useEffect(() => {
         const PT1Value = parseFloat(PT1 as any);
         const highValue = PT1_High ?? NaN;
@@ -1476,7 +1448,6 @@ useEffect(() => {
        // =================================================================================================================== 
 
        const [DI_ZSO_1, setDI_ZSO_1] = useState<string | null>(null);
-       const [audioPlayingDI_ZSO_1, setAudioPlayingDI_ZSO_1] = useState(false);
        const [inputValueDI_ZSO_1, setInputValueDI_ZSO_1] = useState<any>();
        const [inputValue2DI_ZSO_1, setInputValue2DI_ZSO_1] = useState<any>();
        const [DI_ZSO_1_High, setDI_ZSO_1_High] = useState<number | null>(null);
@@ -3052,18 +3023,15 @@ const ChangemaintainPLC_Conn_STT = async () => {
             try {
                 const newMaintainGD1 = checked;
                 const newMaintainGD2 = checked;
-                const newMaintainGD3 = checked;
-        
                 const newMaintainPT1 = checked;
-                const newMaintainDI_DI_ZSO_1 = checked;
-                const newMaintainDI_DI_ZSC_1 = checked;
+                const newMaintainDI_ZSO_1 = checked;
+                const newMaintainDI_ZSC_1 = checked;
                 const newmaintainDI_MAP_1 = checked;
                 const newmaintainDI_UPS_CHARGING = checked;
                 const newmaintainDI_UPS_ALARM = checked;
                 const newmaintainDI_SELECT_SW = checked;
                 const newmaintainDI_RESET = checked;
                 const newmaintainDI_UPS_BATTERY = checked;
-                const newmaintainDO_SV1 = checked;
         
                 const newmaintainEmergency_NO = checked;
                 const newmaintainEmergency_NC = checked;
@@ -3079,17 +3047,15 @@ const ChangemaintainPLC_Conn_STT = async () => {
                     `/plugins/telemetry/DEVICE/${id_NITORI}/SERVER_SCOPE`,
                     {                GD1_Maintain: newMaintainGD1,
                         GD2_Maintain: newMaintainGD2,
-                        GD3_Maintain: newMaintainGD3,
                         PT1_Maintain: newMaintainPT1,
-                        DI_ZSO_1_Maintain: newMaintainDI_DI_ZSO_1,
-                        DI_ZSC_1_Maintain: newMaintainDI_DI_ZSC_1,
+                        DI_ZSO_1_Maintain: newMaintainDI_ZSO_1,
+                        DI_ZSC_1_Maintain: newMaintainDI_ZSC_1,
                         DI_MAP_1_Maintain: newmaintainDI_MAP_1,
                         DI_UPS_CHARGING_Maintain: newmaintainDI_UPS_CHARGING,
                         DI_UPS_ALARM_Maintain: newmaintainDI_UPS_ALARM,
                         DI_SELECT_SW_Maintain: newmaintainDI_SELECT_SW,
                         DI_RESET_Maintain: newmaintainDI_RESET,
                         DI_UPS_BATTERY_Maintain: newmaintainDI_UPS_BATTERY,
-                        DO_SV1_Maintain: newmaintainDO_SV1,
          
                         Emergency_NO_Maintain: newmaintainEmergency_NO,
                         Emergency_NC_Maintain: newmaintainEmergency_NC,
@@ -3106,8 +3072,8 @@ const ChangemaintainPLC_Conn_STT = async () => {
                 setMaintainGD2(newMaintainGD2);
         
                 setMaintainPT1(newMaintainPT1);
-                setMaintainDI_ZSO_1(newMaintainDI_DI_ZSO_1);
-                setMaintainDI_ZSC_1(newMaintainDI_DI_ZSC_1);
+                setMaintainDI_ZSO_1(newMaintainDI_ZSO_1);
+                setMaintainDI_ZSC_1(newMaintainDI_ZSC_1);
                 setMaintainDI_MAP_1(newmaintainDI_MAP_1);
                 setMaintainDI_UPS_CHARGING(newmaintainDI_UPS_CHARGING);
                 setMaintainDI_UPS_ALARM(newmaintainDI_UPS_ALARM);
@@ -3119,7 +3085,7 @@ const ChangemaintainPLC_Conn_STT = async () => {
                 setMaintainEmergency_NC(newmaintainEmergency_NC);
                 setMaintainUPS_Mode(newmaintainUPS_Mode);
                 setMaintainDO_HR_01(newmaintainDO_HR_01);
-                setMaintainDO_SV_01(newmaintainDO_HR_01);
+                setMaintainDO_SV_01(newMaintainDO_SV_01);
 
                 setMaintainDO_BC_01(newmaintainDO_BC_01);
                 setmaintainPLC_Conn_STT(newmaintainPLC_Conn_STT);
@@ -3137,8 +3103,7 @@ const ChangemaintainPLC_Conn_STT = async () => {
             handleMainTainPLC(isChecked);
         };
 
-        const checkMaintainingPLC = 
-    maintainGD1 === true &&
+        const checkMaintainingPLC = maintainGD1 === true &&
     maintainGD2 === true &&
     maintainPT1 === true &&
     maintainDI_ZSO_1 === true &&
@@ -3156,6 +3121,7 @@ const ChangemaintainPLC_Conn_STT = async () => {
     maintainDO_BC_01 === true &&
     maintainDO_SV_01 === true &&
     maintainPLC_Conn_STT === true;
+
 
 //===========================================================================================
         
@@ -3479,7 +3445,26 @@ const ChangemaintainPLC_Conn_STT = async () => {
             height:25,
             fontWeight:400,
         },
-
+        CSS_EVC_01_Conn_STT: {
+            color:exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
+            ? "#ff5656"
+            : maintainEVC_01_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+            
+        },
+          CSS_PLC_Conn_STT: {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            height:25,
+            fontWeight:400,
+            
+        },
   };
          
   const mainCategoryFC = {
@@ -3499,6 +3484,8 @@ const ChangemaintainPLC_Conn_STT = async () => {
         />
     <p style={{fontSize:15}}>Maintain PLC </p>  </div> )}  </span> 
 };
+const DataEVC_01_Conn_STT = EVC_01_Conn_STT === "0" ? "Not Init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null
+const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
 
 
         const dataEVC01 = [
@@ -3780,6 +3767,31 @@ disabled={AuthInput}
 
      },
 
+     { 
+        mainCategory: mainCategoryFC.EVC,
+        
+        timeUpdate: <span style={combineCss.CSS_EVC_01_Conn_STT} >{EVC_STT01Value}</span>,
+    modbus: <span style={combineCss.CSS_EVC_01_Conn_STT}>Status</span> ,
+
+    name: <span style={combineCss.CSS_EVC_01_Conn_STT}> EVC Connection Status </span> ,
+
+    value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {EVC_01_Conn_STT} {DataEVC_01_Conn_STT}</span>, 
+    high: <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Conn_STT} onChange={handleInputChangeEVC_01_Conn_STT} inputMode="decimal" />, 
+    low:  <InputText  
+disabled={AuthInputHighLow}
+    
+    style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Conn_STT} onChange={handleInputChange2EVC_01_Conn_STT} inputMode="decimal" />,
+    update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+    Maintain:   <Checkbox
+    style={{ marginRight: 20, }}
+    onChange={ChangemaintainEVC_01_Conn_STT}
+    checked={maintainEVC_01_Conn_STT}
+></Checkbox>
+
+    },
 
     ]
 
@@ -3790,14 +3802,14 @@ const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
 const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
 const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
-const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
+const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
 const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
 const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
 const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
 const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
 const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null;
-const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "Using Battery" : UPS_Mode === "2" ? "Charging Battery" : UPS_Mode === "3" ? "Disconnected Battery" : UPS_Mode === "4" ? "Normal" : null
+const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "UPS Running" : UPS_Mode === "2" ? "Charging" : UPS_Mode === "3" ? "No Battery" : UPS_Mode === "4" ? "Normal" : null
 
 const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
 const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
@@ -4254,7 +4266,31 @@ checked={maintainDO_SV_01}
 ></Checkbox>
 
 },
+{ 
+    mainCategory: mainCategoryFC.PLC,
+    
+    timeUpdate: <span style={combineCss.CSS_PLC_Conn_STT} >{EVC_STT01Value}</span>,
+modbus: <span style={combineCss.CSS_PLC_Conn_STT}>Status</span> ,
 
+name: <span style={combineCss.CSS_PLC_Conn_STT}>PLC Connection Status</span> ,
+
+value: <span style={combineCss.CSS_PLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span>, 
+high: <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
+low:  <InputText  
+disabled={AuthInputHighLow}
+
+style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangemaintainPLC_Conn_STT}
+checked={maintainPLC_Conn_STT}
+></Checkbox>
+
+},
       ]
 
       const combinedData = [ ...dataEVC01 , ...PLC];
@@ -4370,7 +4406,6 @@ const Configuration = [
             disabled={AuthUpdatePCV}
 
                 style={combineCssAttribute.PCV}
-                placeholder="High"
                 step="0.1"
                 type="Name"
                 value={inputPCV_01}
@@ -4399,7 +4434,6 @@ const Configuration = [
             disabled={AuthUpdatePCV}
 
                 style={combineCssAttribute.PCV}
-                placeholder="High"
                 step="0.1"
                 type="Name"
                 value={inputPCV_02}
@@ -4428,7 +4462,6 @@ const Configuration = [
             disabled={AuthUpdatePCV}
 
                 style={combineCssAttribute.PCV}
-                placeholder="High"
                 step="0.1"
                 type="Name"
                 value={inputPSV_01}
@@ -4450,7 +4483,7 @@ const Configuration = [
     },
    
     {
-        Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+        Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
 
         Value: (
             <InputText 
@@ -4458,7 +4491,6 @@ const Configuration = [
             disabled={AuthUpdatePCV}
 
                 style={combineCssAttribute.PCV}
-                placeholder="High"
                 step="0.1"
                 type="Name"
                 value={inputGetwayPhone}
