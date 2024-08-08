@@ -104,9 +104,6 @@ export default function ScoreCard_ZOCV() {
                         FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
                         FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
 
-
-
-
                         EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
                         EVC_02_Temperature: setEVC_02_Temperature,
                         EVC_02_Pressure: setEVC_02_Pressure,
@@ -118,9 +115,6 @@ export default function ScoreCard_ZOCV() {
                         EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
                         EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
                         EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-
-
-                   
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -545,8 +539,17 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
 
+            const PT_1103_High = res.data.find((item: any) => item.key === "PT_1103_High");
+            setPT_1103_High(PT_1103_High?.value || null);
+            const PT_1103_Low = res.data.find((item: any) => item.key === "PT_1103_Low");
+            setPT_1103_Low(PT_1103_Low?.value || null);
+            const PT_1103_Maintain = res.data.find(
+                (item: any) => item.key === "PT_1103_Maintain"
+            );
+
  // =================================================================================================================== 
 
+ setMaintainPT_1103(PT_1103_Maintain?.value || false);
 
  setMaintainFC_01_Charger_Voltage(FC_01_Charger_Voltage_Maintain?.value || false);
 
@@ -2057,6 +2060,34 @@ useEffect(() => {
         }, [FC_01_Yesterday_Values_Uncorrected_Volume_High, FC_01_Yesterday_Values_Uncorrected_Volume, FC_01_Yesterday_Values_Uncorrected_Volume_Low,maintainFC_01_Yesterday_Values_Uncorrected_Volume]);
     
 
+    // =================================================================================================================== 
+
+    const [PT_1103, setPT_1103] = useState<string | null>(null);
+
+    const [PT_1103_High, setPT_1103_High] = useState<number | null>(null);
+    const [PT_1103_Low, setPT_1103_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_1103, setExceedThresholdPT_1103] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainPT_1103, setMaintainPT_1103] = useState<boolean>(false);
+    
+    
+        useEffect(() => {
+            if (typeof PT_1103_High === 'string' && typeof PT_1103_Low === 'string' && PT_1103 !== null && maintainPT_1103 === false
+            ) {
+                const highValue = parseFloat(PT_1103_High);
+                const lowValue = parseFloat(PT_1103_Low);
+                const PT_1103Value = parseFloat(PT_1103);
+        
+                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT_1103Value)) {
+                    if (highValue <= PT_1103Value || PT_1103Value <= lowValue) {
+                            setExceedThresholdPT_1103(true);
+                    } else {
+                       setExceedThresholdPT_1103(false);
+                    }
+                } 
+            } 
+        }, [PT_1103_High, PT_1103, PT_1103_Low,maintainPT_1103]);
+    
+
 
     // =================================================================================================================== 
     const tagNameFC = {
@@ -2076,7 +2107,9 @@ useEffect(() => {
         VbLastDay: "Standard Volume Vb Yesterday (Sm³)",
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
-        ReBattery: "Remainning Battery (Months)",
+        ReBattery: "Lithium Battery Status (Months)",
+        PT_1103: "Output Pressure PT-1103 (BarG)",
+
     };
 
     const tagNamePLC = {
