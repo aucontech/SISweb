@@ -1194,8 +1194,8 @@ useEffect(() => {
         PT01: "Output Pressure (BarG)",
         GD1: "Gas Detector GD-1301 (%LEL)",
         GD2: "Gas Detector GD-1302 (%LEL)",
-        ZSC: "SDV-1301 ZSO (0: ON - 1: OFF)",
-        ZSO: "SDV-1301 ZSC (0: OFF - 1: ON)",
+        ZSO: "SDV-1301 ZSO (0: OFF - 1: ON)",
+        ZSC: "SDV-1301 ZSC (0: ON - 1: OFF)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
@@ -1209,7 +1209,7 @@ useEffect(() => {
         HORN: "HORN (0: OFF - 1: ON)",
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
-        DO_SV_01: "SDV-1301 SOLENOID (0: Off - 1: On)",
+        DO_SV_01: "SDV-1301 SOLENOID (0: OFF - 1: ON)",
 
     };
 
@@ -1229,19 +1229,8 @@ useEffect(() => {
         DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
     const DataAlarm =
         DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
-    const DataMode =
-        UPS_Mode === "0"
-            ? "Error"
-            : UPS_Mode === "1"
-            ? "Using Running"
-            : UPS_Mode === "2"
-            ? "Charging"
-            : UPS_Mode === "3"
-            ? "No Battery"
-            : UPS_Mode === "4"
-            ? "Normal"
-            : null;
-            const DataZSO_1 = DI_ZSO_1 === "0" ? "Off" : DI_ZSO_1 === "1" ? "ON" : null;
+    const DataMode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "UPS Running" : UPS_Mode === "2" ? "Charging" : UPS_Mode === "3" ? "No Battery" : UPS_Mode === "4" ? "Normal" : null
+            const DataZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
             const DataZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
 
     const DataDI_SELECT_SW =
