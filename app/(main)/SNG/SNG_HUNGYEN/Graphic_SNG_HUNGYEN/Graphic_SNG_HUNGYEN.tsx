@@ -347,9 +347,9 @@ export default function Graphic_SNG_HUNGYEN() {
         TT: "TT",
     };
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
         BAR: "Bara",
         CC: "°C",
@@ -1627,7 +1627,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-3004 :
+                                        PIT-3005 :
                                     </p>
                                     <p
                                         style={{
@@ -1689,7 +1689,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-3005 :
+                                        PIT-3006 :
                                     </p>
                                     <p
                                         style={{
@@ -3080,6 +3080,7 @@ export default function Graphic_SNG_HUNGYEN() {
             data: {
                 label: <div></div>,
             },
+            zIndex:99999,
 
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
@@ -3093,7 +3094,7 @@ export default function Graphic_SNG_HUNGYEN() {
             data: {
                 label: <div></div>,
             },
-
+            zIndex:99999,
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
@@ -3111,7 +3112,7 @@ export default function Graphic_SNG_HUNGYEN() {
             data: {
                 label: <div></div>,
             },
-
+            zIndex:99999,
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: { border: "none", width: 0, height: 50, background: "blue" },
@@ -3124,6 +3125,7 @@ export default function Graphic_SNG_HUNGYEN() {
             data: {
                 label: <div></div>,
             },
+            zIndex:99999,
 
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
@@ -3456,7 +3458,7 @@ export default function Graphic_SNG_HUNGYEN() {
                 ),
             },
             position: positions.WB_1001,
-
+            zIndex:99999,
             style: {
                 border: background,
                 width: 300,

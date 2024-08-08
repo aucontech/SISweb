@@ -103,7 +103,6 @@ export default function GraphicNITORI() {
 
     const [PT01, setPT01] = useState<string | null>(null);
     const [PT02, setPT02] = useState<string | null>(null);
-    const [PT1, setPT1] = useState<string | null>(null);
 
     const [GD2, SetGD2] = useState<string | null>(null);
     const [GD3, SetGD3] = useState<string | null>(null);
@@ -305,7 +304,24 @@ export default function GraphicNITORI() {
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
+    const [PT1, setPT1] = useState<string | null>(null);
 
+    const [PT1_High, setPT1_High] = useState<number | null>(null);
+    const [PT1_Low, setPT1_Low] = useState<number | null>(null);
+    const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    
+    const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
+    
+    
+    useEffect(() => {
+       const PT1Value = parseFloat(PT1 as any);
+       const highValue = PT1_High ?? NaN;
+       const lowValue = PT1_Low ?? NaN;
+   
+       if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+           setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+       }
+   }, [PT1, PT1_High, PT1_Low, maintainPT1]);
 
     //================================ PT 1903======================================================
     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
@@ -541,16 +557,17 @@ export default function GraphicNITORI() {
                 (item: any) => item.key === "GD2_Maintain"
             );
             setMaintainGD2(MaintainGD2?.value || false);
+            //============================================================================
      
             const HighEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setEVC_01_Flow_at_Base_Condition_High(HighEVC_01_Flow_at_Base_Condition?.value || null);
 
             const LowEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setEVC_01_Flow_at_Base_Condition_Low(LowEVC_01_Flow_at_Base_Condition?.value || null);
 
@@ -562,12 +579,12 @@ export default function GraphicNITORI() {
             //============================================================================
 
             const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Conditionn_High"
             );
             setEVC_01_Flow_at_Measurement_Condition_High(HighEVC_01_Flow_at_Measurement_Condition?.value || null);
 
             const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Conditionn_Low"
             );
             setEVC_01_Flow_at_Measurement_Condition_Low(LowEVC_01_Flow_at_Measurement_Condition?.value || null);
 
@@ -662,11 +679,11 @@ export default function GraphicNITORI() {
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -687,7 +704,7 @@ export default function GraphicNITORI() {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
                 const roundedSVF1 =
-                    SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+                EVC_01_Flow_at_Base_Condition !== null ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -748,7 +765,7 @@ export default function GraphicNITORI() {
             }
             if (node.id === "data3") {
                 const roundedGVF1 =
-                    GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+                EVC_01_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_01_Flow_at_Measurement_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -809,7 +826,7 @@ export default function GraphicNITORI() {
             }
             if (node.id === "data2") {
                 const roundedSVA1 =
-                    SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
+                EVC_01_Volume_at_Base_Condition !== null ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -870,7 +887,7 @@ export default function GraphicNITORI() {
             }
             if (node.id === "data1") {
                 const roundedGVA1 =
-                    GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
+                EVC_01_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_01_Volume_at_Measurement_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1299,7 +1316,7 @@ export default function GraphicNITORI() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1362,7 +1379,7 @@ export default function GraphicNITORI() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1574,7 +1591,7 @@ export default function GraphicNITORI() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD01} LEL</p>
+                                <p>{roundedGD01} %LEL</p>
                             </div>
                         ),
                     },
@@ -1610,7 +1627,7 @@ export default function GraphicNITORI() {
                                 }}
                                 // onClick={() => confirmGD2()}
                             >
-                                <p>{roundedGD02} LEL</p>
+                                <p>{roundedGD02} %LEL</p>
                             </div>
                         ),
                     },
