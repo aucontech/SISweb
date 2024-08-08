@@ -2170,7 +2170,6 @@ const ChangeMaintainEmergency_NO = async () => {
 
 
      const [DO_HR_01, setDO_HR_01] = useState<string | null>(null);
-     const [audioPlayingDO_HR_01, setAudioPlayingDO_HR_01] = useState(false);
      const [inputValueDO_HR_01, setInputValueDO_HR_01] = useState<any>();
      const [inputValue2DO_HR_01, setInputValue2DO_HR_01] = useState<any>();
      const [DO_HR_01_High, setDO_HR_01_High] = useState<number | null>(null);
@@ -2223,7 +2222,6 @@ const ChangeMaintainEmergency_NO = async () => {
 
 
           const [DO_BC_01, setDO_BC_01] = useState<string | null>(null);
-          const [audioPlayingDO_BC_01, setAudioPlayingDO_BC_01] = useState(false);
           const [inputValueDO_BC_01, setInputValueDO_BC_01] = useState<any>();
           const [inputValue2DO_BC_01, setInputValue2DO_BC_01] = useState<any>();
           const [DO_BC_01_High, setDO_BC_01_High] = useState<number | null>(null);
@@ -3804,7 +3802,7 @@ const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY ==
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
 const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
 const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
-const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
+const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote  " : null;
 const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
 const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
@@ -3814,6 +3812,7 @@ const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "UPS Runnin
 const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
 const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
 const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
+
 
     const PLC = [
 
@@ -4189,11 +4188,35 @@ checked={maintainUPS_Mode}
 },
 
 {
+    mainCategory: mainCategoryFC.PLC ,
+   timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
+   name: <span style={combineCss.CSSDO_HR_01}>HORN</span> ,
+   
+   modbus: <span style={combineCss.CSSDO_HR_01}>DB5W50	 </span> ,
+   
+   value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
+   high: <InputText 
+   
+   disabled={AuthInput} 
+   style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
+   low:  <InputText 
+   
+   disabled={AuthInput} 
+   style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
+   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   Maintain:   <Checkbox
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainDO_HR_01}
+   checked={maintainDO_HR_01}
+   ></Checkbox>
+   
+   },
+{
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
+name: <span style={combineCss.CSSDO_BC_01}>  BEACON</span> ,
 
-modbus: <span style={combineCss.CSSDO_BC_01}>DB5W50	 </span> ,
+modbus: <span style={combineCss.CSSDO_BC_01}>	DB5W52 </span> ,
 
 value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
 high: <InputText 
@@ -4216,30 +4239,6 @@ checked={maintainDO_BC_01}
 
 
 
-{
- mainCategory: mainCategoryFC.PLC ,
-timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
-
-modbus: <span style={combineCss.CSSDO_HR_01}>DB5W52	 </span> ,
-
-value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
-high: <InputText 
-
-disabled={AuthInput} 
-style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
-low:  <InputText 
-
-disabled={AuthInput} 
-style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_HR_01}
-checked={maintainDO_HR_01}
-></Checkbox>
-
-},
 
 
 {
