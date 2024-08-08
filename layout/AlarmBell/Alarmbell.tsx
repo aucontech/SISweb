@@ -264,34 +264,33 @@ export default function Alarmbell() {
     );
 
     const processNotification = async (dataAlarm: any[]) => {
-        // Xử lý logic tại đây, ví dụ như gửi yêu cầu API hoặc cập nhật cơ sở dữ liệu
         console.log("Processing notification:", dataAlarm);
-
-        // let dataAlarmIds = [...dataAlarm].map((item: any) => item.id.id);
-        // let newNotifications = notifications.filter((item: any) =>
-        //     dataAlarmIds.includes(item.id.id)
-        // ); //
-        // let newNotificationsIds = [...newNotifications].map(
-        //     (item: any) => item.id.id
-        // );
-        // let newAlarm = [...dataAlarm].filter(
-        //     (item: any) => !newNotificationsIds.includes(item.id.id)
-        // );
-
         let updatedAlarms = await Promise.all(
             [...dataAlarm].map(async (alarm: any) => {
                 if (alarm.severity === "MAJOR") {
-                    return alarm; // Nếu đã có, trả về nguyên đối tượng không thay đổi
+                    return alarm;
                 }
+
                 let tag = alarm?.details?.data?.split(",")[0];
                 let shouldRing = true;
                 let maintained = null;
+
                 if (tag !== null && tag !== undefined) {
-                    maintained = await _fetchAttributeData(
-                        alarm.entityId.id,
-                        tag + "_Maintain"
-                    );
+                    try {
+                        maintained = await _fetchAttributeData(
+                            alarm.entityId.id,
+                            tag + "_Maintain"
+                        );
+                    } catch (error) {
+                        console.error(
+                            `Error fetching attribute data for ${tag}:`,
+                            error
+                        );
+                        // Xử lý lỗi ở đây, ví dụ như đặt maintained về giá trị mặc định
+                        maintained = null;
+                    }
                 }
+
                 return {
                     ...alarm,
                     shouldPlaySound:
@@ -299,7 +298,7 @@ export default function Alarmbell() {
                 };
             })
         );
-        // setNotifications([...updatedAlarms, ...newNotifications]);
+
         setNotifications([...updatedAlarms]);
     };
 

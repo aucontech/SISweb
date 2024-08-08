@@ -1,5 +1,4 @@
 // src/hooks/useToken.ts
-
 import { useState, useEffect } from "react";
 import { readToken } from "@/service/localStorage";
 export const useToken = (): string | null => {
