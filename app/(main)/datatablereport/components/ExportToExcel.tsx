@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 import { Button } from "primereact/button";
-import { co } from "@fullcalendar/core/internal-common";
+
 import { Utils } from "@/service/Utils";
 interface Props {
     data: any[];
@@ -10,8 +10,6 @@ interface Props {
 }
 
 const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
-    console.log("filter", filters);
-    console.log("date", filters ? filters : null);
     const handleExport = () => {
         const tagsKeys = filters.tags.map((tag: any) => tag.key).join(", ");
         const data1 = [
