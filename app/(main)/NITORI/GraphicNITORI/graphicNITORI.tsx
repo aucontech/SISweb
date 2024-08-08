@@ -527,15 +527,15 @@ export default function GraphicNITORI() {
             //============================================================================
 
             const HighEVC_01_Pressure = res.data.find(
-                (item: any) => item.key === "PT1_High"
+                (item: any) => item.key === "EVC_01_Pressure_High"
             );
             setEVC_01_Pressure_High(HighEVC_01_Pressure?.value || null);
             const LowEVC_01_Pressure = res.data.find(
-                (item: any) => item.key === "PT1_Low"
+                (item: any) => item.key === "EVC_01_Pressure_Low"
             );
             setEVC_01_Pressure_Low(LowEVC_01_Pressure?.value || null);
             const MaintainPT_1903 = res.data.find(
-                (item: any) => item.key === "PT1_Maintain"
+                (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
             setMaintainEVC_01_Pressure(MaintainPT_1903?.value || false);
             //============================================================================
