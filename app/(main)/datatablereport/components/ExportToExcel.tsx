@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 import { Button } from "primereact/button";
-import { co } from "@fullcalendar/core/internal-common";
+
 import { Utils } from "@/service/Utils";
 interface Props {
     data: any[];
@@ -20,14 +20,14 @@ const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
             [
                 "FROM:",
                 `${Utils.formateJsTime(
-                    filters.dates[0],
+                    filters.dates[0].toDate(),
                     "yyyy-MM-dd HH:mm:ss"
                 )}`,
             ],
             [
                 "TO:",
                 `${Utils.formateJsTime(
-                    filters.dates[1],
+                    filters.dates[1].toDate(),
                     "yyyy-MM-dd HH:mm:ss"
                 )}`,
             ],
@@ -58,8 +58,14 @@ const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
         XLSX.utils.book_append_sheet(wb, ws, "Data");
 
         // Tạo và tải xuống file Excel
-        const fromDate = Utils.formateJsTime(filters.dates[0], "yyyy-MM-dd");
-        const toDate = Utils.formateJsTime(filters.dates[1], "yyyy-MM-dd");
+        const fromDate = Utils.formateJsTime(
+            filters.dates[0].toDate(),
+            "yyyy-MM-dd"
+        );
+        const toDate = Utils.formateJsTime(
+            filters.dates[1].toDate(),
+            "yyyy-MM-dd"
+        );
 
         // Tạo và tải xuống file Excel
         XLSX.writeFile(

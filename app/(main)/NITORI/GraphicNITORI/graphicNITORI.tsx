@@ -511,8 +511,20 @@ export default function GraphicNITORI() {
         try {
             const res = await httpApi.get(GetTelemetry_ZOVC);
 
-        
+            const HighPT01 = res.data.find(
+                (item: any) => item.key === "PT1_High"
+            );
+            setPT1_High(HighPT01?.value || null);
+            const LowPT01 = res.data.find(
+                (item: any) => item.key === "PT1_Low"
+            );
+            setPT1_Low(LowPT01?.value || null);
+            const MaintainPT1 = res.data.find(
+                (item: any) => item.key === "PT1_Maintain"
+            );
+            setMaintainPT1(MaintainPT1?.value || false);
          
+            //============================================================================
 
             const HighEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "PT1_High"
@@ -579,12 +591,12 @@ export default function GraphicNITORI() {
             //============================================================================
 
             const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Conditionn_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setEVC_01_Flow_at_Measurement_Condition_High(HighEVC_01_Flow_at_Measurement_Condition?.value || null);
 
             const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Conditionn_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setEVC_01_Flow_at_Measurement_Condition_Low(LowEVC_01_Flow_at_Measurement_Condition?.value || null);
 
@@ -1202,7 +1214,7 @@ export default function GraphicNITORI() {
             }
             if (node.id === "Pressure_Trans01") {
                 const roundedPT1 =
-                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
+                PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1219,9 +1231,9 @@ export default function GraphicNITORI() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                    exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure
+                                    exceedThresholdPT1 && !maintainPT1
                                             ? "#ff5656"
-                                            : maintainEVC_01_Pressure
+                                            : maintainPT1
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1262,8 +1274,8 @@ export default function GraphicNITORI() {
                 };
             }
             if (node.id === "Pressure_Trans02") {
-                const roundedPT01 =
-                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+                const roundedEVC_01_Pressure =
+                    EVC_01_Pressure !== null ? parseFloat(EVC_01_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1279,12 +1291,12 @@ export default function GraphicNITORI() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    // backgroundColor:
-                                    //     exceedThreshold && !maintainPCV1901
-                                    //         ? "#ff5656"
-                                    //         : maintainPCV1901
-                                    //         ? "orange"
-                                    //         : "transparent",
+                                    backgroundColor:
+                                    exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure
+                                            ? "#ff5656"
+                                            : maintainEVC_01_Pressure
+                                            ? "orange"
+                                            : "transparent",
                                 }}
                                 // onClick={() => confirmPCV1901()}
                             >
@@ -1305,8 +1317,8 @@ export default function GraphicNITORI() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {/* {roundedPT01} */}
-                                        {roundedPT01}
+                                        {/* {roundedEVC_01_Pressure} */}
+                                        {roundedEVC_01_Pressure}
                                     </p>
                                 </div>
                                 <p
