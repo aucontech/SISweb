@@ -3162,16 +3162,12 @@ const ChangemaintainPLC_Conn_STT = async () => {
             const newmaintainDO_BC_01 = checked;
             const newMaintainDO_SV_01 = checked;
             const newmaintainPLC_Conn_STT = checked;
-            const newmaintainEVC_01_Conn_STT = checked;
-            const newmaintainEVC_02_Conn_STT = checked;
+  
     
     
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
                 { 
-    
-    
-                 
     
                    GD1_Maintain: newMaintainGD1,
                    GD2_Maintain: newMaintainGD2,
@@ -3193,8 +3189,7 @@ const ChangemaintainPLC_Conn_STT = async () => {
                    DO_BC_01_Maintain: newmaintainDO_BC_01,
                    DO_SV_01_Maintain: newMaintainDO_SV_01,
                    PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
-                   EVC_01_Conn_STT_Maintain: newmaintainEVC_01_Conn_STT,
-                   EVC_02_Conn_STT_Maintain: newmaintainEVC_02_Conn_STT,
+           
     
     
                  }
@@ -3233,23 +3228,12 @@ const ChangemaintainPLC_Conn_STT = async () => {
     
     const handleCheckboxChangePLC = (e:any) => {
         const isChecked = e.checked;
-        handleMainTainAll(isChecked);
+        handleMainTainPLC(isChecked);
     };
     
 
     const checkMaintainingPLC = 
-    maintainEVC_01_Remain_Battery_Service_Life === true &&
-    maintainEVC_01_Temperature === true &&
-    maintainEVC_01_Pressure === true &&
-    maintainEVC_01_Volume_at_Base_Condition === true &&
-    maintainEVC_01_Volume_at_Measurement_Condition === true &&
-    maintainEVC_01_Flow_at_Base_Condition === true &&
-    maintainEVC_01_Flow_at_Measurement_Condition === true &&
-    maintainEVC_01_Vb_of_Current_Day === true &&
-    maintainEVC_01_Vm_of_Current_Day === true &&
-    maintainEVC_01_Vb_of_Last_Day === true &&
-    maintainEVC_01_Vm_of_Last_Day === true &&
-    maintainEVC_01_Conn_STT === true &&
+   
     maintainGD1 === true &&
     maintainGD2 === true &&
     maintainPT1 === true &&
@@ -4600,7 +4584,7 @@ checked={maintainPLC_Conn_STT}
             ),
         },
         {
-            Name: <p style={combineCssAttribute.PCV}>IOT getway phone number </p>,
+            Name: <p style={combineCssAttribute.PCV}>IOT gateway phone number </p>,
 
             Value: (
                 <InputText  disabled={AuthUpdatePCV}

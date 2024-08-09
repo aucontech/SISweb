@@ -1451,7 +1451,7 @@ useEffect(() => {
         UPS_Mode === "0"
             ? "Error"
             : UPS_Mode === "1"
-            ? "Using Running"
+            ? "UPS Running"
             : UPS_Mode === "2"
             ? "Charging"
             : UPS_Mode === "3"
