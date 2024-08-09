@@ -63,8 +63,8 @@ const FilterDataTableReport: React.FC<Props> = ({
     const handleDateRangeChange = (dates: any) => {
         console.log(dates);
         if (dates !== null) {
-            const startDate = dates[0] ? dates[0].toDate() : null;
-            const endDate = dates[1] ? dates[1].toDate() : null;
+            const startDate = dates[0] ? dates[0] : null;
+            const endDate = dates[1] ? dates[1] : null;
             const dateRange = [startDate, endDate];
             _processFilterChange("dates", dateRange);
         } else {
@@ -311,9 +311,8 @@ const FilterDataTableReport: React.FC<Props> = ({
         console.log(dates);
         if (dates && dates.length === 2 && dates[0] && dates[1]) {
             const [start, end] = dates;
-            const dateRange = [start.toDate(), end.toDate()];
+            const dateRange = [start, end];
             _processFilterChange("dates", dateRange);
-            // setDateRangeFocused(true);
         }
     };
 
