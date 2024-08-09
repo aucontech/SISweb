@@ -1892,11 +1892,11 @@ export default function GraphicARAKAWA() {
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -2826,7 +2826,7 @@ export default function GraphicARAKAWA() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD01} LEL</p>
+                                <p>{roundedGD01} %LEL</p>
                             </div>
                         ),
                     },
@@ -2863,7 +2863,7 @@ export default function GraphicARAKAWA() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD02} LEL</p>
+                                <p>{roundedGD02} %LEL</p>
                             </div>
                         ),
                     },
@@ -2900,7 +2900,7 @@ export default function GraphicARAKAWA() {
                                 }}
                                 // onClick={() => confirmGD_1903()}
                             >
-                                <p>{roundedGD03} LEL</p>
+                                <p>{roundedGD03} %LEL</p>
                             </div>
                         ),
                     },
