@@ -262,46 +262,38 @@ export default function SetUpdata_ZOVC() {
                         FC_01_System_Voltage: setFC_01_System_Voltage,
                         FC_01_Charger_Voltage: setFC_01_Charger_Voltage,
                         FC_01_Conn_STT: setFC_01_Conn_STT,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
 
+
+                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
                         FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
                         FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
                         FC_01_Current_Values_Temperature: setFC_01_Current_Values_Temperature,
-
                         FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
 
-
-
-                        EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
-
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-
-
-                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-                        
-                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
-                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
-
-                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-
-
-
-                        EVC_02_Vb_of_Last_Day:setEVC_02_Vb_of_Last_Day,
-
-
-                        
                         FC_01_Current_Values_Uncorrected_Flow_Rate:setFC_01_Current_Values_Uncorrected_Flow_Rate,
                         FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
                         FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
                         FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
                         FC_01_Yesterday_Values_Uncorrected_Volume:setFC_01_Yesterday_Values_Uncorrected_Volume,
 
-                        PT_1103:setPT_1103
+                        EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
+                        EVC_02_Temperature: setEVC_02_Temperature,
+                        EVC_02_Pressure: setEVC_02_Pressure,
+                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
+                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
+                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
+                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
 
+                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                        EVC_02_Vb_of_Last_Day:setEVC_02_Vb_of_Last_Day,
+
+                        PT_1103:setPT_1103,
+                        // Mode_ATS:setMode_ATS,
+                        // ATS_Auto_Man:setATS_Auto_Man,
+                        // FC_01_Conn_STT:setFC_01_Conn_STT,
+                        // EVC_02_Conn_STT:setEVC_02_Conn_STT,
 
                     };
                     const valueStateMap: ValueStateMap = {
@@ -654,10 +646,48 @@ export default function SetUpdata_ZOVC() {
             const PT_1103_Maintain = res.data.find(
                 (item: any) => item.key === "PT_1103_Maintain"
             );
-            setMaintainPT_1103(PT_1103_Maintain?.value || false);
-            
+            // setMaintainPT_1103(PT_1103_Maintain?.value || false);
+            // const Mode_ATS_High = res.data.find((item: any) => item.key === "Mode_ATS_High");
+            // setMode_ATS_High(Mode_ATS_High?.value || null);
+            // const Mode_ATS_Low = res.data.find((item: any) => item.key === "Mode_ATS_Low");
+            // setMode_ATS_Low(Mode_ATS_Low?.value || null);
+            // const Mode_ATS_Maintain = res.data.find(
+            //     (item: any) => item.key === "Mode_ATS_Maintain"
+            // );
+       
+            // const ATS_Auto_Man_High = res.data.find((item: any) => item.key === "ATS_Auto_Man_High");
+            // setATS_Auto_Man_High(ATS_Auto_Man_High?.value || null);
+            // const ATS_Auto_Man_Low = res.data.find((item: any) => item.key === "ATS_Auto_Man_Low");
+            // setATS_Auto_Man_Low(ATS_Auto_Man_Low?.value || null);
+            // const ATS_Auto_Man_Maintain = res.data.find(
+            //     (item: any) => item.key === "ATS_Auto_Man_Maintain"
+            // );
+       
+            // const EVC_02_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_High");
+            // setEVC_02_Conn_STT_High(EVC_02_Conn_STT_High?.value || null);
+            // const EVC_02_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_02_Conn_STT_Low");
+            // setEVC_02_Conn_STT_Low(EVC_02_Conn_STT_Low?.value || null);
+            // const EVC_02_Conn_STT_Maintain = res.data.find(
+            //     (item: any) => item.key === "EVC_02_Conn_STT_Maintain"
+            // );
+
+            // const FC_01_Conn_STT_High = res.data.find((item: any) => item.key === "FC_01_Conn_STT_High");
+            // setFC_01_Conn_STT_High(FC_01_Conn_STT_High?.value || null);
+            // const FC_01_Conn_STT_Low = res.data.find((item: any) => item.key === "FC_01_Conn_STT_Low");
+            // setFC_01_Conn_STT_Low(FC_01_Conn_STT_Low?.value || null);
+            // const FC_01_Conn_STT_Maintain = res.data.find(
+            //     (item: any) => item.key === "FC_01_Conn_STT_Maintain"
+            // );
 
  // =================================================================================================================== 
+ setMaintainFC_01_Charger_Voltage(FC_01_Charger_Voltage_Maintain?.value || false);
+
+ setMaintainFC_01_System_Voltage(FC_01_System_Voltage_Maintain?.value || false);
+
+ setMaintainFC_01_Battery_Voltage(FC_01_Battery_Voltage_Maintain?.value || false);
+
+//  setMaintainFC_01_Lithium_Battery_Status(MaintainFC_01_Lithium_Battery_Status?.value || false);
+
             setMaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
 
             setMaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
@@ -731,7 +761,6 @@ export default function SetUpdata_ZOVC() {
  // =================================================================================================================== 
 
     const [FC_01_Lithium_Batery_Status, setFC_01_Lithium_Batery_Status] = useState<string | null>(null);
-const [audioPlayingFC_01_Lithium_Batery_Status, setAudioPlayingFC_01_Lithium_Batery_Status] = useState(false);
 const [inputValueFC_01_Lithium_Batery_Status, setInputValueFC_01_Lithium_Batery_Status] = useState<any>();
 const [inputValue2FC_01_Lithium_Batery_Status, setInputValue2FC_01_Lithium_Batery_Status] = useState<any>();
 const [FC_01_Lithium_Batery_Status_High, setFC_01_Lithium_Batery_Status_High] = useState<number | null>(null);
@@ -741,39 +770,15 @@ const [exceedThresholdFC_01_Lithium_Batery_Status, setExceedThresholdFC_01_Lithi
 const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Status] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_01_Lithium_Batery_Status_High === 'string' && typeof FC_01_Lithium_Batery_Status_Low === 'string' && FC_01_Lithium_Batery_Status !== null && maintainFC_01_Lithium_Batery_Status === false
-        ) {
-            const highValue = parseFloat(FC_01_Lithium_Batery_Status_High);
-            const lowValue = parseFloat(FC_01_Lithium_Batery_Status_Low);
-            const FC_01_Lithium_Batery_StatusValue = parseFloat(FC_01_Lithium_Batery_Status);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Lithium_Batery_StatusValue)) {
-                if (highValue <= FC_01_Lithium_Batery_StatusValue || FC_01_Lithium_Batery_StatusValue <= lowValue) {
-                    if (!audioPlayingFC_01_Lithium_Batery_Status) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_01_Lithium_Batery_Status(true);
-                        setExceedThresholdFC_01_Lithium_Batery_Status(true);
-                    }
-                } else {
-                    setAudioPlayingFC_01_Lithium_Batery_Status(false);
-                    setExceedThresholdFC_01_Lithium_Batery_Status(false);
-                }
-            } 
-        } 
-    }, [FC_01_Lithium_Batery_Status_High, FC_01_Lithium_Batery_Status, audioPlayingFC_01_Lithium_Batery_Status, FC_01_Lithium_Batery_Status_Low,maintainFC_01_Lithium_Batery_Status]);
+useEffect(() => {
+    const FC_01_Lithium_Batery_StatusValue = parseFloat(FC_01_Lithium_Batery_Status as any);
+    const highValue = FC_01_Lithium_Batery_Status_High ?? NaN;
+    const lowValue = FC_01_Lithium_Batery_Status_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_01_Lithium_Batery_Status) {
-            const audioEnded = () => {
-                setAudioPlayingFC_01_Lithium_Batery_Status(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_01_Lithium_Batery_Status]);
+    if (!isNaN(FC_01_Lithium_Batery_StatusValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Lithium_Batery_Status) {
+        setExceedThresholdFC_01_Lithium_Batery_Status(FC_01_Lithium_Batery_StatusValue >= highValue || FC_01_Lithium_Batery_StatusValue <= lowValue);
+    }
+}, [FC_01_Lithium_Batery_Status, FC_01_Lithium_Batery_Status_High, FC_01_Lithium_Batery_Status_Low, maintainFC_01_Lithium_Batery_Status]);
 
     const handleInputChangeFC_01_Lithium_Batery_Status = (event: any) => {
         const newValue = event.target.value;
@@ -800,49 +805,25 @@ const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Sta
      // =================================================================================================================== 
 
      const [FC_01_Battery_Voltage, setFC_01_Battery_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_01_Battery_Voltage, setAudioPlayingFC_01_Battery_Voltage] = useState(false);
      const [inputValueFC_01_Battery_Voltage, setInputValueFC_01_Battery_Voltage] = useState<any>();
      const [inputValue2FC_01_Battery_Voltage, setInputValue2FC_01_Battery_Voltage] = useState<any>();
      const [FC_01_Battery_Voltage_High, setFC_01_Battery_Voltage_High] = useState<number | null>(null);
      const [FC_01_Battery_Voltage_Low, setFC_01_Battery_Voltage_Low] = useState<number | null>(null);
-     const [exceedThreshold302, setExceedThreshold302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdFC_01_Battery_Voltage, setExceedThresholdFC_01_Battery_Voltage] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainFC_01_Battery_Voltage, setMaintainFC_01_Battery_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_01_Battery_Voltage_High === 'string' && typeof FC_01_Battery_Voltage_Low === 'string' && FC_01_Battery_Voltage !== null && maintainFC_01_Battery_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_01_Battery_Voltage_High);
-                 const lowValue = parseFloat(FC_01_Battery_Voltage_Low);
-                 const FC_01_Battery_VoltageValue = parseFloat(FC_01_Battery_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Battery_VoltageValue)) {
-                     if (highValue <= FC_01_Battery_VoltageValue || FC_01_Battery_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_01_Battery_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_01_Battery_Voltage(true);
-                             setExceedThreshold302(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_01_Battery_Voltage(false);
-                         setExceedThreshold302(false);
-                     }
-                 } 
-             } 
-         }, [FC_01_Battery_Voltage_High, FC_01_Battery_Voltage, audioPlayingFC_01_Battery_Voltage, FC_01_Battery_Voltage_Low,maintainFC_01_Battery_Voltage]);
-     
-         useEffect(() => {
-             if (audioPlayingFC_01_Battery_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_01_Battery_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_01_Battery_Voltage]);
+     useEffect(() => {
+        const FC_01_Battery_VoltageValue = parseFloat(FC_01_Battery_Voltage as any);
+        const highValue = FC_01_Battery_Voltage_High ?? NaN;
+        const lowValue = FC_01_Battery_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_01_Battery_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Battery_Voltage) {
+            setExceedThresholdFC_01_Battery_Voltage(FC_01_Battery_VoltageValue >= highValue || FC_01_Battery_VoltageValue <= lowValue);
+        }
+    }, [FC_01_Battery_Voltage, FC_01_Battery_Voltage_High, FC_01_Battery_Voltage_Low, maintainFC_01_Battery_Voltage]);
+    
      
          const handleInputChangeFC_01_Battery_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -870,7 +851,6 @@ const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Sta
 
 
      const [FC_01_System_Voltage, setFC_01_System_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_01_System_Voltage, setAudioPlayingFC_01_System_Voltage] = useState(false);
      const [inputValueFC_01_System_Voltage, setInputValueFC_01_System_Voltage] = useState<any>();
      const [inputValue2FC_01_System_Voltage, setInputValue2FC_01_System_Voltage] = useState<any>();
      const [FC_01_System_Voltage_High, setFC_01_System_Voltage_High] = useState<number | null>(null);
@@ -880,39 +860,16 @@ const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Sta
      const [maintainFC_01_System_Voltage, setMaintainFC_01_System_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_01_System_Voltage_High === 'string' && typeof FC_01_System_Voltage_Low === 'string' && FC_01_System_Voltage !== null && maintainFC_01_System_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_01_System_Voltage_High);
-                 const lowValue = parseFloat(FC_01_System_Voltage_Low);
-                 const FC_01_System_VoltageValue = parseFloat(FC_01_System_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_System_VoltageValue)) {
-                     if (highValue <= FC_01_System_VoltageValue || FC_01_System_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_01_System_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_01_System_Voltage(true);
-                             setExceedThresholdFC_01_System_Voltage(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_01_System_Voltage(false);
-                        setExceedThresholdFC_01_System_Voltage(false);
-                     }
-                 } 
-             } 
-         }, [FC_01_System_Voltage_High, FC_01_System_Voltage, audioPlayingFC_01_System_Voltage, FC_01_System_Voltage_Low,maintainFC_01_System_Voltage]);
-     
-         useEffect(() => {
-             if (audioPlayingFC_01_System_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_01_System_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_01_System_Voltage]);
+     useEffect(() => {
+        const FC_01_System_VoltageValue = parseFloat(FC_01_System_Voltage as any);
+        const highValue = FC_01_System_Voltage_High ?? NaN;
+        const lowValue = FC_01_System_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_01_System_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_System_Voltage) {
+            setExceedThresholdFC_01_System_Voltage(FC_01_System_VoltageValue >= highValue || FC_01_System_VoltageValue <= lowValue);
+        }
+    }, [FC_01_System_Voltage, FC_01_System_Voltage_High, FC_01_System_Voltage_Low, maintainFC_01_System_Voltage]);
+    
      
          const handleInputChangeFC_01_System_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -951,39 +908,17 @@ const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Sta
           const [maintainFC_01_Charger_Voltage, setMaintainFC_01_Charger_Voltage] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Charger_Voltage_High === 'string' && typeof FC_01_Charger_Voltage_Low === 'string' && FC_01_Charger_Voltage !== null && maintainFC_01_Charger_Voltage === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Charger_Voltage_High);
-                      const lowValue = parseFloat(FC_01_Charger_Voltage_Low);
-                      const FC_01_Charger_VoltageValue = parseFloat(FC_01_Charger_Voltage);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Charger_VoltageValue)) {
-                          if (highValue <= FC_01_Charger_VoltageValue || FC_01_Charger_VoltageValue <= lowValue) {
-                              if (!audioPlayingFC_01_Charger_Voltage) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Charger_Voltage(true);
-                                  setExceedThresholdFC_01_Charger_Voltage(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Charger_Voltage(false);
-                             setExceedThresholdFC_01_Charger_Voltage(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Charger_Voltage_High, FC_01_Charger_Voltage, audioPlayingFC_01_Charger_Voltage, FC_01_Charger_Voltage_Low,maintainFC_01_Charger_Voltage]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_01_Charger_Voltage) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Charger_Voltage(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Charger_Voltage]);
+          useEffect(() => {
+            const FC_01_Charger_VoltageValue = parseFloat(FC_01_Charger_Voltage as any);
+            const highValue = FC_01_Charger_Voltage_High ?? NaN;
+            const lowValue = FC_01_Charger_Voltage_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Charger_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Charger_Voltage) {
+                setExceedThresholdFC_01_Charger_Voltage(FC_01_Charger_VoltageValue >= highValue || FC_01_Charger_VoltageValue <= lowValue);
+            }
+        }, [FC_01_Charger_Voltage, FC_01_Charger_Voltage_High, FC_01_Charger_Voltage_Low, maintainFC_01_Charger_Voltage]);
+        
+         
           
               const handleInputChangeFC_01_Charger_Voltage = (event: any) => {
                   const newValue = event.target.value;
@@ -1021,39 +956,16 @@ const [maintainFC_01_Lithium_Batery_Status, setMaintainFC_01_Lithium_Battery_Sta
           const [maintainFC_01_Conn_STT, setMaintainFC_01_Conn_STT] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Conn_STT_High === 'string' && typeof FC_01_Conn_STT_Low === 'string' && FC_01_Conn_STT !== null && maintainFC_01_Conn_STT === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Conn_STT_High);
-                      const lowValue = parseFloat(FC_01_Conn_STT_Low);
-                      const FC_01_Conn_STTValue = parseFloat(FC_01_Conn_STT);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Conn_STTValue)) {
-                          if (highValue <= FC_01_Conn_STTValue || FC_01_Conn_STTValue <= lowValue) {
-                              if (!audioPlayingFC_01_Conn_STT) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Conn_STT(true);
-                                  setExceedThresholdFC_01_Conn_STT(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Conn_STT(false);
-                             setExceedThresholdFC_01_Conn_STT(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Conn_STT_High, FC_01_Conn_STT, audioPlayingFC_01_Conn_STT , FC_01_Conn_STT_Low,maintainFC_01_Conn_STT]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_01_Conn_STT) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Conn_STT(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Conn_STT]);
+          useEffect(() => {
+            const FC_01_Conn_STTValue = parseFloat(FC_01_Conn_STT as any);
+            const highValue = FC_01_Conn_STT_High ?? NaN;
+            const lowValue = FC_01_Conn_STT_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Conn_STT) {
+                setExceedThresholdFC_01_Conn_STT(FC_01_Conn_STTValue >= highValue || FC_01_Conn_STTValue <= lowValue);
+            }
+        }, [FC_01_Conn_STT, FC_01_Conn_STT_High, FC_01_Conn_STT_Low, maintainFC_01_Conn_STT]);
+        
           
               const handleInputChangeFC_01_Conn_STT = (event: any) => {
                   const newValue = event.target.value;
@@ -3248,7 +3160,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
             fontWeight:400,
         },
         CSSFC_01_Battery_Voltage : {
-            color:exceedThreshold302 && !maintainFC_01_Battery_Voltage
+            color:exceedThresholdFC_01_Battery_Voltage && !maintainFC_01_Battery_Voltage
             ? "#ff5656"
             : maintainFC_01_Battery_Voltage
             ? "orange"

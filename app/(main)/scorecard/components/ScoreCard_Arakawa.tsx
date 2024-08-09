@@ -1405,7 +1405,7 @@ useEffect(() => {
         VbLastDay: "Standard Volume Vb Yesterday (Sm³)",
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
-        ReBattery: "Remainning Battery (Months)",
+        ReBattery: "Remain Battery Service Life (Months)",
     };
 
     const tagNamePLC = {
@@ -1433,7 +1433,7 @@ useEffect(() => {
 
     const DataRESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON" : null;
     const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
-    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
+    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
@@ -1451,7 +1451,7 @@ useEffect(() => {
         UPS_Mode === "0"
             ? "Error"
             : UPS_Mode === "1"
-            ? "Using Running"
+            ? "UPS Running"
             : UPS_Mode === "2"
             ? "Charging"
             : UPS_Mode === "3"
@@ -1635,15 +1635,15 @@ useEffect(() => {
                 },
 
                 CSSEVC_01_Vm_of_Current_Day : {
-                    color:exceedThresholdEVC_01_Vb_of_Current_Day && !maintainEVC_01_Vb_of_Current_Day
+                    color:exceedThresholdEVC_01_Vm_of_Current_Day && !maintainEVC_01_Vm_of_Current_Day
                     ? "#ff5656"
-                    : maintainEVC_01_Vb_of_Current_Day
+                    : maintainEVC_01_Vm_of_Current_Day
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdEVC_01_Vb_of_Current_Day || maintainEVC_01_Vb_of_Current_Day)
+                    fontWeight: (exceedThresholdEVC_01_Vm_of_Current_Day || maintainEVC_01_Vm_of_Current_Day)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdEVC_01_Vb_of_Current_Day || maintainEVC_01_Vb_of_Current_Day)
+                    fontSize: (exceedThresholdEVC_01_Vm_of_Current_Day || maintainEVC_01_Vm_of_Current_Day)
                     ? 18
                     : ""
                 },
