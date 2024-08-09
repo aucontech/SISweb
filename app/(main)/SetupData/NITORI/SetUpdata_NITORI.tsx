@@ -1677,10 +1677,10 @@ useEffect(() => {
   
        // =================================================================================================================== 
 
+
  // =================================================================================================================== 
 
  const [DI_MAP_1, setDI_MAP_1] = useState<string | null>(null);
- const [audioPlayingDI_MAP_1, setAudioPlayingDI_MAP_1] = useState(false);
  const [inputValueDI_MAP_1, setInputValueDI_MAP_1] = useState<any>();
  const [inputValue2DI_MAP_1, setInputValue2DI_MAP_1] = useState<any>();
  const [DI_MAP_1_High, setDI_MAP_1_High] = useState<number | null>(null);
@@ -3798,6 +3798,9 @@ disabled={AuthInputHighLow}
 const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
 
 const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
+
+
+
 const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
 const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
@@ -4130,9 +4133,6 @@ checked={maintainEmergency_NO}
 ></Checkbox>
 
 },
-
-
-
 
 
 
