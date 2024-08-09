@@ -2913,10 +2913,10 @@ export default function GraphicARAKAWA() {
                         ...node.data,
                         label: (
                             <div>
-                                <div>
+                                 <div>
                                     {NO === "1"
                                         ? SVD_NO
-                                        : NC === "0"
+                                        : NO === "0"
                                         ? SVD_NC
                                         : null}
                                 </div>
