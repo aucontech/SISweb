@@ -35,6 +35,7 @@ import {
     SNG_ACECOOK_DEVICE_ID,
 } from "@/constants/constans";
 import { useToken } from "@/hook/useToken";
+
 interface Notification {
     subject: string;
     text: string;
@@ -45,6 +46,8 @@ interface WebSocketMessage {
     notifications: Notification[];
     totalUnreadCount: string;
 }
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000;
 export default function Alarmbell() {
     const token = useToken();
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -140,7 +143,7 @@ export default function Alarmbell() {
                                 },
                                 pageLink: {
                                     page: 0,
-                                    pageSize: 10,
+                                    pageSize: 100,
                                     textSearch: null,
                                     typeList: [],
                                     severityList: ["CRITICAL", "MAJOR"],
@@ -263,38 +266,63 @@ export default function Alarmbell() {
         [sendData]
     );
 
+    const fetchWithRetry = async (
+        entityId: string,
+        tag: string,
+        retries = 0
+    ): Promise<any> => {
+        try {
+            return await _fetchAttributeData(entityId, tag + "_Maintain");
+        } catch (error) {
+            if (retries < MAX_RETRIES) {
+                console.log(
+                    `Error fetching attribute data for ${tag}. Retrying... Attempt ${
+                        retries + 1
+                    }`
+                );
+                await new Promise((resolve) =>
+                    setTimeout(resolve, RETRY_DELAY)
+                );
+                return fetchWithRetry(entityId, tag, retries + 1);
+            }
+            console.error(
+                `Max retries reached for ${tag}. Final error:`,
+                error
+            );
+            throw error;
+        }
+    };
+
     const processNotification = async (dataAlarm: any[]) => {
         console.log("Processing notification:", dataAlarm);
         let updatedAlarms = await Promise.all(
             [...dataAlarm].map(async (alarm: any) => {
+                let shouldPlaySound = true; // Mặc định là true
+
                 if (alarm.severity === "MAJOR") {
-                    return alarm;
+                    return { ...alarm };
                 }
 
                 let tag = alarm?.details?.data?.split(",")[0];
-                let shouldRing = true;
-                let maintained = null;
 
                 if (tag !== null && tag !== undefined) {
                     try {
-                        maintained = await _fetchAttributeData(
+                        const maintained = await fetchWithRetry(
                             alarm.entityId.id,
-                            tag + "_Maintain"
+                            tag
                         );
+                        shouldPlaySound = !maintained;
                     } catch (error) {
                         console.error(
-                            `Error fetching attribute data for ${tag}:`,
-                            error
+                            `Failed to fetch attribute data for ${tag} after multiple attempts`
                         );
-                        // Xử lý lỗi ở đây, ví dụ như đặt maintained về giá trị mặc định
-                        maintained = null;
+                        // Không thay đổi shouldPlaySound, giữ nguyên là true
                     }
                 }
 
                 return {
                     ...alarm,
-                    shouldPlaySound:
-                        maintained !== null ? !maintained : shouldRing,
+                    shouldPlaySound,
                 };
             })
         );
@@ -302,6 +330,7 @@ export default function Alarmbell() {
         setNotifications([...updatedAlarms]);
     };
 
+    console.log("not", notifications);
     useEffect(() => {
         processNotification(notificationsQueue);
     }, [notificationsQueue]);
@@ -454,6 +483,18 @@ export default function Alarmbell() {
                                         item.startTs,
                                         "dd-MM-yyyy , HH:mm:ss"
                                     )}
+                                    {/* <br />
+                                    {item.shouldPlaySound == true ? (
+                                        <i
+                                            className="pi pi-volume-up"
+                                            style={{ fontSize: "1rem" }}
+                                        ></i>
+                                    ) : (
+                                        <i
+                                            className="pi pi-volume-off"
+                                            style={{ fontSize: "1rem" }}
+                                        ></i>
+                                    )} */}
                                 </div>
                             </div>
                             <div style={{ marginTop: 10 }}>
@@ -503,7 +544,20 @@ export default function Alarmbell() {
     if (subjectCount > 99) {
         totalSubjectDisplay = "99+";
     }
+    useEffect(() => {
+        // Tạo một Set các ID từ notifications hiện tại
+        const currentNotificationIds = new Set(
+            notifications.map((notif) => notif.id.id)
+        );
 
+        // Lặp qua tất cả các key trong audioRefs.current
+        Object.keys(audioRefs.current).forEach((audioId) => {
+            // Nếu ID không còn trong notifications, xóa nó khỏi audioRefs
+            if (!currentNotificationIds.has(audioId)) {
+                delete audioRefs.current[audioId];
+            }
+        });
+    }, [notifications]);
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 

@@ -16,7 +16,6 @@ import dayjs from "dayjs"; // Import dayjs
 
 import { DatePicker } from "antd"; // Import DatePicker from Ant Design
 
-
 const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
 
 interface Props {
@@ -63,7 +62,7 @@ const FilterDataTableReport: React.FC<Props> = ({
 
     const handleDateRangeChange = (dates: any) => {
         console.log(dates);
-        if (dates) {
+        if (dates !== null) {
             const startDate = dates[0] ? dates[0].toDate() : null;
             const endDate = dates[1] ? dates[1].toDate() : null;
             const dateRange = [startDate, endDate];
@@ -393,11 +392,10 @@ const FilterDataTableReport: React.FC<Props> = ({
                                     onChange={(dates) =>
                                         handleDateRangeChange(dates)
                                     }
+                                    onOk={handleDateRangeOk}
                                     className={
                                         editFilter.dates &&
-                                        editFilter.dates.length === 2 &&
-                                        editFilter.dates[0] &&
-                                        editFilter.dates[1]
+                                        editFilter.dates.length > 0
                                             ? "ant-picker-has-value"
                                             : ""
                                     }
