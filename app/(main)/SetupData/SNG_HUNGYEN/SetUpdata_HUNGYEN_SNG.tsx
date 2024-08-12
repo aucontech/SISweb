@@ -4430,7 +4430,7 @@ const ChangeMaintainSDV_3003 = async () => {
                 timeUpdate: <span style={combineCss.CSSPT_3005} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_3005}>Pressure Transmitter PT-3005</span> ,
     
-             modbus: <span style={combineCss.CSSPT_3005}>40001	 </span> ,
+             modbus: <span style={combineCss.CSSPT_3005}>40003	 </span> ,
     
             value: <span style={combineCss.CSSPT_3005} > {PT_3005} {nameValue.BARG} </span> , 
              high: <InputText 
@@ -4457,7 +4457,7 @@ disabled={AuthInputHighLow}
                 timeUpdate: <span style={combineCss.CSSPT_3006} >{PLC_STTValue}</span>,
              name: <span style={combineCss.CSSPT_3006}>Pressure Transmitter PT-3006</span> ,
     
-             modbus: <span style={combineCss.CSSPT_3006}>40003	 </span> ,
+             modbus: <span style={combineCss.CSSPT_3006}>40001	 </span> ,
     
             value: <span style={combineCss.CSSPT_3006} > {PT_3006}  {nameValue.BARG}</span> , 
              high: <InputText 
@@ -4484,7 +4484,7 @@ disabled={AuthInputHighLow}
                 timeUpdate: <span style={combineCss.CSSTT_3003} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSTT_3003}>Temperature Transmitter TT-3003</span> ,
    
-            modbus: <span style={combineCss.CSSTT_3003}>40005	 </span> ,
+            modbus: <span style={combineCss.CSSTT_3003}>40007	 </span> ,
    
            value: <span style={combineCss.CSSTT_3003} > {TT_3003}  {nameValue.C}</span> , 
             high: <InputText 
@@ -4512,7 +4512,7 @@ disabled={AuthInputHighLow}
             timeUpdate: <span style={combineCss.CSSTT_3004} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSTT_3004}>Temperature Transmitter TT-3004</span> ,
   
-           modbus: <span style={combineCss.CSSTT_3004}>40007	 </span> ,
+           modbus: <span style={combineCss.CSSTT_3004}>40005	 </span> ,
   
           value: <span style={combineCss.CSSTT_3004} > {TT_3004} {nameValue.C}</span> , 
            high: <InputText 
@@ -4565,7 +4565,7 @@ disabled={AuthInputHighLow}
 
             
             timeUpdate: <span style={combineCss.CSSWB_3001} >{PLC_STTValue}</span>,
-         name: <span style={combineCss.CSSWB_3001}>Wobbe Index WB-1001</span> ,
+         name: <span style={combineCss.CSSWB_3001}>Wobbe Index WB-3001</span> ,
 
          modbus: <span style={combineCss.CSSWB_3001}>40011	 </span> ,
 
@@ -4735,7 +4735,7 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSTM_3002_SNG} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSTM_3002_SNG}>Tubine Meter TM2002-SNG </span> ,
+            name: <span style={combineCss.CSSTM_3002_SNG}>Tubine Meter TM3002-SNG </span> ,
        
             modbus: <span style={combineCss.CSSTM_3002_SNG}>40023	 </span> ,
        
@@ -4768,7 +4768,7 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSTM_3003_SNG} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSTM_3003_SNG}>Tubine Meter TM2003-SNG </span> ,
+    name: <span style={combineCss.CSSTM_3003_SNG}>Tubine Meter TM3003-SNG </span> ,
 
     modbus: <span style={combineCss.CSSTM_3003_SNG}>40025	 </span> ,
 
@@ -5443,7 +5443,7 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSTM_3002_CNG} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSTM_3002_CNG}>Tubine Meter TM2002-CNG</span> ,
+   name: <span style={combineCss.CSSTM_3002_CNG}>Tubine Meter TM3002-CNG</span> ,
 
    modbus: <span style={combineCss.CSSTM_3002_CNG}>40073	 </span> ,
 
@@ -5471,7 +5471,7 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSTM_3003_CNG} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSTM_3003_CNG}>Tubine Meter TM2003-CNG</span> ,
+  name: <span style={combineCss.CSSTM_3003_CNG}>Tubine Meter TM3003-CNG</span> ,
 
   modbus: <span style={combineCss.CSSTM_3003_CNG}>40075	 </span> ,
 

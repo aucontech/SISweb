@@ -1864,7 +1864,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         TT_3004: "Temperature Transmitter TT-3004 (˚C) ",
         TG_3005: "TG-3005 (˚C)",
 
-        WB_3001: "Wobbe Index WB-1001 (MJ/Sm³)",
+        WB_3001: "Wobbe Index WB-3001 (MJ/Sm³)",
 
       
 
@@ -1877,7 +1877,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
         TM_3002_SNG:`Tubine Meter TM_3002-SNG${nameValue.Sm3h}`,
         TM_3003_SNG:`Tubine Meter TM_3003-SNG${nameValue.Sm3h}`,
-        TOTAL_SNG: `Total SNG ${nameValue.m3}`,
+        TOTAL_SNG: `Total SNG ${nameValue.Sm3}`,
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
         SDV_3003:"Shutdown Valve SDV-3003 (0: Close - 1: Open)",
@@ -1908,12 +1908,12 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     
         PERCENT_LPG:"% LPG (%)",
         PERCENT_AIR:"% AIR (%)",
-        HV_3001:"Heat Value HV-1001 (MJ/Sm³)",
+        HV_3001:"Heat Value HV-3001 (MJ/Sm³)",
         RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
-        FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
+        FCV_MODE:"FCV Mode (0: Manual - 1: Auto )",
         TOTAL_CNG: "Total CNG (Sm³)",
-        TM_3002_CNG: "Tubine Meter TM_3002-CNG (Sm³/h)",
-        TM_3003_CNG: "Tubine Meter TM_3003-CNG (Sm³/h)",
+        TM_3002_CNG: "Tubine Meter TM3002-CNG (Sm³/h)",
+        TM_3003_CNG: "Tubine Meter TM3003-CNG (Sm³/h)",
         WB_Setpoint: "Wobbe Index Setpoint (MJ/Sm³)",
         WIS_Calorimeter: "WIS Calorimeter (MJ/Sm³)", 
         CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
@@ -2785,10 +2785,6 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         },
    
         {
-            name: <span>{tagNamePLC.TOTAL_CNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
-        },
-        {
             name: <span>{tagNamePLC.RATIO_MODE}</span>,
             PLC: <span style={combineCss.CSSFCV_MODE}>{FCV_MODE} {DataFCV_MODE}</span>,
         },
@@ -2797,6 +2793,10 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSRATIO_MODE}>{RATIO_MODE} {DataRATIO_MODE}</span>,
         },
       
+        {
+            name: <span>{tagNamePLC.TOTAL_CNG}</span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
+        },
         {
             name: <span>{tagNamePLC.TM_3002_CNG}</span>,
             PLC: <span style={combineCss.CSSTM_3002_CNG}> {TM_3002_CNG} </span>,

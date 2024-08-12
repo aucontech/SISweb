@@ -1708,7 +1708,7 @@ useEffect(() => {
 
     const tagNamePLC = {
         PIT_3001A: "Pressure Indicator Transmitter PIT-3001A (BarG)",
-        PIT_3001B: "Pressure Indicator Transmitter PIT-3001B (BarG)",
+        PIT_3001B: "Pressure Indicator Transmitter PIT-3007 (BarG)",
         PT_3001: "Pressure Transmitter PT-3001 (BarG)",
         PT_3002: "Pressure Transmitter PT-3002 (BarG)",
         PT_3003: "Pressure Transmitter PT-3003 (BarG)",
@@ -1732,12 +1732,12 @@ useEffect(() => {
         BOILER: "Boiler (0: Manual - 1: Auto)",
 
 
-        GD_STATUS: "Gas Detector Status (0: Normal - 1: Alarm)",
+        GD_STATUS: "Gas Detector ST (0: Normal - 1: Alarm)",
         ESD_3001: "Emergency Shut ESD-3001 (0: Not Active - 1: Active)",
 
         HR_BC: "Horn And Beacon (0: Normal - 1: Alarm)",
-        SD_3001: "Smoke Detector SD-3001 (0: Normal - 1: Smoker Detected)",
-        SD_3002: "Smoke Detector SD-3002 (0: Normal - 1: Smoker Detected)",
+        SD_3001: "Smoker Detector SD-3001 (0: Normal - 1: Smoker Detected)",
+        SD_3002: "Smoker Detector SD-3002 (0: Normal - 1: Smoker Detected)",
 
     };
 
