@@ -330,32 +330,32 @@ export const edgePRU = [
         type: "smoothstep",
     },
 
-    {
-        id: "TT_2001_NONE-TT_2001_DATA",
-        source: "TT_2001_NONE",
-        target: "TT_2001_DATA",
-        type: "smoothstep",
-    },
+    // {
+    //     id: "TT_2001_NONE-TT_2001_DATA",
+    //     source: "TT_2001_NONE",
+    //     target: "TT_2001_DATA",
+    //     type: "smoothstep",
+    // },
+
+    // {
+    //     id: "PT_2003_NONE-PT_2003_DATA",
+    //     source: "PT_2003_NONE",
+    //     target: "PT_2003_DATA",
+    //     type: "smoothstep",
+    // },
 
     {
-        id: "PT_2003_NONE-PT_2003_DATA",
-        source: "PT_2003_NONE",
-        target: "PT_2003_DATA",
-        type: "smoothstep",
-    },
-
-    {
-        id: "FIQ_2001A-EVC_01_Flow_at_Base_Condition",
+        id: "FIQ_2001A-EVC_01_Pressure_DATA",
         source: "FIQ_2001A",
-        target: "EVC_01_Flow_at_Base_Condition",
+        target: "EVC_01_Pressure_DATA",
         type: "smoothstep",
     },
 
 
     {
-        id: "FIQ_2001B-EVC_02_Flow_at_Base_Condition",
+        id: "FIQ_2001B-EVC_02_Pressure_DATA",
         source: "FIQ_2001B",
-        target: "EVC_02_Flow_at_Base_Condition",
+        target: "EVC_02_Pressure_DATA",
         type: "smoothstep",
     },
 

@@ -30,7 +30,7 @@ import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
-import AlarmCNG_BINHDUONG from "@/layout/AlarmBell/AlarmCNG_BINHDUONG";
+import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
 
 interface StateMap {
@@ -64,7 +64,7 @@ export default function Graphic_CNG_HUNGYEN() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const toast = useRef<Toast>(null);
- 
+
     const [PCV_3001A, setPCV_3001A] = useState();
     const [PCV_3001B, setPCV_3001B] = useState();
     const [PCV_3002A, setPCV_3002A] = useState();
@@ -270,7 +270,7 @@ export default function Graphic_CNG_HUNGYEN() {
                         SDV_3001B: setSDV_3001B,
                         SDV_3002: setSDV_3002,
                         TT_3001: setTT_3001,
-                        PT_3003: setPT_3003,
+                        TT_3002: setTT_3002,
                         GD_3001: setGD_3001,
 
                         EVC_01_Flow_at_Base_Condition:
@@ -563,20 +563,20 @@ export default function Graphic_CNG_HUNGYEN() {
             //===========================================================================================
             //===========================================================================================
 
-            const HighPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_High"
+            const HighTT_3002 = res.data.find(
+                (item: any) => item.key === "TT_3002_High"
             );
-            setPT_3003_High(HighPT_3003?.value || null);
+            setTT_3002_High(HighTT_3002?.value || null);
 
-            const LowPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_Low"
+            const LowTT_3002 = res.data.find(
+                (item: any) => item.key === "TT_3002_Low"
             );
-            setPT_3003_Low(LowPT_3003?.value || null);
+            setTT_3002_Low(LowTT_3002?.value || null);
 
-            const PT_3003_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3003_Maintain"
+            const TT_3002_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3002_Maintain"
             );
-            setmaintainPT_3003(PT_3003_Maintain?.value || false);
+            setmaintainTT_3002(TT_3002_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
@@ -823,11 +823,11 @@ export default function Graphic_CNG_HUNGYEN() {
         PIT_3001B: "PIT_3001B",
         PT_3001: "PT_3001",
         PT_3002: "PT_3002",
-        EVC_01_Pressure: "EVC 01 Pressure",
-        EVC_02_Pressure: "EVC 02 Pressure",
+        EVC_01_Pressure: " Pressure",
+        EVC_02_Pressure: " Pressure",
 
-        EVC_01_Temperature: "EVC 01 Temperature",
-        EVC_02_Temperature: "EVC 02 Temperature",
+        EVC_01_Temperature: "Temperature",
+        EVC_02_Temperature: "Temperature",
         TT: "TT",
     };
     const KeyGas = {
@@ -845,200 +845,316 @@ export default function Graphic_CNG_HUNGYEN() {
 
     const [PIT_3001A_High, setPIT_3001A_High] = useState<number | null>(null);
     const [PIT_3001A_Low, setPIT_3001A_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_3001A, setexceedThresholdPIT_3001A] = useState(false); 
-    
+    const [exceedThresholdPIT_3001A, setexceedThresholdPIT_3001A] =
+        useState(false);
+
     const [maintainPIT_3001A, setmaintainPIT_3001A] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-     const PIT_3001AValue = parseFloat(PIT_3001A as any);
-     const highValue = PIT_3001A_High ?? NaN;
-     const lowValue = PIT_3001A_Low ?? NaN;
- 
-     if (!isNaN(PIT_3001AValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3001A) {
-         setexceedThresholdPIT_3001A(PIT_3001AValue >= highValue || PIT_3001AValue <= lowValue);
-     }
- }, [PIT_3001A, PIT_3001A_High, PIT_3001A_Low, maintainPIT_3001A]);
+        const PIT_3001AValue = parseFloat(PIT_3001A as any);
+        const highValue = PIT_3001A_High ?? NaN;
+        const lowValue = PIT_3001A_Low ?? NaN;
+
+        if (
+            !isNaN(PIT_3001AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_3001A
+        ) {
+            setexceedThresholdPIT_3001A(
+                PIT_3001AValue >= highValue || PIT_3001AValue <= lowValue
+            );
+        }
+    }, [PIT_3001A, PIT_3001A_High, PIT_3001A_Low, maintainPIT_3001A]);
 
     //================================ PIT_3001B================================
 
     const [PIT_3001B, setPIT_3001B] = useState<string | null>(null);
     const [PIT_3001B_High, setPIT_3001B_High] = useState<number | null>(null);
     const [PIT_3001B_Low, setPIT_3001B_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_3001B, setexceedThresholdPIT_3001B] = useState(false); 
+    const [exceedThresholdPIT_3001B, setexceedThresholdPIT_3001B] =
+        useState(false);
     const [maintainPIT_3001B, setmaintainPIT_3001B] = useState<boolean>(false);
-    
-    
-    useEffect(() => {
-      const PIT_3001BValue = parseFloat(PIT_3001B as any);
-      const highValue = PIT_3001B_High ?? NaN;
-      const lowValue = PIT_3001B_Low ?? NaN;
-  
-      if (!isNaN(PIT_3001BValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3001B) {
-          setexceedThresholdPIT_3001B(PIT_3001BValue >= highValue || PIT_3001BValue <= lowValue);
-      }
-  }, [PIT_3001B, PIT_3001B_High, PIT_3001B_Low, maintainPIT_3001B]);
-    //================================ PT_3001================================
 
+    useEffect(() => {
+        const PIT_3001BValue = parseFloat(PIT_3001B as any);
+        const highValue = PIT_3001B_High ?? NaN;
+        const lowValue = PIT_3001B_Low ?? NaN;
+
+        if (
+            !isNaN(PIT_3001BValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_3001B
+        ) {
+            setexceedThresholdPIT_3001B(
+                PIT_3001BValue >= highValue || PIT_3001BValue <= lowValue
+            );
+        }
+    }, [PIT_3001B, PIT_3001B_High, PIT_3001B_Low, maintainPIT_3001B]);
+    //================================ PT_3001================================
 
     const [PT_3001, setPT_3001] = useState<string | null>(null);
     const [PT_3001_High, setPT_3001_High] = useState<number | null>(null);
     const [PT_3001_Low, setPT_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3001, setexceedThresholdPT_3001] = useState(false); 
+    const [exceedThresholdPT_3001, setexceedThresholdPT_3001] = useState(false);
     const [maintainPT_3001, setmaintainPT_3001] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-     const PT_3001Value = parseFloat(PT_3001 as any);
-     const highValue = PT_3001_High ?? NaN;
-     const lowValue = PT_3001_Low ?? NaN;
- 
-     if (!isNaN(PT_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3001) {
-         setexceedThresholdPT_3001(PT_3001Value >= highValue || PT_3001Value <= lowValue);
-     }
- }, [PT_3001, PT_3001_High, PT_3001_Low, maintainPT_3001]);
- 
+        const PT_3001Value = parseFloat(PT_3001 as any);
+        const highValue = PT_3001_High ?? NaN;
+        const lowValue = PT_3001_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3001
+        ) {
+            setexceedThresholdPT_3001(
+                PT_3001Value >= highValue || PT_3001Value <= lowValue
+            );
+        }
+    }, [PT_3001, PT_3001_High, PT_3001_Low, maintainPT_3001]);
+
     //================================ PT_3002================================
 
     const [PT_3002, setPT_3002] = useState<string | null>(null);
     const [PT_3002_High, setPT_3002_High] = useState<number | null>(null);
     const [PT_3002_Low, setPT_3002_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3002, setexceedThresholdPT_3002] = useState(false); 
+    const [exceedThresholdPT_3002, setexceedThresholdPT_3002] = useState(false);
     const [maintainPT_3002, setmaintainPT_3002] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-     const PT_3002Value = parseFloat(PT_3002 as any);
-     const highValue = PT_3002_High ?? NaN;
-     const lowValue = PT_3002_Low ?? NaN;
- 
-     if (!isNaN(PT_3002Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3002) {
-         setexceedThresholdPT_3002(PT_3002Value >= highValue || PT_3002Value <= lowValue);
-     }
- }, [PT_3002, PT_3002_High, PT_3002_Low, maintainPT_3002]);
- 
+        const PT_3002Value = parseFloat(PT_3002 as any);
+        const highValue = PT_3002_High ?? NaN;
+        const lowValue = PT_3002_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3002
+        ) {
+            setexceedThresholdPT_3002(
+                PT_3002Value >= highValue || PT_3002Value <= lowValue
+            );
+        }
+    }, [PT_3002, PT_3002_High, PT_3002_Low, maintainPT_3002]);
 
     //================================ EVC_02_Pressure================================
     const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
- 
-    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
-    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] = useState(false); 
-    
-    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] = useState<boolean>(false);
-    
+
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] =
+        useState(false);
+
+    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] =
+        useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
-      const highValue = EVC_02_Pressure_High ?? NaN;
-      const lowValue = EVC_02_Pressure_Low ?? NaN;
-  
-      if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
-          setexceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
-      }
-  }, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Pressure
+        ) {
+            setexceedThresholdEVC_02_Pressure(
+                EVC_02_PressureValue >= highValue ||
+                    EVC_02_PressureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Pressure,
+        EVC_02_Pressure_High,
+        EVC_02_Pressure_Low,
+        maintainEVC_02_Pressure,
+    ]);
 
     //================================ EVC_01_Pressure================================
 
     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
 
-    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
-    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] = useState(false); 
-    
-    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] = useState<boolean>(false);
-    
-    
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] =
+        useState(false);
+
+    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] =
+        useState<boolean>(false);
+
     useEffect(() => {
-       const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
-       const highValue = EVC_01_Pressure_High ?? NaN;
-       const lowValue = EVC_01_Pressure_Low ?? NaN;
-   
-       if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
-           setexceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
-       }
-   }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Pressure
+        ) {
+            setexceedThresholdEVC_01_Pressure(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
+        maintainEVC_01_Pressure,
+    ]);
     //================================ EVC_01_Temperature================================
 
+    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
+        null
+    );
 
-    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(null);
+    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_01_Temperature,
+        setexceedThresholdEVC_01_Temperature,
+    ] = useState(false);
 
-    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
-    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); 
-    
-    const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] = useState<boolean>(false);
-    
-    
+    const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] =
+        useState<boolean>(false);
+
     useEffect(() => {
-       const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
-       const highValue = EVC_01_Temperature_High ?? NaN;
-       const lowValue = EVC_01_Temperature_Low ?? NaN;
-   
-       if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
-           setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
-       }
-   }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
-   
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Temperature
+        ) {
+            setexceedThresholdEVC_01_Temperature(
+                EVC_01_TemperatureValue >= highValue ||
+                    EVC_01_TemperatureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Temperature,
+        EVC_01_Temperature_High,
+        EVC_01_Temperature_Low,
+        maintainEVC_01_Temperature,
+    ]);
+
     //================================ EVC_02_Temperature================================
 
-    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(null);
- 
-    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<number | null>(null);
-    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Temperature, setexceedThresholdEVC_02_Temperature] = useState(false); 
-    
-    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] = useState<boolean>(false);
-    
-    useEffect(() => {
-      const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
-      const highValue = EVC_02_Temperature_High ?? NaN;
-      const lowValue = EVC_02_Temperature_Low ?? NaN;
-  
-      if (!isNaN(EVC_02_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Temperature) {
-          setexceedThresholdEVC_02_Temperature(EVC_02_TemperatureValue >= highValue || EVC_02_TemperatureValue <= lowValue);
-      }
-  }, [EVC_02_Temperature, EVC_02_Temperature_High, EVC_02_Temperature_Low, maintainEVC_02_Temperature]);
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
+        null
+    );
 
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Temperature,
+        setexceedThresholdEVC_02_Temperature,
+    ] = useState(false);
+
+    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Temperature
+        ) {
+            setexceedThresholdEVC_02_Temperature(
+                EVC_02_TemperatureValue >= highValue ||
+                    EVC_02_TemperatureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Temperature,
+        EVC_02_Temperature_High,
+        EVC_02_Temperature_Low,
+        maintainEVC_02_Temperature,
+    ]);
 
     //================================ EVC_02_Temperature================================
 
     const [TT_3001, setTT_3001] = useState<string | null>(null);
     const [TT_3001_High, setTT_3001_High] = useState<number | null>(null);
     const [TT_3001_Low, setTT_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_3001, setexceedThresholdTT_3001] = useState(false); 
+    const [exceedThresholdTT_3001, setexceedThresholdTT_3001] = useState(false);
     const [maintainTT_3001, setmaintainTT_3001] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-     const TT_3001Value = parseFloat(TT_3001 as any);
-     const highValue = TT_3001_High ?? NaN;
-     const lowValue = TT_3001_Low ?? NaN;
- 
-     if (!isNaN(TT_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3001) {
-         setexceedThresholdTT_3001(TT_3001Value >= highValue || TT_3001Value <= lowValue);
-     }
- }, [TT_3001, TT_3001_High, TT_3001_Low, maintainTT_3001]);
- 
+        const TT_3001Value = parseFloat(TT_3001 as any);
+        const highValue = TT_3001_High ?? NaN;
+        const lowValue = TT_3001_Low ?? NaN;
+
+        if (
+            !isNaN(TT_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3001
+        ) {
+            setexceedThresholdTT_3001(
+                TT_3001Value >= highValue || TT_3001Value <= lowValue
+            );
+        }
+    }, [TT_3001, TT_3001_High, TT_3001_Low, maintainTT_3001]);
 
     //================================ EVC_02_Temperature================================
 
-    const [PT_3003, setPT_3003] = useState<string | null>(null);
- 
-    const [PT_3003_High, setPT_3003_High] = useState<number | null>(null);
-    const [PT_3003_Low, setPT_3003_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3003, setexceedThresholdPT_3003] = useState(false); 
-    
-    const [maintainPT_3003, setmaintainPT_3003] = useState<boolean>(false);
-    
+    const [TT_3002, setTT_3002] = useState<string | null>(null);
+
+    const [TT_3002_High, setTT_3002_High] = useState<number | null>(null);
+    const [TT_3002_Low, setTT_3002_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_3002, setexceedThresholdTT_3002] = useState(false);
+
+    const [maintainTT_3002, setmaintainTT_3002] = useState<boolean>(false);
+
     useEffect(() => {
-      const PT_3003Value = parseFloat(PT_3003 as any);
-      const highValue = PT_3003_High ?? NaN;
-      const lowValue = PT_3003_Low ?? NaN;
-  
-      if (!isNaN(PT_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3003) {
-          setexceedThresholdPT_3003(PT_3003Value >= highValue || PT_3003Value <= lowValue);
-      }
-  }, [PT_3003, PT_3003_High, PT_3003_Low, maintainPT_3003]);
+        const TT_3002Value = parseFloat(TT_3002 as any);
+        const highValue = TT_3002_High ?? NaN;
+        const lowValue = TT_3002_Low ?? NaN;
+
+        if (
+            !isNaN(TT_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3002
+        ) {
+            setexceedThresholdTT_3002(
+                TT_3002Value >= highValue || TT_3002Value <= lowValue
+            );
+        }
+    }, [TT_3002, TT_3002_High, TT_3002_Low, maintainTT_3002]);
 
     //================================ EVC_02_Temperature ======================================================
 
@@ -1066,171 +1182,392 @@ export default function Graphic_CNG_HUNGYEN() {
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
- 
-    const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
-    
-    const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
+
+    const [
+        EVC_01_Flow_at_Base_Condition_High,
+        setEVC_01_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Base_Condition_Low,
+        setEVC_01_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setexceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setmaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
     useEffect(() => {
-      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
-      const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
-      const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
-          setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
-  
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        EVC_01_Flow_at_Base_Condition_Low,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
-    const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Flow_at_Measurement_Condition,
+        setEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition_High,
+        setEVC_01_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        setEVC_01_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        setmaintainEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
-      const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
-      const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
-          setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
-  
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-    const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
+    const [
+        EVC_01_Volume_at_Base_Condition,
+        setEVC_01_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
 
-    const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
-    const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Volume_at_Base_Condition_High,
+        setEVC_01_Volume_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Base_Condition_Low,
+        setEVC_01_Volume_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Base_Condition,
+        setexceedThresholdEVC_01_Volume_at_Base_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Volume_at_Base_Condition,
+        setmaintainEVC_01_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
-      const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
-      const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
-          setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
-  
+        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_High,
+        EVC_01_Volume_at_Base_Condition_Low,
+        maintainEVC_01_Volume_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_01_Volume_at_Measurement_Condition,
+        setEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+    const [
+        EVC_01_Volume_at_Measurement_Condition_High,
+        setEVC_01_Volume_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        setEVC_01_Volume_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Volume_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Volume_at_Measurement_Condition,
+        setmaintainEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
-   
-    const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
-    const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
-      const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
-      const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
-          setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
-  
+        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
 
+        if (
+            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_High,
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        maintainEVC_01_Volume_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
- // =================================================================================================================== 
- const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
- 
- const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
- const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
- const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); 
- 
- const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
- 
- useEffect(() => {
-   const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
-   const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
-   const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+    // ===================================================================================================================
+    const [
+        EVC_02_Volume_at_Base_Condition,
+        setEVC_02_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
 
-   if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
-       setexceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
-   }
-}, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
+    const [
+        EVC_02_Volume_at_Base_Condition_High,
+        setEVC_02_Volume_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Volume_at_Base_Condition_Low,
+        setEVC_02_Volume_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Volume_at_Base_Condition,
+        setexceedThresholdEVC_02_Volume_at_Base_Condition,
+    ] = useState(false);
 
+    const [
+        maintainEVC_02_Volume_at_Base_Condition,
+        setmaintainEVC_02_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
 
+    useEffect(() => {
+        const EVC_02_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
 
-      // =================================================================================================================== 
-      const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
+        if (
+            !isNaN(EVC_02_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Base_Condition(
+                EVC_02_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Volume_at_Base_Condition,
+        EVC_02_Volume_at_Base_Condition_High,
+        EVC_02_Volume_at_Base_Condition_Low,
+        maintainEVC_02_Volume_at_Base_Condition,
+    ]);
 
-      const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-      const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-      const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); 
-      
-      const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
-      
-      useEffect(() => {
-        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
+    // ===================================================================================================================
+    const [
+        EVC_02_Volume_at_Measurement_Condition,
+        setEVC_02_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+
+    const [
+        EVC_02_Volume_at_Measurement_Condition_High,
+        setEVC_02_Volume_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Volume_at_Measurement_Condition_Low,
+        setEVC_02_Volume_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Volume_at_Measurement_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Volume_at_Measurement_Condition,
+        setmaintainEVC_02_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Measurement_Condition as any
+        );
         const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
         const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
-    
-        if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
-            setexceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
+
+        if (
+            !isNaN(EVC_02_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Measurement_Condition(
+                EVC_02_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Measurement_ConditionValue <= lowValue
+            );
         }
-    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
+    }, [
+        EVC_02_Volume_at_Measurement_Condition,
+        EVC_02_Volume_at_Measurement_Condition_High,
+        EVC_02_Volume_at_Measurement_Condition_Low,
+        maintainEVC_02_Volume_at_Measurement_Condition,
+    ]);
 
+    // ===================================================================================================================
+    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] =
+        useState<string | null>(null);
 
-      
+    const [
+        EVC_02_Flow_at_Base_Condition_High,
+        setEVC_02_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Base_Condition_Low,
+        setEVC_02_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Base_Condition,
+        setexceedThresholdEVC_02_Flow_at_Base_Condition,
+    ] = useState(false);
 
- 
-      // =================================================================================================================== 
-      const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
+    const [
+        maintainEVC_02_Flow_at_Base_Condition,
+        setmaintainEVC_02_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
 
-      const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
-      const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-      const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); 
-      
-      const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
-      
-      useEffect(() => {
-        const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
+    useEffect(() => {
+        const EVC_02_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Base_Condition as any
+        );
         const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
         const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
-    
-        if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
-            setexceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
+
+        if (
+            !isNaN(EVC_02_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Base_Condition(
+                EVC_02_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Base_ConditionValue <= lowValue
+            );
         }
-    }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
+    }, [
+        EVC_02_Flow_at_Base_Condition,
+        EVC_02_Flow_at_Base_Condition_High,
+        EVC_02_Flow_at_Base_Condition_Low,
+        maintainEVC_02_Flow_at_Base_Condition,
+    ]);
 
+    // ===================================================================================================================
 
-          // =================================================================================================================== 
+    const [
+        EVC_02_Flow_at_Measurement_Condition,
+        setEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
-          const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
+    const [
+        EVC_02_Flow_at_Measurement_Condition_High,
+        setEVC_02_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        setEVC_02_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Flow_at_Measurement_Condition,
+    ] = useState(false);
 
-          const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-          const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-          const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); 
-          
-          const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
-          
-          useEffect(() => {
-            const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
-            const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
-            const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
-        
-            if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
-                setexceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
-            }
-        }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
+    const [
+        maintainEVC_02_Flow_at_Measurement_Condition,
+        setmaintainEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
+    useEffect(() => {
+        const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Measurement_Condition(
+                EVC_02_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Flow_at_Measurement_Condition,
+        EVC_02_Flow_at_Measurement_Condition_High,
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        maintainEVC_02_Flow_at_Measurement_Condition,
+    ]);
 
     //====================================================================
 
@@ -1248,14 +1585,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
+                                    bottom: 4,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
                                         !maintainEVC_01_Flow_at_Base_Condition
@@ -1275,7 +1611,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
+                                        {ValueGas.SVF}:
                                     </p>
                                     <p
                                         style={{
@@ -1291,6 +1627,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3H}
@@ -1314,13 +1652,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
@@ -1341,7 +1679,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVF} :
+                                        {ValueGas.GVF}:
                                     </p>
                                     <p
                                         style={{
@@ -1359,6 +1697,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3H}
@@ -1380,13 +1719,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Volume_at_Base_Condition &&
@@ -1407,7 +1746,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                                        {ValueGas.SVA}:
                                     </p>
                                     <p
                                         style={{
@@ -1423,6 +1762,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3}
@@ -1447,13 +1787,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
@@ -1474,7 +1814,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                        {ValueGas.GVA}:
                                     </p>
 
                                     <p
@@ -1493,6 +1833,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3}
@@ -1515,13 +1856,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Flow_at_Base_Condition &&
@@ -1542,7 +1883,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
+                                        {ValueGas.SVF}:
                                     </p>
                                     <p
                                         style={{
@@ -1558,6 +1899,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3H}
@@ -1582,13 +1924,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Flow_at_Measurement_Condition &&
@@ -1627,6 +1969,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3H}
@@ -1649,13 +1992,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Volume_at_Base_Condition &&
@@ -1676,12 +2019,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                                        {ValueGas.SVA}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedEVC_02_Volume_at_Base_Condition}
@@ -1692,6 +2035,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3}
@@ -1716,13 +2060,13 @@ export default function Graphic_CNG_HUNGYEN() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Volume_at_Measurement_Condition &&
@@ -1743,12 +2087,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                        {ValueGas.GVA}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {
@@ -1761,6 +2105,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3}
@@ -1782,7 +2127,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -1807,12 +2152,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-3006 :
+                                        PIT-3001A:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -1823,6 +2168,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -1844,7 +2190,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -1869,12 +2215,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-3007 :
+                                        PIT-3001B:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -1885,6 +2231,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -1907,7 +2254,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -1932,7 +2279,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3001 :
+                                        PT-3001:
                                     </p>
                                     <p
                                         style={{
@@ -1948,6 +2295,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 15,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -1969,7 +2317,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -1994,7 +2342,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3002 :
+                                        PT-3002:
                                     </p>
                                     <p
                                         style={{
@@ -2010,6 +2358,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 15,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -2033,7 +2382,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2063,7 +2412,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2074,6 +2423,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     BarA
@@ -2097,7 +2447,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2109,6 +2459,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             : maintainEVC_01_Pressure
                                             ? "orange"
                                             : "transparent",
+                                    marginLeft: 10,
                                     cursor: "pointer",
                                 }}
                                 // onClick={() => confirmPT_1902()}
@@ -2122,12 +2473,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_01_Pressure} :
+                                        {ValueGas.EVC_01_Pressure}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2138,6 +2489,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     BarA
@@ -2162,7 +2514,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2187,12 +2539,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_01_Temperature} :
+                                        {ValueGas.EVC_01_Temperature}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2203,6 +2555,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     °C
@@ -2226,7 +2579,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2256,7 +2609,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2267,6 +2620,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     °C
@@ -2292,14 +2646,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV-3001A :
+                                <p style={{ color: "black", marginLeft: 10 }}>
+                                    PCV-3001A: {PCV_3001A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_3001A}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2321,14 +2670,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV-3001B :
+                                <p style={{ color: "black", marginLeft: 10 }}>
+                                    PCV-3001B: {PCV_3001B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_3001B}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2344,20 +2688,13 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     fontSize: 18,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
+
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV-3002A :
+                                <p style={{ color: "black" }}>
+                                    PCV-3002A: {PCV_3002A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_3002A}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2373,20 +2710,13 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     fontSize: 18,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
+
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV-3002B :
+                                <p style={{ color: "black" }}>
+                                    PCV-3002B: {PCV_3002B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_3002B}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2465,7 +2795,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2490,12 +2820,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-3001 :
+                                        TT-3001:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2506,6 +2836,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     ˚C
@@ -2516,9 +2847,9 @@ export default function Graphic_CNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "PT_3003_DATA") {
+            if (node.id === "TT_3002_DATA") {
                 const roundedPT02 =
-                    PT_3003 !== null ? parseFloat(PT_3003).toFixed(2) : "";
+                    TT_3002 !== null ? parseFloat(TT_3002).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2528,16 +2859,16 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT_3003 &&
-                                        !maintainPT_3003
+                                        exceedThresholdTT_3002 &&
+                                        !maintainTT_3002
                                             ? "#ff5656"
-                                            : maintainPT_3003
+                                            : maintainTT_3002
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2553,12 +2884,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3003 :
+                                        PT-3003:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2569,6 +2900,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -2591,7 +2923,7 @@ export default function Graphic_CNG_HUNGYEN() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -2616,12 +2948,12 @@ export default function Graphic_CNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        GD-3001 :
+                                        GD-3001:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2631,6 +2963,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                     style={{
                                         color: colorNameValue,
                                         position: "relative",
+                                        marginLeft: 10,
 
                                         top: 5,
                                     }}
@@ -2659,13 +2992,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001A :
+                                    PSV-3001A: {PSV_3001A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PSV_3001A} 
-                                </p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2688,10 +3016,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002A :
+                                    PSV-3002A: {PSV_3002A} BarG
                                 </p>
-                                <p style={{ color: colorData }}> {PSV_3002A}</p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2714,10 +3040,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001B :
+                                    PSV-3001B: {PSV_3001B} BarG
                                 </p>
-                                <p style={{ color: colorData }}> {PSV_3001B}</p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2740,10 +3064,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002B :
+                                    PSV-3002B: {PSV_3002B} BarG
                                 </p>
-                                <p style={{ color: colorData }}> {PSV_3002B}</p>
-                                <p style={{ color: colorNameValue }}>BarG</p>
                             </div>
                         ),
                     },
@@ -2961,331 +3283,337 @@ export default function Graphic_CNG_HUNGYEN() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-    const initialPositions = {
-        AlarmCenter: { x: -1244.529411972646, y: 762.0298862357979 },
-        Arrow10: { x: -419.8018780792174, y: 1273.381523476552 },
-        BallVavleLine2_Bottom: {
-            x: -1661.682672878477,
-            y: 1481.0920733587484,
-        },
-        BallVavleLine2_Bottom_none: {
-            x: -1650.5994566252746,
-            y: 1097.5108416746705,
-        },
-        BallVavleLine2_Top: {
-            x: -1664.44860296679,
-            y: 1067.0182929442992,
-        },
-        BallVavleLine2_Top_none: {
-            x: -1648.09187529084,
-            y: 1512.8588877121745,
-        },
-        BallVavleLine3_Bottom_none: {
-            x: -945.4386378616368,
-            y: 1513.0768819977573,
-        },
-        BallVavleLine3_Top_none: {
-            x: -945.2533633599176,
-            y: 1098.9068673573584,
-        },
-        BallVavle_Line3_Bottom: {
-            x: -958.9030596290709,
-            y: 1482.17665624866,
-        },
-        BallVavle_Line3_Top: {
-            x: -959.090980952997,
-            y: 1068.376995289186,
-        },
-        DownArrow: { x: -2440.1778265025932, y: 1643.6301381134936 },
-        EVC_01_Flow_at_Base_Condition: {
-            x: -944.7566756597366,
-            y: 877.4187744710375,
-        },
-        EVC_01_Flow_at_Measurement_Condition: {
-            x: -944.8390916088076,
-            y: 925.5955178129639,
-        },
-        EVC_01_Pressure_COL: {
-            x: -1422.6213132405162,
-            y: 1463.468095326561,
-        },
-        EVC_01_Pressure_DATA: {
-            x: -1565.8256783115937,
-            y: 1148.9827037803145,
-        },
-        EVC_01_Pressure_IMG: {
-            x: -1455.2210748964526,
-            y: 1400.4111483146833,
-        },
-        EVC_01_Pressure_NONE: {
-            x: -1424.2458626037571,
-            y: 1021.7335838041611,
-        },
-        EVC_01_Temperature: {
-            x: -1384.3876204395422,
-            y: 1377.3823609961598,
-        },
-        EVC_01_Temperature_COL: {
-            x: -1360.9590194746786,
-            y: 1427.2945127887838,
-        },
-        EVC_01_Temperature_DATA: {
-            x: -1736.2102870765705,
-            y: 815.4661864731523,
-        },
-        EVC_01_Temperature_NONE: {
-            x: -1362.8266325377226,
-            y: 977.2539852046791,
-        },
-        EVC_01_Volume_at_Base_Condition: {
-            x: -703.8315004521368,
-            y: 877.542107815135,
-        },
-        EVC_01_Volume_at_Measurement_Condition: {
-            x: -704.133309317585,
-            y: 925.6995906874301,
-        },
-        EVC_02_Flow_at_Base_Condition: {
-            x: -932.8685029333565,
-            y: 1611.5650097972457,
-        },
-        EVC_02_Flow_at_Measurement_Condition: {
-            x: -932.8603748341441,
-            y: 1659.619138394843,
-        },
-        EVC_02_Pressure_COL: {
-            x: -1425.0343776799361,
-            y: 1050.2965580409796,
-        },
-        EVC_02_Pressure_DATA: {
-            x: -1563.2499315232963,
-            y: 1587.1147367905612,
-        },
-        EVC_02_Pressure_IMG: {
-            x: -1457.3119231476958,
-            y: 987.4972191813588,
-        },
-        EVC_02_Pressure_NONE: {
-            x: -1422.6407988495287,
-            y: 1424.3535206118927,
-        },
-        EVC_02_Temperature: {
-            x: -1385.8650633329748,
-            y: 960.1049085729308,
-        },
-        EVC_02_Temperature_COL: {
-            x: -1362.8971911342087,
-            y: 1007.3441734368228,
-        },
-        EVC_02_Temperature_DATA: {
-            x: -1727.0419105701028,
-            y: 1232.4793100005968,
-        },
-        EVC_02_Temperature_NONE: {
-            x: -1361.3563019384721,
-            y: 1396.8762550311894,
-        },
-        EVC_02_Volume_at_Base_Condition: {
-            x: -691.7043842569694,
-            y: 1611.7575715748744,
-        },
-        EVC_02_Volume_at_Measurement_Condition: {
-            x: -691.7597706423713,
-            y: 1659.6681974922926,
-        },
-        FIQ_3001A: { x: -1122.9979525971376, y: 1090.3467963356752 },
-        FIQ_3001B: { x: -1127.9442365313425, y: 1503.338633373814 },
-        GD_3001: { x: -1177.1116094437443, y: 1176.7839153333475 },
-        GD_IMG: { x: -1096.8954721391294, y: 1232.7407461451007 },
-        Header: { x: -2375.4269666355694, y: 739.4302234279377 },
-        PCV_3001A: { x: -1590.143839770737, y: 1466.187406343237 },
-        PCV_3001A_DATA: { x: -2129.6272157235535, y: 991.5991483239666 },
-        PCV_3001A_SmallBallVavle: {
-            x: -1483.6177892854255,
-            y: 1469.3848130414924,
-        },
-        PCV_3001A_none: { x: -1472.3253266041704, y: 1520.498001843855 },
-        PCV_3001A_none2: {
-            x: -1560.2798867415365,
-            y: 1482.2617504326024,
-        },
-        PCV_3001B: { x: -1589.6280768037607, y: 1051.7950507090916 },
-        PCV_3001B_DATA: { x: -2131.981935662864, y: 1402.9439742063528 },
-        PCV_3001B_SmallBallVavle: {
-            x: -1486.9036877800625,
-            y: 1056.0055835082862,
-        },
-        PCV_3001B_none: { x: -1559.0670889230703, y: 1066.5206445548827 },
-        PCV_3001B_none2: { x: -1475.720019744693, y: 1104.4215156026714 },
-        PCV_3002A_DATA: { x: -1670.0177925707806, y: 989.3425335926158 },
-        PCV_3002B_DATA: { x: -1669.2998780554922, y: 1403.0927905211088 },
-        PCV_line1_Bottom: { x: -2059.46440478068, y: 1051.690596866844 },
-        PCV_line1_Bottom_SmallBallVavle: {
-            x: -1959.916081354473,
-            y: 1469.1895625081877,
-        },
-        PCV_line1_Bottom_none: {
-            x: -2033.416081354473,
-            y: 1480.8357187400395,
-        },
-        PCV_line1_Bottom_none2: {
-            x: -1948.4145711922317,
-            y: 1518.503878770942,
-        },
-        PCV_line1_Top: { x: -2063.2209588415735, y: 1465.9672706188694 },
-        PCV_line1_Top_SmallBallVavle: {
-            x: -1955.363015032123,
-            y: 1056.514175669431,
-        },
-        PCV_line1_Top_none: {
-            x: -2029.3085400395037,
-            y: 1067.755196238937,
-        },
-        PCV_line1_Top_none2: {
-            x: -1943.863015032123,
-            y: 1106.014175669431,
-        },
-        PIT_3001A_COL: { x: -2194.366805384612, y: 1463.874739139494 },
-        PIT_3001A_DATA: { x: -2323.884062940713, y: 1148.6083704185041 },
-        PIT_3001A_IMG: { x: -2226.866805384612, y: 1400.374739139494 },
-        PIT_3001A_NONE: { x: -2197.8690826568136, y: 1007.3191633358758 },
-        PIT_3001B_COL: { x: -2197.6600827175034, y: 1050.3588175915195 },
-        PIT_3001B_DATA: { x: -2326.9359251148935, y: 1585.7692501253557 },
-        PIT_3001B_IMG: { x: -2230.624481311542, y: 986.990895895738 },
-        PIT_3001B_NONE: { x: -2193.7144666730205, y: 1424.0282015242046 },
-        PSV_3001A: { x: -1844.6249877968003, y: 904.7518340240545 },
-        PSV_3001B: { x: -1851.8971023103254, y: 1316.7167432666458 },
-        PSV_3002A: { x: -1307.7176662681832, y: 894.499205487562 },
-        PSV_3002B: { x: -1307.7176662681832, y: 1311.4439993566057 },
-        PSV_LINE2_BOTTOM: {
-            x: -1740.5499935425808,
-            y: 1021.4152979362718,
-        },
-        PSV_LINE2_BOTTOM_HALFCIRCLE: {
-            x: -1266.1474092778985,
-            y: 943.9517620367403,
-        },
-        PSV_LINE2_BOTTOM_NONE: {
-            x: -1718.3515671112975,
-            y: 1070.542505015602,
-        },
-        PSV_LINE2_BOTTOM_NONE1: {
-            x: -1741.7830527009469,
-            y: 1432.6252337777432,
-        },
-        PSV_LINE2_BOTTOM_NONE2: {
-            x: -1742.6123310219864,
-            y: 1377.8993730119664,
-        },
-        PSV_LINE2_BOTTOM_RIGHT: {
-            x: -1760.0864447641275,
-            y: 1002.261090283854,
-        },
-        PSV_LINE2_TOP: { x: -1741.762582600041, y: 1428.90071831721 },
-        PSV_LINE2_TOP_HALFCIRCLE: {
-            x: -1763.0861113674155,
-            y: 950.1586579328373,
-        },
-        PSV_LINE2_TOP_NONE: { x: -1719.609015298378, y: 1478.4738962378 },
-        PSV_LINE2_TOP_NONE1: {
-            x: -1741.292471045089,
-            y: 1024.6454245613245,
-        },
-        PSV_LINE2_TOP_NONE2: {
-            x: -1739.6279244378063,
-            y: 970.6923874449885,
-        },
-        PSV_LINE2_TOP_RIGHT: {
-            x: -1760.932470452269,
-            y: 1409.788926569184,
-        },
-        PSV_LINE3_BOTTOM: {
-            x: -1241.9662551779466,
-            y: 1017.2912953863099,
-        },
-        PSV_LINE3_BOTTOM_HALFCIRCLE: {
-            x: -1766.2849260256212,
-            y: 1357.309168723579,
-        },
-        PSV_LINE3_BOTTOM_NONE: {
-            x: -1212.1740869021496,
-            y: 1482.673575129763,
-        },
-        PSV_LINE3_BOTTOM_NONE1: {
-            x: -1234.6943213706072,
-            y: 1436.0560745736848,
-        },
-        PSV_LINE3_BOTTOM_NONE2: {
-            x: -1235.6368665307696,
-            y: 1382.4374704915526,
-        },
-        PSV_LINE3_BOTTOM_RIGHT: {
-            x: -1261.8081518592426,
-            y: 997.532009870901,
-        },
-        PSV_LINE3_TOP: { x: -1235.1897637926832, y: 1433.6788607117933 },
-        PSV_LINE3_TOP_HALFCIRCLE: {
-            x: -1260.1083626642362,
-            y: 1361.3375074809244,
-        },
-        PSV_LINE3_TOP_NONE: {
-            x: -1219.9913727940623,
-            y: 1066.3862945267433,
-        },
-        PSV_LINE3_TOP_NONE1: {
-            x: -1243.1459580683222,
-            y: 1020.1249803904852,
-        },
-        PSV_LINE3_TOP_NONE2: {
-            x: -1242.4987054998287,
-            y: 963.723626602304,
-        },
-        PSV_LINE3_TOP_RIGHT: {
-            x: -1254.4104579359896,
-            y: 1415.3142896015559,
-        },
-        PT_3001_COL: { x: -1866.4577639723273, y: 1462.4297119508683 },
-        PT_3001_DATA: { x: -1995.729893153021, y: 1149.2252195340056 },
-        PT_3001_IMG: { x: -1898.7568597618636, y: 1399.3826957761635 },
-        PT_3001_NONE: { x: -1865.795938216313, y: 1009.610885120657 },
-        PT_3002_COL: { x: -1866.073792487846, y: 1050.0079742479018 },
-        PT_3002_DATA: { x: -1993.699445139633, y: 1586.4921741314997 },
-        PT_3002_IMG: { x: -1898.5737924878463, y: 986.4938130080379 },
-        PT_3002_NONE: { x: -1866.220994341128, y: 1425.5940219176825 },
-        PT_3003: { x: -666.2089558729057, y: 1188.8850079129675 },
-        PT_3003_COL: { x: -633.9583485605712, y: 1251.8967025568588 },
-        PT_3003_DATA: { x: -742.9610697521994, y: 1091.3785184131166 },
-        PT_3003_NONE: { x: -633.0354493104628, y: 1209.00064035183 },
-        SDV_3001A: { x: -2367.264096852104, y: 1047.9003450623102 },
-        SDV_3001A_Name: { x: -2400.231075578696, y: 1016.8765739089936 },
-        SDV_3001B: { x: -2347.936922940682, y: 1461.553943767321 },
-        SDV_3001B_Name: { x: -2380.436922940682, y: 1431.1155032793695 },
-        SDV_3002: { x: -546.8250410658575, y: 1247.6548809936753 },
-        SDV_3002_Name: { x: -578.6384414106462, y: 1206.9501983013681 },
-        TT_3001: { x: -804.780575412963, y: 1160.3568104077146 },
-        TT_3001_COL: { x: -782.9206503661431, y: 1211.2440219701655 },
-        TT_3001_DATA: { x: -891.8701172663017, y: 1010.002688321111 },
-        TT_3001_NONE: { x: -781.9417334427174, y: 1174.1528941713789 },
-        bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
-        bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
-        bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
-        bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
-        borderWhite: { x: -2419.4989026325693, y: 730.797467783713 },
-        line1: { x: -2407.3097089925586, y: 1684.7936897594798 },
-        line2: { x: -2407.550402509801, y: 1663.500870252391 },
-        line3: { x: -2030.8329144167883, y: 1098.5296705520232 },
-        line4: { x: -2033.455135048047, y: 1512.635009158724 },
-        line5: { x: -1559.5270533882806, y: 1098.3740496757796 },
-        line6: { x: -1559.7769633031824, y: 1512.7897157412472 },
-        line7: { x: -1036.0060026105384, y: 1098.3096365331119 },
-        line8: { x: -1037.0272391551282, y: 1512.874739139494 },
-        line9: { x: -661.0207270322528, y: 1298.5866709113047 },
-        line9none: { x: -713.1893118583799, y: 1298.7824600879364 },
-        line10: { x: -449.9501828459661, y: 1298.5866709113047 },
-        line10none: { x: -405.6683476271253, y: 1298.7587875755169 },
-        percent: { x: -405.6683476271253, y: 1298.7587875755169 },
-        timeUpdate3: { x: -2381.52648946302, y: 800.0866709113047 },
-    };
+              const initialPositions = {
+              AlarmCenter: { x: -996.6028672622674, y: 718.8443630551295 },
+              Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
+              BallVavleLine2_Bottom: {
+                  x: -1752.748552461399,
+                  y: 1398.7809179318454,
+              },
+              BallVavleLine2_Bottom_none: {
+                  x: -1739.1152406034073,
+                  y: 1430.2199359776428,
+              },
+              BallVavleLine2_Top: {
+                  x: -1754.9752547260307,
+                  y: 1066.3945634448808,
+              },
+              BallVavleLine2_Top_none: {
+                  x: -1740.7857064948557,
+                  y: 1097.0254070197795,
+              },
+              BallVavleLine3_Bottom_none: {
+                  x: -1188.6007658649082,
+                  y: 1430.7062254963867,
+              },
+              BallVavleLine3_Top_none: {
+                  x: -1190.3857919153643,
+                  y: 1097.999896447289,
+              },
+              BallVavle_Line3_Bottom: {
+                  x: -1203.020965699144,
+                  y: 1399.2185849353757,
+              },
+              BallVavle_Line3_Top: {
+                  x: -1204.4484013514104,
+                  y: 1066.748043368249,
+              },
+              DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
+              EVC_01_Flow_at_Base_Condition: {
+                  x: -1300.2117083264288,
+                  y: 751.5293893652726,
+              },
+              EVC_01_Flow_at_Measurement_Condition: {
+                  x: -1300.4747755822623,
+                  y: 812.9342555162998,
+              },
+              EVC_01_Pressure_COL: {
+                  x: -1422.6213132405162,
+                  y: 1463.468095326561,
+              },
+              EVC_01_Pressure_DATA: {
+                  x: -1300.5518647911813,
+                  y: 874.307982790011,
+              },
+              EVC_01_Pressure_IMG: {
+                  x: -1455.2210748964526,
+                  y: 1400.4111483146833,
+              },
+              EVC_01_Pressure_NONE: {
+                  x: -1424.2458626037571,
+                  y: 1021.7335838041611,
+              },
+              EVC_01_Temperature: {
+                  x: -1384.3876204395422,
+                  y: 1377.3823609961598,
+              },
+              EVC_01_Temperature_COL: {
+                  x: -1360.9590194746786,
+                  y: 1427.2945127887838,
+              },
+              EVC_01_Temperature_DATA: {
+                  x: -1651.9839445793107,
+                  y: 873.7849536634603,
+              },
+              EVC_01_Temperature_NONE: {
+                  x: -1362.8266325377226,
+                  y: 977.2539852046791,
+              },
+              EVC_01_Volume_at_Base_Condition: {
+                  x: -1651.3638601651735,
+                  y: 751.2185853413771,
+              },
+              EVC_01_Volume_at_Measurement_Condition: {
+                  x: -1651.889586160885,
+                  y: 812.6874699639815,
+              },
+              EVC_02_Flow_at_Base_Condition: {
+                  x: -1304.5045612961057,
+                  y: 1526.246568287584,
+              },
+              EVC_02_Flow_at_Measurement_Condition: {
+                  x: -1304.6902205234626,
+                  y: 1587.58097045636,
+              },
+              EVC_02_Pressure_COL: {
+                  x: -1425.0343776799361,
+                  y: 1050.2965580409796,
+              },
+              EVC_02_Pressure_DATA: {
+                  x: -1304.6862397428831,
+                  y: 1648.7497951092391,
+              },
+              EVC_02_Pressure_IMG: {
+                  x: -1457.3119231476958,
+                  y: 987.4972191813588,
+              },
+              EVC_02_Pressure_NONE: {
+                  x: -1422.6407988495287,
+                  y: 1424.3535206118927,
+              },
+              EVC_02_Temperature: {
+                  x: -1385.8650633329748,
+                  y: 960.1049085729308,
+              },
+              EVC_02_Temperature_COL: {
+                  x: -1362.8971911342087,
+                  y: 1007.3441734368228,
+              },
+              EVC_02_Temperature_DATA: {
+                  x: -1655.6231376798764,
+                  y: 1649.0182904812473,
+              },
+              EVC_02_Temperature_NONE: {
+                  x: -1361.3563019384721,
+                  y: 1396.8762550311894,
+              },
+              EVC_02_Volume_at_Base_Condition: {
+                  x: -1655.441578959918,
+                  y: 1526.3262726240537,
+              },
+              EVC_02_Volume_at_Measurement_Condition: {
+                  x: -1655.518638620903,
+                  y: 1587.742152328961,
+              },
+              FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
+              FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
+              GD_3001: { x: -989.3020106788827, y: 1318.7155007722488 },
+              GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+              Header: { x: -2332.820092483261, y: 648.7682137524797 },
+              PCV_3001A: { x: -1673.1177611019, y: 1384.1107119962714 },
+              PCV_3001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
+              PCV_3001A_SmallBallVavle: {
+                  x: -1590.1177892854255,
+                  y: 1391.8848130414924,
+              },
+              PCV_3001A_none: { x: -1578.8253266041704, y: 1437.998001843855 },
+              PCV_3001A_none2: {
+                  x: -1644.8538756176888,
+                  y: 1406.5995698502961,
+              },
+              PCV_3001B: { x: -1677.3656150260101, y: 1052.000421403267 },
+              PCV_3001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
+              PCV_3001B_SmallBallVavle: {
+                  x: -1589.286173260068,
+                  y: 1060.1713499375644,
+              },
+              PCV_3001B_none: { x: -1648.0670889230703, y: 1076.0206445548827 },
+              PCV_3001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
+              PCV_3002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
+              PCV_3002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
+              PCV_line1_Bottom: {
+                  x: -2111.3678672845463,
+                  y: 1052.190596866844,
+              },
+              PCV_line1_Bottom_SmallBallVavle: {
+                  x: -2021.0842967435187,
+                  y: 1392.2146663154426,
+              },
+              PCV_line1_Bottom_none: {
+                  x: -2082.0447320338617,
+                  y: 1406.8642014517307,
+              },
+              PCV_line1_Bottom_none2: {
+                  x: -2009.774232806013,
+                  y: 1437.5474817836612,
+              },
+              PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
+              PCV_line1_Top_SmallBallVavle: {
+                  x: -2020.758188887233,
+                  y: 1058.572245211475,
+              },
+              PCV_line1_Top_none: {
+                  x: -2079.1641412034114,
+                  y: 1073.0229180707613,
+              },
+              PCV_line1_Top_none2: {
+                  x: -2009.2581888872328,
+                  y: 1105.293210440453,
+              },
+              PIT_3001A_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
+              PIT_3001A_DATA: { x: -2348.6186513642347, y: 870.9225639134092 },
+              PIT_3001A_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
+              PIT_3001A_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
+              PIT_3001B_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
+              PIT_3001B_DATA: { x: -2348.8352724506376, y: 1526.9945389222787 },
+              PIT_3001B_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
+              PIT_3001B_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
+              PSV_3001A: { x: -1806.4495698232004, y: 966.4171746665486 },
+              PSV_3001B: { x: -1799.9019866867252, y: 1297.6141788823015 },
+              PSV_3002A: { x: -1500.6943362170002, y: 969.58257364993 },
+              PSV_3002B: { x: -1493.6020428530078, y: 1296.9325533391168 },
+              PSV_LINE2_BOTTOM: {
+                  x: -1822.5499935425808,
+                  y: 1022.9152979362718,
+              },
+              PSV_LINE2_BOTTOM_HALFCIRCLE: {
+                  x: -1537.0489668387918,
+                  y: 962.2028750034647,
+              },
+              PSV_LINE2_BOTTOM_NONE: {
+                  x: -1800.2748765223484,
+                  y: 1071.4335361920557,
+              },
+              PSV_LINE2_BOTTOM_NONE1: {
+                  x: -1823.0693694333604,
+                  y: 1360.4020119665827,
+              },
+              PSV_LINE2_BOTTOM_NONE2: {
+                  x: -1823.263852446076,
+                  y: 1315.6438506423797,
+              },
+              PSV_LINE2_BOTTOM_RIGHT: {
+                  x: -1841.9793816682281,
+                  y: 1003.5894848459614,
+              },
+              PSV_LINE2_TOP: { x: -1824.621004682478, y: 1357.2168795688774 },
+              PSV_LINE2_TOP_HALFCIRCLE: {
+                  x: -1846.419275542719,
+                  y: 961.8665937984044,
+              },
+              PSV_LINE2_TOP_NONE: {
+                  x: -1802.2062318196358,
+                  y: 1404.2787700504089,
+              },
+              PSV_LINE2_TOP_NONE1: {
+                  x: -1822.49563729746,
+                  y: 1025.4738191234321,
+              },
+              PSV_LINE2_TOP_NONE2: {
+                  x: -1820.713980893797,
+                  y: 982.7946809276918,
+              },
+              PSV_LINE2_TOP_RIGHT: {
+                  x: -1843.7363814733678,
+                  y: 1337.2167064142152,
+              },
+              PSV_LINE3_BOTTOM: {
+                  x: -1513.9276090762096,
+                  y: 1023.2929663757193,
+              },
+              PSV_LINE3_BOTTOM_HALFCIRCLE: {
+                  x: -1847.8476607451094,
+                  y: 1294.5969973308625,
+              },
+              PSV_LINE3_BOTTOM_NONE: {
+                  x: -1491.5458949259623,
+                  y: 1402.9749944793095,
+              },
+              PSV_LINE3_BOTTOM_NONE1: {
+                  x: -1513.9942216185614,
+                  y: 1359.7067206930428,
+              },
+              PSV_LINE3_BOTTOM_NONE2: {
+                  x: -1512.9767227486302,
+                  y: 1314.4270541042574,
+              },
+              PSV_LINE3_BOTTOM_RIGHT: {
+                  x: -1533.4478790692137,
+                  y: 1003.5774869187717,
+              },
+              PSV_LINE3_TOP: { x: -1514.7416075320712, y: 1357.7240669142898 },
+              PSV_LINE3_TOP_HALFCIRCLE: {
+                  x: -1537.643267778939,
+                  y: 1294.1557057434507,
+              },
+              PSV_LINE3_TOP_NONE: {
+                  x: -1491.4345428387423,
+                  y: 1068.5155162952701,
+              },
+              PSV_LINE3_TOP_NONE1: {
+                  x: -1514.2952576203431,
+                  y: 1026.4316416628542,
+              },
+              PSV_LINE3_TOP_NONE2: {
+                  x: -1512.9987054998287,
+                  y: 983.159710586679,
+              },
+              PSV_LINE3_TOP_RIGHT: {
+                  x: -1533.786401000067,
+                  y: 1337.8006420545576,
+              },
+              PT_3001_COL: { x: -1944.126211137847, y: 1414.8743710777078 },
+              PT_3001_DATA: { x: -2062.9474286701056, y: 871.9588473450049 },
+              PT_3001_IMG: { x: -1976.3967429262366, y: 1351.9634634096726 },
+              PT_3001_NONE: { x: -1938.0753232184695, y: 1045.530553967972 },
+              PT_3002_COL: { x: -1939.3531774900025, y: 1082.027958478726 },
+              PT_3002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
+              PT_3002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
+              PT_3002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
+              TT_3002: { x: -804.9838255763632, y: 1193.6908985163677 },
+              TT_3002_COL: { x: -772.6201142386359, y: 1255.823965495775 },
+              TT_3002_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+              TT_3002_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
+              SDV_3001A: { x: -2375.7904529874913, y: 1046.6822941858263 },
+              SDV_3001A_Name: { x: -2408.757431714083, y: 1018.4506281074462 },
+              SDV_3001B: { x: -2377.0898761861, y: 1379.0178060073683 },
+              SDV_3001B_Name: { x: -2411.6354714981053, y: 1348.6127064386965 },
+              SDV_3002: { x: -653.7026272334658, y: 1210.1260672163446 },
+              SDV_3002_Name: { x: -694.8783133128501, y: 1178.06997145104 },
+              TT_3001: { x: -1024.6693805861637, y: 1196.2161585621343 },
+              TT_3001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
+              TT_3001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
+              TT_3001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
+              bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
+              bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
+              bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
+              bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
+              borderWhite: { x: -2378.220025932068, y: 632.5724848353368 },
+              line1: { x: -2410.5925492337, y: 1618.373867274551 },
+              line2: { x: -2410.891552880127, y: 1598.1196367183622 },
+              line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
+              line4: { x: -2082.153208656881, y: 1430.8103326059108 },
+              line5: { x: -1647.2085647611, y: 1098.3740496757796 },
+              line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
+              line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
+              line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+              line9: { x: -925.9976477005001, y: 1260.4714803086474 },
+              line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
+              line10: { x: -531.9035836581911, y: 1260.593609780011 },
+              line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
+              percent: { x: -405.6683476271253, y: 1298.7587875755169 },
+              timeUpdate3: { x: -2336.2287424299593, y: 709.0412944066101 },
+          };
 
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3344,10 +3672,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -3364,10 +3692,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -3384,10 +3712,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -3404,10 +3732,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -3416,10 +3744,10 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         // =================== data ================================
-
+        
         {
-            id: "FIQ_3001A",
-            position: positions.FIQ_3001A,
+            id: "FIQ_2001A",
+            position: positions.FIQ_2001A,
             type: "custom",
             data: {
                 label: <div>FIQ-3001A</div>,
@@ -3437,8 +3765,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "FIQ_3001B",
-            position: positions.FIQ_3001B,
+            id: "FIQ_2001B",
+            position: positions.FIQ_2001B,
             type: "custom",
             data: {
                 label: <div>FIQ-3001B</div>,
@@ -3475,8 +3803,9 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -3500,8 +3829,9 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -3526,8 +3856,8 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -3552,10 +3882,10 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+                height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
         },
 
         {
@@ -3579,10 +3909,11 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Bottom,
         },
         {
             id: "EVC_02_Flow_at_Measurement_Condition",
@@ -3605,8 +3936,9 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Left,
         },
@@ -3631,8 +3963,9 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Top,
         },
@@ -3657,8 +3990,9 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Top,
         },
@@ -3900,7 +4234,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
@@ -4443,10 +4777,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4464,10 +4798,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Top,
@@ -4485,10 +4819,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Top,
@@ -4506,10 +4840,10 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 220,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4589,39 +4923,39 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_IMG",
-            data: {
-                label: <div>{PTV}</div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_IMG",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_IMG,
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     position: positions.EVC_01_Pressure_IMG,
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_IMG",
-            data: {
-                label: <div>{PTV}</div>,
-            },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_IMG",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_IMG,
+        //     position: positions.EVC_02_Pressure_IMG,
 
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         {
             id: "PIT_3001A_COL",
@@ -4630,13 +4964,13 @@ export default function Graphic_CNG_HUNGYEN() {
             },
 
             position: positions.PIT_3001A_COL,
-            zIndex: 9999,
+            zIndex: 9999999,
             style: {
                 background: line,
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -4647,14 +4981,14 @@ export default function Graphic_CNG_HUNGYEN() {
             },
 
             position: positions.PIT_3001B_COL,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             style: {
                 background: line,
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -4672,7 +5006,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -4690,46 +5024,46 @@ export default function Graphic_CNG_HUNGYEN() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_COL",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_COL",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_COL,
-            zIndex: 9999,
-            style: {
-                background: line3,
-                border: "none",
-                width: "10px",
+        //     position: positions.EVC_01_Pressure_COL,
+        //     zIndex: 9999,
+        //     style: {
+        //         background: line3,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 60,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_COL",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 60,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_COL",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_COL,
-            zIndex: 9999,
+        //     position: positions.EVC_02_Pressure_COL,
+        //     zIndex: 9999,
 
-            style: {
-                background: line3,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: line3,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 60,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 60,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         {
             id: "PIT_3001A_DATA",
@@ -4738,7 +5072,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4750,12 +5084,12 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "PIT_3001B_DATA",
@@ -4764,7 +5098,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4776,7 +5110,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -4790,7 +5124,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4802,12 +5136,12 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "PT_3002_DATA",
@@ -4816,7 +5150,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4828,7 +5162,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -4843,7 +5177,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4854,12 +5188,12 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.EVC_01_Pressure_DATA,
 
             style: {
-                border: background,
-                width: 300,
+                border: "1px solid white",
+                width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "EVC_02_Pressure_DATA",
@@ -4868,7 +5202,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -4879,8 +5213,8 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.EVC_02_Pressure_DATA,
 
             style: {
-                border: background,
-                width: 300,
+                border: "1px solid white",
+                width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4960,155 +5294,155 @@ export default function Graphic_CNG_HUNGYEN() {
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_NONE",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_NONE",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_NONE,
-            zIndex: 9999,
+        //     position: positions.EVC_01_Pressure_NONE,
+        //     zIndex: 9999,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_NONE",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_NONE",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_NONE,
-            zIndex: 9999,
+        //     position: positions.EVC_02_Pressure_NONE,
+        //     zIndex: 9999,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         //===========================  TT LINE ==================================
 
-        {
-            id: "EVC_01_Temperature_COL",
-            position: positions.EVC_01_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Temperature_COL",
+        //     position: positions.EVC_01_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_02_Temperature_COL",
-            position: positions.EVC_02_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature_COL",
+        //     position: positions.EVC_02_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_01_Temperature",
-            position: positions.EVC_01_Temperature,
-            type: "custom",
-            data: {
-                label: <div>{GaugeTemperature}</div>,
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_01_Temperature",
+        //     position: positions.EVC_01_Temperature,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{GaugeTemperature}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            zIndex: 9999,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     zIndex: 9999,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
-        {
-            id: "EVC_02_Temperature",
-            position: positions.EVC_02_Temperature,
-            type: "custom",
-            data: {
-                label: <div>{GaugeTemperature}</div>,
-            },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature",
+        //     position: positions.EVC_02_Temperature,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{GaugeTemperature}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            zIndex: 9999,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     zIndex: 9999,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
 
         //================================  ==================================
 
-        {
-            id: "EVC_01_Temperature_COL",
-            position: positions.EVC_01_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Temperature_COL",
+        //     position: positions.EVC_01_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_02_Temperature_COL",
-            position: positions.EVC_02_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature_COL",
+        //     position: positions.EVC_02_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
 
         {
             id: "EVC_02_Temperature_DATA",
@@ -5117,7 +5451,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5128,29 +5462,30 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.EVC_02_Temperature_DATA,
 
             style: {
-                border: background,
+                border: "1px solid white",
                 width: 350,
+
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Right,
         },
-        {
-            id: "EVC_02_Temperature_NONE",
-            position: positions.EVC_02_Temperature_NONE,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_02_Temperature_NONE",
+        //     position: positions.EVC_02_Temperature_NONE,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Top,
-            style: {
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
 
         {
             id: "EVC_01_Temperature_DATA",
@@ -5159,7 +5494,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5170,29 +5505,30 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.EVC_01_Temperature_DATA,
 
             style: {
-                border: background,
+                border: "1px solid white",
                 width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Right,
         },
-        {
-            id: "EVC_01_Temperature_NONE",
-            position: positions.EVC_01_Temperature_NONE,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Top,
-            style: {
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        // {
+        //     id: "EVC_01_Temperature_NONE",
+        //     position: positions.EVC_01_Temperature_NONE,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
+
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
         //========================== PSV line 2  ========================
 
         {
@@ -5204,7 +5540,7 @@ export default function Graphic_CNG_HUNGYEN() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -5223,7 +5559,7 @@ export default function Graphic_CNG_HUNGYEN() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -5704,12 +6040,14 @@ export default function Graphic_CNG_HUNGYEN() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -5731,12 +6069,14 @@ export default function Graphic_CNG_HUNGYEN() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -5762,8 +6102,9 @@ export default function Graphic_CNG_HUNGYEN() {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -5781,7 +6122,7 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 border: "none",
                 width: 10,
-                height: 100,
+                height: 30,
                 background: line3,
             },
         },
@@ -5793,7 +6134,7 @@ export default function Graphic_CNG_HUNGYEN() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5805,7 +6146,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
@@ -5849,8 +6190,8 @@ export default function Graphic_CNG_HUNGYEN() {
 
         // ==========================================================================================
         {
-            id: "PT_3003_COL",
-            position: positions.PT_3003_COL,
+            id: "TT_3002_COL",
+            position: positions.TT_3002_COL,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5861,20 +6202,20 @@ export default function Graphic_CNG_HUNGYEN() {
             style: {
                 border: "none",
                 width: 10,
-                height: 60,
+                height: 20,
                 background: line3,
             },
             zIndex: 9999,
         },
 
         {
-            id: "PT_3003_DATA",
+            id: "TT_3002_DATA",
             data: {
                 label: (
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5882,19 +6223,19 @@ export default function Graphic_CNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3003_DATA,
+            position: positions.TT_3002_DATA,
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Top,
         },
         {
-            id: "PT_3003",
-            position: positions.PT_3003,
+            id: "TT_3002",
+            position: positions.TT_3002,
             type: "custom",
             data: {
                 label: <div>{PTV}</div>,
@@ -5911,8 +6252,8 @@ export default function Graphic_CNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3003_NONE",
-            position: positions.PT_3003_NONE,
+            id: "TT_3002_NONE",
+            position: positions.TT_3002_NONE,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6027,7 +6368,7 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <AlarmCNG_BINHDUONG />
+                        <AlarmCNG_HUNGYEN />
                     </div>
                 ),
             },
@@ -6635,25 +6976,25 @@ export default function Graphic_CNG_HUNGYEN() {
                     }));
                 }
                 //========================== pit line 1 =========================
-                else if (id === "PT_3003") {
+                else if (id === "TT_3002") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3003: position,
+                        TT_3002: position,
                     }));
-                } else if (id === "PT_3003_DATA") {
+                } else if (id === "TT_3002_DATA") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3003_DATA: position,
+                        TT_3002_DATA: position,
                     }));
-                } else if (id === "PT_3003_COL") {
+                } else if (id === "TT_3002_COL") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3003_COL: position,
+                        TT_3002_COL: position,
                     }));
-                } else if (id === "PT_3003_NONE") {
+                } else if (id === "TT_3002_NONE") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3003_NONE: position,
+                        TT_3002_NONE: position,
                     }));
                 } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
                     setPositions((prevPositions: any) => ({
@@ -6695,15 +7036,15 @@ export default function Graphic_CNG_HUNGYEN() {
                         ...prevPositions,
                         EVC_02_Volume_at_Measurement_Condition: position,
                     }));
-                } else if (id === "FIQ_3001A") {
+                } else if (id === "FIQ_2001A") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_3001A: position,
+                        FIQ_2001A: position,
                     }));
-                } else if (id === "FIQ_3001B") {
+                } else if (id === "FIQ_2001B") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_3001B: position,
+                        FIQ_2001B: position,
                     }));
                 } else if (id === "PSV_3001A") {
                     setPositions((prevPositions: any) => ({
@@ -6835,8 +7176,6 @@ export default function Graphic_CNG_HUNGYEN() {
                     minZoom={0.5}
                     maxZoom={2}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>

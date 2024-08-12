@@ -166,24 +166,7 @@ export default function AlarmCNG_BINHDUONG() {
         <div style={{display:'flex',}}>
             <div>
                 {criticalElements === 0 ? (
-                    <div
-                        style={{
-                            background: 'green',
-                            width: 150,
-                            height: 60,
-                            textAlign: 'center',
-                            justifyContent: 'center',
-                            display: 'flex',
-                            alignItems: 'center',
-                            color: 'white',
-                            borderRadius: 5,
-                            fontWeight: 500,
-                            fontSize: 25,
-                            marginBottom: 10,
-                        }}
-                    >
-                        Normal
-                    </div>
+                    ''
                 ) : (
                     <div
                         style={{
@@ -207,7 +190,7 @@ export default function AlarmCNG_BINHDUONG() {
             </div>
             <div style={{marginLeft:10}}>
                 {majorElements === 0 ? (
-                 ' '
+              ''
                 ) : (
                     <div
                         style={{
