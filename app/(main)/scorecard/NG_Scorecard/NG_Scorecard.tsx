@@ -9,10 +9,12 @@ import ScoreCard_SPMCV from '../components/ScoreCard_SPMCV'
 import ScoreCard_IGUACU from '../components/ScoreCard_IGUACU'
 import ScoreCard_ZOCV from '../components/ScoreCard_ZOCV'
 
+import  "./NG_Scorecard.css"
+
 export default function NG_Scorecard() {
   return (
 
-    <div style={{display:'grid', gridTemplateColumns:'auto auto', gap:"1.25rem"}}> 
+    <div className='responsive' > 
 
 
     <ScoreCard_ZOCV/>

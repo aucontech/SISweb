@@ -376,26 +376,16 @@ export default function ScoreCard_Meiko() {
 
  // =================================================================================================================== 
 
-
-
-            
-
-
-
-           
-
             setMaintainVP_303(VP_303_Maintain?.value || false);
-
 
             setMaintainVP_302(VP_302_Maintain?.value || false);
 
-
             setMaintainVP_301(VP_301_Maintain?.value || false);
-
 
             setMaintainGD_103_High(GD_103_High_Maintain?.value || false);
 
             setMaintainGD_102_High(GD_102_High_Maintain?.value || false);
+
             setMaintainGD_101_High(GD_101_High_Maintain?.value || false);
 
             setMaintainGD_103_Low(GD_103_Low_Maintain?.value || false);
@@ -403,34 +393,20 @@ export default function ScoreCard_Meiko() {
             setMaintainGD_102_Low(GD_102_Low_Maintain?.value || false);
 
             setMaintainGD_101_Low(GD_101_Low_Maintain?.value || false);
+
             setMaintainSDV_302(SDV_302_Maintain?.value || false);
 
-
-
             setMaintainSDV_301(SDV_301_Maintain?.value || false);
-
 
             setMaintainV1_Flow_Meter(V1_Flow_Meter_Maintain?.value || false);
             
             setMaintainV2_Flow_Meter(V2_Flow_Meter_Maintain?.value || false);
-            
 
-            
             setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
-
-
-
-           
-
-
-
-
 
             setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
 
-
             setMaintainTank_PT_301(Tank_PT_301_Maintain?.value || false);
-
 
             setMaintainTank_01_Volume(Tank_01_Volume_Maintain?.value || false);
 
@@ -440,11 +416,9 @@ export default function ScoreCard_Meiko() {
 
             setMaintainFlow_Meter_Total(Flow_Meter_Total_Maintain?.value || false);
 
-
             setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
 
-            setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
-
+            setMaintainFlow_Velocity(Consumption_Flow_Maintain?.value || false);
 
             setMaintainPipe_Press(Pipe_Press_Maintain?.value || false);
            
@@ -1033,35 +1007,35 @@ useEffect(() => {
      //======================================================================================================================
 
     const tagNamePLC = {
-        VP_301: "VP 301 (0: Stop - 1: Run) ",
-        VP_302: "VP 302 (0: Stop - 1: Run)",
-        VP_303: "VP 303 (0: Stop - 1: Run)",
-        GD_101_High: "GD 101 High (0: Normal - 1: Alarm)",
-        GD_102_High: "GD 102 High (0: Normal - 1: Alarm)",
-        GD_103_High: "GD 103 High (0: Normal - 1: Alarm)",
+        VP_301: "VP-301 (0: Stop - 1: Run) ",
+        VP_302: "VP-302 (0: Stop - 1: Run)",
+        VP_303: "VP-303 (0: Stop - 1: Run)",
+        GD_101_High: "GD-101 High (0: Normal - 1: Alarm)",
+        GD_102_High: "GD-102 High (0: Normal - 1: Alarm)",
+        GD_103_High: "GD-103 High (0: Normal - 1: Alarm)",
 
 
-        GD_103_Low: "GD 103 Low (0: Normal - 1: Alarm)",
-        GD_102_Low: "GD 102 Low (0: Normal - 1: Alarm)",
-        GD_101_Low: "GD 101 Low (0: Normal - 1: Alarm)",
+        GD_103_Low: "GD-103 Low (0: Normal - 1: Alarm)",
+        GD_102_Low: "GD-102 Low (0: Normal - 1: Alarm)",
+        GD_101_Low: "GD-101 Low (0: Normal - 1: Alarm)",
 
-        SDV_302: "SDV 302 (0: Off - 1: On)",
-        SDV_301: "SDV 301 (0: Off - 1: On)",
+        SDV_302: "SDV-302 (0: OFF - 1: ON)",
+        SDV_301: "SDV-301 (0: OFF - 1: ON)",
 
         V1_Flow_Meter: `V1 Flow Meter ${nameValue.m3}`,
         V2_Flow_Meter: `V2 Flow Meter ${nameValue.m3}`,
 
         Pipe_Temp:`Pipe Temp ${nameValue.C}`,
-        Pipe_Press:`Pipe Press  (Bar)`,
+        Pipe_Press:`Pipe Press (Bar)`,
 
-        Tank_TT_301: `Tank TT 301  ${nameValue.C}`,
+        Tank_TT_301: `Tank TT-301  ${nameValue.C}`,
 
-        Tank_PT_301: `Tank PT 301 (Bar)`,
+        Tank_PT_301: `Tank PT-301 (Bar)`,
 
-        Tank_01_Level: `Tank_01_Level `,
+        Tank_01_Level: `Tank-01 Level `,
 
         HORN: `HORN (0: OFF - 1: ON)`,
-        Tank_01_Volume: `SDV SOLENOID (0: Off - 1: On)`,
+        Tank_01_Volume: `Tank-01 Volume `,
 
         Consumption_Flow: `Consumption Flow ${nameValue.m3}`,
         Flow_Velocity:`Flow Velocity ${nameValue.m3h}`
@@ -1081,8 +1055,8 @@ useEffect(() => {
         const DataGD_102_Low  = GD_102_Low === "0" ? "Normal" : GD_102_Low === "1" ? "Alarm" : null;
         const DataGD_103_Low  = GD_103_Low === "0" ? "Normal" : GD_103_Low === "1" ? "Alarm" : null;
 
-        const DataSDV_301  = SDV_301 === "0" ? "Off" : SDV_301 === "1" ? "On" : null;
-        const DataSDV_302  = SDV_302 === "0" ? "Off" : SDV_302 === "1" ? "On" : null;
+        const DataSDV_301  = SDV_301 === "0" ? "OFF" : SDV_301 === "1" ? "ON" : null;
+        const DataSDV_302  = SDV_302 === "0" ? "OFF" : SDV_302 === "1" ? "ON" : null;
 
 
             const combineCss = {

@@ -1701,16 +1701,15 @@ export default function GraphicLGDS() {
         PCV1901: "PT-1901",
         PT_1902: "PT-1902",
         PT_1903: "PT-1903",
-
         TT: "TT",
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -2339,7 +2338,7 @@ export default function GraphicLGDS() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2401,7 +2400,7 @@ export default function GraphicLGDS() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2689,11 +2688,52 @@ export default function GraphicLGDS() {
                         label: (
                             <div>
                                 <div>
-                                    {NO === "1"
+                                    {/* {NO === "1"
                                         ? SVD_NO
                                         : NC === "0"
                                         ? SVD_NC
-                                        : null}
+                                        : null} */}
+                                    {SVD_NO}
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "SDV_IMG2") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div>
+                                <div>
+                                    {/* {NO === "1"
+                                        ? SVD_NO
+                                        : NC === "0"
+                                        ? SVD_NC
+                                        : null} */}
+                                    {SVD_NO}
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "SDV_IMG3") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div>
+                                <div>
+                                    {/* {NO === "1"
+                                        ? SVD_NO
+                                        : NC === "0"
+                                        ? SVD_NC
+                                        : null} */}
+                                    {SVD_NO}
                                 </div>
                             </div>
                         ),
@@ -2779,7 +2819,7 @@ export default function GraphicLGDS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
               ArrowRight: { x: 706.1381419284244, y: 1023.694783335719 },
               ArrowRight1: { x: -1310.4855228544018, y: 1027.4017827933426 },
@@ -2903,11 +2943,18 @@ export default function GraphicLGDS() {
               },
               Pressure_Trans02: { x: -990.2974317013955, y: 699.3816804812852 },
               Pressure_Trans03: { x: -989.4559802798087, y: 1310.658341965765 },
-              SDV: { x: -1152.6996152623774, y: 939.6846925365174 },
+              SDV: { x: -1155.6996152623774, y: 947.1846925365174 },
               SDV_Ball: { x: -1107.27002180917, y: 1164.281142621933 },
               SDV_Ball_top: { x: 493.92546533290914, y: 1040.8451177997745 },
               SDV_Ball_top1: { x: 497.6559789587865, y: 1323.4095997087377 },
-              SDV_IMG: { x: -1049.7709320021045, y: 995.6790306469368 },
+              SDV_IMG: { x: -1131.4561458733262, y: 995.1790306469368 },
+              SDV_IMG2
+              : 
+              {x: 467.3461261570005, y: 990.5076581130913},
+              SDV_IMG3
+              : 
+              {x: 469.73432653276836, y: 1272.55566469334},
+
               SDV_IMG_top: { x: -1049.7709320021045, y: 1195.6790306469368 },
               SDV_IMG_top1: { x: -1049.7709320021045, y: 895.6790306469368 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
@@ -3540,7 +3587,7 @@ export default function GraphicLGDS() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: 'none',
+                background: "none",
                 width: 30,
                 height: 1,
             },
@@ -3566,6 +3613,40 @@ export default function GraphicLGDS() {
         {
             id: "SDV_IMG",
             position: positions.SDV_IMG,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 0,
+                height: 0,
+            },
+        },
+        {
+            id: "SDV_IMG2",
+            position: positions.SDV_IMG2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "#333333",
+                background: background,
+                width: 0,
+                height: 0,
+            },
+        },
+        {
+            id: "SDV_IMG3",
+            position: positions.SDV_IMG3,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5992,7 +6073,18 @@ export default function GraphicLGDS() {
                         ...prevPositions,
                         SDV_IMG: position,
                     }));
-                } else if (id === "SDV_Ball") {
+                }  else if (id === "SDV_IMG2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG2: position,
+                    }));
+                }   else if (id === "SDV_IMG3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_IMG3: position,
+                    }));
+                }
+                 else if (id === "SDV_Ball") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         SDV_Ball: position,
@@ -6838,8 +6930,8 @@ export default function GraphicLGDS() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

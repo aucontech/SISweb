@@ -2796,7 +2796,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             name: <span>{tagNamePLC.FCV_MODE}</span>,
             PLC: <span style={combineCss.CSSRATIO_MODE}>{RATIO_MODE} {DataRATIO_MODE}</span>,
         },
-      
+    
         {
             name: <span>{tagNamePLC.TM2002_CNG}</span>,
             PLC: <span style={combineCss.CSSTM2002_CNG}> {TM2002_CNG} </span>,

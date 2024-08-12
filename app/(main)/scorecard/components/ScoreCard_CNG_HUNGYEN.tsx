@@ -119,9 +119,9 @@ export default function ScoreCard_CNG_HUNGYEN() {
                         EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
 
 
-                        PIT_3001A: setPIT_3006,
+                        PIT_3001A: setPIT_3001A,
 
-                        PIT_3001B: setPIT_3007,
+                        PIT_3001B: setPIT_3001B,
                         PT_3001: setPT_3001,
                         PT_3002: setPT_3002,
                         PT_3003: setPT_3003,
@@ -400,21 +400,21 @@ export default function ScoreCard_CNG_HUNGYEN() {
             );
 
 
-            const PIT_3006_High = res.data.find((item: any) => item.key === "PIT_3006_High");
-            setPIT_3006_High(PIT_3006_High?.value || null);
-            const PIT_3006_Low = res.data.find((item: any) => item.key === "PIT_3007_Low");
-            setPIT_3006_Low(PIT_3006_Low?.value || null);
-            const MaintainPIT_3006 = res.data.find(
-                (item: any) => item.key === "PIT_3006_Maintain"
+            const PIT_3001A_High = res.data.find((item: any) => item.key === "PIT_3001A_High");
+            setPIT_3001A_High(PIT_3001A_High?.value || null);
+            const PIT_3001A_Low = res.data.find((item: any) => item.key === "PIT_3001B_Low");
+            setPIT_3001A_Low(PIT_3001A_Low?.value || null);
+            const MaintainPIT_3001A = res.data.find(
+                (item: any) => item.key === "PIT_3001A_Maintain"
             );
 
 
-            const PIT_3007_High = res.data.find((item: any) => item.key === "PIT_3007_High");
-            setPIT_3007_High(PIT_3007_High?.value || null);
-            const PIT_3007_Low = res.data.find((item: any) => item.key === "PIT_3007_Low");
-            setPIT_3007_Low(PIT_3007_Low?.value || null);
-            const PIT_3007_Maintain = res.data.find(
-                (item: any) => item.key === "PIT_3007_Maintain"
+            const PIT_3001B_High = res.data.find((item: any) => item.key === "PIT_3001B_High");
+            setPIT_3001B_High(PIT_3001B_High?.value || null);
+            const PIT_3001B_Low = res.data.find((item: any) => item.key === "PIT_3001B_Low");
+            setPIT_3001B_Low(PIT_3001B_Low?.value || null);
+            const PIT_3001B_Maintain = res.data.find(
+                (item: any) => item.key === "PIT_3001B_Maintain"
             );
 
             const PT_3001_High = res.data.find((item: any) => item.key === "PT_3001_High");
@@ -630,8 +630,8 @@ export default function ScoreCard_CNG_HUNGYEN() {
             setmaintainEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_Life_Maintain?.value || false);
 
 
-            setmaintainPIT_3006(MaintainPIT_3006?.value || false);
-            setmaintainPIT_3007(PIT_3007_Maintain?.value || false);
+            setmaintainPIT_3001A(MaintainPIT_3001A?.value || false);
+            setmaintainPIT_3001B(PIT_3001B_Maintain?.value || false);
             setmaintainPT_3001(PT_3001_Maintain?.value || false);
             setmaintainPT_3002(PT_3002_Maintain?.value || false);
             setmaintainPT_3003(PT_3003_Maintain?.value || false);
@@ -910,22 +910,22 @@ useEffect(() => {
   // =================================================================================================================== 
  
  
-  const [PIT_3007, setPIT_3007] = useState<string | null>(null);
-  const [PIT_3007_High, setPIT_3007_High] = useState<number | null>(null);
-  const [PIT_3007_Low, setPIT_3007_Low] = useState<number | null>(null);
-  const [exceedThresholdPIT_3007, setexceedThresholdPIT_3007] = useState(false); 
-  const [maintainPIT_3007, setmaintainPIT_3007] = useState<boolean>(false);
+  const [PIT_3001B, setPIT_3001B] = useState<string | null>(null);
+  const [PIT_3001B_High, setPIT_3001B_High] = useState<number | null>(null);
+  const [PIT_3001B_Low, setPIT_3001B_Low] = useState<number | null>(null);
+  const [exceedThresholdPIT_3001B, setexceedThresholdPIT_3001B] = useState(false); 
+  const [maintainPIT_3001B, setmaintainPIT_3001B] = useState<boolean>(false);
   
   
   useEffect(() => {
-    const PIT_3007Value = parseFloat(PIT_3007 as any);
-    const highValue = PIT_3007_High ?? NaN;
-    const lowValue = PIT_3007_Low ?? NaN;
+    const PIT_3001BValue = parseFloat(PIT_3001B as any);
+    const highValue = PIT_3001B_High ?? NaN;
+    const lowValue = PIT_3001B_Low ?? NaN;
 
-    if (!isNaN(PIT_3007Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3007) {
-        setexceedThresholdPIT_3007(PIT_3007Value >= highValue || PIT_3007Value <= lowValue);
+    if (!isNaN(PIT_3001BValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3001B) {
+        setexceedThresholdPIT_3001B(PIT_3001BValue >= highValue || PIT_3001BValue <= lowValue);
     }
-}, [PIT_3007, PIT_3007_High, PIT_3007_Low, maintainPIT_3007]);
+}, [PIT_3001B, PIT_3001B_High, PIT_3001B_Low, maintainPIT_3001B]);
 
 
   // =================================================================================================================== 
@@ -976,24 +976,24 @@ useEffect(() => {
        // =================================================================================================================== 
 
 
-       const [PIT_3006, setPIT_3006] = useState<string | null>(null);
+       const [PIT_3001A, setPIT_3001A] = useState<string | null>(null);
 
-       const [PIT_3006_High, setPIT_3006_High] = useState<number | null>(null);
-       const [PIT_3006_Low, setPIT_3006_Low] = useState<number | null>(null);
-       const [exceedThresholdPIT_3006, setexceedThresholdPIT_3006] = useState(false); 
+       const [PIT_3001A_High, setPIT_3001A_High] = useState<number | null>(null);
+       const [PIT_3001A_Low, setPIT_3001A_Low] = useState<number | null>(null);
+       const [exceedThresholdPIT_3001A, setexceedThresholdPIT_3001A] = useState(false); 
        
-       const [maintainPIT_3006, setmaintainPIT_3006] = useState<boolean>(false);
+       const [maintainPIT_3001A, setmaintainPIT_3001A] = useState<boolean>(false);
        
        
        useEffect(() => {
-        const PIT_3006Value = parseFloat(PIT_3006 as any);
-        const highValue = PIT_3006_High ?? NaN;
-        const lowValue = PIT_3006_Low ?? NaN;
+        const PIT_3001AValue = parseFloat(PIT_3001A as any);
+        const highValue = PIT_3001A_High ?? NaN;
+        const lowValue = PIT_3001A_Low ?? NaN;
     
-        if (!isNaN(PIT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3006) {
-            setexceedThresholdPIT_3006(PIT_3006Value >= highValue || PIT_3006Value <= lowValue);
+        if (!isNaN(PIT_3001AValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPIT_3001A) {
+            setexceedThresholdPIT_3001A(PIT_3001AValue >= highValue || PIT_3001AValue <= lowValue);
         }
-    }, [PIT_3006, PIT_3006_High, PIT_3006_Low, maintainPIT_3006]);
+    }, [PIT_3001A, PIT_3001A_High, PIT_3001A_Low, maintainPIT_3001A]);
 
   
        // =================================================================================================================== 
@@ -1707,8 +1707,8 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PIT_3006: "Pressure Indicator Transmitter PIT-3001A (BarG)",
-        PIT_3007: "Pressure Indicator Transmitter PIT-3001B (BarG)",
+        PIT_3001A: "Pressure Indicator Transmitter PIT-3001A (BarG)",
+        PIT_3001B: "Pressure Indicator Transmitter PIT-3001B (BarG)",
         PT_3001: "Pressure Transmitter PT-3001 (BarG)",
         PT_3002: "Pressure Transmitter PT-3002 (BarG)",
         PT_3003: "Pressure Transmitter PT-3003 (BarG)",
@@ -1772,9 +1772,8 @@ useEffect(() => {
 
     const DataWater_PG =
         Water_PG === "0" ? "Normal" : Water_PG === "1" ? " Pressure Low" : null;
-    const DataHEATER_1 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Run" : null;
-    const DataHEATER_2 =
-        HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Run" : null;
+    const DataHEATER_1 = HEATER_1 === "0" ? "Stop" : HEATER_1 === "1" ? "Run" : null;
+    const DataHEATER_2 = HEATER_2 === "0" ? "Stop" : HEATER_2 === "1" ? "Run" : null;
     const DataPUMP_1 =
         PUMP_1 === "0"
             ? "Stop"
@@ -2170,16 +2169,16 @@ useEffect(() => {
         ? 18
         : ""
     },
-                CSSPIT_3007 : {
-                    color:exceedThresholdPIT_3007 && !maintainPIT_3007
+                CSSPIT_3001B : {
+                    color:exceedThresholdPIT_3001B && !maintainPIT_3001B
                     ? "#ff5656"
-                    : maintainPIT_3007
+                    : maintainPIT_3001B
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPIT_3007 || maintainPIT_3007)
+                    fontWeight: (exceedThresholdPIT_3001B || maintainPIT_3001B)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPIT_3007 || maintainPIT_3007)
+                    fontSize: (exceedThresholdPIT_3001B || maintainPIT_3001B)
                     ? 18
                     : ""
                 },
@@ -2214,16 +2213,16 @@ useEffect(() => {
                 },
         
         
-                CSSPIT_3006 : {
-                    color:exceedThresholdPIT_3006 && !maintainPIT_3006
+                CSSPIT_3001A : {
+                    color:exceedThresholdPIT_3001A && !maintainPIT_3001A
                     ? "#ff5656"
-                    : maintainPIT_3006
+                    : maintainPIT_3001A
                     ? "orange"
                     : "" ,
-                    fontWeight: (exceedThresholdPIT_3006 || maintainPIT_3006)
+                    fontWeight: (exceedThresholdPIT_3001A || maintainPIT_3001A)
                     ? 600
                     : "",
-                    fontSize: (exceedThresholdPIT_3006 || maintainPIT_3006)
+                    fontSize: (exceedThresholdPIT_3001A || maintainPIT_3001A)
                     ? 18
                     : ""
                 },
@@ -2580,12 +2579,12 @@ useEffect(() => {
 
     const dataPLC = [
         {
-            name: <span>{tagNamePLC.PIT_3006}</span>,
-            PLC: <span style={combineCss.CSSPIT_3006}> {PIT_3006}</span>,
+            name: <span>{tagNamePLC.PIT_3001A}</span>,
+            PLC: <span style={combineCss.CSSPIT_3001A}> {PIT_3001A}</span>,
         },
         {
-            name: <span>{tagNamePLC.PIT_3007}</span>,
-            PLC: <span style={combineCss.CSSPIT_3007}>{} {PIT_3007}</span>,
+            name: <span>{tagNamePLC.PIT_3001B}</span>,
+            PLC: <span style={combineCss.CSSPIT_3001B}>{} {PIT_3001B}</span>,
         },
         {
             name: <span>{tagNamePLC.PT_3001}</span>,

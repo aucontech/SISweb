@@ -3606,7 +3606,7 @@ const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency
 const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
 const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
-const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
+const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote  " : null;
 const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
 const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
@@ -4177,7 +4177,7 @@ checked={maintainUPS_Mode}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_BC_01}>{TagName.HR_1}</span> ,
+name: <span style={combineCss.CSSDO_BC_01}>{TagName.BC_1}</span> ,
 
 modbus: <span style={combineCss.CSSDO_BC_01}>DB5W50	 </span> ,
 
@@ -4200,7 +4200,7 @@ checked={maintainDO_BC_01}
 {
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}>{TagName.BC_1}</span> ,
+name: <span style={combineCss.CSSDO_HR_01}> {TagName.HR_1}</span> ,
 
 modbus: <span style={combineCss.CSSDO_HR_01}>DB5W52	 </span> ,
 
