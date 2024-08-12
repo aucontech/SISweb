@@ -89,8 +89,8 @@ export default function ScoreCard_SNG_HUNGYEN() {
 
 
 
-                        PT_3006: setPT_3006,
                         PT_3005: setPT_3005,
+                        PT_3006: setPT_3006,
                         TT_3003: setTT_3003,
                         TT_3004: setTT_3004,
                         WB_3001: setWB_3001,
@@ -212,21 +212,21 @@ export default function ScoreCard_SNG_HUNGYEN() {
     
           
 
-            const PT_3006_High = res.data.find((item: any) => item.key === "PT_3006_High");
-            setPT_3006_High(PT_3006_High?.value || null);
-            const PT_3006_Low = res.data.find((item: any) => item.key === "PT_3006_Low");
-            setPT_3006_Low(PT_3006_Low?.value || null);
-            const PT_3006_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3006_Maintain"
-            );
-
-
             const PT_3005_High = res.data.find((item: any) => item.key === "PT_3005_High");
             setPT_3005_High(PT_3005_High?.value || null);
             const PT_3005_Low = res.data.find((item: any) => item.key === "PT_3005_Low");
             setPT_3005_Low(PT_3005_Low?.value || null);
             const PT_3005_Maintain = res.data.find(
                 (item: any) => item.key === "PT_3005_Maintain"
+            );
+
+
+            const PT_3006_High = res.data.find((item: any) => item.key === "PT_3006_High");
+            setPT_3006_High(PT_3006_High?.value || null);
+            const PT_3006_Low = res.data.find((item: any) => item.key === "PT_3006_Low");
+            setPT_3006_Low(PT_3006_Low?.value || null);
+            const PT_3006_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3006_Maintain"
             );
 
             const TT_3003_High = res.data.find((item: any) => item.key === "TT_3003_High");
@@ -256,14 +256,7 @@ export default function ScoreCard_SNG_HUNGYEN() {
 
 
 
-            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
-            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
-            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
-            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
-            const GD5_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD5_STATUS_Maintain"
-            );
-
+       
             const GD_3002_High = res.data.find((item: any) => item.key === "GD_3002_High");
             setGD_3002_High(GD_3002_High?.value || null);
             const GD_3002_Low = res.data.find((item: any) => item.key === "GD_3002_Low");
@@ -335,7 +328,13 @@ export default function ScoreCard_SNG_HUNGYEN() {
             const SDV_3004_Maintain = res.data.find(
                 (item: any) => item.key === "SDV_3004_Maintain"
             );
-
+            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
+            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
+            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
+            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
+            const GD1_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD1_STATUS_Maintain"
+            );
             const GD2_STATUS_High = res.data.find((item: any) => item.key === "GD2_STATUS_High");
             setGD2_STATUS_High(GD2_STATUS_High?.value || null);
             const GD2_STATUS_Low = res.data.find((item: any) => item.key === "GD2_STATUS_Low");
@@ -343,6 +342,31 @@ export default function ScoreCard_SNG_HUNGYEN() {
             const GD2_STATUS_Maintain = res.data.find(
                 (item: any) => item.key === "GD2_STATUS_Maintain"
             );
+            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
+            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
+            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
+            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
+            const GD3_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD3_STATUS_Maintain"
+            );
+
+            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
+            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
+            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
+            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
+            const GD4_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD4_STATUS_Maintain"
+            );
+            const GD5_STATUS_High = res.data.find((item: any) => item.key === "GD5_STATUS_High");
+            setGD5_STATUS_High(GD5_STATUS_High?.value || null);
+            const GD5_STATUS_Low = res.data.find((item: any) => item.key === "GD5_STATUS_Low");
+            setGD5_STATUS_Low(GD5_STATUS_Low?.value || null);
+            const GD5_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD5_STATUS_Maintain"
+            );
+
+
+
             const TM_3003_SNG_High = res.data.find((item: any) => item.key === "TM_3003_SNG_High");
             setTM_3003_SNG_High(TM_3003_SNG_High?.value || null);
             const TM_3003_SNG_Low = res.data.find((item: any) => item.key === "TM_3003_SNG_Low");
@@ -351,13 +375,7 @@ export default function ScoreCard_SNG_HUNGYEN() {
                 (item: any) => item.key === "TM_3003_SNG_Maintain"
             );
 
-            const GD1_STATUS_High = res.data.find((item: any) => item.key === "GD1_STATUS_High");
-            setGD1_STATUS_High(GD1_STATUS_High?.value || null);
-            const GD1_STATUS_Low = res.data.find((item: any) => item.key === "GD1_STATUS_Low");
-            setGD1_STATUS_Low(GD1_STATUS_Low?.value || null);
-            const GD1_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD1_STATUS_Maintain"
-            );
+     
 
             const SDV_3003_High = res.data.find((item: any) => item.key === "SDV_3003_High");
             setSDV_3003_High(SDV_3003_High?.value || null);
@@ -369,22 +387,9 @@ export default function ScoreCard_SNG_HUNGYEN() {
 
      
 
-            const GD4_STATUS_High = res.data.find((item: any) => item.key === "GD4_STATUS_High");
-            setGD4_STATUS_High(GD4_STATUS_High?.value || null);
-            const GD4_STATUS_Low = res.data.find((item: any) => item.key === "GD4_STATUS_Low");
-            setGD4_STATUS_Low(GD4_STATUS_Low?.value || null);
-            const GD4_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD4_STATUS_Maintain"
-            );
+      
 
-            const GD3_STATUS_High = res.data.find((item: any) => item.key === "GD3_STATUS_High");
-            setGD3_STATUS_High(GD3_STATUS_High?.value || null);
-            const GD3_STATUS_Low = res.data.find((item: any) => item.key === "GD3_STATUS_Low");
-            setGD3_STATUS_Low(GD3_STATUS_Low?.value || null);
-            const GD3_STATUS_Maintain = res.data.find(
-                (item: any) => item.key === "GD3_STATUS_Maintain"
-            );
-
+          
 
             const ESD_High = res.data.find((item: any) => item.key === "ESD_High");
             setESD_High(ESD_High?.value || null);
@@ -648,10 +653,10 @@ export default function ScoreCard_SNG_HUNGYEN() {
  
            
 
-            setMaintainPT_3006(PT_3006_Maintain?.value || false);
-
-
             setMaintainPT_3005(PT_3005_Maintain?.value || false);
+
+
+            setMaintainPT_3006(PT_3006_Maintain?.value || false);
 
 
             setMaintainTT_3003(TT_3003_Maintain?.value || false);
@@ -736,27 +741,10 @@ useEffect(() => {
         setExceedThresholdTT_3004(TT_3004Value >= highValue || TT_3004Value <= lowValue);
     }
 }, [TT_3004, TT_3004_High, TT_3004_Low, maintainTT_3004]);
-// =================================================================================================================== 
 
 
-const [PT_3006, setPT_3006] = useState<string | null>(null);
-const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
-const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
-const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false); 
-const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
-
-useEffect(() => {
-const PT_3006Value = parseFloat(PT_3006 as any);
-const highValue = PT_3006_High ?? NaN;
-const lowValue = PT_3006_Low ?? NaN;
-
-if (!isNaN(PT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3006) {
- setExceedThresholdPT_3006(PT_3006Value >= highValue || PT_3006Value <= lowValue);
-}
-}, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006]);
 
 
-// =================================================================================================================== 
 
 const [PT_3005, setPT_3005] = useState<string | null>(null);
 const [PT_3005_High, setPT_3005_High] = useState<number | null>(null);
@@ -765,14 +753,49 @@ const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false);
 const [maintainPT_3005, setMaintainPT_3005] = useState<boolean>(false);
 
 useEffect(() => {
- const PT_3005Value = parseFloat(PT_3005 as any);
- const highValue = PT_3005_High ?? NaN;
- const lowValue = PT_3005_Low ?? NaN;
+const PT_3005Value = parseFloat(PT_3005 as any);
+const highValue = PT_3005_High ?? NaN;
+const lowValue = PT_3005_Low ?? NaN;
 
- if (!isNaN(PT_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3005) {
-     setExceedThresholdPT_3005(PT_3005Value >= highValue || PT_3005Value <= lowValue);
- }
+if (!isNaN(PT_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3005) {
+ setExceedThresholdPT_3005(PT_3005Value >= highValue || PT_3005Value <= lowValue);
+}
 }, [PT_3005, PT_3005_High, PT_3005_Low, maintainPT_3005]);
+
+
+
+
+
+
+
+// =================================================================================================================== 
+
+const [PT_3006, setPT_3006] = useState<string | null>(null);
+const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
+const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
+const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false); 
+const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
+
+useEffect(() => {
+ const PT_3006Value = parseFloat(PT_3006 as any);
+ const highValue = PT_3006_High ?? NaN;
+ const lowValue = PT_3006_Low ?? NaN;
+
+ if (!isNaN(PT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3006) {
+     setExceedThresholdPT_3006(PT_3006Value >= highValue || PT_3006Value <= lowValue);
+ }
+}, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006,
+
+
+
+
+
+
+]);
+
+
+
+
 
 
 // =================================================================================================================== 
@@ -795,6 +818,11 @@ useEffect(() => {
 }, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
 
 
+
+
+
+
+
   // =================================================================================================================== 
 
 
@@ -814,6 +842,12 @@ useEffect(() => {
  }
 }, [TG_3005, TG_3005_High, TG_3005_Low, maintainTG_3005]);
 
+
+
+
+
+
+
   // =================================================================================================================== 
   const [WB_3001, setWB_3001] = useState<string | null>(null);
   const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
@@ -831,7 +865,12 @@ useEffect(() => {
       }
   }, [WB_3001, WB_3001_High, WB_3001_Low, maintainWB_3001]);
  
+  
+ 
+  
 
+  
+  
   // =================================================================================================================== 
 
   const [GD_3004, setGD_3004] = useState<string | null>(null);
@@ -851,7 +890,11 @@ useEffect(() => {
   }, [GD_3004, GD_3004_High, GD_3004_Low, maintainGD_3004]);
  
   
+ 
+  
+ 
 
+  
   // =================================================================================================================== 
 
   const [GD_3003, setGD_3003] = useState<string | null>(null);
@@ -870,6 +913,12 @@ useEffect(() => {
       }
   }, [GD_3003, GD_3003_High, GD_3003_Low, maintainGD_3003]);
  
+  
+ 
+  
+ 
+
+
 
   // =================================================================================================================== 
 
@@ -888,6 +937,10 @@ useEffect(() => {
           setExceedThresholdGD_3002(GD_3002Value >= highValue || GD_3002Value <= lowValue);
       }
   }, [GD_3002, GD_3002_High, GD_3002_Low, maintainGD_3002]);
+ 
+  
+ 
+  
  
 
 
@@ -910,6 +963,7 @@ useEffect(() => {
   }, [GD_3005, GD_3005_High, GD_3005_Low, maintainGD_3005]);
  
 
+
   // =================================================================================================================== 
 
 // =================================================================================================================== 
@@ -929,6 +983,10 @@ if (!isNaN(GD_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD
     setExceedThresholdGD_3006(GD_3006Value >= highValue || GD_3006Value <= lowValue);
 }
 }, [GD_3006, GD_3006_High, GD_3006_Low, maintainGD_3006]);
+
+
+
+
 
 
 // =================================================================================================================== 
@@ -951,6 +1009,11 @@ useEffect(() => {
     }
 }, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
 
+
+
+
+
+
 // =================================================================================================================== 
 
     // =================================================================================================================== 
@@ -971,6 +1034,11 @@ useEffect(() => {
         }
     }, [TM_3003_SNG, TM_3003_SNG_High, TM_3003_SNG_Low, maintainTM_3003_SNG]);
    
+    
+   
+    
+
+
 
 // =================================================================================================================== 
 
@@ -990,6 +1058,8 @@ if (!isNaN(TOTAL_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintain
     setExceedThresholdTOTAL_SNG(TOTAL_SNGValue >= highValue || TOTAL_SNGValue <= lowValue);
 }
 }, [TOTAL_SNG, TOTAL_SNG_High, TOTAL_SNG_Low, maintainTOTAL_SNG]);
+
+
 
 // =================================================================================================================== 
 
@@ -1012,6 +1082,11 @@ useEffect(() => {
 }, [SDV_3004, SDV_3004_High, SDV_3004_Low, maintainSDV_3004]);
 
 
+
+
+
+
+
 // =================================================================================================================== 
 
 
@@ -1030,6 +1105,7 @@ if (!isNaN(SDV_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainS
 setExceedThresholdSDV_3003(SDV_3003Value >= highValue || SDV_3003Value <= lowValue);
 }
 }, [SDV_3003, SDV_3003_High, SDV_3003_Low, maintainSDV_3003]);
+
 
 
 // =================================================================================================================== 
@@ -1051,6 +1127,11 @@ if (!isNaN(GD1_STATUSValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     setExceedThresholdGD1_STATUS(GD1_STATUSValue >= highValue || GD1_STATUSValue <= lowValue);
 }
 }, [GD1_STATUS, GD1_STATUS_High, GD1_STATUS_Low, maintainGD1_STATUS]);
+
+
+
+
+
 
 
 // =================================================================================================================== 
@@ -1075,6 +1156,9 @@ useEffect(() => {
 }, [GD2_STATUS, GD2_STATUS_High, GD2_STATUS_Low, maintainGD2_STATUS]);
 
 
+
+
+
 // =================================================================================================================== 
 
 
@@ -1093,6 +1177,12 @@ useEffect(() => {
         setExceedThresholdGD3_STATUS(GD3_STATUSValue >= highValue || GD3_STATUSValue <= lowValue);
     }
 }, [GD3_STATUS, GD3_STATUS_High, GD3_STATUS_Low, maintainGD3_STATUS]);
+
+
+
+
+
+
 
 
 // =================================================================================================================== 
@@ -1115,6 +1205,11 @@ useEffect(() => {
         }
     }, [GD4_STATUS, GD4_STATUS_High, GD4_STATUS_Low, maintainGD4_STATUS]);
     
+    
+    
+    
+    
+
 
 
 // =================================================================================================================== 
@@ -1139,6 +1234,15 @@ useEffect(() => {
         }
     }, [GD5_STATUS, GD5_STATUS_High, GD5_STATUS_Low, maintainGD5_STATUS]);
     
+    
+    
+    
+
+    
+    
+    // =================================================================================================================== 
+
+    
 
     // =================================================================================================================== 
 
@@ -1157,7 +1261,15 @@ useEffect(() => {
             setExceedThresholdEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_DayValue >= highValue || EVC_02_Vm_of_Last_DayValue <= lowValue);
         }
     }, [EVC_02_Vm_of_Last_Day, EVC_02_Vm_of_Last_Day_High, EVC_02_Vm_of_Last_Day_Low, maintainEVC_02_Vm_of_Last_Day]);
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // =================================================================================================================== 
     
 // =================================================================================================================== 
@@ -1179,6 +1291,10 @@ if (!isNaN(ESDValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainESD) {
 }, [ESD, ESD_High, ESD_Low, maintainESD]);
 
 
+
+
+
+
 // =================================================================================================================== 
 const [VAPORIZER_1, setVAPORIZER_1] = useState<string | null>(null);
 const [VAPORIZER_1_High, setVAPORIZER_1_High] = useState<number | null>(null);
@@ -1195,6 +1311,11 @@ useEffect(() => {
       setExceedThresholdVAPORIZER_1(VAPORIZER_1Value >= highValue || VAPORIZER_1Value <= lowValue);
   }
 }, [VAPORIZER_1, VAPORIZER_1_High, VAPORIZER_1_Low, maintainVAPORIZER_1]);
+
+
+
+
+
 
 
 
@@ -1218,6 +1339,12 @@ useEffect(() => {
 }, [VAPORIZER_2, VAPORIZER_2_High, VAPORIZER_2_Low, maintainVAPORIZER_2]);
 
 
+
+
+
+
+
+
 // =================================================================================================================== 
 
 
@@ -1239,6 +1366,12 @@ useEffect(() => {
 }, [VAPORIZER_3, VAPORIZER_3_High, VAPORIZER_3_Low, maintainVAPORIZER_3]);
 
 
+
+
+
+
+
+
    // =================================================================================================================== 
 
 
@@ -1257,6 +1390,9 @@ useEffect(() => {
            setExceedThresholdVAPORIZER_4(VAPORIZER_4Value >= highValue || VAPORIZER_4Value <= lowValue);
        }
    }, [VAPORIZER_4, VAPORIZER_4_High, VAPORIZER_4_Low, maintainVAPORIZER_4]);
+   
+   
+   
    
 
    
@@ -1277,10 +1413,6 @@ useEffect(() => {
            setExceedThresholdCOOLING_V(COOLING_VValue >= highValue || COOLING_VValue <= lowValue);
        }
    }, [COOLING_V, COOLING_V_High, COOLING_V_Low, maintainCOOLING_V]);
-   
-   
-   
-   
    
 
    
@@ -1303,7 +1435,12 @@ useEffect(() => {
        }
    }, [PERCENT_LPG, PERCENT_LPG_High, PERCENT_LPG_Low, maintainPERCENT_LPG]);
    
+   
+   
+   
 
+
+   
    // =================================================================================================================== 
 
    const [FCV_3001, setFCV_3001] = useState<string | null>(null);
@@ -1321,6 +1458,9 @@ useEffect(() => {
            setExceedThresholdFCV_3001(FCV_3001Value >= highValue || FCV_3001Value <= lowValue);
        }
    }, [FCV_3001, FCV_3001_High, FCV_3001_Low, maintainFCV_3001]);
+   
+   
+
 
    // =================================================================================================================== 
 
@@ -1340,6 +1480,8 @@ useEffect(() => {
        }
    }, [PERCENT_AIR, PERCENT_AIR_High, PERCENT_AIR_Low, maintainPERCENT_AIR]);
    
+ 
+
 
    // =================================================================================================================== 
    
@@ -1360,10 +1502,6 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
            setExceedThresholdHV_3001(HV_3001Value >= highValue || HV_3001Value <= lowValue);
        }
    }, [HV_3001, HV_3001_High, HV_3001_Low, maintainHV_3001]);
-   
-   
-   
-   
    
 
 
@@ -1387,11 +1525,6 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
          setExceedThresholdFCV_MODE(FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue);
      }
  }, [FCV_MODE, FCV_MODE_High, FCV_MODE_Low, maintainFCV_MODE]);
- 
- 
- 
- 
- 
 
 
 
@@ -1418,8 +1551,7 @@ const [HV_3001, setHV_3001] = useState<string | null>(null);
      
      
      
-     
-
+    
 // =================================================================================================================== 
 
 
@@ -1439,9 +1571,6 @@ useEffect(() => {
      setExceedThresholdTM3002_CNG(TM3002_CNGValue >= highValue || TM3002_CNGValue <= lowValue);
  }
 }, [TM3002_CNG, TM3002_CNG_High, TM3002_CNG_Low, maintainTM3002_CNG]);
-
-
-
 
 
 
@@ -1467,9 +1596,6 @@ useEffect(() => {
  }, [TM3003_CNG, TM3003_CNG_High, TM3003_CNG_Low, maintainTM3003_CNG]);
  
  
- 
- 
- 
 
 
 // =================================================================================================================== 
@@ -1490,9 +1616,6 @@ if (!isNaN(WB_SetpointValue) && !isNaN(highValue) && !isNaN(lowValue) && !mainta
  setExceedThresholdWB_Setpoint(WB_SetpointValue >= highValue || WB_SetpointValue <= lowValue);
 }
 }, [WB_Setpoint, WB_Setpoint_High, WB_Setpoint_Low, maintainWB_Setpoint]);
-
-
-
 
 
 
@@ -1521,11 +1644,6 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 }, [RATIO_MODE, RATIO_MODE_High, RATIO_MODE_Low, maintainRATIO_MODE]);
 
 
-
-
-
-
- 
  
  // =================================================================================================================== 
  
@@ -1552,10 +1670,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
   }, [HR_BC, HR_BC_High, HR_BC_Low, maintainHR_BC]);
   
   
-  
-  
-  
-  
+
  // =================================================================================================================== 
 
 
@@ -1576,10 +1691,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      }
  }, [SD, SD_High, SD_Low, maintainSD]);
  
- 
- 
- 
- 
+
 
  // =================================================================================================================== 
 
@@ -1601,10 +1713,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      }
  }, [ESD_3001, ESD_3001_High, ESD_3001_Low, maintainESD_3001]);
  
- 
- 
- 
- 
+
  
       // =================================================================================================================== 
       
@@ -1628,10 +1737,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
          }
      }, [WIS_Calorimeter, WIS_Calorimeter_High, WIS_Calorimeter_Low, maintainWIS_Calorimeter]);
      
-     
-     
-     
-     
+
 
      // =================================================================================================================== 
            // =================================================================================================================== 
@@ -1656,9 +1762,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
            }, [CVS_Calorimeter, CVS_Calorimeter_High, CVS_Calorimeter_Low, maintainCVS_Calorimeter]);
            
            
-           
-           
-           
+
       
       
            // =================================================================================================================== 
@@ -1685,10 +1789,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                          }
                      }, [SG_Calorimeter, SG_Calorimeter_High, SG_Calorimeter_Low, maintainSG_Calorimeter]);
                      
-                     
-                     
-                     
-                     
+   
                 
                 
                      // =================================================================================================================== 
@@ -1717,8 +1818,16 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                }
            }, [TD_4072_Conn_STT, TD_4072_Conn_STT_High, TD_4072_Conn_STT_Low, maintainTD_4072_Conn_STT]);
            
+           
 
+      
            // =================================================================================================================== 
+
+
+           
+
+                     // =================================================================================================================== 
+
 
                      const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
                      const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
@@ -1735,8 +1844,17 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                              setExceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
                          }
                      }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+                     
+                     
 
+                
+                     // =================================================================================================================== 
+ // =================================================================================================================== 
+
+// =================================================================================================================== 
        
+       
+
      //======================================================================================================================
 
     const tagNamePLC = {
@@ -1746,7 +1864,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         TT_3004: "Temperature Transmitter TT-3004 (˚C) ",
         TG_3005: "TG-3005 (˚C)",
 
-        WB_3001: "Wobbe Index WB-3001 (MJ/Sm³)",
+        WB_3001: "Wobbe Index WB-1001 (MJ/Sm³)",
 
       
 
@@ -1757,12 +1875,15 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_3005: `Gas Detector GD-3005 (%LEL)`,
         GD_3006: `Gas Detector GD-3006 (%LEL)`,
 
-        TM_3002_SNG:`Tubine Meter TM3002-SNG (Sm³/h)`,
-        TM_3003_SNG:`Tubine Meter TM3003-SNG (Sm³/h)`,
-        TOTAL_SNG: `Total SNG (Sm³)`,
+        TM_3002_SNG:`Tubine Meter TM3002-SNG${nameValue.Sm3h}`,
+        TM_3003_SNG:`Tubine Meter TM3003-SNG${nameValue.Sm3h}`,
+        TOTAL_SNG: `Total SNG ${nameValue.m3}`,
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
         SDV_3003:"Shutdown Valve SDV-3003 (0: Close - 1: Open)",
+
+        
+        
 
 
         GD1_STATUS:"GD-3002 Status (0: Normal - 1: Alarm)",
@@ -1787,7 +1908,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     
         PERCENT_LPG:"% LPG (%)",
         PERCENT_AIR:"% AIR (%)",
-        HV_3001:"Heat Value HV-3001 (MJ/Sm³)",
+        HV_3001:"Heat Value HV-1001 (MJ/Sm³)",
         RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
         FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
         TOTAL_CNG: "Total CNG (Sm³)",
@@ -1805,8 +1926,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     };
 
         const DataTT_3003  = TT_3003 === "0" ? "Stop" : TT_3003 === "1" ? "Run" : null;
-        const DataPT_3005  = PT_3005 === "0" ? "Stop" : PT_3005 === "1" ? "Run" : null;
         const DataPT_3006  = PT_3006 === "0" ? "Stop" : PT_3006 === "1" ? "Run" : null;
+        const DataPT_3005  = PT_3005 === "0" ? "Stop" : PT_3005 === "1" ? "Run" : null;
 
         const DataTG_3005  = TG_3005 === "0" ? "Normal" : TG_3005 === "1" ? "Alarm" : null;
         const DataWB_3001  = WB_3001 === "0" ? "Normal" : WB_3001 === "1" ? "Alarm" : null;
@@ -1847,20 +1968,6 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
             const combineCss = {
 
-                CSSPT_3006 : {
-                    color:exceedThresholdPT_3006 && !maintainPT_3006
-                    ? "#ff5656"
-                    : maintainPT_3006
-                    ? "orange"
-                    : "" ,
-                    fontWeight: (exceedThresholdPT_3006 || maintainPT_3006)
-                    ? 600
-                    : "",
-                    fontSize: (exceedThresholdPT_3006 || maintainPT_3006)
-                    ? 18
-                    : ""
-                },
-        
                 CSSPT_3005 : {
                     color:exceedThresholdPT_3005 && !maintainPT_3005
                     ? "#ff5656"
@@ -1871,6 +1978,20 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     ? 600
                     : "",
                     fontSize: (exceedThresholdPT_3005 || maintainPT_3005)
+                    ? 18
+                    : ""
+                },
+        
+                CSSPT_3006 : {
+                    color:exceedThresholdPT_3006 && !maintainPT_3006
+                    ? "#ff5656"
+                    : maintainPT_3006
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdPT_3006 || maintainPT_3006)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdPT_3006 || maintainPT_3006)
                     ? 18
                     : ""
                 },
@@ -2502,13 +2623,13 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
     const dataPLC = [
         {
-            name: <span>{tagNamePLC.PT_3006}</span>,
-            PLC: <span style={combineCss.CSSPT_3006}>{} {PT_3006} {DataPT_3006}</span>,
+            name: <span>{tagNamePLC.PT_3005}</span>,
+            PLC: <span style={combineCss.CSSPT_3005}>{} {PT_3005} {DataPT_3005}</span>,
         },
 
         {
-            name: <span>{tagNamePLC.PT_3005}</span>,
-            PLC: <span style={combineCss.CSSPT_3005}> {PT_3005} {DataPT_3005}</span>,
+            name: <span>{tagNamePLC.PT_3006}</span>,
+            PLC: <span style={combineCss.CSSPT_3006}> {PT_3006} {DataPT_3006}</span>,
         },
      
         {
@@ -2665,7 +2786,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
    
         {
             name: <span>{tagNamePLC.TOTAL_CNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG}</span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
         },
         {
             name: <span>{tagNamePLC.RATIO_MODE}</span>,
@@ -2810,7 +2931,9 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     </DataTable>
             </div>
 
-      
+            {/* <div>
+                <SetAttribute1/>
+            </div> */}
         </div>
     );
 }

@@ -98,9 +98,6 @@ export default function GraphicZOCV() {
     const [SVA2, setSVA2] = useState<string | null>(null);
     const [GVA2, setGVA2] = useState<string | null>(null);
 
-    const [PT01, setPT01] = useState<string | null>(null);
-    const [PT02, setPT02] = useState<string | null>(null);
-    const [PT_1103, setPT_1103] = useState<string | null>(null);
 
     const [GD1, SetGD1] = useState<string | null>(null);
     const [GD2, SetGD2] = useState<string | null>(null);
@@ -225,7 +222,7 @@ export default function GraphicZOCV() {
 
                         EVC_01_Volume_at_Base_Condition: setSVA1,
                         EVC_01_Vm_Adjustable_Counter: setGVA1,
-                        // EVC_01_Pressure: setPT01,
+                        EVC_01_Pressure: setEVC_01_Pressure,
 
                         EVC_02_Flow_at_Base_Condition: setSVF2,
                         EVC_02_Flow_at_Measurement_Condition: setGVF2,
@@ -302,30 +299,30 @@ export default function GraphicZOCV() {
     }, [data]);
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-    //============================GD =============================
 
     //================================ PT 1901================================
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
 
     const [audioPT1901, setAudio1901] = useState(false);
-    const [HighPT01, setHighPT01] = useState<number | null>(null);
-    const [LowPT01, setLowPT01] = useState<number | null>(null);
-    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [HighEVC_01_Pressure, setHighEVC_01_Pressure] = useState<number | null>(null);
+    const [LowEVC_01_Pressure, setLowEVC_01_Pressure] = useState<number | null>(null);
+    const [exceedThreshold, setExceedThreshold] = useState(false); 
 
-    const [maintainPCV1901, setMaintainPCV1901] = useState<boolean>(false);
+    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
 
     useEffect(() => {
         if (
-            typeof HighPT01 === "string" &&
-            typeof LowPT01 === "string" &&
-            PT01 !== null &&
-            maintainPCV1901 === false
+            typeof HighEVC_01_Pressure === "string" &&
+            typeof LowEVC_01_Pressure === "string" &&
+            EVC_01_Pressure !== null &&
+            maintainEVC_01_Pressure === false
         ) {
-            const highValue = parseFloat(HighPT01);
-            const lowValue = parseFloat(LowPT01);
-            const PT01Value = parseFloat(PT01);
+            const highValue = parseFloat(HighEVC_01_Pressure);
+            const lowValue = parseFloat(LowEVC_01_Pressure);
+            const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
 
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue <= PT01Value || PT01Value <= lowValue) {
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
+                if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
                     if (!audioPT1901) {
                         audioRef.current?.play();
                         setAudio1901(true);
@@ -338,7 +335,7 @@ export default function GraphicZOCV() {
             }
             fetchData();
         }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPCV1901]);
+    }, [HighEVC_01_Pressure, EVC_01_Pressure, audioPT1901, LowEVC_01_Pressure, maintainEVC_01_Pressure]);
 
     useEffect(() => {
         if (audioPT1901) {
@@ -352,13 +349,13 @@ export default function GraphicZOCV() {
         }
     }, [audioPT1901]);
 
-    const ChangeMaintainPCV1901 = async () => {
+    const ChangeMaintainEVC_01_Pressure = async () => {
         try {
-            const newValue = !maintainPCV1901;
+            const newValue = !maintainEVC_01_Pressure;
             await httpApi.post(PostTelemetry_ZOVC, {
                 PCV1901_maintain: newValue,
             });
-            setMaintainPCV1901(newValue);
+            setMaintainEVC_01_Pressure(newValue);
 
             toast.current?.show({
                 severity: "info",
@@ -375,13 +372,15 @@ export default function GraphicZOCV() {
             message: "Do you want to change the status?",
             header: " PT-1901",
             icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPCV1901(),
+            accept: () => ChangeMaintainEVC_01_Pressure(),
         });
     };
 
     //================================ PT 1901======================================================
 
     //================================ PT 1902======================================================
+    const [PT02, setPT02] = useState<string | null>(null);
+
     const [audioPT1902, setAudio1902] = useState(false);
     const [HighPT02, setHighPT02] = useState<number | null>(null);
     const [LowPT02, setLowPT02] = useState<number | null>(null);
@@ -460,6 +459,8 @@ export default function GraphicZOCV() {
     //================================ PT 1902======================================================
 
     //================================ PT 1903======================================================
+    const [PT_1103, setPT_1103] = useState<string | null>(null);
+
     const [audioPT1903, setAudio1903] = useState(false);
     const [HighPT_1103, setHighPT_1103] = useState<number | null>(null);
     const [LowPT_1103, setLowPT_1103] = useState<number | null>(null);
@@ -1437,11 +1438,11 @@ export default function GraphicZOCV() {
             const highEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
             );
-            setHighPT01(highEVCPressureItem?.value || null);
+            setHighEVC_01_Pressure(highEVCPressureItem?.value || null);
             const lowEVCPressureItem = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Low"
             );
-            setLowPT01(lowEVCPressureItem?.value || null);
+            setLowEVC_01_Pressure(lowEVCPressureItem?.value || null);
 
             const HighPT1902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_High"
@@ -1581,10 +1582,10 @@ export default function GraphicZOCV() {
             );
             setLowGVA2(LowGVA2?.value || null);
 
-            const MaintainPCV1901 = res.data.find(
+            const MaintainEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
-            setMaintainPCV1901(MaintainPCV1901?.value || false);
+            setMaintainEVC_01_Pressure(MaintainEVC_01_Pressure?.value || false);
 
             const MaintainPT_1902 = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
@@ -1688,11 +1689,11 @@ export default function GraphicZOCV() {
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -2267,8 +2268,8 @@ export default function GraphicZOCV() {
                 };
             }
             if (node.id === "Pressure_Trans02") {
-                const roundedPT01 =
-                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+                const roundedEVC_01_Pressure =
+                    EVC_01_Pressure !== null ? parseFloat(EVC_01_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2285,9 +2286,9 @@ export default function GraphicZOCV() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainPCV1901
+                                        exceedThreshold && !maintainEVC_01_Pressure
                                             ? "#ff5656"
-                                            : maintainPCV1901
+                                            : maintainEVC_01_Pressure
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2310,7 +2311,7 @@ export default function GraphicZOCV() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {/* {roundedPT01} */}
+                                        {/* {roundedEVC_01_Pressure} */}
                                         Not used
                                     </p>
                                 </div>
@@ -2374,7 +2375,7 @@ export default function GraphicZOCV() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),

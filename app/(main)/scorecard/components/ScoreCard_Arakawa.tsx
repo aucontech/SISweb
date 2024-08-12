@@ -1414,7 +1414,7 @@ useEffect(() => {
         GD2: "Gas Detector GD-1602 (%LEL)",
         ZSC: "SDV-1601 ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-1601 ZSO (0: OFF - 1: ON)",
-        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_BATTERY: "UPS BATTERY (0: Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
         Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
