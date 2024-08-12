@@ -823,8 +823,8 @@ export default function Graphic_CNG_BINHDUONG() {
         PIT_2007: "PIT_2007",
         PT_2001: "PT_2001",
         PT_2002: "PT_2002",
-        EVC_01_Pressure: "Output Pressure",
-        EVC_02_Pressure: "Output Pressure",
+        EVC_01_Pressure: " Pressure",
+        EVC_02_Pressure: " Pressure",
 
         EVC_01_Temperature: "Temperature",
         EVC_02_Temperature: "Temperature",
@@ -2152,7 +2152,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2006 :
+                                        PIT-2006:
                                     </p>
                                     <p
                                         style={{
@@ -2215,7 +2215,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT-2007 :
+                                        PIT-2007:
                                     </p>
                                     <p
                                         style={{
@@ -2279,7 +2279,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-2001 :
+                                        PT-2001:
                                     </p>
                                     <p
                                         style={{
@@ -2342,7 +2342,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-2002 :
+                                        PT-2002:
                                     </p>
                                     <p
                                         style={{
@@ -2825,7 +2825,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2836,7 +2836,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
-                                        marginLeft: 15,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     ˚C
@@ -2889,7 +2889,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -2900,7 +2900,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
-                                        marginLeft: 15,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3282,58 +3282,58 @@ export default function Graphic_CNG_BINHDUONG() {
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
-        // : {
+    //     : {
               const initialPositions = {
-              AlarmCenter: { x: -2410.028351525698, y: 692.3224551648495 },
-              Arrow10: { x: -657.138368386577, y: 1273.6345814725987 },
+              AlarmCenter: { x: -996.6028672622674, y: 718.8443630551295 },
+              Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
               BallVavleLine2_Bottom: {
-                  x: -1661.682672878477,
-                  y: 1481.0920733587484,
+                  x: -1752.748552461399,
+                  y: 1398.7809179318454,
               },
               BallVavleLine2_Bottom_none: {
-                  x: -1650.5994566252746,
-                  y: 1097.5108416746705,
+                  x: -1739.1152406034073,
+                  y: 1430.2199359776428,
               },
               BallVavleLine2_Top: {
-                  x: -1664.44860296679,
-                  y: 1067.0182929442992,
+                  x: -1754.9752547260307,
+                  y: 1066.3945634448808,
               },
               BallVavleLine2_Top_none: {
-                  x: -1648.09187529084,
-                  y: 1512.8588877121745,
+                  x: -1740.7857064948557,
+                  y: 1097.0254070197795,
               },
               BallVavleLine3_Bottom_none: {
-                  x: -1135.9949371559305,
-                  y: 1511.7342276426302,
+                  x: -1188.6007658649082,
+                  y: 1430.7062254963867,
               },
               BallVavleLine3_Top_none: {
-                  x: -1139.1110384711665,
-                  y: 1099.0585739747964,
+                  x: -1190.3857919153643,
+                  y: 1097.999896447289,
               },
               BallVavle_Line3_Bottom: {
-                  x: -1149.7158985415722,
-                  y: 1479.9135199637983,
+                  x: -1203.020965699144,
+                  y: 1399.2185849353757,
               },
               BallVavle_Line3_Top: {
-                  x: -1152.7158666435062,
-                  y: 1067.089077151346,
+                  x: -1204.4484013514104,
+                  y: 1066.748043368249,
               },
-              DownArrow: { x: -2443.9606667437342, y: 1567.2904931436362 },
+              DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
               EVC_01_Flow_at_Base_Condition: {
-                  x: -1231.2274786015846,
-                  y: 828.3556039973657,
+                  x: -1300.2117083264288,
+                  y: 751.5293893652726,
               },
               EVC_01_Flow_at_Measurement_Condition: {
-                  x: -1231.3827321875701,
-                  y: 888.8803205194256,
+                  x: -1300.4747755822623,
+                  y: 812.9342555162998,
               },
               EVC_01_Pressure_COL: {
                   x: -1422.6213132405162,
                   y: 1463.468095326561,
               },
               EVC_01_Pressure_DATA: {
-                  x: -880.6508855178131,
-                  y: 949.4360018233847,
+                  x: -1300.5518647911813,
+                  y: 874.307982790011,
               },
               EVC_01_Pressure_IMG: {
                   x: -1455.2210748964526,
@@ -3352,36 +3352,36 @@ export default function Graphic_CNG_BINHDUONG() {
                   y: 1427.2945127887838,
               },
               EVC_01_Temperature_DATA: {
-                  x: -1231.4232235395534,
-                  y: 949.5978850901463,
+                  x: -1651.9839445793107,
+                  y: 873.7849536634603,
               },
               EVC_01_Temperature_NONE: {
                   x: -1362.8266325377226,
                   y: 977.2539852046791,
               },
               EVC_01_Volume_at_Base_Condition: {
-                  x: -880.8313907480683,
-                  y: 828.5981052410312,
+                  x: -1651.3638601651735,
+                  y: 751.2185853413771,
               },
               EVC_01_Volume_at_Measurement_Condition: {
-                  x: -880.9740513467495,
-                  y: 888.981247285729,
+                  x: -1651.889586160885,
+                  y: 812.6874699639815,
               },
               EVC_02_Flow_at_Base_Condition: {
-                  x: -1230.5145958317614,
-                  y: 1560.1956723694543,
+                  x: -1304.5045612961057,
+                  y: 1526.246568287584,
               },
               EVC_02_Flow_at_Measurement_Condition: {
-                  x: -1230.6757061202484,
-                  y: 1620.9190393547512,
+                  x: -1304.6902205234626,
+                  y: 1587.58097045636,
               },
               EVC_02_Pressure_COL: {
                   x: -1425.0343776799361,
                   y: 1050.2965580409796,
               },
               EVC_02_Pressure_DATA: {
-                  x: -880.2212858594961,
-                  y: 1681.7033414461007,
+                  x: -1304.6862397428831,
+                  y: 1648.7497951092391,
               },
               EVC_02_Pressure_IMG: {
                   x: -1457.3119231476958,
@@ -3400,219 +3400,219 @@ export default function Graphic_CNG_BINHDUONG() {
                   y: 1007.3441734368228,
               },
               EVC_02_Temperature_DATA: {
-                  x: -1230.8101655521527,
-                  y: 1681.2929056054545,
+                  x: -1655.6231376798764,
+                  y: 1649.0182904812473,
               },
               EVC_02_Temperature_NONE: {
                   x: -1361.3563019384721,
                   y: 1396.8762550311894,
               },
               EVC_02_Volume_at_Base_Condition: {
-                  x: -879.9415789599179,
-                  y: 1560.2790310516443,
+                  x: -1655.441578959918,
+                  y: 1526.3262726240537,
               },
               EVC_02_Volume_at_Measurement_Condition: {
-                  x: -880.2057699494289,
-                  y: 1621.0287158239244,
+                  x: -1655.518638620903,
+                  y: 1587.742152328961,
               },
-              FIQ_2001A: { x: -1334.5315969250962, y: 1089.0476534040276 },
-              FIQ_2001B: { x: -1338.7173251004047, y: 1502.4688817650092 },
-              GD_2001: { x: -1424.667136474205, y: 1175.579061276146 },
-              GD_IMG: { x: -1335.9163433841604, y: 1237.5231030754012 },
-              Header: { x: -1682.8691159804866, y: 667.6054700345013 },
-              PCV_2001A: { x: -1591.3356076807486, y: 1464.606291335593 },
-              PCV_2001A_DATA: { x: -2165.49158352156, y: 994.2048071396639 },
+              FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
+              FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
+              GD_2001: { x: -989.3020106788827, y: 1318.7155007722488 },
+              GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+              Header: { x: -2332.820092483261, y: 648.7682137524797 },
+              PCV_2001A: { x: -1673.1177611019, y: 1384.1107119962714 },
+              PCV_2001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
               PCV_2001A_SmallBallVavle: {
-                  x: -1503.1177892854255,
-                  y: 1471.8848130414924,
+                  x: -1590.1177892854255,
+                  y: 1391.8848130414924,
               },
-              PCV_2001A_none: { x: -1491.3253266041704, y: 1516.998001843855 },
+              PCV_2001A_none: { x: -1578.8253266041704, y: 1437.998001843855 },
               PCV_2001A_none2: {
-                  x: -1560.2798867415365,
-                  y: 1482.2617504326024,
+                  x: -1644.8538756176888,
+                  y: 1406.5995698502961,
               },
-              PCV_2001B: { x: -1589.6280768037607, y: 1051.7950507090916 },
-              PCV_2001B_DATA: { x: -2172.4592793689617, y: 1410.2100720666779 },
+              PCV_2001B: { x: -1677.3656150260101, y: 1052.000421403267 },
+              PCV_2001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
               PCV_2001B_SmallBallVavle: {
-                  x: -1501.786173260068,
-                  y: 1058.1713499375644,
+                  x: -1589.286173260068,
+                  y: 1060.1713499375644,
               },
-              PCV_2001B_none: { x: -1559.0670889230703, y: 1066.5206445548827 },
-              PCV_2001B_none2: { x: -1489.980563248409, y: 1104.4215156026714 },
-              PCV_2002A_DATA: { x: -1658.0952465284213, y: 989.5130937326853 },
-              PCV_2002B_DATA: { x: -1658.6124448883636, y: 1412.4910281657576 },
+              PCV_2001B_none: { x: -1648.0670889230703, y: 1076.0206445548827 },
+              PCV_2001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
+              PCV_2002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
+              PCV_2002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
               PCV_line1_Bottom: {
                   x: -2111.3678672845463,
                   y: 1052.190596866844,
               },
               PCV_line1_Bottom_SmallBallVavle: {
-                  x: -2020.416081354473,
-                  y: 1470.2053739811668,
+                  x: -2021.0842967435187,
+                  y: 1392.2146663154426,
               },
               PCV_line1_Bottom_none: {
-                  x: -2086.3856361287953,
-                  y: 1482.207670794438,
+                  x: -2082.0447320338617,
+                  y: 1406.8642014517307,
               },
               PCV_line1_Bottom_none2: {
-                  x: -2009.4145711922317,
-                  y: 1519.503878770942,
+                  x: -2009.774232806013,
+                  y: 1437.5474817836612,
               },
-              PCV_line1_Top: { x: -2115.111822476022, y: 1465.5285118679667 },
+              PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
               PCV_line1_Top_SmallBallVavle: {
-                  x: -2024.363015032123,
-                  y: 1060.014175669431,
+                  x: -2020.758188887233,
+                  y: 1058.572245211475,
               },
               PCV_line1_Top_none: {
-                  x: -2081.327036890346,
-                  y: 1067.255196238937,
+                  x: -2079.1641412034114,
+                  y: 1073.0229180707613,
               },
               PCV_line1_Top_none2: {
-                  x: -2012.863015032123,
-                  y: 1106.014175669431,
+                  x: -2009.2581888872328,
+                  y: 1105.293210440453,
               },
-              PIT_2006_COL: { x: -2224.9142828465674, y: 1466.7281972105643 },
-              PIT_2006_DATA: { x: -2345.2206554138606, y: 836.4790335330727 },
-              PIT_2006_IMG: { x: -2257.1862508670465, y: 1404.262574863171 },
-              PIT_2006_NONE: { x: -2223.0907768540847, y: 1028.0138867797907 },
-              PIT_2007_COL: { x: -2224.8219072376414, y: 1049.0653973762749 },
-              PIT_2007_DATA: { x: -2345.7936964852297, y: 1251.1609173888633 },
-              PIT_2007_IMG: { x: -2256.992885616435, y: 986.1974756804932 },
-              PIT_2007_NONE: { x: -2223.5360563984254, y: 1446.3342084888582 },
-              PSV_2001A: { x: -1833.1392147665706, y: 918.2174755595645 },
-              PSV_2001B: { x: -1834.1764221419073, y: 1327.1218181759557 },
-              PSV_2002A: { x: -1513.6908206020153, y: 918.5332629610662 },
-              PSV_2002B: { x: -1511.5304974285475, y: 1328.5711280255437 },
+              PIT_2006_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
+              PIT_2006_DATA: { x: -2348.6186513642347, y: 870.9225639134092 },
+              PIT_2006_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
+              PIT_2006_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
+              PIT_2007_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
+              PIT_2007_DATA: { x: -2348.8352724506376, y: 1526.9945389222787 },
+              PIT_2007_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
+              PIT_2007_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
+              PSV_2001A: { x: -1806.4495698232004, y: 966.4171746665486 },
+              PSV_2001B: { x: -1799.9019866867252, y: 1297.6141788823015 },
+              PSV_2002A: { x: -1500.6943362170002, y: 969.58257364993 },
+              PSV_2002B: { x: -1493.6020428530078, y: 1296.9325533391168 },
               PSV_LINE2_BOTTOM: {
-                  x: -1740.5499935425808,
-                  y: 1021.4152979362718,
+                  x: -1822.5499935425808,
+                  y: 1022.9152979362718,
               },
               PSV_LINE2_BOTTOM_HALFCIRCLE: {
-                  x: -1435.0489668387918,
-                  y: 953.7028750034647,
+                  x: -1537.0489668387918,
+                  y: 962.2028750034647,
               },
               PSV_LINE2_BOTTOM_NONE: {
-                  x: -1718.3515671112975,
-                  y: 1070.542505015602,
+                  x: -1800.2748765223484,
+                  y: 1071.4335361920557,
               },
               PSV_LINE2_BOTTOM_NONE1: {
-                  x: -1741.1883776247973,
-                  y: 1440.590423120003,
+                  x: -1823.0693694333604,
+                  y: 1360.4020119665827,
               },
               PSV_LINE2_BOTTOM_NONE2: {
-                  x: -1742.6123310219864,
-                  y: 1377.8993730119664,
+                  x: -1823.263852446076,
+                  y: 1315.6438506423797,
               },
               PSV_LINE2_BOTTOM_RIGHT: {
-                  x: -1760.0864447641275,
-                  y: 1002.261090283854,
+                  x: -1841.9793816682281,
+                  y: 1003.5894848459614,
               },
-              PSV_LINE2_TOP: { x: -1742.7180150452293, y: 1436.5441778787165 },
+              PSV_LINE2_TOP: { x: -1824.621004682478, y: 1357.2168795688774 },
               PSV_LINE2_TOP_HALFCIRCLE: {
-                  x: -1763.0861113674155,
-                  y: 950.1586579328373,
+                  x: -1846.419275542719,
+                  y: 961.8665937984044,
               },
               PSV_LINE2_TOP_NONE: {
-                  x: -1720.5644477435662,
-                  y: 1485.1619233541182,
+                  x: -1802.2062318196358,
+                  y: 1404.2787700504089,
               },
               PSV_LINE2_TOP_NONE1: {
-                  x: -1741.292471045089,
-                  y: 1024.6454245613245,
+                  x: -1822.49563729746,
+                  y: 1025.4738191234321,
               },
               PSV_LINE2_TOP_NONE2: {
-                  x: -1739.6279244378063,
-                  y: 970.6923874449885,
+                  x: -1820.713980893797,
+                  y: 982.7946809276918,
               },
               PSV_LINE2_TOP_RIGHT: {
-                  x: -1761.8879028974573,
-                  y: 1417.8878185758788,
+                  x: -1843.7363814733678,
+                  y: 1337.2167064142152,
               },
               PSV_LINE3_BOTTOM: {
-                  x: -1411.1513969577684,
-                  y: 1022.3097021803947,
+                  x: -1513.9276090762096,
+                  y: 1023.2929663757193,
               },
               PSV_LINE3_BOTTOM_HALFCIRCLE: {
-                  x: -1766.2849260256212,
-                  y: 1359.309168723579,
+                  x: -1847.8476607451094,
+                  y: 1294.5969973308625,
               },
               PSV_LINE3_BOTTOM_NONE: {
-                  x: -1388.5032341218698,
-                  y: 1484.008560559632,
+                  x: -1491.5458949259623,
+                  y: 1402.9749944793095,
               },
               PSV_LINE3_BOTTOM_NONE1: {
-                  x: -1411.9335008206397,
-                  y: 1437.2004982722633,
+                  x: -1513.9942216185614,
+                  y: 1359.7067206930428,
               },
               PSV_LINE3_BOTTOM_NONE2: {
-                  x: -1411.4682835049944,
-                  y: 1378.9543032928286,
+                  x: -1512.9767227486302,
+                  y: 1314.4270541042574,
               },
               PSV_LINE3_BOTTOM_RIGHT: {
-                  x: -1430.140564142181,
-                  y: 1003.2130774024754,
+                  x: -1533.4478790692137,
+                  y: 1003.5774869187717,
               },
-              PSV_LINE3_TOP: { x: -1410.5136580587603, y: 1436.3299938652153 },
+              PSV_LINE3_TOP: { x: -1514.7416075320712, y: 1357.7240669142898 },
               PSV_LINE3_TOP_HALFCIRCLE: {
-                  x: -1434.9612480677702,
-                  y: 1358.5323326899438,
+                  x: -1537.643267778939,
+                  y: 1294.1557057434507,
               },
               PSV_LINE3_TOP_NONE: {
-                  x: -1388.1918023296519,
-                  y: 1069.4987804905948,
+                  x: -1491.4345428387423,
+                  y: 1068.5155162952701,
               },
               PSV_LINE3_TOP_NONE1: {
-                  x: -1411.2952576203431,
-                  y: 1025.4316416628542,
+                  x: -1514.2952576203431,
+                  y: 1026.4316416628542,
               },
               PSV_LINE3_TOP_NONE2: {
-                  x: -1411.4987054998287,
-                  y: 973.159710586679,
+                  x: -1512.9987054998287,
+                  y: 983.159710586679,
               },
               PSV_LINE3_TOP_RIGHT: {
-                  x: -1430.3177984691579,
-                  y: 1415.7776838291027,
+                  x: -1533.786401000067,
+                  y: 1337.8006420545576,
               },
-              PT_2001_COL: { x: -1905.5986412843538, y: 1464.87471554009 },
-              PT_2001_DATA: { x: -2027.6841586008773, y: 838.5062473608839 },
-              PT_2001_IMG: { x: -1938.1575762242508, y: 1402.2701959596873 },
-              PT_2001_NONE: { x: -1905.5753232184695, y: 1031.030553967972 },
-              PT_2002_COL: { x: -1905.8531774900025, y: 1051.027958478726 },
-              PT_2002_DATA: { x: -2030.8380777669722, y: 1249.7505355187245 },
-              PT_2002_IMG: { x: -1938.3531774900027, y: 988.533781469687 },
-              PT_2002_NONE: { x: -1904.720994341128, y: 1420.5940219176825 },
-              PT_2003: { x: -864.6323890623436, y: 1208.244867729075 },
-              PT_2003_COL: { x: -831.2133216884863, y: 1269.8624406146207 },
-              PT_2003_DATA: { x: -945.5475933946302, y: 1339.463163476207 },
-              PT_2003_NONE: { x: -832.415290430864, y: 1248.8766085759103 },
-              SDV_2001A: { x: -2367.264096852104, y: 1047.9003450623102 },
-              SDV_2001A_Name: { x: -2400.231075578696, y: 1016.8765739089936 },
-              SDV_2001B: { x: -2363.6913165447777, y: 1460.627214731786 },
-              SDV_2001B_Name: { x: -2390.630942331568, y: 1427.4085871372292 },
-              SDV_2002: { x: -746.5250384256435, y: 1247.0820307864924 },
-              SDV_2002_Name: { x: -773.7073670473632, y: 1214.4943003978158 },
-              TT_2001: { x: -973.4745171079314, y: 1164.1349309721543 },
-              TT_2001_COL: { x: -951.252984021753, y: 1210.020732761909 },
-              TT_2001_DATA: { x: -1051.6674629955712, y: 1078.044323611282 },
-              TT_2001_NONE: { x: -949.9337363304269, y: 1183.8459312154791 },
+              PT_2001_COL: { x: -1944.126211137847, y: 1414.8743710777078 },
+              PT_2001_DATA: { x: -2062.9474286701056, y: 871.9588473450049 },
+              PT_2001_IMG: { x: -1976.3967429262366, y: 1351.9634634096726 },
+              PT_2001_NONE: { x: -1938.0753232184695, y: 1045.530553967972 },
+              PT_2002_COL: { x: -1939.3531774900025, y: 1082.027958478726 },
+              PT_2002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
+              PT_2002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
+              PT_2002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
+              PT_2003: { x: -804.9838255763632, y: 1193.6908985163677 },
+              PT_2003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
+              PT_2003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+              PT_2003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
+              SDV_2001A: { x: -2375.7904529874913, y: 1046.6822941858263 },
+              SDV_2001A_Name: { x: -2408.757431714083, y: 1018.4506281074462 },
+              SDV_2001B: { x: -2377.0898761861, y: 1379.0178060073683 },
+              SDV_2001B_Name: { x: -2411.6354714981053, y: 1348.6127064386965 },
+              SDV_2002: { x: -653.7026272334658, y: 1210.1260672163446 },
+              SDV_2002_Name: { x: -694.8783133128501, y: 1178.06997145104 },
+              TT_2001: { x: -1024.6693805861637, y: 1196.2161585621343 },
+              TT_2001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
+              TT_2001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
+              TT_2001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
               bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
               bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
               bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
-              borderWhite: { x: -1728.8585406660322, y: 659.7459881443308 },
+              borderWhite: { x: -2378.220025932068, y: 632.5724848353368 },
               line1: { x: -2410.5925492337, y: 1618.373867274551 },
-              line2: { x: -2411.913420266014, y: 1589.0810477674625 },
+              line2: { x: -2410.891552880127, y: 1598.1196367183622 },
               line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
-              line4: { x: -2087.4681785994817, y: 1511.0480348549916 },
-              line5: { x: -1559.5270533882806, y: 1098.3740496757796 },
-              line6: { x: -1559.7769633031824, y: 1511.1960403304386 },
-              line7: { x: -1262.7601739710276, y: 1098.3096365331119 },
-              line8: { x: -1263.4897630224293, y: 1511.2475714369527 },
-              line9: { x: -909.0588072603842, y: 1297.5251937714008 },
-              line9none: { x: -1092.0911189996043, y: 1297.6471053347987 },
-              line10: { x: -642.6357609528327, y: 1297.8323709477843 },
-              line10none: { x: -642.2337612243081, y: 1297.499384727617 },
+              line4: { x: -2082.153208656881, y: 1430.8103326059108 },
+              line5: { x: -1647.2085647611, y: 1098.3740496757796 },
+              line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
+              line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
+              line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+              line9: { x: -925.9976477005001, y: 1260.4714803086474 },
+              line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
+              line10: { x: -531.9035836581911, y: 1260.593609780011 },
+              line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
               percent: { x: -405.6683476271253, y: 1298.7587875755169 },
-              timeUpdate3: { x: -1688.0201184473199, y: 730.1698690184217 },
+              timeUpdate3: { x: -2336.2287424299593, y: 709.0412944066101 },
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -3885,7 +3885,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 width: 350,
                 height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
         },
 
         {
@@ -3913,7 +3913,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
                 height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Bottom,
         },
         {
             id: "EVC_02_Flow_at_Measurement_Condition",
@@ -4970,7 +4970,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -4988,7 +4988,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5006,7 +5006,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5024,7 +5024,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5072,7 +5072,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5084,7 +5084,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: "auto",
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -5098,7 +5098,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5110,12 +5110,12 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: "auto",
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Bottom,
+            sourcePosition: Position.Top,
         },
         {
             id: "PT_2001_DATA",
@@ -5124,7 +5124,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5136,7 +5136,7 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: "auto",
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -5150,7 +5150,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5162,12 +5162,12 @@ export default function Graphic_CNG_BINHDUONG() {
 
             style: {
                 border: background,
-                width: "auto",
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Bottom,
+            sourcePosition: Position.Top,
         },
 
         {
@@ -5177,7 +5177,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5193,7 +5193,7 @@ export default function Graphic_CNG_BINHDUONG() {
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "EVC_02_Pressure_DATA",
@@ -5202,7 +5202,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5451,7 +5451,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5494,7 +5494,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5512,6 +5512,7 @@ export default function Graphic_CNG_BINHDUONG() {
             },
             sourcePosition: Position.Right,
         },
+
         // {
         //     id: "EVC_01_Temperature_NONE",
         //     position: positions.EVC_01_Temperature_NONE,
@@ -5539,7 +5540,7 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -5558,7 +5559,7 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -6039,12 +6040,14 @@ export default function Graphic_CNG_BINHDUONG() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -6066,12 +6069,14 @@ export default function Graphic_CNG_BINHDUONG() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -6097,8 +6102,9 @@ export default function Graphic_CNG_BINHDUONG() {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -6116,7 +6122,7 @@ export default function Graphic_CNG_BINHDUONG() {
             style: {
                 border: "none",
                 width: 10,
-                height: 100,
+                height: 30,
                 background: line3,
             },
         },
@@ -6128,7 +6134,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6196,7 +6202,7 @@ export default function Graphic_CNG_BINHDUONG() {
             style: {
                 border: "none",
                 width: 10,
-                height: 40,
+                height: 20,
                 background: line3,
             },
             zIndex: 9999,
@@ -6209,7 +6215,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >

@@ -5461,11 +5461,32 @@ value: <span style={combineCss.CSSUPS_Mode} > {UPS_Mode} {DataUPS_Mode}</span> ,
 },
 
 {
+    mainCategory: mainCategoryFC.PLC ,
+   timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
+name: <span style={combineCss.CSSDO_HR_01}>HORN</span> ,
+
+modbus: <span style={combineCss.CSSDO_HR_01}>DB5W50</span> ,
+
+value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
+Maintain:   <Checkbox
+style={{ marginRight: 20, }}
+onChange={ChangeMaintainDO_HR_01}
+checked={maintainDO_HR_01}
+></Checkbox>
+
+},
+
+
+
+{
      mainCategory: mainCategoryFC.PLC ,
     timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_BC_01}> HORN</span> ,
+name: <span style={combineCss.CSSDO_BC_01}>BEACON </span> ,
 
-modbus: <span style={combineCss.CSSDO_BC_01}>DB5W50	 </span> ,
+modbus: <span style={combineCss.CSSDO_BC_01}>DB5W52	 </span> ,
 
 value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
@@ -5481,25 +5502,6 @@ checked={maintainDO_BC_01}
 
 
 
-
-{
-     mainCategory: mainCategoryFC.PLC ,
-    timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}>BEACON</span> ,
-
-modbus: <span style={combineCss.CSSDO_HR_01}>DB5W52	 </span> ,
-
-value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
-high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
-low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_HR_01}
-checked={maintainDO_HR_01}
-></Checkbox>
-
-},
 
 
 

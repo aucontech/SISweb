@@ -2892,93 +2892,93 @@ zIndex:999999,
             style: { border: "none", width: 0, height: 10, background: "none" },
         },
 
-        {
-            id: "PSV01",
-            position: positions.PSV01,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ display: "flex", marginTop: 5 }}>
-                        <PSV01 />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PSV01",
+        //     position: positions.PSV01,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div style={{ display: "flex", marginTop: 5 }}>
+        //                 <PSV01 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            style: {
-                border: background,
-                width: 260,
-                background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Bottom,
+        //     style: {
+        //         border: background,
+        //         width: 260,
+        //         background: borderBox,
+        //         // Thêm box shadow với màu (0, 255, 255)
+        //     },
+        // },
 
-        {
-            id: "PSV02",
-            position: positions.PSV02,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ display: "flex", marginTop: 5 }}>
-                        <PSV02 />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PSV02",
+        //     position: positions.PSV02,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div style={{ display: "flex", marginTop: 5 }}>
+        //                 <PSV02 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            style: {
-                border: background,
-                width: 260,
-                background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Bottom,
+        //     style: {
+        //         border: background,
+        //         width: 260,
+        //         background: borderBox,
+        //         // Thêm box shadow với màu (0, 255, 255)
+        //     },
+        // },
 
-        {
-            id: "PSV01_IMG",
-            position: positions.PSV01_IMG,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/PVC.png"
-                            width={70}
-                            height={70}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PSV01_IMG",
+        //     position: positions.PSV01_IMG,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/PVC.png"
+        //                     width={70}
+        //                     height={70}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: { border: "none", width: 0, height: 10, background: "none" },
-        },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: { border: "none", width: 0, height: 10, background: "none" },
+        // },
 
-        {
-            id: "PSV02_IMG",
-            position: positions.PSV02_IMG,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/PVC.png"
-                            width={70}
-                            height={70}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PSV02_IMG",
+        //     position: positions.PSV02_IMG,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/PVC.png"
+        //                     width={70}
+        //                     height={70}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: { border: "none", width: 0, height: 10, background: "none" },
-        },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: { border: "none", width: 0, height: 10, background: "none" },
+        // },
 
         {
             id: "WB_Setpoint",

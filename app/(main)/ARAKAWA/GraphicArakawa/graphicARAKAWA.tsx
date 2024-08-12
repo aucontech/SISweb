@@ -1668,9 +1668,6 @@ export default function GraphicARAKAWA() {
         });
     };
 
-
-
-
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
@@ -1735,30 +1732,30 @@ export default function GraphicARAKAWA() {
             setLowGD03(LowGD03?.value || null);
 
             const HighEVC_01_Flow_at_Base_Condition = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Base_Condition_High"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
             setHighEVC_01_Flow_at_Base_Condition(
                 HighEVC_01_Flow_at_Base_Condition?.value || null
             );
 
             const LowEVC_01_Flow_at_Base_Condition = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Base_Condition_Low"
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
             setLowEVC_01_Flow_at_Base_Condition(
                 LowEVC_01_Flow_at_Base_Condition?.value || null
             );
 
             const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_High"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
             setHighEVC_01_Flow_at_Measurement_Condition(
                 HighEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
             const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
+                (item: any) =>
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
             setLowEVC_01_Flow_at_Measurement_Condition(
                 LowEVC_01_Flow_at_Measurement_Condition?.value || null
@@ -1795,8 +1792,6 @@ export default function GraphicARAKAWA() {
             setLowEVC_01_Volume_at_Measurement_Condition(
                 LowEVC_01_Volume_at_Measurement_Condition?.value || null
             );
-
-     
 
             const MaintainPT_1901 = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
@@ -2913,7 +2908,7 @@ export default function GraphicARAKAWA() {
                         ...node.data,
                         label: (
                             <div>
-                                 <div>
+                                <div>
                                     {NO === "1"
                                         ? SVD_NO
                                         : NO === "0"
@@ -3007,7 +3002,7 @@ export default function GraphicARAKAWA() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 402.9256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1352.9494973180329, y: 1027.5674536161455 },
@@ -3067,17 +3062,17 @@ export default function GraphicARAKAWA() {
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
-              GD1: { x: -343.742629431451, y: 1033.1925796680935 },
-              GD1_Name1901: { x: -374.2113084299622, y: 951.062287392658 },
-              GD1_Value1901: { x: -374.02346612478414, y: 986.4347273405062 },
-              GD2: { x: 16.719970605642402, y: 1025.7021439643406 },
-              GD2_Name1902: { x: -13.296698830843866, y: 945.370740418364 },
-              GD2_Value1902: { x: -12.967035961151623, y: 981.2686416536776 },
+              GD1: { x: -701.8947533111287, y: 1040.906336426672 },
+              GD1_Name1901: { x: -731.7469880516512, y: 964.8136596858 },
+              GD1_Value1901: { x: -732.0205320793395, y: 1000.3366910874352 },
+              GD2: { x: 17.853099564334826, y: 1041.7626603399713 },
+              GD2_Name1902: { x: -11.81159537363672, y: 968.5058223909082 },
+              GD2_Value1902: { x: -11.724484232548093, y: 1004.2481728203431 },
               GD3: { x: 16.04134176178286, y: 1035.243511740587 },
               GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
               GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
-              GD_none1: { x: -319.0584623985645, y: 1051.7191440834904 },
-              GD_none2: { x: 41.78855599573092, y: 1045.5316583224167 },
+              GD_none1: { x: -676.9801966372074, y: 1059.8910108034106 },
+              GD_none2: { x: 43.273659452938034, y: 1056.5060722807486 },
               GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
               Header: { x: -1151.6225319026826, y: 574.7715183161662 },
@@ -6724,9 +6719,6 @@ export default function GraphicARAKAWA() {
 
                     <Controls />
                 </ReactFlow>
-
-
-                
             </div>
         </>
     );
