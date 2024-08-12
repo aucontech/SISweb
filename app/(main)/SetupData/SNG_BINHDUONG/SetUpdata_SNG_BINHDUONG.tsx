@@ -255,8 +255,8 @@ export default function SetUpdata_SNG_BINHDUONG() {
 
                         FCV_MODE: setFCV_MODE,
                         TOTAL_CNG: setTOTAL_CNG,
-                        TM2002_CNG: setTM2002_CNG,
-                        TM2003_CNG: setTM2003_CNG,
+                        TM_2002_CNG: setTM_2002_CNG,
+                        TM_2003_CNG: setTM_2003_CNG,
                         
                         WB_Setpoint: setWB_Setpoint,
 
@@ -646,20 +646,20 @@ export default function SetUpdata_SNG_BINHDUONG() {
                 (item: any) => item.key === "TOTAL_CNG_Maintain"
             );
 
-            const TM2002_CNG_High = res.data.find((item: any) => item.key === "TM2002_CNG_High");
-            setTM2002_CNG_High(TM2002_CNG_High?.value || null);
-            const TM2002_CNG_Low = res.data.find((item: any) => item.key === "TM2002_CNG_Low");
-            setTM2002_CNG_Low(TM2002_CNG_Low?.value || null);
-            const TM2002_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2002_CNG_Maintain"
+            const TM_2002_CNG_High = res.data.find((item: any) => item.key === "TM_2002_CNG_High");
+            setTM_2002_CNG_High(TM_2002_CNG_High?.value || null);
+            const TM_2002_CNG_Low = res.data.find((item: any) => item.key === "TM_2002_CNG_Low");
+            setTM_2002_CNG_Low(TM_2002_CNG_Low?.value || null);
+            const TM_2002_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2002_CNG_Maintain"
             );
 
-            const TM2003_CNG_High = res.data.find((item: any) => item.key === "TM2003_CNG_High");
-            setTM2003_CNG_High(TM2003_CNG_High?.value || null);
-            const TM2003_CNG_Low = res.data.find((item: any) => item.key === "TM2003_CNG_Low");
-            setTM2003_CNG_Low(TM2003_CNG_Low?.value || null);
-            const TM2003_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2003_CNG_Maintain"
+            const TM_2003_CNG_High = res.data.find((item: any) => item.key === "TM_2003_CNG_High");
+            setTM_2003_CNG_High(TM_2003_CNG_High?.value || null);
+            const TM_2003_CNG_Low = res.data.find((item: any) => item.key === "TM_2003_CNG_Low");
+            setTM_2003_CNG_Low(TM_2003_CNG_Low?.value || null);
+            const TM_2003_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2003_CNG_Maintain"
             );
 
             const WB_Setpoint_High = res.data.find((item: any) => item.key === "WB_Setpoint_High");
@@ -843,9 +843,9 @@ export default function SetUpdata_SNG_BINHDUONG() {
             setMaintainWB_Setpoint(WB_Setpoint_Maintain?.value || false);
 
 
-            setMaintainTM2003_CNG(TM2003_CNG_Maintain?.value || false);
+            setMaintainTM_2003_CNG(TM_2003_CNG_Maintain?.value || false);
 
-            setMaintainTM2002_CNG(TM2002_CNG_Maintain?.value || false);
+            setMaintainTM_2002_CNG(TM_2002_CNG_Maintain?.value || false);
 
             setMaintainTOTAL_CNG(TOTAL_CNG_Maintain?.value || false);
 
@@ -2357,40 +2357,40 @@ const ChangeMaintainSDV_2003 = async () => {
      
  
 
-     const [TM2002_CNG, setTM2002_CNG] = useState<string | null>(null);
-     const [inputValueTM2002_CNG, setInputValueTM2002_CNG] = useState<any>();
-     const [inputValue2TM2002_CNG, setInputValue2TM2002_CNG] = useState<any>();
-     const [TM2002_CNG_High, setTM2002_CNG_High] = useState<number | null>(null);
-     const [TM2002_CNG_Low, setTM2002_CNG_Low] = useState<number | null>(null);
-     const [exceedThresholdTM2002_CNG, setExceedThresholdTM2002_CNG] = useState(false); 
-     const [maintainTM2002_CNG, setMaintainTM2002_CNG] = useState<boolean>(false);
+     const [TM_2002_CNG, setTM_2002_CNG] = useState<string | null>(null);
+     const [inputValueTM_2002_CNG, setInputValueTM_2002_CNG] = useState<any>();
+     const [inputValue2TM_2002_CNG, setInputValue2TM_2002_CNG] = useState<any>();
+     const [TM_2002_CNG_High, setTM_2002_CNG_High] = useState<number | null>(null);
+     const [TM_2002_CNG_Low, setTM_2002_CNG_Low] = useState<number | null>(null);
+     const [exceedThresholdTM_2002_CNG, setExceedThresholdTM_2002_CNG] = useState(false); 
+     const [maintainTM_2002_CNG, setMaintainTM_2002_CNG] = useState<boolean>(false);
      
      useEffect(() => {
-         const TM2002_CNGValue = parseFloat(TM2002_CNG as any);
-         const highValue = TM2002_CNG_High ?? NaN;
-         const lowValue = TM2002_CNG_Low ?? NaN;
+         const TM_2002_CNGValue = parseFloat(TM_2002_CNG as any);
+         const highValue = TM_2002_CNG_High ?? NaN;
+         const lowValue = TM_2002_CNG_Low ?? NaN;
      
-         if (!isNaN(TM2002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2002_CNG) {
-             setExceedThresholdTM2002_CNG(TM2002_CNGValue >= highValue || TM2002_CNGValue <= lowValue);
+         if (!isNaN(TM_2002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2002_CNG) {
+             setExceedThresholdTM_2002_CNG(TM_2002_CNGValue >= highValue || TM_2002_CNGValue <= lowValue);
          }
-     }, [TM2002_CNG, TM2002_CNG_High, TM2002_CNG_Low, maintainTM2002_CNG]);
+     }, [TM_2002_CNG, TM_2002_CNG_High, TM_2002_CNG_Low, maintainTM_2002_CNG]);
      
-     const handleInputChangeTM2002_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
-         setInputValueTM2002_CNG(event.target.value);
+     const handleInputChangeTM_2002_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setInputValueTM_2002_CNG(event.target.value);
      };
      
-     const handleInputChange2TM2002_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
-         setInputValue2TM2002_CNG(event.target.value);
+     const handleInputChange2TM_2002_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
+         setInputValue2TM_2002_CNG(event.target.value);
      };
      
-     const ChangeMaintainTM2002_CNG = async () => {
+     const ChangeMaintainTM_2002_CNG = async () => {
          try {
-             const newValue = !maintainTM2002_CNG;
+             const newValue = !maintainTM_2002_CNG;
              await httpApi.post(
                  `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
-                 { TM2002_CNG_Maintain: newValue }
+                 { TM_2002_CNG_Maintain: newValue }
              );
-             setMaintainTM2002_CNG(newValue);
+             setMaintainTM_2002_CNG(newValue);
          } catch (error) {
              console.error(error);
          }
@@ -2401,40 +2401,40 @@ const ChangeMaintainSDV_2003 = async () => {
      
          // =================================================================================================================== 
  
-         const [TM2003_CNG, setTM2003_CNG] = useState<string | null>(null);
-         const [inputValueTM2003_CNG, setInputValueTM2003_CNG] = useState<any>();
-         const [inputValue2TM2003_CNG, setInputValue2TM2003_CNG] = useState<any>();
-         const [TM2003_CNG_High, setTM2003_CNG_High] = useState<number | null>(null);
-         const [TM2003_CNG_Low, setTM2003_CNG_Low] = useState<number | null>(null);
-         const [exceedThresholdTM2003_CNG, setExceedThresholdTM2003_CNG] = useState(false); 
-         const [maintainTM2003_CNG, setMaintainTM2003_CNG] = useState<boolean>(false);
+         const [TM_2003_CNG, setTM_2003_CNG] = useState<string | null>(null);
+         const [inputValueTM_2003_CNG, setInputValueTM_2003_CNG] = useState<any>();
+         const [inputValue2TM_2003_CNG, setInputValue2TM_2003_CNG] = useState<any>();
+         const [TM_2003_CNG_High, setTM_2003_CNG_High] = useState<number | null>(null);
+         const [TM_2003_CNG_Low, setTM_2003_CNG_Low] = useState<number | null>(null);
+         const [exceedThresholdTM_2003_CNG, setExceedThresholdTM_2003_CNG] = useState(false); 
+         const [maintainTM_2003_CNG, setMaintainTM_2003_CNG] = useState<boolean>(false);
          
          useEffect(() => {
-             const TM2003_CNGValue = parseFloat(TM2003_CNG as any);
-             const highValue = TM2003_CNG_High ?? NaN;
-             const lowValue = TM2003_CNG_Low ?? NaN;
+             const TM_2003_CNGValue = parseFloat(TM_2003_CNG as any);
+             const highValue = TM_2003_CNG_High ?? NaN;
+             const lowValue = TM_2003_CNG_Low ?? NaN;
          
-             if (!isNaN(TM2003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2003_CNG) {
-                 setExceedThresholdTM2003_CNG(TM2003_CNGValue >= highValue || TM2003_CNGValue <= lowValue);
+             if (!isNaN(TM_2003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2003_CNG) {
+                 setExceedThresholdTM_2003_CNG(TM_2003_CNGValue >= highValue || TM_2003_CNGValue <= lowValue);
              }
-         }, [TM2003_CNG, TM2003_CNG_High, TM2003_CNG_Low, maintainTM2003_CNG]);
+         }, [TM_2003_CNG, TM_2003_CNG_High, TM_2003_CNG_Low, maintainTM_2003_CNG]);
          
-         const handleInputChangeTM2003_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
-             setInputValueTM2003_CNG(event.target.value);
+         const handleInputChangeTM_2003_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
+             setInputValueTM_2003_CNG(event.target.value);
          };
          
-         const handleInputChange2TM2003_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
-             setInputValue2TM2003_CNG(event.target.value);
+         const handleInputChange2TM_2003_CNG = (event: React.ChangeEvent<HTMLInputElement>) => {
+             setInputValue2TM_2003_CNG(event.target.value);
          };
          
-         const ChangeMaintainTM2003_CNG = async () => {
+         const ChangeMaintainTM_2003_CNG = async () => {
              try {
-                 const newValue = !maintainTM2003_CNG;
+                 const newValue = !maintainTM_2003_CNG;
                  await httpApi.post(
                      `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/SERVER_SCOPE`,
-                     { TM2003_CNG_Maintain: newValue }
+                     { TM_2003_CNG_Maintain: newValue }
                  );
-                 setMaintainTM2003_CNG(newValue);
+                 setMaintainTM_2003_CNG(newValue);
              } catch (error) {
                  console.error(error);
              }
@@ -2962,8 +2962,8 @@ const ChangeMaintainSDV_2003 = async () => {
 
                     FCV_MODE_High: inputValueFCV_MODE,FCV_MODE_Low:inputValue2FCV_MODE,
                     TOTAL_CNG_High: inputValueTOTAL_CNG,TOTAL_CNG_Low:inputValue2TOTAL_CNG,
-                    TM2002_CNG_High: inputValueTM2002_CNG,TM2002_CNG_Low:inputValue2TM2002_CNG,
-                    TM2003_CNG_High: inputValueTM2003_CNG,TM2003_CNG_Low:inputValue2TM2003_CNG,
+                    TM_2002_CNG_High: inputValueTM_2002_CNG,TM_2002_CNG_Low:inputValue2TM_2002_CNG,
+                    TM_2003_CNG_High: inputValueTM_2003_CNG,TM_2003_CNG_Low:inputValue2TM_2003_CNG,
                     WB_Setpoint_High: inputValueWB_Setpoint,WB_Setpoint_Low:inputValue2WB_Setpoint,
                     RATIO_MODE_High: inputValueRATIO_MODE,RATIO_MODE_Low:inputValue2RATIO_MODE,
                     IOT_Gateway_Phone: inputGetwayPhone,
@@ -3120,11 +3120,11 @@ const ChangeMaintainSDV_2003 = async () => {
             setFCV_MODE_High(inputValueFCV_MODE);
             setFCV_MODE_Low(inputValue2FCV_MODE);
 
-            setTM2002_CNG_High(inputValueTM2002_CNG);
-            setTM2002_CNG_Low(inputValue2TM2002_CNG);
+            setTM_2002_CNG_High(inputValueTM_2002_CNG);
+            setTM_2002_CNG_Low(inputValue2TM_2002_CNG);
 
-            setTM2003_CNG_High(inputValueTM2003_CNG);
-            setTM2003_CNG_Low(inputValue2TM2003_CNG);
+            setTM_2003_CNG_High(inputValueTM_2003_CNG);
+            setTM_2003_CNG_Low(inputValue2TM_2003_CNG);
 
 
 
@@ -3309,11 +3309,11 @@ const ChangeMaintainSDV_2003 = async () => {
         setInputValueTOTAL_CNG(TOTAL_CNG_High); 
         setInputValue2TOTAL_CNG(TOTAL_CNG_Low); 
 
-        setInputValueTM2002_CNG(TM2002_CNG_High); 
-        setInputValue2TM2002_CNG(TM2002_CNG_Low); 
+        setInputValueTM_2002_CNG(TM_2002_CNG_High); 
+        setInputValue2TM_2002_CNG(TM_2002_CNG_Low); 
 
-        setInputValueTM2003_CNG(TM2003_CNG_High); 
-        setInputValue2TM2003_CNG(TM2003_CNG_Low); 
+        setInputValueTM_2003_CNG(TM_2003_CNG_High); 
+        setInputValue2TM_2003_CNG(TM_2003_CNG_Low); 
 
 
         setInputValueWB_Setpoint(WB_Setpoint_High); 
@@ -3396,8 +3396,8 @@ const ChangeMaintainSDV_2003 = async () => {
            FCV_MODE_High,FCV_MODE_Low,
            TOTAL_CNG_High,TOTAL_CNG_Low,
 
-           TM2002_CNG_High,TM2002_CNG_Low,
-           TM2003_CNG_High,TM2003_CNG_Low,
+           TM_2002_CNG_High,TM_2002_CNG_Low,
+           TM_2003_CNG_High,TM_2003_CNG_Low,
 
            WB_Setpoint_High,WB_Setpoint_Low,
 
@@ -3459,8 +3459,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                 const newMaintainFCV_MODE = checked;
                 const newMaintainTOTAL_CNG = checked;
-                const newMaintainTM2002_CNG = checked;
-                const newMaintainTM2003_CNG = checked;
+                const newMaintainTM_2002_CNG = checked;
+                const newMaintainTM_2003_CNG = checked;
                 const newMaintainWB_Setpoint = checked;
                 const newMaintainWIS_Calorimeter = checked;
                 const newMaintainCVS_Calorimeter = checked;
@@ -3511,8 +3511,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                        FCV_MODE_Maintain: newMaintainFCV_MODE,
                        TOTAL_CNG_Maintain: newMaintainTOTAL_CNG,
-                       TM2002_CNG_Maintain: newMaintainTM2002_CNG,
-                       TM2003_CNG_Maintain: newMaintainTM2003_CNG,
+                       TM_2002_CNG_Maintain: newMaintainTM_2002_CNG,
+                       TM_2003_CNG_Maintain: newMaintainTM_2003_CNG,
                        WB_Setpoint_Maintain: newMaintainWB_Setpoint,
                        WIS_Calorimeter_Maintain: newMaintainWIS_Calorimeter,
                        CVS_Calorimeter_Maintain: newMaintainCVS_Calorimeter,
@@ -3563,8 +3563,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                 setMaintainFCV_MODE(newMaintainFCV_MODE);
                 setMaintainTOTAL_CNG(newMaintainTOTAL_CNG);
-                setMaintainTM2002_CNG(newMaintainTM2002_CNG);
-                setMaintainTM2003_CNG(newMaintainTM2003_CNG);
+                setMaintainTM_2002_CNG(newMaintainTM_2002_CNG);
+                setMaintainTM_2003_CNG(newMaintainTM_2003_CNG);
                 setMaintainWB_Setpoint(newMaintainWB_Setpoint);
                 setMaintainWIS_Calorimeter(newMaintainWIS_Calorimeter);
         
@@ -3629,8 +3629,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                 const newMaintainFCV_MODE = checked;
                 const newMaintainTOTAL_CNG = checked;
-                const newMaintainTM2002_CNG = checked;
-                const newMaintainTM2003_CNG = checked;
+                const newMaintainTM_2002_CNG = checked;
+                const newMaintainTM_2003_CNG = checked;
                 const newMaintainWB_Setpoint = checked;
             
                 const newMaintainPLC_Conn_STT = checked;
@@ -3677,8 +3677,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                        FCV_MODE_Maintain: newMaintainFCV_MODE,
                        TOTAL_CNG_Maintain: newMaintainTOTAL_CNG,
-                       TM2002_CNG_Maintain: newMaintainTM2002_CNG,
-                       TM2003_CNG_Maintain: newMaintainTM2003_CNG,
+                       TM_2002_CNG_Maintain: newMaintainTM_2002_CNG,
+                       TM_2003_CNG_Maintain: newMaintainTM_2003_CNG,
                        WB_Setpoint_Maintain: newMaintainWB_Setpoint,
                    
                        PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
@@ -3725,8 +3725,8 @@ const ChangeMaintainSDV_2003 = async () => {
         
                 setMaintainFCV_MODE(newMaintainFCV_MODE);
                 setMaintainTOTAL_CNG(newMaintainTOTAL_CNG);
-                setMaintainTM2002_CNG(newMaintainTM2002_CNG);
-                setMaintainTM2003_CNG(newMaintainTM2003_CNG);
+                setMaintainTM_2002_CNG(newMaintainTM_2002_CNG);
+                setMaintainTM_2003_CNG(newMaintainTM_2003_CNG);
                 setMaintainWB_Setpoint(newMaintainWB_Setpoint);
            
         
@@ -3779,8 +3779,8 @@ const ChangeMaintainSDV_2003 = async () => {
     maintainRATIO_MODE === true &&
     maintainFCV_MODE === true &&
     maintainTOTAL_CNG === true &&
-    maintainTM2002_CNG === true &&
-    maintainTM2003_CNG === true &&
+    maintainTM_2002_CNG === true &&
+    maintainTM_2003_CNG === true &&
     maintainWB_Setpoint === true &&
     maintainPLC_Conn_STT === true;
 
@@ -3867,8 +3867,8 @@ const ChangeMaintainSDV_2003 = async () => {
        maintainRATIO_MODE === true &&
        maintainFCV_MODE === true &&
        maintainTOTAL_CNG === true &&
-       maintainTM2002_CNG === true &&
-       maintainTM2003_CNG === true &&
+       maintainTM_2002_CNG === true &&
+       maintainTM_2003_CNG === true &&
        maintainWB_Setpoint === true &&
        maintainPLC_Conn_STT === true &&
          maintainWIS_Calorimeter === true &&
@@ -4302,20 +4302,20 @@ const ChangeMaintainSDV_2003 = async () => {
             fontWeight:400,
         },
 
-        CSSTM2003_CNG : {
-            color:exceedThresholdTM2003_CNG && !maintainTM2003_CNG
+        CSSTM_2003_CNG : {
+            color:exceedThresholdTM_2003_CNG && !maintainTM_2003_CNG
             ? "#ff5656"
-            : maintainTM2003_CNG
+            : maintainTM_2003_CNG
             ? "orange"
             : "" ,
             height:25,
             fontWeight:400,
         },
 
-        CSSTM2002_CNG : {
-            color:exceedThresholdTM2002_CNG && !maintainTM2002_CNG
+        CSSTM_2002_CNG : {
+            color:exceedThresholdTM_2002_CNG && !maintainTM_2002_CNG
             ? "#ff5656"
-            : maintainTM2002_CNG
+            : maintainTM_2002_CNG
             ? "orange"
             : "" ,
             height:25,
@@ -4735,7 +4735,7 @@ disabled={AuthInputHighLow}
                 mainCategory: mainCategoryFC.PLC,
                 
                 timeUpdate: <span style={combineCss.CSSTM_2002_SNG} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSTM_2002_SNG}>Tubine Meter TM2002-SNG </span> ,
+            name: <span style={combineCss.CSSTM_2002_SNG}>Tubine Meter TM_2002-SNG </span> ,
        
             modbus: <span style={combineCss.CSSTM_2002_SNG}>40023	 </span> ,
        
@@ -4768,7 +4768,7 @@ disabled={AuthInputHighLow}
 
         
         timeUpdate: <span style={combineCss.CSSTM_2003_SNG} >{PLC_STTValue}</span>,
-    name: <span style={combineCss.CSSTM_2003_SNG}>Tubine Meter TM2003-SNG </span> ,
+    name: <span style={combineCss.CSSTM_2003_SNG}>Tubine Meter TM_2003-SNG </span> ,
 
     modbus: <span style={combineCss.CSSTM_2003_SNG}>40025	 </span> ,
 
@@ -5442,26 +5442,26 @@ disabled={AuthInputHighLow}
    {
                 mainCategory: mainCategoryFC.PLC,
     
-    timeUpdate: <span style={combineCss.CSSTM2002_CNG} >{PLC_STTValue}</span>,
-   name: <span style={combineCss.CSSTM2002_CNG}>Tubine Meter TM2002-CNG</span> ,
+    timeUpdate: <span style={combineCss.CSSTM_2002_CNG} >{PLC_STTValue}</span>,
+   name: <span style={combineCss.CSSTM_2002_CNG}>Tubine Meter TM_2002-CNG</span> ,
 
-   modbus: <span style={combineCss.CSSTM2002_CNG}>40073	 </span> ,
+   modbus: <span style={combineCss.CSSTM_2002_CNG}>40073	 </span> ,
 
-  value: <span style={combineCss.CSSTM2002_CNG} > {TM2002_CNG} (Sm³/h)</span> , 
+  value: <span style={combineCss.CSSTM_2002_CNG} > {TM_2002_CNG} (Sm³/h)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
-   style={combineCss.CSSTM2002_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM2002_CNG} onChange={handleInputChangeTM2002_CNG} inputMode="decimal" />, 
+   style={combineCss.CSSTM_2002_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2002_CNG} onChange={handleInputChangeTM_2002_CNG} inputMode="decimal" />, 
    low:  <InputText 
 disabled={AuthInputHighLow}
    
-   style={combineCss.CSSTM2002_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM2002_CNG} onChange={handleInputChange2TM2002_CNG} inputMode="decimal" />,
+   style={combineCss.CSSTM_2002_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2002_CNG} onChange={handleInputChange2TM_2002_CNG} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox  
    disabled={AuthInput} 
    style={{ marginRight: 20, }}
-   onChange={ChangeMaintainTM2002_CNG}
-   checked={maintainTM2002_CNG}
+   onChange={ChangeMaintainTM_2002_CNG}
+   checked={maintainTM_2002_CNG}
 ></Checkbox>
 
   },
@@ -5470,26 +5470,26 @@ disabled={AuthInputHighLow}
   {
                 mainCategory: mainCategoryFC.PLC,
     
-    timeUpdate: <span style={combineCss.CSSTM2003_CNG} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSTM2003_CNG}>Tubine Meter TM2003-CNG</span> ,
+    timeUpdate: <span style={combineCss.CSSTM_2003_CNG} >{PLC_STTValue}</span>,
+  name: <span style={combineCss.CSSTM_2003_CNG}>Tubine Meter TM_2003-CNG</span> ,
 
-  modbus: <span style={combineCss.CSSTM2003_CNG}>40075	 </span> ,
+  modbus: <span style={combineCss.CSSTM_2003_CNG}>40075	 </span> ,
 
- value: <span style={combineCss.CSSTM2003_CNG} > {TM2003_CNG} (Sm³/h)</span> , 
+ value: <span style={combineCss.CSSTM_2003_CNG} > {TM_2003_CNG} (Sm³/h)</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
-  style={combineCss.CSSTM2003_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM2003_CNG} onChange={handleInputChangeTM2003_CNG} inputMode="decimal" />, 
+  style={combineCss.CSSTM_2003_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2003_CNG} onChange={handleInputChangeTM_2003_CNG} inputMode="decimal" />, 
   low:  <InputText 
 disabled={AuthInputHighLow}
   
-  style={combineCss.CSSTM2003_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM2003_CNG} onChange={handleInputChange2TM2003_CNG} inputMode="decimal" />,
+  style={combineCss.CSSTM_2003_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2003_CNG} onChange={handleInputChange2TM_2003_CNG} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox  
   disabled={AuthInput} 
   style={{ marginRight: 20, }}
-  onChange={ChangeMaintainTM2003_CNG}
-  checked={maintainTM2003_CNG}
+  onChange={ChangeMaintainTM_2003_CNG}
+  checked={maintainTM_2003_CNG}
 ></Checkbox>
 
  },
