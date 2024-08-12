@@ -145,8 +145,8 @@ export default function ScoreCard_SNG_BINHDUONG() {
                         FCV_MODE: setFCV_MODE,
                         TOTAL_CNG: setTOTAL_CNG,
 
-                        TM2002_CNG: setTM2002_CNG,
-                        TM2003_CNG: setTM2003_CNG,
+                        TM_2002_CNG: setTM_2002_CNG,
+                        TM_2003_CNG: setTM_2003_CNG,
                         WB_Setpoint: setWB_Setpoint,
                         WIS_Calorimeter: setWIS_Calorimeter,
                         CVS_Calorimeter: setCVS_Calorimeter,
@@ -525,12 +525,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
             
-            const TM2002_CNG_High = res.data.find((item: any) => item.key === "TM2002_CNG_High");
-            setTM2002_CNG_High(TM2002_CNG_High?.value || null);
-            const TM2002_CNG_Low = res.data.find((item: any) => item.key === "TM2002_CNG_Low");
-            setTM2002_CNG_Low(TM2002_CNG_Low?.value || null);
-            const TM2002_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2002_CNG_Maintain"
+            const TM_2002_CNG_High = res.data.find((item: any) => item.key === "TM_2002_CNG_High");
+            setTM_2002_CNG_High(TM_2002_CNG_High?.value || null);
+            const TM_2002_CNG_Low = res.data.find((item: any) => item.key === "TM_2002_CNG_Low");
+            setTM_2002_CNG_Low(TM_2002_CNG_Low?.value || null);
+            const TM_2002_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2002_CNG_Maintain"
             );
             const WB_Setpoint_High = res.data.find((item: any) => item.key === "WB_Setpoint_High");
             setWB_Setpoint_High(WB_Setpoint_High?.value || null);
@@ -539,12 +539,12 @@ export default function ScoreCard_SNG_BINHDUONG() {
             const WB_Setpoint_Maintain = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_Maintain"
             );
-            const TM2003_CNG_High = res.data.find((item: any) => item.key === "TM2003_CNG_High");
-            setTM2003_CNG_High(TM2003_CNG_High?.value || null);
-            const TM2003_CNG_Low = res.data.find((item: any) => item.key === "TM2003_CNG_Low");
-            setTM2003_CNG_Low(TM2003_CNG_Low?.value || null);
-            const TM2003_CNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM2003_CNG_Maintain"
+            const TM_2003_CNG_High = res.data.find((item: any) => item.key === "TM_2003_CNG_High");
+            setTM_2003_CNG_High(TM_2003_CNG_High?.value || null);
+            const TM_2003_CNG_Low = res.data.find((item: any) => item.key === "TM_2003_CNG_Low");
+            setTM_2003_CNG_Low(TM_2003_CNG_Low?.value || null);
+            const TM_2003_CNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2003_CNG_Maintain"
             );
 
             const WIS_Calorimeter_High = res.data.find((item: any) => item.key === "WIS_Calorimeter_High");
@@ -639,11 +639,11 @@ export default function ScoreCard_SNG_BINHDUONG() {
  setMaintainFCV_MODE(FCV_MODE_Maintain?.value || false);
  setMaintainTOTAL_CNG(TOTAL_CNG_Maintain?.value || false);
 
- setMaintainTM2002_CNG(TM2002_CNG_Maintain?.value || false);
+ setMaintainTM_2002_CNG(TM_2002_CNG_Maintain?.value || false);
 
  setMaintainWB_Setpoint(WB_Setpoint_Maintain?.value || false);
 
- setMaintainTM2003_CNG(TM2003_CNG_Maintain?.value || false);
+ setMaintainTM_2003_CNG(TM_2003_CNG_Maintain?.value || false);
  setMaintainCVS_Calorimeter(CVS_Calorimeter_Maintain?.value || false);
 
 
@@ -1556,21 +1556,21 @@ const [HV_1001, setHV_1001] = useState<string | null>(null);
 
 
 
-const [TM2002_CNG, setTM2002_CNG] = useState<string | null>(null);
-const [TM2002_CNG_High, setTM2002_CNG_High] = useState<number | null>(null);
-const [TM2002_CNG_Low, setTM2002_CNG_Low] = useState<number | null>(null);
-const [exceedThresholdTM2002_CNG, setExceedThresholdTM2002_CNG] = useState(false); 
-const [maintainTM2002_CNG, setMaintainTM2002_CNG] = useState<boolean>(false);
+const [TM_2002_CNG, setTM_2002_CNG] = useState<string | null>(null);
+const [TM_2002_CNG_High, setTM_2002_CNG_High] = useState<number | null>(null);
+const [TM_2002_CNG_Low, setTM_2002_CNG_Low] = useState<number | null>(null);
+const [exceedThresholdTM_2002_CNG, setExceedThresholdTM_2002_CNG] = useState(false); 
+const [maintainTM_2002_CNG, setMaintainTM_2002_CNG] = useState<boolean>(false);
 
 useEffect(() => {
- const TM2002_CNGValue = parseFloat(TM2002_CNG as any);
- const highValue = TM2002_CNG_High ?? NaN;
- const lowValue = TM2002_CNG_Low ?? NaN;
+ const TM_2002_CNGValue = parseFloat(TM_2002_CNG as any);
+ const highValue = TM_2002_CNG_High ?? NaN;
+ const lowValue = TM_2002_CNG_Low ?? NaN;
 
- if (!isNaN(TM2002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2002_CNG) {
-     setExceedThresholdTM2002_CNG(TM2002_CNGValue >= highValue || TM2002_CNGValue <= lowValue);
+ if (!isNaN(TM_2002_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2002_CNG) {
+     setExceedThresholdTM_2002_CNG(TM_2002_CNGValue >= highValue || TM_2002_CNGValue <= lowValue);
  }
-}, [TM2002_CNG, TM2002_CNG_High, TM2002_CNG_Low, maintainTM2002_CNG]);
+}, [TM_2002_CNG, TM_2002_CNG_High, TM_2002_CNG_Low, maintainTM_2002_CNG]);
 
 
 
@@ -1579,21 +1579,21 @@ useEffect(() => {
 
  // =================================================================================================================== 
 
- const [TM2003_CNG, setTM2003_CNG] = useState<string | null>(null);
- const [TM2003_CNG_High, setTM2003_CNG_High] = useState<number | null>(null);
- const [TM2003_CNG_Low, setTM2003_CNG_Low] = useState<number | null>(null);
- const [exceedThresholdTM2003_CNG, setExceedThresholdTM2003_CNG] = useState(false); 
- const [maintainTM2003_CNG, setMaintainTM2003_CNG] = useState<boolean>(false);
+ const [TM_2003_CNG, setTM_2003_CNG] = useState<string | null>(null);
+ const [TM_2003_CNG_High, setTM_2003_CNG_High] = useState<number | null>(null);
+ const [TM_2003_CNG_Low, setTM_2003_CNG_Low] = useState<number | null>(null);
+ const [exceedThresholdTM_2003_CNG, setExceedThresholdTM_2003_CNG] = useState(false); 
+ const [maintainTM_2003_CNG, setMaintainTM_2003_CNG] = useState<boolean>(false);
  
  useEffect(() => {
-     const TM2003_CNGValue = parseFloat(TM2003_CNG as any);
-     const highValue = TM2003_CNG_High ?? NaN;
-     const lowValue = TM2003_CNG_Low ?? NaN;
+     const TM_2003_CNGValue = parseFloat(TM_2003_CNG as any);
+     const highValue = TM_2003_CNG_High ?? NaN;
+     const lowValue = TM_2003_CNG_Low ?? NaN;
  
-     if (!isNaN(TM2003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM2003_CNG) {
-         setExceedThresholdTM2003_CNG(TM2003_CNGValue >= highValue || TM2003_CNGValue <= lowValue);
+     if (!isNaN(TM_2003_CNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_2003_CNG) {
+         setExceedThresholdTM_2003_CNG(TM_2003_CNGValue >= highValue || TM_2003_CNGValue <= lowValue);
      }
- }, [TM2003_CNG, TM2003_CNG_High, TM2003_CNG_Low, maintainTM2003_CNG]);
+ }, [TM_2003_CNG, TM_2003_CNG_High, TM_2003_CNG_Low, maintainTM_2003_CNG]);
  
  
 
@@ -1875,8 +1875,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_2005: `Gas Detector GD-2005 (%LEL)`,
         GD_2006: `Gas Detector GD-2006 (%LEL)`,
 
-        TM_2002_SNG:`Tubine Meter TM2002-SNG${nameValue.Sm3h}`,
-        TM_2003_SNG:`Tubine Meter TM2003-SNG${nameValue.Sm3h}`,
+        TM_2002_SNG:`Tubine Meter TM_2002-SNG${nameValue.Sm3h}`,
+        TM_2003_SNG:`Tubine Meter TM_2003-SNG${nameValue.Sm3h}`,
         TOTAL_SNG: `Total SNG ${nameValue.m3}`,
 
         SDV_2004:"Shutdown Valve SDV-2004 (0: Close - 1: Open)",
@@ -1912,8 +1912,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         RATIO_MODE:"RATIO Mode (0: Manual - 1: Auto )",
         FCV_MODE:"FCV MODE (0: Manual - 1: Auto )",
         TOTAL_CNG: "Total CNG (Sm³)",
-        TM2002_CNG: "Tubine Meter TM2002-CNG (Sm³/h)",
-        TM2003_CNG: "Tubine Meter TM2003-CNG (Sm³/h)",
+        TM_2002_CNG: "Tubine Meter TM_2002-CNG (Sm³/h)",
+        TM_2003_CNG: "Tubine Meter TM_2003-CNG (Sm³/h)",
         WB_Setpoint: "Wobbe Index Setpoint (MJ/Sm³)",
         WIS_Calorimeter: "WIS Calorimeter (MJ/Sm³)", 
         CVS_Calorimeter: "CVS Calorimeter (MJ/Sm³)",
@@ -2501,30 +2501,30 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
      
 
-        CSSTM2002_CNG : {
-            color:exceedThresholdTM2002_CNG && !maintainTM2002_CNG
+        CSSTM_2002_CNG : {
+            color:exceedThresholdTM_2002_CNG && !maintainTM_2002_CNG
             ? "#ff5656"
-            : maintainTM2002_CNG
+            : maintainTM_2002_CNG
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            fontWeight: (exceedThresholdTM_2002_CNG || maintainTM_2002_CNG)
             ? 600
             : "",
-            fontSize: (exceedThresholdTM2002_CNG || maintainTM2002_CNG)
+            fontSize: (exceedThresholdTM_2002_CNG || maintainTM_2002_CNG)
             ? 18
             : ""
         },
 
-        CSSTM2003_CNG : {
-            color:exceedThresholdTM2003_CNG && !maintainTM2003_CNG
+        CSSTM_2003_CNG : {
+            color:exceedThresholdTM_2003_CNG && !maintainTM_2003_CNG
             ? "#ff5656"
-            : maintainTM2003_CNG
+            : maintainTM_2003_CNG
             ? "orange"
             : "" ,
-            fontWeight: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            fontWeight: (exceedThresholdTM_2003_CNG || maintainTM_2003_CNG)
             ? 600
             : "",
-            fontSize: (exceedThresholdTM2003_CNG || maintainTM2003_CNG)
+            fontSize: (exceedThresholdTM_2003_CNG || maintainTM_2003_CNG)
             ? 18
             : ""
         },
@@ -2798,13 +2798,13 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         },
     
         {
-            name: <span>{tagNamePLC.TM2002_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM2002_CNG}> {TM2002_CNG} </span>,
+            name: <span>{tagNamePLC.TM_2002_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM_2002_CNG}> {TM_2002_CNG} </span>,
         },
 
         {
-            name: <span>{tagNamePLC.TM2003_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM2003_CNG}>{TM2003_CNG} </span>,
+            name: <span>{tagNamePLC.TM_2003_CNG}</span>,
+            PLC: <span style={combineCss.CSSTM_2003_CNG}>{TM_2003_CNG} </span>,
         },
         {
             name: <span>{tagNamePLC.WB_Setpoint}</span>,
