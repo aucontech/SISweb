@@ -193,18 +193,18 @@ export const edgePRU = [
         
     },
      {
-        id: "PIT_6002A_DATA-PIT_6002A_NONE",
-        source: "PIT_6002A_DATA",
-        target: "PIT_6002A_NONE",
+        id: "PT_6001_DATA-PT_6001_NONE",
+        source: "PT_6001_DATA",
+        target: "PT_6001_NONE",
         type: "smoothstep",
 
      
         
     },
     {
-        id: "PIT_6002B_DATA-PIT_6002B_NONE",
-        source: "PIT_6002B_DATA",
-        target: "PIT_6002B_NONE",
+        id: "PT_6002_DATA-PT_6002_NONE",
+        source: "PT_6002_DATA",
+        target: "PT_6002_NONE",
         type: "smoothstep",
 
      
@@ -231,8 +231,29 @@ export const edgePRU = [
      
         
     },
+
+
     {
-        id: "PCV_line1_Bottom_none-PCV_line1_Bottom_none2",
+        id: "PCV_6001B_none-PCV_6001B_none2",
+        source: "PCV_6001B_none",
+        target: "PCV_6001B_none2",
+        type: "smoothstep",
+
+     
+        
+    },
+
+    {
+        id: "PCV_6001A_none-PCV_6001A_none2",
+        source: "PCV_6001A_none",
+        target: "PCV_6001A_none2",
+        type: "smoothstep",
+
+     
+        
+    },
+    {
+        id: "PCV_6002B_DATA-PCV_line1_Bottom_none2",
         source: "PCV_line1_Bottom_none",
         target: "PCV_line1_Bottom_none2",
         type: "smoothstep",
@@ -309,19 +330,19 @@ export const edgePRU = [
         type: "smoothstep",
     },
 
-    {
-        id: "TIT_6001A_NONE-TIT_6001A_DATA",
-        source: "TIT_6001A_NONE",
-        target: "TIT_6001A_DATA",
-        type: "smoothstep",
-    },
+    // {
+    //     id: "TT_6001_NONE-TT_6001_DATA",
+    //     source: "TT_6001_NONE",
+    //     target: "TT_6001_DATA",
+    //     type: "smoothstep",
+    // },
 
-    {
-        id: "PIT_6003A_NONE-PIT_6003A_DATA",
-        source: "PIT_6003A_NONE",
-        target: "PIT_6003A_DATA",
-        type: "smoothstep",
-    },
+    // {
+    //     id: "PT_6003_NONE-PT_6003_DATA",
+    //     source: "PT_6003_NONE",
+    //     target: "PT_6003_DATA",
+    //     type: "smoothstep",
+    // },
 
     {
         id: "FIQ_6001A-EVC_01_Flow_at_Base_Condition",
@@ -337,6 +358,7 @@ export const edgePRU = [
         target: "EVC_02_Flow_at_Base_Condition",
         type: "smoothstep",
     },
+
     {
         id: "line9none-line10none",
         source: "line9none",
@@ -346,4 +368,19 @@ export const edgePRU = [
             ...styleLine3,
         },
     },
+    {
+        id: "FIQ_2001A-EVC_01_Pressure_DATA",
+        source: "FIQ_2001A",
+        target: "EVC_01_Pressure_DATA",
+        type: "smoothstep",
+    },
+
+
+    {
+        id: "FIQ_2001B-EVC_02_Pressure_DATA",
+        source: "FIQ_2001B",
+        target: "EVC_02_Pressure_DATA",
+        type: "smoothstep",
+    },
+
 ]
