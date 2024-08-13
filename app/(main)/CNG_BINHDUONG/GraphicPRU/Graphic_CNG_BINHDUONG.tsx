@@ -3284,7 +3284,8 @@ export default function Graphic_CNG_BINHDUONG() {
     //     ? JSON.parse(storedPositionString)
     //     : {
               const initialPositions = {
-              AlarmCenter: { x: -996.6028672622674, y: 718.8443630551295 },
+                AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
+
               Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
               BallVavleLine2_Bottom: {
                   x: -1752.748552461399,
