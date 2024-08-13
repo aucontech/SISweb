@@ -193,18 +193,18 @@ export const edgePRU = [
         
     },
      {
-        id: "PT_3001_DATA-PT_3001_NONE",
-        source: "PT_3001_DATA",
-        target: "PT_3001_NONE",
+        id: "PIT_6002A_DATA-PIT_6002A_NONE",
+        source: "PIT_6002A_DATA",
+        target: "PIT_6002A_NONE",
         type: "smoothstep",
 
      
         
     },
     {
-        id: "PT_3002_DATA-PT_3002_NONE",
-        source: "PT_3002_DATA",
-        target: "PT_3002_NONE",
+        id: "PIT_6002B_DATA-PIT_6002B_NONE",
+        source: "PIT_6002B_DATA",
+        target: "PIT_6002B_NONE",
         type: "smoothstep",
 
      

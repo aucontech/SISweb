@@ -30,6 +30,8 @@ import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
+import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
+import { nameValue } from "../../SetupData/namValue";
 import AlarmPRU from "@/layout/AlarmBell/AlarmPRU";
 
 interface StateMap {
@@ -64,48 +66,6 @@ export default function GraphicPRU() {
 
     const toast = useRef<Toast>(null);
 
-    const [PIT_6001A, setPIT_6001A] = useState<string | null>(null);
-    const [PIT_6001B, setPIT_6001B] = useState<string | null>(null);
-    const [PIT_6002A, setPIT_6002A] = useState<string | null>(null);
-    const [PIT_6002B, setPIT_6002B] = useState<string | null>(null);
-    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-
-    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
-        null
-    );
-    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
-        null
-    );
-    const [
-        EVC_01_Flow_at_Measurement_Condition,
-        setEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
-        useState<string | null>(null);
-    const [
-        EVC_01_Volume_at_Base_Condition,
-        setEVC_01_Volume_at_Base_Condition,
-    ] = useState<string | null>(null);
-    const [
-        EVC_01_Volume_at_Measurement_Condition,
-        setEVC_01_Volume_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-
-    const [
-        EVC_02_Flow_at_Measurement_Condition,
-        setEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] =
-        useState<string | null>(null);
-    const [
-        EVC_02_Volume_at_Base_Condition,
-        setEVC_02_Volume_at_Base_Condition,
-    ] = useState<string | null>(null);
-    const [
-        EVC_02_Volume_at_Measurement_Condition,
-        setEVC_02_Volume_at_Measurement_Condition,
-    ] = useState<string | null>(null);
     const [PCV_6001A, setPCV_6001A] = useState();
     const [PCV_6001B, setPCV_6001B] = useState();
     const [PCV_6002A, setPCV_6002A] = useState();
@@ -130,6 +90,15 @@ export default function GraphicPRU() {
     >(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
     const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+    const [LPG, setLPG] = useState<any>();
+    const [AIR, setAIR] = useState<any>();
+
+    const totalHeight = 500;
+    const totalWidth = 50;
+
+    const DataLPG = (totalHeight * LPG) / 100;
+    const DataAir = (totalHeight * AIR) / 100;
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -292,6 +261,7 @@ export default function GraphicPRU() {
                         PIT_6001B: setPIT_6001B,
                         PIT_6002A: setPIT_6002A,
                         PIT_6002B: setPIT_6002B,
+                        PIT_6003A: setPIT_6003A,
 
                         EVC_01_Pressure: setEVC_01_Pressure,
                         EVC_02_Pressure: setEVC_02_Pressure,
@@ -302,7 +272,6 @@ export default function GraphicPRU() {
                         SDV_6001B: setSDV_6001B,
                         SDV_6002: setSDV_6002,
                         TIT_6001A: setTIT_6001A,
-                        PIT_6003A: setPIT_6003A,
                         GD_6001: setGD_6001,
 
                         EVC_01_Flow_at_Base_Condition:
@@ -382,7 +351,7 @@ export default function GraphicPRU() {
                     setPCV_6002A(ballValue2A);
 
                     const ballValueS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_6001A
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_6001A
                             .value;
                     setPSV_6001A(ballValueS);
                     const ballValueSB =
@@ -430,10 +399,8 @@ export default function GraphicPRU() {
                     setPSV_6002B(updatedDataS2A);
                 }
 
-            fetchData();
-
+                fetchData();
             };
-
         }
     }, [data]);
 
@@ -446,79 +413,79 @@ export default function GraphicPRU() {
             const HighPIT_6001A = res.data.find(
                 (item: any) => item.key === "PIT_6001A_High"
             );
-            setHighPIT_6001A(HighPIT_6001A?.value || null);
+            setPIT_6001A_High(HighPIT_6001A?.value || null);
             const LowPIT_6001A = res.data.find(
                 (item: any) => item.key === "PIT_6001A_Low"
             );
-            setLowPIT_6001A(LowPIT_6001A?.value || null);
+            setPIT_6001A_Low(LowPIT_6001A?.value || null);
 
             const MaintainPIT_6001A = res.data.find(
                 (item: any) => item.key === "PIT_6001A_Maintain"
             );
-            setMaintainPIT_6001A(MaintainPIT_6001A?.value || false);
+            setmaintainPIT_6001A(MaintainPIT_6001A?.value || false);
             //===========================================================================================
 
             const HighPIT_6001B = res.data.find(
                 (item: any) => item.key === "PIT_6001B_High"
             );
-            setHighPIT_6001B(HighPIT_6001B?.value || null);
+            setPIT_6001B_High(HighPIT_6001B?.value || null);
             const LowPIT_6001B = res.data.find(
                 (item: any) => item.key === "PIT_6001B_Low"
             );
-            setLowPIT_6001B(LowPIT_6001B?.value || null);
+            setPIT_6001B_Low(LowPIT_6001B?.value || null);
 
             const MaintainPIT_6001B = res.data.find(
                 (item: any) => item.key === "PIT_6001B_Maintain"
             );
-            setMaintainPIT_6001B(MaintainPIT_6001B?.value || false);
+            setmaintainPIT_6001B(MaintainPIT_6001B?.value || false);
             //===========================================================================================
 
             const HighPIT_6002A = res.data.find(
                 (item: any) => item.key === "PIT_6002A_High"
             );
-            setHighPIT_6002A(HighPIT_6002A?.value || null);
+            setPIT_6002A_High(HighPIT_6002A?.value || null);
             const LowPIT_6002A = res.data.find(
                 (item: any) => item.key === "PIT_6002A_Low"
             );
-            setLowPIT_6002A(LowPIT_6002A?.value || null);
+            setPIT_6002A_Low(LowPIT_6002A?.value || null);
 
             const PIT_6002A_Maintain = res.data.find(
                 (item: any) => item.key === "PIT_6002A_Maintain"
             );
-            setMaintainPIT_6002A(PIT_6002A_Maintain?.value || false);
+            setmaintainPIT_6002A(PIT_6002A_Maintain?.value || false);
 
             //===========================================================================================
 
             const HighPIT_6002B = res.data.find(
                 (item: any) => item.key === "PIT_6002B_High"
             );
-            setHighPIT_6002B(HighPIT_6002B?.value || null);
+            setPIT_6002B_High(HighPIT_6002B?.value || null);
 
             const LowPIT_6002B = res.data.find(
                 (item: any) => item.key === "PIT_6002B_Low"
             );
-            setLowPIT_6002B(LowPIT_6002B?.value || null);
+            setPIT_6002B_Low(LowPIT_6002B?.value || null);
 
             const PIT_6002B_Maintain = res.data.find(
                 (item: any) => item.key === "PIT_6002B_Maintain"
             );
-            setMaintainPIT_6002B(PIT_6002B_Maintain?.value || false);
+            setmaintainPIT_6002B(PIT_6002B_Maintain?.value || false);
             //===========================================================================================
 
             const HighEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_High"
             );
-            setHighEVC_01_Pressure(HighEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_High(HighEVC_01_Pressure?.value || null);
 
             const LowEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Low"
             );
-            setLowEVC_01_Pressure(LowEVC_01_Pressure?.value || null);
+            setEVC_01_Pressure_Low(LowEVC_01_Pressure?.value || null);
 
             const EVC_01_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
-            setMaintainEVC_01_Pressure(
+            setmaintainEVC_01_Pressure(
                 EVC_01_Pressure_Maintain?.value || false
             );
 
@@ -527,16 +494,16 @@ export default function GraphicPRU() {
             const HighEVC_02_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_High"
             );
-            setHighEVC_02_Pressure(HighEVC_02_Pressure?.value || null);
+            setEVC_02_Pressure_High(HighEVC_02_Pressure?.value || null);
 
             const LowEVC_02_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Low"
             );
-            setLowEVC_02_Pressure(LowEVC_02_Pressure?.value || null);
+            setEVC_02_Pressure_Low(LowEVC_02_Pressure?.value || null);
             const EVC_02_Pressure_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Pressure_Maintain"
             );
-            setMaintainEVC_02_Pressure(
+            setmaintainEVC_02_Pressure(
                 EVC_02_Pressure_Maintain?.value || false
             );
 
@@ -545,16 +512,16 @@ export default function GraphicPRU() {
             const HighEVC_01_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_High"
             );
-            setHighEVC_01_Temperature(HighEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_High(HighEVC_01_Temperature?.value || null);
 
             const LowEVC_01_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Low"
             );
-            setLowEVC_01_Temperature(LowEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_Low(LowEVC_01_Temperature?.value || null);
             const EVC_01_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
-            setMaintainEVC_01_Temperature(
+            setmaintainEVC_01_Temperature(
                 EVC_01_Temperature_Maintain?.value || false
             );
 
@@ -563,117 +530,85 @@ export default function GraphicPRU() {
             const HighEVC_02_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_High"
             );
-            setHighEVC_02_Temperature(HighEVC_02_Temperature?.value || null);
+            setEVC_02_Temperature_High(HighEVC_02_Temperature?.value || null);
 
             const LowEVC_02_Temperature = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Low"
             );
-            setLowEVC_02_Temperature(LowEVC_02_Temperature?.value || null);
+            setEVC_02_Temperature_Low(LowEVC_02_Temperature?.value || null);
 
             const EVC_02_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_02_Temperature_Maintain"
             );
-            setMaintainEVC_02_Temperature(
+            setmaintainEVC_02_Temperature(
                 EVC_02_Temperature_Maintain?.value || false
             );
             //===========================================================================================
 
-            const HighSDV_6001A = res.data.find(
-                (item: any) => item.key === "SDV_6001A_High"
-            );
-            setHighSDV_6001A(HighSDV_6001A?.value || null);
-
-            const LowSDV_6001A = res.data.find(
-                (item: any) => item.key === "SDV_6001A_Low"
-            );
-            setLowSDV_6001A(LowSDV_6001A?.value || null);
-
-            const SDV_6001A_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_6001A_Maintain"
-            );
-            setMaintainSDV_6001A(SDV_6001A_Maintain?.value || false);
-            //===========================================================================================
-
-            const HighSDV_6002 = res.data.find(
-                (item: any) => item.key === "SDV_6002_High"
-            );
-            setHighSDV_6002(HighSDV_6002?.value || null);
-
-            const LowSDV_6002 = res.data.find(
-                (item: any) => item.key === "SDV_6002_Low"
-            );
-            setLowSDV_6002(LowSDV_6002?.value || null);
-
-            const SDV_6002_Maintain = res.data.find(
-                (item: any) => item.key === "SDV_6002_Maintain"
-            );
-            setMaintainSDV_6002(SDV_6002_Maintain?.value || false);
-
-            //===========================================================================================
             //===========================================================================================
 
             const HighTIT_6001A = res.data.find(
                 (item: any) => item.key === "TIT_6001A_High"
             );
-            setHighTIT_6001A(HighTIT_6001A?.value || null);
+            setTIT_6001A_High(HighTIT_6001A?.value || null);
 
             const LowTIT_6001A = res.data.find(
                 (item: any) => item.key === "TIT_6001A_Low"
             );
-            setLowTIT_6001A(LowTIT_6001A?.value || null);
+            setTIT_6001A_Low(LowTIT_6001A?.value || null);
 
             const TIT_6001A_Maintain = res.data.find(
                 (item: any) => item.key === "TIT_6001A_Maintain"
             );
-            setMaintainTIT_6001A(TIT_6001A_Maintain?.value || false);
+            setmaintainTIT_6001A(TIT_6001A_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
             const HighPIT_6003A = res.data.find(
                 (item: any) => item.key === "PIT_6003A_High"
             );
-            setHighPIT_6003A(HighPIT_6003A?.value || null);
+            setPIT_6003A_High(HighPIT_6003A?.value || null);
 
             const LowPIT_6003A = res.data.find(
                 (item: any) => item.key === "PIT_6003A_Low"
             );
-            setLowPIT_6003A(LowPIT_6003A?.value || null);
+            setPIT_6003A_Low(LowPIT_6003A?.value || null);
 
             const PIT_6003A_Maintain = res.data.find(
                 (item: any) => item.key === "PIT_6003A_Maintain"
             );
-            setMaintainPIT_6003A(PIT_6003A_Maintain?.value || false);
+            setmaintainPIT_6003A(PIT_6003A_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
             const HighGD_6001 = res.data.find(
                 (item: any) => item.key === "GD_6001_High"
             );
-            setHighGD_6001(HighGD_6001?.value || null);
+            setGD_6001_High(HighGD_6001?.value || null);
 
             const LowGD_6001 = res.data.find(
                 (item: any) => item.key === "GD_6001_Low"
             );
-            setLowGD_6001(LowGD_6001?.value || null);
+            setGD_6001_Low(LowGD_6001?.value || null);
 
             const GD_6001_Maintain = res.data.find(
                 (item: any) => item.key === "GD_6001_Maintain"
             );
-            setMaintainGD_6001(GD_6001_Maintain?.value || false);
+            setmaintainGD_6001(GD_6001_Maintain?.value || false);
             //===========================================================================================
             //===========================================================================================
 
             const HighEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setHighEVC_01_Flow_at_Base_Condition(
+            setEVC_01_Flow_at_Base_Condition_High(
                 HighEVC_01_Flow_at_Base_Condition?.value || null
             );
 
             const LowEVC_01_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setLowEVC_01_Flow_at_Base_Condition(
+            setEVC_01_Flow_at_Base_Condition_Low(
                 LowEVC_01_Flow_at_Base_Condition?.value || null
             );
 
@@ -681,7 +616,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Base_Condition(
+            setmaintainEVC_01_Flow_at_Base_Condition(
                 EVC_01_Flow_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -692,7 +627,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setHighEVC_01_Flow_at_Measurement_Condition(
+            setEVC_01_Flow_at_Measurement_Condition_High(
                 HighEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -700,7 +635,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setLowEVC_01_Flow_at_Measurement_Condition(
+            setEVC_01_Flow_at_Measurement_Condition_Low(
                 LowEVC_01_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -708,7 +643,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_01_Flow_at_Measurement_Condition(
+            setmaintainEVC_01_Flow_at_Measurement_Condition(
                 EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -719,7 +654,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
-            setHighEVC_01_Volume_at_Base_Condition(
+            setEVC_01_Volume_at_Base_Condition_High(
                 HighEVC_01_Volume_at_Base_Condition?.value || null
             );
 
@@ -727,7 +662,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
-            setLowEVC_01_Volume_at_Base_Condition(
+            setEVC_01_Volume_at_Base_Condition_Low(
                 LowEVC_01_Volume_at_Base_Condition?.value || null
             );
 
@@ -735,7 +670,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_01_Volume_at_Base_Condition(
+            setmaintainEVC_01_Volume_at_Base_Condition(
                 EVC_01_Volume_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -746,7 +681,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
-            setHighEVC_01_Volume_at_Measurement_Condition(
+            setEVC_01_Volume_at_Measurement_Condition_High(
                 HighEVC_01_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -754,7 +689,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
-            setLowEVC_01_Volume_at_Measurement_Condition(
+            setEVC_01_Volume_at_Measurement_Condition_Low(
                 LowEVC_01_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -764,7 +699,7 @@ export default function GraphicPRU() {
                         item.key ===
                         "EVC_01_Volume_at_Measurement_Condition_Maintain"
                 );
-            setMaintainEVC_01_Volume_at_Measurement_Condition(
+            setmaintainEVC_01_Volume_at_Measurement_Condition(
                 EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -773,14 +708,14 @@ export default function GraphicPRU() {
             const HighEVC_02_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
-            setHighEVC_02_Flow_at_Base_Condition(
+            setEVC_02_Flow_at_Base_Condition_High(
                 HighEVC_02_Flow_at_Base_Condition?.value || null
             );
 
             const LowEVC_02_Flow_at_Base_Condition = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
-            setLowEVC_02_Flow_at_Base_Condition(
+            setEVC_02_Flow_at_Base_Condition_Low(
                 LowEVC_02_Flow_at_Base_Condition?.value || null
             );
 
@@ -788,7 +723,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_02_Flow_at_Base_Condition(
+            setmaintainEVC_02_Flow_at_Base_Condition(
                 EVC_02_Flow_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -799,7 +734,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
-            setHighEVC_02_Flow_at_Measurement_Condition(
+            setEVC_02_Flow_at_Measurement_Condition_High(
                 HighEVC_02_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -807,7 +742,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
-            setLowEVC_02_Flow_at_Measurement_Condition(
+            setEVC_02_Flow_at_Measurement_Condition_Low(
                 LowEVC_02_Flow_at_Measurement_Condition?.value || null
             );
 
@@ -815,7 +750,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
-            setMaintainEVC_02_Flow_at_Measurement_Condition(
+            setmaintainEVC_02_Flow_at_Measurement_Condition(
                 EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -825,7 +760,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_High"
             );
-            setHighEVC_02_Volume_at_Base_Condition(
+            setEVC_02_Volume_at_Base_Condition_High(
                 HighEVC_02_Volume_at_Base_Condition?.value || null
             );
 
@@ -833,7 +768,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
-            setLowEVC_02_Volume_at_Base_Condition(
+            setEVC_02_Volume_at_Base_Condition_Low(
                 LowEVC_02_Volume_at_Base_Condition?.value || null
             );
 
@@ -841,7 +776,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
-            setMaintainEVC_02_Volume_at_Base_Condition(
+            setmaintainEVC_02_Volume_at_Base_Condition(
                 EVC_02_Volume_at_Base_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -852,7 +787,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
-            setHighEVC_02_Volume_at_Measurement_Condition(
+            setEVC_02_Volume_at_Measurement_Condition_High(
                 HighEVC_02_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -860,7 +795,7 @@ export default function GraphicPRU() {
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
-            setLowEVC_02_Volume_at_Measurement_Condition(
+            setEVC_02_Volume_at_Measurement_Condition_Low(
                 LowEVC_02_Volume_at_Measurement_Condition?.value || null
             );
 
@@ -870,7 +805,7 @@ export default function GraphicPRU() {
                         item.key ===
                         "EVC_02_Volume_at_Measurement_Condition_Maintain"
                 );
-            setMaintainEVC_02_Volume_at_Measurement_Condition(
+            setmaintainEVC_02_Volume_at_Measurement_Condition(
                 EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false
             );
             //===========================================================================================
@@ -889,1572 +824,754 @@ export default function GraphicPRU() {
         PIT_6001B: "PIT_6001B",
         PIT_6002A: "PIT_6002A",
         PIT_6002B: "PIT_6002B",
-        EVC_01_Pressure: "EVC 01 Pressure",
-        EVC_02_Pressure: "EVC 02 Pressure",
+        EVC_01_Pressure: " Pressure",
+        EVC_02_Pressure: " Pressure",
 
-        EVC_01_Temperature: "EVC 01 Temperature",
-        EVC_02_Temperature: "EVC 02 Temperature",
+        EVC_01_Temperature: "Temperature",
+        EVC_02_Temperature: "Temperature",
         TT: "TT",
     };
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
-        BARG: "BARG",
+        BARG: "BarG",
     };
     //================================ PIT_6001A================================
 
-    const [audioPIT_6001A, setaudioPIT_6001A] = useState(false);
-    const [HighPIT_6001A, setHighPIT_6001A] = useState<number | null>(null);
-    const [LowPIT_6001A, setLowPIT_6001A] = useState<number | null>(null);
-    const [audioColorPIT_6001A, setaudioColorPIT_6001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [PIT_6001A, setPIT_6001A] = useState<string | null>(null);
 
-    const [maintainPIT_6001A, setMaintainPIT_6001A] = useState<boolean>(false);
+    const [PIT_6001A_High, setPIT_6001A_High] = useState<number | null>(null);
+    const [PIT_6001A_Low, setPIT_6001A_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_6001A, setexceedThresholdPIT_6001A] =
+        useState(false);
+
+    const [maintainPIT_6001A, setmaintainPIT_6001A] = useState<boolean>(false);
 
     useEffect(() => {
+        const PIT_6001AValue = parseFloat(PIT_6001A as any);
+        const highValue = PIT_6001A_High ?? NaN;
+        const lowValue = PIT_6001A_Low ?? NaN;
+
         if (
-            typeof HighPIT_6001A === "string" &&
-            typeof LowPIT_6001A === "string" &&
-            PIT_6001A !== null &&
-            maintainPIT_6001A === false
+            !isNaN(PIT_6001AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_6001A
         ) {
-            const highValue = parseFloat(HighPIT_6001A);
-            const lowValue = parseFloat(LowPIT_6001A);
-            const PIT_6001AValue = parseFloat(PIT_6001A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_6001AValue)
-            ) {
-                if (highValue < PIT_6001AValue || PIT_6001AValue < lowValue) {
-                    if (!audioPIT_6001A) {
-                        audioRef.current?.play();
-                        setaudioPIT_6001A(true);
-                        setaudioColorPIT_6001A(true);
-                    }
-                } else {
-                    setaudioPIT_6001A(false);
-                    setaudioColorPIT_6001A(false);
-                }
-            }
+            setexceedThresholdPIT_6001A(
+                PIT_6001AValue >= highValue || PIT_6001AValue <= lowValue
+            );
         }
-    }, [
-        HighPIT_6001A,
-        PIT_6001A,
-        audioPIT_6001A,
-        LowPIT_6001A,
-        maintainPIT_6001A,
-    ]);
-
-    useEffect(() => {
-        if (audioPIT_6001A) {
-            const audioEnded = () => {
-                setaudioPIT_6001A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_6001A]);
-
-    //================================ PIT_6001A======================================================
+    }, [PIT_6001A, PIT_6001A_High, PIT_6001A_Low, maintainPIT_6001A]);
 
     //================================ PIT_6001B================================
 
-    const [audioPIT_6001B, setaudioPIT_6001B] = useState(false);
-    const [HighPIT_6001B, setHighPIT_6001B] = useState<number | null>(null);
-    const [LowPIT_6001B, setLowPIT_6001B] = useState<number | null>(null);
-    const [audioColorPIT_6001B, setaudioColorPIT_6001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPIT_6001B, setMaintainPIT_6001B] = useState<boolean>(false);
+    const [PIT_6001B, setPIT_6001B] = useState<string | null>(null);
+    const [PIT_6001B_High, setPIT_6001B_High] = useState<number | null>(null);
+    const [PIT_6001B_Low, setPIT_6001B_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_6001B, setexceedThresholdPIT_6001B] =
+        useState(false);
+    const [maintainPIT_6001B, setmaintainPIT_6001B] = useState<boolean>(false);
 
     useEffect(() => {
+        const PIT_6001BValue = parseFloat(PIT_6001B as any);
+        const highValue = PIT_6001B_High ?? NaN;
+        const lowValue = PIT_6001B_Low ?? NaN;
+
         if (
-            typeof HighPIT_6001B === "string" &&
-            typeof LowPIT_6001B === "string" &&
-            PIT_6001B !== null &&
-            maintainPIT_6001B === false
+            !isNaN(PIT_6001BValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_6001B
         ) {
-            const highValue = parseFloat(HighPIT_6001B);
-            const lowValue = parseFloat(LowPIT_6001B);
-            const PIT_6001BValue = parseFloat(PIT_6001B);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_6001BValue)
-            ) {
-                if (highValue < PIT_6001BValue || PIT_6001BValue < lowValue) {
-                    if (!audioPIT_6001B) {
-                        audioRef.current?.play();
-                        setaudioPIT_6001B(true);
-                        setaudioColorPIT_6001B(true);
-                    }
-                } else {
-                    setaudioPIT_6001B(false);
-                    setaudioColorPIT_6001B(false);
-                }
-            }
+            setexceedThresholdPIT_6001B(
+                PIT_6001BValue >= highValue || PIT_6001BValue <= lowValue
+            );
         }
-    }, [
-        HighPIT_6001B,
-        PIT_6001B,
-        audioPIT_6001B,
-        LowPIT_6001B,
-        maintainPIT_6001B,
-    ]);
-
-    useEffect(() => {
-        if (audioPIT_6001B) {
-            const audioEnded = () => {
-                setaudioPIT_6001B(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_6001B]);
-
-    //================================ PIT_6001B ======================================================
-
+    }, [PIT_6001B, PIT_6001B_High, PIT_6001B_Low, maintainPIT_6001B]);
     //================================ PIT_6002A================================
 
-    const [audioPIT_6002A, setaudioPIT_6002A] = useState(false);
-    const [HighPIT_6002A, setHighPIT_6002A] = useState<number | null>(null);
-    const [LowPIT_6002A, setLowPIT_6002A] = useState<number | null>(null);
-    const [audioColorPIT_6002A, setaudioColorPIT_6002A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPIT_6002A, setMaintainPIT_6002A] = useState<boolean>(false);
+    const [PIT_6002A, setPIT_6002A] = useState<string | null>(null);
+    const [PIT_6002A_High, setPIT_6002A_High] = useState<number | null>(null);
+    const [PIT_6002A_Low, setPIT_6002A_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_6002A, setexceedThresholdPIT_6002A] = useState(false);
+    const [maintainPIT_6002A, setmaintainPIT_6002A] = useState<boolean>(false);
 
     useEffect(() => {
+        const PIT_6002AValue = parseFloat(PIT_6002A as any);
+        const highValue = PIT_6002A_High ?? NaN;
+        const lowValue = PIT_6002A_Low ?? NaN;
+
         if (
-            typeof HighPIT_6002A === "string" &&
-            typeof LowPIT_6002A === "string" &&
-            PIT_6002A !== null &&
-            maintainPIT_6002A === false
+            !isNaN(PIT_6002AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_6002A
         ) {
-            const highValue = parseFloat(HighPIT_6002A);
-            const lowValue = parseFloat(LowPIT_6002A);
-            const PIT_6002AValue = parseFloat(PIT_6002A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_6002AValue)
-            ) {
-                if (highValue < PIT_6002AValue || PIT_6002AValue < lowValue) {
-                    if (!audioPIT_6002A) {
-                        audioRef.current?.play();
-                        setaudioPIT_6002A(true);
-                        setaudioColorPIT_6002A(true);
-                    }
-                } else {
-                    setaudioPIT_6002A(false);
-                    setaudioColorPIT_6002A(false);
-                }
-            }
+            setexceedThresholdPIT_6002A(
+                PIT_6002AValue >= highValue || PIT_6002AValue <= lowValue
+            );
         }
-    }, [
-        HighPIT_6002A,
-        PIT_6002A,
-        audioPIT_6002A,
-        LowPIT_6002A,
-        maintainPIT_6002A,
-    ]);
-
-    useEffect(() => {
-        if (audioPIT_6002A) {
-            const audioEnded = () => {
-                setaudioPIT_6002A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_6002A]);
-
-    //================================ PIT_6002A ======================================================
+    }, [PIT_6002A, PIT_6002A_High, PIT_6002A_Low, maintainPIT_6002A]);
 
     //================================ PIT_6002B================================
 
-    const [audioPIT_6002B, setaudioPIT_6002B] = useState(false);
-    const [HighPIT_6002B, setHighPIT_6002B] = useState<number | null>(null);
-    const [LowPIT_6002B, setLowPIT_6002B] = useState<number | null>(null);
-    const [audioColorPIT_6002B, setaudioColorPIT_6002B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPIT_6002B, setMaintainPIT_6002B] = useState<boolean>(false);
+    const [PIT_6002B, setPIT_6002B] = useState<string | null>(null);
+    const [PIT_6002B_High, setPIT_6002B_High] = useState<number | null>(null);
+    const [PIT_6002B_Low, setPIT_6002B_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_6002B, setexceedThresholdPIT_6002B] = useState(false);
+    const [maintainPIT_6002B, setmaintainPIT_6002B] = useState<boolean>(false);
 
     useEffect(() => {
+        const PIT_6002BValue = parseFloat(PIT_6002B as any);
+        const highValue = PIT_6002B_High ?? NaN;
+        const lowValue = PIT_6002B_Low ?? NaN;
+
         if (
-            typeof HighPIT_6002B === "string" &&
-            typeof LowPIT_6002B === "string" &&
-            PIT_6002B !== null &&
-            maintainPIT_6002B === false
+            !isNaN(PIT_6002BValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_6002B
         ) {
-            const highValue = parseFloat(HighPIT_6002B);
-            const lowValue = parseFloat(LowPIT_6002B);
-            const PIT_6002BValue = parseFloat(PIT_6002B);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_6002BValue)
-            ) {
-                if (highValue < PIT_6002BValue || PIT_6002BValue < lowValue) {
-                    if (!audioPIT_6002B) {
-                        audioRef.current?.play();
-                        setaudioPIT_6002B(true);
-                        setaudioColorPIT_6002B(true);
-                    }
-                } else {
-                    setaudioPIT_6002B(false);
-                    setaudioColorPIT_6002B(false);
-                }
-            }
+            setexceedThresholdPIT_6002B(
+                PIT_6002BValue >= highValue || PIT_6002BValue <= lowValue
+            );
         }
-    }, [
-        HighPIT_6002B,
-        PIT_6002B,
-        audioPIT_6002B,
-        LowPIT_6002B,
-        maintainPIT_6002B,
-    ]);
-
-    useEffect(() => {
-        if (audioPIT_6002B) {
-            const audioEnded = () => {
-                setaudioPIT_6002B(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_6002B]);
-
-    //================================ PIT_6002B ======================================================
+    }, [PIT_6002B, PIT_6002B_High, PIT_6002B_Low, maintainPIT_6002B]);
 
     //================================ EVC_02_Pressure================================
+    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
 
-    const [audioEVC_02_Pressure, setaudioEVC_02_Pressure] = useState(false);
-    const [HighEVC_02_Pressure, setHighEVC_02_Pressure] = useState<
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
         number | null
     >(null);
-    const [LowEVC_02_Pressure, setLowEVC_02_Pressure] = useState<number | null>(
-        null
-    );
-    const [audioColorEVC_02_Pressure, setaudioColorEVC_02_Pressure] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] =
+        useState(false);
 
-    const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] =
+    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] =
         useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Pressure === "string" &&
-            typeof LowEVC_02_Pressure === "string" &&
-            EVC_02_Pressure !== null &&
-            maintainEVC_02_Pressure === false
-        ) {
-            const highValue = parseFloat(HighEVC_02_Pressure);
-            const lowValue = parseFloat(LowEVC_02_Pressure);
-            const EVC_02_PressureValue = parseFloat(EVC_02_Pressure);
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_02_PressureValue)
-            ) {
-                if (
-                    highValue < EVC_02_PressureValue ||
-                    EVC_02_PressureValue < lowValue
-                ) {
-                    if (!audioEVC_02_Pressure) {
-                        audioRef.current?.play();
-                        setaudioEVC_02_Pressure(true);
-                        setaudioColorEVC_02_Pressure(true);
-                    }
-                } else {
-                    setaudioEVC_02_Pressure(false);
-                    setaudioColorEVC_02_Pressure(false);
-                }
-            }
+        if (
+            !isNaN(EVC_02_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Pressure
+        ) {
+            setexceedThresholdEVC_02_Pressure(
+                EVC_02_PressureValue >= highValue ||
+                    EVC_02_PressureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Pressure,
         EVC_02_Pressure,
-        audioEVC_02_Pressure,
-        LowEVC_02_Pressure,
+        EVC_02_Pressure_High,
+        EVC_02_Pressure_Low,
         maintainEVC_02_Pressure,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Pressure) {
-            const audioEnded = () => {
-                setaudioEVC_02_Pressure(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Pressure]);
-
-    //================================ EVC_02_Pressure ======================================================
-
     //================================ EVC_01_Pressure================================
 
-    const [audioEVC_01_Pressure, setaudioEVC_01_Pressure] = useState(false);
-    const [HighEVC_01_Pressure, setHighEVC_01_Pressure] = useState<
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
+
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
         number | null
     >(null);
-    const [LowEVC_01_Pressure, setLowEVC_01_Pressure] = useState<number | null>(
-        null
-    );
-    const [audioColorEVC_01_Pressure, setaudioColorEVC_01_Pressure] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] =
+        useState(false);
 
-    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] =
+    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] =
         useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Pressure === "string" &&
-            typeof LowEVC_01_Pressure === "string" &&
-            EVC_01_Pressure !== null &&
-            maintainEVC_01_Pressure === false
-        ) {
-            const highValue = parseFloat(HighEVC_01_Pressure);
-            const lowValue = parseFloat(LowEVC_01_Pressure);
-            const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_01_PressureValue)
-            ) {
-                if (
-                    highValue < EVC_01_PressureValue ||
-                    EVC_01_PressureValue < lowValue
-                ) {
-                    if (!audioEVC_01_Pressure) {
-                        audioRef.current?.play();
-                        setaudioEVC_01_Pressure(true);
-                        setaudioColorEVC_01_Pressure(true);
-                    }
-                } else {
-                    setaudioEVC_01_Pressure(false);
-                    setaudioColorEVC_01_Pressure(false);
-                }
-            }
+        if (
+            !isNaN(EVC_01_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Pressure
+        ) {
+            setexceedThresholdEVC_01_Pressure(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Pressure,
         EVC_01_Pressure,
-        audioEVC_01_Pressure,
-        LowEVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
         maintainEVC_01_Pressure,
     ]);
-
-    useEffect(() => {
-        if (audioEVC_01_Pressure) {
-            const audioEnded = () => {
-                setaudioEVC_01_Pressure(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Pressure]);
-
-    //================================ EVC_01_Pressure ======================================================
-
     //================================ EVC_01_Temperature================================
 
-    const [audioEVC_01_Temperature, setaudioEVC_01_Temperature] =
-        useState(false);
-    const [HighEVC_01_Temperature, setHighEVC_01_Temperature] = useState<
-        number | null
-    >(null);
-    const [LowEVC_01_Temperature, setLowEVC_01_Temperature] = useState<
-        number | null
-    >(null);
-    const [audioColorEVC_01_Temperature, setaudioColorEVC_01_Temperature] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
+        null
+    );
 
-    const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] =
+    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_01_Temperature,
+        setexceedThresholdEVC_01_Temperature,
+    ] = useState(false);
+
+    const [maintainEVC_01_Temperature, setmaintainEVC_01_Temperature] =
         useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Temperature === "string" &&
-            typeof LowEVC_01_Temperature === "string" &&
-            EVC_01_Temperature !== null &&
-            maintainEVC_01_Temperature === false
-        ) {
-            const highValue = parseFloat(HighEVC_01_Temperature);
-            const lowValue = parseFloat(LowEVC_01_Temperature);
-            const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_01_TemperatureValue)
-            ) {
-                if (
-                    highValue < EVC_01_TemperatureValue ||
-                    EVC_01_TemperatureValue < lowValue
-                ) {
-                    if (!audioEVC_01_Temperature) {
-                        audioRef.current?.play();
-                        setaudioEVC_01_Temperature(true);
-                        setaudioColorEVC_01_Temperature(true);
-                    }
-                } else {
-                    setaudioEVC_01_Temperature(false);
-                    setaudioColorEVC_01_Temperature(false);
-                }
-            }
+        if (
+            !isNaN(EVC_01_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Temperature
+        ) {
+            setexceedThresholdEVC_01_Temperature(
+                EVC_01_TemperatureValue >= highValue ||
+                    EVC_01_TemperatureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Temperature,
         EVC_01_Temperature,
-        audioEVC_01_Temperature,
-        LowEVC_01_Temperature,
+        EVC_01_Temperature_High,
+        EVC_01_Temperature_Low,
         maintainEVC_01_Temperature,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Temperature) {
-            const audioEnded = () => {
-                setaudioEVC_01_Temperature(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Temperature]);
-
-    //================================ EVC_01_Temperature ======================================================
     //================================ EVC_02_Temperature================================
 
-    const [audioEVC_02_Temperature, setaudioEVC_02_Temperature] =
-        useState(false);
-    const [HighEVC_02_Temperature, setHighEVC_02_Temperature] = useState<
-        number | null
-    >(null);
-    const [LowEVC_02_Temperature, setLowEVC_02_Temperature] = useState<
-        number | null
-    >(null);
-    const [audioColorEVC_02_Temperature, setaudioColorEVC_02_Temperature] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
+        null
+    );
 
-    const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] =
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Temperature,
+        setexceedThresholdEVC_02_Temperature,
+    ] = useState(false);
+
+    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] =
         useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Temperature === "string" &&
-            typeof LowEVC_02_Temperature === "string" &&
-            EVC_02_Temperature !== null &&
-            maintainEVC_02_Temperature === false
-        ) {
-            const highValue = parseFloat(HighEVC_02_Temperature);
-            const lowValue = parseFloat(LowEVC_02_Temperature);
-            const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature);
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
 
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(EVC_02_TemperatureValue)
-            ) {
-                if (
-                    highValue < EVC_02_TemperatureValue ||
-                    EVC_02_TemperatureValue < lowValue
-                ) {
-                    if (!audioEVC_02_Temperature) {
-                        audioRef.current?.play();
-                        setaudioEVC_02_Temperature(true);
-                        setaudioColorEVC_02_Temperature(true);
-                    }
-                } else {
-                    setaudioEVC_02_Temperature(false);
-                    setaudioColorEVC_02_Temperature(false);
-                }
-            }
+        if (
+            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Temperature
+        ) {
+            setexceedThresholdEVC_02_Temperature(
+                EVC_02_TemperatureValue >= highValue ||
+                    EVC_02_TemperatureValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Temperature,
         EVC_02_Temperature,
-        audioEVC_02_Temperature,
-        LowEVC_02_Temperature,
+        EVC_02_Temperature_High,
+        EVC_02_Temperature_Low,
         maintainEVC_02_Temperature,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Temperature) {
-            const audioEnded = () => {
-                setaudioEVC_02_Temperature(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Temperature]);
-
-    //================================ EVC_02_Temperature ======================================================
-
     //================================ EVC_02_Temperature================================
 
-    const [audioSDV_6001A, setaudioSDV_6001A] = useState(false);
-    const [HighSDV_6001A, setHighSDV_6001A] = useState<number | null>(null);
-    const [LowSDV_6001A, setLowSDV_6001A] = useState<number | null>(null);
-    const [audioColorSDV_6001A, setaudioColorSDV_6001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_6001A, setMaintainSDV_6001A] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_6001A === "string" &&
-            typeof LowSDV_6001A === "string" &&
-            SDV_6001A !== null &&
-            maintainSDV_6001A === false
-        ) {
-            const highValue = parseFloat(HighSDV_6001A);
-            const lowValue = parseFloat(LowSDV_6001A);
-            const SDV_6001AValue = parseFloat(SDV_6001A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_6001AValue)
-            ) {
-                if (highValue < SDV_6001AValue || SDV_6001AValue < lowValue) {
-                    if (!audioSDV_6001A) {
-                        audioRef.current?.play();
-                        setaudioSDV_6001A(true);
-                        setaudioColorSDV_6001A(true);
-                    }
-                } else {
-                    setaudioSDV_6001A(false);
-                    setaudioColorSDV_6001A(false);
-                }
-            }
-        }
-    }, [
-        HighSDV_6001A,
-        SDV_6001A,
-        audioSDV_6001A,
-        LowSDV_6001A,
-        maintainSDV_6001A,
-    ]);
-
-    useEffect(() => {
-        if (audioSDV_6001A) {
-            const audioEnded = () => {
-                setaudioSDV_6001A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_6001A]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    //================================ EVC_02_Temperature================================
-
-    const [audioSDV_6001B, setaudioSDV_6001B] = useState(false);
-    const [HighSDV_6001B, setHighSDV_6001B] = useState<number | null>(null);
-    const [LowSDV_6001B, setLowSDV_6001B] = useState<number | null>(null);
-    const [audioColorSDV_6001B, setaudioColorSDV_6001B] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_6001B, setMaintainSDV_6001B] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_6001B === "string" &&
-            typeof LowSDV_6001B === "string" &&
-            SDV_6001B !== null &&
-            maintainSDV_6001B === false
-        ) {
-            const highValue = parseFloat(HighSDV_6001B);
-            const lowValue = parseFloat(LowSDV_6001B);
-            const SDV_6001BValue = parseFloat(SDV_6001B);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_6001BValue)
-            ) {
-                if (highValue < SDV_6001BValue || SDV_6001BValue < lowValue) {
-                    if (!audioSDV_6001B) {
-                        audioRef.current?.play();
-                        setaudioSDV_6001B(true);
-                        setaudioColorSDV_6001B(true);
-                    }
-                } else {
-                    setaudioSDV_6001B(false);
-                    setaudioColorSDV_6001B(false);
-                }
-            }
-        }
-    }, [
-        HighSDV_6001B,
-        SDV_6001B,
-        audioSDV_6001B,
-        LowSDV_6001B,
-        maintainSDV_6001B,
-    ]);
-
-    useEffect(() => {
-        if (audioSDV_6001B) {
-            const audioEnded = () => {
-                setaudioSDV_6001B(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_6001B]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    //================================ EVC_02_Temperature================================
-
-    const [audioSDV_6002, setaudioSDV_6002] = useState(false);
-    const [HighSDV_6002, setHighSDV_6002] = useState<number | null>(null);
-    const [LowSDV_6002, setLowSDV_6002] = useState<number | null>(null);
-    const [audioColorSDV_6002, setaudioColorSDV_6002] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSDV_6002, setMaintainSDV_6002] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSDV_6002 === "string" &&
-            typeof LowSDV_6002 === "string" &&
-            SDV_6002 !== null &&
-            maintainSDV_6002 === false
-        ) {
-            const highValue = parseFloat(HighSDV_6002);
-            const lowValue = parseFloat(LowSDV_6002);
-            const SDV_6002Value = parseFloat(SDV_6002);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(SDV_6002Value)
-            ) {
-                if (highValue < SDV_6002Value || SDV_6002Value < lowValue) {
-                    if (!audioSDV_6002) {
-                        audioRef.current?.play();
-                        setaudioSDV_6002(true);
-                        setaudioColorSDV_6002(true);
-                    }
-                } else {
-                    setaudioSDV_6002(false);
-                    setaudioColorSDV_6002(false);
-                }
-            }
-        }
-    }, [HighSDV_6002, SDV_6002, audioSDV_6002, LowSDV_6002, maintainSDV_6002]);
-
-    useEffect(() => {
-        if (audioSDV_6002) {
-            const audioEnded = () => {
-                setaudioSDV_6002(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSDV_6002]);
-
-    //================================ EVC_02_Temperature =============================================
-
-    //================================ EVC_02_Temperature================================
     const [TIT_6001A, setTIT_6001A] = useState<string | null>(null);
-    const [audioTIT_6001A, setaudioTIT_6001A] = useState(false);
-    const [HighTIT_6001A, setHighTIT_6001A] = useState<number | null>(null);
-    const [LowTIT_6001A, setLowTIT_6001A] = useState<number | null>(null);
-    const [audioColorTIT_6001A, setaudioColorTIT_6001A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainTIT_6001A, setMaintainTIT_6001A] = useState<boolean>(false);
+    const [TIT_6001A_High, setTIT_6001A_High] = useState<number | null>(null);
+    const [TIT_6001A_Low, setTIT_6001A_Low] = useState<number | null>(null);
+    const [exceedThresholdTIT_6001A, setexceedThresholdTIT_6001A] = useState(false);
+    const [maintainTIT_6001A, setmaintainTIT_6001A] = useState<boolean>(false);
 
     useEffect(() => {
+        const TIT_6001AValue = parseFloat(TIT_6001A as any);
+        const highValue = TIT_6001A_High ?? NaN;
+        const lowValue = TIT_6001A_Low ?? NaN;
+
         if (
-            typeof HighTIT_6001A === "string" &&
-            typeof LowTIT_6001A === "string" &&
-            TIT_6001A !== null &&
-            maintainTIT_6001A === false
+            !isNaN(TIT_6001AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTIT_6001A
         ) {
-            const highValue = parseFloat(HighTIT_6001A);
-            const lowValue = parseFloat(LowTIT_6001A);
-            const TIT_6001AValue = parseFloat(TIT_6001A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(TIT_6001AValue)
-            ) {
-                if (highValue < TIT_6001AValue || TIT_6001AValue < lowValue) {
-                    if (!audioTIT_6001A) {
-                        audioRef.current?.play();
-                        setaudioTIT_6001A(true);
-                        setaudioColorTIT_6001A(true);
-                    }
-                } else {
-                    setaudioTIT_6001A(false);
-                    setaudioColorTIT_6001A(false);
-                }
-            }
+            setexceedThresholdTIT_6001A(
+                TIT_6001AValue >= highValue || TIT_6001AValue <= lowValue
+            );
         }
-    }, [
-        HighTIT_6001A,
-        TIT_6001A,
-        audioTIT_6001A,
-        LowTIT_6001A,
-        maintainTIT_6001A,
-    ]);
-
-    useEffect(() => {
-        if (audioTIT_6001A) {
-            const audioEnded = () => {
-                setaudioTIT_6001A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioTIT_6001A]);
-
-    //================================ EVC_02_Temperature ======================================================
+    }, [TIT_6001A, TIT_6001A_High, TIT_6001A_Low, maintainTIT_6001A]);
 
     //================================ EVC_02_Temperature================================
+
     const [PIT_6003A, setPIT_6003A] = useState<string | null>(null);
-    const [audioPIT_6003A, setaudioPIT_6003A] = useState(false);
-    const [HighPIT_6003A, setHighPIT_6003A] = useState<number | null>(null);
-    const [LowPIT_6003A, setLowPIT_6003A] = useState<number | null>(null);
-    const [audioColorPIT_6003A, setaudioColorPIT_6003A] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainPIT_6003A, setMaintainPIT_6003A] = useState<boolean>(false);
+    const [PIT_6003A_High, setPIT_6003A_High] = useState<number | null>(null);
+    const [PIT_6003A_Low, setPIT_6003A_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_6003A, setexceedThresholdPIT_6003A] = useState(false);
+
+    const [maintainPIT_6003A, setmaintainPIT_6003A] = useState<boolean>(false);
 
     useEffect(() => {
+        const PIT_6003AValue = parseFloat(PIT_6003A as any);
+        const highValue = PIT_6003A_High ?? NaN;
+        const lowValue = PIT_6003A_Low ?? NaN;
+
         if (
-            typeof HighPIT_6003A === "string" &&
-            typeof LowPIT_6003A === "string" &&
-            PIT_6003A !== null &&
-            maintainPIT_6003A === false
+            !isNaN(PIT_6003AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_6003A
         ) {
-            const highValue = parseFloat(HighPIT_6003A);
-            const lowValue = parseFloat(LowPIT_6003A);
-            const PIT_6003AValue = parseFloat(PIT_6003A);
-
-            if (
-                !isNaN(highValue) &&
-                !isNaN(lowValue) &&
-                !isNaN(PIT_6003AValue)
-            ) {
-                if (highValue < PIT_6003AValue || PIT_6003AValue < lowValue) {
-                    if (!audioPIT_6003A) {
-                        audioRef.current?.play();
-                        setaudioPIT_6003A(true);
-                        setaudioColorPIT_6003A(true);
-                    }
-                } else {
-                    setaudioPIT_6003A(false);
-                    setaudioColorPIT_6003A(false);
-                }
-            }
+            setexceedThresholdPIT_6003A(
+                PIT_6003AValue >= highValue || PIT_6003AValue <= lowValue
+            );
         }
-    }, [
-        HighPIT_6003A,
-        PIT_6003A,
-        audioPIT_6003A,
-        LowPIT_6003A,
-        maintainPIT_6003A,
-    ]);
-
-    useEffect(() => {
-        if (audioPIT_6003A) {
-            const audioEnded = () => {
-                setaudioPIT_6003A(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPIT_6003A]);
+    }, [PIT_6003A, PIT_6003A_High, PIT_6003A_Low, maintainPIT_6003A]);
 
     //================================ EVC_02_Temperature ======================================================
 
-    //================================ EVC_02_Temperature================================
     const [GD_6001, setGD_6001] = useState<string | null>(null);
-    const [audioGD_6001, setaudioGD_6001] = useState(false);
-    const [HighGD_6001, setHighGD_6001] = useState<number | null>(null);
-    const [LowGD_6001, setLowGD_6001] = useState<number | null>(null);
-    const [audioColorGD_6001, setaudioColorGD_6001] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainGD_6001, setMaintainGD_6001] = useState<boolean>(false);
-
+    const [GD_6001_High, setGD_6001_High] = useState<number | null>(null);
+    const [GD_6001_Low, setGD_6001_Low] = useState<number | null>(null);
+    const [exceedThresholdGD_6001, setExceedThresholdGD_6001] = useState(false);
+    const [maintainGD_6001, setmaintainGD_6001] = useState<boolean>(false);
     useEffect(() => {
+        const GD_6001Value = parseFloat(GD_6001 as any);
+        const highValue = GD_6001_High ?? NaN;
+        const lowValue = GD_6001_Low ?? NaN;
+
         if (
-            typeof HighGD_6001 === "string" &&
-            typeof LowGD_6001 === "string" &&
-            GD_6001 !== null &&
-            maintainGD_6001 === false
+            !isNaN(GD_6001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD_6001
         ) {
-            const highValue = parseFloat(HighGD_6001);
-            const lowValue = parseFloat(LowGD_6001);
-            const GD_6001Value = parseFloat(GD_6001);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD_6001Value)) {
-                if (highValue < GD_6001Value || GD_6001Value < lowValue) {
-                    if (!audioGD_6001) {
-                        audioRef.current?.play();
-                        setaudioGD_6001(true);
-                        setaudioColorGD_6001(true);
-                    }
-                } else {
-                    setaudioGD_6001(false);
-                    setaudioColorGD_6001(false);
-                }
-            }
+            setExceedThresholdGD_6001(
+                GD_6001Value >= highValue || GD_6001Value <= lowValue
+            );
         }
-    }, [HighGD_6001, GD_6001, audioGD_6001, LowGD_6001, maintainGD_6001]);
-
-    useEffect(() => {
-        if (audioGD_6001) {
-            const audioEnded = () => {
-                setaudioGD_6001(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD_6001]);
-
-    //================================ EVC_02_Temperature ======================================================
+    }, [GD_6001, GD_6001_High, GD_6001_Low, maintainGD_6001]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
+
     const [
-        audioEVC_01_Flow_at_Base_Condition,
-        setAudioEVC_01_Flow_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_01_Flow_at_Base_Condition,
-        setHighEVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        setEVC_01_Flow_at_Base_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_01_Flow_at_Base_Condition,
-        setLowEVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_Low,
+        setEVC_01_Flow_at_Base_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_01_Flow_at_Base_Condition,
-        setExceedThresholdEVC_01_Flow_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [
-        inputValueHighEVC_01_Flow_at_Base_Condition,
-        setInputValueHighEVC_01_Flow_at_Base_Condition,
-    ] = useState<any>();
-    const [
-        inputValueLowEVC_01_Flow_at_Base_Condition,
-        settInputValueLowEVC_01_Flow_at_Base_Condition,
-    ] = useState<any>();
+        setexceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
 
     const [
         maintainEVC_01_Flow_at_Base_Condition,
-        setMaintainEVC_01_Flow_at_Base_Condition,
+        setmaintainEVC_01_Flow_at_Base_Condition,
     ] = useState<boolean>(false);
-
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Flow_at_Base_Condition === "string" &&
-            typeof LowEVC_01_Flow_at_Base_Condition === "string" &&
-            EVC_01_Flow_at_Base_Condition !== null &&
-            maintainEVC_01_Flow_at_Base_Condition === false
-        ) {
-            const highValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                HighEVC_01_Flow_at_Base_Condition
-            );
-            const lowValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                LowEVC_01_Flow_at_Base_Condition
-            );
-            const ValueEVC_01_Flow_at_Base_Condition = parseFloat(
-                EVC_01_Flow_at_Base_Condition
-            );
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_01_Flow_at_Base_Condition) &&
-                !isNaN(lowValueEVC_01_Flow_at_Base_Condition) &&
-                !isNaN(ValueEVC_01_Flow_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Flow_at_Base_Condition <=
-                        ValueEVC_01_Flow_at_Base_Condition ||
-                    ValueEVC_01_Flow_at_Base_Condition <=
-                        lowValueEVC_01_Flow_at_Base_Condition
-                ) {
-                    if (!audioEVC_01_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Base_Condition(true);
-                        setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Base_Condition(false);
-                    setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
+        if (
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Flow_at_Base_Condition,
         EVC_01_Flow_at_Base_Condition,
-        audioEVC_01_Flow_at_Base_Condition,
-        LowEVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        EVC_01_Flow_at_Base_Condition_Low,
         maintainEVC_01_Flow_at_Base_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Flow_at_Base_Condition]);
-
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
     const [
-        audioEVC_01_Flow_at_Measurement_Condition,
-        setAudioEVC_01_Flow_at_Measurement_Condition,
-    ] = useState(false);
+        EVC_01_Flow_at_Measurement_Condition,
+        setEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
     const [
-        HighEVC_01_Flow_at_Measurement_Condition,
-        setHighEVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        setEVC_01_Flow_at_Measurement_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_01_Flow_at_Measurement_Condition,
-        setLowEVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        setEVC_01_Flow_at_Measurement_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_01_Flow_at_Measurement_Condition,
-        setExceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Flow_at_Measurement_Condition,
     ] = useState(false);
-
     const [
         maintainEVC_01_Flow_at_Measurement_Condition,
-        setMaintainEVC_01_Flow_at_Measurement_Condition,
+        setmaintainEVC_01_Flow_at_Measurement_Condition,
     ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Flow_at_Measurement_Condition === "string" &&
-            typeof LowEVC_01_Flow_at_Measurement_Condition === "string" &&
-            EVC_01_Flow_at_Measurement_Condition !== null &&
-            maintainEVC_01_Flow_at_Measurement_Condition === false
-        ) {
-            const highValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                HighEVC_01_Flow_at_Measurement_Condition
-            );
-            const lowValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                LowEVC_01_Flow_at_Measurement_Condition
-            );
-            const ValueEVC_01_Flow_at_Measurement_Condition = parseFloat(
-                EVC_01_Flow_at_Measurement_Condition
-            );
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_01_Flow_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_01_Flow_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_01_Flow_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Flow_at_Measurement_Condition <=
-                        ValueEVC_01_Flow_at_Measurement_Condition ||
-                    ValueEVC_01_Flow_at_Measurement_Condition <=
-                        lowValueEVC_01_Flow_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_01_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Flow_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_01_Flow_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
+        if (
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Flow_at_Measurement_Condition,
         EVC_01_Flow_at_Measurement_Condition,
-        audioEVC_01_Flow_at_Measurement_Condition,
-        LowEVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        EVC_01_Flow_at_Measurement_Condition_Low,
         maintainEVC_01_Flow_at_Measurement_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Flow_at_Measurement_Condition]);
-
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
-
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
+
     const [
-        audioEVC_01_Volume_at_Base_Condition,
-        setAudioEVC_01_Volume_at_Base_Condition,
-    ] = useState(false);
+        EVC_01_Volume_at_Base_Condition,
+        setEVC_01_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
+
     const [
-        HighEVC_01_Volume_at_Base_Condition,
-        setHighEVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_High,
+        setEVC_01_Volume_at_Base_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_01_Volume_at_Base_Condition,
-        setLowEVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_Low,
+        setEVC_01_Volume_at_Base_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_01_Volume_at_Base_Condition,
-        setExceedThresholdEVC_01_Volume_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
+        setexceedThresholdEVC_01_Volume_at_Base_Condition,
+    ] = useState(false);
     const [
         maintainEVC_01_Volume_at_Base_Condition,
-        setMaintainEVC_01_Volume_at_Base_Condition,
+        setmaintainEVC_01_Volume_at_Base_Condition,
     ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Volume_at_Base_Condition === "string" &&
-            typeof LowEVC_01_Volume_at_Base_Condition === "string" &&
-            EVC_01_Volume_at_Base_Condition !== null &&
-            maintainEVC_01_Volume_at_Base_Condition === false
-        ) {
-            const highValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                HighEVC_01_Volume_at_Base_Condition
-            );
-            const lowValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                LowEVC_01_Volume_at_Base_Condition
-            );
-            const ValueEVC_01_Volume_at_Base_Condition = parseFloat(
-                EVC_01_Volume_at_Base_Condition
-            );
+        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_01_Volume_at_Base_Condition) &&
-                !isNaN(lowValueEVC_01_Volume_at_Base_Condition) &&
-                !isNaN(ValueEVC_01_Volume_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Volume_at_Base_Condition <=
-                        ValueEVC_01_Volume_at_Base_Condition ||
-                    ValueEVC_01_Volume_at_Base_Condition <=
-                        lowValueEVC_01_Volume_at_Base_Condition
-                ) {
-                    if (!audioEVC_01_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Base_Condition(true);
-                        setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Base_Condition(false);
-                    setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
+        if (
+            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Base_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Volume_at_Base_Condition,
         EVC_01_Volume_at_Base_Condition,
-        audioEVC_01_Volume_at_Base_Condition,
-        LowEVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_High,
+        EVC_01_Volume_at_Base_Condition_Low,
         maintainEVC_01_Volume_at_Base_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Volume_at_Base_Condition]);
-
-    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
-
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+
     const [
-        audioEVC_01_Volume_at_Measurement_Condition,
-        setAudioEVC_01_Volume_at_Measurement_Condition,
-    ] = useState(false);
+        EVC_01_Volume_at_Measurement_Condition,
+        setEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
     const [
-        HighEVC_01_Volume_at_Measurement_Condition,
-        setHighEVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_High,
+        setEVC_01_Volume_at_Measurement_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_01_Volume_at_Measurement_Condition,
-        setLowEVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        setEVC_01_Volume_at_Measurement_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_01_Volume_at_Measurement_Condition,
-        setExceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Volume_at_Measurement_Condition,
     ] = useState(false);
-
     const [
         maintainEVC_01_Volume_at_Measurement_Condition,
-        setMaintainEVC_01_Volume_at_Measurement_Condition,
+        setmaintainEVC_01_Volume_at_Measurement_Condition,
     ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_01_Volume_at_Measurement_Condition === "string" &&
-            typeof LowEVC_01_Volume_at_Measurement_Condition === "string" &&
-            EVC_01_Volume_at_Measurement_Condition !== null &&
-            maintainEVC_01_Volume_at_Measurement_Condition === false
-        ) {
-            const highValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                HighEVC_01_Volume_at_Measurement_Condition
-            );
-            const lowValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                LowEVC_01_Volume_at_Measurement_Condition
-            );
-            const ValueEVC_01_Volume_at_Measurement_Condition = parseFloat(
-                EVC_01_Volume_at_Measurement_Condition
-            );
+        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_01_Volume_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_01_Volume_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_01_Volume_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_01_Volume_at_Measurement_Condition <=
-                        ValueEVC_01_Volume_at_Measurement_Condition ||
-                    ValueEVC_01_Volume_at_Measurement_Condition <=
-                        lowValueEVC_01_Volume_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_01_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_01_Volume_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_01_Volume_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
+        if (
+            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_01_Volume_at_Measurement_Condition,
         EVC_01_Volume_at_Measurement_Condition,
-        audioEVC_01_Volume_at_Measurement_Condition,
-        LowEVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_High,
+        EVC_01_Volume_at_Measurement_Condition_Low,
         maintainEVC_01_Volume_at_Measurement_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_01_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_01_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_01_Volume_at_Measurement_Condition]);
-
-    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
-
-    //================================ EVC_02_Flow_at_Base_Condition FIQ 1901 ======================================================
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Flow_at_Base_Condition,
-        setAudioEVC_02_Flow_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Flow_at_Base_Condition,
-        setHighEVC_02_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Flow_at_Base_Condition,
-        setLowEVC_02_Flow_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Flow_at_Base_Condition,
-        setExceedThresholdEVC_02_Flow_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [
-        maintainEVC_02_Flow_at_Base_Condition,
-        setMaintainEVC_02_Flow_at_Base_Condition,
-    ] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighEVC_02_Flow_at_Base_Condition === "string" &&
-            typeof LowEVC_02_Flow_at_Base_Condition === "string" &&
-            EVC_02_Flow_at_Base_Condition !== null &&
-            maintainEVC_02_Flow_at_Base_Condition === false
-        ) {
-            const highValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                HighEVC_02_Flow_at_Base_Condition
-            );
-            const lowValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                LowEVC_02_Flow_at_Base_Condition
-            );
-            const ValueEVC_02_Flow_at_Base_Condition = parseFloat(
-                EVC_02_Flow_at_Base_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Flow_at_Base_Condition) &&
-                !isNaN(lowValueEVC_02_Flow_at_Base_Condition) &&
-                !isNaN(ValueEVC_02_Flow_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Flow_at_Base_Condition <=
-                        ValueEVC_02_Flow_at_Base_Condition ||
-                    ValueEVC_02_Flow_at_Base_Condition <=
-                        lowValueEVC_02_Flow_at_Base_Condition
-                ) {
-                    if (!audioEVC_02_Flow_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Base_Condition(true);
-                        setExceedThresholdEVC_02_Flow_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Base_Condition(false);
-                    setExceedThresholdEVC_02_Flow_at_Base_Condition(false);
-                }
-            }
-            // fetchData();
-        }
-    }, [
-        HighEVC_02_Flow_at_Base_Condition,
-        EVC_02_Flow_at_Base_Condition,
-        audioEVC_02_Flow_at_Base_Condition,
-        LowEVC_02_Flow_at_Base_Condition,
-        maintainEVC_02_Flow_at_Base_Condition,
-    ]);
-
-    useEffect(() => {
-        if (audioEVC_02_Flow_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Flow_at_Base_Condition]);
-
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-    //================================ EVC_02_Flow_at_Measurement_Condition FIQ 1901 ======================================================
+    // ===================================================================================================================
     const [
-        audioEVC_02_Flow_at_Measurement_Condition,
-        setAudioEVC_02_Flow_at_Measurement_Condition,
-    ] = useState(false);
+        EVC_02_Volume_at_Base_Condition,
+        setEVC_02_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
+
     const [
-        HighEVC_02_Flow_at_Measurement_Condition,
-        setHighEVC_02_Flow_at_Measurement_Condition,
+        EVC_02_Volume_at_Base_Condition_High,
+        setEVC_02_Volume_at_Base_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_02_Flow_at_Measurement_Condition,
-        setLowEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
-        setExceedThresholdEVC_02_Flow_at_Measurement_Condition,
-    ] = useState(false);
-
-    const [
-        maintainEVC_02_Flow_at_Measurement_Condition,
-        setMaintainEVC_02_Flow_at_Measurement_Condition,
-    ] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighEVC_02_Flow_at_Measurement_Condition === "string" &&
-            typeof LowEVC_02_Flow_at_Measurement_Condition === "string" &&
-            EVC_02_Flow_at_Measurement_Condition !== null &&
-            maintainEVC_02_Flow_at_Measurement_Condition === false
-        ) {
-            const highValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                HighEVC_02_Flow_at_Measurement_Condition
-            );
-            const lowValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                LowEVC_02_Flow_at_Measurement_Condition
-            );
-            const ValueEVC_02_Flow_at_Measurement_Condition = parseFloat(
-                EVC_02_Flow_at_Measurement_Condition
-            );
-
-            if (
-                !isNaN(highValueEVC_02_Flow_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_02_Flow_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_02_Flow_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Flow_at_Measurement_Condition <=
-                        ValueEVC_02_Flow_at_Measurement_Condition ||
-                    ValueEVC_02_Flow_at_Measurement_Condition <=
-                        lowValueEVC_02_Flow_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_02_Flow_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Flow_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_02_Flow_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_02_Flow_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
-        }
-    }, [
-        HighEVC_02_Flow_at_Measurement_Condition,
-        EVC_02_Flow_at_Measurement_Condition,
-        audioEVC_02_Flow_at_Measurement_Condition,
-        LowEVC_02_Flow_at_Measurement_Condition,
-        maintainEVC_02_Flow_at_Measurement_Condition,
-    ]);
-
-    useEffect(() => {
-        if (audioEVC_02_Flow_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Flow_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Flow_at_Measurement_Condition]);
-
-    //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
-
-    //================================ EVC_02_Volume_at_Base_Condition FIQ 1901 ======================================================
-    const [
-        audioEVC_02_Volume_at_Base_Condition,
-        setAudioEVC_02_Volume_at_Base_Condition,
-    ] = useState(false);
-    const [
-        HighEVC_02_Volume_at_Base_Condition,
-        setHighEVC_02_Volume_at_Base_Condition,
-    ] = useState<number | null>(null);
-    const [
-        LowEVC_02_Volume_at_Base_Condition,
-        setLowEVC_02_Volume_at_Base_Condition,
+        EVC_02_Volume_at_Base_Condition_Low,
+        setEVC_02_Volume_at_Base_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_02_Volume_at_Base_Condition,
-        setExceedThresholdEVC_02_Volume_at_Base_Condition,
-    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+        setexceedThresholdEVC_02_Volume_at_Base_Condition,
+    ] = useState(false);
 
     const [
         maintainEVC_02_Volume_at_Base_Condition,
-        setMaintainEVC_02_Volume_at_Base_Condition,
+        setmaintainEVC_02_Volume_at_Base_Condition,
     ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Volume_at_Base_Condition === "string" &&
-            typeof LowEVC_02_Volume_at_Base_Condition === "string" &&
-            EVC_02_Volume_at_Base_Condition !== null &&
-            maintainEVC_02_Volume_at_Base_Condition === false
-        ) {
-            const highValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                HighEVC_02_Volume_at_Base_Condition
-            );
-            const lowValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                LowEVC_02_Volume_at_Base_Condition
-            );
-            const ValueEVC_02_Volume_at_Base_Condition = parseFloat(
-                EVC_02_Volume_at_Base_Condition
-            );
+        const EVC_02_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_02_Volume_at_Base_Condition) &&
-                !isNaN(lowValueEVC_02_Volume_at_Base_Condition) &&
-                !isNaN(ValueEVC_02_Volume_at_Base_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Volume_at_Base_Condition <=
-                        ValueEVC_02_Volume_at_Base_Condition ||
-                    ValueEVC_02_Volume_at_Base_Condition <=
-                        lowValueEVC_02_Volume_at_Base_Condition
-                ) {
-                    if (!audioEVC_02_Volume_at_Base_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Base_Condition(true);
-                        setExceedThresholdEVC_02_Volume_at_Base_Condition(true);
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Base_Condition(false);
-                    setExceedThresholdEVC_02_Volume_at_Base_Condition(false);
-                }
-            }
+        if (
+            !isNaN(EVC_02_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Base_Condition(
+                EVC_02_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Base_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Volume_at_Base_Condition,
         EVC_02_Volume_at_Base_Condition,
-        audioEVC_02_Volume_at_Base_Condition,
-        LowEVC_02_Volume_at_Base_Condition,
+        EVC_02_Volume_at_Base_Condition_High,
+        EVC_02_Volume_at_Base_Condition_Low,
         maintainEVC_02_Volume_at_Base_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Volume_at_Base_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Base_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Volume_at_Base_Condition]);
-
-    //================================ EVC_02_Volume_at_Base_Condition FIQ 1901 ======================================================
-
-    //================================ EVC_02_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+    // ===================================================================================================================
     const [
-        audioEVC_02_Volume_at_Measurement_Condition,
-        setAudioEVC_02_Volume_at_Measurement_Condition,
-    ] = useState(false);
+        EVC_02_Volume_at_Measurement_Condition,
+        setEVC_02_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+
     const [
-        HighEVC_02_Volume_at_Measurement_Condition,
-        setHighEVC_02_Volume_at_Measurement_Condition,
+        EVC_02_Volume_at_Measurement_Condition_High,
+        setEVC_02_Volume_at_Measurement_Condition_High,
     ] = useState<number | null>(null);
     const [
-        LowEVC_02_Volume_at_Measurement_Condition,
-        setLowEVC_02_Volume_at_Measurement_Condition,
+        EVC_02_Volume_at_Measurement_Condition_Low,
+        setEVC_02_Volume_at_Measurement_Condition_Low,
     ] = useState<number | null>(null);
     const [
         exceedThresholdEVC_02_Volume_at_Measurement_Condition,
-        setExceedThresholdEVC_02_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Volume_at_Measurement_Condition,
     ] = useState(false);
 
     const [
         maintainEVC_02_Volume_at_Measurement_Condition,
-        setMaintainEVC_02_Volume_at_Measurement_Condition,
+        setmaintainEVC_02_Volume_at_Measurement_Condition,
     ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (
-            typeof HighEVC_02_Volume_at_Measurement_Condition === "string" &&
-            typeof LowEVC_02_Volume_at_Measurement_Condition === "string" &&
-            EVC_02_Volume_at_Measurement_Condition !== null &&
-            maintainEVC_02_Volume_at_Measurement_Condition === false
-        ) {
-            const highValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                HighEVC_02_Volume_at_Measurement_Condition
-            );
-            const lowValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                LowEVC_02_Volume_at_Measurement_Condition
-            );
-            const ValueEVC_02_Volume_at_Measurement_Condition = parseFloat(
-                EVC_02_Volume_at_Measurement_Condition
-            );
+        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
 
-            if (
-                !isNaN(highValueEVC_02_Volume_at_Measurement_Condition) &&
-                !isNaN(lowValueEVC_02_Volume_at_Measurement_Condition) &&
-                !isNaN(ValueEVC_02_Volume_at_Measurement_Condition)
-            ) {
-                if (
-                    highValueEVC_02_Volume_at_Measurement_Condition <=
-                        ValueEVC_02_Volume_at_Measurement_Condition ||
-                    ValueEVC_02_Volume_at_Measurement_Condition <=
-                        lowValueEVC_02_Volume_at_Measurement_Condition
-                ) {
-                    if (!audioEVC_02_Volume_at_Measurement_Condition) {
-                        audioRef.current?.play();
-                        setAudioEVC_02_Volume_at_Measurement_Condition(true);
-                        setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
-                            true
-                        );
-                    }
-                } else {
-                    setAudioEVC_02_Volume_at_Measurement_Condition(false);
-                    setExceedThresholdEVC_02_Volume_at_Measurement_Condition(
-                        false
-                    );
-                }
-            }
-            // fetchData();
+        if (
+            !isNaN(EVC_02_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Measurement_Condition(
+                EVC_02_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Measurement_ConditionValue <= lowValue
+            );
         }
     }, [
-        HighEVC_02_Volume_at_Measurement_Condition,
         EVC_02_Volume_at_Measurement_Condition,
-        audioEVC_02_Volume_at_Measurement_Condition,
-        LowEVC_02_Volume_at_Measurement_Condition,
+        EVC_02_Volume_at_Measurement_Condition_High,
+        EVC_02_Volume_at_Measurement_Condition_Low,
         maintainEVC_02_Volume_at_Measurement_Condition,
     ]);
 
-    useEffect(() => {
-        if (audioEVC_02_Volume_at_Measurement_Condition) {
-            const audioEnded = () => {
-                setAudioEVC_02_Volume_at_Measurement_Condition(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioEVC_02_Volume_at_Measurement_Condition]);
+    // ===================================================================================================================
+    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] =
+        useState<string | null>(null);
 
-    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+    const [
+        EVC_02_Flow_at_Base_Condition_High,
+        setEVC_02_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Base_Condition_Low,
+        setEVC_02_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Base_Condition,
+        setexceedThresholdEVC_02_Flow_at_Base_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Flow_at_Base_Condition,
+        setmaintainEVC_02_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Base_Condition(
+                EVC_02_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Flow_at_Base_Condition,
+        EVC_02_Flow_at_Base_Condition_High,
+        EVC_02_Flow_at_Base_Condition_Low,
+        maintainEVC_02_Flow_at_Base_Condition,
+    ]);
+
+    // ===================================================================================================================
+
+    const [
+        EVC_02_Flow_at_Measurement_Condition,
+        setEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+
+    const [
+        EVC_02_Flow_at_Measurement_Condition_High,
+        setEVC_02_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        setEVC_02_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Flow_at_Measurement_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Flow_at_Measurement_Condition,
+        setmaintainEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Measurement_Condition(
+                EVC_02_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Flow_at_Measurement_Condition,
+        EVC_02_Flow_at_Measurement_Condition_High,
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        maintainEVC_02_Flow_at_Measurement_Condition,
+    ]);
+
+    //====================================================================
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "EVC_01_Flow_at_Base_Condition") {
@@ -2469,14 +1586,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
+                                    bottom: 4,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
                                         !maintainEVC_01_Flow_at_Base_Condition
@@ -2496,7 +1612,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
+                                        {ValueGas.SVF}:
                                     </p>
                                     <p
                                         style={{
@@ -2512,6 +1628,8 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3H}
@@ -2535,13 +1653,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
@@ -2562,7 +1680,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVF} :
+                                        {ValueGas.GVF}:
                                     </p>
                                     <p
                                         style={{
@@ -2580,6 +1698,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3H}
@@ -2601,13 +1720,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Volume_at_Base_Condition &&
@@ -2628,7 +1747,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                                        {ValueGas.SVA}:
                                     </p>
                                     <p
                                         style={{
@@ -2644,6 +1763,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3}
@@ -2668,13 +1788,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
@@ -2695,7 +1815,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                        {ValueGas.GVA}:
                                     </p>
 
                                     <p
@@ -2714,6 +1834,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3}
@@ -2736,13 +1857,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Flow_at_Base_Condition &&
@@ -2763,7 +1884,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVF} :
+                                        {ValueGas.SVF}:
                                     </p>
                                     <p
                                         style={{
@@ -2779,6 +1900,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3H}
@@ -2803,13 +1925,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Flow_at_Measurement_Condition &&
@@ -2848,6 +1970,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3H}
@@ -2870,13 +1993,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Volume_at_Base_Condition &&
@@ -2897,12 +2020,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                                        {ValueGas.SVA}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedEVC_02_Volume_at_Base_Condition}
@@ -2913,6 +2036,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.SM3}
@@ -2937,13 +2061,13 @@ export default function GraphicPRU() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+                                    bottom: 4,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_02_Volume_at_Measurement_Condition &&
@@ -2964,12 +2088,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                        {ValueGas.GVA}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {
@@ -2982,6 +2106,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.M3}
@@ -3003,13 +2128,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_6001A &&
+                                        exceedThresholdPIT_6001A &&
                                         !maintainPIT_6001A
                                             ? "#ff5656"
                                             : maintainPIT_6001A
@@ -3028,12 +2153,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 6001A :
+                                        PIT-6001A:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3044,6 +2169,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3065,13 +2191,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_6001B &&
+                                        exceedThresholdPIT_6001B &&
                                         !maintainPIT_6001B
                                             ? "#ff5656"
                                             : maintainPIT_6001B
@@ -3090,12 +2216,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 6001B :
+                                        PIT-6001B:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3106,6 +2232,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3128,13 +2255,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_6002A &&
+                                        exceedThresholdPIT_6002A &&
                                         !maintainPIT_6002A
                                             ? "#ff5656"
                                             : maintainPIT_6002A
@@ -3153,7 +2280,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 6002A :
+                                        PIT-6002A:
                                     </p>
                                     <p
                                         style={{
@@ -3169,6 +2296,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 15,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3190,13 +2318,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_6002B &&
+                                        exceedThresholdPIT_6002B &&
                                         !maintainPIT_6002B
                                             ? "#ff5656"
                                             : maintainPIT_6002B
@@ -3215,7 +2343,7 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 6002B :
+                                        PIT-6002B:
                                     </p>
                                     <p
                                         style={{
@@ -3231,6 +2359,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 15,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3254,13 +2383,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_02_Pressure &&
+                                        exceedThresholdEVC_02_Pressure &&
                                         !maintainEVC_02_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_02_Pressure
@@ -3284,7 +2413,7 @@ export default function GraphicPRU() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3295,9 +2424,10 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -3318,18 +2448,19 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_01_Pressure &&
+                                        exceedThresholdEVC_01_Pressure &&
                                         !maintainEVC_01_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_01_Pressure
                                             ? "orange"
                                             : "transparent",
+                                    marginLeft: 10,
                                     cursor: "pointer",
                                 }}
                                 // onClick={() => confirmPT_1902()}
@@ -3343,12 +2474,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_01_Pressure} :
+                                        {ValueGas.EVC_01_Pressure}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3359,9 +2490,10 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -3383,13 +2515,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_01_Temperature &&
+                                        exceedThresholdEVC_01_Temperature &&
                                         !maintainEVC_01_Temperature
                                             ? "#ff5656"
                                             : maintainEVC_01_Temperature
@@ -3408,12 +2540,12 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_01_Temperature} :
+                                        {ValueGas.EVC_01_Temperature}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3424,6 +2556,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     °C
@@ -3447,13 +2580,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorEVC_02_Temperature &&
+                                        exceedThresholdEVC_02_Temperature &&
                                         !maintainEVC_02_Temperature
                                             ? "#ff5656"
                                             : maintainEVC_02_Temperature
@@ -3477,7 +2610,7 @@ export default function GraphicPRU() {
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT02}
@@ -3488,6 +2621,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     °C
@@ -3513,14 +2647,9 @@ export default function GraphicPRU() {
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6001A
+                                <p style={{ color: "black", marginLeft: 10 }}>
+                                    PCV-6001A: {PCV_6001A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6001A}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3542,14 +2671,9 @@ export default function GraphicPRU() {
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6001B
+                                <p style={{ color: "black", marginLeft: 10 }}>
+                                    PCV-6001B: {PCV_6001B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6001B}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3565,20 +2689,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     fontSize: 18,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
+
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6002A
+                                <p style={{ color: "black" }}>
+                                    PCV-6002A: {PCV_6002A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6002A}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3594,20 +2711,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     fontSize: 18,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
+
                                     fontWeight: 500,
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6002B
+                                <p style={{ color: "black" }}>
+                                    PCV-6002B: {PCV_6002B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6002B}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3686,13 +2796,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorTIT_6001A &&
+                                        exceedThresholdTIT_6001A &&
                                         !maintainTIT_6001A
                                             ? "#ff5656"
                                             : maintainTIT_6001A
@@ -3711,15 +2821,15 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TIT 6001A :
+                                        TT-6001:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02} :
+                                        {roundedPT02}
                                     </p>
                                 </div>
                                 <p
@@ -3727,6 +2837,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     ˚C
@@ -3749,13 +2860,13 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorPIT_6003A &&
+                                        exceedThresholdPIT_6003A &&
                                         !maintainPIT_6003A
                                             ? "#ff5656"
                                             : maintainPIT_6003A
@@ -3774,15 +2885,15 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PIT 6003A :
+                                        PT-6003:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02} :
+                                        {roundedPT02}
                                     </p>
                                 </div>
                                 <p
@@ -3790,6 +2901,7 @@ export default function GraphicPRU() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BARG}
@@ -3812,13 +2924,14 @@ export default function GraphicPRU() {
                             <div
                                 style={{
                                     borderRadius: 5,
-                                    fontSize: 18,
+                                    fontSize: 22,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        audioColorGD_6001 && !maintainGD_6001
+                                        exceedThresholdGD_6001 &&
+                                        !maintainGD_6001
                                             ? "#ff5656"
                                             : maintainGD_6001
                                             ? "orange"
@@ -3836,21 +2949,22 @@ export default function GraphicPRU() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        GD 6001 :
+                                        GD-6001:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02} :
+                                        {roundedPT02}
                                     </p>
                                 </div>
                                 <p
                                     style={{
                                         color: colorNameValue,
                                         position: "relative",
+                                        marginLeft: 10,
 
                                         top: 5,
                                     }}
@@ -3879,13 +2993,8 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV 6001A :
+                                    PSV-6001A: {PSV_6001A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PSV_6001A} 
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3908,13 +3017,8 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV 6002A :
+                                    PSV-6002A: {PSV_6002A} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PSV_6002A} 
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3937,13 +3041,8 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV 6001B :
+                                    PSV-6001B: {PSV_6001B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6001B} 
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3966,13 +3065,8 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV 6002B :
+                                    PSV-6002B: {PSV_6002B} BarG
                                 </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PSV_6002B} 
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
                     },
@@ -3993,8 +3087,6 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <div>
-                                  
-
                                     <p
                                         style={{
                                             color: "white",
@@ -4122,6 +3214,66 @@ export default function GraphicPRU() {
                     },
                 };
             }
+
+            if (node.id === "percent") {
+                return {
+                    ...node,
+
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                className="column-chart"
+                                style={{
+                                    height: `${totalHeight}px`,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "flex-end",
+                                    width: "50px",
+                                    border: "1px solid red",
+                                    position: "relative",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        width: "100%",
+                                        display: "flex",
+                                        flexDirection: "column-reverse",
+                                    }}
+                                    className="column"
+                                >
+                                    <div
+                                        className="id"
+                                        style={{
+                                            height: `${DataLPG}px`,
+                                            width: "100%",
+                                            textAlign: "center",
+                                            color: "white",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            backgroundColor: "yellow",
+                                            position: "absolute",
+                                            top: "0",
+                                        }}
+                                    ></div>
+                                    <div
+                                        className="name"
+                                        style={{
+                                            height: `${DataAir}px`,
+                                            width: "100%",
+                                            textAlign: "center",
+                                            color: "white",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            backgroundColor: "blue",
+                                        }}
+                                    ></div>
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
             return node;
         });
         setNodes(updatedNodes);
@@ -4132,417 +3284,337 @@ export default function GraphicPRU() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-
-    const initialPositions = {
-        Arrow10
-        : 
-        {x: -420.53375498677605, y: 1273.8256598751323},
-        BallVavleLine2_Bottom
-        : 
-        {x: -1661.682672878477, y: 1481.0920733587484},
-        BallVavleLine2_Bottom_none
-        : 
-        {x: -1650.5994566252746, y: 1097.5108416746705},
-        BallVavleLine2_Top
-        : 
-        {x: -1664.44860296679, y: 1067.0182929442992},
-        BallVavleLine2_Top_none
-        : 
-        {x: -1648.09187529084, y: 1512.8588877121745},
-        BallVavleLine3_Bottom_none
-        : 
-        {x: -945.4386378616368, y: 1513.0768819977573},
-        BallVavleLine3_Top_none
-        : 
-        {x: -945.2533633599176, y: 1098.9068673573584},
-        BallVavle_Line3_Bottom
-        : 
-        {x: -958.9030596290709, y: 1482.17665624866},
-        BallVavle_Line3_Top
-        : 
-        {x: -959.090980952997, y: 1068.376995289186},
-        DownArrow
-        : 
-        {x: -2440.1778265025932, y: 1638.6301381134936},
-        EVC_01_Flow_at_Base_Condition
-        : 
-        {x: -944.7566756597366, y: 877.4187744710375},
-        EVC_01_Flow_at_Measurement_Condition
-        : 
-        {x: -944.8390916088076, y: 925.5955178129639},
-        EVC_01_Pressure_COL
-        : 
-        {x: -1422.6213132405162, y: 1463.468095326561},
-        EVC_01_Pressure_DATA
-        : 
-        {x: -1565.8256783115937, y: 1148.9827037803145},
-        EVC_01_Pressure_IMG
-        : 
-        {x: -1455.2210748964526, y: 1400.4111483146833},
-        EVC_01_Pressure_NONE
-        : 
-        {x: -1424.2458626037571, y: 1021.7335838041611},
-        EVC_01_Temperature
-        : 
-        {x: -1384.3876204395422, y: 1377.3823609961598},
-        EVC_01_Temperature_COL
-        : 
-        {x: -1360.9590194746786, y: 1427.2945127887838},
-        EVC_01_Temperature_DATA
-        : 
-        {x: -1736.2102870765705, y: 815.4661864731523},
-        EVC_01_Temperature_NONE
-        : 
-        {x: -1362.8266325377226, y: 977.2539852046791},
-        EVC_01_Volume_at_Base_Condition
-        : 
-        {x: -703.8315004521368, y: 877.542107815135},
-        EVC_01_Volume_at_Measurement_Condition
-        : 
-        {x: -704.133309317585, y: 925.6995906874301},
-        EVC_02_Flow_at_Base_Condition
-        : 
-        {x: -932.8685029333565, y: 1611.5650097972457},
-        EVC_02_Flow_at_Measurement_Condition
-        : 
-        {x: -932.8603748341441, y: 1659.619138394843},
-        EVC_02_Pressure_COL
-        : 
-        {x: -1425.0343776799361, y: 1050.2965580409796},
-        EVC_02_Pressure_DATA
-        : 
-        {x: -1563.2499315232963, y: 1587.1147367905612},
-        EVC_02_Pressure_IMG
-        : 
-        {x: -1457.3119231476958, y: 987.4972191813588},
-        EVC_02_Pressure_NONE
-        : 
-        {x: -1422.6407988495287, y: 1424.3535206118927},
-        EVC_02_Temperature
-        : 
-        {x: -1385.8650633329748, y: 960.1049085729308},
-        EVC_02_Temperature_COL
-        : 
-        {x: -1362.8971911342087, y: 1007.3441734368228},
-        EVC_02_Temperature_DATA
-        : 
-        {x: -1727.0419105701028, y: 1232.4793100005968},
-        EVC_02_Temperature_NONE
-        : 
-        {x: -1361.3563019384721, y: 1396.8762550311894},
-        EVC_02_Volume_at_Base_Condition
-        : 
-        {x: -691.7043842569694, y: 1611.7575715748744},
-        EVC_02_Volume_at_Measurement_Condition
-        : 
-        {x: -691.7597706423713, y: 1659.6681974922926},
-        FIQ_6001A
-        : 
-        {x: -1122.9979525971376, y: 1090.3467963356752},
-        FIQ_6001B
-        : 
-        {x: -1127.9442365313425, y: 1503.338633373814},
-        GD_6001
-        : 
-        {x: -1177.1116094437443, y: 1176.7839153333475},
-        GD_IMG
-        : 
-        {x: -1096.8954721391294, y: 1232.7407461451007},
-        Header
-        : 
-        {x: -2347.783064181821, y: 737.4556589669556},
-        PCV_6001A
-        : 
-        {x: -1590.143839770737, y: 1466.187406343237},
-        PCV_6001A_DATA
-        : 
-        {x: -2119.0752064067256, y: 965.1236193186844},
-        PCV_6001A_SmallBallVavle
-        : 
-        {x: -1483.6177892854255, y: 1469.3848130414924},
-        PCV_6001A_none
-        : 
-        {x: -1472.3253266041704, y: 1520.498001843855},
-        PCV_6001A_none2
-        : 
-        {x: -1560.2798867415365, y: 1482.2617504326024},
-        PCV_6001B
-        : 
-        {x: -1589.6280768037607, y: 1051.7950507090916},
-        PCV_6001B_DATA
-        : 
-        {x: -2123.2870218126836, y: 1379.6541893713072},
-        PCV_6001B_SmallBallVavle
-        : 
-        {x: -1486.9036877800625, y: 1056.0055835082862},
-        PCV_6001B_none
-        : 
-        {x: -1559.0670889230703, y: 1066.5206445548827},
-        PCV_6001B_none2
-        : 
-        {x: -1475.720019744693, y: 1104.4215156026714},
-        PCV_6002A_DATA
-        : 
-        {x: -1648.4407513108924, y: 980.9864265861706},
-        PCV_6002B_DATA
-        : 
-        {x: -1650.4202186554123, y: 1389.6028607942028},
-        PCV_line1_Bottom
-        : 
-        {x: -2059.46440478068, y: 1051.690596866844},
-        PCV_line1_Bottom_SmallBallVavle
-        : 
-        {x: -1959.916081354473, y: 1469.1895625081877},
-        PCV_line1_Bottom_none
-        : 
-        {x: -2033.416081354473, y: 1480.8357187400395},
-        PCV_line1_Bottom_none2
-        : 
-        {x: -1948.4145711922317, y: 1518.503878770942},
-        PCV_line1_Top
-        : 
-        {x: -2063.2209588415735, y: 1465.9672706188694},
-        PCV_line1_Top_SmallBallVavle
-        : 
-        {x: -1955.363015032123, y: 1056.514175669431},
-        PCV_line1_Top_none
-        : 
-        {x: -2029.3085400395037, y: 1067.755196238937},
-        PCV_line1_Top_none2
-        : 
-        {x: -1943.863015032123, y: 1106.014175669431},
-        PIT_6001A_COL
-        : 
-        {x: -2194.366805384612, y: 1463.874739139494},
-        PIT_6001A_DATA
-        : 
-        {x: -2323.884062940713, y: 1148.6083704185041},
-        PIT_6001A_IMG
-        : 
-        {x: -2226.866805384612, y: 1400.374739139494},
-        PIT_6001A_NONE
-        : 
-        {x: -2197.8690826568136, y: 1007.3191633358758},
-        PIT_6001B_COL
-        : 
-        {x: -2197.6600827175034, y: 1050.3588175915195},
-        PIT_6001B_DATA
-        : 
-        {x: -2326.9359251148935, y: 1585.7692501253557},
-        PIT_6001B_IMG
-        : 
-        {x: -2230.624481311542, y: 986.990895895738},
-        PIT_6001B_NONE
-        : 
-        {x: -2193.7144666730205, y: 1424.0282015242046},
-        PIT_6002A_COL
-        : 
-        {x: -1866.4577639723273, y: 1462.4297119508683},
-        PIT_6002A_DATA
-        : 
-        {x: -1995.729893153021, y: 1149.2252195340056},
-        PIT_6002A_IMG
-        : 
-        {x: -1898.7568597618636, y: 1399.3826957761635},
-        PIT_6002A_NONE
-        : 
-        {x: -1865.795938216313, y: 1009.610885120657},
-        PIT_6002B_COL
-        : 
-        {x: -1866.073792487846, y: 1050.0079742479018},
-        PIT_6002B_DATA
-        : 
-        {x: -1993.699445139633, y: 1586.4921741314997},
-        PIT_6002B_IMG
-        : 
-        {x: -1898.5737924878463, y: 986.4938130080379},
-        PIT_6002B_NONE
-        : 
-        {x: -1866.220994341128, y: 1425.5940219176825},
-        PIT_6003A
-        : 
-        {x: -677.4292044121116, y: 1187.0328164243124},
-        PIT_6003A_COL
-        : 
-        {x: -644.6785970997771, y: 1250.0518497796409},
-        PIT_6003A_DATA
-        : 
-        {x: -753.9048631752663, y: 1096.5943426448448},
-        PIT_6003A_NONE
-        : 
-        {x: -644.1057092574567, y: 1220.861473990371},
-        PSV_6001A
-        : 
-        {x: -1844.6249877968003, y: 904.7518340240545},
-        PSV_6001B
-        : 
-        {x: -1851.8971023103254, y: 1316.7167432666458},
-        PSV_6002A
-        : 
-        {x: -1307.7176662681832, y: 894.499205487562},
-        PSV_6002B
-        : 
-        {x: -1307.7176662681832, y: 1311.4439993566057},
-        PSV_LINE2_BOTTOM
-        : 
-        {x: -1740.5499935425808, y: 1021.4152979362718},
-        PSV_LINE2_BOTTOM_HALFCIRCLE
-        : 
-        {x: -1266.1474092778985, y: 943.9517620367403},
-        PSV_LINE2_BOTTOM_NONE
-        : 
-        {x: -1718.3515671112975, y: 1070.542505015602},
-        PSV_LINE2_BOTTOM_NONE1
-        : 
-        {x: -1741.7830527009469, y: 1432.6252337777432},
-        PSV_LINE2_BOTTOM_NONE2
-        : 
-        {x: -1742.6123310219864, y: 1377.8993730119664},
-        PSV_LINE2_BOTTOM_RIGHT
-        : 
-        {x: -1760.0864447641275, y: 1002.261090283854},
-        PSV_LINE2_TOP
-        : 
-        {x: -1741.762582600041, y: 1428.90071831721},
-        PSV_LINE2_TOP_HALFCIRCLE
-        : 
-        {x: -1763.0861113674155, y: 950.1586579328373},
-        PSV_LINE2_TOP_NONE
-        : 
-        {x: -1719.609015298378, y: 1478.4738962378},
-        PSV_LINE2_TOP_NONE1
-        : 
-        {x: -1741.292471045089, y: 1024.6454245613245},
-        PSV_LINE2_TOP_NONE2
-        : 
-        {x: -1739.6279244378063, y: 970.6923874449885},
-        PSV_LINE2_TOP_RIGHT
-        : 
-        {x: -1760.932470452269, y: 1409.788926569184},
-        PSV_LINE3_BOTTOM
-        : 
-        {x: -1241.9662551779466, y: 1017.2912953863099},
-        PSV_LINE3_BOTTOM_HALFCIRCLE
-        : 
-        {x: -1766.2849260256212, y: 1357.309168723579},
-        PSV_LINE3_BOTTOM_NONE
-        : 
-        {x: -1212.1740869021496, y: 1482.673575129763},
-        PSV_LINE3_BOTTOM_NONE1
-        : 
-        {x: -1234.6943213706072, y: 1436.0560745736848},
-        PSV_LINE3_BOTTOM_NONE2
-        : 
-        {x: -1235.6368665307696, y: 1382.4374704915526},
-        PSV_LINE3_BOTTOM_RIGHT
-        : 
-        {x: -1261.8081518592426, y: 997.532009870901},
-        PSV_LINE3_TOP
-        : 
-        {x: -1235.1897637926832, y: 1433.6788607117933},
-        PSV_LINE3_TOP_HALFCIRCLE
-        : 
-        {x: -1260.1083626642362, y: 1361.3375074809244},
-        PSV_LINE3_TOP_NONE
-        : 
-        {x: -1219.9913727940623, y: 1066.3862945267433},
-        PSV_LINE3_TOP_NONE1
-        : 
-        {x: -1243.1459580683222, y: 1020.1249803904852},
-        PSV_LINE3_TOP_NONE2
-        : 
-        {x: -1242.4987054998287, y: 963.723626602304},
-        PSV_LINE3_TOP_RIGHT
-        : 
-        {x: -1254.4104579359896, y: 1415.3142896015559},
-        SDV_6001A
-        : 
-        {x: -2367.264096852104, y: 1047.9003450623102},
-        SDV_6001A_Name
-        : 
-        {x: -2400.231075578696, y: 1016.8765739089936},
-        SDV_6001B
-        : 
-        {x: -2347.936922940682, y: 1461.553943767321},
-        SDV_6001B_Name
-        : 
-        {x: -2380.436922940682, y: 1431.1155032793695},
-        SDV_6002
-        : 
-        {x: -537.8948179752053, y: 1248.296378511269},
-        SDV_6002_Name
-        : 
-        {x: -572.9903026817977, y: 1204.827087824066},
-        TIT_6001A
-        : 
-        {x: -807.709256349765, y: 1163.28491796364},
-        TIT_6001A_COL
-        : 
-        {x: -783.8221358118526, y: 1210.6610114128175},
-        TIT_6001A_DATA
-        : 
-        {x: -893.4738263346659, y: 1014.9710461373154},
-        TIT_6001A_NONE
-        : 
-        {x: -783.5454425110814, y: 1188.130946016786},
-        bor1
-        : 
-        {x: -2436.5855686504956, y: 1039.1608637258034},
-        bor2
-        : 
-        {x: -983.1512218888312, y: 1025.8994423073616},
-        bor3
-        : 
-        {x: -2320.8078213113167, y: 1680.894788044694},
-        bor4
-        : 
-        {x: -950.4329469573597, y: 1583.0590100592938},
-        borderWhite
-        : 
-        {x: -2419.4989026325693, y: 730.797467783713},
-        line1
-        : 
-        {x: -2407.3097089925586, y: 1684.7936897594798},
-        line2
-        : 
-        {x: -2407.550402509801, y: 1663.500870252391},
-        line3
-        : 
-        {x: -2030.8329144167883, y: 1098.5296705520232},
-        line4
-        : 
-        {x: -2033.455135048047, y: 1512.635009158724},
-        line5
-        : 
-        {x: -1559.5270533882806, y: 1098.3740496757796},
-        line6
-        : 
-        {x: -1559.7769633031824, y: 1512.7897157412472},
-        line7
-        : 
-        {x: -1036.0060026105384, y: 1098.3096365331119},
-        line8
-        : 
-        {x: -1037.0272391551282, y: 1512.874739139494},
-        line9
-        : 
-        {x: -661.0207270322528, y: 1298.5866709113047},
-        line9none
-        : 
-        {x: -713.1893118583799, y: 1298.7824600879364},
-        line10
-        : 
-        {x: -449.9501828459661, y: 1298.5866709113047},
-        line10none
-        : 
-        {x: -405.6683476271253, y: 1298.7587875755169},
-        timeUpdate3
-        : 
-        {x: -2387.450182845966, y: 800.0866709113047},
-        AlarmCenter: {x: -1244.529411972646, y: 762.0298862357979},
-
-
-    };
+                const initialPositions = {
+              AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
+              Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
+              BallVavleLine2_Bottom: {
+                  x: -1752.748552461399,
+                  y: 1398.7809179318454,
+              },
+              BallVavleLine2_Bottom_none: {
+                  x: -1739.1152406034073,
+                  y: 1430.2199359776428,
+              },
+              BallVavleLine2_Top: {
+                  x: -1754.9752547260307,
+                  y: 1066.3945634448808,
+              },
+              BallVavleLine2_Top_none: {
+                  x: -1740.7857064948557,
+                  y: 1097.0254070197795,
+              },
+              BallVavleLine3_Bottom_none: {
+                  x: -1188.6007658649082,
+                  y: 1430.7062254963867,
+              },
+              BallVavleLine3_Top_none: {
+                  x: -1190.3857919153643,
+                  y: 1097.999896447289,
+              },
+              BallVavle_Line3_Bottom: {
+                  x: -1203.020965699144,
+                  y: 1399.2185849353757,
+              },
+              BallVavle_Line3_Top: {
+                  x: -1204.4484013514104,
+                  y: 1066.748043368249,
+              },
+              DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
+              EVC_01_Flow_at_Base_Condition: {
+                  x: -1300.2117083264288,
+                  y: 751.5293893652726,
+              },
+              EVC_01_Flow_at_Measurement_Condition: {
+                  x: -1300.4747755822623,
+                  y: 812.9342555162998,
+              },
+              EVC_01_Pressure_COL: {
+                  x: -1422.6213132405162,
+                  y: 1463.468095326561,
+              },
+              EVC_01_Pressure_DATA: {
+                  x: -1300.5518647911813,
+                  y: 874.307982790011,
+              },
+              EVC_01_Pressure_IMG: {
+                  x: -1455.2210748964526,
+                  y: 1400.4111483146833,
+              },
+              EVC_01_Pressure_NONE: {
+                  x: -1424.2458626037571,
+                  y: 1021.7335838041611,
+              },
+              EVC_01_Temperature: {
+                  x: -1384.3876204395422,
+                  y: 1377.3823609961598,
+              },
+              EVC_01_Temperature_COL: {
+                  x: -1360.9590194746786,
+                  y: 1427.2945127887838,
+              },
+              EVC_01_Temperature_DATA: {
+                  x: -1651.9839445793107,
+                  y: 873.7849536634603,
+              },
+              EVC_01_Temperature_NONE: {
+                  x: -1362.8266325377226,
+                  y: 977.2539852046791,
+              },
+              EVC_01_Volume_at_Base_Condition: {
+                  x: -1651.3638601651735,
+                  y: 751.2185853413771,
+              },
+              EVC_01_Volume_at_Measurement_Condition: {
+                  x: -1651.889586160885,
+                  y: 812.6874699639815,
+              },
+              EVC_02_Flow_at_Base_Condition: {
+                  x: -1304.5045612961057,
+                  y: 1526.246568287584,
+              },
+              EVC_02_Flow_at_Measurement_Condition: {
+                  x: -1304.6902205234626,
+                  y: 1587.58097045636,
+              },
+              EVC_02_Pressure_COL: {
+                  x: -1425.0343776799361,
+                  y: 1050.2965580409796,
+              },
+              EVC_02_Pressure_DATA: {
+                  x: -1304.6862397428831,
+                  y: 1648.7497951092391,
+              },
+              EVC_02_Pressure_IMG: {
+                  x: -1457.3119231476958,
+                  y: 987.4972191813588,
+              },
+              EVC_02_Pressure_NONE: {
+                  x: -1422.6407988495287,
+                  y: 1424.3535206118927,
+              },
+              EVC_02_Temperature: {
+                  x: -1385.8650633329748,
+                  y: 960.1049085729308,
+              },
+              EVC_02_Temperature_COL: {
+                  x: -1362.8971911342087,
+                  y: 1007.3441734368228,
+              },
+              EVC_02_Temperature_DATA: {
+                  x: -1655.6231376798764,
+                  y: 1649.0182904812473,
+              },
+              EVC_02_Temperature_NONE: {
+                  x: -1361.3563019384721,
+                  y: 1396.8762550311894,
+              },
+              EVC_02_Volume_at_Base_Condition: {
+                  x: -1655.441578959918,
+                  y: 1526.3262726240537,
+              },
+              EVC_02_Volume_at_Measurement_Condition: {
+                  x: -1655.518638620903,
+                  y: 1587.742152328961,
+              },
+              FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
+              FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
+              GD_6001: { x: -989.3020106788827, y: 1318.7155007722488 },
+              GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+              Header: { x: -2332.820092483261, y: 648.7682137524797 },
+              PCV_6001A: { x: -1673.1177611019, y: 1384.1107119962714 },
+              PCV_6001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
+              PCV_6001A_SmallBallVavle: {
+                  x: -1590.1177892854255,
+                  y: 1391.8848130414924,
+              },
+              PCV_6001A_none: { x: -1578.8253266041704, y: 1437.998001843855 },
+              PCV_6001A_none2: {
+                  x: -1644.8538756176888,
+                  y: 1406.5995698502961,
+              },
+              PCV_6001B: { x: -1677.3656150260101, y: 1052.000421403267 },
+              PCV_6001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
+              PCV_6001B_SmallBallVavle: {
+                  x: -1589.286173260068,
+                  y: 1060.1713499375644,
+              },
+              PCV_6001B_none: { x: -1648.0670889230703, y: 1076.0206445548827 },
+              PCV_6001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
+              PCV_6002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
+              PCV_6002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
+              PCV_line1_Bottom: {
+                  x: -2111.3678672845463,
+                  y: 1052.190596866844,
+              },
+              PCV_line1_Bottom_SmallBallVavle: {
+                  x: -2021.0842967435187,
+                  y: 1392.2146663154426,
+              },
+              PCV_line1_Bottom_none: {
+                  x: -2082.0447320338617,
+                  y: 1406.8642014517307,
+              },
+              PCV_line1_Bottom_none2: {
+                  x: -2009.774232806013,
+                  y: 1437.5474817836612,
+              },
+              PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
+              PCV_line1_Top_SmallBallVavle: {
+                  x: -2020.758188887233,
+                  y: 1058.572245211475,
+              },
+              PCV_line1_Top_none: {
+                  x: -2079.1641412034114,
+                  y: 1073.0229180707613,
+              },
+              PCV_line1_Top_none2: {
+                  x: -2009.2581888872328,
+                  y: 1105.293210440453,
+              },
+              PIT_6001A_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
+              PIT_6001A_DATA: { x: -2348.6186513642347, y: 870.9225639134092 },
+              PIT_6001A_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
+              PIT_6001A_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
+              PIT_6001B_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
+              PIT_6001B_DATA: { x: -2348.8352724506376, y: 1526.9945389222787 },
+              PIT_6001B_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
+              PIT_6001B_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
+              PSV_6001A: { x: -1806.4495698232004, y: 966.4171746665486 },
+              PSV_6001B: { x: -1799.9019866867252, y: 1297.6141788823015 },
+              PSV_6002A: { x: -1500.6943362170002, y: 969.58257364993 },
+              PSV_6002B: { x: -1493.6020428530078, y: 1296.9325533391168 },
+              PSV_LINE2_BOTTOM: {
+                  x: -1822.5499935425808,
+                  y: 1022.9152979362718,
+              },
+              PSV_LINE2_BOTTOM_HALFCIRCLE: {
+                  x: -1537.0489668387918,
+                  y: 962.2028750034647,
+              },
+              PSV_LINE2_BOTTOM_NONE: {
+                  x: -1800.2748765223484,
+                  y: 1071.4335361920557,
+              },
+              PSV_LINE2_BOTTOM_NONE1: {
+                  x: -1823.0693694333604,
+                  y: 1360.4020119665827,
+              },
+              PSV_LINE2_BOTTOM_NONE2: {
+                  x: -1823.263852446076,
+                  y: 1315.6438506423797,
+              },
+              PSV_LINE2_BOTTOM_RIGHT: {
+                  x: -1841.9793816682281,
+                  y: 1003.5894848459614,
+              },
+              PSV_LINE2_TOP: { x: -1824.621004682478, y: 1357.2168795688774 },
+              PSV_LINE2_TOP_HALFCIRCLE: {
+                  x: -1846.419275542719,
+                  y: 961.8665937984044,
+              },
+              PSV_LINE2_TOP_NONE: {
+                  x: -1802.2062318196358,
+                  y: 1404.2787700504089,
+              },
+              PSV_LINE2_TOP_NONE1: {
+                  x: -1822.49563729746,
+                  y: 1025.4738191234321,
+              },
+              PSV_LINE2_TOP_NONE2: {
+                  x: -1820.713980893797,
+                  y: 982.7946809276918,
+              },
+              PSV_LINE2_TOP_RIGHT: {
+                  x: -1843.7363814733678,
+                  y: 1337.2167064142152,
+              },
+              PSV_LINE3_BOTTOM: {
+                  x: -1513.9276090762096,
+                  y: 1023.2929663757193,
+              },
+              PSV_LINE3_BOTTOM_HALFCIRCLE: {
+                  x: -1847.8476607451094,
+                  y: 1294.5969973308625,
+              },
+              PSV_LINE3_BOTTOM_NONE: {
+                  x: -1491.5458949259623,
+                  y: 1402.9749944793095,
+              },
+              PSV_LINE3_BOTTOM_NONE1: {
+                  x: -1513.9942216185614,
+                  y: 1359.7067206930428,
+              },
+              PSV_LINE3_BOTTOM_NONE2: {
+                  x: -1512.9767227486302,
+                  y: 1314.4270541042574,
+              },
+              PSV_LINE3_BOTTOM_RIGHT: {
+                  x: -1533.4478790692137,
+                  y: 1003.5774869187717,
+              },
+              PSV_LINE3_TOP: { x: -1514.7416075320712, y: 1357.7240669142898 },
+              PSV_LINE3_TOP_HALFCIRCLE: {
+                  x: -1537.643267778939,
+                  y: 1294.1557057434507,
+              },
+              PSV_LINE3_TOP_NONE: {
+                  x: -1491.4345428387423,
+                  y: 1068.5155162952701,
+              },
+              PSV_LINE3_TOP_NONE1: {
+                  x: -1514.2952576203431,
+                  y: 1026.4316416628542,
+              },
+              PSV_LINE3_TOP_NONE2: {
+                  x: -1512.9987054998287,
+                  y: 983.159710586679,
+              },
+              PSV_LINE3_TOP_RIGHT: {
+                  x: -1533.786401000067,
+                  y: 1337.8006420545576,
+              },
+              PIT_6002A_COL: { x: -1944.126211137847, y: 1414.8743710777078 },
+              PIT_6002A_DATA: { x: -2062.9474286701056, y: 871.9588473450049 },
+              PIT_6002A_IMG: { x: -1976.3967429262366, y: 1351.9634634096726 },
+              PIT_6002A_NONE: { x: -1938.0753232184695, y: 1045.530553967972 },
+              PIT_6002B_COL: { x: -1939.3531774900025, y: 1082.027958478726 },
+              PIT_6002B_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
+              PIT_6002B_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
+              PIT_6002B_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
+              SDV_6001A: { x: -2375.7904529874913, y: 1046.6822941858263 },
+              SDV_6001A_Name: { x: -2408.757431714083, y: 1018.4506281074462 },
+              SDV_6001B: { x: -2377.0898761861, y: 1379.0178060073683 },
+              SDV_6001B_Name: { x: -2411.6354714981053, y: 1348.6127064386965 },
+              SDV_6002: { x: -653.7026272334658, y: 1210.1260672163446 },
+              SDV_6002_Name: { x: -694.8783133128501, y: 1178.06997145104 },
+              TIT_6001A: { x: -1024.6693805861637, y: 1196.2161585621343 },
+              TIT_6001A_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
+              TIT_6001A_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
+              TIT_6001A_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
+              PIT_6003A: { x: -804.9838255763632, y: 1193.6908985163677 },
+              PIT_6003A_COL: { x: -772.6201142386359, y: 1255.823965495775 },
+              PIT_6003A_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+              PIT_6003A_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
+              bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
+              bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
+              bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
+              bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
+              borderWhite: { x: -2378.220025932068, y: 632.5724848353368 },
+              line1: { x: -2410.5925492337, y: 1618.373867274551 },
+              line2: { x: -2410.891552880127, y: 1598.1196367183622 },
+              line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
+              line4: { x: -2082.153208656881, y: 1430.8103326059108 },
+              line5: { x: -1647.2085647611, y: 1098.3740496757796 },
+              line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
+              line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
+              line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+              line9: { x: -925.9976477005001, y: 1260.4714803086474 },
+              line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
+              line10: { x: -531.9035836581911, y: 1260.593609780011 },
+              line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
+              percent: { x: -405.6683476271253, y: 1298.7587875755169 },
+              timeUpdate3: { x: -2336.2287424299593, y: 709.0412944066101 },
+          };
 
     const [positions, setPositions] = useState(initialPositions);
 
@@ -4572,7 +3644,7 @@ export default function GraphicPRU() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                CNG PHU MY 3
+                                CNG PRU
                             </p>
                         </div>
                     </div>
@@ -4585,7 +3657,7 @@ export default function GraphicPRU() {
             style: {
                 background: background,
                 border: background,
-                width: 300,
+                width: 330,
 
                 height: 10,
             },
@@ -4601,10 +3673,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4621,10 +3693,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4641,10 +3713,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4661,10 +3733,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -4672,14 +3744,13 @@ export default function GraphicPRU() {
             zIndex: 999999,
         },
 
-        // =================== data ================================
 
         {
-            id: "FIQ_6001A",
-            position: positions.FIQ_6001A,
+            id: "FIQ_2001A",
+            position: positions.FIQ_2001A,
             type: "custom",
             data: {
-                label: <div>FIQ 6001A</div>,
+                label: <div>FIQ-6001A</div>,
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
@@ -4694,11 +3765,11 @@ export default function GraphicPRU() {
         },
 
         {
-            id: "FIQ_6001B",
-            position: positions.FIQ_6001B,
+            id: "FIQ_2001B",
+            position: positions.FIQ_2001B,
             type: "custom",
             data: {
-                label: <div>FIQ_6001B</div>,
+                label: <div>FIQ-6001B</div>,
             },
             sourcePosition: Position.Bottom,
             targetPosition: Position.Bottom,
@@ -4732,8 +3803,9 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -4757,8 +3829,9 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -4783,8 +3856,8 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+                height: 60,
             },
             targetPosition: Position.Bottom,
         },
@@ -4809,10 +3882,10 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+                height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
         },
 
         {
@@ -4836,10 +3909,11 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
-            targetPosition: Position.Left,
+            targetPosition: Position.Bottom,
         },
         {
             id: "EVC_02_Flow_at_Measurement_Condition",
@@ -4862,8 +3936,9 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Left,
         },
@@ -4888,8 +3963,9 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Top,
         },
@@ -4914,8 +3990,9 @@ export default function GraphicPRU() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 240,
-                height: 47,
+                width: 350,
+
+                height: 60,
             },
             targetPosition: Position.Top,
         },
@@ -5061,6 +4138,41 @@ export default function GraphicPRU() {
                 background: "none",
             },
         },
+
+        {
+            id: "line9none",
+            position: positions.line9none,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+        {
+            id: "line10none",
+            position: positions.line10none,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
         {
             id: "DownArrow",
             position: positions.DownArrow,
@@ -5122,7 +4234,7 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
@@ -5665,10 +4777,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -5686,10 +4798,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Top,
@@ -5707,10 +4819,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Top,
@@ -5728,10 +4840,10 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 200,
+                width: "auto",
                 height: 45,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Bottom,
@@ -5783,7 +4895,6 @@ export default function GraphicPRU() {
             },
 
             position: positions.PIT_6002A_IMG,
-            zIndex: 9999,
             style: {
                 background: background,
                 border: "none",
@@ -5801,7 +4912,6 @@ export default function GraphicPRU() {
             },
 
             position: positions.PIT_6002B_IMG,
-            zIndex: 9999,
 
             style: {
                 background: background,
@@ -5813,41 +4923,39 @@ export default function GraphicPRU() {
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_IMG",
-            data: {
-                label: <div>{PTV}</div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_IMG",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_IMG,
-            zIndex: 9999,
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     position: positions.EVC_01_Pressure_IMG,
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_IMG",
-            data: {
-                label: <div>{PTV}</div>,
-            },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_IMG",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_IMG,
-            zIndex: 9999,
+        //     position: positions.EVC_02_Pressure_IMG,
 
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         {
             id: "PIT_6001A_COL",
@@ -5856,13 +4964,13 @@ export default function GraphicPRU() {
             },
 
             position: positions.PIT_6001A_COL,
-            zIndex: 9999,
+            zIndex: 9999999,
             style: {
                 background: line,
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5873,14 +4981,14 @@ export default function GraphicPRU() {
             },
 
             position: positions.PIT_6001B_COL,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             style: {
                 background: line,
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5898,7 +5006,7 @@ export default function GraphicPRU() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
@@ -5916,46 +5024,46 @@ export default function GraphicPRU() {
                 border: "none",
                 width: "10px",
 
-                height: 60,
+                height: 30,
             },
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_COL",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_COL",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_COL,
-            zIndex: 9999,
-            style: {
-                background: line3,
-                border: "none",
-                width: "10px",
+        //     position: positions.EVC_01_Pressure_COL,
+        //     zIndex: 9999,
+        //     style: {
+        //         background: line3,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 60,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_COL",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 60,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_COL",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_COL,
-            zIndex: 9999,
+        //     position: positions.EVC_02_Pressure_COL,
+        //     zIndex: 9999,
 
-            style: {
-                background: line3,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: line3,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 60,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 60,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         {
             id: "PIT_6001A_DATA",
@@ -5964,7 +5072,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -5976,12 +5084,12 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "PIT_6001B_DATA",
@@ -5990,7 +5098,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6002,7 +5110,7 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 280,
+                width: 270,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -6016,7 +5124,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6033,7 +5141,7 @@ export default function GraphicPRU() {
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "PIT_6002B_DATA",
@@ -6042,7 +5150,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6069,7 +5177,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6080,12 +5188,12 @@ export default function GraphicPRU() {
             position: positions.EVC_01_Pressure_DATA,
 
             style: {
-                border: background,
-                width: 300,
+                border: "1px solid white",
+                width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Bottom,
         },
         {
             id: "EVC_02_Pressure_DATA",
@@ -6094,7 +5202,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6105,8 +5213,8 @@ export default function GraphicPRU() {
             position: positions.EVC_02_Pressure_DATA,
 
             style: {
-                border: background,
-                width: 300,
+                border: "1px solid white",
+                width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -6186,155 +5294,155 @@ export default function GraphicPRU() {
             targetPosition: Position.Bottom,
         },
 
-        {
-            id: "EVC_01_Pressure_NONE",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Pressure_NONE",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_01_Pressure_NONE,
-            zIndex: 9999,
+        //     position: positions.EVC_01_Pressure_NONE,
+        //     zIndex: 9999,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "EVC_02_Pressure_NONE",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "EVC_02_Pressure_NONE",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.EVC_02_Pressure_NONE,
-            zIndex: 9999,
+        //     position: positions.EVC_02_Pressure_NONE,
+        //     zIndex: 9999,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
         //===========================  TT LINE ==================================
 
-        {
-            id: "EVC_01_Temperature_COL",
-            position: positions.EVC_01_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Temperature_COL",
+        //     position: positions.EVC_01_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_02_Temperature_COL",
-            position: positions.EVC_02_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature_COL",
+        //     position: positions.EVC_02_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_01_Temperature",
-            position: positions.EVC_01_Temperature,
-            type: "custom",
-            data: {
-                label: <div>{GaugeTemperature}</div>,
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_01_Temperature",
+        //     position: positions.EVC_01_Temperature,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{GaugeTemperature}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            zIndex: 9999,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     zIndex: 9999,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
-        {
-            id: "EVC_02_Temperature",
-            position: positions.EVC_02_Temperature,
-            type: "custom",
-            data: {
-                label: <div>{GaugeTemperature}</div>,
-            },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature",
+        //     position: positions.EVC_02_Temperature,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{GaugeTemperature}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            zIndex: 9999,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     zIndex: 9999,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
 
         //================================  ==================================
 
-        {
-            id: "EVC_01_Temperature_COL",
-            position: positions.EVC_01_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_01_Temperature_COL",
+        //     position: positions.EVC_01_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
 
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
-        {
-            id: "EVC_02_Temperature_COL",
-            position: positions.EVC_02_Temperature_COL,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
+        // {
+        //     id: "EVC_02_Temperature_COL",
+        //     position: positions.EVC_02_Temperature_COL,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 100,
-                background: line3,
-            },
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         width: 10,
+        //         height: 100,
+        //         background: line3,
+        //     },
+        // },
 
         {
             id: "EVC_02_Temperature_DATA",
@@ -6343,7 +5451,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6354,29 +5462,30 @@ export default function GraphicPRU() {
             position: positions.EVC_02_Temperature_DATA,
 
             style: {
-                border: background,
+                border: "1px solid white",
                 width: 350,
+
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Right,
         },
-        {
-            id: "EVC_02_Temperature_NONE",
-            position: positions.EVC_02_Temperature_NONE,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "EVC_02_Temperature_NONE",
+        //     position: positions.EVC_02_Temperature_NONE,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Top,
-            style: {
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
 
         {
             id: "EVC_01_Temperature_DATA",
@@ -6385,7 +5494,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -6396,29 +5505,30 @@ export default function GraphicPRU() {
             position: positions.EVC_01_Temperature_DATA,
 
             style: {
-                border: background,
+                border: "1px solid white",
                 width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             sourcePosition: Position.Right,
         },
-        {
-            id: "EVC_01_Temperature_NONE",
-            position: positions.EVC_01_Temperature_NONE,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Top,
-            style: {
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
+        // {
+        //     id: "EVC_01_Temperature_NONE",
+        //     position: positions.EVC_01_Temperature_NONE,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
+
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         width: 10,
+        //         height: 10,
+        //         background: "none",
+        //     },
+        // },
         //========================== PSV line 2  ========================
 
         {
@@ -6430,7 +5540,7 @@ export default function GraphicPRU() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -6449,7 +5559,7 @@ export default function GraphicPRU() {
             },
 
             sourcePosition: Position.Right,
-            zIndex: 9999,
+            zIndex: 9999999,
 
             targetPosition: Position.Left,
             style: {
@@ -6930,12 +6040,14 @@ export default function GraphicPRU() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -6957,12 +6069,14 @@ export default function GraphicPRU() {
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
+            zIndex: 999999,
             style: {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -6988,8 +6102,9 @@ export default function GraphicPRU() {
                 fontSize: 18,
                 fontWeight: 500,
                 padding: 5,
-
-                background: "white",
+                color: "white",
+                background: "none",
+                border: "none",
                 borderRadius: 5,
             },
         },
@@ -7007,7 +6122,7 @@ export default function GraphicPRU() {
             style: {
                 border: "none",
                 width: 10,
-                height: 100,
+                height: 30,
                 background: line3,
             },
         },
@@ -7019,7 +6134,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -7031,7 +6146,7 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
@@ -7087,7 +6202,7 @@ export default function GraphicPRU() {
             style: {
                 border: "none",
                 width: 10,
-                height: 60,
+                height: 20,
                 background: line3,
             },
             zIndex: 9999,
@@ -7100,7 +6215,7 @@ export default function GraphicPRU() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: 600,
                         }}
                     >
@@ -7112,11 +6227,11 @@ export default function GraphicPRU() {
 
             style: {
                 border: background,
-                width: 240,
+                width: "auto",
                 background: borderBox,
             },
             sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
+            targetPosition: Position.Top,
         },
         {
             id: "PIT_6003A",
@@ -7181,6 +6296,33 @@ export default function GraphicPRU() {
             targetPosition: Position.Bottom,
         },
 
+        // {
+        //     id: "percent",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 32,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.percent,
+
+        //     style: {
+        //         background: 'none',
+        //         border: "1px solid white",
+        //         width: 0,
+        //         height: 0,
+        //         borderRadius: 50,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+
         {
             id: "timeUpdate3",
             data: {
@@ -7220,41 +6362,6 @@ export default function GraphicPRU() {
         },
 
         {
-            id: "line9none",
-            position: positions.line9none,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
-        {
-            id: "line10none",
-            position: positions.line10none,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                width: 10,
-                height: 10,
-                background: "none",
-            },
-        },
-
-        {
             id: "AlarmCenter",
             position: positions.AlarmCenter,
             type: "custom",
@@ -7279,724 +6386,734 @@ export default function GraphicPRU() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
 
-    // const onNodeDragStop = useCallback(
-    //     (event: any, node: any) => {
-    //         if (editingEnabled) {
-    //             const { id, position } = node;
-    //             setNodes((prevNodes) =>
-    //                 prevNodes.map((n) =>
-    //                     n.id === id ? { ...n, position: position } : n
-    //                 )
-    //             );
-    //             if (id === "bor1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor1: position,
-    //                 }));
-    //             } else if (id === "bor2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor2: position,
-    //                 }));
-    //             } else if (id === "bor3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor3: position,
-    //                 }));
-    //             } else if (id === "bor4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     bor4: position,
-    //                 }));
-    //             } else if (id === "line1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line1: position,
-    //                 }));
-    //             } else if (id === "line2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line2: position,
-    //                 }));
-    //             } else if (id === "line3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line3: position,
-    //                 }));
-    //             } else if (id === "line4") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line4: position,
-    //                 }));
-    //             } else if (id === "line5") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line5: position,
-    //                 }));
-    //             } else if (id === "line6") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line6: position,
-    //                 }));
-    //             } else if (id === "line7") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line7: position,
-    //                 }));
-    //             } else if (id === "line8") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line8: position,
-    //                 }));
-    //             } else if (id === "line9") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line9: position,
-    //                 }));
-    //             } else if (id === "line10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line10: position,
-    //                 }));
-    //             } else if (id === "Arrow10") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Arrow10: position,
-    //                 }));
-    //             } else if (id === "GD_6001") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_6001: position,
-    //                 }));
-    //             } else if (id === "GD_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     GD_IMG: position,
-    //                 }));
-    //             }
+    const onNodeDragStop = useCallback(
+        (event: any, node: any) => {
+            if (editingEnabled) {
+                const { id, position } = node;
+                setNodes((prevNodes) =>
+                    prevNodes.map((n) =>
+                        n.id === id ? { ...n, position: position } : n
+                    )
+                );
+                if (id === "bor1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor1: position,
+                    }));
+                } else if (id === "bor2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor2: position,
+                    }));
+                } else if (id === "bor3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor3: position,
+                    }));
+                } else if (id === "bor4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        bor4: position,
+                    }));
+                } else if (id === "line1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line1: position,
+                    }));
+                } else if (id === "line2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line2: position,
+                    }));
+                } else if (id === "line3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line3: position,
+                    }));
+                } else if (id === "line4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line4: position,
+                    }));
+                } else if (id === "line5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line5: position,
+                    }));
+                } else if (id === "line6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line6: position,
+                    }));
+                } else if (id === "line7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line7: position,
+                    }));
+                } else if (id === "line8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line8: position,
+                    }));
+                } else if (id === "line9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9: position,
+                    }));
+                } else if (id === "line10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10: position,
+                    }));
+                } else if (id === "Arrow10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Arrow10: position,
+                    }));
+                } else if (id === "GD_6001") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_6001: position,
+                    }));
+                } else if (id === "GD_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        GD_IMG: position,
+                    }));
+                }
 
-    //             //======================= BallVavle 2 ====================================
-    //             else if (id === "BallVavleLine2_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Top: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Bottom: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Top_none: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine2_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine2_Bottom_none: position,
-    //                 }));
-    //             }
+                //======================= BallVavle 2 ====================================
+                else if (id === "BallVavleLine2_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Top: position,
+                    }));
+                } else if (id === "BallVavleLine2_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Bottom: position,
+                    }));
+                } else if (id === "BallVavleLine2_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Top_none: position,
+                    }));
+                } else if (id === "BallVavleLine2_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine2_Bottom_none: position,
+                    }));
+                }
 
-    //             //======================= BallVavle 3 ====================================
-    //             else if (id === "BallVavle_Line3_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavle_Line3_Top: position,
-    //                 }));
-    //             } else if (id === "BallVavle_Line3_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavle_Line3_Bottom: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine3_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine3_Top_none: position,
-    //                 }));
-    //             } else if (id === "BallVavleLine3_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     BallVavleLine3_Bottom_none: position,
-    //                 }));
-    //             }
+                //======================= BallVavle 3 ====================================
+                else if (id === "BallVavle_Line3_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavle_Line3_Top: position,
+                    }));
+                } else if (id === "BallVavle_Line3_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavle_Line3_Bottom: position,
+                    }));
+                } else if (id === "BallVavleLine3_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine3_Top_none: position,
+                    }));
+                } else if (id === "BallVavleLine3_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        BallVavleLine3_Bottom_none: position,
+                    }));
+                }
 
-    //             //======================= BallVavle ====================================
-    //             else if (id === "PCV_6001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001A: position,
-    //                 }));
-    //             } else if (id === "PCV_6001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001B: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_none: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_none: position,
-    //                 }));
-    //             } else if (id === "PCV_6001B_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001B_none: position,
-    //                 }));
-    //             } else if (id === "PCV_6001A_none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001A_none: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_6001B_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001B_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_6001A_none2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001A_none2: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Bottom_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Bottom_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_6001B_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001B_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_6001A_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001A_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_line1_Top_SmallBallVavle") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_line1_Top_SmallBallVavle: position,
-    //                 }));
-    //             } else if (id === "PCV_6001A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001A_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_6002A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6002A_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_6001B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6001B_DATA: position,
-    //                 }));
-    //             } else if (id === "PCV_6002B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PCV_6002B_DATA: position,
-    //                 }));
-    //             }
-    //             //======================= BallVavle ====================================
-    //             else if (id === "PIT_6002A_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002A_IMG: position,
-    //                 }));
-    //             } else if (id === "PIT_6002B_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002B_IMG: position,
-    //                 }));
-    //             } else if (id === "PIT_6001A_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001A_IMG: position,
-    //                 }));
-    //             } else if (id === "PIT_6001B_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001B_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_IMG") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_IMG: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6002A_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002A_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6002B_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002B_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6001A_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001A_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6001B_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001B_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6001A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001A_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_6001B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001B_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_6002A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002A_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_6002B_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002B_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_6001A_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001A_NONE: position,
-    //                 }));
-    //             } else if (id === "PIT_6001B_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6001B_NONE: position,
-    //                 }));
-    //             } else if (id === "PIT_6002A_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002A_NONE: position,
-    //                 }));
-    //             } else if (id === "PIT_6002B_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6002B_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Pressure_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Pressure_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Pressure_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Pressure_NONE: position,
-    //                 }));
-    //             }
+                //======================= BallVavle ====================================
+                else if (id === "PCV_6001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001A: position,
+                    }));
+                } else if (id === "PCV_6001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001B: position,
+                    }));
+                } else if (id === "PCV_line1_Top") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_none: position,
+                    }));
+                } else if (id === "PCV_line1_Top_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_none: position,
+                    }));
+                } else if (id === "PCV_6001B_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001B_none: position,
+                    }));
+                } else if (id === "PCV_6001A_none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001A_none: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_none2: position,
+                    }));
+                } else if (id === "PCV_line1_Top_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_none2: position,
+                    }));
+                } else if (id === "PCV_6001B_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001B_none2: position,
+                    }));
+                } else if (id === "PCV_6001A_none2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001A_none2: position,
+                    }));
+                } else if (id === "PCV_line1_Bottom_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Bottom_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_6001B_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001B_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_6001A_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001A_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_line1_Top_SmallBallVavle") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_line1_Top_SmallBallVavle: position,
+                    }));
+                } else if (id === "PCV_6001A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001A_DATA: position,
+                    }));
+                } else if (id === "PCV_6002A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6002A_DATA: position,
+                    }));
+                } else if (id === "PCV_6001B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6001B_DATA: position,
+                    }));
+                } else if (id === "PCV_6002B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PCV_6002B_DATA: position,
+                    }));
+                }
+                //======================= BallVavle ====================================
+                else if (id === "PIT_6002A_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002A_IMG: position,
+                    }));
+                } else if (id === "PIT_6002B_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002B_IMG: position,
+                    }));
+                } else if (id === "PIT_6001A_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001A_IMG: position,
+                    }));
+                } else if (id === "PIT_6001B_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001B_IMG: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_IMG: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_IMG: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_COL: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_COL: position,
+                    }));
+                } else if (id === "PIT_6002A_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002A_COL: position,
+                    }));
+                } else if (id === "PIT_6002B_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002B_COL: position,
+                    }));
+                } else if (id === "PIT_6001A_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001A_COL: position,
+                    }));
+                } else if (id === "PIT_6001B_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001B_COL: position,
+                    }));
+                } else if (id === "PIT_6001A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001A_DATA: position,
+                    }));
+                } else if (id === "PIT_6001B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001B_DATA: position,
+                    }));
+                } else if (id === "PIT_6002A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002A_DATA: position,
+                    }));
+                } else if (id === "PIT_6002B_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002B_DATA: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_DATA: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_DATA: position,
+                    }));
+                } else if (id === "PIT_6001A_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001A_NONE: position,
+                    }));
+                } else if (id === "PIT_6001B_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6001B_NONE: position,
+                    }));
+                } else if (id === "PIT_6002A_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002A_NONE: position,
+                    }));
+                } else if (id === "PIT_6002B_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6002B_NONE: position,
+                    }));
+                } else if (id === "EVC_01_Pressure_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Pressure_NONE: position,
+                    }));
+                } else if (id === "EVC_02_Pressure_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Pressure_NONE: position,
+                    }));
+                }
 
-    //             //======================= BallVavle ====================================
-    //             else if (id === "EVC_01_Temperature") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_COL: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_DATA: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Temperature_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Temperature_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Temperature_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Temperature_NONE: position,
-    //                 }));
-    //             }
+                //======================= BallVavle ====================================
+                else if (id === "EVC_01_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature: position,
+                    }));
+                } else if (id === "EVC_02_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_COL: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_COL: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_DATA: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_DATA: position,
+                    }));
+                } else if (id === "EVC_01_Temperature_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature_NONE: position,
+                    }));
+                } else if (id === "EVC_02_Temperature_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature_NONE: position,
+                    }));
+                }
 
-    //             // ========================= PSV LINE 2  ===============================
-    //             else if (id === "PSV_LINE2_TOP_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_TOP_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_TOP_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE2_BOTTOM_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE2_BOTTOM_NONE2: position,
-    //                 }));
-    //             }
+                // ========================= PSV LINE 2  ===============================
+                else if (id === "PSV_LINE2_TOP_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE2_TOP_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_TOP_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE2_BOTTOM_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE2_BOTTOM_NONE2: position,
+                    }));
+                }
 
-    //             // ========================= PSV LINE 2  ===============================
-    //             else if (id === "PSV_LINE3_TOP_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_RIGHT") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_RIGHT: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE1") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE1: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_NONE2") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_NONE2: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_BOTTOM_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_BOTTOM_HALFCIRCLE: position,
-    //                 }));
-    //             } else if (id === "PSV_LINE3_TOP_HALFCIRCLE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_LINE3_TOP_HALFCIRCLE: position,
-    //                 }));
-    //             }
-    //             // ========================= Data  ===============================
-    //             else if (id === "SDV_6001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6001A: position,
-    //                 }));
-    //             } else if (id === "SDV_6001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6001B: position,
-    //                 }));
-    //             } else if (id === "SDV_6002") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6002: position,
-    //                 }));
-    //             } else if (id === "SDV_6001A_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6001A_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_6001B_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6001B_Name: position,
-    //                 }));
-    //             } else if (id === "SDV_6002_Name") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     SDV_6002_Name: position,
-    //                 }));
-    //             }
-    //             //========================== pit line 1 =========================
-    //             else if (id === "TIT_6001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TIT_6001A: position,
-    //                 }));
-    //             } else if (id === "TIT_6001A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TIT_6001A_DATA: position,
-    //                 }));
-    //             } else if (id === "TIT_6001A_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TIT_6001A_COL: position,
-    //                 }));
-    //             } else if (id === "TIT_6001A_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     TIT_6001A_NONE: position,
-    //                 }));
-    //             }
-    //             //========================== pit line 1 =========================
-    //             else if (id === "PIT_6003A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6003A: position,
-    //                 }));
-    //             } else if (id === "PIT_6003A_DATA") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6003A_DATA: position,
-    //                 }));
-    //             } else if (id === "PIT_6003A_COL") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6003A_COL: position,
-    //                 }));
-    //             } else if (id === "PIT_6003A_NONE") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PIT_6003A_NONE: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Volume_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Volume_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Volume_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Flow_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Flow_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_01_Flow_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_01_Flow_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Flow_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Flow_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Flow_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Flow_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Volume_at_Base_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Volume_at_Base_Condition: position,
-    //                 }));
-    //             } else if (id === "EVC_02_Volume_at_Measurement_Condition") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     EVC_02_Volume_at_Measurement_Condition: position,
-    //                 }));
-    //             } else if (id === "FIQ_6001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_6001A: position,
-    //                 }));
-    //             } else if (id === "FIQ_6001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     FIQ_6001B: position,
-    //                 }));
-    //             } else if (id === "PSV_6001A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_6001A: position,
-    //                 }));
-    //             } else if (id === "PSV_6001B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_6001B: position,
-    //                 }));
-    //             } else if (id === "PSV_6002A") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_6002A: position,
-    //                 }));
-    //             } else if (id === "PSV_6002B") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     PSV_6002B: position,
-    //                 }));
-    //             }
+                // ========================= PSV LINE 2  ===============================
+                else if (id === "PSV_LINE3_TOP_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_RIGHT") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_RIGHT: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE1: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_NONE2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_NONE2: position,
+                    }));
+                } else if (id === "PSV_LINE3_BOTTOM_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_BOTTOM_HALFCIRCLE: position,
+                    }));
+                } else if (id === "PSV_LINE3_TOP_HALFCIRCLE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_LINE3_TOP_HALFCIRCLE: position,
+                    }));
+                }
+                // ========================= Data  ===============================
+                else if (id === "SDV_6001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6001A: position,
+                    }));
+                } else if (id === "SDV_6001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6001B: position,
+                    }));
+                } else if (id === "SDV_6002") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6002: position,
+                    }));
+                } else if (id === "SDV_6001A_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6001A_Name: position,
+                    }));
+                } else if (id === "SDV_6001B_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6001B_Name: position,
+                    }));
+                } else if (id === "SDV_6002_Name") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_6002_Name: position,
+                    }));
+                }
+                //========================== pit line 1 =========================
+                else if (id === "TIT_6001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TIT_6001A: position,
+                    }));
+                } else if (id === "TIT_6001A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TIT_6001A_DATA: position,
+                    }));
+                } else if (id === "TIT_6001A_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TIT_6001A_COL: position,
+                    }));
+                } else if (id === "TIT_6001A_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        TIT_6001A_NONE: position,
+                    }));
+                }
+                //========================== pit line 1 =========================
+                else if (id === "PIT_6003A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6003A: position,
+                    }));
+                } else if (id === "PIT_6003A_DATA") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6003A_DATA: position,
+                    }));
+                } else if (id === "PIT_6003A_COL") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6003A_COL: position,
+                    }));
+                } else if (id === "PIT_6003A_NONE") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PIT_6003A_NONE: position,
+                    }));
+                } else if (id === "EVC_01_Volume_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Volume_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Volume_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Volume_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Flow_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Flow_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_01_Flow_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Flow_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Flow_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Flow_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Flow_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Flow_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Volume_at_Base_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Volume_at_Base_Condition: position,
+                    }));
+                } else if (id === "EVC_02_Volume_at_Measurement_Condition") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Volume_at_Measurement_Condition: position,
+                    }));
+                } else if (id === "FIQ_2001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2001A: position,
+                    }));
+                } else if (id === "FIQ_2001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2001B: position,
+                    }));
+                } else if (id === "PSV_6001A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_6001A: position,
+                    }));
+                } else if (id === "PSV_6001B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_6001B: position,
+                    }));
+                } else if (id === "PSV_6002A") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_6002A: position,
+                    }));
+                } else if (id === "PSV_6002B") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_6002B: position,
+                    }));
+                }
 
-    //             // =====================================================
-    //             else if (id === "borderWhite") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     borderWhite: position,
-    //                 }));
-    //             } else if (id === "timeUpdate3") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     timeUpdate3: position,
-    //                 }));
-    //             } else if (id === "Header") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     Header: position,
-    //                 }));
-    //             } else if (id === "DownArrow") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     DownArrow: position,
-    //                 }));
-    //             }  else if (id === "line9none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line9none: position,
-    //                 }));
-    //             } else if (id === "line10none") {
-    //                 setPositions((prevPositions: any) => ({
-    //                     ...prevPositions,
-    //                     line10none: position,
-    //                 }));
-    //             }
-    //         }
-    //     },
-    //     [setNodes, setPositions, editingEnabled]
-    // );
+                // =====================================================
+                else if (id === "borderWhite") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        borderWhite: position,
+                    }));
+                } else if (id === "timeUpdate3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        timeUpdate3: position,
+                    }));
+                } else if (id === "Header") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Header: position,
+                    }));
+                } else if (id === "DownArrow") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        DownArrow: position,
+                    }));
+                } else if (id === "line9none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line9none: position,
+                    }));
+                } else if (id === "line10none") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line10none: position,
+                    }));
+                } else if (id === "percent") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        percent: position,
+                    }));
+                } else if (id === "AlarmCenter") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        AlarmCenter: position,
+                    }));
+                }
+            }
+        },
+        [setNodes, setPositions, editingEnabled]
+    );
     // const toggleEditing = () => {
     //     setEditingEnabled(!editingEnabled);
     // };
@@ -8059,8 +7176,6 @@ export default function GraphicPRU() {
                     minZoom={0.5}
                     maxZoom={2}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>

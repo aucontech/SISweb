@@ -12,8 +12,6 @@ export default function AlarmSNG_HUNGYEN() {
     const ws = useRef<WebSocket | null>(null);
     const [criticalElements, setCriticalElements] = useState<number>(0);
     const [majorElements, setMajorElements] = useState<number>(0);
-    console.log('criticalElements: ', criticalElements);
-    console.log('majorElements: ', majorElements);
 
     useEffect(() => {
         ws.current = new WebSocket(url);
