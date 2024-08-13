@@ -164,54 +164,71 @@ export default function AlarmCNG_BINHDUONG() {
 
     return (
         <div style={{display:'flex',}}>
-            <div>
-                {criticalElements === 0 ? (
-                    ''
-                ) : (
-                    <div
-                        style={{
-                            background: 'red',
-                            width: 150,
-                            height: 60,
-                            textAlign: 'center',
-                            justifyContent: 'center',
-                            display: 'flex',
-                            alignItems: 'center',
-                            color: 'white',
-                            borderRadius: 5,
-                            fontWeight: 500,
-                            fontSize: 25,
-                            marginBottom: 10,
-                        }}
-                    >
-                       Alarming
-                    </div>
-                )}
-            </div>
-            <div style={{marginLeft:10}}>
-                {majorElements === 0 ? (
-              ''
-                ) : (
-                    <div
-                        style={{
-                            background: 'orange',
-                            width: 150,
-                            height: 60,
-                            textAlign: 'center',
-                            justifyContent: 'center',
-                            display: 'flex',
-                            alignItems: 'center',
-                            color: 'white',
-                            borderRadius: 5,
-                            fontWeight: 500,
-                            fontSize: 25,
-                            marginBottom: 10,
-                        }}
-                    >
-                       Maintained
-                    </div>
-                )}
-            </div>
+        <div>
+            {criticalElements === 0 ? (
+                <div
+                    style={{
+                        background: 'green',
+                        width: 150,
+                        height: 60,
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
+                        borderRadius: 5,
+                        fontWeight: 500,
+                        fontSize: 25,
+                        marginBottom: 10,
+                    }}
+                >
+                    Normal
+                </div>
+            ) : (
+                <div
+                    style={{
+                        background: 'red',
+                        width: 150,
+                        height: 60,
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
+                        borderRadius: 5,
+                        fontWeight: 500,
+                        fontSize: 25,
+                        marginBottom: 10,
+                    }}
+                >
+                   Alarming
+                </div>
+            )}
         </div>
+        <div style={{marginLeft:10}}>
+            {majorElements === 0 ? (
+             ' '
+            ) : (
+                <div
+                    style={{
+                        background: 'orange',
+                        width: 150,
+                        height: 60,
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
+                        borderRadius: 5,
+                        fontWeight: 500,
+                        fontSize: 25,
+                        marginBottom: 10,
+                    }}
+                >
+                   Maintained
+                </div>
+            )}
+        </div>
+    </div>
     );
 }
