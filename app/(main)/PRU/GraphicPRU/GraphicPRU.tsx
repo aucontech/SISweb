@@ -3744,7 +3744,6 @@ export default function GraphicPRU() {
             zIndex: 999999,
         },
 
-        // =================== data ================================
 
         {
             id: "FIQ_2001A",
