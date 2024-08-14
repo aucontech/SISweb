@@ -742,7 +742,6 @@ export default function SetUpdata_SPMCV() {
  // =================================================================================================================== 
 
     const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
-const [audioPlayingEVC_01_Remain_Battery_Service_Life, setAudioPlayingEVC_01_Remain_Battery_Service_Life] = useState(false);
 const [inputValueEVC_01_Remain_Battery_Service_Life, setInputValueEVC_01_Remain_Battery_Service_Life] = useState<any>();
 const [inputValue2EVC_01_Remain_Battery_Service_Life, setInputValue2EVC_01_Remain_Battery_Service_Life] = useState<any>();
 const [EVC_01_Remain_Battery_Service_Life_High, setEVC_01_Remain_Battery_Service_Life_High] = useState<number | null>(null);
@@ -752,39 +751,16 @@ const [exceedThresholdEVC_01_Remain_Battery_Service_Life, setExceedThresholdEVC_
 const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Battery_Service_Life] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof EVC_01_Remain_Battery_Service_Life_High === 'string' && typeof EVC_01_Remain_Battery_Service_Life_Low === 'string' && EVC_01_Remain_Battery_Service_Life !== null && maintainEVC_01_Remain_Battery_Service_Life === false
-        ) {
-            const highValue = parseFloat(EVC_01_Remain_Battery_Service_Life_High);
-            const lowValue = parseFloat(EVC_01_Remain_Battery_Service_Life_Low);
-            const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Remain_Battery_Service_LifeValue)) {
-                if (highValue <= EVC_01_Remain_Battery_Service_LifeValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue) {
-                    if (!audioPlayingEVC_01_Remain_Battery_Service_Life) {
-                        audioRef.current?.play();
-                        setAudioPlayingEVC_01_Remain_Battery_Service_Life(true);
-                        setExceedThresholdEVC_01_Remain_Battery_Service_Life(true);
-                    }
-                } else {
-                    setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
-                    setExceedThresholdEVC_01_Remain_Battery_Service_Life(false);
-                }
-            } 
-        } 
-    }, [EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life, audioPlayingEVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_Low,maintainEVC_01_Remain_Battery_Service_Life]);
+useEffect(() => {
+    const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(EVC_01_Remain_Battery_Service_Life as any);
+    const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+    const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingEVC_01_Remain_Battery_Service_Life) {
-            const audioEnded = () => {
-                setAudioPlayingEVC_01_Remain_Battery_Service_Life(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingEVC_01_Remain_Battery_Service_Life]);
+    if (!isNaN(EVC_01_Remain_Battery_Service_LifeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Remain_Battery_Service_Life) {
+        setExceedThresholdEVC_01_Remain_Battery_Service_Life(EVC_01_Remain_Battery_Service_LifeValue >= highValue || EVC_01_Remain_Battery_Service_LifeValue <= lowValue);
+    }
+}, [EVC_01_Remain_Battery_Service_Life, EVC_01_Remain_Battery_Service_Life_High, EVC_01_Remain_Battery_Service_Life_Low, maintainEVC_01_Remain_Battery_Service_Life]);
+
 
     const handleInputChangeEVC_01_Remain_Battery_Service_Life = (event: any) => {
         const newValue = event.target.value;
@@ -820,40 +796,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      
      const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
      
-     
-         useEffect(() => {
-             if (typeof EVC_01_Temperature_High === 'string' && typeof EVC_01_Temperature_Low === 'string' && EVC_01_Temperature !== null && maintainEVC_01_Temperature === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Temperature_High);
-                 const lowValue = parseFloat(EVC_01_Temperature_Low);
-                 const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_TemperatureValue)) {
-                     if (highValue <= EVC_01_TemperatureValue || EVC_01_TemperatureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Temperature) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Temperature(true);
-                             setExceedThresholdTemperature(true);
-                         }
-                     } else {
-                        setAudioPlayingEVC_01_Temperature(false);
-                         setExceedThresholdTemperature(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Temperature_High, EVC_01_Temperature, audioPlayingEVC_01_Temperature, EVC_01_Temperature_Low,maintainEVC_01_Temperature]);
-     
-         useEffect(() => {
-             if (audioPlayingEVC_01_Temperature) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Temperature(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Temperature]);
+     useEffect(() => {
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
+            setExceedThresholdTemperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+        }
+    }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
+    
      
          const handleInputChangeEVC_01_Temperature = (event: any) => {
              const newValue = event.target.value;
@@ -881,7 +833,6 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
 
 
      const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-     const [audioPlayingEVC_01_Pressure, setAudioPlayingEVC_01_Pressure] = useState(false);
      const [inputValueEVC_01_Pressure, setInputValueEVC_01_Pressure] = useState<any>();
      const [inputValue2EVC_01_Pressure, setInputValue2EVC_01_Pressure] = useState<any>();
      const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
@@ -890,40 +841,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      
      const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
      
-     
-         useEffect(() => {
-             if (typeof EVC_01_Pressure_High === 'string' && typeof EVC_01_Pressure_Low === 'string' && EVC_01_Pressure !== null && maintainEVC_01_Pressure === false
-             ) {
-                 const highValue = parseFloat(EVC_01_Pressure_High);
-                 const lowValue = parseFloat(EVC_01_Pressure_Low);
-                 const EVC_01_PressureValue = parseFloat(EVC_01_Pressure);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_PressureValue)) {
-                     if (highValue <= EVC_01_PressureValue || EVC_01_PressureValue <= lowValue) {
-                         if (!audioPlayingEVC_01_Pressure) {
-                             audioRef.current?.play();
-                             setAudioPlayingEVC_01_Pressure(true);
-                             setExceedThresholdEVC_01_Pressure(true);
-                         }
-                     } else {
-                        setAudioPlayingEVC_01_Pressure(false);
-                        setExceedThresholdEVC_01_Pressure(false);
-                     }
-                 } 
-             } 
-         }, [EVC_01_Pressure_High, EVC_01_Pressure, audioPlayingEVC_01_Pressure, EVC_01_Pressure_Low,maintainEVC_01_Pressure]);
-     
-         useEffect(() => {
-             if (audioPlayingEVC_01_Pressure) {
-                 const audioEnded = () => {
-                    setAudioPlayingEVC_01_Pressure(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEVC_01_Pressure]);
+     useEffect(() => {
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
+    
+        if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
+            setExceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+        }
+    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+    
      
          const handleInputChangeEVC_01_Pressure = (event: any) => {
              const newValue = event.target.value;
@@ -962,39 +889,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Base_Condition_High === 'string' && typeof EVC_01_Volume_at_Base_Condition_Low === 'string' && EVC_01_Volume_at_Base_Condition !== null && maintainEVC_01_Volume_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Base_Condition_Low);
-                      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Base_ConditionValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Base_Condition(true);
-                                  setExceedThresholdEVC_01_Volume_at_Base_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
-                             setExceedThresholdEVC_01_Volume_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition, audioPlayingEVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_Low,maintainEVC_01_Volume_at_Base_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Base_Condition]);
+          useEffect(() => {
+            const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
+            const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
+                setExceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+        
           
               const handleInputChangeEVC_01_Volume_at_Base_Condition = (event: any) => {
                   const newValue = event.target.value;
@@ -1032,40 +936,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Volume_at_Measurement_Condition_High === 'string' && typeof EVC_01_Volume_at_Measurement_Condition_Low === 'string' && EVC_01_Volume_at_Measurement_Condition !== null && maintainEVC_01_Volume_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Volume_at_Measurement_Condition_Low);
-                      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Volume_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_01_Volume_at_Measurement_ConditionValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Volume_at_Measurement_Condition(true);
-                                  setExceedThresholdEVC_01_Volume_at_Measurement_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
-                             setExceedThresholdEVC_01_Volume_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition, audioPlayingEVC_01_Volume_at_Measurement_Condition , EVC_01_Volume_at_Measurement_Condition_Low,maintainEVC_01_Volume_at_Measurement_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Volume_at_Measurement_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Volume_at_Measurement_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Volume_at_Measurement_Condition]);
-          
+          useEffect(() => {
+            const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
+            const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
+                setExceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
+        
               const handleInputChangeEVC_01_Volume_at_Measurement_Condition = (event: any) => {
                   const newValue = event.target.value;
                   setInputValueEVC_01_Volume_at_Measurement_Condition(newValue);
@@ -1101,40 +981,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Flow_at_Base_Condition_High === 'string' && typeof EVC_01_Flow_at_Base_Condition_Low === 'string' && EVC_01_Flow_at_Base_Condition !== null && maintainEVC_01_Flow_at_Base_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Flow_at_Base_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Flow_at_Base_Condition_Low);
-                      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Base_ConditionValue)) {
-                          if (highValue <= EVC_01_Flow_at_Base_ConditionValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Flow_at_Base_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Flow_at_Base_Condition(true);
-                                  setExceedThresholdEVC_01_Flow_at_Base_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
-                             setExceedThresholdEVC_01_Flow_at_Base_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition, audioPlayingEVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_Low,maintainEVC_01_Flow_at_Base_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Flow_at_Base_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Flow_at_Base_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Flow_at_Base_Condition]);
-          
+          useEffect(() => {
+            const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
+            const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+            const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
+                setExceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
+        
               const handleInputChangeEVC_01_Flow_at_Base_Condition = (event: any) => {
                   const newValue = event.target.value;
                   setInputValueEVC_01_Flow_at_Base_Condition(newValue);
@@ -1171,39 +1027,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Vm_of_Current_Day, setMaintainEVC_01_Vm_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vm_of_Current_Day_High === 'string' && typeof EVC_01_Vm_of_Current_Day_Low === 'string' && EVC_01_Vm_of_Current_Day !== null && maintainEVC_01_Vm_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vm_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vm_of_Current_Day_Low);
-                      const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vm_of_Current_DayValue || EVC_01_Vm_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vm_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vm_of_Current_Day(true);
-                                  setExceedThresholdEVC_01_Vm_of_Current_Day(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Vm_of_Current_Day(false);
-                             setExceedThresholdEVC_01_Vm_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day, audioPlayingEVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_Low,maintainEVC_01_Vm_of_Current_Day]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vm_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vm_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vm_of_Current_Day]);
+          useEffect(() => {
+            const EVC_01_Vm_of_Current_DayValue = parseFloat(EVC_01_Vm_of_Current_Day as any);
+            const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vm_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Current_Day) {
+                setExceedThresholdEVC_01_Vm_of_Current_Day(EVC_01_Vm_of_Current_DayValue >= highValue || EVC_01_Vm_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vm_of_Current_Day, EVC_01_Vm_of_Current_Day_High, EVC_01_Vm_of_Current_Day_Low, maintainEVC_01_Vm_of_Current_Day]);
           
               const handleInputChangeEVC_01_Vm_of_Current_Day = (event: any) => {
                   const newValue = event.target.value;
@@ -1240,39 +1072,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Vb_of_Current_Day, setMaintainEVC_01_Vb_of_Current_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Current_Day_High === 'string' && typeof EVC_01_Vb_of_Current_Day_Low === 'string' && EVC_01_Vb_of_Current_Day !== null && maintainEVC_01_Vb_of_Current_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Current_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Current_Day_Low);
-                      const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Current_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Current_DayValue || EVC_01_Vb_of_Current_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vb_of_Current_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vb_of_Current_Day(true);
-                                  setExceedThresholdEVC_01_Vb_of_Current_Day(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Vb_of_Current_Day(false);
-                             setExceedThresholdEVC_01_Vb_of_Current_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day, audioPlayingEVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_Low,maintainEVC_01_Vb_of_Current_Day]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vb_of_Current_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vb_of_Current_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vb_of_Current_Day]);
+          useEffect(() => {
+            const EVC_01_Vb_of_Current_DayValue = parseFloat(EVC_01_Vb_of_Current_Day as any);
+            const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Current_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Current_Day) {
+                setExceedThresholdEVC_01_Vb_of_Current_Day(EVC_01_Vb_of_Current_DayValue >= highValue || EVC_01_Vb_of_Current_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Current_Day, EVC_01_Vb_of_Current_Day_High, EVC_01_Vb_of_Current_Day_Low, maintainEVC_01_Vb_of_Current_Day]);
+        
           
               const handleInputChangeEVC_01_Vb_of_Current_Day = (event: any) => {
                   const newValue = event.target.value;
@@ -1309,39 +1118,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Flow_at_Measurement_Condition_High === 'string' && typeof EVC_01_Flow_at_Measurement_Condition_Low === 'string' && EVC_01_Flow_at_Measurement_Condition !== null && maintainEVC_01_Flow_at_Measurement_Condition === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_High);
-                      const lowValue = parseFloat(EVC_01_Flow_at_Measurement_Condition_Low);
-                      const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Flow_at_Measurement_ConditionValue)) {
-                          if (highValue <= EVC_01_Flow_at_Measurement_ConditionValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Flow_at_Measurement_Condition) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Flow_at_Measurement_Condition(true);
-                                  setExceedThresholdEVC_01_Flow_at_Measurement_Condition(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Flow_at_Measurement_Condition(false);
-                             setExceedThresholdEVC_01_Flow_at_Measurement_Condition(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition, audioPlayingEVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_Low,maintainEVC_01_Flow_at_Measurement_Condition]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Flow_at_Measurement_Condition) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Flow_at_Measurement_Condition(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Flow_at_Measurement_Condition]);
+          useEffect(() => {
+            const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
+            const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+            const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
+                setExceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
+            }
+        }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
+        
           
               const handleInputChangeEVC_01_Flow_at_Measurement_Condition = (event: any) => {
                   const newValue = event.target.value;
@@ -1378,39 +1164,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
           const [maintainEVC_01_Vb_of_Last_Day, setMaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof EVC_01_Vb_of_Last_Day_High === 'string' && typeof EVC_01_Vb_of_Last_Day_Low === 'string' && EVC_01_Vb_of_Last_Day !== null && maintainEVC_01_Vb_of_Last_Day === false
-                  ) {
-                      const highValue = parseFloat(EVC_01_Vb_of_Last_Day_High);
-                      const lowValue = parseFloat(EVC_01_Vb_of_Last_Day_Low);
-                      const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
-                          if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                              if (!audioPlayingEVC_01_Vb_of_Last_Day) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingEVC_01_Vb_of_Last_Day(true);
-                                  setExceedThresholdEVC_01_Vb_of_Last_Day(true);
-                              }
-                          } else {
-                             setAudioPlayingEVC_01_Vb_of_Last_Day(false);
-                             setExceedThresholdEVC_01_Vb_of_Last_Day(false);
-                          }
-                      } 
-                  } 
-              }, [EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day, audioPlayingEVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low,maintainEVC_01_Vb_of_Last_Day]);
-          
-              useEffect(() => {
-                  if (audioPlayingEVC_01_Vb_of_Last_Day) {
-                      const audioEnded = () => {
-                         setAudioPlayingEVC_01_Vb_of_Last_Day(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingEVC_01_Vb_of_Last_Day]);
+          useEffect(() => {
+            const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day as any);
+            const highValue = EVC_01_Vb_of_Last_Day_High ?? NaN;
+            const lowValue = EVC_01_Vb_of_Last_Day_Low ?? NaN;
+        
+            if (!isNaN(EVC_01_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vb_of_Last_Day) {
+                setExceedThresholdEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_DayValue >= highValue || EVC_01_Vb_of_Last_DayValue <= lowValue);
+            }
+        }, [EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low, maintainEVC_01_Vb_of_Last_Day]);
+        
           
               const handleInputChangeEVC_01_Vb_of_Last_Day = (event: any) => {
                   const newValue = event.target.value;
@@ -1449,39 +1212,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
     const [maintainEVC_01_Vm_of_Last_Day, setMaintainEVC_01_Vm_of_Last_Day] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof EVC_01_Vm_of_Last_Day_High === 'string' && typeof EVC_01_Vm_of_Last_Day_Low === 'string' && EVC_01_Vm_of_Last_Day !== null && maintainEVC_01_Vm_of_Last_Day === false
-            ) {
-                const highValue = parseFloat(EVC_01_Vm_of_Last_Day_High);
-                const lowValue = parseFloat(EVC_01_Vm_of_Last_Day_Low);
-                const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
-                    if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                        if (!audioPlayingEVC_01_Vm_of_Last_Day) {
-                            audioRef.current?.play();
-                            setAudioPlayingEVC_01_Vm_of_Last_Day(true);
-                            setExceedThresholdEVC_01_Vm_of_Last_Day(true);
-                        }
-                    } else {
-                       setAudioPlayingEVC_01_Vm_of_Last_Day(false);
-                       setExceedThresholdEVC_01_Vm_of_Last_Day(false);
-                    }
-                } 
-            } 
-        }, [EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day, audioPlayingEVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low,maintainEVC_01_Vm_of_Last_Day]);
+    useEffect(() => {
+        const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day as any);
+        const highValue = EVC_01_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_01_Vm_of_Last_Day_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingEVC_01_Vm_of_Last_Day) {
-                const audioEnded = () => {
-                   setAudioPlayingEVC_01_Vm_of_Last_Day(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingEVC_01_Vm_of_Last_Day]);
+        if (!isNaN(EVC_01_Vm_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Vm_of_Last_Day) {
+            setExceedThresholdEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_DayValue >= highValue || EVC_01_Vm_of_Last_DayValue <= lowValue);
+        }
+    }, [EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low, maintainEVC_01_Vm_of_Last_Day]);
+    
     
         const handleInputChangeEVC_01_Vm_of_Last_Day = (event: any) => {
             const newValue = event.target.value;
@@ -1520,39 +1260,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
   const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
   
   
-      useEffect(() => {
-          if (typeof GD1_High === 'string' && typeof GD1_Low === 'string' && GD1 !== null && maintainGD1 === false
-          ) {
-              const highValue = parseFloat(GD1_High);
-              const lowValue = parseFloat(GD1_Low);
-              const GD1Value = parseFloat(GD1);
-      
-              if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD1Value)) {
-                  if (highValue <= GD1Value || GD1Value <= lowValue) {
-                      if (!audioPlayingGD1) {
-                          audioRef.current?.play();
-                          setAudioPlayingGD1(true);
-                          setExceedThresholdGD1(true);
-                      }
-                  } else {
-                     setAudioPlayingGD1(false);
-                     setExceedThresholdGD1(false);
-                  }
-              } 
-          } 
-      }, [GD1_High, GD1, audioPlayingGD1, GD1_Low,maintainGD1]);
-  
-      useEffect(() => {
-          if (audioPlayingGD1) {
-              const audioEnded = () => {
-                 setAudioPlayingGD1(false);
-              };
-              audioRef.current?.addEventListener('ended', audioEnded);
-              return () => {
-                  audioRef.current?.removeEventListener('ended', audioEnded);
-              };
-          }
-      }, [audioPlayingGD1]);
+  useEffect(() => {
+    const GD1Value = parseFloat(GD1 as any);
+    const highValue = GD1_High ?? NaN;
+    const lowValue = GD1_Low ?? NaN;
+
+    if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
+        setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+    }
+}, [GD1, GD1_High, GD1_Low, maintainGD1]);
+
   
       const handleInputChangeGD1 = (event: any) => {
           const newValue = event.target.value;
@@ -1591,39 +1308,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof GD2_High === 'string' && typeof GD2_Low === 'string' && GD2 !== null && maintainGD2 === false
-               ) {
-                   const highValue = parseFloat(GD2_High);
-                   const lowValue = parseFloat(GD2_Low);
-                   const GD2Value = parseFloat(GD2);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(GD2Value)) {
-                       if (highValue <= GD2Value || GD2Value <= lowValue) {
-                           if (!audioPlayingGD2) {
-                               audioRef.current?.play();
-                               setAudioPlayingGD2(true);
-                               setExceedThresholdGD2(true);
-                           }
-                       } else {
-                          setAudioPlayingGD2(false);
-                          setExceedThresholdGD2(false);
-                       }
-                   } 
-               } 
-           }, [GD2_High, GD2, audioPlayingGD2, GD2_Low,maintainGD2]);
-       
-           useEffect(() => {
-               if (audioPlayingGD2) {
-                   const audioEnded = () => {
-                      setAudioPlayingGD2(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingGD2]);
+       useEffect(() => {
+        const GD2Value = parseFloat(GD2 as any);
+        const highValue = GD2_High ?? NaN;
+        const lowValue = GD2_Low ?? NaN;
+    
+        if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
+            setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
+        }
+    }, [GD2, GD2_High, GD2_Low, maintainGD2]);
+    
        
            const handleInputChangeGD2 = (event: any) => {
                const newValue = event.target.value;
@@ -1661,39 +1355,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof PT1_High === 'string' && typeof PT1_Low === 'string' && PT1 !== null && maintainPT1 === false
-               ) {
-                   const highValue = parseFloat(PT1_High);
-                   const lowValue = parseFloat(PT1_Low);
-                   const PT1Value = parseFloat(PT1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
-                       if (highValue <= PT1Value || PT1Value <= lowValue) {
-                           if (!audioPlayingPT1) {
-                               audioRef.current?.play();
-                               setAudioPlayingPT1(true);
-                               setExceedThresholdPT1(true);
-                           }
-                       } else {
-                          setAudioPlayingPT1(false);
-                          setExceedThresholdPT1(false);
-                       }
-                   } 
-               } 
-           }, [PT1_High, PT1, audioPlayingPT1 , PT1_Low,maintainPT1]);
-       
-           useEffect(() => {
-               if (audioPlayingPT1) {
-                   const audioEnded = () => {
-                      setAudioPlayingPT1(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingPT1]);
+       useEffect(() => {
+        const PT1Value = parseFloat(PT1 as any);
+        const highValue = PT1_High ?? NaN;
+        const lowValue = PT1_Low ?? NaN;
+    
+        if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+            setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+        }
+    }, [PT1, PT1_High, PT1_Low, maintainPT1]);
        
            const handleInputChangePT1 = (event: any) => {
                const newValue = event.target.value;
@@ -1730,39 +1400,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSO_1, setMaintainDI_ZSO_1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSO_1_High === 'string' && typeof DI_ZSO_1_Low === 'string' && DI_ZSO_1 !== null && maintainDI_ZSO_1 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSO_1_High);
-                   const lowValue = parseFloat(DI_ZSO_1_Low);
-                   const DI_ZSO_1Value = parseFloat(DI_ZSO_1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_1Value)) {
-                       if (highValue <= DI_ZSO_1Value || DI_ZSO_1Value <= lowValue) {
-                           if (!audioPlayingDI_ZSO_1) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSO_1(true);
-                               setExceedThresholdDI_ZSO_1(true);
-                           }
-                       } else {
-                          setAudioPlayingDI_ZSO_1(false);
-                          setExceedThresholdDI_ZSO_1(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSO_1_High, DI_ZSO_1, audioPlayingDI_ZSO_1, DI_ZSO_1_Low,maintainDI_ZSO_1]);
-       
-           useEffect(() => {
-               if (audioPlayingDI_ZSO_1) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSO_1(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSO_1]);
+       useEffect(() => {
+        const DI_ZSO_1Value = parseFloat(DI_ZSO_1 as any);
+        const highValue = DI_ZSO_1_High ?? NaN;
+        const lowValue = DI_ZSO_1_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSO_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSO_1) {
+            setExceedThresholdDI_ZSO_1(DI_ZSO_1Value >= highValue || DI_ZSO_1Value <= lowValue);
+        }
+    }, [DI_ZSO_1, DI_ZSO_1_High, DI_ZSO_1_Low, maintainDI_ZSO_1]);
        
            const handleInputChangeDI_ZSO_1 = (event: any) => {
                const newValue = event.target.value;
@@ -1800,39 +1446,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSO_2, setMaintainDI_ZSO_2] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSO_2_High === 'string' && typeof DI_ZSO_2_Low === 'string' && DI_ZSO_2 !== null && maintainDI_ZSO_2 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSO_2_High);
-                   const lowValue = parseFloat(DI_ZSO_2_Low);
-                   const DI_ZSO_2Value = parseFloat(DI_ZSO_2);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSO_2Value)) {
-                       if (highValue <= DI_ZSO_2Value || DI_ZSO_2Value <= lowValue) {
-                           if (!audioPlayingDI_ZSO_2) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSO_2(true);
-                               setExceedThresholdDI_ZSO_2(true);
-                           }
-                       } else {
-                          setAudioPlayingDI_ZSO_2(false);
-                          setExceedThresholdDI_ZSO_2(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSO_2_High, DI_ZSO_2, audioPlayingDI_ZSO_2, DI_ZSO_2_Low,maintainDI_ZSO_2]);
-       
-           useEffect(() => {
-               if (audioPlayingDI_ZSO_2) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSO_2(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSO_2]);
+       useEffect(() => {
+        const DI_ZSO_2Value = parseFloat(DI_ZSO_2 as any);
+        const highValue = DI_ZSO_2_High ?? NaN;
+        const lowValue = DI_ZSO_2_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSO_2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSO_2) {
+            setExceedThresholdDI_ZSO_2(DI_ZSO_2Value >= highValue || DI_ZSO_2Value <= lowValue);
+        }
+    }, [DI_ZSO_2, DI_ZSO_2_High, DI_ZSO_2_Low, maintainDI_ZSO_2]);
        
            const handleInputChangeDI_ZSO_2 = (event: any) => {
                const newValue = event.target.value;
@@ -1869,39 +1491,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSC_1, setMaintainDI_ZSC_1] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSC_1_High === 'string' && typeof DI_ZSC_1_Low === 'string' && DI_ZSC_1 !== null && maintainDI_ZSC_1 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSC_1_High);
-                   const lowValue = parseFloat(DI_ZSC_1_Low);
-                   const DI_ZSC_1Value = parseFloat(DI_ZSC_1);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_1Value)) {
-                       if (highValue <= DI_ZSC_1Value || DI_ZSC_1Value <= lowValue) {
-                           if (!audioPlayingDI_ZSC_1) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSC_1(true);
-                               setExceedThresholdDI_ZSC_1(true);
-                           }
-                       } else {
-                          setAudioPlayingDI_ZSC_1(false);
-                          setExceedThresholdDI_ZSC_1(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSC_1_High, DI_ZSC_1, audioPlayingDI_ZSC_1, DI_ZSC_1_Low,maintainDI_ZSC_1]);
-       
-           useEffect(() => {
-               if (audioPlayingDI_ZSC_1) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSC_1(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSC_1]);
+       useEffect(() => {
+        const DI_ZSC_1Value = parseFloat(DI_ZSC_1 as any);
+        const highValue = DI_ZSC_1_High ?? NaN;
+        const lowValue = DI_ZSC_1_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSC_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSC_1) {
+            setExceedThresholdDI_ZSC_1(DI_ZSC_1Value >= highValue || DI_ZSC_1Value <= lowValue);
+        }
+    }, [DI_ZSC_1, DI_ZSC_1_High, DI_ZSC_1_Low, maintainDI_ZSC_1]);
        
            const handleInputChangeDI_ZSC_1 = (event: any) => {
                const newValue = event.target.value;
@@ -1939,39 +1537,16 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
        const [maintainDI_ZSC_2, setMaintainDI_ZSC_2] = useState<boolean>(false);
        
        
-           useEffect(() => {
-               if (typeof DI_ZSC_2_High === 'string' && typeof DI_ZSC_2_Low === 'string' && DI_ZSC_2 !== null && maintainDI_ZSC_2 === false
-               ) {
-                   const highValue = parseFloat(DI_ZSC_2_High);
-                   const lowValue = parseFloat(DI_ZSC_2_Low);
-                   const DI_ZSC_2Value = parseFloat(DI_ZSC_2);
-           
-                   if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_ZSC_2Value)) {
-                       if (highValue <= DI_ZSC_2Value || DI_ZSC_2Value <= lowValue) {
-                           if (!audioPlayingDI_ZSC_2) {
-                               audioRef.current?.play();
-                               setAudioPlayingDI_ZSC_2(true);
-                               setExceedThresholdDI_ZSC_2(true);
-                           }
-                       } else {
-                          setAudioPlayingDI_ZSC_2(false);
-                          setExceedThresholdDI_ZSC_2(false);
-                       }
-                   } 
-               } 
-           }, [DI_ZSC_2_High, DI_ZSC_2, audioPlayingDI_ZSC_2, DI_ZSC_2_Low,maintainDI_ZSC_2]);
+       useEffect(() => {
+        const DI_ZSC_2Value = parseFloat(DI_ZSC_2 as any);
+        const highValue = DI_ZSC_2_High ?? NaN;
+        const lowValue = DI_ZSC_2_Low ?? NaN;
+    
+        if (!isNaN(DI_ZSC_2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_ZSC_2) {
+            setExceedThresholdDI_ZSC_2(DI_ZSC_2Value >= highValue || DI_ZSC_2Value <= lowValue);
+        }
+    }, [DI_ZSC_2, DI_ZSC_2_High, DI_ZSC_2_Low, maintainDI_ZSC_2]);
        
-           useEffect(() => {
-               if (audioPlayingDI_ZSC_2) {
-                   const audioEnded = () => {
-                      setAudioPlayingDI_ZSC_2(false);
-                   };
-                   audioRef.current?.addEventListener('ended', audioEnded);
-                   return () => {
-                       audioRef.current?.removeEventListener('ended', audioEnded);
-                   };
-               }
-           }, [audioPlayingDI_ZSC_2]);
        
            const handleInputChangeDI_ZSC_2 = (event: any) => {
                const newValue = event.target.value;
@@ -2010,39 +1585,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [maintainDI_MAP_1, setMaintainDI_MAP_1] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof DI_MAP_1_High === 'string' && typeof DI_MAP_1_Low === 'string' && DI_MAP_1 !== null && maintainDI_MAP_1 === false
-         ) {
-             const highValue = parseFloat(DI_MAP_1_High);
-             const lowValue = parseFloat(DI_MAP_1_Low);
-             const DI_MAP_1Value = parseFloat(DI_MAP_1);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_MAP_1Value)) {
-                 if (highValue <= DI_MAP_1Value || DI_MAP_1Value <= lowValue) {
-                     if (!audioPlayingDI_MAP_1) {
-                         audioRef.current?.play();
-                         setAudioPlayingDI_MAP_1(true);
-                         setExceedThresholdDI_MAP_1(true);
-                     }
-                 } else {
-                    setAudioPlayingDI_MAP_1(false);
-                    setExceedThresholdDI_MAP_1(false);
-                 }
-             } 
-         } 
-     }, [DI_MAP_1_High, DI_MAP_1, audioPlayingDI_MAP_1, DI_MAP_1_Low,maintainDI_MAP_1]);
- 
-     useEffect(() => {
-         if (audioPlayingDI_MAP_1) {
-             const audioEnded = () => {
-                setAudioPlayingDI_MAP_1(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingDI_MAP_1]);
+ useEffect(() => {
+    const DI_MAP_1Value = parseFloat(DI_MAP_1 as any);
+    const highValue = DI_MAP_1_High ?? NaN;
+    const lowValue = DI_MAP_1_Low ?? NaN;
+
+    if (!isNaN(DI_MAP_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_MAP_1) {
+        setExceedThresholdDI_MAP_1(DI_MAP_1Value >= highValue || DI_MAP_1Value <= lowValue);
+    }
+}, [DI_MAP_1, DI_MAP_1_High, DI_MAP_1_Low, maintainDI_MAP_1]);
  
      const handleInputChangeDI_MAP_1 = (event: any) => {
          const newValue = event.target.value;
@@ -2081,39 +1632,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
      const [maintainDI_UPS_CHARGING, setMaintainDI_UPS_CHARGING] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DI_UPS_CHARGING_High === 'string' && typeof DI_UPS_CHARGING_Low === 'string' && DI_UPS_CHARGING !== null && maintainDI_UPS_CHARGING === false
-             ) {
-                 const highValue = parseFloat(DI_UPS_CHARGING_High);
-                 const lowValue = parseFloat(DI_UPS_CHARGING_Low);
-                 const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_CHARGINGValue)) {
-                     if (highValue <= DI_UPS_CHARGINGValue || DI_UPS_CHARGINGValue <= lowValue) {
-                         if (!audioPlayingDI_UPS_CHARGING) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_UPS_CHARGING(true);
-                             setExceedThresholdDI_UPS_CHARGING(true);
-                         }
-                     } else {
-                        setAudioPlayingDI_UPS_CHARGING(false);
-                        setExceedThresholdDI_UPS_CHARGING(false);
-                     }
-                 } 
-             } 
-         }, [DI_UPS_CHARGING_High, DI_UPS_CHARGING, audioPlayingDI_UPS_CHARGING, DI_UPS_CHARGING_Low,maintainDI_UPS_CHARGING]);
-     
-         useEffect(() => {
-             if (audioPlayingDI_UPS_CHARGING) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_UPS_CHARGING(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_UPS_CHARGING]);
+     useEffect(() => {
+        const DI_UPS_CHARGINGValue = parseFloat(DI_UPS_CHARGING as any);
+        const highValue = DI_UPS_CHARGING_High ?? NaN;
+        const lowValue = DI_UPS_CHARGING_Low ?? NaN;
+    
+        if (!isNaN(DI_UPS_CHARGINGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_CHARGING) {
+            setExceedThresholdDI_UPS_CHARGING(DI_UPS_CHARGINGValue >= highValue || DI_UPS_CHARGINGValue <= lowValue);
+        }
+    }, [DI_UPS_CHARGING, DI_UPS_CHARGING_High, DI_UPS_CHARGING_Low, maintainDI_UPS_CHARGING]);
      
          const handleInputChangeDI_UPS_CHARGING = (event: any) => {
              const newValue = event.target.value;
@@ -2152,39 +1679,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [maintainDI_UPS_ALARM, setMaintainDI_UPS_ALARM] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof DI_UPS_ALARM_High === 'string' && typeof DI_UPS_ALARM_Low === 'string' && DI_UPS_ALARM !== null && maintainDI_UPS_ALARM === false
-         ) {
-             const highValue = parseFloat(DI_UPS_ALARM_High);
-             const lowValue = parseFloat(DI_UPS_ALARM_Low);
-             const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_ALARMValue)) {
-                 if (highValue <= DI_UPS_ALARMValue || DI_UPS_ALARMValue <= lowValue) {
-                     if (!audioPlayingDI_UPS_ALARM) {
-                         audioRef.current?.play();
-                         setAudioPlayingDI_UPS_ALARM(true);
-                         setExceedThresholdDI_UPS_ALARM(true);
-                     }
-                 } else {
-                    setAudioPlayingDI_UPS_ALARM(false);
-                    setExceedThresholdDI_UPS_ALARM(false);
-                 }
-             } 
-         } 
-     }, [DI_UPS_ALARM_High, DI_UPS_ALARM, audioPlayingDI_UPS_ALARM, DI_UPS_ALARM_Low,maintainDI_UPS_ALARM]);
- 
-     useEffect(() => {
-         if (audioPlayingDI_UPS_ALARM) {
-             const audioEnded = () => {
-                setAudioPlayingDI_UPS_ALARM(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingDI_UPS_ALARM]);
+ useEffect(() => {
+    const DI_UPS_ALARMValue = parseFloat(DI_UPS_ALARM as any);
+    const highValue = DI_UPS_ALARM_High ?? NaN;
+    const lowValue = DI_UPS_ALARM_Low ?? NaN;
+
+    if (!isNaN(DI_UPS_ALARMValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_ALARM) {
+        setExceedThresholdDI_UPS_ALARM(DI_UPS_ALARMValue >= highValue || DI_UPS_ALARMValue <= lowValue);
+    }
+}, [DI_UPS_ALARM, DI_UPS_ALARM_High, DI_UPS_ALARM_Low, maintainDI_UPS_ALARM]);
  
      const handleInputChangeDI_UPS_ALARM = (event: any) => {
          const newValue = event.target.value;
@@ -2222,39 +1725,15 @@ const [maintainEVC_01_Remain_Battery_Service_Life, setMaintainEVC_01_Remain_Batt
  const [maintainDI_SD_1, setMaintainDI_SD_1] = useState<boolean>(false);
  
  
-     useEffect(() => {
-         if (typeof DI_SD_1_High === 'string' && typeof DI_SD_1_Low === 'string' && DI_SD_1 !== null && maintainDI_SD_1 === false
-         ) {
-             const highValue = parseFloat(DI_SD_1_High);
-             const lowValue = parseFloat(DI_SD_1_Low);
-             const DI_SD_1Value = parseFloat(DI_SD_1);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
-                 if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                     if (!audioPlayingDI_SD_1) {
-                         audioRef.current?.play();
-                         setAudioPlayingDI_SD_1(true);
-                         setExceedThresholdDI_SD_1(true);
-                     }
-                 } else {
-                    setAudioPlayingDI_SD_1(false);
-                    setExceedThresholdDI_SD_1(false);
-                 }
-             } 
-         } 
-     }, [DI_SD_1_High, DI_SD_1, audioPlayingDI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
- 
-     useEffect(() => {
-         if (audioPlayingDI_SD_1) {
-             const audioEnded = () => {
-                setAudioPlayingDI_SD_1(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingDI_SD_1]);
+ useEffect(() => {
+    const DI_SD_1Value = parseFloat(DI_SD_1 as any);
+    const highValue = DI_SD_1_High ?? NaN;
+    const lowValue = DI_SD_1_Low ?? NaN;
+
+    if (!isNaN(DI_SD_1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_SD_1) {
+        setExceedThresholdDI_SD_1(DI_SD_1Value >= highValue || DI_SD_1Value <= lowValue);
+    }
+}, [DI_SD_1, DI_SD_1_High, DI_SD_1_Low, maintainDI_SD_1]);
  
      const handleInputChangeDI_SD_1 = (event: any) => {
          const newValue = event.target.value;
@@ -2293,39 +1772,15 @@ const [exceedThresholdDI_SELECT_SW, setExceedThresholdDI_SELECT_SW] = useState(f
 const [maintainDI_SELECT_SW, setMaintainDI_SELECT_SW] = useState<boolean>(false);
 
 
- useEffect(() => {
-     if (typeof DI_SELECT_SW_High === 'string' && typeof DI_SELECT_SW_Low === 'string' && DI_SELECT_SW !== null && maintainDI_SELECT_SW === false
-     ) {
-         const highValue = parseFloat(DI_SELECT_SW_High);
-         const lowValue = parseFloat(DI_SELECT_SW_Low);
-         const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW);
- 
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SELECT_SWValue)) {
-             if (highValue <= DI_SELECT_SWValue || DI_SELECT_SWValue <= lowValue) {
-                 if (!audioPlayingDI_SELECT_SW) {
-                     audioRef.current?.play();
-                     setAudioPlayingDI_SELECT_SW(true);
-                     setExceedThresholdDI_SELECT_SW(true);
-                 }
-             } else {
-                setAudioPlayingDI_SELECT_SW(false);
-                setExceedThresholdDI_SELECT_SW(false);
-             }
-         } 
-     } 
- }, [DI_SELECT_SW_High, DI_SELECT_SW, audioPlayingDI_SELECT_SW, DI_SELECT_SW_Low,maintainDI_SELECT_SW]);
+useEffect(() => {
+    const DI_SELECT_SWValue = parseFloat(DI_SELECT_SW as any);
+    const highValue = DI_SELECT_SW_High ?? NaN;
+    const lowValue = DI_SELECT_SW_Low ?? NaN;
 
- useEffect(() => {
-     if (audioPlayingDI_SELECT_SW) {
-         const audioEnded = () => {
-            setAudioPlayingDI_SELECT_SW(false);
-         };
-         audioRef.current?.addEventListener('ended', audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener('ended', audioEnded);
-         };
-     }
- }, [audioPlayingDI_SELECT_SW]);
+    if (!isNaN(DI_SELECT_SWValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_SELECT_SW) {
+        setExceedThresholdDI_SELECT_SW(DI_SELECT_SWValue >= highValue || DI_SELECT_SWValue <= lowValue);
+    }
+}, [DI_SELECT_SW, DI_SELECT_SW_High, DI_SELECT_SW_Low, maintainDI_SELECT_SW]);
 
  const handleInputChangeDI_SELECT_SW = (event: any) => {
      const newValue = event.target.value;
@@ -2363,39 +1818,15 @@ const [exceedThresholdDI_RESET, setExceedThresholdDI_RESET] = useState(false); /
 const [maintainDI_RESET, setMaintainDI_RESET] = useState<boolean>(false);
 
 
- useEffect(() => {
-     if (typeof DI_RESET_High === 'string' && typeof DI_RESET_Low === 'string' && DI_RESET !== null && maintainDI_RESET === false
-     ) {
-         const highValue = parseFloat(DI_RESET_High);
-         const lowValue = parseFloat(DI_RESET_Low);
-         const DI_RESETValue = parseFloat(DI_RESET);
- 
-         if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_RESETValue)) {
-             if (highValue <= DI_RESETValue || DI_RESETValue <= lowValue) {
-                 if (!audioPlayingDI_RESET) {
-                     audioRef.current?.play();
-                     setAudioPlayingDI_RESET(true);
-                     setExceedThresholdDI_RESET(true);
-                 }
-             } else {
-                setAudioPlayingDI_RESET(false);
-                setExceedThresholdDI_RESET(false);
-             }
-         } 
-     } 
- }, [DI_RESET_High, DI_RESET, audioPlayingDI_RESET, DI_RESET_Low,maintainDI_RESET]);
+useEffect(() => {
+    const DI_RESETValue = parseFloat(DI_RESET as any);
+    const highValue = DI_RESET_High ?? NaN;
+    const lowValue = DI_RESET_Low ?? NaN;
 
- useEffect(() => {
-     if (audioPlayingDI_RESET) {
-         const audioEnded = () => {
-            setAudioPlayingDI_RESET(false);
-         };
-         audioRef.current?.addEventListener('ended', audioEnded);
-         return () => {
-             audioRef.current?.removeEventListener('ended', audioEnded);
-         };
-     }
- }, [audioPlayingDI_RESET]);
+    if (!isNaN(DI_RESETValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_RESET) {
+        setExceedThresholdDI_RESET(DI_RESETValue >= highValue || DI_RESETValue <= lowValue);
+    }
+}, [DI_RESET, DI_RESET_High, DI_RESET_Low, maintainDI_RESET]);
 
  const handleInputChangeDI_RESET = (event: any) => {
      const newValue = event.target.value;
@@ -2435,38 +1866,15 @@ const [maintainEmergency_NO, setMaintainEmergency_NO] = useState<boolean>(false)
 
 
 useEffect(() => {
- if (typeof Emergency_NO_High === 'string' && typeof Emergency_NO_Low === 'string' && Emergency_NO !== null && maintainEmergency_NO === false
- ) {
-     const highValue = parseFloat(Emergency_NO_High);
-     const lowValue = parseFloat(Emergency_NO_Low);
-     const Emergency_NOValue = parseFloat(Emergency_NO);
+    const Emergency_NOValue = parseFloat(Emergency_NO as any);
+    const highValue = Emergency_NO_High ?? NaN;
+    const lowValue = Emergency_NO_Low ?? NaN;
 
-     if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NOValue)) {
-         if (highValue <= Emergency_NOValue || Emergency_NOValue <= lowValue) {
-             if (!audioPlayingEmergency_NO) {
-                 audioRef.current?.play();
-                 setAudioPlayingEmergency_NO(true);
-                 setExceedThresholdEmergency_NO(true);
-             }
-         } else {
-            setAudioPlayingEmergency_NO(false);
-            setExceedThresholdEmergency_NO(false);
-         }
-     } 
- } 
-}, [Emergency_NO_High, Emergency_NO, audioPlayingEmergency_NO, Emergency_NO_Low,maintainEmergency_NO]);
+    if (!isNaN(Emergency_NOValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NO) {
+        setExceedThresholdEmergency_NO(Emergency_NOValue >= highValue || Emergency_NOValue <= lowValue);
+    }
+}, [Emergency_NO, Emergency_NO_High, Emergency_NO_Low, maintainEmergency_NO]);
 
-useEffect(() => {
- if (audioPlayingEmergency_NO) {
-     const audioEnded = () => {
-        setAudioPlayingEmergency_NO(false);
-     };
-     audioRef.current?.addEventListener('ended', audioEnded);
-     return () => {
-         audioRef.current?.removeEventListener('ended', audioEnded);
-     };
- }
-}, [audioPlayingEmergency_NO]);
 
 const handleInputChangeEmergency_NO = (event: any) => {
  const newValue = event.target.value;
@@ -2506,39 +1914,15 @@ const ChangeMaintainEmergency_NO = async () => {
      const [maintainDI_UPS_BATTERY, setMaintainDI_UPS_BATTERY] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DI_UPS_BATTERY_High === 'string' && typeof DI_UPS_BATTERY_Low === 'string' && DI_UPS_BATTERY !== null && maintainDI_UPS_BATTERY === false
-             ) {
-                 const highValue = parseFloat(DI_UPS_BATTERY_High);
-                 const lowValue = parseFloat(DI_UPS_BATTERY_Low);
-                 const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_UPS_BATTERYValue)) {
-                     if (highValue <= DI_UPS_BATTERYValue || DI_UPS_BATTERYValue <= lowValue) {
-                         if (!audioPlayingDI_UPS_BATTERY) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_UPS_BATTERY(true);
-                             setExceedThresholdDI_UPS_BATTERY(true);
-                         }
-                     } else {
-                        setAudioPlayingDI_UPS_BATTERY(false);
-                        setExceedThresholdDI_UPS_BATTERY(false);
-                     }
-                 } 
-             } 
-         }, [DI_UPS_BATTERY_High, DI_UPS_BATTERY, audioPlayingDI_UPS_BATTERY, DI_UPS_BATTERY_Low,maintainDI_UPS_BATTERY]);
-     
-         useEffect(() => {
-             if (audioPlayingDI_UPS_BATTERY) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_UPS_BATTERY(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_UPS_BATTERY]);
+     useEffect(() => {
+        const DI_UPS_BATTERYValue = parseFloat(DI_UPS_BATTERY as any);
+        const highValue = DI_UPS_BATTERY_High ?? NaN;
+        const lowValue = DI_UPS_BATTERY_Low ?? NaN;
+    
+        if (!isNaN(DI_UPS_BATTERYValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDI_UPS_BATTERY) {
+            setExceedThresholdDI_UPS_BATTERY(DI_UPS_BATTERYValue >= highValue || DI_UPS_BATTERYValue <= lowValue);
+        }
+    }, [DI_UPS_BATTERY, DI_UPS_BATTERY_High, DI_UPS_BATTERY_Low, maintainDI_UPS_BATTERY]);
      
          const handleInputChangeDI_UPS_BATTERY = (event: any) => {
              const newValue = event.target.value;
@@ -2576,39 +1960,15 @@ const ChangeMaintainEmergency_NO = async () => {
      const [maintainEmergency_NC, setMaintainEmergency_NC] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof Emergency_NC_High === 'string' && typeof Emergency_NC_Low === 'string' && Emergency_NC !== null && maintainEmergency_NC === false
-             ) {
-                 const highValue = parseFloat(Emergency_NC_High);
-                 const lowValue = parseFloat(Emergency_NC_Low);
-                 const Emergency_NCValue = parseFloat(Emergency_NC);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(Emergency_NCValue)) {
-                     if (highValue <= Emergency_NCValue || Emergency_NCValue <= lowValue) {
-                         if (!audioPlayingEmergency_NC) {
-                             audioRef.current?.play();
-                             setAudioPlayingEmergency_NC(true);
-                             setExceedThresholdEmergency_NC(true);
-                         }
-                     } else {
-                        setAudioPlayingEmergency_NC(false);
-                        setExceedThresholdEmergency_NC(false);
-                     }
-                 } 
-             } 
-         }, [Emergency_NC_High, Emergency_NC, audioPlayingEmergency_NC, Emergency_NC_Low,maintainEmergency_NC]);
-     
-         useEffect(() => {
-             if (audioPlayingEmergency_NC) {
-                 const audioEnded = () => {
-                    setAudioPlayingEmergency_NC(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingEmergency_NC]);
+     useEffect(() => {
+        const Emergency_NCValue = parseFloat(Emergency_NC as any);
+        const highValue = Emergency_NC_High ?? NaN;
+        const lowValue = Emergency_NC_Low ?? NaN;
+    
+        if (!isNaN(Emergency_NCValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEmergency_NC) {
+            setExceedThresholdEmergency_NC(Emergency_NCValue >= highValue || Emergency_NCValue <= lowValue);
+        }
+    }, [Emergency_NC, Emergency_NC_High, Emergency_NC_Low, maintainEmergency_NC]);
      
          const handleInputChangeEmergency_NC = (event: any) => {
              const newValue = event.target.value;
@@ -2648,38 +2008,15 @@ const ChangeMaintainEmergency_NO = async () => {
      
      
      useEffect(() => {
-         if (typeof UPS_Mode_High === 'string' && typeof UPS_Mode_Low === 'string' && UPS_Mode !== null && maintainUPS_Mode === false
-         ) {
-             const highValue = parseFloat(UPS_Mode_High);
-             const lowValue = parseFloat(UPS_Mode_Low);
-             const UPS_ModeValue = parseFloat(UPS_Mode);
+        const UPS_ModeValue = parseFloat(UPS_Mode as any);
+        const highValue = UPS_Mode_High ?? NaN;
+        const lowValue = UPS_Mode_Low ?? NaN;
+    
+        if (!isNaN(UPS_ModeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainUPS_Mode) {
+            setExceedThresholdUPS_Mode(UPS_ModeValue >= highValue || UPS_ModeValue <= lowValue);
+        }
+    }, [UPS_Mode, UPS_Mode_High, UPS_Mode_Low, maintainUPS_Mode]);
      
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(UPS_ModeValue)) {
-                 if (highValue <= UPS_ModeValue || UPS_ModeValue <= lowValue) {
-                     if (!audioPlayingUPS_Mode) {
-                         audioRef.current?.play();
-                         setAudioPlayingUPS_Mode(true);
-                         setExceedThresholdUPS_Mode(true);
-                     }
-                 } else {
-                    setAudioPlayingUPS_Mode(false);
-                    setExceedThresholdUPS_Mode(false);
-                 }
-             } 
-         } 
-     }, [UPS_Mode_High, UPS_Mode, audioPlayingUPS_Mode, UPS_Mode_Low,maintainUPS_Mode]);
-     
-     useEffect(() => {
-         if (audioPlayingUPS_Mode) {
-             const audioEnded = () => {
-                setAudioPlayingUPS_Mode(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingUPS_Mode]);
      
      const handleInputChangeUPS_Mode = (event: any) => {
          const newValue = event.target.value;
@@ -2716,39 +2053,15 @@ const ChangeMaintainEmergency_NO = async () => {
      const [maintainDO_HR_01, setMaintainDO_HR_01] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof DO_HR_01_High === 'string' && typeof DO_HR_01_Low === 'string' && DO_HR_01 !== null && maintainDO_HR_01 === false
-             ) {
-                 const highValue = parseFloat(DO_HR_01_High);
-                 const lowValue = parseFloat(DO_HR_01_Low);
-                 const DO_HR_01Value = parseFloat(DO_HR_01);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_HR_01Value)) {
-                     if (highValue <= DO_HR_01Value || DO_HR_01Value <= lowValue) {
-                         if (!audioPlayingDO_HR_01) {
-                             audioRef.current?.play();
-                             setAudioPlayingDO_HR_01(true);
-                             setExceedThresholdDO_HR_01(true);
-                         }
-                     } else {
-                        setAudioPlayingDO_HR_01(false);
-                         setExceedThresholdDO_HR_01(false);
-                     }
-                 } 
-             } 
-         }, [DO_HR_01_High, DO_HR_01, audioPlayingDO_HR_01, DO_HR_01_Low,maintainDO_HR_01]);
-     
-         useEffect(() => {
-             if (audioPlayingDO_HR_01) {
-                 const audioEnded = () => {
-                    setAudioPlayingDO_HR_01(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDO_HR_01]);
+     useEffect(() => {
+        const DO_HR_01Value = parseFloat(DO_HR_01 as any);
+        const highValue = DO_HR_01_High ?? NaN;
+        const lowValue = DO_HR_01_Low ?? NaN;
+    
+        if (!isNaN(DO_HR_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_HR_01) {
+            setExceedThresholdDO_HR_01(DO_HR_01Value >= highValue || DO_HR_01Value <= lowValue);
+        }
+    }, [DO_HR_01, DO_HR_01_High, DO_HR_01_Low, maintainDO_HR_01]);
      
          const handleInputChangeDO_HR_01 = (event: any) => {
              const newValue = event.target.value;
@@ -2793,39 +2106,15 @@ const ChangeMaintainEmergency_NO = async () => {
           const [maintainDO_BC_01, setMaintainDO_BC_01] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof DO_BC_01_High === 'string' && typeof DO_BC_01_Low === 'string' && DO_BC_01 !== null && maintainDO_BC_01 === false
-                  ) {
-                      const highValue = parseFloat(DO_BC_01_High);
-                      const lowValue = parseFloat(DO_BC_01_Low);
-                      const DO_BC_01Value = parseFloat(DO_BC_01);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_BC_01Value)) {
-                          if (highValue <= DO_BC_01Value || DO_BC_01Value <= lowValue) {
-                              if (!audioPlayingDO_BC_01) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingDO_BC_01(true);
-                                  setExceedThresholdDO_BC_01(true);
-                              }
-                          } else {
-                             setAudioPlayingDO_BC_01(false);
-                             setExceedThresholdDO_BC_01(false);
-                          }
-                      } 
-                  } 
-              }, [DO_BC_01_High, DO_BC_01, audioPlayingDO_BC_01, DO_BC_01_Low,maintainDO_BC_01]);
-          
-              useEffect(() => {
-                  if (audioPlayingDO_BC_01) {
-                      const audioEnded = () => {
-                         setAudioPlayingDO_BC_01(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingDO_BC_01]);
+          useEffect(() => {
+            const DO_BC_01Value = parseFloat(DO_BC_01 as any);
+            const highValue = DO_BC_01_High ?? NaN;
+            const lowValue = DO_BC_01_Low ?? NaN;
+        
+            if (!isNaN(DO_BC_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_BC_01) {
+                setExceedThresholdDO_BC_01(DO_BC_01Value >= highValue || DO_BC_01Value <= lowValue);
+            }
+        }, [DO_BC_01, DO_BC_01_High, DO_BC_01_Low, maintainDO_BC_01]);
           
               const handleInputChangeDO_BC_01 = (event: any) => {
                   const newValue = event.target.value;
@@ -2863,39 +2152,15 @@ const ChangeMaintainEmergency_NO = async () => {
           const [maintainDO_SV_01, setMaintainDO_SV_01] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof DO_SV_01_High === 'string' && typeof DO_SV_01_Low === 'string' && DO_SV_01 !== null && maintainDO_SV_01 === false
-                  ) {
-                      const highValue = parseFloat(DO_SV_01_High);
-                      const lowValue = parseFloat(DO_SV_01_Low);
-                      const DO_SV_01Value = parseFloat(DO_SV_01);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DO_SV_01Value)) {
-                          if (highValue <= DO_SV_01Value || DO_SV_01Value <= lowValue) {
-                              if (!audioPlayingDO_SV_01) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingDO_SV_01(true);
-                                  setExceedThresholdDO_SV_01(true);
-                              }
-                          } else {
-                             setAudioPlayingDO_SV_01(false);
-                             setExceedThresholdDO_SV_01(false);
-                          }
-                      } 
-                  } 
-              }, [DO_SV_01_High, DO_SV_01, audioPlayingDO_SV_01 , DO_SV_01_Low,maintainDO_SV_01]);
-          
-              useEffect(() => {
-                  if (audioPlayingDO_SV_01) {
-                      const audioEnded = () => {
-                         setAudioPlayingDO_SV_01(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingDO_SV_01]);
+          useEffect(() => {
+            const DO_SV_01Value = parseFloat(DO_SV_01 as any);
+            const highValue = DO_SV_01_High ?? NaN;
+            const lowValue = DO_SV_01_Low ?? NaN;
+        
+            if (!isNaN(DO_SV_01Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainDO_SV_01) {
+                setExceedThresholdDO_SV_01(DO_SV_01Value >= highValue || DO_SV_01Value <= lowValue);
+            }
+        }, [DO_SV_01, DO_SV_01_High, DO_SV_01_Low, maintainDO_SV_01]);
           
               const handleInputChangDO_BC_01 = (event: any) => {
                   const newValue = event.target.value;
