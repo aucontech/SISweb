@@ -2518,7 +2518,6 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div>{PTV}</div>,
             },
-            zIndex:-9999,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -2531,7 +2530,6 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div>{PTV}</div>,
             },
-            zIndex:-9999,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: { border: "none", width: 0, height: 10, background: "none" },
@@ -2544,6 +2542,7 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div></div>,
             },
+            zIndex:9999,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -2556,7 +2555,7 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div></div>,
             },
-
+            zIndex:9999,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: { border: "none", width: 0, height: 50, background: line },
