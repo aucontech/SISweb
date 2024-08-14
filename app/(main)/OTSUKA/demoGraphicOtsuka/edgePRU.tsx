@@ -271,9 +271,9 @@ export const DemoPRU = [
         stroke: "gray",
     }, 
      {
-        id: "FIQ_none11-data1",
+        id: "FIQ_none11-FIQ_1901",
         source: "FIQ_none11",
-        target: "data1",
+        target: "FIQ_1901",
         // animated: true,
         type: "smoothstep",
 
