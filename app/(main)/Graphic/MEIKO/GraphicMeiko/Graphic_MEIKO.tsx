@@ -1675,7 +1675,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>TT-302</p>
+                                <p style={{ color: colorNameValue }}>TT-301</p>
                                 <p style={{ color: colorData }}> {Pipe_Temp}</p>
                                 <p style={{ color: colorNameValue }}>°C</p>
                             </div>
@@ -1709,7 +1709,7 @@ export default function Graphic_MEIKO() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>PT-302</p>
+                                <p style={{ color: colorNameValue }}>PT-301</p>
                                 <p style={{ color: colorData }}>{Pipe_Press}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -1842,7 +1842,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-101: {icon20}
+                                        GD-101: 20%
                                     </span>
                                 ) : GD_101_High === "1" &&
                                   GD_101_Low === "0" ? (
@@ -1857,7 +1857,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-101: {icon40}
+                                        GD-101: 40%
                                     </span>
                                 ) : GD_101_High === "1" &&
                                   GD_101_Low === "1" ? (
@@ -1872,7 +1872,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-101: {icon40}
+                                        GD-101: 40%
                                     </span>
                                 ) : (
                                     ""
@@ -1992,7 +1992,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-103: {icon20}
+                                        GD-103: 20%
                                     </span>
                                 ) : GD_103_High === "1" &&
                                   GD_103_Low === "0" ? (
@@ -2007,7 +2007,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-103: {icon40}
+                                        GD-103: 40%
                                     </span>
                                 ) : GD_103_High === "1" &&
                                   GD_103_Low === "1" ? (
@@ -2022,7 +2022,7 @@ export default function Graphic_MEIKO() {
                                         }}
                                     >
                                         {" "}
-                                        GD-103: {icon40}
+                                        GD-103: 40%
                                     </span>
                                 ) : (
                                     ""
@@ -2518,6 +2518,7 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div>{PTV}</div>,
             },
+            zIndex:-9999,
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
@@ -2530,7 +2531,7 @@ export default function Graphic_MEIKO() {
             data: {
                 label: <div>{PTV}</div>,
             },
-
+            zIndex:-9999,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: { border: "none", width: 0, height: 10, background: "none" },
@@ -2644,7 +2645,7 @@ export default function Graphic_MEIKO() {
                     <div style={{ width: 400, height: 230 }}>{TankMeiko}</div>
                 ),
             },
-
+            zIndex:-99999,
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
             style: { border: "none", width: 0, height: 10, background: "none" },

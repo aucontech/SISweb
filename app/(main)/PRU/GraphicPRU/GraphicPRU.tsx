@@ -5,9 +5,9 @@ import ReactFlow, {
     Position,
     Controls,
 } from "reactflow";
+
 import "reactflow/dist/style.css";
 import { edgePRU } from "./edgePRU";
-import { Button } from "primereact/button";
 import BallVavle_Line2_Top from "../BallVavlePRU/BallVavle_Line2_Top";
 import BallVavle_Line2_Bottom from "../BallVavlePRU/BallVavle_Line2_Bottom";
 import Image from "next/image";
@@ -22,6 +22,7 @@ import {
     SVD_NO,
     WhiteTriangleRight,
 } from "./iconSVG";
+
 import { BlackTriangleRight } from "../../ZOVC/GraphicZOVC/iconSVG";
 import BallVavle_Line3_Top from "../BallVavlePRU/BallVavle_Line3_Top";
 import BallVavle_Line3_Bottom from "../BallVavlePRU/BallVavle_Line3_Bottom";
@@ -29,9 +30,7 @@ import { id_CNG_PRU } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
-import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
-import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
-import { nameValue } from "../../SetupData/namValue";
+
 import AlarmPRU from "@/layout/AlarmBell/AlarmPRU";
 
 interface StateMap {

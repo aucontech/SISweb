@@ -29,7 +29,6 @@ import { id_CNG_HungYen } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
-import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
 import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
 

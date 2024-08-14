@@ -154,17 +154,16 @@ export default function PCV_01_Otsuka() {
             <div
                 style={{
                     border: "none",
-                    fontSize: 22,
-                    color: "white",
+                    fontSize: 20,
                     display: "flex",
                     cursor: "pointer",
                     justifyContent: "space-between",
                     fontWeight: 500,
                 }}
             >
-                <p style={{ color: colorNameValue }}>PCV-1901 : </p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+                <p style={{ color: 'black' }}>PCV-1901: </p>
+                <p style={{ marginLeft: 20, color: 'black' }}> {upData} </p>
+                <p style={{ marginLeft: 10, color: 'black' }}>BarG</p>
             </div>
 
             {/* <OverlayPanel ref={op}>
