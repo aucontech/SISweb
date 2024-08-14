@@ -2544,7 +2544,6 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                 const newMaintainFC_01_Today_Values_Uncorrected_Volume = checked;
                 const newMaintainFC_01_Yesterday_Values_Volume = checked;
                 const newMaintainFC_01_Yesterday_Values_Uncorrected_Volume = checked;
-
         
                 const newMaintainEVC_02_Remain_Battery_Service_Life = checked;
                 const newMaintainEVC_02_Temperature = checked;

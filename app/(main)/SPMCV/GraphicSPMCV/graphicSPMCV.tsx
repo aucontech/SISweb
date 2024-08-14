@@ -349,12 +349,6 @@ export default function GraphicSPMCV() {
         }
     }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
 
-
-
-    //================================ PT 1901======================================================
-
-    //================================ PT 1902======================================================
-
     //================================ PT 1903======================================================
     const [PT1_High, setPT1_High] = useState<number | null>(null);
     const [PT1_Low, setPT1_Low] = useState<number | null>(null);
@@ -371,9 +365,7 @@ export default function GraphicSPMCV() {
             setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
         }
     }, [PT1, PT1_High, PT1_Low, maintainPT1]);
-
-    //================================ PT 1903======================================================
-
+       
     //================================ GD 1901 ======================================================
     const [GD1_High, setGD1_High] = useState<number | null>(null);
     const [GD1_Low, setGD1_Low] = useState<number | null>(null);
@@ -390,14 +382,12 @@ export default function GraphicSPMCV() {
             setexceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
         }
     }, [GD1, GD1_High, GD1_Low, maintainGD1]);
-    //================================ GD 1901======================================================
 
     //================================ GD 1902 ======================================================
     const [GD2_High, setGD2_High] = useState<number | null>(null);
     const [GD2_Low, setGD2_Low] = useState<number | null>(null);
     const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
-    
     
     useEffect(() => {
      const GD2Value = parseFloat(GD2 as any);
@@ -539,14 +529,14 @@ export default function GraphicSPMCV() {
             setEVC_01_Pressure_Low(lowEVCPressureItem?.value || null);
 
       
-            const PT1_High903 = res.data.find(
+            const PT1_High = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
-            setPT1_High(PT1_High903?.value || null);
-            const PT1_Low903 = res.data.find(
-                (item: any) => item.key === "PT1_High"
+            setPT1_High(PT1_High?.value || null);
+            const PT1_Low = res.data.find(
+                (item: any) => item.key === "PT1_Low"
             );
-            setPT1_Low(PT1_Low903?.value || null);
+            setPT1_Low(PT1_Low?.value || null);
 
             const GD1_High = res.data.find(
                 (item: any) => item.key === "GD1_High"
@@ -681,11 +671,13 @@ export default function GraphicSPMCV() {
                 MaintainGVA_1?.value || false
             );
 
-            const MaintainSVF_2 = res.data.find(
+            const MaintainSVF_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
-          
+            setMaintainEVC_01_Flow_at_Base_Condition(
+                MaintainSVF_1?.value || false
+            );
             const LineDuty1901 = res.data.find(
                 (item: any) => item.key === "FIQ1901_LineDuty"
             );
@@ -717,11 +709,11 @@ export default function GraphicSPMCV() {
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -1625,7 +1617,7 @@ export default function GraphicSPMCV() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD01} LEL</p>
+                                <p>{roundedGD01} %LEL</p>
                             </div>
                         ),
                     },
@@ -1662,7 +1654,7 @@ export default function GraphicSPMCV() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD02} LEL</p>
+                                <p>{roundedGD02} %LEL</p>
                             </div>
                         ),
                     },
@@ -1691,7 +1683,7 @@ export default function GraphicSPMCV() {
                                 }}
                                 // onClick={() => confirmGD_1903()}
                             >
-                                <p>{roundedGD03} LEL</p>
+                                <p>{roundedGD03} %LEL</p>
                             </div>
                         ),
                     },

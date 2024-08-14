@@ -5140,7 +5140,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            sourcePosition: Position.Bottom,
+            targetPosition: Position.Bottom,
         },
         {
             id: "PT_3002_DATA",

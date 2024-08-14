@@ -1122,8 +1122,6 @@ useEffect(() => {
           
           const [maintainDO_SV_01, setMaintainDO_SV_01] = useState<boolean>(false);
           
-          
-     
           useEffect(() => {
             const DO_SV_01Value = parseFloat(DO_SV_01 as any);
             const highValue = DO_SV_01_High ?? NaN;
@@ -1189,7 +1187,6 @@ useEffect(() => {
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
         DO_SV_01: "SDV SOLENOID (0: Off - 1: On)",
-
     };
 
     const DataRESET = DI_RESET === "0" ? "Off" : DI_RESET === "1" ? "On" : null;
