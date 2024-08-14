@@ -1969,7 +1969,7 @@ const dataFC = [
                        
                 </DataTable>
                     <DataTable value={dataPLC} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
+                        <Column  field="name" header={<span className="id556" > EVC-1102 Parameter</span>}></Column>
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 
@@ -1977,13 +1977,13 @@ const dataFC = [
                             header={PLC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-1102 Value</p>
    
                                </div>
                                
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
+                                {DotRed}  <p style={{marginLeft:5}}>EVC-1102 Value</p>
                              </div>
                             )}
                         ></Column>
