@@ -2930,7 +2930,7 @@ const handleMainTainPLC = async (checked:any) => {
                 UPS_Mode_Maintain: newmaintainUPS_Mode,
                 DO_HR_01_Maintain: newmaintainDO_HR_01,
                 DO_BC_01_Maintain: newmaintainDO_BC_01,
-                DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
+                DO_SV_01_Maintain: newMaintainDO_SV_0_01,
                 PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
 
 

@@ -1810,11 +1810,7 @@ const dataFC = [
             FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
 
         },
-        {
-            name: <span>FC Connection Status (0: Not Init - 1: COM OK - 2: Error)</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Conn_STT}>{FC_01_Conn_STT} {DataFC_01_Conn_STT}</span>,
-
-        },
+     
     ];
 
     const dataPLC = [
@@ -1869,6 +1865,30 @@ const dataFC = [
 
         },
 
+
+        {
+            name: <span>Output Pressure PT-1103 (BarG)</span>,
+            FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
+
+        },
+     
+        {
+            name: <span>Mode ATS (0: UPS Run - 1: Line Run)</span>,
+            FC1901: <span style={combineCss.CSSMode_ATS}>{Mode_ATS} {dataMode_ATS}</span>,
+
+        },
+        {
+            name: <span>ATS Auto Man (0: Auto - 1: Man)</span>,
+            FC1901: <span style={combineCss.CSSATS_Auto_Man}>{ATS_Auto_Man} {dataATS_Auto_Man}</span>,
+
+        },
+     
+      
+    ];
+
+
+    const dataUPS = [
+       
 
         {
             name: <span>Output Pressure PT-1103 (BarG)</span>,
@@ -1945,7 +1965,6 @@ const dataFC = [
 
 
 
-
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
                     <Column field="name" header="FC Parameter"></Column>
 
@@ -1989,7 +2008,27 @@ const dataFC = [
                         ></Column>
                     </DataTable>
                 
+                    <DataTable value={dataUPS} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > UPS Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
 
+                            field="FC1901"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>UPS Value</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>UPS Value</p>
+   
+                               </div>
+                            )}
+                        ></Column>
+                    </DataTable>
             </div>
 
         
