@@ -10,6 +10,7 @@ interface Props {
 }
 
 const ExportToExcel: React.FC<Props> = ({ data, columns, filters, user }) => {
+    console.log("ExportToExcel -> data", filters);
     const handleExport = () => {
         const tagsKeys = filters.tags.map((tag: any) => tag.key).join(", ");
         const data1 = [

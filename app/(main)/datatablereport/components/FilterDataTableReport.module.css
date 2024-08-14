@@ -1,7 +1,3 @@
-.dateRangeWrapper {
-    position: relative;
-}
-
 .floatLabel {
     position: relative;
     display: inline-block;
@@ -10,7 +6,7 @@
 
 .floatLabel label {
     position: absolute;
-    left: 11px; /* Căn chỉnh với padding của Ant Design input */
+    left: 11px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
@@ -19,7 +15,7 @@
     transition: all 0.2s;
     color: rgba(0, 0, 0, 0.65);
     pointer-events: none;
-    width: calc(100% - 22px); /* Đảm bảo label không vượt quá biên của input */
+    width: calc(100% - 22px);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -27,14 +23,15 @@
 
 .floatLabel :global(.ant-picker) {
     width: 100%;
+    position: relative;
 }
 
 .floatLabel :global(.ant-picker.ant-picker-focused) + label,
 .floatLabel :global(.ant-picker.ant-picker-has-value) + label {
     top: -20px;
     transform: translateY(0);
-    font-size: 12px; /* Giữ nguyên font size */
-    width: auto; /* Cho phép label hiển thị đầy đủ khi di chuyển lên */
+    font-size: 12px;
+    width: auto;
 }
 
 .floatLabel :global(.ant-picker.ant-picker-focused),
@@ -43,11 +40,20 @@
 }
 
 .floatLabel :global(.ant-picker-input) > input {
-    opacity: 0; /* Ẩn văn bản đầu vào khi không focus */
+    opacity: 0;
     transition: opacity 0.2s;
 }
 
 .floatLabel :global(.ant-picker-focused) :global(.ant-picker-input) > input,
 .floatLabel :global(.ant-picker-has-value) :global(.ant-picker-input) > input {
-    opacity: 1; /* Hiển thị văn bản đầu vào khi focus hoặc có giá trị */
+    opacity: 1;
+}
+
+/* Đoạn này giữ label ở giữa khi không có giá trị hoặc không focus */
+.floatLabel
+    :global(.ant-picker:not(.ant-picker-has-value):not(.ant-picker-focused))
+    + label {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
 }

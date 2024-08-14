@@ -61,14 +61,12 @@ const FilterDataTableReport: React.FC<Props> = ({
     // }, [editFilter.dates]);
 
     const handleDateRangeChange = (dates: any) => {
-        console.log(dates);
-        if (dates !== null) {
-            const startDate = dates[0] ? dates[0] : null;
-            const endDate = dates[1] ? dates[1] : null;
-            const dateRange = [startDate, endDate];
-            _processFilterChange("dates", dateRange);
-        } else {
-            _processFilterChange("dates", null);
+        if (dates && dates.length === 2) {
+            const startDate = dates[0];
+            const endDate = dates[1];
+            if (startDate && endDate) {
+                _processFilterChange("dates", [startDate, endDate]);
+            }
         }
     };
 
@@ -309,9 +307,9 @@ const FilterDataTableReport: React.FC<Props> = ({
     };
     const handleDateRangeOk = (dates: any) => {
         console.log(dates);
-        if (dates && dates.length === 2 && dates[0] && dates[1]) {
+        if (dates && dates.length > 0) {
             const [start, end] = dates;
-            const dateRange = [start, end];
+            const dateRange = [start ? start : null, end ? end : null];
             _processFilterChange("dates", dateRange);
         }
     };
@@ -369,6 +367,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                                     style={{ padding: "0.65rem" }}
                                     format="DD/MM/YYYY HH:mm"
                                     placeholder={["Start Time", "End Time"]}
+                                    // onChange={handleDateRangeChange}
                                     value={
                                         editFilter.dates
                                             ? // editFilter.dates.length === 2 &
@@ -388,10 +387,8 @@ const FilterDataTableReport: React.FC<Props> = ({
                                               ]
                                             : null
                                     }
-                                    onChange={(dates) =>
-                                        handleDateRangeChange(dates)
-                                    }
-                                    onOk={handleDateRangeOk}
+                                    allowClear={true}
+                                    onOk={(dates) => handleDateRangeOk(dates)}
                                     className={
                                         editFilter.dates &&
                                         editFilter.dates.length > 0
