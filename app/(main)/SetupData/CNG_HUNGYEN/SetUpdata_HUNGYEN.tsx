@@ -791,7 +791,7 @@ export default function SetUpdata_HUNGYEN() {
 
             const PIT_3001A_High = res.data.find((item: any) => item.key === "PIT_3001A_High");
             setPIT_3001A_High(PIT_3001A_High?.value || null);
-            const PIT_3001A_Low = res.data.find((item: any) => item.key === "PIT_3001B_Low");
+            const PIT_3001A_Low = res.data.find((item: any) => item.key === "PIT_3001A_Low");
             setPIT_3001A_Low(PIT_3001A_Low?.value || null);
             const MaintainPIT_3001A = res.data.find(
                 (item: any) => item.key === "PIT_3001A_Maintain"

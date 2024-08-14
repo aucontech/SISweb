@@ -2,12 +2,12 @@ import { MarkerType } from "reactflow";
 
 const styleLine = {
     strokeWidth: 14,
-    stroke: "#ffaa00",
+    stroke: "yellow",
 };
 
 const styleHide = {
     strokeWidth: 9,
-    stroke: "#ffaa00",
+    stroke: "yellow",
 }
 const styleBallSmall = {
     strokeWidth: 2,
@@ -87,6 +87,7 @@ export const DemoEdges = [
     //         ...styleLine,
     //     },
     // },
+
     {
         id: "line8-line9",
         source: "line8",
@@ -243,9 +244,9 @@ export const DemoEdges = [
     //     stroke: "gray",
     // }, 
      {
-        id: "FIQ_none11-data1",
+        id: "FIQ_none11-FIQ_1901",
         source: "FIQ_none11",
-        target: "data1",
+        target: "FIQ_1901",
         // animated: true,
         type: "smoothstep",
 

@@ -418,7 +418,7 @@ export default function ScoreCard_Meiko() {
 
             setMaintainConsumption_Flow(Consumption_Flow_Maintain?.value || false);
 
-            setMaintainFlow_Velocity(Consumption_Flow_Maintain?.value || false);
+            setMaintainFlow_Velocity(Flow_Velocity_Maintain?.value || false);
 
             setMaintainPipe_Press(Pipe_Press_Maintain?.value || false);
            
@@ -1436,7 +1436,7 @@ useEffect(() => {
         },
 
         {
-            name: <span>Tank Level (%)</span>,
+            name: <span>Tank-01 Level (%)</span>,
             PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
         },
 
@@ -1444,13 +1444,13 @@ useEffect(() => {
 //===
 
         {
-            name: <span>Tank Mass (Kg)</span>,
+            name: <span>Tank-01 Mass (Kg)</span>,
             PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Mass}  </span>,
         },
      
         {
-            name: <span>Tank Volume (L)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Volume}  </span>,
+            name: <span>Tank-01 Volume (L)</span>,
+            PLC: <span style={combineCss.CSSTank_01_Volume}>{Tank_01_Volume}  </span>,
         },
       
 

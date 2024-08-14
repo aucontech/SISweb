@@ -69,13 +69,13 @@ interface ValueStateMap {
 }
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = "#036E9B";
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "yellow";
 
 export default function DemoFlowOTS() {
     const [visible, setVisible] = useState(false);
@@ -92,10 +92,6 @@ export default function DemoFlowOTS() {
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
 
     const [data, setData] = useState<any[]>([]);
-
-
-
-
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
@@ -214,20 +210,31 @@ export default function DemoFlowOTS() {
 
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
-                        EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
+                        EVC_01_Flow_at_Base_Condition:
+                            setEVC_01_Flow_at_Base_Condition,
+                        EVC_01_Flow_at_Measurement_Condition:
+                            setEVC_01_Flow_at_Measurement_Condition,
 
-                        EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
-                        EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
-                        EVC_01_Pressure: setEVC_01_Pressure,
+                        EVC_01_Volume_at_Base_Condition:
+                            setEVC_01_Volume_at_Base_Condition,
+                        EVC_01_Volume_at_Measurement_Condition:
+                            setEVC_01_Volume_at_Measurement_Condition,
 
-                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
+                        EVC_02_Flow_at_Base_Condition:
+                            setEVC_02_Flow_at_Base_Condition,
+                        EVC_02_Flow_at_Measurement_Condition:
+                            setEVC_02_Flow_at_Measurement_Condition,
 
-                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
+                        EVC_02_Volume_at_Base_Condition:
+                            setEVC_02_Volume_at_Base_Condition,
+                        EVC_02_Volume_at_Measurement_Condition:
+                            setEVC_02_Volume_at_Measurement_Condition,
 
                         EVC_02_Pressure: setEVC_02_Pressure,
+                        EVC_01_Pressure: setEVC_01_Pressure,
+
+                        EVC_02_Temperature: setEVC_02_Temperature,
+                        EVC_01_Temperature: setEVC_01_Temperature,
 
                         GD1: setGD1,
                         GD2: setGD2,
@@ -299,91 +306,146 @@ export default function DemoFlowOTS() {
     //============================GD =============================
     const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
 
-    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<number | null>(null);
-    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] = useState(false); 
-    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] = useState<boolean>(false);
-    
-    useEffect(() => {
-    const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
-    const highValue = EVC_01_Pressure_High ?? NaN;
-    const lowValue = EVC_01_Pressure_Low ?? NaN;
-    
-    if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
-     setExceedThresholdEVC_01_Pressure(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
-    }
-    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_01_Pressure, setExceedThresholdEVC_01_Pressure] =
+        useState(false);
+    const [maintainEVC_01_Pressure, setMaintainEVC_01_Pressure] =
+        useState<boolean>(false);
 
+    useEffect(() => {
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Pressure
+        ) {
+            setExceedThresholdEVC_01_Pressure(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
+        maintainEVC_01_Pressure,
+    ]);
 
     //================================ PT 1901======================================================
     const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<number | null>(null);
-    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] = useState(false); 
-    const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] = useState<boolean>(false);
-    
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Pressure, setExceedThresholdEVC_02_Pressure] =
+        useState(false);
+    const [maintainEVC_02_Pressure, setMaintainEVC_02_Pressure] =
+        useState<boolean>(false);
+
     useEffect(() => {
-    const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
-    const highValue = EVC_02_Pressure_High ?? NaN;
-    const lowValue = EVC_02_Pressure_Low ?? NaN;
-    
-    if (!isNaN(EVC_02_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Pressure) {
-     setExceedThresholdEVC_02_Pressure(EVC_02_PressureValue >= highValue || EVC_02_PressureValue <= lowValue);
-    }
-    }, [EVC_02_Pressure, EVC_02_Pressure_High, EVC_02_Pressure_Low, maintainEVC_02_Pressure]);
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Pressure
+        ) {
+            setExceedThresholdEVC_02_Pressure(
+                EVC_02_PressureValue >= highValue ||
+                    EVC_02_PressureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Pressure,
+        EVC_02_Pressure_High,
+        EVC_02_Pressure_Low,
+        maintainEVC_02_Pressure,
+    ]);
 
     //================================ PT 1903======================================================
     const [PT1, setPT1] = useState<string | null>(null);
     const [PT1_High, setPT1_High] = useState<number | null>(null);
     const [PT1_Low, setPT1_Low] = useState<number | null>(null);
-    const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); 
+    const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false);
     const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
-    
+
     useEffect(() => {
-    const PT1Value = parseFloat(PT1 as any);
-    const highValue = PT1_High ?? NaN;
-    const lowValue = PT1_Low ?? NaN;
-    
-    if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
-     setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
-    }
+        const PT1Value = parseFloat(PT1 as any);
+        const highValue = PT1_High ?? NaN;
+        const lowValue = PT1_Low ?? NaN;
+
+        if (
+            !isNaN(PT1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT1
+        ) {
+            setExceedThresholdPT1(
+                PT1Value >= highValue || PT1Value <= lowValue
+            );
+        }
     }, [PT1, PT1_High, PT1_Low, maintainPT1]);
 
+    //================================ PT 1903======================================================
+    const [GD1, setGD1] = useState<string | null>(null);
+    const [GD1_High, setGD1_High] = useState<number | null>(null);
+    const [GD1_Low, setGD1_Low] = useState<number | null>(null);
+    const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false);
+    const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
 
-
-        //================================ PT 1903======================================================
-        const [GD1, setGD1] = useState<string | null>(null);
-        const [GD1_High, setGD1_High] = useState<number | null>(null);
-        const [GD1_Low, setGD1_Low] = useState<number | null>(null);
-        const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); 
-        const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
-        
-        useEffect(() => {
+    useEffect(() => {
         const GD1Value = parseFloat(GD1 as any);
         const highValue = GD1_High ?? NaN;
         const lowValue = GD1_Low ?? NaN;
-        
-        if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
-         setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+
+        if (
+            !isNaN(GD1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD1
+        ) {
+            setExceedThresholdGD1(
+                GD1Value >= highValue || GD1Value <= lowValue
+            );
         }
-        }, [GD1, GD1_High, GD1_Low, maintainGD1]);
-    
+    }, [GD1, GD1_High, GD1_Low, maintainGD1]);
 
     //================================ GD 1901 ======================================================
     const [GD2, setGD2] = useState<string | null>(null);
     const [GD2_High, setGD2_High] = useState<number | null>(null);
     const [GD2_Low, setGD2_Low] = useState<number | null>(null);
-    const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); 
+    const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false);
     const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
-    
+
     useEffect(() => {
-    const GD2Value = parseFloat(GD2 as any);
-    const highValue = GD2_High ?? NaN;
-    const lowValue = GD2_Low ?? NaN;
-    
-    if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
-     setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
-    }
+        const GD2Value = parseFloat(GD2 as any);
+        const highValue = GD2_High ?? NaN;
+        const lowValue = GD2_Low ?? NaN;
+
+        if (
+            !isNaN(GD2Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD2
+        ) {
+            setExceedThresholdGD2(
+                GD2Value >= highValue || GD2Value <= lowValue
+            );
+        }
     }, [GD2, GD2_High, GD2_Low, maintainGD2]);
 
     //================================ GD 1902 ======================================================
@@ -391,197 +453,499 @@ export default function DemoFlowOTS() {
 
     const [GD3_High, setGD3_High] = useState<number | null>(null);
     const [GD3_Low, setGD3_Low] = useState<number | null>(null);
-    const [exceedThresholdGD3, setExceedThresholdGD3] = useState(false); 
+    const [exceedThresholdGD3, setExceedThresholdGD3] = useState(false);
     const [maintainGD3, setMaintainGD3] = useState<boolean>(false);
-    
+
     useEffect(() => {
-    const GD3Value = parseFloat(GD3 as any);
-    const highValue = GD3_High ?? NaN;
-    const lowValue = GD3_Low ?? NaN;
-    
-    if (!isNaN(GD3Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD3) {
-     setExceedThresholdGD3(GD3Value >= highValue || GD3Value <= lowValue);
-    }
+        const GD3Value = parseFloat(GD3 as any);
+        const highValue = GD3_High ?? NaN;
+        const lowValue = GD3_Low ?? NaN;
+
+        if (
+            !isNaN(GD3Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD3
+        ) {
+            setExceedThresholdGD3(
+                GD3Value >= highValue || GD3Value <= lowValue
+            );
+        }
     }, [GD3, GD3_High, GD3_Low, maintainGD3]);
 
-
     //================================ GD 1902 ======================================================
-    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] = useState<string | null>(null);
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
 
-    const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setexceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); 
-    const [maintainEVC_01_Flow_at_Base_Condition, setmaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Flow_at_Base_Condition_High,
+        setEVC_01_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Base_Condition_Low,
+        setEVC_01_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setexceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setmaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-    const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
-    const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
-    const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
-     setexceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
-    }
-    }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        EVC_01_Flow_at_Base_Condition_Low,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_01_Flow_at_Measurement_Condition,
+        setEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_01_Flow_at_Measurement_Condition_High,
+        setEVC_01_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        setEVC_01_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        setmaintainEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
-
-    const [EVC_01_Flow_at_Measurement_Condition, setEVC_01_Flow_at_Measurement_Condition] = useState<string | null>(null);
-
-    const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setexceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_01_Flow_at_Measurement_Condition, setmaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
-    const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
-    const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
-     setexceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
-    }
-    }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
- 
 
+    const [
+        EVC_01_Volume_at_Base_Condition,
+        setEVC_01_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_01_Volume_at_Base_Condition_High,
+        setEVC_01_Volume_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Base_Condition_Low,
+        setEVC_01_Volume_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Base_Condition,
+        setexceedThresholdEVC_01_Volume_at_Base_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Volume_at_Base_Condition,
+        setmaintainEVC_01_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
 
-
-    const [EVC_01_Volume_at_Base_Condition, setEVC_01_Volume_at_Base_Condition] = useState<string | null>(null);
-
-    const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setexceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); 
-    const [maintainEVC_01_Volume_at_Base_Condition, setmaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
-    const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
-    const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
-     setexceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
-    }
-    }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
+        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_High,
+        EVC_01_Volume_at_Base_Condition_Low,
+        maintainEVC_01_Volume_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_01_Volume_at_Measurement_Condition,
+        setEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_01_Volume_at_Measurement_Condition_High,
+        setEVC_01_Volume_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        setEVC_01_Volume_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Volume_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Volume_at_Measurement_Condition,
+        setmaintainEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
-
-
-    const [EVC_01_Volume_at_Measurement_Condition, setEVC_01_Volume_at_Measurement_Condition] = useState<string | null>(null);
-
-    const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setexceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_01_Volume_at_Measurement_Condition, setmaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
-    const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
-    const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
-     setexceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
-    }
-    }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
+        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_High,
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        maintainEVC_01_Volume_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] =
+        useState<string | null>(null);
 
+    const [
+        EVC_02_Flow_at_Base_Condition_High,
+        setEVC_02_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Base_Condition_Low,
+        setEVC_02_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Base_Condition,
+        setexceedThresholdEVC_02_Flow_at_Base_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_02_Flow_at_Base_Condition,
+        setmaintainEVC_02_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
 
-
-
-    const [EVC_02_Flow_at_Base_Condition, setEVC_02_Flow_at_Base_Condition] = useState<string | null>(null);
-
-    const [EVC_02_Flow_at_Base_Condition_High, setEVC_02_Flow_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Flow_at_Base_Condition_Low, setEVC_02_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Flow_at_Base_Condition, setexceedThresholdEVC_02_Flow_at_Base_Condition] = useState(false); 
-    const [maintainEVC_02_Flow_at_Base_Condition, setmaintainEVC_02_Flow_at_Base_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_02_Flow_at_Base_ConditionValue = parseFloat(EVC_02_Flow_at_Base_Condition as any);
-    const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
-    const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_02_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Base_Condition) {
-     setexceedThresholdEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_ConditionValue >= highValue || EVC_02_Flow_at_Base_ConditionValue <= lowValue);
-    }
-    }, [EVC_02_Flow_at_Base_Condition, EVC_02_Flow_at_Base_Condition_High, EVC_02_Flow_at_Base_Condition_Low, maintainEVC_02_Flow_at_Base_Condition]);
+        const EVC_02_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_02_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Base_Condition(
+                EVC_02_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Flow_at_Base_Condition,
+        EVC_02_Flow_at_Base_Condition_High,
+        EVC_02_Flow_at_Base_Condition_Low,
+        maintainEVC_02_Flow_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_02_Flow_at_Measurement_Condition,
+        setEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_02_Flow_at_Measurement_Condition_High,
+        setEVC_02_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        setEVC_02_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Flow_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_02_Flow_at_Measurement_Condition,
+        setmaintainEVC_02_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
-
-    const [EVC_02_Flow_at_Measurement_Condition, setEVC_02_Flow_at_Measurement_Condition] = useState<string | null>(null);
-
-    const [EVC_02_Flow_at_Measurement_Condition_High, setEVC_02_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Flow_at_Measurement_Condition_Low, setEVC_02_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Flow_at_Measurement_Condition, setexceedThresholdEVC_02_Flow_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_02_Flow_at_Measurement_Condition, setmaintainEVC_02_Flow_at_Measurement_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(EVC_02_Flow_at_Measurement_Condition as any);
-    const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
-    const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_02_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Flow_at_Measurement_Condition) {
-     setexceedThresholdEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_ConditionValue >= highValue || EVC_02_Flow_at_Measurement_ConditionValue <= lowValue);
-    }
-    }, [EVC_02_Flow_at_Measurement_Condition, EVC_02_Flow_at_Measurement_Condition_High, EVC_02_Flow_at_Measurement_Condition_Low, maintainEVC_02_Flow_at_Measurement_Condition]);
+        const EVC_02_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_02_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Flow_at_Measurement_Condition(
+                EVC_02_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Flow_at_Measurement_Condition,
+        EVC_02_Flow_at_Measurement_Condition_High,
+        EVC_02_Flow_at_Measurement_Condition_Low,
+        maintainEVC_02_Flow_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_02_Volume_at_Base_Condition,
+        setEVC_02_Volume_at_Base_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_02_Volume_at_Base_Condition_High,
+        setEVC_02_Volume_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Volume_at_Base_Condition_Low,
+        setEVC_02_Volume_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Volume_at_Base_Condition,
+        setexceedThresholdEVC_02_Volume_at_Base_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_02_Volume_at_Base_Condition,
+        setmaintainEVC_02_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
 
-
-
-    const [EVC_02_Volume_at_Base_Condition, setEVC_02_Volume_at_Base_Condition] = useState<string | null>(null);
-
-    const [EVC_02_Volume_at_Base_Condition_High, setEVC_02_Volume_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Volume_at_Base_Condition_Low, setEVC_02_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Volume_at_Base_Condition, setexceedThresholdEVC_02_Volume_at_Base_Condition] = useState(false); 
-    const [maintainEVC_02_Volume_at_Base_Condition, setmaintainEVC_02_Volume_at_Base_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_02_Volume_at_Base_ConditionValue = parseFloat(EVC_02_Volume_at_Base_Condition as any);
-    const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
-    const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_02_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Base_Condition) {
-     setexceedThresholdEVC_02_Volume_at_Base_Condition(EVC_02_Volume_at_Base_ConditionValue >= highValue || EVC_02_Volume_at_Base_ConditionValue <= lowValue);
-    }
-    }, [EVC_02_Volume_at_Base_Condition, EVC_02_Volume_at_Base_Condition_High, EVC_02_Volume_at_Base_Condition_Low, maintainEVC_02_Volume_at_Base_Condition]);
+        const EVC_02_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_02_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Base_Condition(
+                EVC_02_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Volume_at_Base_Condition,
+        EVC_02_Volume_at_Base_Condition_High,
+        EVC_02_Volume_at_Base_Condition_Low,
+        maintainEVC_02_Volume_at_Base_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
+    const [
+        EVC_02_Volume_at_Measurement_Condition,
+        setEVC_02_Volume_at_Measurement_Condition,
+    ] = useState<string | null>(null);
 
+    const [
+        EVC_02_Volume_at_Measurement_Condition_High,
+        setEVC_02_Volume_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Volume_at_Measurement_Condition_Low,
+        setEVC_02_Volume_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Volume_at_Measurement_Condition,
+        setexceedThresholdEVC_02_Volume_at_Measurement_Condition,
+    ] = useState(false);
+    const [
+        maintainEVC_02_Volume_at_Measurement_Condition,
+        setmaintainEVC_02_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
 
-    const [EVC_02_Volume_at_Measurement_Condition, setEVC_02_Volume_at_Measurement_Condition] = useState<string | null>(null);
-
-    const [EVC_02_Volume_at_Measurement_Condition_High, setEVC_02_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_02_Volume_at_Measurement_Condition_Low, setEVC_02_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_02_Volume_at_Measurement_Condition, setexceedThresholdEVC_02_Volume_at_Measurement_Condition] = useState(false); 
-    const [maintainEVC_02_Volume_at_Measurement_Condition, setmaintainEVC_02_Volume_at_Measurement_Condition] = useState<boolean>(false);
-    
     useEffect(() => {
-    const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(EVC_02_Volume_at_Measurement_Condition as any);
-    const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
-    const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
-    
-    if (!isNaN(EVC_02_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Volume_at_Measurement_Condition) {
-     setexceedThresholdEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_ConditionValue >= highValue || EVC_02_Volume_at_Measurement_ConditionValue <= lowValue);
-    }
-    }, [EVC_02_Volume_at_Measurement_Condition, EVC_02_Volume_at_Measurement_Condition_High, EVC_02_Volume_at_Measurement_Condition_Low, maintainEVC_02_Volume_at_Measurement_Condition]);
+        const EVC_02_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_02_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_02_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_02_Volume_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Volume_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_02_Volume_at_Measurement_Condition(
+                EVC_02_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_02_Volume_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Volume_at_Measurement_Condition,
+        EVC_02_Volume_at_Measurement_Condition_High,
+        EVC_02_Volume_at_Measurement_Condition_Low,
+        maintainEVC_02_Volume_at_Measurement_Condition,
+    ]);
+    //==================================================================================================================================================
+
+    const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
+        null
+    );
+
+    const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_01_Temperature,
+        setExceedThresholdEVC_01_Temperature,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+    const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_TemperatureValue = parseFloat(EVC_01_Temperature as any);
+        const highValue = EVC_01_Temperature_High ?? NaN;
+        const lowValue = EVC_01_Temperature_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Temperature
+        ) {
+            setExceedThresholdEVC_01_Temperature(
+                EVC_01_TemperatureValue >= highValue ||
+                    EVC_01_TemperatureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Temperature,
+        EVC_01_Temperature_High,
+        EVC_01_Temperature_Low,
+        maintainEVC_01_Temperature,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
+        null
+    );
+
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Temperature,
+        setExceedThresholdEVC_02_Temperature,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+    const [maintainEVC_02_Temperature, setMaintainEVC_02_Temperature] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Temperature
+        ) {
+            setExceedThresholdEVC_02_Temperature(
+                EVC_02_TemperatureValue >= highValue ||
+                    EVC_02_TemperatureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Temperature,
+        EVC_02_Temperature_High,
+        EVC_02_Temperature_Low,
+        maintainEVC_02_Temperature,
+    ]);
 
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
-
 
     const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
@@ -682,101 +1046,133 @@ export default function DemoFlowOTS() {
             const EVC_01_Flow_at_Base_Condition_High = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setEVC_01_Flow_at_Base_Condition_High(EVC_01_Flow_at_Base_Condition_High?.value || null);
+            setEVC_01_Flow_at_Base_Condition_High(
+                EVC_01_Flow_at_Base_Condition_High?.value || null
+            );
 
             const EVC_01_Flow_at_Base_Condition_Low = res.data.find(
                 (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setEVC_01_Flow_at_Base_Condition_Low(EVC_01_Flow_at_Base_Condition_Low?.value || null);
+            setEVC_01_Flow_at_Base_Condition_Low(
+                EVC_01_Flow_at_Base_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_01_Flow_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setEVC_01_Flow_at_Measurement_Condition_High(EVC_01_Flow_at_Measurement_Condition_High?.value || null);
+            setEVC_01_Flow_at_Measurement_Condition_High(
+                EVC_01_Flow_at_Measurement_Condition_High?.value || null
+            );
 
             const EVC_01_Flow_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setEVC_01_Flow_at_Measurement_Condition_Low(EVC_01_Flow_at_Measurement_Condition_Low?.value || null);
+            setEVC_01_Flow_at_Measurement_Condition_Low(
+                EVC_01_Flow_at_Measurement_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_01_Volume_at_Base_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
-            setEVC_01_Volume_at_Base_Condition_High(EVC_01_Volume_at_Base_Condition_High?.value || null);
+            setEVC_01_Volume_at_Base_Condition_High(
+                EVC_01_Volume_at_Base_Condition_High?.value || null
+            );
 
             const EVC_01_Volume_at_Base_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
-            setEVC_01_Volume_at_Base_Condition_Low(EVC_01_Volume_at_Base_Condition_Low?.value || null);
+            setEVC_01_Volume_at_Base_Condition_Low(
+                EVC_01_Volume_at_Base_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_01_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
-            setEVC_01_Volume_at_Measurement_Condition_High(EVC_01_Volume_at_Measurement_Condition_High?.value || null);
+            setEVC_01_Volume_at_Measurement_Condition_High(
+                EVC_01_Volume_at_Measurement_Condition_High?.value || null
+            );
 
             const EVC_01_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
-            setEVC_01_Volume_at_Measurement_Condition_Low(EVC_01_Volume_at_Measurement_Condition_Low?.value || null);
+            setEVC_01_Volume_at_Measurement_Condition_Low(
+                EVC_01_Volume_at_Measurement_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_02_Flow_at_Base_Condition_High = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
             );
-            setEVC_02_Flow_at_Base_Condition_High(EVC_02_Flow_at_Base_Condition_High?.value || null);
+            setEVC_02_Flow_at_Base_Condition_High(
+                EVC_02_Flow_at_Base_Condition_High?.value || null
+            );
 
             const EVC_02_Flow_at_Base_Condition_Low = res.data.find(
                 (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
             );
-            setEVC_02_Flow_at_Base_Condition_Low(EVC_02_Flow_at_Base_Condition_Low?.value || null);
+            setEVC_02_Flow_at_Base_Condition_Low(
+                EVC_02_Flow_at_Base_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_02_Flow_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_High"
             );
-            setEVC_02_Flow_at_Measurement_Condition_High(EVC_02_Flow_at_Measurement_Condition_High?.value || null);
+            setEVC_02_Flow_at_Measurement_Condition_High(
+                EVC_02_Flow_at_Measurement_Condition_High?.value || null
+            );
 
             const EVC_02_Flow_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
             );
-            setEVC_02_Flow_at_Measurement_Condition_Low(EVC_02_Flow_at_Measurement_Condition_Low?.value || null);
+            setEVC_02_Flow_at_Measurement_Condition_Low(
+                EVC_02_Flow_at_Measurement_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_02_Volume_at_Base_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_High"
             );
-            setEVC_02_Volume_at_Base_Condition_High(EVC_02_Volume_at_Base_Condition_High?.value || null);
+            setEVC_02_Volume_at_Base_Condition_High(
+                EVC_02_Volume_at_Base_Condition_High?.value || null
+            );
 
             const EVC_02_Volume_at_Base_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Low"
             );
-            setEVC_02_Volume_at_Base_Condition_Low(EVC_02_Volume_at_Base_Condition_Low?.value || null);
+            setEVC_02_Volume_at_Base_Condition_Low(
+                EVC_02_Volume_at_Base_Condition_Low?.value || null
+            );
             //========================================================================
 
             const EVC_02_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
-            setEVC_02_Volume_at_Measurement_Condition_High(EVC_02_Volume_at_Measurement_Condition_High?.value || null);
+            setEVC_02_Volume_at_Measurement_Condition_High(
+                EVC_02_Volume_at_Measurement_Condition_High?.value || null
+            );
 
             const EVC_02_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
-            setEVC_02_Volume_at_Measurement_Condition_Low(EVC_02_Volume_at_Measurement_Condition_Low?.value || null);
+            setEVC_02_Volume_at_Measurement_Condition_Low(
+                EVC_02_Volume_at_Measurement_Condition_Low?.value || null
+            );
             //========================================================================
 
             const maintainEVC_01_Pressure = res.data.find(
@@ -813,51 +1209,67 @@ export default function DemoFlowOTS() {
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_01_Flow_at_Base_Condition(MaintainSVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Base_Condition(
+                MaintainSVF_1?.value || false
+            );
 
             const MaintainGVF_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setmaintainEVC_01_Flow_at_Measurement_Condition(MaintainGVF_1?.value || false);
+            setmaintainEVC_01_Flow_at_Measurement_Condition(
+                MaintainGVF_1?.value || false
+            );
 
             const MaintainSVA_1 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_01_Volume_at_Base_Condition(MaintainSVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Base_Condition(
+                MaintainSVA_1?.value || false
+            );
 
             const MaintainGVA_1 = res.data.find(
                 (item: any) =>
                     item.key ===
                     "EVC_01_Volume_at_Measurement_Condition_Maintain"
             );
-            setmaintainEVC_01_Volume_at_Measurement_Condition(MaintainGVA_1?.value || false);
+            setmaintainEVC_01_Volume_at_Measurement_Condition(
+                MaintainGVA_1?.value || false
+            );
 
             const MaintainSVF_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_02_Flow_at_Base_Condition(MaintainSVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Base_Condition(
+                MaintainSVF_2?.value || false
+            );
 
             const MaintainGVF_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
             );
-            setmaintainEVC_02_Flow_at_Measurement_Condition(MaintainGVF_2?.value || false);
+            setmaintainEVC_02_Flow_at_Measurement_Condition(
+                MaintainGVF_2?.value || false
+            );
 
             const MaintainSVA_2 = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_02_Volume_at_Base_Condition(MaintainSVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Base_Condition(
+                MaintainSVA_2?.value || false
+            );
 
             const MaintainGVA_2 = res.data.find(
                 (item: any) =>
                     item.key ===
                     "EVC_02_Volume_at_Measurement_Condition_Maintain"
             );
-            setmaintainEVC_02_Volume_at_Measurement_Condition(MaintainGVA_2?.value || false);
+            setmaintainEVC_02_Volume_at_Measurement_Condition(
+                MaintainGVA_2?.value || false
+            );
 
             const LineDuty1901 = res.data.find(
                 (item: any) => item.key === "FIQ1901_LineDuty"
@@ -868,6 +1280,36 @@ export default function DemoFlowOTS() {
                 (item: any) => item.key === "FIQ1902_LineDuty"
             );
             setLineduty1902(LineDuty1902?.value || false);
+
+            const EVC_02_Temperature_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_High"
+            );
+            setEVC_02_Temperature_High(EVC_02_Temperature_High?.value || null);
+            const EVC_02_Temperature_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_Low"
+            );
+            setEVC_02_Temperature_Low(EVC_02_Temperature_Low?.value || null);
+            const EVC_02_Temperature_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_Maintain"
+            );
+            setMaintainEVC_02_Temperature(
+                EVC_02_Temperature_Maintain?.value || false
+            );
+
+            const EVC_01_Temperature_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Temperature_High"
+            );
+            setEVC_01_Temperature_High(EVC_01_Temperature_High?.value || null);
+            const EVC_01_Temperature_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Temperature_Low"
+            );
+            setEVC_01_Temperature_Low(EVC_01_Temperature_Low?.value || null);
+            const EVC_01_Temperature_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Temperature_Maintain"
+            );
+            setMaintainEVC_01_Temperature(
+                EVC_01_Temperature_Maintain?.value || false
+            );
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -915,7 +1357,9 @@ export default function DemoFlowOTS() {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
                 const roundedEVC_01_Flow_at_Base_Condition =
-                    EVC_01_Flow_at_Base_Condition !== null ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2) : "";
+                    EVC_01_Flow_at_Base_Condition !== null
+                        ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -923,16 +1367,16 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_01_Flow_at_Base_Condition && !maintainEVC_01_Flow_at_Base_Condition
+                                        exceedThresholdEVC_01_Flow_at_Base_Condition &&
+                                        !maintainEVC_01_Flow_at_Base_Condition
                                             ? "#ff5656"
                                             : maintainEVC_01_Flow_at_Base_Condition
                                             ? "orange"
@@ -976,7 +1420,11 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data3") {
                 const roundedEVC_01_Flow_at_Measurement_Condition =
-                    EVC_01_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_01_Flow_at_Measurement_Condition).toFixed(2) : "";
+                    EVC_01_Flow_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_01_Flow_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -984,16 +1432,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_01_Flow_at_Measurement_Condition && !maintainEVC_01_Flow_at_Measurement_Condition
+                                        exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
+                                        !maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "#ff5656"
                                             : maintainEVC_01_Flow_at_Measurement_Condition
                                             ? "orange"
@@ -1018,7 +1467,9 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_01_Flow_at_Measurement_Condition}
+                                        {
+                                            roundedEVC_01_Flow_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1037,7 +1488,9 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data2") {
                 const roundedEVC_01_Volume_at_Base_Condition =
-                    EVC_01_Volume_at_Base_Condition !== null ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2) : "";
+                    EVC_01_Volume_at_Base_Condition !== null
+                        ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -1045,16 +1498,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_01_Volume_at_Base_Condition && !maintainEVC_01_Volume_at_Base_Condition
+                                        exceedThresholdEVC_01_Volume_at_Base_Condition &&
+                                        !maintainEVC_01_Volume_at_Base_Condition
                                             ? "#ff5656"
                                             : maintainEVC_01_Volume_at_Base_Condition
                                             ? "orange"
@@ -1098,7 +1552,11 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data1") {
                 const roundedEVC_01_Volume_at_Measurement_Condition =
-                    EVC_01_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_01_Volume_at_Measurement_Condition).toFixed(2) : "";
+                    EVC_01_Volume_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_01_Volume_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1107,16 +1565,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     background:
-                                        exceedThresholdEVC_01_Volume_at_Measurement_Condition && !maintainEVC_01_Volume_at_Measurement_Condition
+                                        exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
+                                        !maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "#ff5656"
                                             : maintainEVC_01_Volume_at_Measurement_Condition
                                             ? "orange"
@@ -1142,7 +1601,9 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_01_Volume_at_Measurement_Condition}
+                                        {
+                                            roundedEVC_01_Volume_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1161,7 +1622,9 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data5") {
                 const roundedEVC_02_Flow_at_Base_Condition =
-                    EVC_02_Flow_at_Base_Condition !== null ? parseFloat(EVC_02_Flow_at_Base_Condition).toFixed(2) : "";
+                    EVC_02_Flow_at_Base_Condition !== null
+                        ? parseFloat(EVC_02_Flow_at_Base_Condition).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1170,16 +1633,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Flow_at_Base_Condition && !maintainEVC_02_Flow_at_Base_Condition
+                                        exceedThresholdEVC_02_Flow_at_Base_Condition &&
+                                        !maintainEVC_02_Flow_at_Base_Condition
                                             ? "#ff5656"
                                             : maintainEVC_02_Flow_at_Base_Condition
                                             ? "orange"
@@ -1223,7 +1687,11 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data6") {
                 const roundedEVC_02_Flow_at_Measurement_Condition =
-                    EVC_02_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_02_Flow_at_Measurement_Condition).toFixed(2) : "";
+                    EVC_02_Flow_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_02_Flow_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1232,16 +1700,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Flow_at_Measurement_Condition && !maintainEVC_02_Flow_at_Measurement_Condition
+                                        exceedThresholdEVC_02_Flow_at_Measurement_Condition &&
+                                        !maintainEVC_02_Flow_at_Measurement_Condition
                                             ? "#ff5656"
                                             : maintainEVC_02_Flow_at_Measurement_Condition
                                             ? "orange"
@@ -1266,7 +1735,9 @@ export default function DemoFlowOTS() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_02_Flow_at_Measurement_Condition}
+                                        {
+                                            roundedEVC_02_Flow_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1285,7 +1756,9 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data7") {
                 const roundedEVC_02_Volume_at_Base_Condition =
-                    EVC_02_Volume_at_Base_Condition !== null ? parseFloat(EVC_02_Volume_at_Base_Condition).toFixed(2) : "";
+                    EVC_02_Volume_at_Base_Condition !== null
+                        ? parseFloat(EVC_02_Volume_at_Base_Condition).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1294,16 +1767,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
 
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Volume_at_Base_Condition && !maintainEVC_02_Volume_at_Base_Condition
+                                        exceedThresholdEVC_02_Volume_at_Base_Condition &&
+                                        !maintainEVC_02_Volume_at_Base_Condition
                                             ? "#ff5656"
                                             : maintainEVC_02_Volume_at_Base_Condition
                                             ? "orange"
@@ -1347,7 +1821,11 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "data8") {
                 const roundedEVC_02_Volume_at_Measurement_Condition =
-                    EVC_02_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_02_Volume_at_Measurement_Condition).toFixed(2) : "";
+                    EVC_02_Volume_at_Measurement_Condition !== null
+                        ? parseFloat(
+                              EVC_02_Volume_at_Measurement_Condition
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1356,15 +1834,17 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
+
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 8,
+
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Volume_at_Measurement_Condition && !maintainEVC_02_Volume_at_Measurement_Condition
+                                        exceedThresholdEVC_02_Volume_at_Measurement_Condition &&
+                                        !maintainEVC_02_Volume_at_Measurement_Condition
                                             ? "#ff5656"
                                             : maintainEVC_02_Volume_at_Measurement_Condition
                                             ? "orange"
@@ -1389,7 +1869,9 @@ export default function DemoFlowOTS() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedEVC_02_Volume_at_Measurement_Condition}
+                                        {
+                                            roundedEVC_02_Volume_at_Measurement_Condition
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1419,7 +1901,7 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
@@ -1442,12 +1924,12 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1903} :
+                                        {ValueGas.PT_1903}:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedPT1}
@@ -1458,6 +1940,7 @@ export default function DemoFlowOTS() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     BarG
@@ -1469,7 +1952,9 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "Pressure_Trans02") {
                 const roundedEVC_01_Pressure =
-                    EVC_01_Pressure !== null ? parseFloat(EVC_01_Pressure).toFixed(2) : "";
+                    EVC_01_Pressure !== null
+                        ? parseFloat(EVC_01_Pressure).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1480,13 +1965,14 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure
+                                        exceedThresholdEVC_01_Pressure &&
+                                        !maintainEVC_01_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_01_Pressure
                                             ? "orange"
@@ -1503,12 +1989,12 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1901} :
+                                        Pressure:
                                     </p>
                                     <p
                                         style={{
                                             color: colorData,
-                                            marginLeft: 15,
+                                            marginLeft: 10,
                                         }}
                                     >
                                         {roundedEVC_01_Pressure}
@@ -1519,6 +2005,7 @@ export default function DemoFlowOTS() {
                                         color: colorNameValue,
                                         position: "relative",
                                         top: 5,
+                                        marginLeft: 10,
                                     }}
                                 >
                                     {KeyGas.BAR}
@@ -1530,7 +2017,9 @@ export default function DemoFlowOTS() {
             }
             if (node.id === "Pressure_Trans03") {
                 const roundedEVC_02_Pressure =
-                    EVC_02_Pressure !== null ? parseFloat(EVC_02_Pressure).toFixed(2) : "";
+                    EVC_02_Pressure !== null
+                        ? parseFloat(EVC_02_Pressure).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1541,13 +2030,14 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Pressure && !maintainEVC_02_Pressure
+                                        exceedThresholdEVC_02_Pressure &&
+                                        !maintainEVC_02_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_02_Pressure
                                             ? "orange"
@@ -1565,7 +2055,7 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1902} :
+                                        Pressure:
                                     </p>
                                     <p
                                         style={{
@@ -1584,6 +2074,138 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     {KeyGas.BAR}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "EVC_02_Temperature") {
+                const roundedEVC_02_Temperature =
+                    EVC_02_Temperature !== null
+                        ? parseFloat(EVC_02_Temperature).toFixed(2)
+                        : "";
+
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        exceedThresholdEVC_02_Temperature &&
+                                        !maintainEVC_02_Temperature
+                                            ? "#ff5656"
+                                            : maintainEVC_02_Temperature
+                                            ? "orange"
+                                            : "transparent",
+                                }}
+                                // onClick={() => confirmPT_1901()}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    <p style={{ color: colorNameValue }}>
+                                        Temperature:
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: colorData,
+                                            marginLeft: 10,
+                                        }}
+                                    >
+                                        {roundedEVC_02_Temperature}
+                                    </p>
+                                </div>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                        marginLeft: 10,
+                                    }}
+                                >
+                                    {KeyGas.CC}
+                                </p>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "EVC_01_Temperature") {
+                const roundedEVC_01_Temperature =
+                    EVC_01_Temperature !== null
+                        ? parseFloat(EVC_01_Temperature).toFixed(2)
+                        : "";
+
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    padding: 2,
+                                    borderRadius: 5,
+                                    fontSize: 27,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    position: "relative",
+                                    backgroundColor:
+                                        exceedThresholdEVC_01_Temperature &&
+                                        !maintainEVC_01_Temperature
+                                            ? "#ff5656"
+                                            : maintainEVC_01_Temperature
+                                            ? "orange"
+                                            : "transparent",
+                                }}
+                                // onClick={() => confirmPT_1901()}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        position: "relative",
+                                        top: 5,
+                                    }}
+                                >
+                                    <p style={{ color: colorNameValue }}>
+                                        Temperature:
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: colorData,
+                                            marginLeft: 10,
+                                        }}
+                                    >
+                                        {roundedEVC_01_Temperature}
+                                    </p>
+                                </div>
+                                <p
+                                    style={{
+                                        color: colorNameValue,
+                                        position: "relative",
+                                        top: 5,
+                                        marginLeft: 10,
+                                    }}
+                                >
+                                    {KeyGas.CC}
                                 </p>
                             </div>
                         ),
@@ -1768,13 +2390,13 @@ export default function DemoFlowOTS() {
                                 <div>
                                     <p
                                         style={{
-                                            color: 'white',
-                                            
+                                            color: "white",
+
                                             fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                          {EVC_01_Conn_STTValue}
+                                        {EVC_01_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -1788,7 +2410,6 @@ export default function DemoFlowOTS() {
                                     <p
                                         style={{
                                             color: background,
-
 
                                             fontSize: 15,
                                             marginLeft: 15,
@@ -1951,7 +2572,7 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 30,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -1985,7 +2606,7 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 30,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -2016,12 +2637,12 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsDemo");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+                const initialPositions = {
               AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
               ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
@@ -2056,12 +2677,20 @@ export default function DemoFlowOTS() {
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              FIQ_1901: { x: -275.39498197292176, y: 542.9840164170233 },
-              FIQ_1902: { x: -276.2858047694856, y: 1289.1255396791125 },
-              FIQ_none: { x: -165.54268721568215, y: 798.0972512607284 },
-              FIQ_none2: { x: -167.1205623176026, y: 1187.5853436430443 },
-              FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
-              FIQ_none22: { x: -136.86875034337498, y: 1231.5392945117674 },
+              EVC_01_Temperature: {
+                  x: -511.0369165389658,
+                  y: 707.4815305892284,
+              },
+              EVC_02_Temperature: {
+                  x: -508.4032164626999,
+                  y: 1502.617581291104,
+              },
+              FIQ_1901: { x: -512.6099419714315, y: 496.25460629317683 },
+              FIQ_1902: { x: -507.49052121970806, y: 1293.2125047507254 },
+              FIQ_none: { x: -150.5196832833689, y: 798.1782141204573 },
+              FIQ_none2: { x: -147.34984951405957, y: 1186.6476456288979 },
+              FIQ_none11: { x: -121.25271864997154, y: 842.6885101213705 },
+              FIQ_none22: { x: -118.15224507964376, y: 1231.5527388685316 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
@@ -2084,8 +2713,8 @@ export default function DemoFlowOTS() {
               LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
               PCV01: { x: -689.7970151337088, y: 879.00632918006 },
               PCV02: { x: -692.1078758499317, y: 1118.5826891892311 },
-              PCV_NUM01: { x: -779.9600337241574, y: 768.447087576874 },
-              PCV_NUM02: { x: -781.3582929049288, y: 1216.3514700801552 },
+              PCV_NUM01: { x: -763.2072991580352, y: 813.6066329290295 },
+              PCV_NUM02: { x: -751.8582929049288, y: 1193.8514700801552 },
               PCV_ballVavle_Small1: {
                   x: -597.4113415337335,
                   y: 882.8095517403245,
@@ -2112,7 +2741,7 @@ export default function DemoFlowOTS() {
               },
               PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
               PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
-              PSV01: { x: 82.07441770537497, y: 725.2594427121527 },
+              PSV01: { x: 224.12329186495157, y: 801.5449492052588 },
               PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
               PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
               PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
@@ -2120,23 +2749,29 @@ export default function DemoFlowOTS() {
               PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
               PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -1248.552773720958, y: 955.1291015417314 },
-              PT2: { x: -350.9391791978867, y: 1138.964910598512 },
-              PT3: { x: -354.39235881679406, y: 750.8313302579563 },
-              PT_col1: { x: -1216.2184970277972, y: 1017.4628364925754 },
-              PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
-              PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
-              PT_none1: { x: -1215.83217151093, y: 976.4301182806702 },
-              PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
+              PT1: { x: -1248.552773720958, y: 969.1291015417314 },
+              PT2: { x: -349.4367631709992, y: 1157.7451109346052 },
+              PT3: { x: -347.89235881679406, y: 764.2733407560032 },
+              PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
+              PT_col2: { x: -315.5385042528555, y: 827.0886938349211 },
+              PT_col3: { x: -316.7314217527526, y: 1220.854882900364 },
+              PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
+              PT_none2: { x: -315.6920537881153, y: 794.0253182723825 },
               PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: {
-                  x: -1335.6658301344921,
-                  y: 842.7769667413587,
+                  x: -1380.0578823281708,
+                  y: 846.7237411958964,
               },
-              Pressure_Trans02: { x: -621.9858891160426, y: 679.8062716057881 },
-              Pressure_Trans03: { x: -604.0462699276177, y: 1303.749484067353 },
+              Pressure_Trans02: {
+                  x: -109.79034149924189,
+                  y: 707.6780011386318,
+              },
+              Pressure_Trans03: {
+                  x: -107.09687912495832,
+                  y: 1503.0848878201787,
+              },
               SDV: { x: -1140.480069057554, y: 948.4164901444692 },
               SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
               SDV_IMG: { x: -1114.8297195331543, y: 995.274284574213 },
@@ -2181,14 +2816,14 @@ export default function DemoFlowOTS() {
                   y: 1235.5350090951665,
               },
               borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data1: { x: -274.9305105252121, y: 746.5043895523191 },
-              data2: { x: -275.37496874581336, y: 695.5497653944917 },
-              data3: { x: -275.5788897046258, y: 645.0064507552753 },
-              data4: { x: -275.258231018305, y: 594.1099182771684 },
-              data5: { x: -276.4131945555665, y: 1339.9972181078178 },
-              data6: { x: -276.41104003332725, y: 1390.708994293254 },
-              data7: { x: -276.37005369020784, y: 1441.1285917462176 },
-              data8: { x: -276.38561112765143, y: 1491.6205588818639 },
+              data1: { x: -511.9183704059243, y: 553.2453773417925 },
+              data2: { x: -511.32132695116746, y: 630.6218303835474 },
+              data3: { x: -109.69515726307876, y: 630.4094893817204 },
+              data4: { x: -110.15912933245389, y: 553.2682262175399 },
+              data5: { x: -106.02467863859127, y: 1349.497296060089 },
+              data6: { x: -106.79961331562694, y: 1426.0686215913433 },
+              data7: { x: -507.2601169268821, y: 1349.2786849631038 },
+              data8: { x: -507.8350795554151, y: 1425.8559337638578 },
               line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
               line2: { x: -842.576582460349, y: 1046.3496174211396 },
               line3: { x: -757.3073258645178, y: 924.8718460504479 },
@@ -2218,7 +2853,7 @@ export default function DemoFlowOTS() {
     const [positions, setPositions] = useState(initialPositions);
     const [editingEnabled, seteditingEnabled] = useState(false);
 
-    const lineColor = "#ffaa00";
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -2248,7 +2883,7 @@ export default function DemoFlowOTS() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2257,7 +2892,7 @@ export default function DemoFlowOTS() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke: isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -2266,7 +2901,7 @@ export default function DemoFlowOTS() {
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2737,10 +3372,11 @@ export default function DemoFlowOTS() {
             position: positions.SDV,
 
             style: {
-                background: "yellow",
-                border: "1px solid white",
+                background: "none",
+                border: "none",
                 width: 130,
                 height: 45,
+                color:'white'
             },
             targetPosition: Position.Bottom,
         },
@@ -3061,6 +3697,7 @@ export default function DemoFlowOTS() {
             },
         },
         // ================= Tank ======================
+
         {
             id: "Tank",
             position: positions.Tank,
@@ -3089,8 +3726,8 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#ffaa00",
-                background: "#ffaa00",
+                border: "yellow",
+                background: "yellow",
                 width: 55,
                 height: 1,
             },
@@ -3310,9 +3947,9 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
-                width: 260,
-                background: borderBox,
+                border: "none",
+                width: "auto",
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3332,43 +3969,43 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Right,
             targetPosition: Position.Top,
             style: {
-                border: background,
-                width: 260,
+                border: "none",
+                width: "auto",
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
-        {
-            id: "PCV_none1",
-            position: positions.PCV_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_none1",
+        //     position: positions.PCV_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
-        {
-            id: "PCV_none2",
-            position: positions.PCV_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_none2",
+        //     position: positions.PCV_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
 
         // ==================== FIQ =============================
         {
@@ -3392,8 +4029,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 800,
+                height: 55,
             },
             targetPosition: Position.Bottom,
         },
@@ -3418,8 +4055,8 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 800,
+                height: 55,
             },
             targetPosition: Position.Top,
         },
@@ -3629,8 +4266,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3654,8 +4290,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3680,25 +4315,14 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
         {
             id: "data4",
             data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
+                label: "",
             },
 
             position: positions.data4,
@@ -3706,8 +4330,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3733,8 +4356,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3759,8 +4381,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Left,
         },
@@ -3785,8 +4406,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3811,8 +4431,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3959,9 +4578,9 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
-                width: 260,
-                background: borderBox,
+                border: "none",
+                width: "auto",
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3987,7 +4606,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 350,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4010,7 +4629,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 400,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4035,11 +4654,89 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 400,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
+        },
+
+        {
+            id: "EVC_02_Temperature",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.EVC_02_Temperature,
+
+            style: {
+                border: background,
+                width: 400,
+                background: borderBox,
+                // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "EVC_01_Temperature",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.EVC_01_Temperature,
+
+            style: {
+                border: background,
+                width: 400,
+                background: borderBox,
+                // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Bottom,
+        },
+
+        {
+            id: "Pressure_Trans02",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 25,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.Pressure_Trans02,
+
+            style: {
+                border: background,
+                width: 400,
+                background: borderBox,
+                // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Bottom,
         },
         {
             id: "PT1",
@@ -4058,42 +4755,42 @@ export default function DemoFlowOTS() {
             },
             targetPosition: Position.Bottom,
         },
-        {
-            id: "PT2",
-            data: {
-                label: <div>{PTV}</div>,
-            },
+        // {
+        //     id: "PT2",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
 
-            position: positions.PT2,
-            zIndex: 9999,
+        //     position: positions.PT2,
+        //     zIndex: 9999,
 
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "PT3",
-            data: {
-                label: <div>{PTV}</div>,
-            },
-            zIndex: 9999,
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
+        // {
+        //     id: "PT3",
+        //     data: {
+        //         label: <div>{PTV}</div>,
+        //     },
+        //     zIndex: 9999,
 
-            position: positions.PT3,
+        //     position: positions.PT3,
 
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: background,
+        //         border: "none",
+        //         width: "10px",
 
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //         height: 10,
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
         {
             id: "PT_none1",
             position: positions.PT_none1,
@@ -4111,40 +4808,40 @@ export default function DemoFlowOTS() {
                 height: 1,
             },
         },
-        {
-            id: "PT_none2",
-            position: positions.PT_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PT_none2",
+        //     position: positions.PT_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
-        {
-            id: "PT_none3",
-            position: positions.PT_none3,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: colorIMG_none,
+        //         width: 10,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PT_none3",
+        //     position: positions.PT_none3,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 20,
-                height: 1,
-            },
-        },
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: colorIMG_none,
+        //         width: 20,
+        //         height: 1,
+        //     },
+        // },
         {
             id: "PT_col1",
             position: positions.PT_col1,
@@ -4159,49 +4856,49 @@ export default function DemoFlowOTS() {
                 border: line,
                 background: line,
                 width: 0,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
         },
-        {
-            id: "PT_col2",
-            position: positions.PT_col2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-            zIndex: 999999,
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: line,
-                background: line,
-                width: 10,
-                height: 40,
+        // {
+        //     id: "PT_col2",
+        //     position: positions.PT_col2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
+        //     zIndex: 999999,
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: line,
+        //         background: line,
+        //         width: 10,
+        //         height: 25,
 
-                borderRadius: "none",
-            },
-        },
-        {
-            id: "PT_col3",
-            position: positions.PT_col3,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-            zIndex: 999999,
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: line,
-                background: line,
-                width: 10,
-                height: 40,
+        //         borderRadius: "none",
+        //     },
+        // },
+        // {
+        //     id: "PT_col3",
+        //     position: positions.PT_col3,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
+        //     zIndex: 999999,
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: line,
+        //         background: line,
+        //         width: 10,
+        //         height: 25,
 
-                borderRadius: "none",
-            },
-        },
+        //         borderRadius: "none",
+        //     },
+        // },
 
         //  ================== TT ======================
 
@@ -4224,7 +4921,7 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 45,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "orange",
                                 }}
                             >
                                 OTSUKA
@@ -4305,7 +5002,7 @@ export default function DemoFlowOTS() {
                                 style={{
                                     fontSize: 60,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "yellow",
                                 }}
                             ></p>
                         </div>
@@ -4486,6 +5183,8 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
+                            color:'white'
+
                         }}
                     >
                         GD-1901
@@ -4495,7 +5194,7 @@ export default function DemoFlowOTS() {
             position: positions.GD1_Name1901,
 
             style: {
-                background: "yellow",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4512,6 +5211,7 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
+                            color:'white'
                         }}
                     >
                         GD-1902
@@ -4521,7 +5221,7 @@ export default function DemoFlowOTS() {
             position: positions.GD2_Name1902,
 
             style: {
-                background: "yellow",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4538,6 +5238,8 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
+                            color:'white'
+
                         }}
                     >
                         GD-1903
@@ -4547,7 +5249,7 @@ export default function DemoFlowOTS() {
             position: positions.GD3_Name1903,
 
             style: {
-                background: "yellow",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -5621,28 +6323,34 @@ export default function DemoFlowOTS() {
                         ...prevPositions,
                         lineBall_13_1: position,
                     }));
+                } else if (id === "EVC_02_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_02_Temperature: position,
+                    }));
+                } else if (id === "EVC_01_Temperature") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        EVC_01_Temperature: position,
+                    }));
                 }
             }
         },
         [setNodes, setPositions, editingEnabled]
     );
 
-    const toggleEditing = () => {
-        seteditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     seteditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
     //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
     // }, [positions]);
-
-
-    
 
     return (
         <>
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
-      
 
             <Toast ref={toast} />
             <ConfirmDialog />

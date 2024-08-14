@@ -2529,7 +2529,7 @@ const ChangeMaintainTank_PT_301 = async () => {
             timeUpdate: <span style={combineCss.CSSGD_101_High} >{PLC_STTValue}</span>,
            name: <span style={combineCss.CSSGD_101_High}>GD-101 High </span> ,
   
-           modbus: <span style={combineCss.CSSGD_101_High}>000019	 </span> ,
+           modbus: <span style={combineCss.CSSGD_101_High}>300019	 </span> ,
   
           value: <span style={combineCss.CSSGD_101_High} > {GD_101_High} {DataGD_101_High}</span> , 
            high: <InputText style={combineCss.CSSGD_101_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_High} onChange={handleInputChangeGD_101_High} inputMode="decimal" />, 
@@ -2703,12 +2703,11 @@ const ChangeMaintainTank_PT_301 = async () => {
     const Configuration = [
        
         {
-            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+            Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
 
             Value: (
                 <InputText
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputGetwayPhone}
