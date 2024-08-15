@@ -4175,13 +4175,34 @@ checked={maintainUPS_Mode}
 },
 
 {
+    mainCategory: mainCategoryFC.PLC ,
+   timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
+   name: <span style={combineCss.CSSDO_HR_01}> {TagName.HR_1}</span> ,
+   
+   modbus: <span style={combineCss.CSSDO_HR_01}>DB5W50	 </span> ,
+   
+   value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_HR_01}</span> , 
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} disabled={AuthUpdatePCV} label='Update' />,
+   Maintain:   <Checkbox
+   disabled={AuthInput} 
+   style={{ marginRight: 20, }}
+   onChange={ChangeMaintainDO_HR_01}
+   checked={maintainDO_HR_01}
+   ></Checkbox>
+   
+   },
+   
+   
+{
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSDO_BC_01}>{TagName.BC_1}</span> ,
 
-modbus: <span style={combineCss.CSSDO_BC_01}>DB5W50	 </span> ,
+modbus: <span style={combineCss.CSSDO_BC_01}>DB5W52	 </span> ,
 
-value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_HR_01}</span> , 
+value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01} </span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} disabled={AuthUpdatePCV} label='Update' />,
@@ -4195,27 +4216,6 @@ checked={maintainDO_BC_01}
 },
 
 
-
-
-{
- mainCategory: mainCategoryFC.PLC ,
-timeUpdate: <span style={combineCss.CSSDO_HR_01} >{PLC_STTValue}</span>,
-name: <span style={combineCss.CSSDO_HR_01}> {TagName.HR_1}</span> ,
-
-modbus: <span style={combineCss.CSSDO_HR_01}>DB5W52	 </span> ,
-
-value: <span style={combineCss.CSSDO_HR_01} > {DO_HR_01} {DataDO_BC_01}</span> , 
-high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
-low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSDO_HR_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} disabled={AuthUpdatePCV} label='Update' />,
-Maintain:   <Checkbox
-disabled={AuthInput} 
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainDO_HR_01}
-checked={maintainDO_HR_01}
-></Checkbox>
-
-},
 
 
 
