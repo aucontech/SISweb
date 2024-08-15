@@ -1866,22 +1866,6 @@ const dataFC = [
         },
 
 
-        {
-            name: <span>Output Pressure PT-1103 (BarG)</span>,
-            FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
-
-        },
-     
-        {
-            name: <span>Mode ATS (0: UPS Run - 1: Line Run)</span>,
-            FC1901: <span style={combineCss.CSSMode_ATS}>{Mode_ATS} {dataMode_ATS}</span>,
-
-        },
-        {
-            name: <span>ATS Auto Man (0: Auto - 1: Man)</span>,
-            FC1901: <span style={combineCss.CSSATS_Auto_Man}>{ATS_Auto_Man} {dataATS_Auto_Man}</span>,
-
-        },
      
       
     ];
@@ -1906,11 +1890,7 @@ const dataFC = [
             FC1901: <span style={combineCss.CSSATS_Auto_Man}>{ATS_Auto_Man} {dataATS_Auto_Man}</span>,
 
         },
-        {
-            name: <span>EVC Connection Status (0: Not Init - 1: COM OK - 2: Error)</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Conn_STT}>{EVC_02_Conn_STT}  {DataEVC_02_Conn_STT}</span>,
-
-        },
+ 
       
       
     ];
