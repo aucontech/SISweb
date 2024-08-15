@@ -120,13 +120,13 @@ export default function ScoreCard_ZOCV() {
 
                         Mode_ATS:setMode_ATS,
                         ATS_Auto_Man:setATS_Auto_Man,
-                        FC_01_Conn_STT:setFC_01_Conn_STT,
+                        FC_01_Conn_STT:setFC_Conn_STTValue,
                         EVC_02_Conn_STT:setEVC_02_Conn_STT,
 
 
                     };
                     const valueStateMap: ValueStateMap = {
-                        FC_01_Conn_STT: setFC_Conn_STTValue,
+                        FC_01_Conn_STT: setFC_STT01,
                         EVC_02_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
@@ -1866,22 +1866,6 @@ const dataFC = [
         },
 
 
-        {
-            name: <span>Output Pressure PT-1103 (BarG)</span>,
-            FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
-
-        },
-     
-        {
-            name: <span>Mode ATS (0: UPS Run - 1: Line Run)</span>,
-            FC1901: <span style={combineCss.CSSMode_ATS}>{Mode_ATS} {dataMode_ATS}</span>,
-
-        },
-        {
-            name: <span>ATS Auto Man (0: Auto - 1: Man)</span>,
-            FC1901: <span style={combineCss.CSSATS_Auto_Man}>{ATS_Auto_Man} {dataATS_Auto_Man}</span>,
-
-        },
      
       
     ];
@@ -1906,11 +1890,7 @@ const dataFC = [
             FC1901: <span style={combineCss.CSSATS_Auto_Man}>{ATS_Auto_Man} {dataATS_Auto_Man}</span>,
 
         },
-        {
-            name: <span>EVC Connection Status (0: Not Init - 1: COM OK - 2: Error)</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Conn_STT}>{EVC_02_Conn_STT}  {DataEVC_02_Conn_STT}</span>,
-
-        },
+ 
       
       
     ];
@@ -1972,7 +1952,7 @@ const dataFC = [
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1901"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STTValue === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative',}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
@@ -1993,7 +1973,7 @@ const dataFC = [
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
+                            header={EVC_02_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>EVC-1102 Value</p>
