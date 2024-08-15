@@ -8,6 +8,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import { edgePRU } from "./edgePRU";
 import { Button } from "primereact/button";
+import "./ForCssGraphic.css"
 
 import Image from "next/image";
 import {
@@ -37,6 +38,7 @@ import {
     icon20,
     icon40,
 } from "./iconSVG";
+import "./ForCssGraphic.css"
 
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";

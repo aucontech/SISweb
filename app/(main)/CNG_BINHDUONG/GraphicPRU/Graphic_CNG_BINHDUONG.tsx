@@ -22,6 +22,8 @@ import {
     SVD_NO,
     WhiteTriangleRight,
 } from "./iconSVG";
+import "./ForCssGraphic.css"
+
 import { BlackTriangleRight } from "../../ZOVC/GraphicZOVC/iconSVG";
 import BallVavle_Line3_Top from "../BallVavlePRU/BallVavle_Line3_Top";
 import BallVavle_Line3_Bottom from "../BallVavlePRU/BallVavle_Line3_Bottom";
