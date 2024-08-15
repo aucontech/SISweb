@@ -1986,7 +1986,7 @@ const dataFC = [
                     >
                        
                         <div style={{  fontWeight: 500,display:'flex' }}>
-                           <p style={{fontWeight:700}}>FC</p> : {FC_Conn_STTValue}
+                           <p style={{fontWeight:700}}>FC</p> : {FC_STT01}
                         </div>
                         <div style={{  fontWeight: 500 , display:'flex'}}>
                            <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
