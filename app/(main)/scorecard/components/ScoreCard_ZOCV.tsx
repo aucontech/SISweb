@@ -120,13 +120,13 @@ export default function ScoreCard_ZOCV() {
 
                         Mode_ATS:setMode_ATS,
                         ATS_Auto_Man:setATS_Auto_Man,
-                        FC_01_Conn_STT:setFC_01_Conn_STT,
+                        FC_01_Conn_STT:setFC_Conn_STTValue,
                         EVC_02_Conn_STT:setEVC_02_Conn_STT,
 
 
                     };
                     const valueStateMap: ValueStateMap = {
-                        FC_01_Conn_STT: setFC_Conn_STTValue,
+                        FC_01_Conn_STT: setFC_STT01,
                         EVC_02_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
@@ -1952,7 +1952,7 @@ const dataFC = [
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1901"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STTValue === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative',}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
@@ -1973,7 +1973,7 @@ const dataFC = [
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
+                            header={EVC_02_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>EVC-1102 Value</p>
