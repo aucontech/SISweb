@@ -226,7 +226,6 @@ export default function GraphicIGUACU() {
                   
                         EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
                         EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
-
                         EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
                         EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
                   
@@ -1204,8 +1203,8 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                 };
             }
             if (node.id === "data7") {
-                const roundedEVC_02_Flow_at_Base_Condition =
-                    EVC_02_Flow_at_Base_Condition !== null ? parseFloat(EVC_02_Flow_at_Base_Condition).toFixed(2) : "";
+                const roundedEVC_01_Volume_at_Base_Condition =
+                    EVC_01_Volume_at_Base_Condition !== null ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1223,9 +1222,9 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdEVC_02_Flow_at_Base_Condition && !maintainEVC_02_Flow_at_Base_Condition
+                                        exceedThresholdEVC_01_Volume_at_Base_Condition && !maintainEVC_01_Volume_at_Base_Condition
                                             ? "#ff5656"
-                                            : maintainEVC_02_Flow_at_Base_Condition
+                                            : maintainEVC_01_Volume_at_Base_Condition
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1240,7 +1239,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.SVA} :
+                                        {ValueGas.SVA}:
                                     </p>
                                     <p
                                         style={{
@@ -1248,7 +1247,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedEVC_02_Flow_at_Base_Condition}
+                                        {roundedEVC_01_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1302,7 +1301,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.GVA} :
+                                        {ValueGas.GVA}:
                                     </p>
                                     <p
                                         style={{
@@ -1363,7 +1362,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1503 :
+                                        PT-1503:
                                     </p>
                                     <p
                                         style={{
@@ -1424,7 +1423,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1501 :
+                                        PT-1501:
                                     </p>
                                     <p
                                         style={{
@@ -1487,7 +1486,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1502 :
+                                        PT-1502:
                                     </p>
                                     <p
                                         style={{

@@ -31,6 +31,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
+import "./ForCssGraphic.css"
 
 interface StateMap {
     [key: string]:
