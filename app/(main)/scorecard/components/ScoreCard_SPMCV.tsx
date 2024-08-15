@@ -1171,8 +1171,8 @@ useEffect(() => {
         PT01: "Input Pressure (BarG)",
         GD1: "Gas Detector GD-1701 (%LEL)",
         GD2: "Gas Detector GD-1702 (%LEL)",
-        ZSC: "SDV-ZSC (0: ON - 1: OFF)",
-        ZSO: "SDV-ZSO (0: OFF - 1: ON)",
+        ZSC: "SDV-1701 ZSC (0: ON - 1: OFF)",
+        ZSO: "SDV-1701 ZSO (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
@@ -1186,7 +1186,7 @@ useEffect(() => {
         HORN: "HORN (0: OFF - 1: ON)",
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
-        DO_SV_01: "SDV SOLENOID (0: Off - 1: On)",
+        DO_SV_01: "SDV-1701 SOLENOID (0: Off - 1: On)",
     };
 
     const DataRESET = DI_RESET === "0" ? "Off" : DI_RESET === "1" ? "On" : null;

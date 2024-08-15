@@ -108,13 +108,14 @@ export default function ScoreCard_ZOCV() {
                         EVC_02_Temperature: setEVC_02_Temperature,
                         EVC_02_Pressure: setEVC_02_Pressure,
                         EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
 
                         EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
                         EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
                         EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
                         EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
                         EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
 
                         PT_1103:setPT_1103,
 
@@ -354,6 +355,15 @@ const EVC_02_Vb_of_Current_Day_Maintain = res.data.find(
     (item: any) => item.key === "EVC_02_Vb_of_Current_Day_Maintain"
 );
 
+
+const EVC_02_Vb_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_High");
+setEVC_02_Vb_of_Last_Day_High(EVC_02_Vb_of_Last_Day_High?.value || null);
+const EVC_02_Vb_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_02_Vb_of_Last_Day_Low");
+setEVC_02_Vb_of_Last_Day_Low(EVC_02_Vb_of_Last_Day_Low?.value || null);
+const EVC_02_Vb_of_Last_Day_Maintain = res.data.find(
+    (item: any) => item.key === "EVC_02_Vb_of_Last_Day_Maintain"
+);
+
 const EVC_02_Flow_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_High");
 setEVC_02_Flow_at_Measurement_Condition_High(EVC_02_Flow_at_Measurement_Condition_High?.value || null);
 const EVC_02_Flow_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Measurement_Condition_Low");
@@ -464,6 +474,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
             setMaintainEVC_02_Flow_at_Measurement_Condition(EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false);
 
             setMaintainEVC_02_Vb_of_Current_Day(EVC_02_Vb_of_Current_Day_Maintain?.value || false);
+            setMaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
 
 
             setMaintainEVC_02_Vm_of_Current_Day(EVC_02_Vm_of_Current_Day_Maintain?.value || false);
@@ -643,7 +654,28 @@ useEffect(() => {
 
 
      // =================================================================================================================== 
+     const [EVC_02_Vb_of_Last_Day, setEVC_02_Vb_of_Last_Day] = useState<string | null>(null);
 
+     const [EVC_02_Vb_of_Last_Day_High, setEVC_02_Vb_of_Last_Day_High] = useState<number | null>(null);
+     const [EVC_02_Vb_of_Last_Day_Low, setEVC_02_Vb_of_Last_Day_Low] = useState<number | null>(null);
+     const [exceedThresholdEVC_02_Vb_of_Last_Day, setExceedThresholdEVC_02_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     
+     const [maintainEVC_02_Vb_of_Last_Day, setMaintainEVC_02_Vb_of_Last_Day] = useState<boolean>(false);
+     
+     
+     useEffect(() => {
+        const EVC_02_Vb_of_Last_DayValue = parseFloat(EVC_02_Vb_of_Last_Day as any);
+        const highValue = EVC_02_Vb_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_02_Vb_of_Last_Day_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_Vb_of_Last_DayValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Vb_of_Last_Day) {
+            setExceedThresholdEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_DayValue >= highValue || EVC_02_Vb_of_Last_DayValue <= lowValue);
+        }
+    }, [EVC_02_Vb_of_Last_Day, EVC_02_Vb_of_Last_Day_High, EVC_02_Vb_of_Last_Day_Low, maintainEVC_02_Vb_of_Last_Day]);
+    
+
+
+     // =================================================================================================================== 
 
 
           const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
@@ -1169,9 +1201,9 @@ useEffect(() => {
 
         FC_01_Lithium_Battery_Status: "Lithium Battery Status (0: Yes - 1: No)",
 
-        Battery_Voltage:'Battery Voltage ( Volt ) ',
-        System_Voltage :'System Voltage ( Volt )',
-        Charger_Voltage:'Charger Voltage ( Volt )',
+        Battery_Voltage:'Battery Voltage (Volt) ',
+        System_Voltage :'System Voltage (Volt)',
+        Charger_Voltage:'Charger Voltage (Volt)',
         InputPressure: "Input Pressure (BarA)",
         Temperature: "Temperature (°C)",
         GVF: "Gross Volume Flow (m³/h)",
@@ -1621,6 +1653,22 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+
+                CSSEVC_02_Vb_of_Last_Day : {
+                    color:exceedThresholdEVC_02_Vb_of_Last_Day && !maintainEVC_02_Vb_of_Last_Day
+                    ? "#ff5656"
+                    : maintainEVC_02_Vb_of_Last_Day
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdEVC_02_Vb_of_Last_Day || maintainEVC_02_Vb_of_Last_Day)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdEVC_02_Vb_of_Last_Day || maintainEVC_02_Vb_of_Last_Day)
+                    ? 18
+                    : ""
+                },
+        
         
           
                 CSSEVC_02_Flow_at_Measurement_Condition : {
@@ -1781,11 +1829,11 @@ const dataFC = [
 
         },
         {
-            name: <span>{tagNameFC.SVA}</span>,
+            name: <span>{tagNameFC.GVA}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
         },
         {
-            name: <span>{tagNameFC.GVA}</span>,
+            name: <span>{tagNameFC.SVA}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
 
         },
@@ -1815,34 +1863,40 @@ const dataFC = [
 
     const dataPLC = [
         {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{EVC_02_Vm_of_Last_Day}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{EVC_02_Volume_at_Measurement_Condition}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVF}</span>,
+            name: <span>Remain Battery Service Life (Months) </span>,
             FC1901: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>{EVC_02_Remain_Battery_Service_Life}</span>,
 
         },
         {
-            name: <span>{tagNameFC.GVF}</span>,
+            name: <span>{tagNameFC.Temperature}</span>,
             FC1901: <span style={combineCss.CSSEVC_02_Temperature}>{EVC_02_Temperature}</span>,
 
         },
         {
-            name: <span>{tagNameFC.SVA}</span>,
+            name: <span>{tagNameFC.InputPressure}</span>,
             FC1901: <span style={combineCss.CSSEVC_02_Pressure}>{EVC_02_Pressure}</span>,
         },
+             
         {
-            name: <span>{tagNameFC.GVA}</span>,
+            name: <span>Standard Volume Accumulated (Sm³)</span>,
             FC1901: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{EVC_02_Volume_at_Base_Condition}</span>,
+        },
+        {
+            name: <span>Standard Volume Flow (Sm³/h)</span>,
+            FC1901: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
 
         },
+        {
+            name: <span>Gross Volume Accumulated (m³)</span>,
+            FC1901: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{EVC_02_Volume_at_Measurement_Condition}</span>,
+
+        },
+        {
+            name: <span>Gross Volume Flow (m³/h)</span>,
+            FC1901: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{EVC_02_Flow_at_Measurement_Condition}</span>,
+
+        },
+
      
         {
             name: <span>{tagNameFC.VbToday}</span>,
@@ -1851,22 +1905,22 @@ const dataFC = [
         },
         {
             name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{EVC_02_Flow_at_Measurement_Condition}</span>,
+            FC1901: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{EVC_02_Vb_of_Last_Day}</span>,
 
         },
+        {
+            name: <span>{tagNameFC.VmLastDay}</span>,
+            FC1901: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{EVC_02_Vm_of_Last_Day}</span>,
+
+        },
+       
         {
             name: <span>{tagNameFC.VmToday}</span>,
             FC1901: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{EVC_02_Vb_of_Current_Day}</span>,
 
         },
-        {
-            name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
+ 
 
-        },
-
-
-     
       
     ];
 
