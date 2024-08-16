@@ -581,7 +581,7 @@ export default function ScoreCard_IGUACU() {
             setMaintainEVC_01_Remain_Battery_Service_Life(MaintainEVC_01_Remain_Battery_Service_Life?.value || false);
 
 
-
+            setMaintainEVC_02_Vm_of_Last_Day(EVC_02_Vm_of_Last_Day_Maintain?.value || false);
 
             setMaintainEVC_02_Vb_of_Last_Day(EVC_02_Vb_of_Last_Day_Maintain?.value || false);
 
@@ -1599,7 +1599,7 @@ useEffect(() => {
 
         ZSC: "SDV-1501 ZSC (0: ON - 1: OFF)",
         ZSO: "SDV-1501 ZSO (0: OFF - 1: ON)",
-        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_BATTERY: "UPS BATTERY (0: Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
@@ -1610,7 +1610,7 @@ useEffect(() => {
         SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
         RESET: "RESET (0: OFF - 1: ON)",
         EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
-        EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal )",
+        EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal)",
         HORN: "HORN (0: OFF - 1: ON)",
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",
@@ -1638,7 +1638,7 @@ useEffect(() => {
         UPS_Mode === "0"
             ? "Error"
             : UPS_Mode === "1"
-            ? "Using Running"
+            ? "UPS Running"
             : UPS_Mode === "2"
             ? "Charging"
             : UPS_Mode === "3"

@@ -298,7 +298,6 @@ export default function SetUpdata_IGUACU() {
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
                         DI_UPS_ALARM: setDI_UPS_ALARM,
-                        DI_SD_1: setDI_SD_1,
                         DI_SELECT_SW: setDI_SELECT_SW,
                         DI_RESET: setDI_RESET,
                         Emergency_NO: setEmergency_NO,
@@ -637,7 +636,7 @@ export default function SetUpdata_IGUACU() {
             );
             const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
             setGD1_High(GD1_High?.value || null);
-            const GD1_Low = res.data.find((item: any) => item.key === "GD2_Low");
+            const GD1_Low = res.data.find((item: any) => item.key === "GD1_Low");
             setGD1_Low(GD1_Low?.value || null);
             const MaintainGD1 = res.data.find(
                 (item: any) => item.key === "GD1_Maintain"
@@ -711,13 +710,6 @@ export default function SetUpdata_IGUACU() {
                 (item: any) => item.key === "DI_UPS_ALARM_Maintain"
             );
 
-            const DI_SD_1_High = res.data.find((item: any) => item.key === "DI_SD_1_High");
-            setDI_SD_1_High(DI_SD_1_High?.value || null);
-            const DI_SD_1_Low = res.data.find((item: any) => item.key === "DI_SD_1_Low");
-            setDI_SD_1_Low(DI_SD_1_Low?.value || null);
-            const DI_SD_1_Maintain = res.data.find(
-                (item: any) => item.key === "DI_SD_1_Maintain"
-            );
 
             const DI_RESET_High = res.data.find((item: any) => item.key === "DI_RESET_High");
             setDI_RESET_High(DI_RESET_High?.value || null);
@@ -931,7 +923,6 @@ setmaintainPLC_Conn_STT(maintainPLC_Conn_STT?.value || false);
 
             setMaintainDI_RESET(DI_RESET_Maintain?.value || false);
 
-            setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
 
 
             setMaintainDI_UPS_ALARM(DI_UPS_ALARM_Maintain?.value || false);
@@ -1002,7 +993,7 @@ useEffect(() => {
      const [inputValue2EVC_01_Temperature, setInputValue2EVC_01_Temperature] = useState<any>();
      const [EVC_01_Temperature_High, setEVC_01_Temperature_High] = useState<number | null>(null);
      const [EVC_01_Temperature_Low, setEVC_01_Temperature_Low] = useState<number | null>(null);
-     const [exceedThresholdTemperature, setexceedThresholdTemperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdEVC_01_Temperature, setexceedThresholdEVC_01_Temperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainEVC_01_Temperature, setMaintainEVC_01_Temperature] = useState<boolean>(false);
      
@@ -1013,7 +1004,7 @@ useEffect(() => {
         const lowValue = EVC_01_Temperature_Low ?? NaN;
     
         if (!isNaN(EVC_01_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Temperature) {
-            setexceedThresholdTemperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
+            setexceedThresholdEVC_01_Temperature(EVC_01_TemperatureValue >= highValue || EVC_01_TemperatureValue <= lowValue);
         }
     }, [EVC_01_Temperature, EVC_01_Temperature_High, EVC_01_Temperature_Low, maintainEVC_01_Temperature]);
     
@@ -1365,7 +1356,6 @@ useEffect(() => {
           // =================================================================================================================== 
 
           const [EVC_01_Vb_of_Last_Day, setEVC_01_Vb_of_Last_Day] = useState<string | null>(null);
-          const [audioPlayingEVC_01_Vb_of_Last_Day, setAudioPlayingEVC_01_Vb_of_Last_Day] = useState(false);
           const [inputValueEVC_01_Vb_of_Last_Day, setInputValueEVC_01_Vb_of_Last_Day] = useState<any>();
           const [inputValue2EVC_01_Vb_of_Last_Day, setInputValue2EVC_01_Vb_of_Last_Day] = useState<any>();
           const [EVC_01_Vb_of_Last_Day_High, setEVC_01_Vb_of_Last_Day_High] = useState<number | null>(null);
@@ -2400,76 +2390,7 @@ useEffect(() => {
       
            // =================================================================================================================== 
  
-     // =================================================================================================================== 
- 
-     const [DI_SD_1, setDI_SD_1] = useState<string | null>(null);
-     const [audioPlayingDI_SD_1, setAudioPlayingDI_SD_1] = useState(false);
-     const [inputValueDI_SD_1, setInputValueDI_SD_1] = useState<any>();
-     const [inputValue2DI_SD_1, setInputValue2DI_SD_1] = useState<any>();
-     const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
-     const [DI_SD_1_Low, setDI_SD_1_Low] = useState<number | null>(null);
-     const [exceedThresholdDI_SD_1, setExceedThresholdDI_SD_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-     
-     const [maintainDI_SD_1, setMaintainDI_SD_1] = useState<boolean>(false);
-     
-     
-         useEffect(() => {
-             if (typeof DI_SD_1_High === 'string' && typeof DI_SD_1_Low === 'string' && DI_SD_1 !== null && maintainDI_SD_1 === false
-             ) {
-                 const highValue = parseFloat(DI_SD_1_High);
-                 const lowValue = parseFloat(DI_SD_1_Low);
-                 const DI_SD_1Value = parseFloat(DI_SD_1);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(DI_SD_1Value)) {
-                     if (highValue <= DI_SD_1Value || DI_SD_1Value <= lowValue) {
-                         if (!audioPlayingDI_SD_1) {
-                             audioRef.current?.play();
-                             setAudioPlayingDI_SD_1(true);
-                             setExceedThresholdDI_SD_1(true);
-                         }
-                     } else {
-                        setAudioPlayingDI_SD_1(false);
-                        setExceedThresholdDI_SD_1(false);
-                     }
-                 } 
-             } 
-         }, [DI_SD_1_High, DI_SD_1, audioPlayingDI_SD_1, DI_SD_1_Low,maintainDI_SD_1]);
-     
-         useEffect(() => {
-             if (audioPlayingDI_SD_1) {
-                 const audioEnded = () => {
-                    setAudioPlayingDI_SD_1(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingDI_SD_1]);
-     
-         const handleInputChangeDI_SD_1 = (event: any) => {
-             const newValue = event.target.value;
-             setInputValueDI_SD_1(newValue);
-         };
-     
-         const handleInputChange2DI_SD_1 = (event: any) => {
-             const newValue2 = event.target.value;
-             setInputValue2DI_SD_1(newValue2);
-         };
-         const ChangeMaintainDI_SD_1 = async () => {
-             try {
-                 const newValue = !maintainDI_SD_1;
-                 await httpApi.post(
-                     `/plugins/telemetry/DEVICE/${id_IGUECU}/SERVER_SCOPE`,
-                     { DI_SD_1_Maintain: newValue }
-                 );
-                 setMaintainDI_SD_1(newValue);
-                 
-             } catch (error) {}
-         };
- 
- 
-     // =================================================================================================================== 
+
  
          // =================================================================================================================== 
  
@@ -3031,10 +2952,10 @@ useEffect(() => {
 
 
 
+                    GD1_High: inputValueGD1,GD1_Low:inputValue2GD1,
 
                     GD2_High: inputValueGD2,GD2_Low:inputValue2GD2,
                     PT1_High: inputValuePT1,PT1_Low:inputValue2PT1,
-                    GD1_High: inputValueGD1,GD1_Low:inputValue2GD1,
 
 
                     DI_ZSO_1_High: inputValueDI_ZSO_1,DI_ZSO_1_Low:inputValue2DI_ZSO_1,
@@ -3045,7 +2966,6 @@ useEffect(() => {
                     DI_UPS_CHARGING_High: inputValueDI_UPS_CHARGING,DI_UPS_CHARGING_Low:inputValue2DI_UPS_CHARGING,
 
 
-                    DI_SD_1_High: inputValueDI_SD_1,DI_SD_1_Low:inputValue2DI_SD_1,
                     DI_UPS_ALARM_High: inputValueDI_UPS_ALARM,DI_UPS_ALARM_Low:inputValue2DI_UPS_ALARM,
 
 
@@ -3087,14 +3007,16 @@ useEffect(() => {
             setEVC_01_Remain_Battery_Service_Life_High(inputValueEVC_01_Remain_Battery_Service_Life);
             setEVC_01_Remain_Battery_Service_Life_Low(inputValue2EVC_01_Remain_Battery_Service_Life);
 
+
+        
+
             setEVC_01_Temperature_High(inputValueEVC_01_Temperature);
             setEVC_01_Temperature_Low(inputValue2EVC_01_Temperature);
 
             setEVC_01_Pressure_High(inputValueEVC_01_Pressure);
             setEVC_01_Pressure_Low(inputValue2EVC_01_Pressure);
 
-            setEVC_01_Pressure_High(inputValueEVC_01_Pressure);
-            setEVC_01_Pressure_Low(inputValue2EVC_01_Pressure);
+     
 
             setEVC_01_Volume_at_Base_Condition_High(inputValueEVC_01_Volume_at_Base_Condition);
             setEVC_01_Volume_at_Base_Condition_Low(inputValue2EVC_01_Volume_at_Base_Condition);
@@ -3128,13 +3050,18 @@ useEffect(() => {
             setEVC_02_Remain_Battery_Service_Life_High(inputValueEVC_02_Remain_Battery_Service_Life);
             setEVC_02_Remain_Battery_Service_Life_Low(inputValue2EVC_02_Remain_Battery_Service_Life);
 
+
+            setEVC_02_Flow_at_Base_Condition_High(inputValueEVC_02_Flow_at_Base_Condition);
+            setEVC_02_Flow_at_Base_Condition_Low(inputValue2EVC_02_Flow_at_Base_Condition);
+
             setEVC_02_Pressure_High(inputValueEVC_02_Pressure);
             setEVC_02_Pressure_Low(inputValue2EVC_02_Pressure);
 
             setEVC_02_Volume_at_Base_Condition_High(inputValueEVC_02_Volume_at_Base_Condition);
             setEVC_02_Volume_at_Base_Condition_Low(inputValue2EVC_02_Volume_at_Base_Condition);
 
-
+            setEVC_02_Volume_at_Base_Condition_High(inputValueEVC_02_Volume_at_Base_Condition);
+            setEVC_02_Volume_at_Base_Condition_Low(inputValue2EVC_02_Volume_at_Base_Condition);
 
             setEVC_02_Flow_at_Measurement_Condition_High(inputValueEVC_02_Flow_at_Measurement_Condition);
             setEVC_02_Flow_at_Measurement_Condition_Low(inputValue2EVC_02_Flow_at_Measurement_Condition);
@@ -3158,6 +3085,8 @@ useEffect(() => {
 
     
 
+            setGD1_High(inputValueGD1);
+            setGD1_Low(inputValue2GD1);
 
             setGD2_High(inputValueGD2);
             setGD2_Low(inputValue2GD2);
@@ -3186,8 +3115,7 @@ useEffect(() => {
             setDI_UPS_CHARGING_High(inputValueDI_UPS_CHARGING);
             setDI_UPS_CHARGING_Low(inputValue2DI_UPS_CHARGING);
 
-            setDI_SD_1_High(inputValueDI_SD_1);
-            setDI_SD_1_Low(inputValue2DI_SD_1);
+    
 
             setDI_UPS_ALARM_High(inputValueDI_UPS_ALARM);
             setDI_UPS_ALARM_Low(inputValue2DI_UPS_ALARM);
@@ -3369,8 +3297,7 @@ useEffect(() => {
         setInputValueDI_UPS_ALARM(DI_UPS_ALARM_High); 
         setInputValue2DI_UPS_ALARM(DI_UPS_ALARM_Low); 
 
-        setInputValueDI_SD_1(DI_SD_1_High); 
-        setInputValue2DI_SD_1(DI_SD_1_Low); 
+
 
         setInputValueDI_RESET(DI_RESET_High); 
         setInputValue2DI_RESET(DI_RESET_Low); 
@@ -3468,7 +3395,6 @@ useEffect(() => {
           DI_UPS_CHARGING_High,DI_UPS_CHARGING_Low ,
         
            DI_UPS_ALARM_High,DI_UPS_ALARM_Low,
-           DI_SD_1_High,DI_SD_1_Low,
 
            DI_RESET_High,DI_RESET_Low,
            Emergency_NO_High,Emergency_NO_Low,
@@ -3983,7 +3909,7 @@ useEffect(() => {
             fontWeight:400,
         },
         CSSEVC_01_Temperature : {
-            color:exceedThresholdTemperature && !maintainEVC_01_Temperature
+            color:exceedThresholdEVC_01_Temperature && !maintainEVC_01_Temperature
             ? "#ff5656"
             : maintainEVC_01_Temperature
             ? "orange"
@@ -4302,16 +4228,7 @@ useEffect(() => {
             fontWeight:400,
         },
 
-        CSSDI_SD_1 : {
-            color:exceedThresholdDI_SD_1 && !maintainDI_SD_1
-            ? "#ff5656"
-            : maintainDI_SD_1
-            ? "orange"
-            : "" ,
-            height:25,
-            fontWeight:400,
-        },
-
+  
         CSSDI_RESET : {
             color:exceedThresholdDI_RESET && !maintainDI_RESET
             ? "#ff5656"
@@ -5015,7 +4932,6 @@ checked={maintainEVC_02_Conn_STT}
           const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
           const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
           const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
-          const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
           const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "local" : DI_SELECT_SW === "1" ? "Remote  " : null;
           const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
           
