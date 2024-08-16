@@ -640,6 +640,8 @@ export default function SetUpdata_ZOVC() {
                 (item: any) => item.key === "PT_1103_Maintain"
             );
             setMaintainPT_1103(PT_1103_Maintain?.value || false);
+
+
             const Mode_ATS_High = res.data.find((item: any) => item.key === "Mode_ATS_High");
             setMode_ATS_High(Mode_ATS_High?.value || null);
             const Mode_ATS_Low = res.data.find((item: any) => item.key === "Mode_ATS_Low");
@@ -746,6 +748,9 @@ export default function SetUpdata_ZOVC() {
 
 
             setMaintainEVC_02_Conn_STT(EVC_02_Conn_STT_Maintain?.value || false);
+
+            setMaintainFC_01_Conn_STT(FC_01_Conn_STT_Maintain?.value || false);
+
 
             setMaintainPT_1103(PT_1103_Maintain?.value || false);
 
@@ -2214,7 +2219,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 
 
                     PT_1103_High: inputValuePT_1103,PT_1103_Low:inputValue2PT_1103,
-                    Mode_ATS_High: inputValueMode_ATS,FMode_ATS_Low:inputValue2Mode_ATS,
+                    Mode_ATS_High: inputValueMode_ATS,Mode_ATS_Low:inputValue2Mode_ATS,
                     ATS_Auto_Man_High: inputValueATS_Auto_Man,ATS_Auto_Man_Low:inputValue2ATS_Auto_Man,
 
                     FC_01_Conn_STT_High: inputValueFC_01_Conn_STT,FC_01_Conn_STT_Low:inputValue2FC_01_Conn_STT,
@@ -3236,7 +3241,7 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
 };
 
 
-const dataFC_01_Lithium_Battery_Status = FC_01_Lithium_Battery_Status === "0" ? "USP Run" : FC_01_Lithium_Battery_Status === "1" ? "Line Run" : null
+const dataFC_01_Lithium_Battery_Status = FC_01_Lithium_Battery_Status === "0" ? "Yes" : FC_01_Lithium_Battery_Status === "1" ? "No" : null
 
 const dataMode_ATS = Mode_ATS === "0" ? "USP Run" : Mode_ATS === "1" ? "Line Run" : null
 const dataATS_Auto_Man = ATS_Auto_Man === "0" ? "Auto" : ATS_Auto_Man === "1" ? "Man" : null

@@ -21,7 +21,7 @@ import {
 } from "@/service/localStorage";
 import Image from "next/image";
 import Link from "next/link";
-import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+import { CNGBD_DEVICE_ID, MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
 
 const Login: Page = () => {
     const authContext = useContext(AuthContext);
@@ -104,6 +104,11 @@ const Login: Page = () => {
 
                                     case MEIKO_DEVICE_ID:
                                         router.push("/Graphic/MEIKO");
+                                        break;
+
+
+                                    case CNGBD_DEVICE_ID:
+                                        router.push("/Graphic/BINHDUONG");
                                         break;
                                 }
                             }

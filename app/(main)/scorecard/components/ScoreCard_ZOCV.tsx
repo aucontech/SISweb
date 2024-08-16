@@ -1780,6 +1780,7 @@ useEffect(() => {
 
 const dataMode_ATS = Mode_ATS === "0" ? "USP Run" : Mode_ATS === "1" ? "Line Run" : null
 const dataATS_Auto_Man = ATS_Auto_Man === "0" ? "Auto" : ATS_Auto_Man === "1" ? "Man" : null
+
 const DataEVC_02_Conn_STT  = EVC_02_Conn_STT === "0" ? "Not Init" : EVC_02_Conn_STT === "1" ? "COM OK" : EVC_02_Conn_STT === "2" ? "Error" : null;
       
 
@@ -1923,16 +1924,20 @@ const dataFC = [
 
       
     ];
+    const dataPT = [
 
+
+    {
+        name: <span>Output Pressure PT-1103 (BarG)</span>,
+        FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
+
+    },
+];
 
     const dataUPS = [
        
 
-        {
-            name: <span>Output Pressure PT-1103 (BarG)</span>,
-            FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
-
-        },
+       
      
         {
             name: <span>Mode ATS (0: UPS Run - 1: Line Run)</span>,
@@ -2041,7 +2046,27 @@ const dataFC = [
                             )}
                         ></Column>
                     </DataTable>
-                
+                    <DataTable value={dataPT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="FC1901"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT Value</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT Value</p>
+   
+                               </div>
+                            )}
+                        ></Column>
+                    </DataTable>
                     <DataTable value={dataUPS} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > UPS Parameter</span>}></Column>
                         <Column

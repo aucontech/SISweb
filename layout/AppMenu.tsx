@@ -3,7 +3,7 @@ import AppSubMenu from "./AppSubMenu";
 import { useCallback, useEffect, useState } from "react";
 import { readUser } from "@/service/localStorage";
 import { getDeviceByCustomer } from "@/api/device.api";
-import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+import { CNGBD_DEVICE_ID, MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
 
 const AppMenu = () => {
     const [model, setModel] = useState<MenuModel[]>([]);
@@ -90,6 +90,22 @@ const AppMenu = () => {
                                 }
                                 setModel(modelData);
                                 break;
+
+
+                                case CNGBD_DEVICE_ID:
+                                    if (
+                                        modelData &&
+                                        modelData.length > 0 &&
+                                        modelData[0].items
+                                    ) {
+                                        modelData[0].items.push({
+                                            label: "Graphics",
+                                            icon: "pi pi-fw pi-image",
+                                            to: "/Graphic/BINHDUONG",
+                                        });
+                                    }
+                                    setModel(modelData);
+                                    break;
                         }
                     }
                 })

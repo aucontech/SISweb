@@ -166,7 +166,6 @@ export default function LowHighData() {
 
                         time: setTimeUpdate,
 
-
                         EVC_01_Temperature:setEVC_01_Temperature,
                         EVC_02_Temperature:setEVC_02_Temperature,
 
@@ -314,7 +313,6 @@ export default function LowHighData() {
             setGD3_High(GD3_High?.value || null);
             const GD3_Low = res.data.find((item: any) => item.key === "GD3_Low");
             setGD3_Low(GD3_Low?.value || null);
-
 
             const MaintainGD1 = res.data.find(
                 (item: any) => item.key === "GD1_Maintain"
@@ -2636,7 +2634,7 @@ const handleMainTainAll = async (checked:any) => {
         const newmaintainUPS_Mode = checked;
         const newmaintainDO_HR_01 = checked;
         const newmaintainDO_BC_01 = checked;
-        const newMaintainDO_SV_0_01 = checked;
+        const newMaintainDO_SV_01 = checked;
         const newmaintainPLC_Conn_STT = checked;
         const newmaintainEVC_01_Conn_STT = checked;
         const newmaintainEVC_02_Conn_STT = checked;
@@ -2688,7 +2686,7 @@ const handleMainTainAll = async (checked:any) => {
                UPS_Mode_Maintain: newmaintainUPS_Mode,
                DO_HR_01_Maintain: newmaintainDO_HR_01,
                DO_BC_01_Maintain: newmaintainDO_BC_01,
-               DO_SV_0_01_Maintain: newMaintainDO_SV_0_01,
+               DO_SV_01_Maintain: newMaintainDO_SV_01,
                PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
                EVC_01_Conn_STT_Maintain: newmaintainEVC_01_Conn_STT,
                EVC_02_Conn_STT_Maintain: newmaintainEVC_02_Conn_STT,
@@ -2904,7 +2902,7 @@ const handleMainTainPLC = async (checked:any) => {
         const newmaintainUPS_Mode = checked;
         const newmaintainDO_HR_01 = checked;
         const newmaintainDO_BC_01 = checked;
-        const newMaintainDO_SV_0_01 = checked;
+        const newMaintainDO_SV_01 = checked;
         const newmaintainPLC_Conn_STT = checked;
 
    
@@ -2930,7 +2928,7 @@ const handleMainTainPLC = async (checked:any) => {
                 UPS_Mode_Maintain: newmaintainUPS_Mode,
                 DO_HR_01_Maintain: newmaintainDO_HR_01,
                 DO_BC_01_Maintain: newmaintainDO_BC_01,
-                DO_SV_01_Maintain: newMaintainDO_SV_0_01,
+                DO_SV_01_Maintain: newMaintainDO_SV_01,
                 PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
 
 
