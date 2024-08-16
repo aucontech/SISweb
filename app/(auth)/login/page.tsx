@@ -21,7 +21,14 @@ import {
 } from "@/service/localStorage";
 import Image from "next/image";
 import Link from "next/link";
-import { CNGBD_DEVICE_ID, CNGHY_DEVICE_ID, MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+import {
+    CNGBD_DEVICE_ID,
+    CNGHY_DEVICE_ID,
+    MEIKO_DEVICE_ID,
+    OTSUKA_DEVICE_ID,
+    SNGHY_DEVICE_ID,
+    SNG_ACECOOK_DEVICE_ID,
+} from "@/constants/constans";
 
 const Login: Page = () => {
     const authContext = useContext(AuthContext);
@@ -66,6 +73,18 @@ const Login: Page = () => {
                                     case MEIKO_DEVICE_ID:
                                         router.push("/Graphic/MEIKO");
                                         break;
+                                    case CNGBD_DEVICE_ID:
+                                        router.push("/Graphic/BINHDUONG");
+                                        break;
+                                    case SNG_ACECOOK_DEVICE_ID:
+                                        router.push("/Graphic/BINHDUONG");
+                                        break;
+                                    case CNGHY_DEVICE_ID:
+                                        router.push("/Graphic/HUNGYEN");
+                                        break;
+                                    case SNGHY_DEVICE_ID:
+                                        router.push("/Graphic/HUNGYEN");
+                                        break;
                                 }
                             }
                         })
@@ -106,14 +125,18 @@ const Login: Page = () => {
                                         router.push("/Graphic/MEIKO");
                                         break;
 
-
                                     case CNGBD_DEVICE_ID:
                                         router.push("/Graphic/BINHDUONG");
                                         break;
-
-                                        case CNGHY_DEVICE_ID:
-                                            router.push("/Graphic/HUNGYEN");
-                                            break;
+                                    case SNG_ACECOOK_DEVICE_ID:
+                                        router.push("/Graphic/BINHDUONG");
+                                        break;
+                                    case CNGHY_DEVICE_ID:
+                                        router.push("/Graphic/HUNGYEN");
+                                        break;
+                                    case SNGHY_DEVICE_ID:
+                                        router.push("/Graphic/HUNGYEN");
+                                        break;
                                 }
                             }
                         })

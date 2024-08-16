@@ -6,7 +6,14 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthProvider";
 import { readUser } from "@/service/localStorage";
 import { getDeviceByCustomer } from "@/api/device.api";
-import { MEIKO_DEVICE_ID, OTSUKA_DEVICE_ID } from "@/constants/constans";
+import {
+    CNGBD_DEVICE_ID,
+    CNGHY_DEVICE_ID,
+    MEIKO_DEVICE_ID,
+    OTSUKA_DEVICE_ID,
+    SNGHY_DEVICE_ID,
+    SNG_ACECOOK_DEVICE_ID,
+} from "@/constants/constans";
 
 interface AppWrapperProps {
     children: ReactNode;
@@ -28,6 +35,10 @@ const ROUTE_CONFIG: RouteConfig = {
         DEVICE_SPECIFIC: {
             [OTSUKA_DEVICE_ID]: ["/OTSUKA"],
             [MEIKO_DEVICE_ID]: ["/Graphic/MEIKO"],
+            [CNGBD_DEVICE_ID]: ["/Graphic/BINHDUONG"],
+            [SNG_ACECOOK_DEVICE_ID]: ["/Graphic/BINHDUONG"],
+            [CNGHY_DEVICE_ID]: ["/Graphic/HUNGYEN"],
+            [SNGHY_DEVICE_ID]: ["/Graphic/HUNGYEN"],
         },
     },
     OTHER_USER: [
