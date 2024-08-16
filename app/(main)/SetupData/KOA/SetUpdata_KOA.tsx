@@ -3211,9 +3211,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     const newMaintainFC_02_Today_Values_Uncorrected_Volume = checked;
                     const newMaintainFC_02_Yesterday_Values_Volume = checked;
                     const newMaintainFC_02_Yesterday_Values_Uncorrected_Volume = checked;
+                    const newMaintainFC_Conn_STT = checked;
+
+
+
             
                     const newMaintainDI_SD_1 = checked;
-            
                     const newMaintainGD1 = checked;
                     const newMaintainGD2 = checked;
                     const newMaintainPT1 = checked;
@@ -3234,6 +3237,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     const newMaintainDO_BC_01 = checked;
                     const newMaintainDO_SV_01 = checked;
                     const newMaintainDO_SV_02 = checked;
+                    const newMaintainPLC_Conn_STT = checked;
             
                     await httpApi.post(
                         `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
@@ -3271,8 +3275,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                            FC_02_Yesterday_Values_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Volume,
                            FC_02_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Uncorrected_Volume,
             
+                           FC_Conn_STT_Maintain: newMaintainFC_Conn_STT,
             
-                     
                            DI_SD_1_Maintain: newMaintainDI_SD_1,
             
                            GD1_Maintain: newMaintainGD1,
@@ -3299,6 +3303,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                            DO_SV_01_Maintain: newMaintainDO_SV_01,
 
                            DO_SV_02_Maintain: newMaintainDO_SV_02,
+                           PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
             
                          }
                     );
@@ -3331,6 +3336,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     setMaintainFC_02_Today_Values_Uncorrected_Volume(newMaintainFC_02_Today_Values_Uncorrected_Volume);
                     setMaintainFC_02_Yesterday_Values_Volume(newMaintainFC_02_Yesterday_Values_Volume);
                     setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newMaintainFC_02_Yesterday_Values_Uncorrected_Volume);
+                    setMaintainFC_Conn_STT(newMaintainFC_Conn_STT);
                     
             
                     setMaintainGD1(newMaintainGD1);
@@ -3356,6 +3362,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     setMaintainDO_BC_01(newMaintainDO_BC_01);
                     setMaintainDO_SV_01(newMaintainDO_SV_01);
                     setMaintainDO_SV_02(newMaintainDO_SV_02);
+                    setMaintainDO_SV_02(newMaintainDO_SV_02);
+                    setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
             
             
                 } catch (error) {
@@ -3398,6 +3406,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     maintainFC_02_Today_Values_Uncorrected_Volume === true &&
     maintainFC_02_Yesterday_Values_Volume === true &&
     maintainFC_02_Yesterday_Values_Uncorrected_Volume === true &&
+
+    maintainFC_Conn_STT === true &&
+
     maintainGD1 === true &&
     maintainGD2 === true &&
     maintainPT1 === true &&
@@ -3420,7 +3431,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     maintainDO_SV_01 === true &&
     maintainDO_SV_02 === true &&
     maintainPLC_Conn_STT === true;
-
 
     const checkMaintainingFC = 
     maintainFC_Lithium_Battery_Status === true &&
@@ -3447,13 +3457,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     maintainFC_02_Today_Values_Volume === true &&
     maintainFC_02_Today_Values_Uncorrected_Volume === true &&
     maintainFC_02_Yesterday_Values_Volume === true &&
-    maintainFC_02_Yesterday_Values_Uncorrected_Volume === true;
-   
+    maintainFC_02_Yesterday_Values_Uncorrected_Volume === true &&
+    maintainFC_Conn_STT === true;
          
-
-
     const checkMaintainingPLC = 
-  
     maintainGD1 === true &&
     maintainGD2 === true &&
     maintainPT1 === true &&
@@ -3476,6 +3483,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     maintainDO_SV_01 === true &&
     maintainDO_SV_02 === true &&
     maintainPLC_Conn_STT === true;
+
          // =================================================================================================================== 
          
 
@@ -3510,6 +3518,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 const newMaintainFC_02_Today_Values_Uncorrected_Volume = checked;
                 const newMaintainFC_02_Yesterday_Values_Volume = checked;
                 const newMaintainFC_02_Yesterday_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_Conn_STT = checked;
         
         
                 await httpApi.post(
@@ -3519,6 +3528,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
                     {
+                        FC_Conn_STT_Maintain: newMaintainFC_Conn_STT,
                         
                     FC_Lithium_Battery_Status_Maintain: newMaintainFC_Lithium_Battery_Status,
                     FC_Battery_Voltage_Maintain: newMaintainFC_Battery_Voltage,
@@ -3581,6 +3591,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 setMaintainFC_02_Today_Values_Uncorrected_Volume(newMaintainFC_02_Today_Values_Uncorrected_Volume);
                 setMaintainFC_02_Yesterday_Values_Volume(newMaintainFC_02_Yesterday_Values_Volume);
                 setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newMaintainFC_02_Yesterday_Values_Uncorrected_Volume);
+                setMaintainFC_Conn_STT(newMaintainFC_Conn_STT);
                 
         
               
@@ -3624,6 +3635,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 const newMaintainDO_BC_01 = checked;
                 const newMaintainDO_SV_01 = checked;
                 const newMaintainDO_SV_02 = checked;
+                const newMaintainPLC_Conn_STT = checked;
         
                 await httpApi.post(
                     `/plugins/telemetry/DEVICE/${id_KOA}/SERVER_SCOPE`,
@@ -3662,6 +3674,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                        DO_SV_01_Maintain: newMaintainDO_SV_01,
 
                        DO_SV_02_Maintain: newMaintainDO_SV_02,
+                       PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
         
                      }
                 );
@@ -3691,6 +3704,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 setMaintainDO_BC_01(newMaintainDO_BC_01);
                 setMaintainDO_SV_01(newMaintainDO_SV_01);
                 setMaintainDO_SV_02(newMaintainDO_SV_02);
+                setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
         
         
             } catch (error) {
@@ -4765,48 +4779,55 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
 const DataDI_ZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
+
 const DataDI_ZSO_2 = DI_ZSO_2 === "0" ? "OFF" : DI_ZSO_2 === "1" ? "ON" : null;
 
 const DataDI_ZSC_1 = DI_ZSC_1 === "0" ? "ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+
 const DataDI_ZSC_2 = DI_ZSC_2 === "0" ? "ON" : DI_ZSC_2 === "1" ? "OFF" : null;
 
 const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
+
 const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
+
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
-const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "Battery" : null;
+
+const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
 
 const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
+
 const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
 const DataEmergency_NO = Emergency_NO === "0" ? "Normal" : Emergency_NO === "1" ? "Emergency" : null;
+
 const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "1" ? "Normal" : null;
+
 const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "UPS Battery" : UPS_Mode === "2" ? "Charging" : UPS_Mode === "3" ? "No Battery" : UPS_Mode === "4" ? "Normal" : null
 
 const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
+
 const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
+
 const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
+
 const DataDO_SV_02 = DO_SV_02 === "0" ? "OFF" : DO_SV_02 === "1" ? "ON" : null;
 
 const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
-
 const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
 
-const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ? "COM OK" : FC_Conn_STT === "2" ? "Error" : null
+const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ? "COM OK" : FC_Conn_STT === "2" ? "Error" : null;
+
 const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
-    
 
         const dataFC01 =  [
-
 
           {
             
             mainCategory: mainCategoryFC.FC01 ,
            timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
-
          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>47615	 </span> ,
-
         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
@@ -4816,18 +4837,12 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
          onChange={ChangeMaintainFC_01_Accumulated_Values_Uncorrected_Volume}
          checked={maintainFC_01_Accumulated_Values_Uncorrected_Volume}
      ></Checkbox>
-
         },
-     
-
          {
-            
             mainCategory: mainCategoryFC.FC01 ,
            timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
-
         modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>47617	 </span> ,
-
        value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
@@ -4903,7 +4918,7 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
     
-          modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>47625	 </span> ,
+          modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>47627	 </span> ,
     
          value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
@@ -4917,22 +4932,13 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
     
          },
     
-   
-
-
- 
-  
-
-
-
-              
       {
         
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>Standard Volume Vb Today</span> ,
 
-      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>47627	 </span> ,
+      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>47625	 </span> ,
 
      value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
@@ -4967,11 +4973,6 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
         ></Checkbox>
        
            },
-    
-        
-
-
-
 
     {
         

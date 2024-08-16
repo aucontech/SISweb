@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { BallVavleOff, BallVavleOn } from "../GraphicIGUACU/iconSVG";
-import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_IGUECU } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicIGUACU/Api_ZOVC";
 
 export default function BallValue03() {
@@ -42,7 +42,7 @@ export default function BallValue03() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_IGUECU,
                             },
                         },
                         pageLink: {

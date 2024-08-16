@@ -3278,12 +3278,12 @@ export default function Graphic_CNG_HUNGYEN() {
         setNodes(updatedNodes);
     }, [data]);
 
-    const storedPositionString = localStorage.getItem("positionPRU");
+    // const storedPositionString = localStorage.getItem("positionPRU");
 
-    const initialPositions = storedPositionString
-        ? JSON.parse(storedPositionString)
-        : {
-              // const initialPositions = {
+    // const initialPositions = storedPositionString
+    //     ? JSON.parse(storedPositionString)
+    //     : {
+              const initialPositions = {
               AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
               Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
               BallVavleLine2_Bottom: {
@@ -7114,19 +7114,19 @@ export default function Graphic_CNG_HUNGYEN() {
         },
         [setNodes, setPositions, editingEnabled]
     );
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
 
-    useEffect(() => {
-        localStorage.setItem("positionPRU", JSON.stringify(positions));
-    }, [positions]);
+    // useEffect(() => {
+    //     localStorage.setItem("positionPRU", JSON.stringify(positions));
+    // }, [positions]);
 
     return (
         <>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button>
+            </Button> */}
             <div
                 style={{
                     // width: "100%",
@@ -7170,8 +7170,8 @@ export default function Graphic_CNG_HUNGYEN() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    onNodeDragStop={onNodeDragStop}
-                    // nodesDraggable={false} // Cho phép kéo thả các nút
+                    // onNodeDragStop={onNodeDragStop}
+                    nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}
