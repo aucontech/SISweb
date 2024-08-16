@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { OverlayPanel } from "primereact/overlaypanel";
 import React, { useEffect, useRef, useState } from "react";
 import { colorData, colorNameValue } from "../GraphicIGUACU/graphicIGUACU";
-import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_IGUECU } from "../../data-table-device/ID-DEVICE/IdDevice";
 
 export default function PCV_01_Otsuka() {
     const [sensorData, setSensorData] = useState<any>([]);
@@ -41,7 +41,7 @@ export default function PCV_01_Otsuka() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_IGUECU,
                             },
                         },
                         pageLink: {

@@ -1955,6 +1955,9 @@ useEffect(() => {
         ZSC1: "SDV-1201 ZSC (0: ON - 1: OFF)",
         ZSO1: "SDV-1201 ZSC (0: OFF - 1: ON)",
 
+        DI_SD_1: "Smoker Detected SD-1201 (0: Normal - 1: Smoker Detected)",
+
+
         ZSC2: "SDV-1202 ZSO (0: ON - 1: OFF)",
         ZSO2: "SDV-1202 ZSC (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
@@ -1980,7 +1983,7 @@ useEffect(() => {
 
     const DataDO_SV_02 = DO_SV_02 === "0" ? "OFF" : DO_SV_02 === "1" ? "ON" : null;
 
-    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
+    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
@@ -2010,6 +2013,7 @@ useEffect(() => {
             : null;
     const DataZSO_1 = DI_ZSO_1 === "0" ? " OFF" : DI_ZSO_1 === "1" ? "ON" : null;
     const DataZSC_1 = DI_ZSC_1 === "0" ? " ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+    const DataDI_SD_1 = DI_SD_1 === "0" ? " Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
 
     const DataZSO_2 = DI_ZSO_2 === "0" ? " OFF" : DI_ZSO_2 === "1" ? "ON" : null;
@@ -2947,7 +2951,10 @@ useEffect(() => {
             name: <span>{tagNamePLC.UPS_MODE}</span>,
             PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
         },
-
+        {
+            name: <span>{tagNamePLC.DI_SD_1}</span>,
+            PLC: <span style={combineCss.CSSDI_SD_1}> {DI_SD_1} {DataDI_SD_1}</span>,
+        },
 
         {
             name: <span>{tagNamePLC.SELECT_SW}</span>,

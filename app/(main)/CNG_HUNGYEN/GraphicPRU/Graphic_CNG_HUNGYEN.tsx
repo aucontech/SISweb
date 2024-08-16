@@ -31,6 +31,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
+import "./ForCssGraphic.css";
 
 interface StateMap {
     [key: string]:
@@ -3277,12 +3278,12 @@ export default function Graphic_CNG_HUNGYEN() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionPRU");
+    const storedPositionString = localStorage.getItem("positionPRU");
 
-    // const initialPositions = storedPositionString
-    //     ? JSON.parse(storedPositionString)
-    //     : {
-                const initialPositions = {
+    const initialPositions = storedPositionString
+        ? JSON.parse(storedPositionString)
+        : {
+              // const initialPositions = {
               AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
               Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
               BallVavleLine2_Bottom: {
@@ -3470,11 +3471,11 @@ export default function Graphic_CNG_HUNGYEN() {
                   y: 1105.293210440453,
               },
               PIT_3001A_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
-              PIT_3001A_DATA: { x: -2348.6186513642347, y: 870.9225639134092 },
+              PIT_3001A_DATA: { x: -2355.6186513642347, y: 871.9225639134092 },
               PIT_3001A_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
               PIT_3001A_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
               PIT_3001B_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
-              PIT_3001B_DATA: { x: -2348.8352724506376, y: 1526.9945389222787 },
+              PIT_3001B_DATA: { x: -2353.582676764463, y: 1526.1450580595135 },
               PIT_3001B_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
               PIT_3001B_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
               PSV_3001A: { x: -1806.4495698232004, y: 966.4171746665486 },
@@ -3579,6 +3580,10 @@ export default function Graphic_CNG_HUNGYEN() {
               PT_3002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
               PT_3002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
               PT_3002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
+              PT_3003: { x: -804.9838255763632, y: 1193.6908985163677 },
+              PT_3003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
+              PT_3003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+              PT_3003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
               SDV_3001A: { x: -2375.7904529874913, y: 1046.6822941858263 },
               SDV_3001A_Name: { x: -2408.757431714083, y: 1018.4506281074462 },
               SDV_3001B: { x: -2377.0898761861, y: 1379.0178060073683 },
@@ -3589,10 +3594,6 @@ export default function Graphic_CNG_HUNGYEN() {
               TT_3001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
               TT_3001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
               TT_3001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
-              PT_3003: { x: -804.9838255763632, y: 1193.6908985163677 },
-              PT_3003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
-              PT_3003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
-              PT_3003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
               bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
               bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
@@ -5083,7 +5084,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 270,
+                width: 280,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -5109,7 +5110,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             style: {
                 border: background,
-                width: 270,
+                width: 280,
 
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
@@ -7113,19 +7114,19 @@ export default function Graphic_CNG_HUNGYEN() {
         },
         [setNodes, setPositions, editingEnabled]
     );
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
 
-    // useEffect(() => {
-    //     localStorage.setItem("positionPRU", JSON.stringify(positions));
-    // }, [positions]);
+    useEffect(() => {
+        localStorage.setItem("positionPRU", JSON.stringify(positions));
+    }, [positions]);
 
     return (
         <>
-            {/* <Button onClick={toggleEditing}>
+            <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
-            </Button> */}
+            </Button>
             <div
                 style={{
                     // width: "100%",
@@ -7169,8 +7170,8 @@ export default function Graphic_CNG_HUNGYEN() {
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    // onNodeDragStop={onNodeDragStop}
-                    nodesDraggable={false} // Cho phép kéo thả các nút
+                    onNodeDragStop={onNodeDragStop}
+                    // nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
                     minZoom={0.5}
                     maxZoom={2}

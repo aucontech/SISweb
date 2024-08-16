@@ -37,6 +37,7 @@ import {
     icon20,
     icon40,
 } from "./iconSVG";
+import "./ForCssGraphic.css"
 
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
