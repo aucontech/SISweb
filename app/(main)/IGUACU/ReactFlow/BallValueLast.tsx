@@ -2,7 +2,7 @@ import { httpApi } from "@/api/http.api";
 import { readToken } from "@/service/localStorage";
 import React, { useEffect, useRef, useState } from "react";
 import {  BallVavleOff, BallVavleOn } from "../GraphicIGUACU/iconSVG";
-import { id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_IGUECU } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicIGUACU/Api_ZOVC";
 
 // export default function BallValue01({ onDataLine1 }: { onDataLine1: (data: any) => void }) {
@@ -42,7 +42,7 @@ export default function BallValueLast() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_KOA,
+                                id: id_IGUECU,
                             },
                         },
                         pageLink: {

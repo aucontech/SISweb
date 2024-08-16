@@ -573,11 +573,21 @@ export default function ScoreCard_KOA() {
             const UPS_Mode_Maintain = res.data.find(
                 (item: any) => item.key === "UPS_Mode_Maintain"
             );
+
+
+            const DI_SD_1_High = res.data.find((item: any) => item.key === "DI_SD_1_High");
+            setDI_SD_1_High(DI_SD_1_High?.value || null);
+            const DI_SD_1_Low = res.data.find((item: any) => item.key === "DI_SD_1_Low");
+            setDI_SD_1_Low(DI_SD_1_Low?.value || null);
+            const DI_SD_1_Maintain = res.data.find(
+                (item: any) => item.key === "DI_SD_1_Maintain"
+            );
  // =================================================================================================================== 
 
 
 
 
+ setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
 
 
             setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
@@ -1953,13 +1963,14 @@ useEffect(() => {
         GD1: "Gas Detector GD-1201 (%LEL)",
         GD2: "Gas Detector GD-1202 (%LEL)",
         ZSC1: "SDV-1201 ZSC (0: ON - 1: OFF)",
-        ZSO1: "SDV-1201 ZSC (0: OFF - 1: ON)",
+        ZSC2: "SDV-1202 ZSC (0: ON - 1: OFF)",
+
+        ZSO1: "SDV-1201 ZSO (0: OFF - 1: ON)",
+        ZSO2: "SDV-1202 ZSO (0: OFF - 1: ON)",
 
         DI_SD_1: "Smoker Detected SD-1201 (0: Normal - 1: Smoker Detected)",
 
 
-        ZSC2: "SDV-1202 ZSO (0: ON - 1: OFF)",
-        ZSO2: "SDV-1202 ZSC (0: OFF - 1: ON)",
         UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
@@ -2003,7 +2014,7 @@ useEffect(() => {
         UPS_Mode === "0"
             ? "Error"
             : UPS_Mode === "1"
-            ? "Using Running"
+            ? "UPS Running"
             : UPS_Mode === "2"
             ? "Charging"
             : UPS_Mode === "3"
@@ -2011,8 +2022,13 @@ useEffect(() => {
             : UPS_Mode === "4"
             ? "Normal"
             : null;
-    const DataZSO_1 = DI_ZSO_1 === "0" ? " OFF" : DI_ZSO_1 === "1" ? "ON" : null;
+    const DataZSO_1 = DI_ZSO_1 === "0" ? "OFF" : DI_ZSO_1 === "1" ? "ON" : null;
+
+    
     const DataZSC_1 = DI_ZSC_1 === "0" ? " ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+
+
+
     const DataDI_SD_1 = DI_SD_1 === "0" ? " Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
 
@@ -2953,7 +2969,7 @@ useEffect(() => {
         },
         {
             name: <span>{tagNamePLC.DI_SD_1}</span>,
-            PLC: <span style={combineCss.CSSDI_SD_1}> {DI_SD_1} {DataDI_SD_1}</span>,
+            PLC: <span style={combineCss.CSSDI_SD_1}> {DI_SD_1} {DataSmoker_Detected}</span>,
         },
 
         {
