@@ -1,9 +1,13 @@
 "use client";
 import { AutoComplete } from "primereact/autocomplete";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
 import { Calendar } from "primereact/calendar";
+import { MegaMenu } from "primereact/megamenu";
 import { getAlarmTypes } from "@/api/alarm.api";
+import { getRelations } from "@/api/relation.api";
+import { getAssetById } from "@/api/assets.api";
+import { getDeviceById } from "@/api/device.api";
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -23,6 +27,100 @@ const FilterReport: React.FC<Props> = ({
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
+    const items = [
+        {
+            label: "Furniture",
+            icon: "pi pi-box",
+            items: [],
+        },
+        {
+            label: "Electronics",
+            icon: "pi pi-mobile",
+            items: [],
+        },
+        {
+            label: "Sports",
+            icon: "pi pi-clock",
+            items: [],
+        },
+    ];
+
+    const _fetchStations = useCallback(() => {
+        let reqParams = {
+            fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+            fromType: "ASSET",
+            relationType: "Contains",
+            relationTypeGroup: "COMMON",
+        };
+        getRelations(reqParams)
+            .then((resp) => resp.data)
+            .then((resp) => {
+                let data = resp || [];
+                if (data.length > 0) {
+                    let pms = data.map((dt: any) => {
+                        //console.log(dt);
+                        return getAssetById(dt["to"]["id"]);
+                    });
+                    Promise.all(pms)
+                        .then((resp) => resp.map((dt: any) => dt.data))
+                        .then((resp) => {
+                            resp.forEach((it: any) => {
+                                it.label = `${it.name}`;
+                            });
+                            console.log(resp); // list asset
+                            let pms = resp.map((dt: any) => {
+                                let reqParams = {
+                                    fromId: dt.id.id,
+                                    fromType: "ASSET",
+                                    relationType: "Contains",
+                                    relationTypeGroup: "COMMON",
+                                };
+                                return getRelations(reqParams);
+                            });
+
+                            Promise.all(pms)
+                                .then((resp) => resp.map((dt: any) => dt.data))
+                                .then((resp) => {
+                                    console.log(resp);
+                                    let data = resp || [];
+                                    let pms = data.map((dt: any) => {
+                                        for (let i = 0; i < dt.length; i++) {
+                                            return getDeviceById(
+                                                dt[i]["to"]["id"]
+                                            );
+                                        }
+                                    });
+                                    Promise.all(pms)
+                                        .then((resp) =>
+                                            resp.map((dt: any) => dt.data)
+                                        )
+                                        .then((resp) => {
+                                            resp.forEach((it: any) => {
+                                                it.label = `${it.name}`;
+                                            });
+                                            // setSuggDevices(resp);
+                                            console.log(resp); // list device
+                                        })
+                                        .catch((e) => {
+                                            console.log(e);
+                                            //setSuggDevices([]);
+                                        });
+                                });
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            //  setSuggAssets([]);
+                        });
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                //  setSuggAssets([]);
+            });
+    }, []);
+    useEffect(() => {
+        _fetchStations();
+    }, [_fetchStations]);
 
     useEffect(() => {
         let newFilter = {
@@ -66,8 +164,8 @@ const FilterReport: React.FC<Props> = ({
         <>
             <div className="grid p-fluid">
                 {showDevice && (
-                    <div className="col-12 lg:col-3">
-                        <span className="p-float-label">
+                    <div className="col-12 lg:col-6">
+                        {/* <span className="p-float-label">
                             <AutoComplete
                                 dropdown
                                 suggestions={suggDevices}
@@ -79,7 +177,8 @@ const FilterReport: React.FC<Props> = ({
                                 }
                             />
                             <label>Device</label>
-                        </span>
+                        </span> */}
+                        <MegaMenu model={items} />
                     </div>
                 )}
                 {showDevice && (
