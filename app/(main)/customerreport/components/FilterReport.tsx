@@ -8,6 +8,8 @@ import { getAlarmTypes } from "@/api/alarm.api";
 import { getRelations } from "@/api/relation.api";
 import { getAssetById } from "@/api/assets.api";
 import { getDeviceById } from "@/api/device.api";
+import { get, set } from "lodash";
+import { co } from "@fullcalendar/core/internal-common";
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -27,96 +29,98 @@ const FilterReport: React.FC<Props> = ({
     const [editFilter, setEditFilter] = useState<any>([]);
     const [suggDevices, setSuggDevices] = useState<any>([]);
     const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
-    const items = [
-        {
-            label: "Furniture",
-            icon: "pi pi-box",
-            items: [],
-        },
-        {
-            label: "Electronics",
-            icon: "pi pi-mobile",
-            items: [],
-        },
-        {
-            label: "Sports",
-            icon: "pi pi-clock",
-            items: [],
-        },
-    ];
+    const [menuItems, setMenuItems] = useState<any>([]);
+    // const items = [
+    //     {
+    //         label: "Furniture",
+    //         icon: "pi pi-box",
+    //         items: [],
+    //     },
+    //     {
+    //         label: "Electronics",
+    //         icon: "pi pi-mobile",
+    //         items: [],
+    //     },
+    //     {
+    //         label: "Sports",
+    //         icon: "pi pi-clock",
+    //         items: [],
+    //     },
+    // ];
 
-    const _fetchStations = useCallback(() => {
-        let reqParams = {
-            fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
-            fromType: "ASSET",
-            relationType: "Contains",
-            relationTypeGroup: "COMMON",
-        };
-        getRelations(reqParams)
-            .then((resp) => resp.data)
-            .then((resp) => {
-                let data = resp || [];
-                if (data.length > 0) {
-                    let pms = data.map((dt: any) => {
-                        //console.log(dt);
-                        return getAssetById(dt["to"]["id"]);
-                    });
-                    Promise.all(pms)
-                        .then((resp) => resp.map((dt: any) => dt.data))
-                        .then((resp) => {
-                            resp.forEach((it: any) => {
-                                it.label = `${it.name}`;
-                            });
-                            console.log(resp); // list asset
-                            let pms = resp.map((dt: any) => {
-                                let reqParams = {
-                                    fromId: dt.id.id,
-                                    fromType: "ASSET",
-                                    relationType: "Contains",
-                                    relationTypeGroup: "COMMON",
-                                };
-                                return getRelations(reqParams);
-                            });
+    const _fetchStations = useCallback(async () => {
+        try {
+            let reqParams = {
+                fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+                fromType: "ASSET",
+                relationType: "Contains",
+                relationTypeGroup: "COMMON",
+            };
+            const resp = await getRelations(reqParams);
+            const data = resp.data || [];
 
-                            Promise.all(pms)
-                                .then((resp) => resp.map((dt: any) => dt.data))
-                                .then((resp) => {
-                                    console.log(resp);
-                                    let data = resp || [];
-                                    let pms = data.map((dt: any) => {
-                                        for (let i = 0; i < dt.length; i++) {
-                                            return getDeviceById(
-                                                dt[i]["to"]["id"]
-                                            );
-                                        }
-                                    });
-                                    Promise.all(pms)
-                                        .then((resp) =>
-                                            resp.map((dt: any) => dt.data)
-                                        )
-                                        .then((resp) => {
-                                            resp.forEach((it: any) => {
-                                                it.label = `${it.name}`;
-                                            });
-                                            // setSuggDevices(resp);
-                                            console.log(resp); // list device
-                                        })
-                                        .catch((e) => {
-                                            console.log(e);
-                                            //setSuggDevices([]);
-                                        });
-                                });
-                        })
-                        .catch((e) => {
+            if (data.length > 0) {
+                const menuItems = await Promise.all(
+                    data.map(async (dt: any) => {
+                        let item = {
+                            label: "",
+                            icon: "pi pi-clock",
+                            command: () => {
+                                console.log("device");
+                            },
+                        };
+                        try {
+                            const assetResp = await getAssetById(
+                                dt["to"]["id"]
+                            );
+                            const asset = assetResp.data || {};
+                            let reqParams = {
+                                fromId: asset.id.id,
+                                fromType: "ASSET",
+                                relationType: "Contains",
+                                relationTypeGroup: "COMMON",
+                            };
+                            const resp = await getRelations(reqParams);
+                            const datare = resp.data || [];
+                            let devices = await Promise.all(
+                                datare.map(async (dt: any) => {
+                                    const deviceResp = await getDeviceById(
+                                        dt["to"]["id"]
+                                    );
+                                    const device = deviceResp.data || {};
+                                    console.log(device);
+                                    return {
+                                        //data: device,
+                                        // label: "station list",
+                                        items: [
+                                            {
+                                                label: device["name"],
+                                                data: device,
+                                                command: () => {
+                                                    //how to get data
+                                                    console.log(device);
+                                                },
+                                            },
+                                        ], // Gán trực tiếp các thiết bị vào `items` của `item`
+                                    };
+                                })
+                            );
+                            console.log(devices);
+                            item.label = asset["name"];
+                            item["items"] = [[...devices]];
+                            //   item.items = devices; // Gán trực tiếp các thiết bị vào `items` của `item`
+                        } catch (e) {
                             console.log(e);
-                            //  setSuggAssets([]);
-                        });
-                }
-            })
-            .catch((e) => {
-                console.log(e);
-                //  setSuggAssets([]);
-            });
+                        }
+                        return item;
+                    })
+                );
+                console.log(menuItems);
+                setMenuItems(menuItems); // Cập nhật menuItems sau khi tất cả các lời gọi API hoàn thành
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }, []);
     useEffect(() => {
         _fetchStations();
@@ -178,7 +182,7 @@ const FilterReport: React.FC<Props> = ({
                             />
                             <label>Device</label>
                         </span> */}
-                        <MegaMenu model={items} />
+                        <MegaMenu model={menuItems} />
                     </div>
                 )}
                 {showDevice && (
