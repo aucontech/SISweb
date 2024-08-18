@@ -37,7 +37,7 @@ import {
     icon20,
     icon40,
 } from "./iconSVG";
-import "./ForCssGraphic.css"
+import "./ForCssGraphic.css";
 
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
@@ -84,12 +84,9 @@ export default function Graphic_SNG_HUNGYEN() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
     const toast = useRef<Toast>(null);
- 
 
     const [SDV, setSDV] = useState<string | null>(null);
 
-
- 
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
 
     const [PLC_STTValue, setPLC_STTValue] = useState<any>();
@@ -492,11 +489,9 @@ export default function Graphic_SNG_HUNGYEN() {
             );
             setMaintainFCV_MODE(MaintainFCV_MODE?.value || false);
 
-
-
             //===========================================================================================
 
-   const HighTOTAL_SNG = res.data.find(
+            const HighTOTAL_SNG = res.data.find(
                 (item: any) => item.key === "TOTAL_SNG_High"
             );
             setTOTAL_SNG_High(HighTOTAL_SNG?.value || null);
@@ -517,269 +512,344 @@ export default function Graphic_SNG_HUNGYEN() {
     const [PT_3005, setPT_3005] = useState<string | null>(null);
     const [PT_3005_High, setPT_3005_High] = useState<number | null>(null);
     const [PT_3005_Low, setPT_3005_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false); 
+    const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false);
     const [maintainPT_3005, setMaintainPT_3005] = useState<boolean>(false);
-    
+
     useEffect(() => {
-    const PT_3005Value = parseFloat(PT_3005 as any);
-    const highValue = PT_3005_High ?? NaN;
-    const lowValue = PT_3005_Low ?? NaN;
-    
-    if (!isNaN(PT_3005Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3005) {
-     setExceedThresholdPT_3005(PT_3005Value >= highValue || PT_3005Value <= lowValue);
-    }
+        const PT_3005Value = parseFloat(PT_3005 as any);
+        const highValue = PT_3005_High ?? NaN;
+        const lowValue = PT_3005_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3005Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3005
+        ) {
+            setExceedThresholdPT_3005(
+                PT_3005Value >= highValue || PT_3005Value <= lowValue
+            );
+        }
     }, [PT_3005, PT_3005_High, PT_3005_Low, maintainPT_3005]);
 
     //======================================================================================
 
-
     const [PT_3006, setPT_3006] = useState<string | null>(null);
     const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
     const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false); 
+    const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false);
     const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
-    
+
     useEffect(() => {
-     const PT_3006Value = parseFloat(PT_3006 as any);
-     const highValue = PT_3006_High ?? NaN;
-     const lowValue = PT_3006_Low ?? NaN;
-    
-     if (!isNaN(PT_3006Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT_3006) {
-         setExceedThresholdPT_3006(PT_3006Value >= highValue || PT_3006Value <= lowValue);
-     }
-    }, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006,
-    
-    
-    ]);
-        //================================ TT_3003================================
+        const PT_3006Value = parseFloat(PT_3006 as any);
+        const highValue = PT_3006_High ?? NaN;
+        const lowValue = PT_3006_Low ?? NaN;
 
+        if (
+            !isNaN(PT_3006Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3006
+        ) {
+            setExceedThresholdPT_3006(
+                PT_3006Value >= highValue || PT_3006Value <= lowValue
+            );
+        }
+    }, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006]);
+    //================================ TT_3003================================
 
-        const [TT_3003, setTT_3003] = useState<string | null>(null);
-        const [TT_3003_High, setTT_3003_High] = useState<number | null>(null);
-        const [TT_3003_Low, setTT_3003_Low] = useState<number | null>(null);
-        const [exceedThresholdTT_3003, setExceedThresholdTT_3003] = useState(false); 
-        const [maintainTT_3003, setMaintainTT_3003] = useState<boolean>(false);
-        
-        useEffect(() => {
-         const TT_3003Value = parseFloat(TT_3003 as any);
-         const highValue = TT_3003_High ?? NaN;
-         const lowValue = TT_3003_Low ?? NaN;
-        
-         if (!isNaN(TT_3003Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3003) {
-             setExceedThresholdTT_3003(TT_3003Value >= highValue || TT_3003Value <= lowValue);
-         }
-        }, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
-        
+    const [TT_3003, setTT_3003] = useState<string | null>(null);
+    const [TT_3003_High, setTT_3003_High] = useState<number | null>(null);
+    const [TT_3003_Low, setTT_3003_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_3003, setExceedThresholdTT_3003] = useState(false);
+    const [maintainTT_3003, setMaintainTT_3003] = useState<boolean>(false);
+
+    useEffect(() => {
+        const TT_3003Value = parseFloat(TT_3003 as any);
+        const highValue = TT_3003_High ?? NaN;
+        const lowValue = TT_3003_Low ?? NaN;
+
+        if (
+            !isNaN(TT_3003Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3003
+        ) {
+            setExceedThresholdTT_3003(
+                TT_3003Value >= highValue || TT_3003Value <= lowValue
+            );
+        }
+    }, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
 
     //================================ Flow_Meter_Total ======================================================
-
 
     const [TT_3004, setTT_3004] = useState<string | null>(null);
     const [TT_3004_High, setTT_3004_High] = useState<number | null>(null);
     const [TT_3004_Low, setTT_3004_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_3004, setExceedThresholdTT_3004] = useState(false); 
+    const [exceedThresholdTT_3004, setExceedThresholdTT_3004] = useState(false);
     const [maintainTT_3004, setMaintainTT_3004] = useState<boolean>(false);
-    
+
     useEffect(() => {
         const TT_3004Value = parseFloat(TT_3004 as any);
         const highValue = TT_3004_High ?? NaN;
         const lowValue = TT_3004_Low ?? NaN;
-    
-        if (!isNaN(TT_3004Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTT_3004) {
-            setExceedThresholdTT_3004(TT_3004Value >= highValue || TT_3004Value <= lowValue);
+
+        if (
+            !isNaN(TT_3004Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3004
+        ) {
+            setExceedThresholdTT_3004(
+                TT_3004Value >= highValue || TT_3004Value <= lowValue
+            );
         }
     }, [TT_3004, TT_3004_High, TT_3004_Low, maintainTT_3004]);
-    
-    
-     //======================================================================================
 
+    //======================================================================================
 
-// =================================================================================================================== 
+    // ===================================================================================================================
 
-const [TM_3002_SNG, setTM_3002_SNG] = useState<string | null>(null);
-const [TM_3002_SNG_High, setTM_3002_SNG_High] = useState<number | null>(null);
-const [TM_3002_SNG_Low, setTM_3002_SNG_Low] = useState<number | null>(null);
-const [exceedThresholdTM_3002_SNG, setExceedThresholdTM_3002_SNG] = useState(false); 
-const [maintainTM_3002_SNG, setMaintainTM_3002_SNG] = useState<boolean>(false);
+    const [TM_3002_SNG, setTM_3002_SNG] = useState<string | null>(null);
+    const [TM_3002_SNG_High, setTM_3002_SNG_High] = useState<number | null>(
+        null
+    );
+    const [TM_3002_SNG_Low, setTM_3002_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_3002_SNG, setExceedThresholdTM_3002_SNG] =
+        useState(false);
+    const [maintainTM_3002_SNG, setMaintainTM_3002_SNG] =
+        useState<boolean>(false);
 
-useEffect(() => {
-    const TM_3002_SNGValue = parseFloat(TM_3002_SNG as any);
-    const highValue = TM_3002_SNG_High ?? NaN;
-    const lowValue = TM_3002_SNG_Low ?? NaN;
+    useEffect(() => {
+        const TM_3002_SNGValue = parseFloat(TM_3002_SNG as any);
+        const highValue = TM_3002_SNG_High ?? NaN;
+        const lowValue = TM_3002_SNG_Low ?? NaN;
 
-    if (!isNaN(TM_3002_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_3002_SNG) {
-        setExceedThresholdTM_3002_SNG(TM_3002_SNGValue >= highValue || TM_3002_SNGValue <= lowValue);
-    }
-}, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
+        if (
+            !isNaN(TM_3002_SNGValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTM_3002_SNG
+        ) {
+            setExceedThresholdTM_3002_SNG(
+                TM_3002_SNGValue >= highValue || TM_3002_SNGValue <= lowValue
+            );
+        }
+    }, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
 
+    // ===================================================================================================================
 
-
-
-
-
-// =================================================================================================================== 
-
-    // =================================================================================================================== 
+    // ===================================================================================================================
 
     const [TM_3003_SNG, setTM_3003_SNG] = useState<string | null>(null);
-    const [TM_3003_SNG_High, setTM_3003_SNG_High] = useState<number | null>(null);
+    const [TM_3003_SNG_High, setTM_3003_SNG_High] = useState<number | null>(
+        null
+    );
     const [TM_3003_SNG_Low, setTM_3003_SNG_Low] = useState<number | null>(null);
-    const [exceedThresholdTM_3003_SNG, setExceedThresholdTM_3003_SNG] = useState(false); 
-    const [maintainTM_3003_SNG, setMaintainTM_3003_SNG] = useState<boolean>(false);
-   
+    const [exceedThresholdTM_3003_SNG, setExceedThresholdTM_3003_SNG] =
+        useState(false);
+    const [maintainTM_3003_SNG, setMaintainTM_3003_SNG] =
+        useState<boolean>(false);
+
     useEffect(() => {
         const TM_3003_SNGValue = parseFloat(TM_3003_SNG as any);
         const highValue = TM_3003_SNG_High ?? NaN;
         const lowValue = TM_3003_SNG_Low ?? NaN;
-   
-        if (!isNaN(TM_3003_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTM_3003_SNG) {
-            setExceedThresholdTM_3003_SNG(TM_3003_SNGValue >= highValue || TM_3003_SNGValue <= lowValue);
+
+        if (
+            !isNaN(TM_3003_SNGValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTM_3003_SNG
+        ) {
+            setExceedThresholdTM_3003_SNG(
+                TM_3003_SNGValue >= highValue || TM_3003_SNGValue <= lowValue
+            );
         }
     }, [TM_3003_SNG, TM_3003_SNG_High, TM_3003_SNG_Low, maintainTM_3003_SNG]);
-   
-    
-   
-
 
     //================================ TT_3004======================================================
     const [FCV_3001, setFCV_3001] = useState<string | null>(null);
     const [FCV_3001_High, setFCV_3001_High] = useState<number | null>(null);
     const [FCV_3001_Low, setFCV_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdFCV_3001, setExceedThresholdFCV_3001] = useState(false); 
+    const [exceedThresholdFCV_3001, setExceedThresholdFCV_3001] =
+        useState(false);
     const [maintainFCV_3001, setMaintainFCV_3001] = useState<boolean>(false);
-    
+
     useEffect(() => {
         const FCV_3001Value = parseFloat(FCV_3001 as any);
         const highValue = FCV_3001_High ?? NaN;
         const lowValue = FCV_3001_Low ?? NaN;
-    
-        if (!isNaN(FCV_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_3001) {
-            setExceedThresholdFCV_3001(FCV_3001Value >= highValue || FCV_3001Value <= lowValue);
+
+        if (
+            !isNaN(FCV_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFCV_3001
+        ) {
+            setExceedThresholdFCV_3001(
+                FCV_3001Value >= highValue || FCV_3001Value <= lowValue
+            );
         }
     }, [FCV_3001, FCV_3001_High, FCV_3001_Low, maintainFCV_3001]);
-    
+
     //================================ FCV_3001======================================================
 
     //================================ WB_3001================================
     const [WB_3001, setWB_3001] = useState<string | null>(null);
     const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
     const [WB_3001_Low, setWB_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdWB_3001, setExceedThresholdWB_3001] = useState(false); 
+    const [exceedThresholdWB_3001, setExceedThresholdWB_3001] = useState(false);
     const [maintainWB_3001, setMaintainWB_3001] = useState<boolean>(false);
-   
+
     useEffect(() => {
         const WB_3001Value = parseFloat(WB_3001 as any);
         const highValue = WB_3001_High ?? NaN;
         const lowValue = WB_3001_Low ?? NaN;
-   
-        if (!isNaN(WB_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_3001) {
-            setExceedThresholdWB_3001(WB_3001Value >= highValue || WB_3001Value <= lowValue);
+
+        if (
+            !isNaN(WB_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainWB_3001
+        ) {
+            setExceedThresholdWB_3001(
+                WB_3001Value >= highValue || WB_3001Value <= lowValue
+            );
         }
     }, [WB_3001, WB_3001_High, WB_3001_Low, maintainWB_3001]);
-   
-    
-   
 
     //================================ WB_3001 ======================================================
 
-
     const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
-    const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(null);
+    const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(
+        null
+    );
     const [WB_Setpoint_Low, setWB_Setpoint_Low] = useState<number | null>(null);
-    const [exceedThresholdWB_Setpoint, setExceedThresholdWB_Setpoint] = useState(false); 
-    const [maintainWB_Setpoint, setMaintainWB_Setpoint] = useState<boolean>(false);
-    
+    const [exceedThresholdWB_Setpoint, setExceedThresholdWB_Setpoint] =
+        useState(false);
+    const [maintainWB_Setpoint, setMaintainWB_Setpoint] =
+        useState<boolean>(false);
+
     useEffect(() => {
-    const WB_SetpointValue = parseFloat(WB_Setpoint as any);
-    const highValue = WB_Setpoint_High ?? NaN;
-    const lowValue = WB_Setpoint_Low ?? NaN;
-    
-    if (!isNaN(WB_SetpointValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainWB_Setpoint) {
-     setExceedThresholdWB_Setpoint(WB_SetpointValue >= highValue || WB_SetpointValue <= lowValue);
-    }
+        const WB_SetpointValue = parseFloat(WB_Setpoint as any);
+        const highValue = WB_Setpoint_High ?? NaN;
+        const lowValue = WB_Setpoint_Low ?? NaN;
+
+        if (
+            !isNaN(WB_SetpointValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainWB_Setpoint
+        ) {
+            setExceedThresholdWB_Setpoint(
+                WB_SetpointValue >= highValue || WB_SetpointValue <= lowValue
+            );
+        }
     }, [WB_Setpoint, WB_Setpoint_High, WB_Setpoint_Low, maintainWB_Setpoint]);
 
     //================================ WB_Setpoint======================================================
     const [HV_3001, setHV_3001] = useState<string | null>(null);
     const [HV_3001_High, setHV_3001_High] = useState<number | null>(null);
     const [HV_3001_Low, setHV_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdHV_3001, setExceedThresholdHV_3001] = useState(false); 
+    const [exceedThresholdHV_3001, setExceedThresholdHV_3001] = useState(false);
     const [maintainHV_3001, setMaintainHV_3001] = useState<boolean>(false);
-    
+
     useEffect(() => {
         const HV_3001Value = parseFloat(HV_3001 as any);
         const highValue = HV_3001_High ?? NaN;
         const lowValue = HV_3001_Low ?? NaN;
-    
-        if (!isNaN(HV_3001Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainHV_3001) {
-            setExceedThresholdHV_3001(HV_3001Value >= highValue || HV_3001Value <= lowValue);
+
+        if (
+            !isNaN(HV_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainHV_3001
+        ) {
+            setExceedThresholdHV_3001(
+                HV_3001Value >= highValue || HV_3001Value <= lowValue
+            );
         }
     }, [HV_3001, HV_3001_High, HV_3001_Low, maintainHV_3001]);
-    
 
     //================================ HV_3001======================================================
     const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
     const [RATIO_MODE_High, setRATIO_MODE_High] = useState<number | null>(null);
     const [RATIO_MODE_Low, setRATIO_MODE_Low] = useState<number | null>(null);
-    const [exceedThresholdRATIO_MODE, setExceedThresholdRATIO_MODE] = useState(false); 
-    const [maintainRATIO_MODE, setMaintainRATIO_MODE] = useState<boolean>(false);
-    
+    const [exceedThresholdRATIO_MODE, setExceedThresholdRATIO_MODE] =
+        useState(false);
+    const [maintainRATIO_MODE, setMaintainRATIO_MODE] =
+        useState<boolean>(false);
+
     useEffect(() => {
-    const RATIO_MODEValue = parseFloat(RATIO_MODE as any);
-    const highValue = RATIO_MODE_High ?? NaN;
-    const lowValue = RATIO_MODE_Low ?? NaN;
-    
-    if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainRATIO_MODE) {
-     setExceedThresholdRATIO_MODE(RATIO_MODEValue >= highValue || RATIO_MODEValue <= lowValue);
-    }
+        const RATIO_MODEValue = parseFloat(RATIO_MODE as any);
+        const highValue = RATIO_MODE_High ?? NaN;
+        const lowValue = RATIO_MODE_Low ?? NaN;
+
+        if (
+            !isNaN(RATIO_MODEValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainRATIO_MODE
+        ) {
+            setExceedThresholdRATIO_MODE(
+                RATIO_MODEValue >= highValue || RATIO_MODEValue <= lowValue
+            );
+        }
     }, [RATIO_MODE, RATIO_MODE_High, RATIO_MODE_Low, maintainRATIO_MODE]);
-    
 
     //================================ RATIO_MODE======================================================
 
     const [FCV_MODE, setFCV_MODE] = useState<string | null>(null);
     const [FCV_MODE_High, setFCV_MODE_High] = useState<number | null>(null);
     const [FCV_MODE_Low, setFCV_MODE_Low] = useState<number | null>(null);
-    const [exceedThresholdFCV_MODE, setExceedThresholdFCV_MODE] = useState(false); 
+    const [exceedThresholdFCV_MODE, setExceedThresholdFCV_MODE] =
+        useState(false);
     const [maintainFCV_MODE, setMaintainFCV_MODE] = useState<boolean>(false);
-    
+
     useEffect(() => {
         const FCV_MODEValue = parseFloat(FCV_MODE as any);
         const highValue = FCV_MODE_High ?? NaN;
         const lowValue = FCV_MODE_Low ?? NaN;
-    
-        if (!isNaN(FCV_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFCV_MODE) {
-            setExceedThresholdFCV_MODE(FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue);
+
+        if (
+            !isNaN(FCV_MODEValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFCV_MODE
+        ) {
+            setExceedThresholdFCV_MODE(
+                FCV_MODEValue >= highValue || FCV_MODEValue <= lowValue
+            );
         }
     }, [FCV_MODE, FCV_MODE_High, FCV_MODE_Low, maintainFCV_MODE]);
 
-
-
-    
-   
     //================================ FCV_MODE======================================================
-
 
     const [TOTAL_SNG, setTOTAL_SNG] = useState<string | null>(null);
     const [TOTAL_SNG_High, setTOTAL_SNG_High] = useState<number | null>(null);
     const [TOTAL_SNG_Low, setTOTAL_SNG_Low] = useState<number | null>(null);
-    const [exceedThresholdTOTAL_SNG, setExceedThresholdTOTAL_SNG] = useState(false); 
+    const [exceedThresholdTOTAL_SNG, setExceedThresholdTOTAL_SNG] =
+        useState(false);
     const [maintainTOTAL_SNG, setMaintainTOTAL_SNG] = useState<boolean>(false);
-    
+
     useEffect(() => {
         const TOTAL_SNGValue = parseFloat(TOTAL_SNG as any);
         const highValue = TOTAL_SNG_High ?? NaN;
         const lowValue = TOTAL_SNG_Low ?? NaN;
-    
-        if (!isNaN(TOTAL_SNGValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainTOTAL_SNG) {
-            setExceedThresholdTOTAL_SNG(TOTAL_SNGValue >= highValue || TOTAL_SNGValue <= lowValue);
+
+        if (
+            !isNaN(TOTAL_SNGValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTOTAL_SNG
+        ) {
+            setExceedThresholdTOTAL_SNG(
+                TOTAL_SNGValue >= highValue || TOTAL_SNGValue <= lowValue
+            );
         }
     }, [TOTAL_SNG, TOTAL_SNG_High, TOTAL_SNG_Low, maintainTOTAL_SNG]);
 
-
-
-    
-   
     //================================ FCV_MODE======================================================
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
@@ -866,7 +936,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT_3005 && !maintainPT_3005
+                                        exceedThresholdPT_3005 &&
+                                        !maintainPT_3005
                                             ? "#ff5656"
                                             : maintainPT_3005
                                             ? "orange"
@@ -928,7 +999,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT_3006 && !maintainPT_3006
+                                        exceedThresholdPT_3006 &&
+                                        !maintainPT_3006
                                             ? "#ff5656"
                                             : maintainPT_3006
                                             ? "orange"
@@ -1120,7 +1192,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTT_3003 && !maintainTT_3003
+                                        exceedThresholdTT_3003 &&
+                                        !maintainTT_3003
                                             ? "#ff5656"
                                             : maintainTT_3003
                                             ? "orange"
@@ -1182,7 +1255,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTT_3004 && !maintainTT_3004
+                                        exceedThresholdTT_3004 &&
+                                        !maintainTT_3004
                                             ? "#ff5656"
                                             : maintainTT_3004
                                             ? "orange"
@@ -1263,7 +1337,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdFCV_3001 && !maintainFCV_3001
+                                        exceedThresholdFCV_3001 &&
+                                        !maintainFCV_3001
                                             ? "#ff5656"
                                             : maintainFCV_3001
                                             ? "orange"
@@ -1326,7 +1401,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdWB_3001 && !maintainWB_3001
+                                        exceedThresholdWB_3001 &&
+                                        !maintainWB_3001
                                             ? "#ff5656"
                                             : maintainWB_3001
                                             ? "orange"
@@ -1370,8 +1446,6 @@ useEffect(() => {
                 };
             }
 
-
-
             if (node.id === "TOTAL_VOLUME") {
                 const roundedPT02 =
                     WB_Setpoint !== null
@@ -1409,7 +1483,7 @@ useEffect(() => {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                    TOTAL SNG
+                                        TOTAL SNG
                                     </p>
                                 </div>
                                 <div
@@ -1427,8 +1501,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                    {TOTAL_SNG}
-
+                                        {TOTAL_SNG}
                                     </p>
                                     <p
                                         style={{
@@ -1436,7 +1509,7 @@ useEffect(() => {
                                             position: "relative",
                                         }}
                                     >
-                                       {KeyGas.SM3}
+                                        {KeyGas.SM3}
                                     </p>
                                 </div>
                             </div>
@@ -1535,7 +1608,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdHV_3001 && !maintainHV_3001
+                                        exceedThresholdHV_3001 &&
+                                        !maintainHV_3001
                                             ? "#ff5656"
                                             : maintainHV_3001
                                             ? "orange"
@@ -1669,7 +1743,8 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdFCV_MODE && !maintainFCV_MODE
+                                        exceedThresholdFCV_MODE &&
+                                        !maintainFCV_MODE
                                             ? "#ff5656"
                                             : maintainFCV_MODE
                                             ? "orange"
@@ -1941,8 +2016,9 @@ useEffect(() => {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AIR_INLET: { x: -2721.4692108086797, y: 2178.2907767624192 },
+              AlarmCenter: { x: -800.5294119726459, y: 1246.647867192829 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
               Arrow2: { x: -2246.4848054605154, y: 2163.170126568243 },
               Arrow3: { x: -2248.2397512254984, y: 1536.7414426555551 },
@@ -1986,8 +2062,8 @@ useEffect(() => {
               PTV_BOTTOM_COL: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_TOP: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_TOP_COL: { x: -2434.736534286145, y: 2280.792696466395 },
-              PT_3005: { x: -2235.931274709016, y: 1396.3343394173278 },
-              PT_3006: { x: -2231.444162009503, y: 2025.8739669330853 },
+              PT_3005: { x: -2230.8861667738647, y: 2025.2943150999515 },
+              PT_3006: { x: -2239.444162009503, y: 1398.8739669330853 },
               PT_3006_BOTTOM: { x: -2151.853482122052, y: 1462.0794767738978 },
               PT_3006_BOTTOM_COL: {
                   x: -2112.3024448062247,
@@ -2001,11 +2077,11 @@ useEffect(() => {
               RATIO_MODE: { x: -1410.6416464768204, y: 1256.368255138329 },
               SDV: { x: -1401.52488436053, y: 1832.5718544031654 },
               SDV_Name: { x: -1425.5257248610396, y: 1798.1112206166258 },
-              TM_3002_SNG: { x: -1888.131178519121, y: 1398.176397881909 },
-              TM_3003_SNG: { x: -1888.6614296514017, y: 2024.619337816509 },
+              TM_3002_SNG: { x: -1892.9319014077257, y: 2023.8706143634247 },
+              TM_3003_SNG: { x: -1899.86311639148, y: 1398.9251213349935 },
               TOTAL_VOLUME: { x: -1687.4440455409626, y: 1257.580931640653 },
-              TT_3003: { x: -1552.7725000031662, y: 1397.4615647145274 },
-              TT_3004: { x: -1562.9435099464908, y: 2023.3170986034156 },
+              TT_3003: { x: -1562.3739457803758, y: 2021.5555402331752 },
+              TT_3004: { x: -1546.9411003178075, y: 1399.2231230847683 },
               Temperature_BOTTOM: {
                   x: -1450.8321181787871,
                   y: 2103.867900090218,
@@ -2030,9 +2106,6 @@ useEffect(() => {
               line3: { x: -2524.296141994977, y: 2189.2006419886534 },
               percent: { x: -802.620762343302, y: 1565.641363272772 },
               timeUpdate3: { x: -2820.484797907167, y: 1247.8726878582834 },
-
-        AlarmCenter: {x: -800.5294119726459, y: 1246.647867192829},
-
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -2412,7 +2485,7 @@ useEffect(() => {
             data: {
                 label: <div></div>,
             },
-            zIndex:9999999,
+            zIndex: 9999999,
 
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
@@ -2426,7 +2499,7 @@ useEffect(() => {
             data: {
                 label: <div></div>,
             },
-zIndex:9999999,
+            zIndex: 9999999,
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
@@ -2789,7 +2862,7 @@ zIndex:9999999,
                 ),
             },
             position: positions.WB_3001,
-zIndex:999999,
+            zIndex: 999999,
             style: {
                 border: background,
                 width: 300,
@@ -3262,7 +3335,6 @@ zIndex:999999,
             },
             targetPosition: Position.Bottom,
         },
-
 
         {
             id: "AlarmCenter",
