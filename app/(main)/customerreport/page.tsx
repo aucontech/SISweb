@@ -78,7 +78,9 @@ const CustomerReport = () => {
                 console.log(error);
                 UIUtils.showError({
                     toast: toast.current,
-                    error: error?.response?.data?.message,
+                    error: error?.response?.data?.message
+                        ? error.response.data.message
+                        : "Soomething went wrong, please try again later",
                 });
             });
         //console.log(filters);
@@ -93,7 +95,6 @@ const CustomerReport = () => {
         }
     }, [filters, _fetchDateReport]);
 
-    // const handleDutyClick = (duty: string) => {
     //     let newReportData = { ...reportData };
     //     switch (duty) {
     //         case "grossVolumeVmB1":

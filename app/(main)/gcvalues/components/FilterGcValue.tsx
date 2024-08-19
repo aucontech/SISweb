@@ -7,7 +7,7 @@ import { Calendar } from "primereact/calendar";
 import { getAssetById } from "@/api/assets.api";
 import { Toast } from "primereact/toast";
 import { getRelations } from "@/api/relation.api";
-
+import { ASSET_SOGECCUSTOMERREPORT_ID } from "@/constants/constans";
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
@@ -132,7 +132,7 @@ const FilterGcValue: React.FC<Props> = ({
     };
     const _onSuggAssets = (evt: any) => {
         let reqParams = {
-            fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+            fromId: ASSET_SOGECCUSTOMERREPORT_ID,
             fromType: "ASSET",
             relationType: "Contains",
             relationTypeGroup: "COMMON",
