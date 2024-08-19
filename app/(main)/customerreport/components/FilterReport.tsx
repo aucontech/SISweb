@@ -118,41 +118,37 @@ const FilterReport: React.FC<Props> = ({
         _fetchStations();
     }, [_fetchStations]);
 
-    useEffect(() => {
-        let newFilter = {
-            ...defFilter,
-        };
-        setEditFilter(editFilter);
-    }, []);
+    // useEffect(() => {
+    //     let newFilter = {
+    //         ...defFilter,
+    //     };
+    //     setEditFilter(editFilter);
+    // }, []);
 
     const _processFilterChange = (
         field: string,
         value: any,
         stationId?: string
     ) => {
-        let newFil = { ...editFilter };
-        newFil[field] = value;
-        setEditFilter(newFil);
-        console.log("newFil", menuItems);
+        setEditFilter((prevFilter) => {
+            const newFilter = { ...prevFilter, [field]: value };
+            console.log("New Filter:", newFilter);
+            onAction(newFilter);
+            return newFilter;
+        });
+
+        // Cập nhật menuItems ở đây nếu cần
         if (field === "device") {
             setMenuItems((prevItems) =>
-                prevItems.map((item) => {
-                    if (item.id === stationId) {
-                        return {
-                            ...item,
-                            label: `${value.name}`,
-                        };
-                    } else {
-                        return {
-                            ...item,
-                            label: `${item.originalLabel}`,
-                        };
-                    }
-                })
+                prevItems.map((item) => ({
+                    ...item,
+                    label:
+                        item.id === stationId
+                            ? `${value.name}`
+                            : `${item.originalLabel}`,
+                }))
             );
         }
-
-        onAction(newFil);
     };
     const _onSuggAlarmType = (evt: any) => {
         getAlarmTypes({ page: 0, pageSize: 50, textSearch: evt.query })
