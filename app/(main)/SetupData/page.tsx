@@ -20,6 +20,7 @@ import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 import SetUpdata_VREC from './VREC/SetUpdata_VREC';
 import SetUpdata_LGDS from './LGDS/SetUpdata_LGDS';
 import SetUpdata_LGDSTest from './LGDS/SetUpdata_LGDSTest';
+import SetUpdata_SNG_PRU from './SNG_PRU/SetUpdata_SNG_PRU';
 
 
           
@@ -139,6 +140,8 @@ export default function GraphicSogec() {
           {
             label: stationList.stationList,
             items: [
+              { label:  'SNG ', command: () => SNG_Click(<SetUpdata_SNG_PRU/> , ' SNG ') },
+
               { label:  'SNG BINH DUONG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
               { label: 'SNG HUNG YEN', command: () => SNG_Click(<SetUpdata_HUNGYEN_SNG/>, 'SNG HUNG YEN') },
 

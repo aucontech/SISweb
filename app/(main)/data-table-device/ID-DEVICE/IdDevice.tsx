@@ -44,6 +44,9 @@ const id_ARAKAWA = "28af9490-a3ce-11ee-9ca1-8f006c3fce43"
 
 
 
+
+
+
  export {id_IGUECU ,id_THACHTHAT,id_OTSUKA,id_YOSHINO,id_SPMCV,id_NITORI,id_ARAKAWA} // export for name guest
 
  export{id_SNG_HungYen, id_SNG_BinhDuong,id_SNG  }  //export for SNG

@@ -2206,7 +2206,6 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
                     FC_01_Current_Values_Uncorrected_Flow_Rate_High: inputValueFC_01_Current_Values_Uncorrected_Flow_Rate,FC_01_Current_Values_Uncorrected_Flow_Rate_Low:inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate,
 
 
-
                     FC_01_Today_Values_Volume_High: inputValueFC_01_Today_Values_Volume,FC_01_Today_Values_Volume_Low:inputValue2FC_01_Today_Values_Volume,
                     FC_01_Today_Values_Uncorrected_Volume_High: inputValueFC_01_Today_Values_Uncorrected_Volume,FC_01_Today_Values_Uncorrected_Volume_Low:inputValue2FC_01_Today_Values_Uncorrected_Volume,
                     FC_01_Yesterday_Values_Volume_High: inputValueFC_01_Yesterday_Values_Volume,FC_01_Yesterday_Values_Volume_Low:inputValue2FC_01_Yesterday_Values_Volume,
@@ -2907,6 +2906,80 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
         maintainATS_Auto_Man === true;
     
         //=============================================================================================
+
+
+        const handleMainTainUPS = async (checked:any) => {
+            try {
+        
+             
+                const newMaintainMode_ATS = checked;
+                const newMaintainATS_Auto_Man = checked;
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_ZOCV}/SERVER_SCOPE`,
+                    { 
+        
+                       Mode_ATS_Maintain: newMaintainMode_ATS,
+                       ATS_Auto_Man_Maintain: newMaintainATS_Auto_Man,
+                     }
+                );
+
+        
+                setMaintainMode_ATS(newMaintainMode_ATS);
+                setMaintainATS_Auto_Man(newMaintainATS_Auto_Man);
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+
+
+        
+        const handleCheckboxChangeUPS = (e:any) => {
+            const isChecked = e.checked;
+        
+            handleMainTainUPS(isChecked);
+        };
+       
+        const checkMaintainingUPS = 
+        maintainMode_ATS === true &&
+        maintainATS_Auto_Man === true;
+    
+        //=============================================================================================
+
+
+
+        const handleMainTainPT_1103 = async (checked:any) => {
+            try {
+    
+        
+                const newMaintainPT_1103 = checked;
+             
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_ZOCV}/SERVER_SCOPE`,
+                    { 
+                 
+                       PT_1103_Maintain: newMaintainPT_1103,
+                     }
+                );
+                setMaintainPT_1103(newMaintainPT_1103);
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+
+
+        
+        const handleCheckboxChangePT_1103 = (e:any) => {
+            const isChecked = e.checked;
+            handleMainTainPT_1103(isChecked);
+        };
+        const checkMaintainingPT_1103 = 
+   
+        maintainPT_1103 === true
+ 
+    
+        //=============================================================================================
         
     const combineCss = {
         CSSFC_01_Lithium_Battery_Status : {
@@ -3237,7 +3310,30 @@ const ChangeMaintainEVC_02_Flow_at_Base_Condition = async () => {
               onChange={handleCheckboxChangeEVC02}
               checked={checkMaintainingEVC02}
           />
-      <p style={{fontSize:15}}>Maintain EVC-1102</p>  </div> )}  </span>  ,
+      <p style={{fontSize:15}}>Maintain EVC-1102</p>  </div> )}  </span> ,
+      
+      
+      UPS: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>UPS -  Parameters & Configurations
+      {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+            <Checkbox
+                style={{ marginRight: 5 }}
+                onChange={handleCheckboxChangeUPS}
+                checked={checkMaintainingUPS}
+            />
+        <p style={{fontSize:15}}>Maintain UPS</p>  </div> )}  </span> 
+      
+      ,
+
+      PT1103: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>PT-1103 -  Parameters & Configurations
+      {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+            <Checkbox
+                style={{ marginRight: 5 }}
+                onChange={handleCheckboxChangePT_1103}
+                checked={checkMaintainingPT_1103}
+            />
+        <p style={{fontSize:15}}>Maintain PT-1103</p>  </div> )}  </span> 
+      
+      ,
 };
 
 
@@ -3621,7 +3717,7 @@ checked={maintainFC_01_Conn_STT}
                 mainCategory: mainCategoryFC.EVC02,
         
         timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC02_Conn_STT}</span>,
-    name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure Transmiter PT-1103</span> ,
+    name: <span style={combineCss.CSSEVC_02_Pressure}>Input Pressure</span> ,
 
     modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
 
@@ -3810,65 +3906,7 @@ checked={maintainEVC_02_Vb_of_Last_Day}
 
 
 
-{
-    mainCategory: mainCategoryFC.EVC02,
 
-timeUpdate: <span style={combineCss.CSSPT_1103} >{EVC02_Conn_STT}</span>,
-name: <span style={combineCss.CSSPT_1103}>Output Pressure PT-1103</span> ,
-
-modbus: <span style={combineCss.CSSPT_1103}>AI1</span> ,
-
-value: <span style={combineCss.CSSPT_1103} > {PT_1103} {nameValue.m3}</span> , 
-high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='High' step="0.1" type='number' value={inputValuePT_1103} onChange={handleInputChangePT_1103} inputMode="decimal" />, 
-low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1103} onChange={handleInputChange2PT_1103} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainPT_1103}
-checked={maintainPT_1103}
-></Checkbox>
-
-},
-
-{
-    mainCategory: mainCategoryFC.EVC02,
-
-timeUpdate: <span style={combineCss.CSSMode_ATS} >{EVC02_Conn_STT}</span>,
-name: <span style={combineCss.CSSMode_ATS}>Mode ATS</span> ,
-
-modbus: <span style={combineCss.CSSMode_ATS}>DI3</span> ,
-
-value: <span style={combineCss.CSSMode_ATS} > {Mode_ATS} {dataMode_ATS}</span> , 
-high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSMode_ATS}   placeholder='High' step="0.1" type='number' value={inputValueMode_ATS} onChange={handleInputChangeMode_ATS} inputMode="decimal" />, 
-low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSMode_ATS}   placeholder='Low' step="0.1" type='number' value={inputValue2Mode_ATS} onChange={handleInputChange2Mode_ATS} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainMode_ATS}
-checked={maintainMode_ATS}
-></Checkbox>
-
-},
-
-{
-    mainCategory: mainCategoryFC.EVC02,
-
-timeUpdate: <span style={combineCss.CSSATS_Auto_Man} >{EVC02_Conn_STT}</span>,
-name: <span style={combineCss.CSSATS_Auto_Man}>ATS Auto Man</span> ,
-
-modbus: <span style={combineCss.CSSATS_Auto_Man}>DI4</span> ,
-
-value: <span style={combineCss.CSSATS_Auto_Man} > {ATS_Auto_Man} {dataATS_Auto_Man}</span> , 
-high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSATS_Auto_Man}   placeholder='High' step="0.1" type='number' value={inputValueATS_Auto_Man} onChange={handleInputChangeATS_Auto_Man} inputMode="decimal" />, 
-low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSATS_Auto_Man}   placeholder='Low' step="0.1" type='number' value={inputValue2ATS_Auto_Man} onChange={handleInputChange2ATS_Auto_Man} inputMode="decimal" />,
-update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
-Maintain:   <Checkbox
-style={{ marginRight: 20, }}
-onChange={ChangeMaintainATS_Auto_Man}
-checked={maintainATS_Auto_Man}
-></Checkbox>
-
-},
 
 {
     mainCategory: mainCategoryFC.EVC02,
@@ -3890,7 +3928,76 @@ checked={maintainEVC_02_Conn_STT}
 
 },
           ]
-          const combinedData = [...dataEVC01,...dataEVC02, ];
+
+
+          const PT_1103_Parameter = [
+            {
+                mainCategory: mainCategoryFC.PT1103,
+            
+            timeUpdate: <span style={combineCss.CSSPT_1103} >{EVC02_Conn_STT}</span>,
+            name: <span style={combineCss.CSSPT_1103}>Output Pressure PT-1103</span> ,
+            
+            modbus: <span style={combineCss.CSSPT_1103}>AI1</span> ,
+            
+            value: <span style={combineCss.CSSPT_1103} > {PT_1103} {nameValue.m3}</span> , 
+            high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='High' step="0.1" type='number' value={inputValuePT_1103} onChange={handleInputChangePT_1103} inputMode="decimal" />, 
+            low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1103} onChange={handleInputChange2PT_1103} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainPT_1103}
+            checked={maintainPT_1103}
+            ></Checkbox>
+            
+            },
+            
+
+         ] 
+
+
+         const UPS_Parameter = [
+            {
+                mainCategory: mainCategoryFC.UPS,
+            
+            timeUpdate: <span style={combineCss.CSSMode_ATS} >{EVC02_Conn_STT}</span>,
+            name: <span style={combineCss.CSSMode_ATS}>Mode ATS</span> ,
+            
+            modbus: <span style={combineCss.CSSMode_ATS}>DI3</span> ,
+            
+            value: <span style={combineCss.CSSMode_ATS} > {Mode_ATS} {dataMode_ATS}</span> , 
+            high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSMode_ATS}   placeholder='High' step="0.1" type='number' value={inputValueMode_ATS} onChange={handleInputChangeMode_ATS} inputMode="decimal" />, 
+            low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSMode_ATS}   placeholder='Low' step="0.1" type='number' value={inputValue2Mode_ATS} onChange={handleInputChange2Mode_ATS} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainMode_ATS}
+            checked={maintainMode_ATS}
+            ></Checkbox>
+            
+            },
+            
+            {
+                mainCategory: mainCategoryFC.UPS,
+            
+            timeUpdate: <span style={combineCss.CSSATS_Auto_Man} >{EVC02_Conn_STT}</span>,
+            name: <span style={combineCss.CSSATS_Auto_Man}>ATS Auto Man</span> ,
+            
+            modbus: <span style={combineCss.CSSATS_Auto_Man}>DI4</span> ,
+            
+            value: <span style={combineCss.CSSATS_Auto_Man} > {ATS_Auto_Man} {dataATS_Auto_Man}</span> , 
+            high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSATS_Auto_Man}   placeholder='High' step="0.1" type='number' value={inputValueATS_Auto_Man} onChange={handleInputChangeATS_Auto_Man} inputMode="decimal" />, 
+            low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSATS_Auto_Man}   placeholder='Low' step="0.1" type='number' value={inputValue2ATS_Auto_Man} onChange={handleInputChange2ATS_Auto_Man} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainATS_Auto_Man}
+            checked={maintainATS_Auto_Man}
+            ></Checkbox>
+            
+            },
+
+         ] 
+          const combinedData = [...dataEVC01,...dataEVC02,...PT_1103_Parameter , ...UPS_Parameter,  ];
 
           const mainCategoryTemplate = (data: any) => {
               return (
