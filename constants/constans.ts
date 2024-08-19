@@ -16,4 +16,5 @@ export const SNG_ACECOOK_DEVICE_ID = "28e375d0-a3ce-11ee-9ca1-8f006c3fce43";
 export const SNGHY_DEVICE_ID = "28f1a6a0-a3ce-11ee-9ca1-8f006c3fce43";
 export const SNG_PM3_DEVICEC_ID = "28db8690-a3ce-11ee-9ca1-8f006c3fce43";
 
-export const ASSET_SOGET_ID = "d209a5b0-a484-11ee-a634-093bc1146158";
+export const ASSET_SOGECCUSTOMERREPORT_ID =
+    "dd31df80-5de2-11ef-92ad-31ac45979cd4";

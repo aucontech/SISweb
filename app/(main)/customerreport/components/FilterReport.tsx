@@ -8,13 +8,20 @@ import { getAlarmTypes } from "@/api/alarm.api";
 import { getRelations } from "@/api/relation.api";
 import { getAssetById } from "@/api/assets.api";
 import { getDeviceById } from "@/api/device.api";
-import { get, set } from "lodash";
-import { co } from "@fullcalendar/core/internal-common";
+import { ASSET_SOGECCUSTOMERREPORT_ID } from "@/constants/constans";
 interface Props {
     showDevice?: boolean;
     showDate?: boolean;
     showAlarmType?: boolean;
     onAction: (evt: any) => void;
+}
+interface MenuItem {
+    id: string;
+    originalLabel: string;
+    label: string;
+    icon: string;
+    command?: () => void;
+    items?: any[]; // Định nghĩa items là một mảng các MenuItem
 }
 const defFilter = {
     device: null,
@@ -24,34 +31,17 @@ const defFilter = {
 const FilterReport: React.FC<Props> = ({
     showDevice,
     onAction,
+    showDate,
     showAlarmType,
 }) => {
     const [editFilter, setEditFilter] = useState<any>([]);
-    const [suggDevices, setSuggDevices] = useState<any>([]);
-    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
-    const [menuItems, setMenuItems] = useState<any>([]);
-    // const items = [
-    //     {
-    //         label: "Furniture",
-    //         icon: "pi pi-box",
-    //         items: [],
-    //     },
-    //     {
-    //         label: "Electronics",
-    //         icon: "pi pi-mobile",
-    //         items: [],
-    //     },
-    //     {
-    //         label: "Sports",
-    //         icon: "pi pi-clock",
-    //         items: [],
-    //     },
-    // ];
 
+    const [suggAlarmType, setSuggAlarmType] = useState<any>([]);
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const _fetchStations = useCallback(async () => {
         try {
             let reqParams = {
-                fromId: "d209a5b0-a484-11ee-a634-093bc1146158",
+                fromId: ASSET_SOGECCUSTOMERREPORT_ID,
                 fromType: "ASSET",
                 relationType: "Contains",
                 relationTypeGroup: "COMMON",
@@ -62,9 +52,11 @@ const FilterReport: React.FC<Props> = ({
             if (data.length > 0) {
                 const menuItems = await Promise.all(
                     data.map(async (dt: any) => {
-                        let item = {
+                        let item: MenuItem = {
+                            id: dt["to"]["id"],
+                            originalLabel: dt["name"], // Thêm originalLabel để lưu tên gốc của station
                             label: "",
-                            icon: "pi pi-clock",
+                            icon: "pi pi-box",
                             command: () => {
                                 console.log("device");
                             },
@@ -88,27 +80,27 @@ const FilterReport: React.FC<Props> = ({
                                         dt["to"]["id"]
                                     );
                                     const device = deviceResp.data || {};
-                                    console.log(device);
+
                                     return {
-                                        //data: device,
-                                        // label: "station list",
                                         items: [
                                             {
                                                 label: device["name"],
                                                 data: device,
                                                 command: () => {
-                                                    //how to get data
-                                                    console.log(device);
+                                                    _processFilterChange(
+                                                        "device",
+                                                        device,
+                                                        asset.id.id
+                                                    );
                                                 },
                                             },
                                         ], // Gán trực tiếp các thiết bị vào `items` của `item`
                                     };
                                 })
                             );
-                            console.log(devices);
                             item.label = asset["name"];
+                            item.originalLabel = asset["name"]; // Lưu tên gốc
                             item["items"] = [[...devices]];
-                            //   item.items = devices; // Gán trực tiếp các thiết bị vào `items` của `item`
                         } catch (e) {
                             console.log(e);
                         }
@@ -132,26 +124,34 @@ const FilterReport: React.FC<Props> = ({
         };
         setEditFilter(editFilter);
     }, []);
-    const _onSuggDevices = (evt: any) => {
-        getDevices({ page: 0, pageSize: 50, textSearch: evt.query })
-            .then((resp) => resp.data)
-            .then((res) => {
-                res.data.forEach((it: any) => {
-                    it.label = `${it.name}`;
-                });
-                setSuggDevices([...res.data]);
-            })
-            .catch((err) => {
-                setSuggDevices([]);
-            });
-    };
-    const _processFilterChange: (field: string, value: any) => any = (
+
+    const _processFilterChange = (
         field: string,
-        value: any
+        value: any,
+        stationId?: string
     ) => {
         let newFil = { ...editFilter };
         newFil[field] = value;
         setEditFilter(newFil);
+        console.log("newFil", menuItems);
+        if (field === "device") {
+            setMenuItems((prevItems) =>
+                prevItems.map((item) => {
+                    if (item.id === stationId) {
+                        return {
+                            ...item,
+                            label: `${value.name}`,
+                        };
+                    } else {
+                        return {
+                            ...item,
+                            label: `${item.originalLabel}`,
+                        };
+                    }
+                })
+            );
+        }
+
         onAction(newFil);
     };
     const _onSuggAlarmType = (evt: any) => {
@@ -164,28 +164,16 @@ const FilterReport: React.FC<Props> = ({
                 setSuggAlarmType([]);
             });
     };
+    console.log("menuItems", menuItems);
     return (
         <>
             <div className="grid p-fluid">
                 {showDevice && (
-                    <div className="col-12 lg:col-6">
-                        {/* <span className="p-float-label">
-                            <AutoComplete
-                                dropdown
-                                suggestions={suggDevices}
-                                field="label"
-                                value={editFilter.device}
-                                completeMethod={_onSuggDevices}
-                                onChange={(e) =>
-                                    _processFilterChange("device", e.value)
-                                }
-                            />
-                            <label>Device</label>
-                        </span> */}
+                    <div className="col-12 lg:col-5">
                         <MegaMenu model={menuItems} />
                     </div>
                 )}
-                {showDevice && (
+                {showDate && (
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
                             <Calendar
