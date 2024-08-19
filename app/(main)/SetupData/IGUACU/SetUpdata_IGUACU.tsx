@@ -4673,12 +4673,6 @@ useEffect(() => {
         ></Checkbox>
        
            },
-    
-        
-
-
-
-
     {
         
         mainCategory: mainCategoryEVC.EVC02,
@@ -4708,7 +4702,7 @@ useEffect(() => {
             mainCategory: mainCategoryEVC.EVC02,
     
     timeUpdate: <span style={combineCss.CSSEVC_02_Pressure} >{EVC_STT02Value}</span>,
-   name: <span style={combineCss.CSSEVC_02_Pressure}>Pressure</span> ,
+   name: <span style={combineCss.CSSEVC_02_Pressure}>Input Pressure</span> ,
 
    modbus: <span style={combineCss.CSSEVC_02_Pressure}>40852	 </span> ,
 
@@ -4945,8 +4939,6 @@ checked={maintainEVC_02_Conn_STT}
 
           const PLC01 = [
 
-        
-
             {
             mainCategory: mainCategoryEVC.PLC,
                 
@@ -4968,7 +4960,6 @@ checked={maintainEVC_02_Conn_STT}
     
             },
     
-         
             {
             mainCategory: mainCategoryEVC.PLC,
                 

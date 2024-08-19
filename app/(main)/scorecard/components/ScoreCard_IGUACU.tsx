@@ -1578,7 +1578,7 @@ useEffect(() => {
 
     // =================================================================================================================== 
     const tagNameEVC = {
-        InputPressure: "Output Pressure (BarA)",
+        InputPressure: "Input Pressure (BarA)",
         Temperature: "Temperature (°C)",
         GVF: "Gross Volume Flow (m³/h)",
         SVF: "Standard Volume Flow (Sm³/h)",
@@ -1592,7 +1592,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Input Pressure (BarG)",
+        PT01: "Output Pressure (BarG)",
         GD1: "Gas Detector GD-1501 (%LEL)",
         GD2: "Gas Detector GD-1502 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",

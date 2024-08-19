@@ -1942,9 +1942,9 @@ useEffect(() => {
 
         FC_Lithium_Battery_Status: "Lithium Battery Status (0: Yes - 1: No)",
 
-        Battery_Voltage:'Battery Voltage ( Volt ) ',
-        System_Voltage :'System Voltage ( Volt )',
-        Charger_Voltage:'Charger Voltage ( Volt )',
+        Battery_Voltage:'Battery Voltage (Volt) ',
+        System_Voltage :'System Voltage (Volt)',
+        Charger_Voltage:'Charger Voltage (Volt)',
         InputPressure: "Input Pressure (BarA)",
         Temperature: "Temperature (°C)",
         GVF: "Gross Volume Flow (m³/h)",
@@ -1971,7 +1971,7 @@ useEffect(() => {
         DI_SD_1: "Smoker Detected SD-1201 (0: Normal - 1: Smoker Detected)",
 
 
-        UPS_BATTERY: "UPS BATTERY (0 :Normal - 1: Battery)",
+        UPS_BATTERY: "UPS BATTERY (0: Normal - 1: Battery)",
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
@@ -1980,7 +1980,7 @@ useEffect(() => {
         SELECT_SW: "SELECT SW (0: Local - 1: Remote)",
         RESET: "RESET (0: OFF - 1: ON)",
         EmergencyNO: "Emergency Stop NO (0: Normal - 1: Emergency)",
-        EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal )",
+        EmergencyNC: "Emergency Stop NC (0: Emergency - 1: Normal)",
         HORN: "HORN (0: OFF - 1: ON)",
         BEACON: "BEACON (0: OFF - 1: ON)",
         MAP: "MAP (0: Normal - 1: Emergency)",

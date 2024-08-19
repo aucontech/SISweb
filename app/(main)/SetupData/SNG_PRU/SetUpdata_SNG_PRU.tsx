@@ -210,9 +210,6 @@ export default function SetUpdata_SNG_PRU() {
                         Calorific_Calorimeter: setCalorific_Calorimeter,
                         Specific_Calorimeter :setSpecific_Calorimeter,
 
-
-               
-                  
                     };
                     const valueStateMap: ValueStateMap = {
                     

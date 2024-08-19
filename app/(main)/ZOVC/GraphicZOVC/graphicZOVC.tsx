@@ -228,7 +228,7 @@ export default function GraphicZOCV() {
                         SSV_1101: setNC,
 
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        Conn_STT: setConn_STT,
+                        FC_01_Conn_STT: setConn_STT,
 
                         time: setTimeUpdate,
                     };
@@ -661,6 +661,16 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                 (item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
             );
             setMaintainFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_Pressure_Maintain?.value || false);
+
+
+            const EVC_02_Flow_at_Base_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High");
+            setEVC_02_Flow_at_Base_Condition_High(EVC_02_Flow_at_Base_Condition_High?.value || null);
+            const EVC_02_Flow_at_Base_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low");
+            setEVC_02_Flow_at_Base_Condition_Low(EVC_02_Flow_at_Base_Condition_Low?.value || null);
+            const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
+            );
+            setMaintainEVC_02_Flow_at_Base_Condition(EVC_02_Flow_at_Base_Condition_Maintain?.value || false);
 
             const LineDuty1902 = res.data.find(
                 (item: any) => item.key === "FIQ1902_LineDuty"
@@ -1422,7 +1432,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        FC :{" "}
                                     </p>
 
                                     <p
@@ -1453,7 +1463,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                                         color: "#ff5656",
                                                     }}
                                                 >
-                                                    Un Active
+                                                    Inactive
                                                 </span>
                                             )}
                                         </p>
@@ -1544,7 +1554,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                         label: (
                             <div>
                                 {NC === "1" && <div>{SVD_NO}</div>}
-                                {NC === "0" && <div>{SVD_NC}</div>}
+                                {NC === "0" && <div>{SVD_NO}</div>}
                             </div>
                         ),
                     },
