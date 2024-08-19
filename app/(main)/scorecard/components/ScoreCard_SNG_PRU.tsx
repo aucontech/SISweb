@@ -2798,7 +2798,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            SNG PRU
+                            SNG
                         </div>
 
                         
