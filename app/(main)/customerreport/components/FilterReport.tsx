@@ -170,7 +170,10 @@ const FilterReport: React.FC<Props> = ({
             <div className="grid p-fluid">
                 {showDevice && (
                     <div className="col-12 lg:col-5">
-                        <MegaMenu model={menuItems} />
+                        <MegaMenu
+                            model={menuItems}
+                            style={{ padding: "0.3rem" }}
+                        />
                     </div>
                 )}
                 {showDate && (
