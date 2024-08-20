@@ -1662,7 +1662,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
+        PT01: "Output Pressure PT-1403 (BarG)",
         GD1: "Gas Detector GD-1401 (%LEL)",
         GD2: "Gas Detector GD-1402 (%LEL)",
         ZSC: "SDV-1401 ZSC (0: ON - 1: OFF)",
@@ -1700,6 +1700,10 @@ useEffect(() => {
             : null;
     const DataBattery =
         DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
+
+
+const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+
     const DataAlarm =
         DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
     const DataMode =
@@ -2574,7 +2578,7 @@ useEffect(() => {
         },
         {
             name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataAlarm}</span>,
+            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataDI_SD_1}</span>,
         },
      
         {

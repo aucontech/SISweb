@@ -1662,7 +1662,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
+        PT01: "Output Pressure PT-1803 (BarG)",
         GD1: "Gas Detector GD-1801 (%LEL)",
         GD2: "Gas Detector GD-1802 (%LEL)",
         ZSC: "SDV-1801 ZSC (0: ON - 1: OFF)",
@@ -2585,7 +2585,7 @@ useEffect(() => {
         },
         {
             name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataAlarm}</span>,
+            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataSmoker_Detected}</span>,
         },
      
         {
@@ -2612,7 +2612,6 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
         },
      
-
         {
             name: <span>{tagNamePLC.HORN}</span>,
             PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
@@ -2621,9 +2620,6 @@ useEffect(() => {
             name: <span>{tagNamePLC.BEACON}</span>,
             PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
         },
-   
-
-    
         {
             name: <span>{tagNamePLC.MAP}</span>,
             PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
