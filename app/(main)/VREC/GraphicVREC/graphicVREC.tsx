@@ -25,7 +25,10 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_VREC } from "../../data-table-device/ID-DEVICE/IdDevice";
+import {
+    id_OTSUKA,
+    id_VREC,
+} from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -55,7 +58,7 @@ import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
-import { GetTelemetry_id_VREC, PostTelemetry_id_VREC } from "./Api_ZOVC";
+import { GetTelemetry_id_VREC,  } from "./Api_ZOVC";
 import AlarmVREC from "@/layout/AlarmBell/AlarmVREC";
 interface StateMap {
     [key: string]:
@@ -88,23 +91,7 @@ export default function GraphicVREC() {
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
 
-    const [GVF1, setGVF1] = useState<string | null>(null);
-    const [SVF1, setSVF1] = useState<string | null>(null);
-    const [SVA1, setSVA1] = useState<string | null>(null);
-    const [GVA1, setGVA1] = useState<string | null>(null);
 
-    const [GVF2, setGVF2] = useState<string | null>(null);
-    const [SVF2, setSVF2] = useState<string | null>(null);
-    const [SVA2, setSVA2] = useState<string | null>(null);
-    const [GVA2, setGVA2] = useState<string | null>(null);
-
-    const [PT01, setPT01] = useState<string | null>(null);
-    const [PT02, setPT02] = useState<string | null>(null);
-    const [PT1, setPT1] = useState<string | null>(null);
-
-    const [GD1, SetGD1] = useState<string | null>(null);
-    const [GD2, SetGD2] = useState<string | null>(null);
-    const [GD3, SetGD3] = useState<string | null>(null);
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
@@ -220,23 +207,26 @@ export default function GraphicVREC() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        FC_01_Current_Values_Flow_Rate: setSVF1,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setGVF1,
+                        FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
+                        FC_01_Current_Values_Uncorrected_Flow_Rate: setFC_01_Current_Values_Uncorrected_Flow_Rate,
 
-                        FC_01_Accumulated_Values_Volume: setSVA1,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setGVA1,
-                        FC_01_Current_Values_Static_Pressure: setPT01,
+                        FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
+                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
 
-                        FC_02_Current_Values_Flow_Rate: setSVF2,
-                        FC_02_Current_Values_Uncorrected_Flow_Rate: setGVF2,
-                        FC_02_Accumulated_Values_Volume: setSVA2,
-                        FC_02_Accumulated_Values_Uncorrected_Volume: setGVA2,
+                        FC_02_Current_Values_Flow_Rate: setFC_02_Current_Values_Flow_Rate,
+                        FC_02_Current_Values_Uncorrected_Flow_Rate: setFC_02_Current_Values_Uncorrected_Flow_Rate,
+                        FC_02_Accumulated_Values_Volume: setFC_02_Accumulated_Values_Volume,
+                        FC_02_Accumulated_Values_Uncorrected_Volume: setFC_02_Accumulated_Values_Uncorrected_Volume,
 
-                        FC_02_Current_Values_Static_Pressure: setPT02,
+                        FC_02_Current_Values_Static_Pressure: setFC_02_Current_Values_Static_Pressure,
 
-                        GD1: SetGD1,
-                        GD2: SetGD2,
-                        GD3: SetGD3,
+
+
+                        FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
+
+
+                        GD1: setGD1,
+                        GD2: setGD2,
 
                         PT1: setPT1,
 
@@ -305,1106 +295,284 @@ export default function GraphicVREC() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
 
-    //================================ PT 1901================================
 
-    const [audioPT1901, setAudio1901] = useState(false);
-    const [HighPT01, setHighPT01] = useState<number | null>(null);
-    const [LowPT01, setLowPT01] = useState<number | null>(null);
-    const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPCV1901, setMaintainPCV1901] = useState<boolean>(false);
-
+    const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<string | null>(null);
+    const [FC_01_Current_Values_Static_Pressure_High, setFC_01_Current_Values_Static_Pressure_High] = useState<number | null>(null);
+    const [FC_01_Current_Values_Static_Pressure_Low, setFC_01_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_01_Current_Values_Static_Pressure, setExceedThresholdFC_01_Current_Values_Static_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_01_Current_Values_Static_Pressure, setMaintainFC_01_Current_Values_Static_Pressure] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighPT01 === "string" &&
-            typeof LowPT01 === "string" &&
-            PT01 !== null &&
-            maintainPCV1901 === false
-        ) {
-            const highValue = parseFloat(HighPT01);
-            const lowValue = parseFloat(LowPT01);
-            const PT01Value = parseFloat(PT01);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT01Value)) {
-                if (highValue < PT01Value || PT01Value < lowValue) {
-                    if (!audioPT1901) {
-                        audioRef.current?.play();
-                        setAudio1901(true);
-                        setExceedThreshold(true);
-                    }
-                } else {
-                    setAudio1901(false);
-                    setExceedThreshold(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighPT01, PT01, audioPT1901, LowPT01, maintainPCV1901]);
-
-    useEffect(() => {
-        if (audioPT1901) {
-            const audioEnded = () => {
-                setAudio1901(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1901]);
-
-    const ChangeMaintainPCV1901 = async () => {
-        try {
-            const newValue = !maintainPCV1901;
-            await httpApi.post(PostTelemetry_id_VREC, {
-                PCV1901_maintain: newValue,
-            });
-            setMaintainPCV1901(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain PT-1901 ",
-                detail: "Success",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPCV1901 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPCV1901(),
-        });
-    };
-
-    //================================ PT 1901======================================================
-
-    //================================ PT 1902======================================================
-    const [audioPT1902, setAudio1902] = useState(false);
-    const [HighPT02, setHighPT02] = useState<number | null>(null);
-    const [LowPT02, setLowPT02] = useState<number | null>(null);
-    const [exceedThreshold2, setExceedThreshold2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPT_1902, setMaintainPT_1902] = useState<boolean>(false);
-
-    const op1902 = useRef<OverlayPanel>(null);
-
-    useEffect(() => {
-        if (
-            typeof HighPT02 === "string" &&
-            typeof LowPT02 === "string" &&
-            PT02 !== null &&
-            maintainPT_1902 === false
-        ) {
-            const highValue = parseFloat(HighPT02);
-            const lowValue = parseFloat(LowPT02);
-            const PT02Value = parseFloat(PT02);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT02Value)) {
-                if (highValue < PT02Value || PT02Value < lowValue) {
-                    if (!audioPT1902) {
-                        audioRef.current?.play();
-                        setAudio1902(true);
-                        setExceedThreshold2(true);
-                    }
-                } else {
-                    setAudio1902(false);
-                    setExceedThreshold2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighPT02, PT02, audioPT1902, LowPT02, maintainPT_1902]);
-
-    useEffect(() => {
-        if (audioPT1902) {
-            const audioEnded = () => {
-                setAudio1902(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1902]);
-
-    const ChangeMaintainPT_1902 = async () => {
-        try {
-            const newValue = !maintainPT_1902;
-            await httpApi.post(PostTelemetry_id_VREC, {
-                PT_1902_maintain: newValue,
-            });
-            setMaintainPT_1902(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain PT-1902 ",
-                detail: "Success",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPT_1902 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1902(),
-        });
-    };
-
+      const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure as any);
+      const highValue = FC_01_Current_Values_Static_Pressure_High ?? NaN;
+      const lowValue = FC_01_Current_Values_Static_Pressure_Low ?? NaN;
+  
+      if (!isNaN(FC_01_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Static_Pressure) {
+          setExceedThresholdFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_PressureValue >= highValue || FC_01_Current_Values_Static_PressureValue <= lowValue);
+      }
+  }, [FC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure_Low, maintainFC_01_Current_Values_Static_Pressure]);
+  
+    
     //================================ PT 1902======================================================
 
-    //================================ PT 1903======================================================
-    const [audioPT1903, setAudio1903] = useState(false);
-    const [HighPT1, setHighPT1] = useState<number | null>(null);
-    const [LowPT1, setLowPT1] = useState<number | null>(null);
-    const [exceedThreshold3, setExceedThreshold3] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainPT_1903, setMaintainPT_1903] = useState<boolean>(false);
-
+    const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<string | null>(null);
+    const [FC_02_Current_Values_Static_Pressure_High, setFC_02_Current_Values_Static_Pressure_High] = useState<number | null>(null);
+    const [FC_02_Current_Values_Static_Pressure_Low, setFC_02_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_02_Current_Values_Static_Pressure, setExceedThresholdFC_02_Current_Values_Static_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_02_Current_Values_Static_Pressure, setMaintainFC_02_Current_Values_Static_Pressure] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighPT1 === "string" &&
-            typeof LowPT1 === "string" &&
-            PT1 !== null &&
-            maintainPT_1903 === false
-        ) {
-            const highValue = parseFloat(HighPT1);
-            const lowValue = parseFloat(LowPT1);
-            const PT1Value = parseFloat(PT1);
-
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(PT1Value)) {
-                if (highValue < PT1Value || PT1Value < lowValue) {
-                    if (!audioPT1903) {
-                        audioRef.current?.play();
-                        setAudio1903(true);
-                        setExceedThreshold3(true);
-                    }
-                } else {
-                    setAudio1903(false);
-                    setExceedThreshold3(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighPT1, PT1, audioPT1903, LowPT1, maintainPT_1903]);
-
-    useEffect(() => {
-        if (audioPT1903) {
-            const audioEnded = () => {
-                setAudio1903(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioPT1903]);
-
-    const ChangeMaintainPT_1903 = async () => {
-        try {
-            const newValue = !maintainPT_1903;
-            await httpApi.post(PostTelemetry_id_VREC, {
-                PT_1903_maintain: newValue,
-            });
-            setMaintainPT_1903(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain PT-1903 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmPT_1903 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " PT-1903",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainPT_1903(),
-        });
-    };
+      const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure as any);
+      const highValue = FC_02_Current_Values_Static_Pressure_High ?? NaN;
+      const lowValue = FC_02_Current_Values_Static_Pressure_Low ?? NaN;
+  
+      if (!isNaN(FC_02_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Static_Pressure) {
+          setExceedThresholdFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_PressureValue >= highValue || FC_02_Current_Values_Static_PressureValue <= lowValue);
+      }
+  }, [FC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure_Low, maintainFC_02_Current_Values_Static_Pressure]);
+  
 
     //================================ PT 1903======================================================
+    const [PT1, setPT1] = useState<string | null>(null);
+    const [PT1_High, setPT1_High] = useState<number | null>(null);
+    const [PT1_Low, setPT1_Low] = useState<number | null>(null);
+    const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
+    
+    
+    useEffect(() => {
+      const PT1Value = parseFloat(PT1 as any);
+      const highValue = PT1_High ?? NaN;
+      const lowValue = PT1_Low ?? NaN;
+  
+      if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
+          setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+      }
+  }, [PT1, PT1_High, PT1_Low, maintainPT1]);
+  
 
     //================================ GD 1901 ======================================================
-    const [audioGD01, setAudioGD01] = useState(false);
-    const [HighGD01, setHighGD01] = useState<number | null>(null);
-    const [LowGD01, setLowGD01] = useState<number | null>(null);
-    const [exceedThresholdGD01, setExceedThresholdGD01] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainGD_1901, setMaintainGD_1901] = useState<boolean>(false);
-
+    const [GD1, setGD1] = useState<string | null>(null);
+    const [GD1_High, setGD1_High] = useState<number | null>(null);
+    const [GD1_Low, setGD1_Low] = useState<number | null>(null);
+    const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighGD01 === "string" &&
-            typeof LowGD01 === "string" &&
-            GD1 !== null &&
-            maintainGD_1901 === false
-        ) {
-            const highValueGD01 = parseFloat(HighGD01);
-            const lowValueGD01 = parseFloat(LowGD01);
-            const ValueGD01 = parseFloat(GD1);
-
-            if (
-                !isNaN(highValueGD01) &&
-                !isNaN(lowValueGD01) &&
-                !isNaN(ValueGD01)
-            ) {
-                if (highValueGD01 < ValueGD01 || ValueGD01 < lowValueGD01) {
-                    if (!audioGD01) {
-                        audioRef.current?.play();
-                        setAudioGD01(true);
-                        setExceedThresholdGD01(true);
-                    }
-                } else {
-                    setAudioGD01(false);
-                    setExceedThresholdGD01(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD01, GD1, audioGD01, LowGD01, maintainGD_1901]);
-
-    useEffect(() => {
-        if (audioGD01) {
-            const audioEnded = () => {
-                setAudioGD01(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD01]);
-
-    const ChangeMaintainGD_01 = async () => {
-        try {
-            const newValue = !maintainGD_1901;
-            await httpApi.post(PostTelemetry_id_VREC, { GD1_Maintain: newValue });
-            setMaintainGD_1901(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GD-1901 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGD_1901 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GD-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_01(),
-        });
-    };
-
-    //================================ GD 1901======================================================
+      const GD1Value = parseFloat(GD1 as any);
+      const highValue = GD1_High ?? NaN;
+      const lowValue = GD1_Low ?? NaN;
+  
+      if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
+          setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+      }
+  }, [GD1, GD1_High, GD1_Low, maintainGD1]);
+  
 
     //================================ GD 1902 ======================================================
-    const [audioGD02, setAudioGD02] = useState(false);
-    const [HighGD02, setHighGD02] = useState<number | null>(null);
-    const [LowGD02, setLowGD02] = useState<number | null>(null);
-    const [exceedThresholdGD02, setExceedThresholdGD02] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighGD02, setInputValueHighGD02] = useState<any>();
-    const [inputValueLowGD02, settInputValueLowGD02] = useState<any>();
-    const opGD02 = useRef<OverlayPanel>(null);
-
-    const [maintainGD_1902, setMaintainGD_1902] = useState<boolean>(false);
-
+    const [GD2, setGD2] = useState<string | null>(null);
+    const [GD2_High, setGD2_High] = useState<number | null>(null);
+    const [GD2_Low, setGD2_Low] = useState<number | null>(null);
+    const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighGD02 === "string" &&
-            typeof LowGD02 === "string" &&
-            GD2 !== null &&
-            maintainGD_1902 === false
-        ) {
-            const highValueGD02 = parseFloat(HighGD02);
-            const lowValueGD02 = parseFloat(LowGD02);
-            const ValueGD02 = parseFloat(GD2);
-
-            if (
-                !isNaN(highValueGD02) &&
-                !isNaN(lowValueGD02) &&
-                !isNaN(ValueGD02)
-            ) {
-                if (highValueGD02 < ValueGD02 || ValueGD02 < lowValueGD02) {
-                    if (!audioGD02) {
-                        audioRef.current?.play();
-                        setAudioGD02(true);
-                        setExceedThresholdGD02(true);
-                    }
-                } else {
-                    setAudioGD02(false);
-                    setExceedThresholdGD02(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD02, GD2, audioGD02, LowGD02, maintainGD_1902]);
-
-    useEffect(() => {
-        if (audioGD02) {
-            const audioEnded = () => {
-                setAudioGD02(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD02]);
-
-    const ChangeMaintainGD_02 = async () => {
-        try {
-            const newValue = !maintainGD_1902;
-            await httpApi.post(PostTelemetry_id_VREC, { GD2_Maintain: newValue });
-            setMaintainGD_1902(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GD-1902 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGD_1902 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GD-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_02(),
-        });
-    };
+      const GD2Value = parseFloat(GD2 as any);
+      const highValue = GD2_High ?? NaN;
+      const lowValue = GD2_Low ?? NaN;
+  
+      if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
+          setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
+      }
+  }, [GD2, GD2_High, GD2_Low, maintainGD2]);
+  
 
     //================================ GD 1902 ======================================================
 
-    //================================ GD 1902 ======================================================
-    const [audioGD03, setAudioGD03] = useState(false);
-    const [HighGD03, setHighGD03] = useState<number | null>(null);
-    const [LowGD03, setLowGD03] = useState<number | null>(null);
-    const [exceedThresholdGD03, setExceedThresholdGD03] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighGD03, setInputValueHighGD03] = useState<any>();
-    const [inputValueLowGD03, settInputValueLowGD03] = useState<any>();
-    const opGD03 = useRef<OverlayPanel>(null);
 
-    const [maintainGD_1903, setMaintainGD_1903] = useState<boolean>(false);
-
+    const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] = useState<string | null>(null);
+    const [FC_01_Current_Values_Flow_Rate_High, setFC_01_Current_Values_Flow_Rate_High] = useState<number | null>(null);
+    const [FC_01_Current_Values_Flow_Rate_Low, setFC_01_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_01_Current_Values_Flow_Rate, setExceedThresholdFC_01_Current_Values_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_01_Current_Values_Flow_Rate, setMaintainFC_01_Current_Values_Flow_Rate] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighGD03 === "string" &&
-            typeof LowGD03 === "string" &&
-            GD3 !== null &&
-            maintainGD_1903 === false
-        ) {
-            const highValueGD03 = parseFloat(HighGD03);
-            const lowValueGD03 = parseFloat(LowGD03);
-            const ValueGD03 = parseFloat(GD3);
-
-            if (
-                !isNaN(highValueGD03) &&
-                !isNaN(lowValueGD03) &&
-                !isNaN(ValueGD03)
-            ) {
-                if (highValueGD03 < ValueGD03 || ValueGD03 < lowValueGD03) {
-                    if (!audioGD03) {
-                        audioRef.current?.play();
-                        setAudioGD03(true);
-                        setExceedThresholdGD03(true);
-                    }
-                } else {
-                    setAudioGD03(false);
-                    setExceedThresholdGD03(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGD03, GD3, audioGD03, LowGD03, maintainGD_1903]);
-
-    useEffect(() => {
-        if (audioGD03) {
-            const audioEnded = () => {
-                setAudioGD03(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGD03]);
-
-    const ChangeMaintainGD_03 = async () => {
-        try {
-            const newValue = !maintainGD_1903;
-            await httpApi.post(PostTelemetry_id_VREC, { GD3_Maintain: newValue });
-            setMaintainGD_1903(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "GD-1903 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGD_1903 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: "Maintain GD-1903",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGD_03(),
-        });
-    };
-
-    //================================ GD 1902 ======================================================
-
-    //================================ SVF1 FIQ 1901 ======================================================
-    const [audioSVF1, setAudioSVF1] = useState(false);
-    const [HighSVF1, setHighSVF1] = useState<number | null>(null);
-    const [LowSVF1, setLowSVF1] = useState<number | null>(null);
-    const [exceedThresholdSVF1, setExceedThresholdSVF1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [inputValueHighSVF1, setInputValueHighSVF1] = useState<any>();
-    const [inputValueLowSVF1, settInputValueLowSVF1] = useState<any>();
-
-    const [maintainSVF1, setMaintainSVF1] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSVF1 === "string" &&
-            typeof LowSVF1 === "string" &&
-            SVF1 !== null &&
-            maintainSVF1 === false
-        ) {
-            const highValueSVF1 = parseFloat(HighSVF1);
-            const lowValueSVF1 = parseFloat(LowSVF1);
-            const ValueSVF1 = parseFloat(SVF1);
-
-            if (
-                !isNaN(highValueSVF1) &&
-                !isNaN(lowValueSVF1) &&
-                !isNaN(ValueSVF1)
-            ) {
-                if (highValueSVF1 < ValueSVF1 || ValueSVF1 < lowValueSVF1) {
-                    if (!audioSVF1) {
-                        audioRef.current?.play();
-                        setAudioSVF1(true);
-                        setExceedThresholdSVF1(true);
-                    }
-                } else {
-                    setAudioSVF1(false);
-                    setExceedThresholdSVF1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVF1, SVF1, audioSVF1, LowSVF1, maintainSVF1]);
-
-    useEffect(() => {
-        if (audioSVF1) {
-            const audioEnded = () => {
-                setAudioSVF1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVF1]);
-
-    const ChangeMaintainSVF_1 = async () => {
-        try {
-            const newValue = !maintainSVF1;
-            await httpApi.post(PostTelemetry_id_VREC, { SVF1_Maintain: newValue });
-            setMaintainSVF1(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain SVF FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVF_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVF FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVF_1(),
-        });
-    };
-
-    //================================ SVF1 FIQ 1901 ======================================================
+      const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate as any);
+      const highValue = FC_01_Current_Values_Flow_Rate_High ?? NaN;
+      const lowValue = FC_01_Current_Values_Flow_Rate_Low ?? NaN;
+  
+      if (!isNaN(FC_01_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Flow_Rate) {
+          setExceedThresholdFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_RateValue >= highValue || FC_01_Current_Values_Flow_RateValue <= lowValue);
+      }
+  }, [FC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate_Low, maintainFC_01_Current_Values_Flow_Rate]);
+  
 
     //================================ GVF1 FIQ 1901 ======================================================
-    const [audioGVF1, setAudioGVF1] = useState(false);
-    const [HighGVF1, setHighGVF1] = useState<number | null>(null);
-    const [LowGVF1, setLowGVF1] = useState<number | null>(null);
-    const [exceedThresholdGVF1, setExceedThresholdGVF1] = useState(false);
-
-    const [maintainGVF1, setMaintainGVF1] = useState<boolean>(false);
-
+  
+    const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
+    const [FC_01_Current_Values_Uncorrected_Flow_Rate_High, setFC_01_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
+    const [FC_01_Current_Values_Uncorrected_Flow_Rate_Low, setFC_01_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate, setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_01_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighGVF1 === "string" &&
-            typeof LowGVF1 === "string" &&
-            GVF1 !== null &&
-            maintainGVF1 === false
-        ) {
-            const highValueGVF1 = parseFloat(HighGVF1);
-            const lowValueGVF1 = parseFloat(LowGVF1);
-            const ValueGVF1 = parseFloat(GVF1);
+      const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate as any);
+      const highValue = FC_01_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+      const lowValue = FC_01_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
+  
+      if (!isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) {
+          setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
+      }
+  }, [FC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
+  
 
-            if (
-                !isNaN(highValueGVF1) &&
-                !isNaN(lowValueGVF1) &&
-                !isNaN(ValueGVF1)
-            ) {
-                if (highValueGVF1 < ValueGVF1 || ValueGVF1 < lowValueGVF1) {
-                    if (!audioGVF1) {
-                        audioRef.current?.play();
-                        setAudioGVF1(true);
-                        setExceedThresholdGVF1(true);
-                    }
-                } else {
-                    setAudioGVF1(false);
-                    setExceedThresholdGVF1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVF1, GVF1, audioGVF1, LowGVF1, maintainGVF1]);
-
-    useEffect(() => {
-        if (audioGVF1) {
-            const audioEnded = () => {
-                setAudioGVF1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVF1]);
-
-    const ChangeMaintainGVF_1 = async () => {
-        try {
-            const newValue = !maintainGVF1;
-            await httpApi.post(PostTelemetry_id_VREC, { GVF1_Maintain: newValue });
-            setMaintainGVF1(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVF FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVF_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVF FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVF_1(),
-        });
-    };
-
-    //================================ GVF1 FIQ 1901 ======================================================
 
     //================================ SVA1 FIQ 1901 ======================================================
-    const [audioSVA1, setAudioSVA1] = useState(false);
-    const [HighSVA1, setHighSVA1] = useState<number | null>(null);
-    const [LowSVA1, setLowSVA1] = useState<number | null>(null);
-    const [exceedThresholdSVA1, setExceedThresholdSVA1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSVA1, setMaintainSVA1] = useState<boolean>(false);
-
+  
+    const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<string | null>(null);
+    const [FC_01_Accumulated_Values_Volume_High, setFC_01_Accumulated_Values_Volume_High] = useState<number | null>(null);
+    const [FC_01_Accumulated_Values_Volume_Low, setFC_01_Accumulated_Values_Volume_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_01_Accumulated_Values_Volume, setExceedThresholdFC_01_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_01_Accumulated_Values_Volume, setMaintainFC_01_Accumulated_Values_Volume] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighSVA1 === "string" &&
-            typeof LowSVA1 === "string" &&
-            SVA1 !== null &&
-            maintainSVA1 === false
-        ) {
-            const highValueSVA1 = parseFloat(HighSVA1);
-            const lowValueSVA1 = parseFloat(LowSVA1);
-            const ValueSVA1 = parseFloat(SVA1);
+      const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume as any);
+      const highValue = FC_01_Accumulated_Values_Volume_High ?? NaN;
+      const lowValue = FC_01_Accumulated_Values_Volume_Low ?? NaN;
+  
+      if (!isNaN(FC_01_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Volume) {
+          setExceedThresholdFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_VolumeValue >= highValue || FC_01_Accumulated_Values_VolumeValue <= lowValue);
+      }
+  }, [FC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume_Low, maintainFC_01_Accumulated_Values_Volume]);
+  
 
-            if (
-                !isNaN(highValueSVA1) &&
-                !isNaN(lowValueSVA1) &&
-                !isNaN(ValueSVA1)
-            ) {
-                if (highValueSVA1 < ValueSVA1 || ValueSVA1 < lowValueSVA1) {
-                    if (!audioSVA1) {
-                        audioRef.current?.play();
-                        setAudioSVA1(true);
-                        setExceedThresholdSVA1(true);
-                    }
-                } else {
-                    setAudioSVA1(false);
-                    setExceedThresholdSVA1(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVA1, SVA1, audioSVA1, LowSVA1, maintainSVA1]);
-
-    useEffect(() => {
-        if (audioSVA1) {
-            const audioEnded = () => {
-                setAudioSVA1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVA1]);
-
-    const ChangeMaintainSVA_1 = async () => {
-        try {
-            const newValue = !maintainSVA1;
-            await httpApi.post(PostTelemetry_id_VREC, { SVA1_Maintain: newValue });
-            setMaintainSVA1(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain SVA FIQ-1901",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVA_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVA FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVA_1(),
-        });
-    };
 
     //================================ SVA1 FIQ 1901 ======================================================
 
-    //================================ GVA1 FIQ 1901 ======================================================
-    const [audioGVA1, setAudioGVA1] = useState(false);
-    const [HighGVA1, setHighGVA1] = useState<number | null>(null);
-    const [LowGVA1, setLowGVA1] = useState<number | null>(null);
-    const [exceedThresholdGVA1, setExceedThresholdGVA1] = useState(false);
-
-    const [maintainGVA1, setMaintainGVA1] = useState<boolean>(false);
-
+    const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
+    const [FC_01_Accumulated_Values_Uncorrected_Volume_High, setFC_01_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
+    const [FC_01_Accumulated_Values_Uncorrected_Volume_Low, setFC_01_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume, setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_01_Accumulated_Values_Uncorrected_Volume, setMaintainFC_01_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
+    
+    
     useEffect(() => {
-        if (
-            typeof HighGVA1 === "string" &&
-            typeof LowGVA1 === "string" &&
-            GVA1 !== null &&
-            maintainGVA1 === false
-        ) {
-            const highValueGVA1 = parseFloat(HighGVA1);
-            const lowValueGVA1 = parseFloat(LowGVA1);
-            const ValueGVA1 = parseFloat(GVA1);
+      const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume as any);
+      const highValue = FC_01_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+      const lowValue = FC_01_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
+  
+      if (!isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) {
+          setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+      }
+  }, [FC_01_Accumulated_Values_Uncorrected_Volume, FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
+  
 
-            if (
-                !isNaN(highValueGVA1) &&
-                !isNaN(lowValueGVA1) &&
-                !isNaN(ValueGVA1)
-            ) {
-                if (highValueGVA1 < ValueGVA1 || ValueGVA1 < lowValueGVA1) {
-                    if (!audioGVA1) {
-                        audioRef.current?.play();
-                        setAudioGVA1(true);
-                        setExceedThresholdGVA1(true);
-                    }
-                } else {
-                    setAudioGVA1(false);
-                    setExceedThresholdGVA1(false);
-                }
-            }
-            fetchData();
+
+    //================================ SVA1 FIQ 1901 ======================================================
+
+
+
+
+
+
+
+
+      //================================ GD 1902 ======================================================
+
+
+      const [FC_02_Current_Values_Flow_Rate, setFC_02_Current_Values_Flow_Rate] = useState<string | null>(null);
+      const [FC_02_Current_Values_Flow_Rate_High, setFC_02_Current_Values_Flow_Rate_High] = useState<number | null>(null);
+      const [FC_02_Current_Values_Flow_Rate_Low, setFC_02_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
+      const [exceedThresholdFC_02_Current_Values_Flow_Rate, setExceedThresholdFC_02_Current_Values_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [maintainFC_02_Current_Values_Flow_Rate, setMaintainFC_02_Current_Values_Flow_Rate] = useState<boolean>(false);
+      
+      
+      useEffect(() => {
+        const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate as any);
+        const highValue = FC_02_Current_Values_Flow_Rate_High ?? NaN;
+        const lowValue = FC_02_Current_Values_Flow_Rate_Low ?? NaN;
+    
+        if (!isNaN(FC_02_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Flow_Rate) {
+            setExceedThresholdFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_RateValue >= highValue || FC_02_Current_Values_Flow_RateValue <= lowValue);
         }
-    }, [HighGVA1, GVA1, audioGVA1, LowGVA1, maintainGVA1]);
-
-    useEffect(() => {
-        if (audioGVA1) {
-            const audioEnded = () => {
-                setAudioGVA1(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
+    }, [FC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate_Low, maintainFC_02_Current_Values_Flow_Rate]);
+    
+  
+      //================================ GVF1 FIQ 1901 ======================================================
+    
+      const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
+      const [FC_02_Current_Values_Uncorrected_Flow_Rate_High, setFC_02_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
+      const [FC_02_Current_Values_Uncorrected_Flow_Rate_Low, setFC_02_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
+      const [exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate, setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [maintainFC_02_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
+      
+      
+      useEffect(() => {
+        const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate as any);
+        const highValue = FC_02_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+        const lowValue = FC_02_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
+    
+        if (!isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) {
+            setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
         }
-    }, [audioGVA1]);
-
-    const ChangeMaintainGVA_1 = async () => {
-        try {
-            const newValue = !maintainGVA1;
-            await httpApi.post(PostTelemetry_id_VREC, { GVA1_Maintain: newValue });
-            setMaintainGVA1(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVA FIQ-1901 ",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVA_1 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVA FIQ-1901",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVA_1(),
-        });
-    };
-
-    //================================ GVA1 FIQ 1901 ======================================================
-
-    //================================ SVF2 FIQ 1901 ======================================================
-    //================================ SVF1 FIQ 1901 ======================================================
-    const [audioSVF2, setAudioSVF2] = useState(false);
-    const [HighSVF2, setHighSVF2] = useState<number | null>(null);
-    const [LowSVF2, setLowSVF2] = useState<number | null>(null);
-    const [exceedThresholdSVF2, setExceedThresholdSVF2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSVF2, setMaintainSVF2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSVF2 === "string" &&
-            typeof LowSVF2 === "string" &&
-            SVF2 !== null &&
-            maintainSVF2 === false
-        ) {
-            const highValueSVF2 = parseFloat(HighSVF2);
-            const lowValueSVF2 = parseFloat(LowSVF2);
-            const ValueSVF2 = parseFloat(SVF2);
-
-            if (
-                !isNaN(highValueSVF2) &&
-                !isNaN(lowValueSVF2) &&
-                !isNaN(ValueSVF2)
-            ) {
-                if (highValueSVF2 < ValueSVF2 || ValueSVF2 < lowValueSVF2) {
-                    if (!audioSVF2) {
-                        audioRef.current?.play();
-                        setAudioSVF2(true);
-                        setExceedThresholdSVF2(true);
-                    }
-                } else {
-                    setAudioSVF2(false);
-                    setExceedThresholdSVF2(false);
-                }
-            }
-            fetchData();
+    }, [FC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
+    
+  
+  
+      //================================ SVA1 FIQ 1901 ======================================================
+    
+      const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<string | null>(null);
+      const [FC_02_Accumulated_Values_Volume_High, setFC_02_Accumulated_Values_Volume_High] = useState<number | null>(null);
+      const [FC_02_Accumulated_Values_Volume_Low, setFC_02_Accumulated_Values_Volume_Low] = useState<number | null>(null);
+      const [exceedThresholdFC_02_Accumulated_Values_Volume, setExceedThresholdFC_02_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Values_Volume] = useState<boolean>(false);
+      
+      
+      useEffect(() => {
+        const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume as any);
+        const highValue = FC_02_Accumulated_Values_Volume_High ?? NaN;
+        const lowValue = FC_02_Accumulated_Values_Volume_Low ?? NaN;
+    
+        if (!isNaN(FC_02_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Volume) {
+            setExceedThresholdFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_VolumeValue >= highValue || FC_02_Accumulated_Values_VolumeValue <= lowValue);
         }
-    }, [HighSVF2, SVF2, audioSVF2, LowSVF2, maintainSVF2]);
-
-    useEffect(() => {
-        if (audioSVF2) {
-            const audioEnded = () => {
-                setAudioSVF2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
+    }, [FC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume_Low, maintainFC_02_Accumulated_Values_Volume]);
+    
+  
+  
+      //================================ SVA1 FIQ 1901 ======================================================
+  
+      const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
+      const [FC_02_Accumulated_Values_Uncorrected_Volume_High, setFC_02_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
+      const [FC_02_Accumulated_Values_Uncorrected_Volume_Low, setFC_02_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
+      const [exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume, setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
+      
+      
+      useEffect(() => {
+        const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume as any);
+        const highValue = FC_02_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+        const lowValue = FC_02_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
+    
+        if (!isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) {
+            setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
         }
-    }, [audioSVF2]);
-
-    const ChangeMaintainSVF_2 = async () => {
-        try {
-            const newValue = !maintainSVF2;
-            await httpApi.post(PostTelemetry_id_VREC, { SVF2_Maintain: newValue });
-            setMaintainSVF2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain SVF FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVF_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVF FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVF_2(),
-        });
-    };
-
-    //================================ SVF1 FIQ 1901 ======================================================
-
-    //================================ GVF2 FIQ 1901 ======================================================
-    const [audioGVF2, setAudioGVF2] = useState(false);
-    const [HighGVF2, setHighGVF2] = useState<number | null>(null);
-    const [LowGVF2, setLowGVF2] = useState<number | null>(null);
-    const [exceedThresholdGVF2, setExceedThresholdGVF2] = useState(false);
-
-    const [maintainGVF2, setMaintainGVF2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighGVF2 === "string" &&
-            typeof LowGVF2 === "string" &&
-            GVF2 !== null &&
-            maintainGVF2 === false
-        ) {
-            const highValueGVF2 = parseFloat(HighGVF2);
-            const lowValueGVF2 = parseFloat(LowGVF2);
-            const ValueGVF2 = parseFloat(GVF2);
-
-            if (
-                !isNaN(highValueGVF2) &&
-                !isNaN(lowValueGVF2) &&
-                !isNaN(ValueGVF2)
-            ) {
-                if (highValueGVF2 < ValueGVF2 || ValueGVF2 < lowValueGVF2) {
-                    if (!audioGVF2) {
-                        audioRef.current?.play();
-                        setAudioGVF2(true);
-                        setExceedThresholdGVF2(true);
-                    }
-                } else {
-                    setAudioGVF2(false);
-                    setExceedThresholdGVF2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVF2, GVF2, audioGVF2, LowGVF2, maintainGVF2]);
-
-    useEffect(() => {
-        if (audioGVF2) {
-            const audioEnded = () => {
-                setAudioGVF2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVF2]);
-
-    const ChangeMaintainGVF_2 = async () => {
-        try {
-            const newValue = !maintainGVF2;
-            await httpApi.post(PostTelemetry_id_VREC, { GVF2_Maintain: newValue });
-            setMaintainGVF2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain GVF FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVF_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVF FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVF_2(),
-        });
-    };
-
-    //================================ GVF1 FIQ 1901 ======================================================
-
-    //================================ SVA2 FIQ 1901 ======================================================
-    const [audioSVA2, setAudioSVA2] = useState(false);
-    const [HighSVA2, setHighSVA2] = useState<number | null>(null);
-    const [LowSVA2, setLowSVA2] = useState<number | null>(null);
-    const [exceedThresholdSVA2, setExceedThresholdSVA2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-
-    const [maintainSVA2, setMaintainSVA2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighSVA2 === "string" &&
-            typeof LowSVA2 === "string" &&
-            SVA2 !== null &&
-            maintainSVA2 === false
-        ) {
-            const highValueSVA2 = parseFloat(HighSVA2);
-            const lowValueSVA2 = parseFloat(LowSVA2);
-            const ValueSVA2 = parseFloat(SVA2);
-
-            if (
-                !isNaN(highValueSVA2) &&
-                !isNaN(lowValueSVA2) &&
-                !isNaN(ValueSVA2)
-            ) {
-                if (highValueSVA2 < ValueSVA2 || ValueSVA2 < lowValueSVA2) {
-                    if (!audioSVA2) {
-                        audioRef.current?.play();
-                        setAudioSVA2(true);
-                        setExceedThresholdSVA2(true);
-                    }
-                } else {
-                    setAudioSVA2(false);
-                    setExceedThresholdSVA2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighSVA2, SVA2, audioSVA2, LowSVA2, maintainSVA2]);
-
-    useEffect(() => {
-        if (audioSVA2) {
-            const audioEnded = () => {
-                setAudioSVA2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioSVA2]);
-
-    const ChangeMaintainSVA_2 = async () => {
-        try {
-            const newValue = !maintainSVA2;
-            await httpApi.post(PostTelemetry_id_VREC, { SVA2_Maintain: newValue });
-            setMaintainSVA2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: "Maintain SVA FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmSVA_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " SVA FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainSVA_2(),
-        });
-    };
-
-    //================================ SVA2 FIQ 1901 ======================================================
-
-    //================================ GVA2 FIQ 1901 ======================================================
-    const [audioGVA2, setAudioGVA2] = useState(false);
-    const [HighGVA2, setHighGVA2] = useState<number | null>(null);
-    const [LowGVA2, setLowGVA2] = useState<number | null>(null);
-    const [exceedThresholdGVA2, setExceedThresholdGVA2] = useState(false);
-
-    const [maintainGVA2, setMaintainGVA2] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (
-            typeof HighGVA2 === "string" &&
-            typeof LowGVA2 === "string" &&
-            GVA2 !== null &&
-            maintainGVA2 === false
-        ) {
-            const highValueGVA2 = parseFloat(HighGVA2);
-            const lowValueGVA2 = parseFloat(LowGVA2);
-            const ValueGVA2 = parseFloat(GVA2);
-
-            if (
-                !isNaN(highValueGVA2) &&
-                !isNaN(lowValueGVA2) &&
-                !isNaN(ValueGVA2)
-            ) {
-                if (highValueGVA2 < ValueGVA2 || ValueGVA2 < lowValueGVA2) {
-                    if (!audioGVA2) {
-                        audioRef.current?.play();
-                        setAudioGVA2(true);
-                        setExceedThresholdGVA2(true);
-                    }
-                } else {
-                    setAudioGVA2(false);
-                    setExceedThresholdGVA2(false);
-                }
-            }
-            fetchData();
-        }
-    }, [HighGVA2, GVA2, audioGVA2, LowGVA2, maintainGVA2]);
-
-    useEffect(() => {
-        if (audioGVA2) {
-            const audioEnded = () => {
-                setAudioGVA2(false);
-            };
-            audioRef.current?.addEventListener("ended", audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener("ended", audioEnded);
-            };
-        }
-    }, [audioGVA2]);
-
-    const ChangeMaintainGVA_2 = async () => {
-        try {
-            const newValue = !maintainGVA2;
-            await httpApi.post(PostTelemetry_id_VREC, { GVA2_Maintain: newValue });
-            setMaintainGVA2(newValue);
-
-            toast.current?.show({
-                severity: "info",
-                summary: " Maintain GVA FIQ-1902",
-                detail: "Success ",
-                life: 3000,
-            });
-            fetchData();
-        } catch (error) {}
-    };
-
-    const confirmGVA_2 = () => {
-        confirmDialog({
-            message: "Do you want to change the status?",
-            header: " GVA FIQ-1902",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeMaintainGVA_2(),
-        });
-    };
-
+    }, [FC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
+    
+  
+  
+      //================================ SVA1 FIQ 1901 ======================================================
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+    const [lineDuty1901, setLineduty1901] = useState<any>();
+    const [lineDuty1902, setLineduty1902] = useState<any>();
 
     const ChangeStatusFIQ = async () => {
         try {
@@ -1434,264 +602,174 @@ export default function GraphicVREC() {
             accept: () => ChangeStatusFIQ(),
         });
     };
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(GetTelemetry_id_VREC);
 
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(GetTelemetry_id_VREC);
-    
-                const highEVCPressureItem = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_01_Current_Values_Static_Pressure_High"
-                );
-                setHighPT01(highEVCPressureItem?.value || null);
-                const lowEVCPressureItem = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_01_Current_Values_Static_Pressure_Low"
-                );
-                setLowPT01(lowEVCPressureItem?.value || null);
-    
-                const HighPT1902 = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_02_Current_Values_Static_Pressure_High"
-                );
-                setHighPT02(HighPT1902?.value || null);
-                const LowPT1902 = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_02_Current_Values_Static_Pressure_Low"
-                );
-                setLowPT02(LowPT1902?.value || null);
-    
-                const HighPT1903 = res.data.find(
-                    (item: any) => item.key === "PT1_High"
-                );
-                setHighPT1(HighPT1903?.value || null);
-                const LowPT1903 = res.data.find(
-                    (item: any) => item.key === "PT1_Low"
-                );
-                setLowPT1(LowPT1903?.value || null);
-    
-                const HighGD01 = res.data.find(
-                    (item: any) => item.key === "GD1_High"
-                );
-                setHighGD01(HighGD01?.value || null);
-    
-                const LowGD01 = res.data.find(
-                    (item: any) => item.key === "GD1_Low"
-                );
-                setLowGD01(LowGD01?.value || null);
-    
-                const HighGD02 = res.data.find(
-                    (item: any) => item.key === "GD2_High"
-                );
-                setHighGD02(HighGD02?.value || null);
-    
-                const LowGD02 = res.data.find(
-                    (item: any) => item.key === "GD2_Low"
-                );
-                setLowGD02(LowGD02?.value || null);
-    
-                const HighGD03 = res.data.find(
-                    (item: any) => item.key === "GD3_High"
-                );
-                setHighGD03(HighGD03?.value || null);
-    
-                const LowGD03 = res.data.find(
-                    (item: any) => item.key === "GD3_Low"
-                );
-                setLowGD03(LowGD03?.value || null);
-    
-                const HighSVF1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Flow_at_Measurement_Condition_High"
-                );
-                setHighSVF1(HighSVF1?.value || null);
-    
-                const LowSVF1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
-                );
-                setLowSVF1(LowSVF1?.value || null);
-    
-                const HighGVF1 = res.data.find(
-                    (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
-                );
-                setHighGVF1(HighGVF1?.value || null);
-    
-                const LowGVF1 = res.data.find(
-                    (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
-                );
-                setLowGVF1(LowGVF1?.value || null);
-    
-                const HighSVA1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Volume_at_Base_Condition_High"
-                );
-                setHighSVA1(HighSVA1?.value || null);
-    
-                const LowSVA1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Volume_at_Base_Condition_Low"
-                );
-                setLowSVA1(LowSVA1?.value || null);
-    
-                const HighGVA1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Volume_at_Measurement_Condition_High"
-                );
-                setHighGVA1(HighGVA1?.value || null);
-    
-                const LowGVA1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
-                );
-                setLowGVA1(LowGVA1?.value || null);
-    
-                const HighSVF2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Measurement_Condition_High"
-                );
-                setHighSVF2(HighSVF2?.value || null);
-    
-                const LowSVF2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
-                );
-                setLowSVF2(LowSVF2?.value || null);
-    
-                const HighGVF2 = res.data.find(
-                    (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
-                );
-                setHighGVF2(HighGVF2?.value || null);
-    
-                const LowGVF2 = res.data.find(
-                    (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
-                );
-                setLowGVF2(LowGVF2?.value || null);
-    
-                const HighSVA2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Measurement_Condition_High"
-                );
-                setHighSVA2(HighSVA2?.value || null);
-    
-                const LowSVA2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
-                );
-                setLowSVA2(LowSVA2?.value || null);
-    
-                const HighGVA2 = res.data.find(
-                    (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
-                );
-                setHighGVA2(HighGVA2?.value || null);
-    
-                const LowGVA2 = res.data.find(
-                    (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
-                );
-                setLowGVA2(LowGVA2?.value || null);
-    
-                const MaintainPCV1901 = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
-                );
-                setMaintainPCV1901(MaintainPCV1901?.value || false);
-    
-                const MaintainPT_1902 = res.data.find(
-                    (item: any) =>
-                        item.key === "FC_02_Current_Values_Static_Pressure_Maintain"
-                );
-                setMaintainPT_1902(MaintainPT_1902?.value || false);
-    
-                const MaintainPT_1903 = res.data.find(
-                    (item: any) => item.key === "PT1_Maintain"
-                );
-                setMaintainPT_1903(MaintainPT_1903?.value || false);
-    
-                const MaintainGD_1901 = res.data.find(
-                    (item: any) => item.key === "GD1_Maintain"
-                );
-                setMaintainGD_1901(MaintainGD_1901?.value || false);
-    
-                const MaintainGD_1902 = res.data.find(
-                    (item: any) => item.key === "GD2_Maintain"
-                );
-                setMaintainGD_1902(MaintainGD_1902?.value || false);
-    
-                const MaintainGD_1903 = res.data.find(
-                    (item: any) => item.key === "GD3_Maintain"
-                );
-                setMaintainGD_1903(MaintainGD_1903?.value || false);
-    
-                const MaintainSVF_1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
-                );
-                setMaintainSVF1(MaintainSVF_1?.value || false);
-    
-                const MaintainGVF_1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
-                );
-                setMaintainGVF1(MaintainGVF_1?.value || false);
-    
-                const MaintainSVA_1 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
-                );
-                setMaintainSVA1(MaintainSVA_1?.value || false);
-    
-                const MaintainGVA_1 = res.data.find(
-                    (item: any) =>
-                        item.key ===
-                        "EVC_01_Volume_at_Measurement_Condition_Maintain"
-                );
-                setMaintainGVA1(MaintainGVA_1?.value || false);
-    
-                const MaintainSVF_2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
-                );
-                setMaintainSVF2(MaintainSVF_2?.value || false);
-    
-                const MaintainGVF_2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
-                );
-                setMaintainGVF2(MaintainGVF_2?.value || false);
-    
-                const MaintainSVA_2 = res.data.find(
-                    (item: any) =>
-                        item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
-                );
-                setMaintainSVA2(MaintainSVA_2?.value || false);
-    
-                const MaintainGVA_2 = res.data.find(
-                    (item: any) =>
-                        item.key ===
-                        "EVC_02_Volume_at_Measurement_Condition_Maintain"
-                );
-                setMaintainGVA2(MaintainGVA_2?.value || false);
-    
-                const LineDuty1901 = res.data.find(
-                    (item: any) => item.key === "FIQ1901_LineDuty"
-                );
-                setLineduty1901(LineDuty1901?.value || false);
-    
-                const LineDuty1902 = res.data.find(
-                    (item: any) => item.key === "FIQ1902_LineDuty"
-                );
-                setLineduty1902(LineDuty1902?.value || false);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+            const FC_01_Current_Values_Static_Pressure_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Static_Pressure_High");
+            setFC_01_Current_Values_Static_Pressure_High(FC_01_Current_Values_Static_Pressure_High?.value || null);
+            const FC_01_Current_Values_Static_Pressure_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Low");
+            setFC_01_Current_Values_Static_Pressure_Low(FC_01_Current_Values_Static_Pressure_Low?.value || null);
+            const FC_01_Current_Values_Static_Pressure_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
+            );
+            setMaintainFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_Pressure_Maintain?.value || false);
 
+            //======================================================================================================
+            
+
+            const FC_02_Current_Values_Static_Pressure_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Static_Pressure_High");
+            setFC_02_Current_Values_Static_Pressure_High(FC_02_Current_Values_Static_Pressure_High?.value || null);
+            const FC_02_Current_Values_Static_Pressure_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Static_Pressure_Low");
+            setFC_02_Current_Values_Static_Pressure_Low(FC_02_Current_Values_Static_Pressure_Low?.value || null);
+            const FC_02_Current_Values_Static_Pressure_Maintain = res.data.find(
+                (item: any) => item.key === "FC_02_Current_Values_Static_Pressure_Maintain"
+            );
+            setMaintainFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_Pressure_Maintain?.value || false);
+
+            //======================================================================================================
+         
+            const PT1_High = res.data.find((item: any) => item.key === "PT1_High");
+            setPT1_High(PT1_High?.value || null);
+            const PT1_Low = res.data.find((item: any) => item.key === "PT1_Low");
+            setPT1_Low(PT1_Low?.value || null);
+            const PT1_Maintain = res.data.find(
+                (item: any) => item.key === "PT1_Maintain"
+            );
+            setMaintainPT1(PT1_Maintain?.value || false);
+
+            //======================================================================================================
+  
+            const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
+            setGD1_High(GD1_High?.value || null);
+            const GD1_Low = res.data.find((item: any) => item.key === "GD1_Low");
+            setGD1_Low(GD1_Low?.value || null);
+            const GD1_Maintain = res.data.find(
+                (item: any) => item.key === "GD1_Maintain"
+            );
+            setMaintainGD1(GD1_Maintain?.value || false);
+
+            //======================================================================================================
+
+            const GD2_High = res.data.find((item: any) => item.key === "GD2_High");
+            setGD2_High(GD2_High?.value || null);
+            const GD2_Low = res.data.find((item: any) => item.key === "GD2_Low");
+            setGD2_Low(GD2_Low?.value || null);
+            const GD2_Maintain = res.data.find(
+                (item: any) => item.key === "GD2_Maintain"
+            );
+            setMaintainGD2(GD2_Maintain?.value || false);
+
+            //======================================================================================================
+
+
+            
+            const FC_01_Current_Values_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Flow_Rate_High");
+            setFC_01_Current_Values_Flow_Rate_High(FC_01_Current_Values_Flow_Rate_High?.value || null);
+            const FC_01_Current_Values_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Flow_Rate_Low");
+            setFC_01_Current_Values_Flow_Rate_Low(FC_01_Current_Values_Flow_Rate_Low?.value || null);
+            const FC_01_Current_Values_Flow_Rate_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Current_Values_Flow_Rate_Maintain"
+            );
+            setMaintainFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_Rate_Maintain?.value || false);
+
+            //======================================================================================================
+
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_High");
+            setFC_01_Current_Values_Uncorrected_Flow_Rate_High(FC_01_Current_Values_Uncorrected_Flow_Rate_High?.value || null);
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_Low");
+            setFC_01_Current_Values_Uncorrected_Flow_Rate_Low(FC_01_Current_Values_Uncorrected_Flow_Rate_Low?.value || null);
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain"
+            );
+            setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain?.value || false);
+
+            //======================================================================================================
+         
+            const FC_01_Accumulated_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Volume_High");
+            setFC_01_Accumulated_Values_Volume_High(FC_01_Accumulated_Values_Volume_High?.value || null);
+            const FC_01_Accumulated_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Volume_Low");
+            setFC_01_Accumulated_Values_Volume_Low(FC_01_Accumulated_Values_Volume_Low?.value || null);
+            const FC_01_Accumulated_Values_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Accumulated_Values_Volume_Maintain"
+            );
+            setMaintainFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_Volume_Maintain?.value || false);
+
+            //======================================================================================================
+        
+            const FC_01_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_High");
+            setFC_01_Accumulated_Values_Uncorrected_Volume_High(FC_01_Accumulated_Values_Uncorrected_Volume_High?.value || null);
+            const FC_01_Accumulated_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_Low");
+            setFC_01_Accumulated_Values_Uncorrected_Volume_Low(FC_01_Accumulated_Values_Uncorrected_Volume_Low?.value || null);
+            const FC_01_Accumulated_Values_Uncorrected_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_Maintain"
+            );
+            setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
+
+            //======================================================================================================
+
+
+     
+            const FC_02_Current_Values_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Flow_Rate_High");
+            setFC_02_Current_Values_Flow_Rate_High(FC_02_Current_Values_Flow_Rate_High?.value || null);
+            const FC_02_Current_Values_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Flow_Rate_Low");
+            setFC_02_Current_Values_Flow_Rate_Low(FC_02_Current_Values_Flow_Rate_Low?.value || null);
+            const FC_02_Current_Values_Flow_Rate_Maintain = res.data.find(
+                (item: any) => item.key === "FC_02_Current_Values_Flow_Rate_Maintain"
+            );
+            setMaintainFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_Rate_Maintain?.value || false);
+
+            //======================================================================================================
+
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_High");
+            setFC_02_Current_Values_Uncorrected_Flow_Rate_High(FC_02_Current_Values_Uncorrected_Flow_Rate_High?.value || null);
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_Low");
+            setFC_02_Current_Values_Uncorrected_Flow_Rate_Low(FC_02_Current_Values_Uncorrected_Flow_Rate_Low?.value || null);
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain = res.data.find(
+                (item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain"
+            );
+            setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain?.value || false);
+
+            //======================================================================================================
+         
+            const FC_02_Accumulated_Values_Volume_High = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_High");
+            setFC_02_Accumulated_Values_Volume_High(FC_02_Accumulated_Values_Volume_High?.value || null);
+            const FC_02_Accumulated_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_Low");
+            setFC_02_Accumulated_Values_Volume_Low(FC_02_Accumulated_Values_Volume_Low?.value || null);
+            const FC_02_Accumulated_Values_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_02_Accumulated_Values_Volume_Maintain"
+            );
+            setMaintainFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_Volume_Maintain?.value || false);
+
+            //======================================================================================================
+        
+            const FC_02_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_High");
+            setFC_02_Accumulated_Values_Uncorrected_Volume_High(FC_02_Accumulated_Values_Uncorrected_Volume_High?.value || null);
+            const FC_02_Accumulated_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_Low");
+            setFC_02_Accumulated_Values_Uncorrected_Volume_Low(FC_02_Accumulated_Values_Uncorrected_Volume_Low?.value || null);
+            const FC_02_Accumulated_Values_Uncorrected_Volume_Maintain = res.data.find(
+                (item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_Maintain"
+            );
+            setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
+
+            //======================================================================================================
+            const LineDuty1901 = res.data.find(
+                (item: any) => item.key === "FIQ1901_LineDuty"
+            );
+            setLineduty1901(LineDuty1901?.value || false);
+
+            const LineDuty1902 = res.data.find(
+                (item: any) => item.key === "FIQ1902_LineDuty"
+            );
+            setLineduty1902(LineDuty1902?.value || false);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
         fetchData();
     }, []);
-
-
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",
@@ -1706,11 +784,11 @@ export default function GraphicVREC() {
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarA",
         CC: "°C",
     };
 
@@ -1730,8 +808,8 @@ export default function GraphicVREC() {
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
-                const roundedSVF1 =
-                    SVF1 !== null ? parseFloat(SVF1).toFixed(2) : "";
+                const roundedFC_01_Current_Values_Flow_Rate =
+                    FC_01_Current_Values_Flow_Rate !== null ? parseFloat(FC_01_Current_Values_Flow_Rate).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1748,9 +826,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVF1 && !maintainSVF1
+                                        exceedThresholdFC_01_Current_Values_Flow_Rate && !maintainFC_01_Current_Values_Flow_Rate
                                             ? "#ff5656"
-                                            : maintainSVF1
+                                            : maintainFC_01_Current_Values_Flow_Rate
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1773,7 +851,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF1}
+                                        {roundedFC_01_Current_Values_Flow_Rate}
                                     </p>
                                 </div>
                                 <p
@@ -1791,8 +869,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data3") {
-                const roundedGVF1 =
-                    GVF1 !== null ? parseFloat(GVF1).toFixed(2) : "";
+                const roundedFC_01_Current_Values_Uncorrected_Flow_Rate =
+                    FC_01_Current_Values_Uncorrected_Flow_Rate !== null ? parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1809,9 +887,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVF1 && !maintainGVF1
+                                        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate
                                             ? "#ff5656"
-                                            : maintainGVF1
+                                            : maintainFC_01_Current_Values_Uncorrected_Flow_Rate
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1834,7 +912,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF1}
+                                        {roundedFC_01_Current_Values_Uncorrected_Flow_Rate}
                                     </p>
                                 </div>
                                 <p
@@ -1852,8 +930,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data2") {
-                const roundedSVA1 =
-                    SVA1 !== null ? parseFloat(SVA1).toFixed(2) : "";
+                const roundedFC_01_Accumulated_Values_Volume =
+                    FC_01_Accumulated_Values_Volume !== null ? parseFloat(FC_01_Accumulated_Values_Volume).toFixed(2) : "";
                 return {
                     ...node,
                     data: {
@@ -1870,9 +948,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVA1 && !maintainSVA1
+                                        exceedThresholdFC_01_Accumulated_Values_Volume && !maintainFC_01_Accumulated_Values_Volume
                                             ? "#ff5656"
-                                            : maintainSVA1
+                                            : maintainFC_01_Accumulated_Values_Volume
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1895,7 +973,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVA1}
+                                        {roundedFC_01_Accumulated_Values_Volume}
                                     </p>
                                 </div>
                                 <p
@@ -1913,8 +991,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data1") {
-                const roundedGVA1 =
-                    GVA1 !== null ? parseFloat(GVA1).toFixed(2) : "";
+                const roundedFC_01_Accumulated_Values_Uncorrected_Volume =
+                    FC_01_Accumulated_Values_Uncorrected_Volume !== null ? parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1932,9 +1010,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     background:
-                                        exceedThresholdGVA1 && !maintainGVA1
+                                        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume && !maintainFC_01_Accumulated_Values_Uncorrected_Volume
                                             ? "#ff5656"
-                                            : maintainGVA1
+                                            : maintainFC_01_Accumulated_Values_Uncorrected_Volume
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -1958,7 +1036,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVA1}
+                                        {roundedFC_01_Accumulated_Values_Uncorrected_Volume}
                                     </p>
                                 </div>
                                 <p
@@ -1976,8 +1054,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data5") {
-                const roundedSVF2 =
-                    SVF2 !== null ? parseFloat(SVF2).toFixed(2) : "";
+                const roundedFC_02_Current_Values_Flow_Rate =
+                    FC_02_Current_Values_Flow_Rate !== null ? parseFloat(FC_02_Current_Values_Flow_Rate).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1995,9 +1073,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVF2 && !maintainSVF2
+                                        exceedThresholdFC_02_Current_Values_Flow_Rate && !maintainFC_02_Current_Values_Flow_Rate
                                             ? "#ff5656"
-                                            : maintainSVF2
+                                            : maintainFC_02_Current_Values_Flow_Rate
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2020,7 +1098,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedSVF2}
+                                        {roundedFC_02_Current_Values_Flow_Rate}
                                     </p>
                                 </div>
                                 <p
@@ -2038,8 +1116,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data6") {
-                const roundedGVF2 =
-                    GVF2 !== null ? parseFloat(GVF2).toFixed(2) : "";
+                const roundedFC_02_Current_Values_Uncorrected_Flow_Rate =
+                    FC_02_Current_Values_Uncorrected_Flow_Rate !== null ? parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2057,9 +1135,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVF2 && !maintainGVF2
+                                        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate
                                             ? "#ff5656"
-                                            : maintainGVF2
+                                            : maintainFC_02_Current_Values_Uncorrected_Flow_Rate
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2082,7 +1160,7 @@ export default function GraphicVREC() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedGVF2}
+                                        {roundedFC_02_Current_Values_Uncorrected_Flow_Rate}
                                     </p>
                                 </div>
                                 <p
@@ -2100,8 +1178,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data7") {
-                const roundedSVA2 =
-                    SVA2 !== null ? parseFloat(SVA2).toFixed(2) : "";
+                const roundedFC_02_Accumulated_Values_Volume =
+                    FC_02_Accumulated_Values_Volume !== null ? parseFloat(FC_02_Accumulated_Values_Volume).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2119,9 +1197,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdSVA2 && !maintainSVA2
+                                        exceedThresholdFC_02_Accumulated_Values_Volume && !maintainFC_02_Accumulated_Values_Volume
                                             ? "#ff5656"
-                                            : maintainSVA2
+                                            : maintainFC_02_Accumulated_Values_Volume
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2144,7 +1222,7 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedSVA2}
+                                        {roundedFC_02_Accumulated_Values_Volume}
                                     </p>
                                 </div>
                                 <p
@@ -2162,8 +1240,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "data8") {
-                const roundedGVA2 =
-                    GVA2 !== null ? parseFloat(GVA2).toFixed(2) : "";
+                const roundedFC_02_Accumulated_Values_Uncorrected_Volume =
+                    FC_02_Accumulated_Values_Uncorrected_Volume !== null ? parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2181,9 +1259,9 @@ export default function GraphicVREC() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdGVA2 && !maintainGVA2
+                                        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume && !maintainFC_02_Accumulated_Values_Uncorrected_Volume
                                             ? "#ff5656"
-                                            : maintainGVA2
+                                            : maintainFC_02_Accumulated_Values_Uncorrected_Volume
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2206,7 +1284,7 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedGVA2}
+                                        {roundedFC_02_Accumulated_Values_Uncorrected_Volume}
                                     </p>
                                 </div>
                                 <p
@@ -2242,9 +1320,9 @@ export default function GraphicVREC() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold3 && !maintainPT_1903
+                                        exceedThresholdPT1 && !maintainPT1
                                             ? "#ff5656"
-                                            : maintainPT_1903
+                                            : maintainPT1
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2259,7 +1337,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1803 :
+                                        PT-1403 :
                                     </p>
                                     <p
                                         style={{
@@ -2285,8 +1363,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "Pressure_Trans02") {
-                const roundedPT01 =
-                    PT01 !== null ? parseFloat(PT01).toFixed(2) : "";
+                const roundedFC_01_Current_Values_Static_Pressure =
+                    FC_01_Current_Values_Static_Pressure !== null ? parseFloat(FC_01_Current_Values_Static_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2303,9 +1381,9 @@ export default function GraphicVREC() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainPCV1901
+                                        exceedThresholdFC_01_Current_Values_Static_Pressure && !maintainFC_01_Current_Values_Static_Pressure
                                             ? "#ff5656"
-                                            : maintainPCV1901
+                                            : maintainFC_01_Current_Values_Static_Pressure
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2320,7 +1398,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1801 :
+                                        PT-1801:
                                     </p>
                                     <p
                                         style={{
@@ -2328,8 +1406,8 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {/* {roundedPT01} */}
-                                        {roundedPT01}
+                                        {/* {roundedFC_01_Current_Values_Static_Pressure} */}
+                                        {roundedFC_01_Current_Values_Static_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2339,7 +1417,7 @@ export default function GraphicVREC() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2347,8 +1425,8 @@ export default function GraphicVREC() {
                 };
             }
             if (node.id === "Pressure_Trans03") {
-                const roundedPT02 =
-                    PT02 !== null ? parseFloat(PT02).toFixed(2) : "";
+                const roundedFC_02_Current_Values_Static_Pressure =
+                    FC_02_Current_Values_Static_Pressure !== null ? parseFloat(FC_02_Current_Values_Static_Pressure).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -2365,14 +1443,14 @@ export default function GraphicVREC() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold2 && !maintainPT_1902
+                                    exceedThresholdFC_02_Current_Values_Static_Pressure && !maintainFC_02_Current_Values_Static_Pressure
                                             ? "#ff5656"
-                                            : maintainPT_1902
+                                            : maintainFC_02_Current_Values_Static_Pressure
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
-                                // onClick={() => confirmPT_1902()}
+                                // onClick={() => confirmFC_02_Current_Values_Static_Pressure()}
                             >
                                 <div
                                     style={{
@@ -2383,7 +1461,7 @@ export default function GraphicVREC() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1802 :
+                                        PT-1802:
                                     </p>
                                     <p
                                         style={{
@@ -2391,7 +1469,7 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {roundedFC_02_Current_Values_Static_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2401,7 +1479,7 @@ export default function GraphicVREC() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2555,7 +1633,7 @@ export default function GraphicVREC() {
             //  =============================== GD ===================================
 
             if (node.id === "GD1_Value1901") {
-                const roundedGD01 =
+                const roundedGD1 =
                     GD1 !== null ? parseFloat(GD1).toFixed(2) : "";
 
                 return {
@@ -2573,23 +1651,23 @@ export default function GraphicVREC() {
                                     borderRadius: 2,
                                     right: 4,
                                     backgroundColor:
-                                        exceedThresholdGD01 && !maintainGD_1901
+                                        exceedThresholdGD1 && !maintainGD1
                                             ? "#ff5656"
-                                            : maintainGD_1901
+                                            : maintainGD1
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD01} LEL</p>
+                                <p>{roundedGD1} %LEL</p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "GD2_Value1902") {
-                const roundedGD02 =
+                const roundedGD2 =
                     GD2 !== null ? parseFloat(GD2).toFixed(2) : "";
 
                 return {
@@ -2608,9 +1686,9 @@ export default function GraphicVREC() {
                                     right: 4,
 
                                     backgroundColor:
-                                        exceedThresholdGD02 && !maintainGD_1902
+                                        exceedThresholdGD2 && !maintainGD2
                                             ? "#ff5656"
-                                            : maintainGD_1902
+                                            : maintainGD2
                                             ? "orange"
                                             : "transparent",
 
@@ -2618,48 +1696,48 @@ export default function GraphicVREC() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD02} LEL</p>
+                                <p>{roundedGD2} %LEL</p>
                             </div>
                         ),
                     },
                 };
             }
-            if (node.id === "GD3_Value1903") {
-                const roundedGD03 =
-                    GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
+            // if (node.id === "GD3_Value1903") {
+            //     const roundedGD03 =
+            //         GD3 !== null ? parseFloat(GD3).toFixed(2) : "";
 
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
-                                    position: "relative",
-                                    bottom: 5,
+            //     return {
+            //         ...node,
+            //         data: {
+            //             ...node.data,
+            //             label: (
+            //                 <div
+            //                     style={{
+            //                         fontSize: 18,
+            //                         fontWeight: 500,
+            //                         position: "relative",
+            //                         bottom: 5,
 
-                                    borderRadius: 2,
-                                    right: 4,
+            //                         borderRadius: 2,
+            //                         right: 4,
 
-                                    backgroundColor:
-                                        exceedThresholdGD03 && !maintainGD_1903
-                                            ? "#ff5656"
-                                            : maintainGD_1903
-                                            ? "orange"
-                                            : "transparent",
+            //                         backgroundColor:
+            //                             exceedThresholdGD03 && !maintainGD_1903
+            //                                 ? "#ff5656"
+            //                                 : maintainGD_1903
+            //                                 ? "orange"
+            //                                 : "transparent",
 
-                                    cursor: "pointer",
-                                }}
-                                // onClick={() => confirmGD_1903()}
-                            >
-                                <p>{roundedGD03} LEL</p>
-                            </div>
-                        ),
-                    },
-                };
-            }
+            //                         cursor: "pointer",
+            //                     }}
+            //                     // onClick={() => confirmGD_1903()}
+            //                 >
+            //                     <p>{roundedGD03} %LEL</p>
+            //                 </div>
+            //             ),
+            //         },
+            //     };
+            // }
             if (node.id === "SDV_IMG") {
                 return {
                     ...node,
@@ -2696,7 +1774,7 @@ export default function GraphicVREC() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1801
+                                FC-1801
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2730,7 +1808,7 @@ export default function GraphicVREC() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1802
+                                FC-1802
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -2758,205 +1836,205 @@ export default function GraphicVREC() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-        const initialPositions = {
-            AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-            ArrowRight: { x: 503.1381419284244, y: 1023.694783335719 },
-            ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
-            BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
-            BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
-            BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
-            BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
-            BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
-            BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
-            BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
-            BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
-            BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
-            BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
-            BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
-            BallValueCenter_Check: {
-                x: 90.96636981528951,
-                y: 1084.2937921267353,
-            },
-            BallValueCenter_None: {
-                x: -474.0480962199408,
-                y: 1047.4658048132944,
-            },
-            BallValueCenter_None2: {
-                x: -458.43233108676895,
-                y: 1047.9161594286932,
-            },
-            BallValueFirst: { x: 419.65262421132076, y: 1009.5430441067174 },
-            BallValueLast: { x: -1236.4348814622088, y: 1015.5065165529766 },
-            BallValuePSV: { x: 290.22148707331525, y: 959.6157106130481 },
-            BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
-            ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-            FIQ_1901: { x: -600.2178332288872, y: 530.5500772634006 },
-            FIQ_1902: { x: -600.782593545606, y: 1307.348642657379 },
-            FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
-            FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
-            FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
-            FIQ_none22: { x: -461.411272356637, y: 1246.8432149457044 },
-            Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-            Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-            GD1: { x: -721.106774380396, y: 1036.124815356864 },
-            GD1_Name1901: { x: -750.5717919879045, y: 963.6033250363372 },
-            GD1_Value1901: { x: -750.6929582767964, y: 998.3450746708818 },
-            GD2: { x: -108.63790203727399, y: 1034.2608683363853 },
-            GD2_Name1902: { x: -138.3576747080346, y: 962.2555967945655 },
-            GD2_Value1902: { x: -138.105199084697, y: 996.9067838824453 },
-            GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
-            GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
-            GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
-            GD_none1: { x: -695.6714460801703, y: 1055.524751466512 },
-            GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
-            GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
-            HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-            Header: { x: -1151.6437416275705, y: 451.3479861495938 },
-            Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
-            Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
-            LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
-            PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
-            PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
-            PCV_NUM01: { x: -200.90249819080248, y: 779.1363564017703 },
-            PCV_NUM02: { x: -202.05990690632876, y: 1214.5509375649663 },
-            PCV_ballVavle_Small1: {
-                x: -9.97812688216436,
-                y: 890.3528829879407,
-            },
-            PCV_ballVavle_Small1_none1: {
-                x: -85.98048131286686,
-                y: 906.7535606409883,
-            },
-            PCV_ballVavle_Small1_none2: {
-                x: -87.01319099046559,
-                y: 1140.2927546567473,
-            },
-            PCV_ballVavle_Small2: {
-                x: -10.924423457684213,
-                y: 1121.8809236143888,
-            },
-            PCV_ballVavle_Small2_none1: {
-                x: -3.980775175783833,
-                y: 937.8135634050248,
-            },
-            PCV_ballVavle_Small2_none2: {
-                x: -4.242106929766209,
-                y: 1168.0979210360842,
-            },
-            PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
-            PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
-            PSV01: { x: 164.5653138749226, y: 709.1940849015447 },
-            PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
-            PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
-            PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-            PSV_None01: { x: 436.98718383080245, y: 1040.7984512500652 },
-            PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
-            PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
-            PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
-            PT1: { x: 210.29089216580826, y: 944.8215389633342 },
-            PT2: { x: -708.258294622871, y: 1154.2084571677146 },
-            PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-            PT_col1: { x: 243.09758907436128, y: 1006.995256464112 },
-            PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
-            PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-            PT_none1: { x: 246.97093596247453, y: 1035.3795085307177 },
-            PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
-            PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
-            PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-            PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-            Pressure_Trans01: {
-                x: 123.01439682372097,
-                y: 1214.0304333064828,
-            },
-            Pressure_Trans02: {
-                x: -1019.4423849427775,
-                y: 706.6585420699575,
-            },
-            Pressure_Trans03: {
-                x: -1022.6221979715284,
-                y: 1306.0599379762566,
-            },
-            SDV: { x: -1127.2804525595525, y: 948.8166088808405 },
-            SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
-            SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
-            SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-            SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
-            T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
-            T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-            Tank: { x: -952.0719666857922, y: 984.2988432580569 },
-            Tank_Ball: { x: -918.0480270305792, y: 1165.3460365617266 },
-            Tank_None: { x: -929.420575058274, y: 1045.859003360467 },
-            Temperature_Trans01: {
-                x: -607.828356494313,
-                y: 562.8487535527242,
-            },
-            Temperature_Trans02: {
-                x: -796.1166124474211,
-                y: 1445.5258186779024,
-            },
-            VavleWay: { x: -548.7343955645046, y: 1023.9896019770438 },
-            animation_line7: { x: -726.8677999585877, y: 845.0411827415849 },
-            animation_line8: { x: -302.1278181476729, y: 845.0900138040361 },
-            animation_line9: { x: -735.8615775891575, y: 1250.0032163426715 },
-            animation_line10: {
-                x: -302.52565055103537,
-                y: 1250.145137738511,
-            },
-            animation_line11: {
-                x: -379.70039074752606,
-                y: 845.4885740100881,
-            },
-            animation_line12: {
-                x: -456.7744720087678,
-                y: 1047.6913485484115,
-            },
-            animation_line13: {
-                x: -471.36187766507726,
-                y: 1047.0994790430639,
-            },
-            animation_line14: {
-                x: -601.6773380252566,
-                y: 1249.8269450159223,
-            },
-            animation_line15: {
-                x: -300.41401361805697,
-                y: 1249.8955661985747,
-            },
-            borderWhite: { x: -1267.4241384555676, y: 447.0015279974359 },
-            data1: { x: -600.2396652303086, y: 733.0298552462513 },
-            data2: { x: -600.6538263836953, y: 682.3968450603423 },
-            data3: { x: -600.4792235982375, y: 631.8178888851007 },
-            data4: { x: -600.1016616532435, y: 580.9222883481272 },
-            data5: { x: -600.9941090494707, y: 1357.5928722234303 },
-            data6: { x: -600.8317496942007, y: 1408.2027063708313 },
-            data7: { x: -600.8761635213684, y: 1458.4550015900893 },
-            data8: { x: -600.4659556614379, y: 1508.8491719032568 },
-            line1: { x: -1219.4244277428284, y: 1046.4109300929706 },
-            line2: { x: -759.1307313177314, y: 1046.097424130381 },
-            line3: { x: -743.0134159304, y: 844.6163804041859 },
-            line4: { x: -743.9949690251686, y: 1249.172245093845 },
-            line5: { x: -300.65784806763253, y: 844.3342440262651 },
-            line6: { x: -300.98065704991916, y: 1249.1529639630187 },
-            line7: { x: -241.6382268189932, y: 1041.7359796478943 },
-            line8: { x: -178.3476951217882, y: 930.3833450683701 },
-            line9: { x: -178.37038145875272, y: 1161.2417569105805 },
-            line10: { x: 86.69745659087829, y: 930.5099856332267 },
-            line11: { x: 86.19431979613125, y: 1161.0153295862324 },
-            line12: { x: 116.83816603164496, y: 1040.345253330986 },
-            line13: { x: 437.3312960971492, y: 1041.4713896720348 },
-            lineBall_13_1: { x: 519.8312960971493, y: 1041.4713896720348 },
-            overlay_SmallVavle1: {
-                x: -593.2918361488164,
-                y: 1011.397327575481,
-            },
-            overlay_SmallVavle2: {
-                x: -1263.7593947324417,
-                y: 1290.7025144885476,
-            },
-            overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-            overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-            timeUpdate3: { x: -1243.9518053811212, y: 516.6560931085854 },
-        };
+    const initialPositions = {
+        AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
+        ArrowRight: { x: 503.1381419284244, y: 1023.694783335719 },
+        ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
+        BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
+        BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
+        BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
+        BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
+        BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
+        BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
+        BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
+        BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
+        BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
+        BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
+        BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
+        BallValueCenter_Check: {
+            x: 90.96636981528951,
+            y: 1084.2937921267353,
+        },
+        BallValueCenter_None: {
+            x: -474.0480962199408,
+            y: 1047.4658048132944,
+        },
+        BallValueCenter_None2: {
+            x: -458.43233108676895,
+            y: 1047.9161594286932,
+        },
+        BallValueFirst: { x: 419.65262421132076, y: 1009.5430441067174 },
+        BallValueLast: { x: -1236.4348814622088, y: 1015.5065165529766 },
+        BallValuePSV: { x: 290.22148707331525, y: 959.6157106130481 },
+        BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
+        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+        FIQ_1901: { x: -600.2178332288872, y: 530.5500772634006 },
+        FIQ_1902: { x: -600.782593545606, y: 1307.348642657379 },
+        FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
+        FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
+        FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
+        FIQ_none22: { x: -461.411272356637, y: 1246.8432149457044 },
+        Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
+        Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
+        GD1: { x: -721.106774380396, y: 1036.124815356864 },
+        GD1_Name1901: { x: -750.5717919879045, y: 963.6033250363372 },
+        GD1_Value1901: { x: -750.6929582767964, y: 998.3450746708818 },
+        GD2: { x: -108.63790203727399, y: 1034.2608683363853 },
+        GD2_Name1902: { x: -138.3576747080346, y: 962.2555967945655 },
+        GD2_Value1902: { x: -138.105199084697, y: 996.9067838824453 },
+        GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
+        GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
+        GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
+        GD_none1: { x: -695.6714460801703, y: 1055.524751466512 },
+        GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
+        GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
+        HELP: { x: 750.7851455025582, y: 336.66019515746984 },
+        Header: { x: -1151.6437416275705, y: 451.3479861495938 },
+        Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
+        Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
+        LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
+        PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
+        PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
+        PCV_NUM01: { x: -200.90249819080248, y: 779.1363564017703 },
+        PCV_NUM02: { x: -202.05990690632876, y: 1214.5509375649663 },
+        PCV_ballVavle_Small1: {
+            x: -9.97812688216436,
+            y: 890.3528829879407,
+        },
+        PCV_ballVavle_Small1_none1: {
+            x: -85.98048131286686,
+            y: 906.7535606409883,
+        },
+        PCV_ballVavle_Small1_none2: {
+            x: -87.01319099046559,
+            y: 1140.2927546567473,
+        },
+        PCV_ballVavle_Small2: {
+            x: -10.924423457684213,
+            y: 1121.8809236143888,
+        },
+        PCV_ballVavle_Small2_none1: {
+            x: -3.980775175783833,
+            y: 937.8135634050248,
+        },
+        PCV_ballVavle_Small2_none2: {
+            x: -4.242106929766209,
+            y: 1168.0979210360842,
+        },
+        PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
+        PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
+        PSV01: { x: 164.5653138749226, y: 709.1940849015447 },
+        PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
+        PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
+        PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
+        PSV_None01: { x: 436.98718383080245, y: 1040.7984512500652 },
+        PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
+        PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
+        PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
+        PT1: { x: 210.29089216580826, y: 944.8215389633342 },
+        PT2: { x: -708.258294622871, y: 1154.2084571677146 },
+        PT3: { x: -714.6813595253996, y: 749.7451241622731 },
+        PT_col1: { x: 243.09758907436128, y: 1006.995256464112 },
+        PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
+        PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
+        PT_none1: { x: 246.97093596247453, y: 1035.3795085307177 },
+        PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
+        PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
+        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+        Pressure_Trans01: {
+            x: 123.01439682372097,
+            y: 1214.0304333064828,
+        },
+        Pressure_Trans02: {
+            x: -1019.4423849427775,
+            y: 706.6585420699575,
+        },
+        Pressure_Trans03: {
+            x: -1022.6221979715284,
+            y: 1306.0599379762566,
+        },
+        SDV: { x: -1127.2804525595525, y: 948.8166088808405 },
+        SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
+        SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
+        SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+        SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
+        T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
+        T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
+        Tank: { x: -952.0719666857922, y: 984.2988432580569 },
+        Tank_Ball: { x: -918.0480270305792, y: 1165.3460365617266 },
+        Tank_None: { x: -929.420575058274, y: 1045.859003360467 },
+        Temperature_Trans01: {
+            x: -607.828356494313,
+            y: 562.8487535527242,
+        },
+        Temperature_Trans02: {
+            x: -796.1166124474211,
+            y: 1445.5258186779024,
+        },
+        VavleWay: { x: -548.7343955645046, y: 1023.9896019770438 },
+        animation_line7: { x: -726.8677999585877, y: 845.0411827415849 },
+        animation_line8: { x: -302.1278181476729, y: 845.0900138040361 },
+        animation_line9: { x: -735.8615775891575, y: 1250.0032163426715 },
+        animation_line10: {
+            x: -302.52565055103537,
+            y: 1250.145137738511,
+        },
+        animation_line11: {
+            x: -379.70039074752606,
+            y: 845.4885740100881,
+        },
+        animation_line12: {
+            x: -456.7744720087678,
+            y: 1047.6913485484115,
+        },
+        animation_line13: {
+            x: -471.36187766507726,
+            y: 1047.0994790430639,
+        },
+        animation_line14: {
+            x: -601.6773380252566,
+            y: 1249.8269450159223,
+        },
+        animation_line15: {
+            x: -300.41801361805697,
+            y: 1249.8955661985747,
+        },
+        borderWhite: { x: -1267.4241384555676, y: 447.0015279974359 },
+        data1: { x: -600.2396652303086, y: 733.0298552462513 },
+        data2: { x: -600.6538263836953, y: 682.3968450603423 },
+        data3: { x: -600.4792235982375, y: 631.8178888851007 },
+        data4: { x: -600.1016616532435, y: 580.9222883481272 },
+        data5: { x: -600.9941090494707, y: 1357.5928722234303 },
+        data6: { x: -600.8317496942007, y: 1408.2027063708313 },
+        data7: { x: -600.8761635213684, y: 1458.4550015900893 },
+        data8: { x: -600.4659556614379, y: 1508.8491719032568 },
+        line1: { x: -1219.4244277428284, y: 1046.4109300929706 },
+        line2: { x: -759.1307313177314, y: 1046.097424130381 },
+        line3: { x: -743.0134159304, y: 844.6163804041859 },
+        line4: { x: -743.9949690251686, y: 1249.172245093845 },
+        line5: { x: -300.65784806763253, y: 844.3342440262651 },
+        line6: { x: -300.98065704991916, y: 1249.1529639630187 },
+        line7: { x: -241.6382268189932, y: 1041.7359796478943 },
+        line8: { x: -178.3476951217882, y: 930.3833450683701 },
+        line9: { x: -178.37038145875272, y: 1161.2417569105805 },
+        line10: { x: 86.69745659087829, y: 930.5099856332267 },
+        line11: { x: 86.19431979613125, y: 1161.0153295862324 },
+        line12: { x: 116.83816603164496, y: 1040.345253330986 },
+        line13: { x: 437.3312960971492, y: 1041.4713896720348 },
+        lineBall_13_1: { x: 519.8312960971493, y: 1041.4713896720348 },
+        overlay_SmallVavle1: {
+            x: -593.2918361488164,
+            y: 1011.397327575481,
+        },
+        overlay_SmallVavle2: {
+            x: -1263.7593947324417,
+            y: 1290.7025144885476,
+        },
+        overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
+        overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
+        timeUpdate3: { x: -1243.9518053811212, y: 516.6560931085854 },
+    };
     const [positions, setPositions] = useState(initialPositions);
 
     const lineColor = "#ffaa00";
@@ -4151,7 +3229,7 @@ export default function GraphicVREC() {
                         }}
                         onClick={confirmLineDuty}
                     >
-                        FIQ-1902
+                        FC-1902
                         {lineDuty1902 && <span>1902</span>}
                     </div>
                 ),
@@ -4778,7 +3856,7 @@ export default function GraphicVREC() {
 
             style: {
                 border: background,
-                width: 300,
+                width: 260,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4848,7 +3926,7 @@ export default function GraphicVREC() {
             sourcePosition: Position.Top,
             targetPosition: Position.Right,
             style: {
-                border: "#333333",
+                border: "none",
                 background: 'none',
                 width: 10,
                 height: 1,
@@ -4866,7 +3944,7 @@ export default function GraphicVREC() {
             targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: 'none',
+                background: colorIMG_none,
                 width: 10,
                 height: 1,
             },
@@ -5543,6 +4621,8 @@ export default function GraphicVREC() {
                 borderRadius: 5,
             },
         },
+
+        //==============================================================================
 
         {
             id: "LineBall_1_1",
@@ -6258,22 +5338,13 @@ export default function GraphicVREC() {
                         ...prevPositions,
                         AlarmCenter: position,
                     }));
-                } else if (id === "LineBall_1_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        LineBall_1_1: position,
-                    }));
-                } else if (id === "lineBall_13_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        lineBall_13_1: position,
-                    }));
                 }
+
+                //=================================================================
             }
         },
         [setNodes, setPositions, editingEnabled]
     );
-
 
     const toggleEditing = () => {
         setEditingEnabled(!editingEnabled);
