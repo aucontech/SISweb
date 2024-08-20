@@ -1592,7 +1592,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
+        PT01: "Output Pressure PT-1503 (BarG)",
         GD1: "Gas Detector GD-1501 (%LEL)",
         GD2: "Gas Detector GD-1502 (%LEL)",
         GD3: "Gas Detector GD-1903 (%LEL)",
