@@ -213,7 +213,7 @@ export default function SetUpdata_YOSHINO() {
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithinum_Battery_Status: setFC_Lithium_Battery_Status,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -4715,8 +4715,7 @@ const DataEmergency_NC = Emergency_NC === "0" ? "Emergency" : Emergency_NC === "
 const DataUPS_Mode = UPS_Mode === "0" ? "Error" : UPS_Mode === "1" ? "UPS Running" : UPS_Mode === "2" ? "Charging" : UPS_Mode === "3" ? "No Battery" : UPS_Mode === "4" ? "Normal" : null
 
 
-
-const DataFC_Lithinum_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
+const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
 
 const DataDO_HR_01 = DO_HR_01 === "0" ? "OFF" : DO_HR_01 === "1" ? "ON" : null;
 const DataDO_BC_01 = DO_BC_01 === "0" ? "OFF" : DO_BC_01 === "1" ? "ON" : null;
@@ -4727,10 +4726,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
 
 
 
-
         const dataFC01 =  [
-
-         
 
   
         {
@@ -4739,7 +4735,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
             timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>Input Pressure</span> ,
 
-        modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
+        modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>47619	 </span> ,
 
        value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
@@ -4757,7 +4753,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>Temperature</span> ,
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
+       modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>47621	 </span> ,
       value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
@@ -4775,7 +4771,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
        timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
      name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
 
-     modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
+     modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>47615	 </span> ,
 
     value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -4794,7 +4790,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
        timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
 
-    modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
+    modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>47617	 </span> ,
 
    value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
@@ -4834,7 +4830,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>Gross Volume Flow</span> ,
 
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
+       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>47625	 </span> ,
 
       value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
@@ -4855,7 +4851,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
         timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>Standard Volume Vb Today</span> ,
 
-      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
+      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>47627	 </span> ,
 
      value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
@@ -4881,7 +4877,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
                 timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
        
-            modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
+            modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>47629	 </span> ,
        
            value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -4906,7 +4902,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
         timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
 
-    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
+    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>47631	 </span> ,
 
    value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume}  {nameValue.Sm3}</span> , 
     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
@@ -4927,7 +4923,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
     timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
    name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
 
-   modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
+   modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>47633	 </span> ,
 
   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume}  {nameValue.m3}</span> , 
    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -4955,7 +4951,7 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>Input Pressure</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>48619	 </span> ,
 
  value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure}  {nameValue.Bara}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
@@ -4978,7 +4974,7 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
  name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>Temperature</span> ,
 
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
+ modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>48621	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature}  {nameValue.C}</span> , 
  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
@@ -4997,7 +4993,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Cur
    timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
  name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>Gross Volume Accumulated</span> ,
 
- modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>8615	 </span> ,
+ modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>48615	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume}  {nameValue.m3}</span> , 
  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -5017,7 +5013,7 @@ value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >
    timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>Standard Volume Accumulated</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>8617	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>48617	 </span> ,
 
  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume}  {nameValue.Sm3}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
@@ -5036,7 +5032,7 @@ value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>8623	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>48623	 </span> ,
 
  value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate}  {nameValue.Sm3h}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
@@ -5078,7 +5074,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > 
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>Standard Volume Vb Today</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>8627	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>48627	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume}  {nameValue.Sm3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
@@ -5099,7 +5095,7 @@ checked={maintainFC_02_Today_Values_Volume}
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>Gross Volume Vm Today</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>8629	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>48629	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume}  {nameValue.m3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -5124,7 +5120,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>Standard Volume Vb Yesterday</span> ,
     
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>8631	 </span> ,
+             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>48631	 </span> ,
     
             value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume}  {nameValue.Sm3}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
@@ -5145,7 +5141,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>Gross Volume Vm Yesterday</span> ,
     
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>8633	 </span> ,
+             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>48633	 </span> ,
     
             value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume}  {nameValue.m3}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
@@ -5563,7 +5559,7 @@ checked={maintainPLC_Conn_STT}
                 timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
              modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} {DataFC_Lithinum_Battery_Status}</span> , 
+            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
              low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5704,7 +5700,6 @@ checked={maintainPLC_Conn_STT}
             Value: (
                 <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputPCV_01}
@@ -5732,7 +5727,6 @@ checked={maintainPLC_Conn_STT}
             Value: (
                 <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputPCV_02}
@@ -5760,7 +5754,6 @@ checked={maintainPLC_Conn_STT}
             Value: (
                 <InputText 
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputPSV_01}
@@ -5784,12 +5777,11 @@ checked={maintainPLC_Conn_STT}
             ),
         },
         {
-            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+            Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
 
             Value: (
                 <InputText
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputGetwayPhone}
@@ -5844,7 +5836,7 @@ checked={maintainPLC_Conn_STT}
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
+                <h4>Station - Configurations </h4>
                 <DataTable value={Configuration} size={"small"} selectionMode="single" >
                     <Column field="Name" header="Name" />
 

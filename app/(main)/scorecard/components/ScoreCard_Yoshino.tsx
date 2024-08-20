@@ -86,7 +86,7 @@ export default function ScoreCard_Yoshino() {
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithinum_Battery_Status: setFC_Lithium_Battery_Status,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -1706,7 +1706,7 @@ useEffect(() => {
         UPS_Mode === "0"
             ? "Error"
             : UPS_Mode === "1"
-            ? "Using Running"
+            ? "UPS Running"
             : UPS_Mode === "2"
             ? "Charging"
             : UPS_Mode === "3"
@@ -1743,7 +1743,7 @@ useEffect(() => {
 
 
 
-                CSSFC_Lithinum_Battery_Status : {
+                CSSFC_Lithium_Battery_Status : {
                     color:exceedThresholdFC_Lithium_Battery_Status && !maintainFC_Lithium_Battery_Status
                     ? "#ff5656"
                     : maintainFC_Lithium_Battery_Status
@@ -2452,7 +2452,7 @@ useEffect(() => {
           const dataFC1 = [
             {
                 name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
-                FC1: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
+                FC1: <span style={combineCss.CSSFC_Lithium_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
     
             },
             {

@@ -220,7 +220,6 @@ export default function ScoreCard_ZOCV() {
                 (item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
             );
 
-
             const FC_01_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_High");
             setFC_01_Accumulated_Values_Uncorrected_Volume_High(FC_01_Accumulated_Values_Uncorrected_Volume_High?.value || null);
             const FC_01_Accumulated_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_Low");
@@ -261,7 +260,6 @@ export default function ScoreCard_ZOCV() {
                 (item: any) => item.key === "FC_01_Today_Values_Volume_Maintain"
             );
 
-
             const FC_01_Today_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_High");
             setFC_01_Today_Values_Uncorrected_Volume_High(FC_01_Today_Values_Uncorrected_Volume_High?.value || null);
             const FC_01_Today_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Today_Values_Uncorrected_Volume_Low");
@@ -278,7 +276,6 @@ export default function ScoreCard_ZOCV() {
                 (item: any) => item.key === "FC_01_Yesterday_Values_Volume_Maintain"
             );
 
-
             const FC_01_Yesterday_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_High");
             setFC_01_Yesterday_Values_Uncorrected_Volume_High(FC_01_Yesterday_Values_Uncorrected_Volume_High?.value || null);
             const FC_01_Yesterday_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Low");
@@ -287,8 +284,6 @@ export default function ScoreCard_ZOCV() {
                 (item: any) => item.key === "FC_01_Yesterday_Values_Uncorrected_Volume_Maintain"
             );
 //==================================================================================================================================
-
-
 const EVC_02_Volume_at_Measurement_Condition_High = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_High");
 setEVC_02_Volume_at_Measurement_Condition_High(EVC_02_Volume_at_Measurement_Condition_High?.value || null);
 const EVC_02_Volume_at_Measurement_Condition_Low = res.data.find((item: any) => item.key === "EVC_02_Volume_at_Measurement_Condition_Low");
@@ -304,7 +299,6 @@ setEVC_02_Vm_of_Last_Day_Low(EVC_02_Vm_of_Last_Day_Low?.value || null);
 const EVC_02_Vm_of_Last_Day_Maintain = res.data.find(
     (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
 );
-
 
 const EVC_02_Pressure_High = res.data.find((item: any) => item.key === "EVC_02_Pressure_High");
 setEVC_02_Pressure_High(EVC_02_Pressure_High?.value || null);

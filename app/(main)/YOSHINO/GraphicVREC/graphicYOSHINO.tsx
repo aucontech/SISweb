@@ -1398,7 +1398,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1401 :
+                                        PT-1401:
                                     </p>
                                     <p
                                         style={{
@@ -1417,7 +1417,7 @@ export default function GraphicYOSHINO() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1461,7 +1461,7 @@ export default function GraphicYOSHINO() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1402 :
+                                        PT-1402:
                                     </p>
                                     <p
                                         style={{
@@ -1479,7 +1479,7 @@ export default function GraphicYOSHINO() {
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1660,7 +1660,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD1} LEL</p>
+                                <p>{roundedGD1} %LEL</p>
                             </div>
                         ),
                     },
@@ -1696,7 +1696,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD2} LEL</p>
+                                <p>{roundedGD2} %LEL</p>
                             </div>
                         ),
                     },
@@ -1732,7 +1732,7 @@ export default function GraphicYOSHINO() {
             //                     }}
             //                     // onClick={() => confirmGD_1903()}
             //                 >
-            //                     <p>{roundedGD03} LEL</p>
+            //                     <p>{roundedGD03} %LEL</p>
             //                 </div>
             //             ),
             //         },
@@ -1774,7 +1774,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1401
+                                FC-1401
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -1808,7 +1808,7 @@ export default function GraphicYOSHINO() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FIQ-1402
+                                FC-1402
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -3229,7 +3229,7 @@ export default function GraphicYOSHINO() {
                         }}
                         onClick={confirmLineDuty}
                     >
-                        FIQ-1902
+                        FC-1902
                         {lineDuty1902 && <span>1902</span>}
                     </div>
                 ),
