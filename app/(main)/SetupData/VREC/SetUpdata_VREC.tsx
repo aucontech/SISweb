@@ -5202,7 +5202,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             {
                  mainCategory: mainCategoryFC.PLC ,
                 timeUpdate: <span style={combineCss.CSSPT1} >{PLC_STTValue}</span>,
-            name: <span style={combineCss.CSSPT1}>Output Pressure PT-1403</span> ,
+            name: <span style={combineCss.CSSPT1}>Output Pressure PT-1803</span> ,
    
             modbus: <span style={combineCss.CSSPT1}>DB5F114	 </span> ,
    
