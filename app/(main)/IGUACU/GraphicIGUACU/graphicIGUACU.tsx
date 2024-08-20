@@ -1722,7 +1722,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD1} LEL</p>
+                                <p>{roundedGD1} %LEL</p>
                             </div>
                         ),
                     },
@@ -1758,7 +1758,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD2} LEL</p>
+                                <p>{roundedGD2} %LEL</p>
                             </div>
                         ),
                     },
