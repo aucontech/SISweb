@@ -4364,7 +4364,7 @@ useEffect(() => {
             onChange={handleCheckboxChangeEVC01}
             checked={checkMaintainingEVC}
         />
-    <p style={{fontSize:15}}>Maintain EVC-1901</p>  </div> )}  </span>,
+    <p style={{fontSize:15}}>Maintain EVC-1501</p>  </div> )}  </span>,
     EVC02:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> EVC-1502 -  Parameters & Configurations  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
         <Checkbox disabled={AuthInput}
  style={{ marginRight: 5 }}

@@ -4686,7 +4686,7 @@ const ChangeMaintainPLC_Conn_STT = async () => {
             onChange={handleCheckboxChangeFC}
             checked={checkMaintainingFC}
         />
-    <p style={{fontSize:15}}>Maintain EVC-1701</p>  </div> )}  </span> ,
+    <p style={{fontSize:15}}>Maintain FC-1401</p>  </div> )}  </span> ,
     FC02: 'FC-1402 -  Parameters & Configurations',
     PLC: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameters & Configurations {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
         <Checkbox
@@ -4694,7 +4694,7 @@ const ChangeMaintainPLC_Conn_STT = async () => {
             onChange={handleCheckboxChangePLC}
             checked={checkMaintainingPLC}
         />
-    <p style={{fontSize:15}}>Maintain EVC-1701</p>  </div> )}  </span> ,
+    <p style={{fontSize:15}}>Maintain PLC</p>  </div> )}  </span> ,
     FC: 'FC -  Parameters & Configurations',
 
 };
@@ -4809,7 +4809,7 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
             timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>Standard Volume Flow</span> ,
 
-        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
+        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>47623	 </span> ,
 
        value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 

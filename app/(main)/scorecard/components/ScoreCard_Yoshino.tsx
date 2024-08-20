@@ -1662,7 +1662,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure (BarG)",
+        PT01: "Output Pressure PT-1403 (BarG)",
         GD1: "Gas Detector GD-1401 (%LEL)",
         GD2: "Gas Detector GD-1402 (%LEL)",
         ZSC: "SDV-1401 ZSC (0: ON - 1: OFF)",
@@ -1671,7 +1671,7 @@ useEffect(() => {
         UPS_CHARGING: "UPS CHARGING (0: Normal - 1: Charging)",
         UPS_ALARM: "UPS ALARM (0: Normal - 1: No Battery)",
 
-        Smoker_Detected: "SD 1 (0: Normal - 1: Smoker Detected)",
+        Smoker_Detected: "Smoker Detected SD-1401 (0: Normal - 1: Smoker Detected)",
 
         UPS_MODE:
             "UPS MODE (1: UPS Running - 2: Charging - 3: No Battery - 4: Normal)",
@@ -1688,7 +1688,7 @@ useEffect(() => {
 
     const DataRESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON" : null;
     const DataDO_SV_01 = DO_SV_01 === "0" ? "OFF" : DO_SV_01 === "1" ? "ON" : null;
-    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_RESET === "1" ? "Emergency" : null;
+    const DataMap1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency" : null;
 
     const DataSmoker_Detected = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
 
@@ -1700,6 +1700,10 @@ useEffect(() => {
             : null;
     const DataBattery =
         DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
+
+
+const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+
     const DataAlarm =
         DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
     const DataMode =
@@ -1716,6 +1720,9 @@ useEffect(() => {
             : null;
     const DataZSO_1 = DI_ZSO_1 === "0" ? " OFF" : DI_ZSO_1 === "1" ? "ON" : null;
     const DataZSC_1 = DI_ZSC_1 === "0" ? " ON" : DI_ZSC_1 === "1" ? "OFF" : null;
+
+    const DataFC_Lithium_Battery_Status= FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
+
 
     const DataDI_SELECT_SW =
         DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
@@ -1738,10 +1745,6 @@ useEffect(() => {
 
 
             const combineCss = {
-
-
-
-
 
                 CSSFC_Lithium_Battery_Status : {
                     color:exceedThresholdFC_Lithium_Battery_Status && !maintainFC_Lithium_Battery_Status
@@ -1993,16 +1996,7 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
-
-
-
-
-
-
 //==================================================================================================================================
-
-
-
 
                 CSSFC_02_Current_Values_Temperature : {
                     color:exceedThresholdFC_02_Current_Values_Temperature && !maintainFC_02_Current_Values_Temperature
@@ -2452,7 +2446,7 @@ useEffect(() => {
           const dataFC1 = [
             {
                 name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
-                FC1: <span style={combineCss.CSSFC_Lithium_Battery_Status}>{FC_Lithium_Battery_Status}</span>,
+                FC1: <span style={combineCss.CSSFC_Lithium_Battery_Status}>{FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span>,
     
             },
             {
@@ -2584,7 +2578,7 @@ useEffect(() => {
         },
         {
             name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataAlarm}</span>,
+            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataDI_SD_1}</span>,
         },
      
         {
