@@ -3939,7 +3939,7 @@ checked={maintainEVC_02_Conn_STT}
             
             modbus: <span style={combineCss.CSSPT_1103}>AI1</span> ,
             
-            value: <span style={combineCss.CSSPT_1103} > {PT_1103} {nameValue.m3}</span> , 
+            value: <span style={combineCss.CSSPT_1103} > {PT_1103} {nameValue.BARG}</span> , 
             high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='High' step="0.1" type='number' value={inputValuePT_1103} onChange={handleInputChangePT_1103} inputMode="decimal" />, 
             low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1103}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1103} onChange={handleInputChange2PT_1103} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
@@ -4083,11 +4083,10 @@ checked={maintainEVC_02_Conn_STT}
         PCV1: "Pressure Control Valve (PCV-1901)",
         PCV2: "Pressure Control Valve (PCV-1902)",
         IOT: "IOT getway phone number",
-        EVC_01_Battery_Expiration_Date: "EVC-1101 Battery Expiration Date",
-        EVC_01_Battery_Installation_Date: "EVC-1101 Battery Installation Date",
+        EVC_01_Battery_Expiration_Date: "EVC-1102 Battery Expiration Date",
+        EVC_01_Battery_Installation_Date: "EVC-1102 Battery Installation Date",
 
-        EVC_02_Battery_Expiration_Date: "EVC-1102 Battery Expiration Date",
-        EVC_02_Battery_Installation_Date: "EVC-1102 Battery Installation Date"
+    
 
     }
 
@@ -4260,67 +4259,6 @@ checked={maintainEVC_02_Conn_STT}
            
         },
 
-        {
-            Name: (
-                <span style={combineCssTime.PCV}>
-                    {ConfigurationsName.EVC_02_Battery_Installation_Date}
-                </span>
-            ),
-          
-            Value: (
-                <Calendar
-                    style={combineCssTime.PCV}
-                    value={date3}
-                    onChange={handleDateChange2}
-                    disabled={AuthInput}
-                    showTime={false}
-                    inputId="timeEVC_02"
-                    dateFormat="dd-mm-yy"
-                />
-            ),
-           
-            Update: (
-                <Button
-                disabled={AuthInput}
-                    className="buttonUpdateSetData"
-                    style={{ marginTop: 5 }}
-                    label="Update"
-                    onClick={confirmUpData}
-                />
-            ),
-        },
-        {
-            Name: (
-                <span style={combineCssTime.PCV}>
-                    {ConfigurationsName.EVC_02_Battery_Expiration_Date}
-                </span>
-            ),
-          
-         
-            Value: (
-                <Calendar
-                
-                    style={combineCssTime.PCV}
-                    value={date4}
-                    disabled
-
-                    showTime={false}
-                    inputId="timeEVC_01"
-                    dateFormat="dd-mm-yy"
-                />
-                
-            ),
-            Update: (
-                <Button
-                    className="buttonUpdateSetData"
-                    
-                    disabled
-                    style={{ marginTop: 5,cursor:"no-drop" }}
-                    label="Update"
-                />
-            ),
-           
-        },
 
     ];
 
