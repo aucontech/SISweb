@@ -3586,6 +3586,7 @@ const ChangeMaintainPLC_Conn_STT = async () => {
                     const newMaintainDO_BC_01 = checked;
                     const newMaintainDO_SV_01 = checked;
                     const newMaintainPLC_Conn_STT = checked;
+                    const newMaintainDI_SD_1 = checked;
 
             
                     await httpApi.post(
@@ -3616,6 +3617,7 @@ const ChangeMaintainPLC_Conn_STT = async () => {
                            DO_BC_01_Maintain: newMaintainDO_BC_01,
                            DO_SV_01_Maintain: newMaintainDO_SV_01,
                            PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT,
+                           DI_SD_1_Maintain: newMaintainDI_SD_1,
 
             
                          }
@@ -3646,6 +3648,7 @@ const ChangeMaintainPLC_Conn_STT = async () => {
                     setMaintainDO_BC_01(newMaintainDO_BC_01);
                     setMaintainDO_SV_01(newMaintainDO_SV_01);
                     setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
+                    setMaintainDI_SD_1(newMaintainDI_SD_1);
             
             
                 } catch (error) {
@@ -4706,7 +4709,11 @@ const DataDI_MAP_1 = DI_MAP_1 === "0" ? "Normal" : DI_MAP_1 === "1" ? "Emergency
 const DataDI_UPS_BATTERY = DI_UPS_BATTERY === "0" ? "Normal" : DI_UPS_BATTERY === "1" ? "Battery" : null;
 const DataDI_UPS_CHARGING = DI_UPS_CHARGING === "0" ? "Normal" : DI_UPS_CHARGING === "1" ? "Charging" : null;
 const DataDI_UPS_ALARM = DI_UPS_ALARM === "0" ? "Normal" : DI_UPS_ALARM === "1" ? "No Battery" : null;
-const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Deteced" : null;
+
+
+const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detected" : null;
+
+
 const DataDI_SELECT_SW = DI_SELECT_SW === "0" ? "Local" : DI_SELECT_SW === "1" ? "Remote" : null;
 const DataDI_RESET = DI_RESET === "0" ? "OFF" : DI_RESET === "1" ? "ON " : null;
 
