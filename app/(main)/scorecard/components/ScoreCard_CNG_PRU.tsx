@@ -1848,7 +1848,7 @@ useEffect(() => {
     const DataGD_STATUS = GD_STATUS === "0" ? "Normal" : GD_STATUS === "1" ? "Alarm" : null;
     const DataHR_BC = HR_BC === "0" ? "Normal" : HR_BC === "1" ? "Alarm" : null;
     const DataESD = ESD === "0" ? "Normal" : ESD === "1" ? "Alarm" : null;
-    const DataSD = SD === "0" ? "Normal" : SD === "1" ? "Smoker Detected" : null;
+    const DataSD = SD === "0" ? "Normal" : SD === "1" ? "Alarm" : null;
 
     const DataPT_6004 = PT_6004 === "0" ? "Normal" : PT_6004 === "1" ? "Smoker Detected" : null;
 
@@ -2954,12 +2954,12 @@ useEffect(() => {
                             field="PLC"
                             header={PLC_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC</p>
                                </div>
                                 
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
+                                {DotRed}  <p style={{marginLeft:5}}>PLC</p>
                              </div>
                             )}
                         ></Column>
