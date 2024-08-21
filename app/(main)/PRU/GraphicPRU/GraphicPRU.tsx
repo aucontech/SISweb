@@ -254,7 +254,7 @@ export default function GraphicPRU() {
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         PIT_6001A: setPIT_6001A,
                         PIT_6001B: setPIT_6001B,
@@ -507,22 +507,15 @@ export default function GraphicPRU() {
             );
 
             //===========================================================================================
-
-            const HighEVC_01_Temperature = res.data.find(
-                (item: any) => item.key === "EVC_01_Temperature_High"
-            );
-            setEVC_01_Temperature_High(HighEVC_01_Temperature?.value || null);
-
-            const LowEVC_01_Temperature = res.data.find(
-                (item: any) => item.key === "EVC_01_Temperature_Low"
-            );
-            setEVC_01_Temperature_Low(LowEVC_01_Temperature?.value || null);
+            const EVC_01_Temperature_High = res.data.find((item: any) => item.key === "EVC_01_Temperature_High");
+            setEVC_01_Temperature_High(EVC_01_Temperature_High?.value || null);
+            const EVC_01_Temperature_Low = res.data.find((item: any) => item.key === "EVC_01_Temperature_Low");
+            setEVC_01_Temperature_Low(EVC_01_Temperature_Low?.value || null);
             const EVC_01_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
-            setmaintainEVC_01_Temperature(
-                EVC_01_Temperature_Maintain?.value || false
-            );
+            setmaintainEVC_01_Temperature(EVC_01_Temperature_Maintain?.value || false);
+
 
             //===========================================================================================
 
