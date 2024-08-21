@@ -5754,7 +5754,7 @@ checked={maintainEVC_02_Conn_STT}
     mainCategory: mainCategoryFC.PLC,
     
     timeUpdate: <span style={combineCss.CSSHEATER_2} >{PLC_STTValue}</span>,
-  name: <span style={combineCss.CSSHEATER_2}>Heater 1</span> ,
+  name: <span style={combineCss.CSSHEATER_2}>Heater 2</span> ,
 
   modbus: <span style={combineCss.CSSHEATER_2}>40033</span> ,
 
