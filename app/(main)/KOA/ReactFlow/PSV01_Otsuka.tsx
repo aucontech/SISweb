@@ -159,7 +159,6 @@ export default function PSV01_Otsuka() {
                 style={{
                     border: "none",
                     fontSize: 22,
-                    color: "white",
                     display: "flex",
                     cursor: "pointer",
                     justifyContent: "space-between",
@@ -167,9 +166,9 @@ export default function PSV01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PSV-1201 : </p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+                <p style={{ color: 'black' }}>PSV-1201 : </p>
+                <p style={{ marginLeft: 20, color: 'black' }}> {upData} </p>
+                <p style={{ marginLeft: 10, color: 'black' }}>BarG</p>
             </div>
 
             {/* <OverlayPanel ref={op}>
