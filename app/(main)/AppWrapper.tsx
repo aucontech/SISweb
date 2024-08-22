@@ -31,7 +31,7 @@ interface RouteConfig {
 
 const ROUTE_CONFIG: RouteConfig = {
     CUSTOMER_USER: {
-        DEFAULT_ROUTES: ["/Graphic", "/alarmsummarycustomer", "/user"],
+        DEFAULT_ROUTES: ["/alarmsummarycustomer", "/user"],
         DEVICE_SPECIFIC: {
             [OTSUKA_DEVICE_ID]: ["/OTSUKA"],
             [MEIKO_DEVICE_ID]: ["/Graphic/MEIKO"],
