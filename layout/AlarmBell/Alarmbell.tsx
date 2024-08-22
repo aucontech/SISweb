@@ -539,7 +539,7 @@ export default function Alarmbell() {
         }
     };
 
-    
+
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
 
