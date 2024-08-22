@@ -1775,7 +1775,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                 <div>
                                     {NO === "1"
                                         ? SVD_NO
-                                        : NC === "0"
+                                        : NO === "0"
                                         ? SVD_NC
                                         : null}
                                 </div>
