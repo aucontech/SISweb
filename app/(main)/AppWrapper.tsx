@@ -128,6 +128,9 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         }
         return ROUTE_CONFIG.CUSTOMER_USER.DEFAULT_ROUTES[0];
     };
+    const getOtherDefaultRoute = (): string => {
+        return ROUTE_CONFIG.OTHER_USER[0];
+    };
 
     const runMiddleware = async (
         user: any,
@@ -166,8 +169,14 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         }
 
         if (isDefaultRouting) {
-            const defaultRoute = await getCustomerDefaultRoute(user);
-            router.push(defaultRoute);
+            let defaultRoute = "/";
+            if (user.authority === "CUSTOMER_USER") {
+                defaultRoute = await getCustomerDefaultRoute(user);
+                router.push(defaultRoute);
+            } else {
+                defaultRoute = getOtherDefaultRoute();
+                router.push(defaultRoute);
+            }
         } else {
             const middlewareResult = await runMiddleware(
                 user,
