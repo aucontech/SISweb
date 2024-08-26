@@ -2914,16 +2914,19 @@ useEffect(() => {
         },
         {
             name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVA}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
             FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{FC_02_Accumulated_Values_Volume}</span>,
 
         },
+        
+        {
+            name: <span>{tagNameFC.GVA}</span>,
+            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
+            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
+
+        },
+       
+       
      
         {
             name: <span>{tagNameFC.VbToday}</span>,
@@ -2932,17 +2935,18 @@ useEffect(() => {
 
         },
         {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-        {
             name: <span>{tagNameFC.VmToday}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
             FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
 
         },
+        {
+            name: <span>{tagNameFC.VbLastDay}</span>,
+            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
+            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
+
+        },
+       
         {
             name: <span>{tagNameFC.VmLastDay}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
@@ -3088,7 +3092,7 @@ useEffect(() => {
                     >
                         <div style={{ fontSize: 30, fontWeight: 700 }}>
                             {" "}
-                            ZOCV
+                            LGDS
                         </div>
                     </div>
                     <div
@@ -3166,7 +3170,27 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable> */}
-                
+                 <DataTable value={dataPT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="FC1901"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT-1003 </p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT-1003 </p>
+   
+                               </div>
+                            )}
+                        ></Column>
+                    </DataTable>
                     <DataTable value={dataFC1} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > FC Parameter</span>}></Column>
                         <Column
@@ -3190,27 +3214,7 @@ useEffect(() => {
                     
                     </DataTable>
 
-                    <DataTable value={dataPT} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1003 </p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1003 </p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
+                   
 
             </div>
 

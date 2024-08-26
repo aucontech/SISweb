@@ -1477,7 +1477,7 @@ export default function GraphicNITORI() {
                                                         color: "#25d125",
                                                     }}
                                                 >
-                                                    Active
+                                                    Online
                                                 </span>
                                             ) : (
                                                 <span
@@ -1485,7 +1485,7 @@ export default function GraphicNITORI() {
                                                         color: "#ff5656",
                                                     }}
                                                 >
-                                                    Un Active
+                                                    Offline
                                                 </span>
                                             )}
                                         </p>

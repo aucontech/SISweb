@@ -2042,7 +2042,7 @@ export default function GraphicYOSHINO() {
                                                         color: "#25d125",
                                                     }}
                                                 >
-                                                    Active
+                                                    Online
                                                 </span>
                                             ) : (
                                                 <span
@@ -2050,7 +2050,7 @@ export default function GraphicYOSHINO() {
                                                         color: "#ff5656",
                                                     }}
                                                 >
-                                                    Un Active
+                                                    Offline
                                                 </span>
                                             )}
                                         </p>

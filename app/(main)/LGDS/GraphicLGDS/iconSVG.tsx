@@ -1423,6 +1423,84 @@ ZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==" />
 </svg>
 
 )
+
+const BlackTriangleTank = (
+    <svg
+        fill="#bc74d6"
+        width="10px"
+        height="10px"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="#bc74d6"
+    >
+        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+        <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <g id="SVGRepo_iconCarrier">
+            <path d="M21,21H3L12,3Z" />
+        </g>
+    </svg>
+);
+
+const BlackTriangleRightTank = (
+    <svg
+        fill="#bc74d6"
+        width="10px"
+        height="10px"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="#bc74d6"
+        transform="rotate(90)"
+    >
+        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+        <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <g id="SVGRepo_iconCarrier">
+            <path d="M21,21H3L12,3Z" />
+        </g>
+    </svg>
+);
+const WhiteTriangleRightTank = (
+    <svg
+        fill="#FFFFFF"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        width="15px"
+        height="15px"
+        viewBox="0 0 108.226 108.226"
+        stroke="#FFFFFF"
+    >
+        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+        <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <g id="SVGRepo_iconCarrier">
+            {" "}
+            <g>
+                {" "}
+                <path d="M27.087,108.226V0c14.806,0,27.515,5.297,38.13,15.889c10.613,10.596,15.921,23.335,15.921,38.225 c0,14.93-5.308,27.682-15.921,38.254C54.603,102.939,41.894,108.226,27.087,108.226z" />{" "}
+            </g>{" "}
+        </g>
+    </svg>
+);
+
+
+
 export {
     gasIn,
     SDV,
@@ -1445,5 +1523,9 @@ export {
     BallVavleRightOff,
     VavleWay,
     juntionBottom,
-    juntionTop
+    juntionTop,
+
+    BlackTriangleTank,
+    BlackTriangleRightTank,
+    WhiteTriangleRightTank,
 };

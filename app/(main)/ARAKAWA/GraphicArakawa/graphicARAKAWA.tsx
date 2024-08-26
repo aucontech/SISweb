@@ -68,13 +68,13 @@ interface ValueStateMap {
 }
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "yellow";
 
 export default function GraphicARAKAWA() {
     const [visible, setVisible] = useState(false);
@@ -1922,13 +1922,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    // padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
@@ -1988,13 +1987,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    // padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
@@ -2054,13 +2052,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    // padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Volume_at_Base_Condition &&
@@ -2121,13 +2118,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    // padding: 2,
+
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
@@ -2187,13 +2183,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVF2 && !maintainSVF2
@@ -2250,13 +2245,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVF2 && !maintainGVF2
@@ -2313,13 +2307,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdSVA2 && !maintainSVA2
@@ -2376,13 +2369,12 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
+
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdGVA2 && !maintainGVA2
@@ -2441,8 +2433,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2464,7 +2456,7 @@ export default function GraphicARAKAWA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1903} :
+                                        {ValueGas.PT_1903}:
                                     </p>
                                     <p
                                         style={{
@@ -2504,8 +2496,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2527,7 +2519,7 @@ export default function GraphicARAKAWA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1901} :
+                                        {ValueGas.PT_1901}:
                                     </p>
                                     <p
                                         style={{
@@ -2567,8 +2559,8 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2591,15 +2583,7 @@ export default function GraphicARAKAWA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1902} :
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: colorData,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        Not used
+                                        {ValueGas.PT_1902}:
                                     </p>
                                 </div>
                                 <p
@@ -2702,7 +2686,7 @@ export default function GraphicARAKAWA() {
                                                         color: "#25d125",
                                                     }}
                                                 >
-                                                    Active
+                                                    Online
                                                 </span>
                                             ) : (
                                                 <span
@@ -2710,7 +2694,7 @@ export default function GraphicARAKAWA() {
                                                         color: "#ff5656",
                                                     }}
                                                 >
-                                                    Un Active
+                                                    Offline
                                                 </span>
                                             )}
                                         </p>
@@ -2756,26 +2740,6 @@ export default function GraphicARAKAWA() {
                                 <div>
                                     <p
                                         style={{
-                                            color: background,
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        null
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {PLC_Conn_STT}
-                                    </p>
-                                    <p
-                                        style={{
                                             color: "white",
 
                                             fontSize: 15,
@@ -2784,6 +2748,22 @@ export default function GraphicARAKAWA() {
                                     >
                                         {EVC_01_Conn_STTValue}
                                     </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    ></p>
+                                    <p
+                                        style={{
+                                            color: "white",
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    ></p>
                                 </div>
                             </div>
                         ),
@@ -2932,7 +2912,7 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -2966,7 +2946,7 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -3002,23 +2982,23 @@ export default function GraphicARAKAWA() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
-              AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
-              ArrowRight: { x: 402.9256642678949, y: 1019.0985886548262 },
-              ArrowRight1: { x: -1352.9494973180329, y: 1027.5674536161455 },
-              BallValue01: { x: -1106.5410229185202, y: 1132.7278853929192 },
-              BallValue02: { x: -934.549938914579, y: 1131.2172895525002 },
-              BallValue03: { x: -776.9545233279918, y: 897.3260485291829 },
-              BallValue04: { x: -775.3322908208111, y: 1128.684549644359 },
-              BallValue05: { x: -510.87337613190925, y: 897.0924687274943 },
-              BallValue06: { x: -524.1490916792975, y: 1127.4978283331593 },
-              BallValue07: { x: -391.6250513136733, y: 814.5285551779713 },
-              BallValue08: { x: 47.19338469127294, y: 813.9009567929689 },
+                const initialPositions = {
+              AlarmCenter: { x: 283.59624370081974, y: 372.1544066615297 },
+              ArrowRight: { x: 422.75899760122815, y: 1019.765255321493 },
+              ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
+              BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
+              BallValue02: { x: -941.3988306125451, y: 1132.519440708925 },
+              BallValue03: { x: -774.8687072979039, y: 894.71316658712 },
+              BallValue04: { x: -774.5658025383268, y: 1135.4678560265843 },
+              BallValue05: { x: -506.64507277013274, y: 894.2651254012783 },
+              BallValue06: { x: -512.5165840307116, y: 1135.4253608380895 },
+              BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
+              BallValue08: { x: 47.91740872558438, y: 814.7518107766351 },
               BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
-              BallValue10: { x: 45.476591370680126, y: 1204.159292175339 },
+              BallValue10: { x: 45.36832776035493, y: 1204.8259588420058 },
               BallValueCenter: {
-                  x: -165.80710887361258,
-                  y: 1006.8595594996316,
+                  x: -167.30710887361258,
+                  y: 1007.8595594996316,
               },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
@@ -3029,125 +3009,129 @@ export default function GraphicARAKAWA() {
                   y: 1039.286470841561,
               },
               BallValueCenter_None2: {
-                  x: -133.78263324371193,
-                  y: 1038.6243048935844,
+                  x: -136.78263324371193,
+                  y: 1039.1243048935844,
               },
-              BallValueFirst: { x: 324.15262421132076, y: 1006.0430441067174 },
-              BallValueLast: { x: -1303.0236694004177, y: 1013.6471326219648 },
+              BallValueFirst: { x: 326.9180574625822, y: 1004.910327481087 },
+              BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
               EVC_01_Flow_at_Base_Condition: {
-                  x: -276.0812541916488,
-                  y: 592.140848757137,
+                  x: -303.8322378682054,
+                  y: 443.25697939342206,
               },
               EVC_01_Flow_at_Measurement_Condition: {
-                  x: -275.5788897046258,
-                  y: 643.3604044085879,
+                  x: -303.38116960325505,
+                  y: 524.3957326841464,
+              },
+              EVC_01_Temperature: {
+                  x: -1397.4430569167453,
+                  y: 1160.0348765205,
               },
               EVC_01_Volume_at_Base_Condition: {
-                  x: -275.37496874581336,
-                  y: 694.7267422211479,
+                  x: -303.37259617210265,
+                  y: 605.4804983117981,
               },
               EVC_01_Volume_at_Measurement_Condition: {
-                  x: -274.9305105252121,
-                  y: 746.0043895523191,
+                  x: -303.0596710316421,
+                  y: 686.6244579208425,
               },
-              FIQ_1901: { x: -276.21800514626557, y: 541.514946896992 },
-              FIQ_1902: { x: -273.8066364957003, y: 1288.6255396791125 },
-              FIQ_none: { x: -165.54268721568215, y: 798.0972512607284 },
-              FIQ_none2: { x: -163.1205623176026, y: 1187.0853436430443 },
-              FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
-              FIQ_none22: { x: -134.36875034337498, y: 1231.5392945117674 },
+              EVC_02_Temperature: {
+                  x: -508.4032164626999,
+                  y: 1502.617581291104,
+              },
+              FIQ_1901: { x: -303.76959449876404, y: 387.0964584868316 },
+              FIQ_1902: { x: -300.3731832948809, y: 1291.9351796213175 },
+              FIQ_none: { x: -142.4069292713505, y: 797.7725764198564 },
+              FIQ_none2: { x: -140.45882559365475, y: 1187.796149615632 },
+              FIQ_none11: { x: -113.54560233855409, y: 842.6885101213705 },
+              FIQ_none22: { x: -110.8783864969942, y: 1231.9355735307763 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
-              GD1: { x: -701.8947533111287, y: 1040.906336426672 },
-              GD1_Name1901: { x: -731.7469880516512, y: 964.8136596858 },
-              GD1_Value1901: { x: -732.0205320793395, y: 1000.3366910874352 },
-              GD2: { x: 17.853099564334826, y: 1041.7626603399713 },
-              GD2_Name1902: { x: -11.81159537363672, y: 968.5058223909082 },
-              GD2_Value1902: { x: -11.724484232548093, y: 1004.2481728203431 },
+              GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
+              GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
+              GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
+              GD2: { x: 14.352240295564371, y: 1036.215094699595 },
+              GD2_Name1902: { x: -16.195635233570172, y: 964.6138317045766 },
+              GD2_Value1902: { x: -15.806553587925947, y: 1000.2949872149165 },
               GD3: { x: 16.04134176178286, y: 1035.243511740587 },
               GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
               GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
-              GD_none1: { x: -676.9801966372074, y: 1059.8910108034106 },
-              GD_none2: { x: 43.273659452938034, y: 1056.5060722807486 },
+              GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
+              GD_none2: { x: 39.42936374662085, y: 1054.0619416332215 },
               GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1151.6225319026826, y: 574.7715183161662 },
-              Line2_NONE: { x: -890.325118399362, y: 1044.8496174211396 },
-              Line2_NONE1: { x: -774.4929854044152, y: 1044.8876560365543 },
-              LineBall_1_1: { x: -1348.0317402818896, y: 1045.4869361614612 },
-              LineBall_1_2: { x: -1323.936468041184, y: 970.477825640528 },
-              PCV01: { x: -676.6225805120118, y: 882.7715530290637 },
-              PCV02: { x: -676.8888486682671, y: 1113.331000966938 },
-              PCV_NUM01: { x: -767.5372331416102, y: 785.3321295232131 },
-              PCV_NUM02: { x: -767.2389655423315, y: 1209.25959836932 },
+              Header: { x: -1278.609399218668, y: 390.03106398167836 },
+              Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
+              Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
+              LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
+              PCV01: { x: -689.7970151337088, y: 879.00632918006 },
+              PCV02: { x: -692.1078758499317, y: 1120.7254019726813 },
+              PCV_NUM01: { x: -753.1197637959665, y: 828.7379359721325 },
+              PCV_NUM02: { x: -754.9807048889562, y: 1181.3618221440458 },
               PCV_ballVavle_Small1: {
-                  x: -581.1967632218833,
-                  y: 884.6475768273098,
+                  x: -597.4113415337335,
+                  y: 882.8095517403245,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -651.9410117692291,
-                  y: 901.8737610941586,
+                  x: -665.0629396476888,
+                  y: 902.0359579483519,
               },
               PCV_ballVavle_Small1_none2: {
-                  x: -651.2219474699687,
-                  y: 1133.8060286050418,
+                  x: -667.1691720404733,
+                  y: 1141.0987492112777,
               },
               PCV_ballVavle_Small2: {
-                  x: -583.7012401573056,
-                  y: 1118.3697811498603,
+                  x: -597.5196697396369,
+                  y: 1124.7706207942995,
               },
               PCV_ballVavle_Small2_none1: {
-                  x: -574.667247168926,
-                  y: 932.894857038164,
+                  x: -591.5512215024908,
+                  y: 932.0283184188106,
               },
               PCV_ballVavle_Small2_none2: {
-                  x: -577.5231614373513,
-                  y: 1166.2292372994432,
+                  x: -591.3659180111881,
+                  y: 1172.918606583641,
               },
-              PCV_none1: { x: -647.8483009440444, y: 927.4958577880324 },
-              PCV_none2: { x: -647.8432312525401, y: 1159.4359816065248 },
-              PSV01: { x: 82.01030209200951, y: 721.8308518318365 },
+              PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
+              PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
+              PSV01: { x: 213.77852426794328, y: 808.706711387803 },
               PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
               PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
               PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
-              PSV_None01: { x: 342.1066519200614, y: 1036.7984512500655 },
+              PSV_None01: { x: 266.8503515537115, y: 1037.307138448062 },
               PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
               PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -1230.167979779781, y: 954.9425932127981 },
-              PT2: { x: -350.9391791978867, y: 1138.964910598512 },
-              PT3: { x: -354.39235881679406, y: 750.8313302579563 },
-              PT_col1: { x: -1197.6718862507378, y: 1016.2653932006001 },
-              PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
-              PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
-              PT_none1: { x: -1197.7850572486375, y: 986.3883264473354 },
-              PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
-              PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
+              PT1: { x: -1248.552773720958, y: 969.1291015417314 },
+              PT2: { x: -355.7700965043326, y: 1157.411777601272 },
+              PT3: { x: -355.19155879585895, y: 764.6788518659513 },
+              PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
+              PT_col2: { x: -322.8377042319204, y: 827.8997160548171 },
+              PT_col3: { x: -323.3980884194193, y: 1220.1882162336972 },
+              PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
+              PT_none2: { x: -322.9912537671802, y: 797.674918261915 },
+              PT_none3: { x: -323.07402304506405, y: 1188.209044624158 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1317.8816023029103,
-                  y: 833.6224000147378,
-              },
-              Pressure_Trans02: { x: -678.3851600513049, y: 668.8753213795461 },
+              Pressure_Trans01: { x: -1370.178598844617, y: 809.4634279335849 },
+              Pressure_Trans02: { x: -714.6393417001174, y: 683.530944025318 },
               Pressure_Trans03: {
-                  x: -678.8643006572322,
-                  y: 1328.1406937683496,
+                  x: -712.0732444985409,
+                  y: 1294.1236870746352,
               },
-              SDV: { x: -1133.4650654958332, y: 948.0837312492845 },
-              SDV_Ball: { x: -1088.7937293510877, y: 1163.0812381752899 },
-              SDV_IMG: { x: -1111.4537779641491, y: 994.6122620521435 },
+              SDV: { x: -1140.086396422953, y: 946.7196538271689 },
+              SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
+              SDV_IMG: { x: -1115.4963861998212, y: 994.274284574213 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1085.4357090805624, y: 1045.7739448871414 },
-              T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
+              SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
+              T_juntion_11: { x: -71.03198916443257, y: 826.6284580114444 },
               T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
-              Tank: { x: -951.835169991736, y: 982.9065943119385 },
-              Tank_Ball: { x: -916.9748282275817, y: 1162.7406903640003 },
-              Tank_None: { x: -928.4865951970223, y: 1046.8294387294968 },
+              Tank: { x: -961.1373095989246, y: 977.5992617936554 },
+              Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
+              Tank_None: { x: -933.6419103358979, y: 1047.4663129728283 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -3157,16 +3141,16 @@ export default function GraphicARAKAWA() {
                   y: 1445.5258186779024,
               },
               VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
-              animation_line7: { x: -359.6759865985786, y: 845.3393038323345 },
-              animation_line8: { x: 62.61285378247803, y: 845.7339111102631 },
+              animation_line7: { x: -359.940697041692, y: 845.650011090059 },
+              animation_line8: { x: 64.61285378247803, y: 845.7339111102631 },
               animation_line9: {
                   x: -367.83294526673615,
                   y: 1235.2489576729074,
               },
               animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
-              animation_line11: { x: -36.25094554550509, y: 845.4101876460927 },
+              animation_line11: { x: -35.76111225621217, y: 845.5377293237694 },
               animation_line12: {
-                  x: -133.2992075354374,
+                  x: -134.7992075354374,
                   y: 1038.0566391817506,
               },
               animation_line13: {
@@ -3181,40 +3165,40 @@ export default function GraphicARAKAWA() {
                   x: 61.881522019472186,
                   y: 1235.5350090951665,
               },
-              borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data5: { x: -273.9345172073349, y: 1338.858916048566 },
-              data6: { x: -274.57066474434737, y: 1389.5706922340023 },
-              data7: { x: -274.66798046047955, y: 1440.490289686966 },
-              data8: { x: -274.6835378979232, y: 1491.4822568226123 },
-              line1: { x: -1286.0314607976943, y: 1045.2946609746105 },
-              line2: { x: -843.076582460349, y: 1044.8496174211396 },
-              line3: { x: -759.215603414978, y: 927.7250459129325 },
-              line4: { x: -757.738419040097, y: 1159.3559724650454 },
-              line5: { x: -492.814394154073, y: 927.7943449477283 },
-              line6: { x: -506.89233051646187, y: 1158.6136627558274 },
-              line7: { x: -430.148654685526, y: 1043.2572140209625 },
-              line8: { x: -373.8539551026089, y: 844.816864512003 },
+              borderWhite: { x: -1364.8389453770394, y: 386.2211894520615 },
+              data5: { x: -300.3532394344717, y: 1348.2148594394282 },
+              data6: { x: -300.7144582875339, y: 1429.43381798634 },
+              data7: { x: -300.91705728550136, y: 1510.4363877474143 },
+              data8: { x: -301.18109812908483, y: 1591.3481702772997 },
+              line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
+              line2: { x: -842.576582460349, y: 1046.3496174211396 },
+              line3: { x: -757.3073258645178, y: 924.8718460504479 },
+              line4: { x: -757.4999146099806, y: 1165.8382016355595 },
+              line5: { x: -489.03309071473825, y: 924.9296337167925 },
+              line6: { x: -494.4305602315913, y: 1165.5862868598924 },
+              line7: { x: -431.86459394413737, y: 1039.3455886441188 },
+              line8: { x: -374.1947990352617, y: 845.1255935069244 },
               line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-              line10: { x: 64.14803369542585, y: 844.6428178706668 },
-              line11: { x: 63.64478084542742, y: 1234.683954724923 },
-              line12: { x: 159.8198310785691, y: 1035.9323508670825 },
-              line13: { x: 341.3312960971492, y: 1036.9713896720348 },
-              lineBall_13_1: { x: 417.3312960971493, y: 1036.9713896720348 },
+              line10: { x: 62.822981890622714, y: 845.1595827580492 },
+              line11: { x: 62.86985056843554, y: 1234.683954724923 },
+              line12: { x: 148.8088449083921, y: 1036.4053009106972 },
+              line13: { x: 343.9979627638159, y: 1037.304723005368 },
+              lineBall_13_1: { x: 437.16462943048253, y: 1037.3047230053683 },
               overlay_SmallVavle1: {
-                  x: -1218.322345742913,
-                  y: 1101.2201563320161,
+                  x: -863.2358516386571,
+                  y: 1208.6706191298017,
               },
               overlay_SmallVavle2: {
-                  x: -1143.878323017184,
-                  y: 1141.1373960711376,
+                  x: -434.80044580641925,
+                  y: 1046.4815751188462,
               },
-              overlay_line7: { x: -789.0642617846597, y: 987.3748262506941 },
-              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
-              timeUpdate3: { x: -1225.2746102555143, y: 646.3977782463587 },
+              overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
+              overlay_line13: { x: 137.00200473980067, y: 1034.4543574634988 },
+              timeUpdate3: { x: -1337.6290616173037, y: 449.2718388310818 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
-    const lineColor = "#ffaa00";
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -3244,7 +3228,8 @@ export default function GraphicARAKAWA() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke:
+                    isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -3253,7 +3238,8 @@ export default function GraphicARAKAWA() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke:
+                    isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -3262,7 +3248,7 @@ export default function GraphicARAKAWA() {
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -3733,7 +3719,8 @@ export default function GraphicARAKAWA() {
             position: positions.SDV,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 45,
@@ -4085,8 +4072,8 @@ export default function GraphicARAKAWA() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#ffaa00",
-                background: "#ffaa00",
+                border: "yellow",
+                background: "yellow",
                 width: 55,
                 height: 1,
             },
@@ -4306,9 +4293,9 @@ export default function GraphicARAKAWA() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -4328,10 +4315,9 @@ export default function GraphicARAKAWA() {
             sourcePosition: Position.Right,
             targetPosition: Position.Top,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -4388,8 +4374,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                height: 55,
             },
             targetPosition: Position.Bottom,
         },
@@ -4414,8 +4400,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                height: 55,
             },
             targetPosition: Position.Top,
         },
@@ -4625,8 +4611,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -4650,8 +4635,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -4676,8 +4660,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -4702,8 +4685,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -4729,8 +4711,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -4755,8 +4736,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Left,
         },
@@ -4781,8 +4761,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -4807,8 +4786,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -4955,9 +4933,9 @@ export default function GraphicARAKAWA() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -4983,7 +4961,7 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -5006,7 +4984,7 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -5031,7 +5009,7 @@ export default function GraphicARAKAWA() {
 
             style: {
                 border: background,
-                width: 300,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -5155,7 +5133,7 @@ export default function GraphicARAKAWA() {
                 border: line,
                 background: line,
                 width: 0,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -5174,7 +5152,7 @@ export default function GraphicARAKAWA() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -5193,7 +5171,7 @@ export default function GraphicARAKAWA() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -5220,7 +5198,7 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     fontSize: 45,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "orange",
                                 }}
                             >
                                 ARAKAWA
@@ -5301,7 +5279,7 @@ export default function GraphicARAKAWA() {
                                 style={{
                                     fontSize: 60,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "yellow",
                                 }}
                             ></p>
                         </div>
@@ -5491,7 +5469,8 @@ export default function GraphicARAKAWA() {
             position: positions.GD1_Name1901,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -5517,7 +5496,8 @@ export default function GraphicARAKAWA() {
             position: positions.GD2_Name1902,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -6630,25 +6610,9 @@ export default function GraphicARAKAWA() {
 
     return (
         <>
-            {/* <audio ref={audioRef}>
-                <source
-                    src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
-                    type="audio/mpeg"
-                />
-            </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
-
-            {/* <div style={{  backgroundColor:
-                                        exceedThresholdEVC_01_Flow_at_Base_Condition &&
-                                        !maintainEVC_01_Flow_at_Base_Condition
-                                            ? "#ff5656"
-                                            : maintainEVC_01_Flow_at_Base_Condition
-                                            ? "orange"
-                                            : "transparent",}}>
-                {EVC_01_Flow_at_Base_Condition}
-            </div> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />
@@ -6714,9 +6678,9 @@ export default function GraphicARAKAWA() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>

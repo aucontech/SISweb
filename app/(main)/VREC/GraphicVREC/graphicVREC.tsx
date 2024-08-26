@@ -1951,7 +1951,8 @@ export default function GraphicVREC() {
             x: -1063.1765921652548,
             y: 1304.9210038322592,
         },
-        SDV: { x: -1127.1765475311256, y: 950.9074671488377 },
+        SDV: { x: -1130.2804525595525, y: 949.2231976259577 },
+
         SDV2: { x: 428.80808378008487, y: 947.7631672170489 },
         SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
         SDV_Ball2: { x: 476.86464803916624, y: 1155.8236963022298 },
@@ -4142,7 +4143,7 @@ export default function GraphicVREC() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
+                width: 400,
 
                 height: 10,
             },
@@ -4520,7 +4521,7 @@ export default function GraphicVREC() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 420,
+                width: 450,
                 height: 190,
                 borderRadius: 50,
             },
