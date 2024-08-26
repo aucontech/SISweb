@@ -60,6 +60,7 @@ import BallVavleSDV_TOP from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_TOP1 from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_BOTTOM1 from "../ReactFlow/BallVavleSDV_BOTTOM";
 import AlarmLGDS from "@/layout/AlarmBell/AlarmLGDS";
+import PSV02_Otsuka from "../ReactFlow/PSV02_Otsuka";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -2391,7 +2392,7 @@ export default function GraphicLGDS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
+                const initialPositions = {
               AlarmCenter: { x: 587.5334077118977, y: 393.5876511598906 },
               ArrowRight: { x: 706.1381419284244, y: 1023.694783335719 },
               ArrowRight1: { x: -1310.4855228544018, y: 1027.4017827933426 },
@@ -2425,7 +2426,7 @@ export default function GraphicLGDS() {
               },
               BallValueFirst: { x: 615.958880827932, y: 1009.9907063439425 },
               BallValueLast: { x: -1230.666509063442, y: 1014.389416442682 },
-              BallValuePSV: { x: 375.19292050720105, y: 970.9832154843842 },
+              BallValuePSV: { x: 375.8978454419197, y: 973.8029152232585 },
               BallValuePSVNone: { x: 393.2839125618558, y: 989.0640389210198 },
               BallVavleSDV_BOTTOM: {
                   x: 514.3019141028957,
@@ -2491,21 +2492,22 @@ export default function GraphicLGDS() {
               PCV_none1: { x: -43.356336775693705, y: 932.4844638821777 },
               PCV_none2: { x: -43.63902265954965, y: 1160.9945398306136 },
               PSV01: { x: 384.51446969940866, y: 851.1754620710124 },
-              PSV01_tank: { x: -986.9838652174163, y: 949.1194732157961 },
+              PSV01_tank: { x: -987.9680523153684, y: 931.4340148608561 },
               PSV_01: { x: 372.10294218876356, y: 923.3643243912055 },
-              PSV_01_tank: { x: -994.4348498187836, y: 912.9395289995246 },
+              PSV_01_tank: { x: -994.1342238904834, y: 877.4036476758067 },
               PSV_02: { x: 352.7460871886958, y: 904.3814153335835 },
-              PSV_02_tank: { x: -1013.9390601034346, y: 893.6282969896355 },
+              PSV_02_tank: { x: -1013.1268857908549, y: 857.727269956162 },
               PSV_03: { x: 345.12033949204454, y: 852.4187793834102 },
-              PSV_03_tank: { x: -1018.2471496756738, y: 847.7334566752501 },
+              PSV_03_tank: { x: -1017.3895401616238, y: 806.8195037235618 },
+              PSV_NUM03: { x: -984.0957107437233, y: 802.5143479219408 },
               PSV_None01: { x: 393.8612044092128, y: 1049.1820731484372 },
               PSV_None01_tank: { x: -912.7459205803787, y: 1000.8653630099554 },
               PSV_None02: { x: 393.7254868841261, y: 948.4442776727033 },
-              PSV_None02_tank: { x: -972.2737958920325, y: 938.9365437291481 },
+              PSV_None02_tank: { x: -973.0567778062799, y: 902.3635803018731 },
               PSV_None03: { x: 372.38126256602715, y: 928.2490764297976 },
-              PSV_None03_tank: { x: -995.03765727553, y: 915.1840889184349 },
+              PSV_None03_tank: { x: -994.2042578689137, y: 880.6171195094362 },
               PSV_None04: { x: 368.91430232750156, y: 872.910717531809 },
-              PSV_None04_tank: { x: -993.7507752367312, y: 867.2698727380609 },
+              PSV_None04_tank: { x: -993.5348905131398, y: 827.0441133163389 },
               PT1: { x: 213.79089216580826, y: 952.8215389633342 },
               PT2: { x: -722.4633098455206, y: 1169.5972236589182 },
               PT3: { x: -721.2004486313662, y: 764.6642722040159 },
@@ -2518,7 +2520,10 @@ export default function GraphicLGDS() {
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: { x: 90.64981693221739, y: 710.7078171051338 },
-              Pressure_Trans02: { x: -1099.886302452788, y: 700.90374813061 },
+              Pressure_Trans02: {
+                  x: -1073.5153522458281,
+                  y: 653.1848858513492,
+              },
               Pressure_Trans03: {
                   x: -1099.7905164574756,
                   y: 1295.846598035787,
@@ -4628,6 +4633,28 @@ export default function GraphicLGDS() {
             },
         },
 
+        {
+            id: "PSV_NUM03",
+            position: positions.PSV_NUM03,
+            type: "custom",
+            data: {
+                label: (
+                    <div style={{ display: "flex", marginTop: 5 }}>
+                        <PSV02_Otsuka />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Bottom,
+            style: {
+                border: "none",
+                width: 260,
+                background: "none",
+                // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+
         // =================  PT ===================================
 
         {
@@ -6611,6 +6638,11 @@ export default function GraphicLGDS() {
                         ...prevPositions,
                         PSV_None04_tank: position,
                     }));
+                } else if (id === "PSV_NUM03") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PSV_NUM03: position,
+                    }));
                 }
             }
         },
@@ -6618,9 +6650,9 @@ export default function GraphicLGDS() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    // const toggleEditing = () => {
-    //     setEditingEnabled(!editingEnabled);
-    // };
+    const toggleEditing = () => {
+        setEditingEnabled(!editingEnabled);
+    };
     // useEffect(() => {
     //     localStorage.setItem("positionsLGDS", JSON.stringify(positions));
     // }, [positions]);
