@@ -1592,7 +1592,7 @@ export default function GraphicSPMCV() {
                                                     color: "#25d125",
                                                 }}
                                             >
-                                                Active
+                                                Online
                                             </span>
                                         ) : (
                                             <span
@@ -1600,7 +1600,7 @@ export default function GraphicSPMCV() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Un Active
+                                                Offline
                                             </span>
                                         )}
                                     </p>

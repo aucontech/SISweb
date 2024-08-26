@@ -5,6 +5,12 @@ const styleLine = {
     stroke: "yellow",
 };
 
+
+const styleLinePSV_Small = {
+    strokeWidth: 9,
+    stroke: "yellow",
+};
+
 const styleHide = {
     strokeWidth: 9,
     stroke: "yellow",
@@ -515,5 +521,29 @@ export const edgeZOVC = [
 
      
     },
+
+    {
+        id: "PSV_None01_tank-PSV_None02_tank",
+        source: "PSV_None01_tank",
+        target: "PSV_None02_tank",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLinePSV_Small,
+        },
+    },
+
+    {
+        id: "PSV_None03-PSV_None04",
+        source: "PSV_None03_tank",
+        target: "PSV_None04_tank",
+        // animated: true,
+        type: "smoothstep",
+
+        style: {
+            ...styleLinePSV_Small,
+        },
+    }, 
 
 ];

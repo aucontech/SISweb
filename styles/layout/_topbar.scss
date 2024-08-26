@@ -4,6 +4,10 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background: var(--surface-ground); // trang thêm
 
     .topbar-start {
         display: flex;
