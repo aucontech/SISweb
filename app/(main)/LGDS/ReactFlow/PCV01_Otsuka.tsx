@@ -153,8 +153,8 @@ export default function PCV_01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PCV-1001 :</p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
+                <p style={{ color: colorNameValue }}>PCV-1001:</p>
+                <p style={{ marginLeft: 20, color: colorNameValue }}> {upData} </p>
                 <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
             </div>
 

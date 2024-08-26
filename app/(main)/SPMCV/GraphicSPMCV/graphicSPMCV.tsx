@@ -68,13 +68,13 @@ interface ValueStateMap {
 }
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "'white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "yellow";
 
 export default function GraphicSPMCV() {
     const [visible, setVisible] = useState(false);
@@ -332,22 +332,36 @@ export default function GraphicSPMCV() {
     const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
         number | null
     >(null);
-    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<number | null>(
-        null
-    );
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
+        number | null
+    >(null);
     const [exceedThreshold, setExceedThreshold] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
 
-    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] = useState<boolean>(false);
+    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] =
+        useState<boolean>(false);
 
     useEffect(() => {
         const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
         const highValue = EVC_01_Pressure_High ?? NaN;
         const lowValue = EVC_01_Pressure_Low ?? NaN;
-    
-        if (!isNaN(EVC_01_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Pressure) {
-            setExceedThreshold(EVC_01_PressureValue >= highValue || EVC_01_PressureValue <= lowValue);
+
+        if (
+            !isNaN(EVC_01_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Pressure
+        ) {
+            setExceedThreshold(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
+            );
         }
-    }, [EVC_01_Pressure, EVC_01_Pressure_High, EVC_01_Pressure_Low, maintainEVC_01_Pressure]);
+    }, [
+        EVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
+        maintainEVC_01_Pressure,
+    ]);
 
     //================================ PT 1903======================================================
     const [PT1_High, setPT1_High] = useState<number | null>(null);
@@ -360,12 +374,19 @@ export default function GraphicSPMCV() {
         const PT1Value = parseFloat(PT1 as any);
         const highValue = PT1_High ?? NaN;
         const lowValue = PT1_Low ?? NaN;
-    
-        if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
-            setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
+
+        if (
+            !isNaN(PT1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT1
+        ) {
+            setExceedThresholdPT1(
+                PT1Value >= highValue || PT1Value <= lowValue
+            );
         }
     }, [PT1, PT1_High, PT1_Low, maintainPT1]);
-       
+
     //================================ GD 1901 ======================================================
     const [GD1_High, setGD1_High] = useState<number | null>(null);
     const [GD1_Low, setGD1_Low] = useState<number | null>(null);
@@ -377,9 +398,16 @@ export default function GraphicSPMCV() {
         const GD1Value = parseFloat(GD1 as any);
         const highValue = GD1_High ?? NaN;
         const lowValue = GD1_Low ?? NaN;
-    
-        if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
-            setexceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
+
+        if (
+            !isNaN(GD1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD1
+        ) {
+            setexceedThresholdGD1(
+                GD1Value >= highValue || GD1Value <= lowValue
+            );
         }
     }, [GD1, GD1_High, GD1_Low, maintainGD1]);
 
@@ -388,98 +416,204 @@ export default function GraphicSPMCV() {
     const [GD2_Low, setGD2_Low] = useState<number | null>(null);
     const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
-    
+
     useEffect(() => {
-     const GD2Value = parseFloat(GD2 as any);
-     const highValue = GD2_High ?? NaN;
-     const lowValue = GD2_Low ?? NaN;
- 
-     if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
-         setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
-     }
- }, [GD2, GD2_High, GD2_Low, maintainGD2]);
+        const GD2Value = parseFloat(GD2 as any);
+        const highValue = GD2_High ?? NaN;
+        const lowValue = GD2_Low ?? NaN;
+
+        if (
+            !isNaN(GD2Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD2
+        ) {
+            setExceedThresholdGD2(
+                GD2Value >= highValue || GD2Value <= lowValue
+            );
+        }
+    }, [GD2, GD2_High, GD2_Low, maintainGD2]);
     //================================ GD 1902 ======================================================
 
-
-
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
- 
-    const [EVC_01_Flow_at_Base_Condition_High, setEVC_01_Flow_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Base_Condition_Low, setEVC_01_Flow_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Base_Condition, setExceedThresholdEVC_01_Flow_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    
-    const [maintainEVC_01_Flow_at_Base_Condition, setMaintainEVC_01_Flow_at_Base_Condition] = useState<boolean>(false);
-    
-    
-    useEffect(() => {
-      const EVC_01_Flow_at_Base_ConditionValue = parseFloat(EVC_01_Flow_at_Base_Condition as any);
-      const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
-      const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Flow_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Base_Condition) {
-          setExceedThresholdEVC_01_Flow_at_Base_Condition(EVC_01_Flow_at_Base_ConditionValue >= highValue || EVC_01_Flow_at_Base_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Flow_at_Base_Condition, EVC_01_Flow_at_Base_Condition_High, EVC_01_Flow_at_Base_Condition_Low, maintainEVC_01_Flow_at_Base_Condition]);
-  
     //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
 
-   
-    const [EVC_01_Flow_at_Measurement_Condition_High, setEVC_01_Flow_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Flow_at_Measurement_Condition_Low, setEVC_01_Flow_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Flow_at_Measurement_Condition, setExceedThresholdEVC_01_Flow_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    
-    const [maintainEVC_01_Flow_at_Measurement_Condition, setMaintainEVC_01_Flow_at_Measurement_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Flow_at_Base_Condition_High,
+        setEVC_01_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Base_Condition_Low,
+        setEVC_01_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setExceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setMaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(EVC_01_Flow_at_Measurement_Condition as any);
-      const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
-      const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Flow_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Flow_at_Measurement_Condition) {
-          setExceedThresholdEVC_01_Flow_at_Measurement_Condition(EVC_01_Flow_at_Measurement_ConditionValue >= highValue || EVC_01_Flow_at_Measurement_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Flow_at_Measurement_Condition, EVC_01_Flow_at_Measurement_Condition_High, EVC_01_Flow_at_Measurement_Condition_Low, maintainEVC_01_Flow_at_Measurement_Condition]);
-  
-    
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
+        ) {
+            setExceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        EVC_01_Flow_at_Base_Condition_Low,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
+
+    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+
+    const [
+        EVC_01_Flow_at_Measurement_Condition_High,
+        setEVC_01_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        setEVC_01_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setExceedThresholdEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+    const [
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        setMaintainEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
+        ) {
+            setExceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Flow_at_Measurement_Condition FIQ 1901 ======================================================
 
-    const [EVC_01_Volume_at_Base_Condition_High, setEVC_01_Volume_at_Base_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Base_Condition_Low, setEVC_01_Volume_at_Base_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Base_Condition, setExceedThresholdEVC_01_Volume_at_Base_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainEVC_01_Volume_at_Base_Condition, setMaintainEVC_01_Volume_at_Base_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Volume_at_Base_Condition_High,
+        setEVC_01_Volume_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Base_Condition_Low,
+        setEVC_01_Volume_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Base_Condition,
+        setExceedThresholdEVC_01_Volume_at_Base_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainEVC_01_Volume_at_Base_Condition,
+        setMaintainEVC_01_Volume_at_Base_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_01_Volume_at_Base_ConditionValue = parseFloat(EVC_01_Volume_at_Base_Condition as any);
-      const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
-      const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Volume_at_Base_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Base_Condition) {
-          setExceedThresholdEVC_01_Volume_at_Base_Condition(EVC_01_Volume_at_Base_ConditionValue >= highValue || EVC_01_Volume_at_Base_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Volume_at_Base_Condition, EVC_01_Volume_at_Base_Condition_High, EVC_01_Volume_at_Base_Condition_Low, maintainEVC_01_Volume_at_Base_Condition]);
-  
+        const EVC_01_Volume_at_Base_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Volume_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Base_Condition
+        ) {
+            setExceedThresholdEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Base_Condition,
+        EVC_01_Volume_at_Base_Condition_High,
+        EVC_01_Volume_at_Base_Condition_Low,
+        maintainEVC_01_Volume_at_Base_Condition,
+    ]);
+
     //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
 
-    const [EVC_01_Volume_at_Measurement_Condition_High, setEVC_01_Volume_at_Measurement_Condition_High] = useState<number | null>(null);
-    const [EVC_01_Volume_at_Measurement_Condition_Low, setEVC_01_Volume_at_Measurement_Condition_Low] = useState<number | null>(null);
-    const [exceedThresholdEVC_01_Volume_at_Measurement_Condition, setExceedThresholdEVC_01_Volume_at_Measurement_Condition] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainEVC_01_Volume_at_Measurement_Condition, setMaintainEVC_01_Volume_at_Measurement_Condition] = useState<boolean>(false);
-    
+    const [
+        EVC_01_Volume_at_Measurement_Condition_High,
+        setEVC_01_Volume_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        setEVC_01_Volume_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        setExceedThresholdEVC_01_Volume_at_Measurement_Condition,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainEVC_01_Volume_at_Measurement_Condition,
+        setMaintainEVC_01_Volume_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(EVC_01_Volume_at_Measurement_Condition as any);
-      const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
-      const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
-  
-      if (!isNaN(EVC_01_Volume_at_Measurement_ConditionValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Volume_at_Measurement_Condition) {
-          setExceedThresholdEVC_01_Volume_at_Measurement_Condition(EVC_01_Volume_at_Measurement_ConditionValue >= highValue || EVC_01_Volume_at_Measurement_ConditionValue <= lowValue);
-      }
-  }, [EVC_01_Volume_at_Measurement_Condition, EVC_01_Volume_at_Measurement_Condition_High, EVC_01_Volume_at_Measurement_Condition_Low, maintainEVC_01_Volume_at_Measurement_Condition]);
-  
+        const EVC_01_Volume_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Volume_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Volume_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Volume_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Volume_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Volume_at_Measurement_Condition
+        ) {
+            setExceedThresholdEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Volume_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Volume_at_Measurement_Condition,
+        EVC_01_Volume_at_Measurement_Condition_High,
+        EVC_01_Volume_at_Measurement_Condition_Low,
+        maintainEVC_01_Volume_at_Measurement_Condition,
+    ]);
 
     //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
-
-   
 
     const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
@@ -528,7 +662,6 @@ export default function GraphicSPMCV() {
             );
             setEVC_01_Pressure_Low(lowEVCPressureItem?.value || null);
 
-      
             const PT1_High = res.data.find(
                 (item: any) => item.key === "PT1_High"
             );
@@ -557,7 +690,6 @@ export default function GraphicSPMCV() {
                 (item: any) => item.key === "GD2_Low"
             );
             setGD2_Low(GD2_Low?.value || null);
-
 
             const EVC_01_Flow_at_Base_Condition_High = res.data.find(
                 (item: any) =>
@@ -621,14 +753,11 @@ export default function GraphicSPMCV() {
                 EVC_01_Volume_at_Measurement_Condition_Low?.value || null
             );
 
-         
-
             const maintainEVC_01_Pressure = res.data.find(
                 (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
             setmaintainEVC_01_Pressure(maintainEVC_01_Pressure?.value || false);
 
-           
             const maintainPT1 = res.data.find(
                 (item: any) => item.key === "PT1_Maintain"
             );
@@ -643,8 +772,6 @@ export default function GraphicSPMCV() {
                 (item: any) => item.key === "GD2_Maintain"
             );
             setMaintainGD2(maintainGD2?.value || false);
-
-          
 
             const MaintainGVF_1 = res.data.find(
                 (item: any) =>
@@ -744,13 +871,11 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
@@ -810,13 +935,11 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
@@ -876,13 +999,11 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdEVC_01_Volume_at_Base_Condition &&
@@ -943,13 +1064,11 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
                                     background:
                                         exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
@@ -1009,15 +1128,12 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
-                                    
                                 }}
                                 // onClick={() => confirmSVF_2()}
                             >
@@ -1067,15 +1183,12 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
-                                  
                                 }}
                                 // onClick={() => confirmGVF_2()}
                             >
@@ -1125,15 +1238,12 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
-                                   
                                 }}
                                 // onClick={() => confirmSVA_2()}
                             >
@@ -1183,15 +1293,12 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
-                                    padding: 2,
                                     borderRadius: 5,
-                                   
                                 }}
                                 // onClick={() => confirmGVA_2()}
                             >
@@ -1241,10 +1348,9 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1266,7 +1372,7 @@ export default function GraphicSPMCV() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1903} :
+                                        {ValueGas.PT_1903}:
                                     </p>
                                     <p
                                         style={{
@@ -1304,15 +1410,15 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThreshold && !maintainEVC_01_Pressure
+                                        exceedThreshold &&
+                                        !maintainEVC_01_Pressure
                                             ? "#ff5656"
                                             : maintainEVC_01_Pressure
                                             ? "orange"
@@ -1329,7 +1435,7 @@ export default function GraphicSPMCV() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.PT_1901} :
+                                        {ValueGas.PT_1901}:
                                     </p>
                                     <p
                                         style={{
@@ -1367,14 +1473,12 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 27,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                 
                                 }}
                                 // onClick={() => confirmPT_1902()}
                             >
@@ -1398,15 +1502,6 @@ export default function GraphicSPMCV() {
                                         Not used
                                     </p>
                                 </div>
-                                <p
-                                    style={{
-                                        color: colorNameValue,
-                                        position: "relative",
-                                        top: 5,
-                                    }}
-                                >
-                                    {KeyGas.BAR}
-                                </p>
                             </div>
                         ),
                     },
@@ -1679,7 +1774,6 @@ export default function GraphicSPMCV() {
                                     borderRadius: 2,
 
                                     right: 4,
-
                                 }}
                                 // onClick={() => confirmGD_1903()}
                             >
@@ -1720,7 +1814,7 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -1754,7 +1848,7 @@ export default function GraphicSPMCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
+                                    fontSize: 27,
                                     fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
@@ -1785,120 +1879,127 @@ export default function GraphicSPMCV() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsSPMCV");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
-              AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
-              ArrowRight: { x: 405.8579396585199, y: 1019.5985886548262 },
-              ArrowRight1: { x: -1368.5392165062376, y: 1028.1849832324785 },
-              BallValue01: { x: -1095.4557044799226, y: 1133.8322603162176 },
-              BallValue02: { x: -923.8369273349099, y: 1130.977155507791 },
-              BallValue03: { x: -757.5075509147275, y: 891.9326848093123 },
-              BallValue04: { x: -757.8322908208111, y: 1127.684549644359 },
-              BallValue05: { x: -513.243025120388, y: 893.7254573680121 },
-              BallValue06: { x: -509.4496840725251, y: 1127.72814287204 },
-              BallValue07: { x: -391.71326336183927, y: 813.8244470890327 },
-              BallValue08: { x: 42.15083782557815, y: 816.0796734600065 },
+              const initialPositions = {
+              AlarmCenter: { x: 283.59624370081974, y: 372.1544066615297 },
+              ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
+              ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
+              BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
+              BallValue02: { x: -941.3988306125451, y: 1132.519440708925 },
+              BallValue03: { x: -774.8687072979039, y: 894.71316658712 },
+              BallValue04: { x: -774.5658025383268, y: 1135.4678560265843 },
+              BallValue05: { x: -507.3840366441426, y: 894.8272766944153 },
+              BallValue06: { x: -519.475658518071, y: 1135.4253608380895 },
+              BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
+              BallValue08: { x: 46.78642344526514, y: 814.45781638628 },
               BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
-              BallValue10: { x: 44.70166109368827, y: 1204.159292175339 },
+              BallValue10: { x: 45.36832776035493, y: 1204.8259588420058 },
               BallValueCenter: {
-                  x: -164.71252745056012,
-                  y: 1005.5989474744415,
+                  x: -167.30710887361258,
+                  y: 1007.8595594996316,
               },
               BallValueCenter_Check: {
                   x: 90.96636981528951,
                   y: 1084.2937921267353,
               },
               BallValueCenter_None: {
-                  x: -145.42156456595674,
-                  y: 1038.1015248331069,
+                  x: -148.86672654059413,
+                  y: 1039.286470841561,
               },
               BallValueCenter_None2: {
-                  x: -132.46485980466053,
-                  y: 1037.669487186285,
+                  x: -136.78263324371193,
+                  y: 1039.1243048935844,
               },
-              BallValueFirst: { x: 325.15262421132076, y: 1005.5430441067174 },
-              BallValueLast: { x: -1310.1236072690967, y: 1012.4432496140678 },
+              BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
+              BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
               BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
               BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
               EVC_01_Flow_at_Base_Condition: {
-                  x: -274.758231018305,
-                  y: 594.1099182771684,
+                  x: -299.92819212360223,
+                  y: 439.35293364881886,
               },
               EVC_01_Flow_at_Measurement_Condition: {
-                  x: -275.0788897046258,
-                  y: 645.0064507552753,
+                  x: -299.9154443239263,
+                  y: 520.3642746442475,
+              },
+              EVC_01_Temperature: {
+                  x: -1397.4430569167453,
+                  y: 1160.0348765205,
               },
               EVC_01_Volume_at_Base_Condition: {
-                  x: -275.37496874581336,
-                  y: 695.5497653944917,
+                  x: -299.9068708927739,
+                  y: 601.3216279766036,
               },
               EVC_01_Volume_at_Measurement_Condition: {
-                  x: -275.4305105252121,
-                  y: 746.0043895523191,
+                  x: -299.9706517562288,
+                  y: 682.3910267976157,
               },
-              FIQ_1901: { x: -275.39498197292176, y: 542.9840164170233 },
-              FIQ_1902: { x: -276.04634933347495, y: 1287.5855875394834 },
-              FIQ_none: { x: -175.54268721568215, y: 798.0972512607284 },
-              FIQ_none2: { x: -165.6205623176026, y: 1187.0853436430443 },
-              FIQ_none11: { x: -136.12942459049623, y: 842.6885101213705 },
-              FIQ_none22: { x: -136.36875034337498, y: 1232.0392945117674 },
+              EVC_02_Temperature: {
+                  x: -508.4032164626999,
+                  y: 1502.617581291104,
+              },
+              FIQ_1901: { x: -299.5638891313443, y: 383.39271433136935 },
+              FIQ_1902: { x: -300.3731832948809, y: 1291.9351796213175 },
+              FIQ_none: { x: -142.4069292713505, y: 797.7725764198564 },
+              FIQ_none2: { x: -140.45882559365475, y: 1187.796149615632 },
+              FIQ_none11: { x: -113.54560233855409, y: 842.6885101213705 },
+              FIQ_none22: { x: -110.8783864969942, y: 1231.9355735307763 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
-              GD1: { x: -345.0274003534157, y: 1031.6843982746898 },
-              GD1_Name1901: { x: -375.7113084299622, y: 951.562287392658 },
-              GD1_Value1901: { x: -375.52346612478414, y: 986.9347273405062 },
-              GD2: { x: 12.719970605642402, y: 1030.2021439643406 },
-              GD2_Name1902: { x: -16.796698830843866, y: 951.870740418364 },
-              GD2_Value1902: { x: -16.967035961151623, y: 987.2686416536776 },
+              GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
+              GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
+              GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
+              GD2: { x: 14.352240295564371, y: 1036.215094699595 },
+              GD2_Name1902: { x: -16.195635233570172, y: 964.6138317045766 },
+              GD2_Value1902: { x: -15.806553587925947, y: 1000.2949872149165 },
               GD3: { x: 16.04134176178286, y: 1035.243511740587 },
               GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
               GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
-              GD_none1: { x: -320.3432333205292, y: 1051.210962690087 },
-              GD_none2: { x: 37.78855599573092, y: 1046.5316583224167 },
+              GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
+              GD_none2: { x: 39.42936374662085, y: 1054.0619416332215 },
               GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1151.6225319026826, y: 574.7715183161662 },
-              IsGateWay: { x: -1224.1168870724678, y: 634.2416848243695 },
-              Line2_NONE: { x: -884.3336203769039, y: 1044.8496174211396 },
-              Line2_NONE1: { x: -766.9885863058424, y: 1044.8496174211396 },
-              LineBall_1_1: { x: -1366.0317402818896, y: 1044.9869361614612 },
-              PCV01: { x: -670.1225805120118, y: 879.0152725114849 },
-              PCV02: { x: -670.2261320869296, y: 1112.240259699294 },
-              PCV_NUM01: { x: -760.4775944144799, y: 784.4870428669313 },
-              PCV_NUM02: { x: -759.5449352428925, y: 1206.8849283397149 },
+              Header: { x: -1246.5471763559826, y: 388.50429146440763 },
+              Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
+              Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
+              LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
+              PCV01: { x: -689.7970151337088, y: 879.00632918006 },
+              PCV02: { x: -692.1078758499317, y: 1120.7254019726813 },
+              PCV_NUM01: { x: -753.1197637959665, y: 828.7379359721325 },
+              PCV_NUM02: { x: -754.9807048889562, y: 1181.3618221440458 },
               PCV_ballVavle_Small1: {
-                  x: -580.633632772711,
-                  y: 883.6388490887801,
+                  x: -597.4113415337335,
+                  y: 882.8095517403245,
               },
               PCV_ballVavle_Small1_none1: {
-                  x: -645.9410117692291,
-                  y: 901.8737610941586,
+                  x: -665.0629396476888,
+                  y: 902.0359579483519,
               },
               PCV_ballVavle_Small1_none2: {
-                  x: -645.2299433549822,
-                  y: 1136.2909413576103,
+                  x: -667.1691720404733,
+                  y: 1141.0987492112777,
               },
               PCV_ballVavle_Small2: {
-                  x: -580.1989498965552,
-                  y: 1118.9114511310147,
+                  x: -597.5196697396369,
+                  y: 1124.7706207942995,
               },
               PCV_ballVavle_Small2_none1: {
-                  x: -574.3824333182524,
-                  y: 933.044876458853,
+                  x: -591.5512215024908,
+                  y: 932.0283184188106,
               },
               PCV_ballVavle_Small2_none2: {
-                  x: -573.4476614967655,
-                  y: 1166.7292372994432,
+                  x: -591.3659180111881,
+                  y: 1172.918606583641,
               },
-              PCV_none1: { x: -640.8483009440444, y: 924.9958577880326 },
-              PCV_none2: { x: -639.8258973272732, y: 1157.5479877126536 },
-              PSV01: { x: 82.49644634072223, y: 723.0979741364629 },
+              PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
+              PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
+              PSV01: { x: 213.77852426794328, y: 808.706711387803 },
               PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
               PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
               PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
@@ -1906,33 +2007,33 @@ export default function GraphicSPMCV() {
               PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
               PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
               PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -1234.164008009856, y: 952.8406963537602 },
-              PT2: { x: -350.9391791978867, y: 1138.964910598512 },
-              PT3: { x: -354.39235881679406, y: 750.8313302579563 },
-              PT_col1: { x: -1201.3607244900436, y: 1015.4980803923286 },
-              PT_col2: { x: -321.0385042528555, y: 812.0886938349211 },
-              PT_col3: { x: -318.1578385287693, y: 1201.5982564241394 },
-              PT_none1: { x: -1200.8732273075652, y: 978.4251147492969 },
-              PT_none2: { x: -320.6920537881153, y: 811.0253182723825 },
-              PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
+              PT1: { x: -1248.552773720958, y: 969.1291015417314 },
+              PT2: { x: -355.7700965043326, y: 1157.411777601272 },
+              PT3: { x: -355.19155879585895, y: 764.6788518659513 },
+              PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
+              PT_col2: { x: -322.8377042319204, y: 827.8997160548171 },
+              PT_col3: { x: -323.3980884194193, y: 1220.1882162336972 },
+              PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
+              PT_none2: { x: -322.9912537671802, y: 797.674918261915 },
+              PT_none3: { x: -323.07402304506405, y: 1188.209044624158 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1320.8030147115624,
-                  y: 844.3281276778143,
+              Pressure_Trans01: { x: -1370.178598844617, y: 809.4634279335849 },
+              Pressure_Trans02: { x: -714.6393417001174, y: 683.530944025318 },
+              Pressure_Trans03: {
+                  x: -712.0732444985409,
+                  y: 1294.1236870746352,
               },
-              Pressure_Trans02: { x: -678.3851600513049, y: 676.0406821423652 },
-              Pressure_Trans03: { x: -677.1607204889335, y: 1317.179830907271 },
-              SDV: { x: -1129.2959635804082, y: 947.2081481555467 },
-              SDV_Ball: { x: -1077.4263678382936, y: 1163.5358794189733 },
-              SDV_IMG: { x: -1101.3745453221554, y: 994.4369024411992 },
+              SDV: { x: -1140.086396422953, y: 946.7196538271689 },
+              SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
+              SDV_IMG: { x: -1115.4963861998212, y: 994.274284574213 },
               SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1076.030977114345, y: 1045.2816682466746 },
-              T_juntion_11: { x: -71.38782403918049, y: 827.0462087381112 },
+              SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
+              T_juntion_11: { x: -71.03198916443257, y: 826.6284580114444 },
               T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
-              Tank: { x: -941.289316539069, y: 980.4019552194111 },
-              Tank_Ball: { x: -906.1466611736813, y: 1163.2030144638798 },
-              Tank_None: { x: -918.1394366344451, y: 1046.9801484268744 },
+              Tank: { x: -961.1373095989246, y: 977.5992617936554 },
+              Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
+              Tank_None: { x: -933.6419103358979, y: 1047.4663129728283 },
               Temperature_Trans01: {
                   x: -607.828356494313,
                   y: 562.8487535527242,
@@ -1941,22 +2042,22 @@ export default function GraphicSPMCV() {
                   x: -796.1166124474211,
                   y: 1445.5258186779024,
               },
-              VavleWay: { x: -222.72576198688358, y: 1014.3730342723888 },
+              VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
               animation_line7: { x: -359.940697041692, y: 845.650011090059 },
-              animation_line8: { x: 56.29508034342663, y: 846.5065022566135 },
+              animation_line8: { x: 64.61285378247803, y: 845.7339111102631 },
               animation_line9: {
                   x: -367.83294526673615,
                   y: 1235.2489576729074,
               },
               animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
-              animation_line11: { x: -36.25094554550509, y: 845.4101876460927 },
+              animation_line11: { x: -35.76111225621217, y: 845.5377293237694 },
               animation_line12: {
-                  x: -133.2992075354374,
+                  x: -134.7992075354374,
                   y: 1038.0566391817506,
               },
               animation_line13: {
-                  x: -147.57082438083057,
-                  y: 1037.941284245162,
+                  x: -149.50201219483813,
+                  y: 1038.8111762620706,
               },
               animation_line14: {
                   x: -253.98006830837323,
@@ -1966,40 +2067,40 @@ export default function GraphicSPMCV() {
                   x: 61.881522019472186,
                   y: 1235.5350090951665,
               },
-              borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data5: { x: -276.15290739334114, y: 1337.9572659681887 },
-              data6: { x: -276.1507528711019, y: 1388.6690421536248 },
-              data7: { x: -276.0698143883534, y: 1439.0886396065885 },
-              data8: { x: -275.88561112765143, y: 1489.6205588818639 },
-              line1: { x: -1291.4355190654237, y: 1044.7946609746105 },
-              line2: { x: -840.6900006887158, y: 1044.8496174211396 },
-              line3: { x: -740.4843786514932, y: 924.7734644855461 },
-              line4: { x: -740.238419040097, y: 1158.8559724650454 },
-              line5: { x: -492.53130770016935, y: 1158.9405157738784 },
-              line6: { x: -496.4503499534759, y: 924.7932564328161 },
-              line7: { x: -430.11535382326633, y: 1034.9023972070609 },
+              borderWhite: { x: -1364.8389453770394, y: 386.2211894520615 },
+              data5: { x: -300.3532394344717, y: 1348.2148594394282 },
+              data6: { x: -300.7144582875339, y: 1429.43381798634 },
+              data7: { x: -300.91705728550136, y: 1510.4363877474143 },
+              data8: { x: -301.18109812908483, y: 1591.3481702772997 },
+              line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
+              line2: { x: -842.576582460349, y: 1046.3496174211396 },
+              line3: { x: -757.3073258645178, y: 924.8718460504479 },
+              line4: { x: -757.4999146099806, y: 1165.8382016355595 },
+              line5: { x: -502.4159262673525, y: 1166.092466768901 },
+              line6: { x: -490.14805285475467, y: 924.7573320303067 },
+              line7: { x: -431.86459394413737, y: 1039.3455886441188 },
               line8: { x: -374.1947990352617, y: 845.1255935069244 },
               line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-              line10: { x: 59.481695703628134, y: 846.6623022055546 },
+              line10: { x: 64.88186817663268, y: 845.1595827580492 },
               line11: { x: 62.86985056843554, y: 1234.683954724923 },
-              line12: { x: 92.81983107856911, y: 1035.9323508670825 },
-              line13: { x: 342.8312960971492, y: 1036.9713896720348 },
-              lineBall_13_1: { x: 421.8312960971493, y: 1036.9713896720348 },
+              line12: { x: 95.31983107856911, y: 1035.9323508670825 },
+              line13: { x: 343.3312960971492, y: 1036.9713896720348 },
+              lineBall_13_1: { x: 429.8312960971493, y: 1036.9713896720348 },
               overlay_SmallVavle1: {
-                  x: -649.7026867284558,
-                  y: 987.6024251546756,
+                  x: -863.2358516386571,
+                  y: 1208.6706191298017,
               },
               overlay_SmallVavle2: {
-                  x: -551.7200932796283,
-                  y: 1186.191866528488,
+                  x: -434.80044580641925,
+                  y: 1046.4815751188462,
               },
-              overlay_line7: { x: -656.1247334784416, y: 1017.8156819743556 },
-              overlay_line13: { x: 253.74722988332098, y: 1120.0819112793884 },
-              timeUpdate3: { x: -1224.1168870724678, y: 634.2416848243695 },
+              overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
+              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
+              timeUpdate3: { x: -1337.6290616173037, y: 449.2718388310818 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
-    const lineColor = "#ffaa00";
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -2029,7 +2130,8 @@ export default function GraphicSPMCV() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke:
+                    isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2038,7 +2140,8 @@ export default function GraphicSPMCV() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke:
+                    isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -2047,7 +2150,7 @@ export default function GraphicSPMCV() {
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2518,7 +2621,8 @@ export default function GraphicSPMCV() {
             position: positions.SDV,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 45,
@@ -2870,8 +2974,8 @@ export default function GraphicSPMCV() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#ffaa00",
-                background: "#ffaa00",
+                border: "yellow",
+                background: "yellow",
                 width: 55,
                 height: 1,
             },
@@ -3091,9 +3195,9 @@ export default function GraphicSPMCV() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3113,10 +3217,9 @@ export default function GraphicSPMCV() {
             sourcePosition: Position.Right,
             targetPosition: Position.Top,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3173,8 +3276,8 @@ export default function GraphicSPMCV() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                height: 55,
             },
             targetPosition: Position.Bottom,
         },
@@ -3199,8 +3302,8 @@ export default function GraphicSPMCV() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                height: 55,
             },
             targetPosition: Position.Top,
         },
@@ -3410,8 +3513,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3435,8 +3537,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3461,8 +3562,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3487,8 +3587,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3514,8 +3613,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3540,8 +3638,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Left,
         },
@@ -3566,8 +3663,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3592,8 +3688,7 @@ export default function GraphicSPMCV() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3740,9 +3835,9 @@ export default function GraphicSPMCV() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3768,7 +3863,7 @@ export default function GraphicSPMCV() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3791,7 +3886,7 @@ export default function GraphicSPMCV() {
 
             style: {
                 border: background,
-                width: 260,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3816,7 +3911,7 @@ export default function GraphicSPMCV() {
 
             style: {
                 border: background,
-                width: 300,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3940,7 +4035,7 @@ export default function GraphicSPMCV() {
                 border: line,
                 background: line,
                 width: 0,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -3959,7 +4054,7 @@ export default function GraphicSPMCV() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -3978,7 +4073,7 @@ export default function GraphicSPMCV() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -4005,7 +4100,7 @@ export default function GraphicSPMCV() {
                                 style={{
                                     fontSize: 45,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "orange",
                                 }}
                             >
                                 SPMCV
@@ -4086,7 +4181,7 @@ export default function GraphicSPMCV() {
                                 style={{
                                     fontSize: 60,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "yellow",
                                 }}
                             ></p>
                         </div>
@@ -4276,7 +4371,8 @@ export default function GraphicSPMCV() {
             position: positions.GD1_Name1901,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4302,7 +4398,8 @@ export default function GraphicSPMCV() {
             position: positions.GD2_Name1902,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -5324,18 +5421,12 @@ export default function GraphicSPMCV() {
         setEditingEnabled(!editingEnabled);
     };
     // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    //     localStorage.setItem("positionsSPMCV", JSON.stringify(positions));
     // }, [positions]);
 
     return (
         <>
-            {/* <audio ref={audioRef}>
-                <source
-                    src="/audios/mixkit-police-siren-us-1743-_1_.mp3"
-                    type="audio/mpeg"
-                />
-            </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
@@ -5403,9 +5494,9 @@ export default function GraphicSPMCV() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>

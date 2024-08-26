@@ -67,6 +67,13 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+//1b84ad    1
+//4094c4    2
+//2e92ba    3
+
+//0f8bbc    4
+
 const background = "#036E9B";
 const backGroundData = "white";
 export const borderBox = "white";
@@ -1367,8 +1374,8 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1432,9 +1439,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1498,9 +1505,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1565,9 +1572,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1633,9 +1640,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1700,9 +1707,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1767,9 +1774,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1834,9 +1841,9 @@ export default function DemoFlowOTS() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 27,
+                                    fontSize: 30,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1901,8 +1908,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1965,8 +1972,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1989,7 +1996,7 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        Pressure:
+                                        {ValueGas.PT_1902}:
                                     </p>
                                     <p
                                         style={{
@@ -2030,8 +2037,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2055,7 +2062,7 @@ export default function DemoFlowOTS() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        Pressure:
+                                        {ValueGas.PT_1901}:
                                     </p>
                                     <p
                                         style={{
@@ -2096,8 +2103,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2162,8 +2169,8 @@ export default function DemoFlowOTS() {
                                 style={{
                                     padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 27,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2637,218 +2644,414 @@ export default function DemoFlowOTS() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsOTSUKA");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
-              AlarmCenter: { x: -769.7577251992393, y: 567.1797209870246 },
-              ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
-              ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
-              BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
-              BallValue02: { x: -940.7321639458784, y: 1131.8527740422585 },
-              BallValue03: { x: -774.2020406312373, y: 893.0464999204534 },
-              BallValue04: { x: -774.8991358716602, y: 1134.4678560265843 },
-              BallValue05: { x: -509.0847877474188, y: 893.3002011223939 },
-              BallValue06: { x: -513.2960507700657, y: 1135.5047245440524 },
-              BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
-              BallValue08: { x: 46.78642344526514, y: 814.45781638628 },
-              BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
-              BallValue10: { x: 44.70166109368827, y: 1204.159292175339 },
-              BallValueCenter: {
-                  x: -167.30710887361258,
-                  y: 1007.8595594996316,
-              },
-              BallValueCenter_Check: {
-                  x: 90.96636981528951,
-                  y: 1084.2937921267353,
-              },
-              BallValueCenter_None: {
-                  x: -148.86672654059413,
-                  y: 1039.286470841561,
-              },
-              BallValueCenter_None2: {
-                  x: -136.78263324371193,
-                  y: 1039.1243048935844,
-              },
-              BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
-              BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
-              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
-              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
-              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-              EVC_01_Temperature: {
-                  x: -511.0369165389658,
-                  y: 707.4815305892284,
-              },
-              EVC_02_Temperature: {
-                  x: -508.4032164626999,
-                  y: 1502.617581291104,
-              },
-              FIQ_1901: { x: -512.6099419714315, y: 496.25460629317683 },
-              FIQ_1902: { x: -507.49052121970806, y: 1293.2125047507254 },
-              FIQ_none: { x: -150.5196832833689, y: 798.1782141204573 },
-              FIQ_none2: { x: -147.34984951405957, y: 1186.6476456288979 },
-              FIQ_none11: { x: -121.25271864997154, y: 842.6885101213705 },
-              FIQ_none22: { x: -118.15224507964376, y: 1231.5527388685316 },
-              Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-              Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-              FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
-              GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
-              GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
-              GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
-              GD2: { x: -340.2800293943576, y: 1036.2021439643406 },
-              GD2_Name1902: { x: -369.7973952262454, y: 962.8403828448106 },
-              GD2_Value1902: { x: -369.7416469139345, y: 997.1904549653616 },
-              GD3: { x: 16.04134176178286, y: 1035.243511740587 },
-              GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
-              GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
-              GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
-              GD_none2: { x: -314.7114440042691, y: 1057.0316583224167 },
-              GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
-              HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1151.6225319026826, y: 574.7715183161662 },
-              Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
-              Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
-              LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
-              PCV01: { x: -689.7970151337088, y: 879.00632918006 },
-              PCV02: { x: -692.1078758499317, y: 1118.5826891892311 },
-              PCV_NUM01: { x: -763.2072991580352, y: 813.6066329290295 },
-              PCV_NUM02: { x: -751.8582929049288, y: 1193.8514700801552 },
-              PCV_ballVavle_Small1: {
-                  x: -597.4113415337335,
-                  y: 882.8095517403245,
-              },
-              PCV_ballVavle_Small1_none1: {
-                  x: -665.0629396476888,
-                  y: 902.0359579483519,
-              },
-              PCV_ballVavle_Small1_none2: {
-                  x: -667.1691720404733,
-                  y: 1141.0987492112777,
-              },
-              PCV_ballVavle_Small2: {
-                  x: -597.5196697396369,
-                  y: 1124.7706207942995,
-              },
-              PCV_ballVavle_Small2_none1: {
-                  x: -591.5512215024908,
-                  y: 932.0283184188106,
-              },
-              PCV_ballVavle_Small2_none2: {
-                  x: -591.3659180111881,
-                  y: 1172.918606583641,
-              },
-              PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
-              PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
-              PSV01: { x: 224.12329186495157, y: 801.5449492052588 },
-              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
-              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
-              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
-              PSV_None01: { x: 264.6066519200614, y: 1036.7984512500655 },
-              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
-              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
-              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-              PT1: { x: -1248.552773720958, y: 969.1291015417314 },
-              PT2: { x: -349.4367631709992, y: 1157.7451109346052 },
-              PT3: { x: -347.89235881679406, y: 764.2733407560032 },
-              PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
-              PT_col2: { x: -315.5385042528555, y: 827.0886938349211 },
-              PT_col3: { x: -316.7314217527526, y: 1220.854882900364 },
-              PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
-              PT_none2: { x: -315.6920537881153, y: 794.0253182723825 },
-              PT_none3: { x: -317.74068971173074, y: 1173.5423779574912 },
-              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-              Pressure_Trans01: {
-                  x: -1380.0578823281708,
-                  y: 846.7237411958964,
-              },
-              Pressure_Trans02: {
-                  x: -109.79034149924189,
-                  y: 707.6780011386318,
-              },
-              Pressure_Trans03: {
-                  x: -107.09687912495832,
-                  y: 1503.0848878201787,
-              },
-              SDV: { x: -1140.480069057554, y: 948.4164901444692 },
-              SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
-              SDV_IMG: { x: -1114.8297195331543, y: 995.274284574213 },
-              SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-              SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
-              T_juntion_11: { x: -71.88782403918049, y: 826.0462087381112 },
-              T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
-              Tank: { x: -956.2937582378859, y: 985.6718473953865 },
-              Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
-              Tank_None: { x: -933.6419103358979, y: 1047.4663129728283 },
-              Temperature_Trans01: {
-                  x: -607.828356494313,
-                  y: 562.8487535527242,
-              },
-              Temperature_Trans02: {
-                  x: -796.1166124474211,
-                  y: 1445.5258186779024,
-              },
-              VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
-              animation_line7: { x: -359.940697041692, y: 845.650011090059 },
-              animation_line8: { x: 64.61285378247803, y: 845.7339111102631 },
-              animation_line9: {
-                  x: -367.83294526673615,
-                  y: 1235.2489576729074,
-              },
-              animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
-              animation_line11: { x: -36.25094554550509, y: 845.4101876460927 },
-              animation_line12: {
-                  x: -134.7992075354374,
-                  y: 1038.0566391817506,
-              },
-              animation_line13: {
-                  x: -149.50201219483813,
-                  y: 1038.8111762620706,
-              },
-              animation_line14: {
-                  x: -253.98006830837323,
-                  y: 1235.4034694811062,
-              },
-              animation_line15: {
-                  x: 61.881522019472186,
-                  y: 1235.5350090951665,
-              },
-              borderWhite: { x: -1255.5860527043733, y: 570.6973852763994 },
-              data1: { x: -511.9183704059243, y: 553.2453773417925 },
-              data2: { x: -511.32132695116746, y: 630.6218303835474 },
-              data3: { x: -109.69515726307876, y: 630.4094893817204 },
-              data4: { x: -110.15912933245389, y: 553.2682262175399 },
-              data5: { x: -106.02467863859127, y: 1349.497296060089 },
-              data6: { x: -106.79961331562694, y: 1426.0686215913433 },
-              data7: { x: -507.2601169268821, y: 1349.2786849631038 },
-              data8: { x: -507.8350795554151, y: 1425.8559337638578 },
-              line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
-              line2: { x: -842.576582460349, y: 1046.3496174211396 },
-              line3: { x: -757.3073258645178, y: 924.8718460504479 },
-              line4: { x: -757.4999146099806, y: 1165.8382016355595 },
-              line5: { x: -491.51843245307396, y: 924.6826669400624 },
-              line6: { x: -495.2528544333276, y: 1165.9228054364569 },
-              line7: { x: -460.3340758870887, y: 1039.7355815474468 },
-              line8: { x: -374.1947990352617, y: 845.1255935069244 },
-              line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-              line10: { x: 64.88186817663268, y: 845.1595827580492 },
-              line11: { x: 62.86985056843554, y: 1234.683954724923 },
-              line12: { x: 95.31983107856911, y: 1035.9323508670825 },
-              line13: { x: 343.3312960971492, y: 1036.9713896720348 },
-              lineBall_13_1: { x: 429.8312960971493, y: 1036.9713896720348 },
-              overlay_SmallVavle1: {
-                  x: -863.2358516386571,
-                  y: 1208.6706191298017,
-              },
-              overlay_SmallVavle2: {
-                  x: -434.80044580641925,
-                  y: 1046.4815751188462,
-              },
-              overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
-              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
-              timeUpdate3: { x: -1224.1168870724678, y: 634.2416848243695 },
+              const initialPositions = {
+                AlarmCenter
+                : 
+                {x: 283.59624370081974, y: 372.1544066615297},
+                ArrowRight
+                : 
+                {x: 407.4256642678949, y: 1019.0985886548262},
+                ArrowRight1
+                : 
+                {x: -1377.765238350283, y: 1029.2839122667642},
+                BallValue01
+                : 
+                {x: -1108.440790541049, y: 1131.119650683875},
+                BallValue02
+                : 
+                {x: -941.3988306125451, y: 1132.519440708925},
+                BallValue03
+                : 
+                {x: -774.8687072979039, y: 894.71316658712},
+                BallValue04
+                : 
+                {x: -774.5658025383268, y: 1135.4678560265843},
+                BallValue05
+                : 
+                {x: -509.0847877474188, y: 893.9668677890605},
+                BallValue06
+                : 
+                {x: -513.2960507700657, y: 1135.5047245440524},
+                BallValue07
+                : 
+                {x: -391.21326336183927, y: 814.8244470890327},
+                BallValue08
+                : 
+                {x: 46.78642344526514, y: 814.45781638628},
+                BallValue09
+                : 
+                {x: -390.7347918738091, y: 1204.6166524541484},
+                BallValue10
+                : 
+                {x: 45.36832776035493, y: 1204.8259588420058},
+                BallValueCenter
+                : 
+                {x: -167.30710887361258, y: 1007.8595594996316},
+                BallValueCenter_Check
+                : 
+                {x: 90.96636981528951, y: 1084.2937921267353},
+                BallValueCenter_None
+                : 
+                {x: -148.86672654059413, y: 1039.286470841561},
+                BallValueCenter_None2
+                : 
+                {x: -136.78263324371193, y: 1039.1243048935844},
+                BallValueFirst
+                : 
+                {x: 325.65262421132076, y: 1005.5430441067174},
+                BallValueLast
+                : 
+                {x: -1321.6123824708486, y: 1014.0668924353204},
+                BallValuePSV
+                : 
+                {x: 210.72148707331525, y: 958.6157106130481},
+                BallValuePSVNone
+                : 
+                {x: 228.65438036310263, y: 974.0164290314665},
+                ConnectData
+                : 
+                {x: -1224.1375965271236, y: 779.7488024784055},
+                EVC_01_Temperature
+                : 
+                {x: -1397.4430569167453, y: 1160.0348765205},
+                EVC_02_Temperature
+                : 
+                {x: -508.4032164626999, y: 1502.617581291104},
+                FIQ_1901
+                : 
+                {x: -299.5638891313443, y: 383.39271433136935},
+                FIQ_1902
+                : 
+                {x: -300.3731832948809, y: 1291.9351796213175},
+                FIQ_none
+                : 
+                {x: -142.4069292713505, y: 797.7725764198564},
+                FIQ_none2
+                : 
+                {x: -140.45882559365475, y: 1187.796149615632},
+                FIQ_none11
+                : 
+                {x: -113.54560233855409, y: 842.6885101213705},
+                FIQ_none22
+                : 
+                {x: -110.8783864969942, y: 1231.9355735307763},
+                Flow1
+                : 
+                {x: -853.4576431348205, y: 1498.5512757003828},
+                Flow2
+                : 
+                {x: -444.10018252327654, y: 1498.2070645557653},
+                FullScreen
+                : 
+                {x: 359.3312960971492, y: 1036.9713896720348},
+                GD1
+                : 
+                {x: -706.3301306692865, y: 1034.6537686321053},
+                GD1_Name1901
+                : 
+                {x: -735.9500671990377, y: 963.4268072979715},
+                GD1_Value1901
+                : 
+                {x: -735.7622248938596, y: 998.7992472458197},
+                GD2
+                : 
+                {x: -340.2800293943576, y: 1036.2021439643406},
+                GD2_Name1902
+                : 
+                {x: -369.7973952262454, y: 962.8403828448106},
+                GD2_Value1902
+                : 
+                {x: -369.7416469139345, y: 997.1904549653616},
+                GD3
+                : 
+                {x: 16.04134176178286, y: 1035.243511740587},
+                GD3_Name1903
+                : 
+                {x: -14.745770942269019, y: 963.1634625787311},
+                GD3_Value1903
+                : 
+                {x: -14.401337483820612, y: 998.7295202130439},
+                GD_none1
+                : 
+                {x: -680.8408824721303, y: 1053.7496989003014},
+                GD_none2
+                : 
+                {x: -314.7114440042691, y: 1057.0316583224167},
+                GD_none3
+                : 
+                {x: 40.93067084862969, y: 1056.6594300401225},
+                HELP
+                : 
+                {x: 750.7851455025582, y: 336.66019515746984},
+                Header
+                : 
+                {x: -1246.5471763559826, y: 388.50429146440763},
+                Line2_NONE
+                : 
+                {x: -884.3336203769039, y: 1046.3496174211396},
+                Line2_NONE1
+                : 
+                {x: -779.4885863058424, y: 1046.3496174211396},
+                LineBall_1_1
+                : 
+                {x: -1372.5317402818896, y: 1045.9869361614612},
+                PCV01
+                : 
+                {x: -689.7970151337088, y: 879.00632918006},
+                PCV02
+                : 
+                {x: -692.1078758499317, y: 1120.7254019726813},
+                PCV_NUM01
+                : 
+                {x: -753.1197637959665, y: 828.7379359721325},
+                PCV_NUM02
+                : 
+                {x: -754.9807048889562, y: 1181.3618221440458},
+                PCV_ballVavle_Small1
+                : 
+                {x: -597.4113415337335, y: 882.8095517403245},
+                PCV_ballVavle_Small1_none1
+                : 
+                {x: -665.0629396476888, y: 902.0359579483519},
+                PCV_ballVavle_Small1_none2
+                : 
+                {x: -667.1691720404733, y: 1141.0987492112777},
+                PCV_ballVavle_Small2
+                : 
+                {x: -597.5196697396369, y: 1124.7706207942995},
+                PCV_ballVavle_Small2_none1
+                : 
+                {x: -591.5512215024908, y: 932.0283184188106},
+                PCV_ballVavle_Small2_none2
+                : 
+                {x: -591.3659180111881, y: 1172.918606583641},
+                PCV_none1
+                : 
+                {x: -660.6947202927415, y: 923.80189117024},
+                PCV_none2
+                : 
+                {x: -661.9127246926923, y: 1165.3911488680144},
+                PSV01
+                : 
+                {x: 213.77852426794328, y: 808.706711387803},
+                PSV_01
+                : 
+                {x: 207.36093454652644, y: 894.8194564074687},
+                PSV_02
+                : 
+                {x: 186.61559387183382, y: 874.8453736745709},
+                PSV_03
+                : 
+                {x: 179.24045238769793, y: 807.8513210996118},
+                PSV_None01
+                : 
+                {x: 264.6066519200614, y: 1036.7984512500655},
+                PSV_None02
+                : 
+                {x: 229.41484444700808, y: 920.3475775498915},
+                PSV_None03
+                : 
+                {x: 205.13413659641662, y: 897.6667259680172},
+                PSV_None04
+                : 
+                {x: 202.2501602840781, y: 827.0933030066423},
+                PT1
+                : 
+                {x: -1248.552773720958, y: 969.1291015417314},
+                PT2
+                : 
+                {x: -355.7700965043326, y: 1157.411777601272},
+                PT3
+                : 
+                {x: -355.19155879585895, y: 764.6788518659513},
+                PT_col1
+                : 
+                {x: -1216.2184970277972, y: 1031.4628364925754},
+                PT_col2
+                : 
+                {x: -322.8377042319204, y: 827.8997160548171},
+                PT_col3
+                : 
+                {x: -323.3980884194193, y: 1220.1882162336972},
+                PT_none1
+                : 
+                {x: -1215.33217151093, y: 1005.9301182806702},
+                PT_none2
+                : 
+                {x: -322.9912537671802, y: 797.674918261915},
+                PT_none3
+                : 
+                {x: -323.07402304506405, y: 1188.209044624158},
+                PVC_none1
+                : 
+                {x: -559.5285900583461, y: 935.5671930782875},
+                PVC_none2
+                : 
+                {x: -554.5116204107262, y: 1246.839418457314},
+                Pressure_Trans01
+                : 
+                {x: -1370.178598844617, y: 809.4634279335849},
+                Pressure_Trans02
+                : 
+                {x: -714.6393417001174, y: 683.530944025318},
+                Pressure_Trans03
+                : 
+                {x: -712.0732444985409, y: 1294.1236870746352},
+                SDV
+                : 
+                {x: -1140.086396422953, y: 946.7196538271689},
+                SDV_Ball
+                : 
+                {x: -1091.1806472239737, y: 1162.1857429302347},
+                SDV_IMG
+                : 
+                {x: -1115.4963861998212, y: 994.274284574213},
+                SDV_Name_none
+                : 
+                {x: -1249.6461839977737, y: 902.8410000476873},
+                SDV_None
+                : 
+                {x: -1089.720700971003, y: 1046.083325698294},
+                T_juntion_11
+                : 
+                {x: -71.03198916443257, y: 826.6284580114444},
+                T_juntion_14
+                : 
+                {x: -289.03721709708736, y: 1184.5034182177258},
+                Tank
+                : 
+                {x: -961.1373095989246, y: 977.5992617936554},
+                Tank_Ball
+                : 
+                {x: -923.9708216841641, y: 1163.4131295204752},
+                Tank_None
+                : 
+                {x: -933.6419103358979, y: 1047.4663129728283},
+                Temperature_Trans01
+                : 
+                {x: -607.828356494313, y: 562.8487535527242},
+                Temperature_Trans02
+                : 
+                {x: -796.1166124474211, y: 1445.5258186779024},
+                VavleWay
+                : 
+                {x: -224.78705778398276, y: 1015.8472031854426},
+                animation_line7
+                : 
+                {x: -359.940697041692, y: 845.650011090059},
+                animation_line8
+                : 
+                {x: 64.61285378247803, y: 845.7339111102631},
+                animation_line9
+                : 
+                {x: -367.83294526673615, y: 1235.2489576729074},
+                animation_line10
+                : 
+                {x: 58.79445151290554, y: 1235.4134977535994},
+                animation_line11
+                : 
+                {x: -35.76111225621217, y: 845.5377293237694},
+                animation_line12
+                : 
+                {x: -134.7992075354374, y: 1038.0566391817506},
+                animation_line13
+                : 
+                {x: -149.50201219483813, y: 1038.8111762620706},
+                animation_line14
+                : 
+                {x: -253.98006830837323, y: 1235.4034694811062},
+                animation_line15
+                : 
+                {x: 61.881522019472186, y: 1235.5350090951665},
+                borderWhite
+                : 
+                {x: -1364.8389453770394, y: 386.2211894520615},
+                data1
+                : 
+                {x: -299.9706517562288, y: 682.3910267976157},
+                data2
+                : 
+                {x: -299.9068708927739, y: 601.3216279766036},
+                data3
+                : 
+                {x: -299.9154443239263, y: 520.3642746442475},
+                data4
+                : 
+                {x: -299.92819212360223, y: 439.35293364881886},
+                data5
+                : 
+                {x: -300.3532394344717, y: 1348.2148594394282},
+                data6
+                : 
+                {x: -300.7144582875339, y: 1429.43381798634},
+                data7
+                : 
+                {x: -300.91705728550136, y: 1510.4363877474143},
+                data8
+                : 
+                {x: -301.18109812908483, y: 1591.3481702772997},
+                line1
+                : 
+                {x: -1304.5570414051474, y: 1045.8299743897232},
+                line2
+                : 
+                {x: -842.576582460349, y: 1046.3496174211396},
+                line3
+                : 
+                {x: -757.3073258645178, y: 924.8718460504479},
+                line4
+                : 
+                {x: -757.4999146099806, y: 1165.8382016355595},
+                line5
+                : 
+                {x: -491.51843245307396, y: 924.6826669400624},
+                line6
+                : 
+                {x: -495.2528544333276, y: 1165.9228054364569},
+                line7
+                : 
+                {x: -460.3340758870887, y: 1039.7355815474468},
+                line8
+                : 
+                {x: -374.1947990352617, y: 845.1255935069244},
+                line9
+                : 
+                {x: -373.5456900377612, y: 1234.7053320346292},
+                line10
+                : 
+                {x: 64.88186817663268, y: 845.1595827580492},
+                line11
+                : 
+                {x: 62.86985056843554, y: 1234.683954724923},
+                line12
+                : 
+                {x: 95.31983107856911, y: 1035.9323508670825},
+                line13
+                : 
+                {x: 343.3312960971492, y: 1036.9713896720348},
+                lineBall_13_1
+                : 
+                {x: 429.8312960971493, y: 1036.9713896720348},
+                overlay_SmallVavle1
+                : 
+                {x: -863.2358516386571, y: 1208.6706191298017},
+                overlay_SmallVavle2
+                : 
+                {x: -434.80044580641925, y: 1046.4815751188462},
+                overlay_line7
+                : 
+                {x: -582.1247334784416, y: 1178.3156819743556},
+                overlay_line13
+                : 
+                {x: 134.32824796850616, y: 1034.2196427442032},
+                timeUpdate3
+                : 
+                {x: -1337.6290616173037, y: 449.2718388310818},
           };
     const [positions, setPositions] = useState(initialPositions);
     const [editingEnabled, seteditingEnabled] = useState(false);
@@ -2883,7 +3086,8 @@ export default function DemoFlowOTS() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
+                stroke:
+                    isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2892,7 +3096,8 @@ export default function DemoFlowOTS() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
+                stroke:
+                    isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -3372,11 +3577,11 @@ export default function DemoFlowOTS() {
             position: positions.SDV,
 
             style: {
-                background: "none",
+                background: "green",
                 border: "none",
                 width: 130,
                 height: 45,
-                color:'white'
+                color: "white",
             },
             targetPosition: Position.Bottom,
         },
@@ -4029,7 +4234,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 800,
+                width: 400,
                 height: 55,
             },
             targetPosition: Position.Bottom,
@@ -4055,7 +4260,7 @@ export default function DemoFlowOTS() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 800,
+                width: 400,
                 height: 55,
             },
             targetPosition: Position.Top,
@@ -4606,7 +4811,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 350,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4629,7 +4834,7 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 400,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -4654,90 +4859,65 @@ export default function DemoFlowOTS() {
 
             style: {
                 border: background,
-                width: 400,
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Right,
         },
 
-        {
-            id: "EVC_02_Temperature",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 25,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.EVC_02_Temperature,
+        // {
+        //     id: "EVC_02_Temperature",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 25,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.EVC_02_Temperature,
 
-            style: {
-                border: background,
-                width: 400,
-                background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-            targetPosition: Position.Bottom,
-        },
+        //     style: {
+        //         border: background,
+        //         width: 400,
+        //         background: borderBox,
+        //         // Thêm box shadow với màu (0, 255, 255)
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
-        {
-            id: "EVC_01_Temperature",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 25,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.EVC_01_Temperature,
+        // {
+        //     id: "EVC_01_Temperature",
+        //     data: {
+        //         label: (
+        //             <div
+        //                 style={{
+        //                     color: "green",
+        //                     fontSize: 25,
+        //                     fontWeight: 600,
+        //                 }}
+        //             >
+        //                 {" "}
+        //             </div>
+        //         ),
+        //     },
+        //     position: positions.EVC_01_Temperature,
 
-            style: {
-                border: background,
-                width: 400,
-                background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-            targetPosition: Position.Bottom,
-        },
+        //     style: {
+        //         border: background,
+        //         width: 400,
+        //         background: borderBox,
+        //         // Thêm box shadow với màu (0, 255, 255)
+        //     },
+        //     targetPosition: Position.Bottom,
+        // },
 
-        {
-            id: "Pressure_Trans02",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 25,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.Pressure_Trans02,
-
-            style: {
-                border: background,
-                width: 400,
-                background: borderBox,
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-            targetPosition: Position.Bottom,
-        },
         {
             id: "PT1",
             data: {
@@ -4755,42 +4935,42 @@ export default function DemoFlowOTS() {
             },
             targetPosition: Position.Bottom,
         },
-        // {
-        //     id: "PT2",
-        //     data: {
-        //         label: <div>{PTV}</div>,
-        //     },
+        {
+            id: "PT2",
+            data: {
+                label: <div>{PTV}</div>,
+            },
 
-        //     position: positions.PT2,
-        //     zIndex: 9999,
+            position: positions.PT2,
+            zIndex: 9999,
 
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
 
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-        // {
-        //     id: "PT3",
-        //     data: {
-        //         label: <div>{PTV}</div>,
-        //     },
-        //     zIndex: 9999,
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "PT3",
+            data: {
+                label: <div>{PTV}</div>,
+            },
+            zIndex: 9999,
 
-        //     position: positions.PT3,
+            position: positions.PT3,
 
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
+            style: {
+                background: background,
+                border: "none",
+                width: "10px",
 
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
+                height: 10,
+            },
+            targetPosition: Position.Bottom,
+        },
         {
             id: "PT_none1",
             position: positions.PT_none1,
@@ -4808,40 +4988,40 @@ export default function DemoFlowOTS() {
                 height: 1,
             },
         },
-        // {
-        //     id: "PT_none2",
-        //     position: positions.PT_none2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
+        {
+            id: "PT_none2",
+            position: positions.PT_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
 
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: colorIMG_none,
-        //         width: 10,
-        //         height: 1,
-        //     },
-        // },
-        // {
-        //     id: "PT_none3",
-        //     position: positions.PT_none3,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 10,
+                height: 1,
+            },
+        },
+        {
+            id: "PT_none3",
+            position: positions.PT_none3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
 
-        //     sourcePosition: Position.Bottom,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: colorIMG_none,
-        //         width: 20,
-        //         height: 1,
-        //     },
-        // },
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: "#333333",
+                background: colorIMG_none,
+                width: 20,
+                height: 1,
+            },
+        },
         {
             id: "PT_col1",
             position: positions.PT_col1,
@@ -4861,44 +5041,44 @@ export default function DemoFlowOTS() {
                 borderRadius: "none",
             },
         },
-        // {
-        //     id: "PT_col2",
-        //     position: positions.PT_col2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-        //     zIndex: 999999,
-        //     sourcePosition: Position.Bottom,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: line,
-        //         background: line,
-        //         width: 10,
-        //         height: 25,
+        {
+            id: "PT_col2",
+            position: positions.PT_col2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            zIndex: 999999,
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: line,
+                background: line,
+                width: 10,
+                height: 25,
 
-        //         borderRadius: "none",
-        //     },
-        // },
-        // {
-        //     id: "PT_col3",
-        //     position: positions.PT_col3,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-        //     zIndex: 999999,
-        //     sourcePosition: Position.Bottom,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: line,
-        //         background: line,
-        //         width: 10,
-        //         height: 25,
+                borderRadius: "none",
+            },
+        },
+        {
+            id: "PT_col3",
+            position: positions.PT_col3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            zIndex: 999999,
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: line,
+                background: line,
+                width: 10,
+                height: 25,
 
-        //         borderRadius: "none",
-        //     },
-        // },
+                borderRadius: "none",
+            },
+        },
 
         //  ================== TT ======================
 
@@ -5183,8 +5363,7 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
-                            color:'white'
-
+                            color: "white",
                         }}
                     >
                         GD-1901
@@ -5211,7 +5390,7 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
-                            color:'white'
+                            color: "white",
                         }}
                     >
                         GD-1902
@@ -5238,8 +5417,7 @@ export default function DemoFlowOTS() {
                             fontWeight: 500,
                             position: "relative",
                             bottom: 5,
-                            color:'white'
-
+                            color: "white",
                         }}
                     >
                         GD-1903
@@ -6339,11 +6517,11 @@ export default function DemoFlowOTS() {
         [setNodes, setPositions, editingEnabled]
     );
 
-    // const toggleEditing = () => {
-    //     seteditingEnabled(!editingEnabled);
-    // };
+    const toggleEditing = () => {
+        seteditingEnabled(!editingEnabled);
+    };
     // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    //     localStorage.setItem("positionsOTSUKA", JSON.stringify(positions));
     // }, [positions]);
 
     return (
@@ -6416,9 +6594,9 @@ export default function DemoFlowOTS() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>

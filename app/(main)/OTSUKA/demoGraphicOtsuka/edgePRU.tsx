@@ -2,12 +2,12 @@ import { MarkerType } from "reactflow";
 
 const styleLine = {
     strokeWidth: 20,
-    stroke: "#ffff00",
+    stroke: "yellow",
 };
 
 const styleHide = {
     strokeWidth: 6,
-    stroke: "#ffff00",
+    stroke: "yellow",
 }
 const styleBallSmall = {
     strokeWidth: 3,

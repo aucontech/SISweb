@@ -2,12 +2,12 @@ import { MarkerType } from "reactflow";
 
 const styleLine = {
     strokeWidth: 14,
-    stroke: "#ffaa00",
+    stroke: "yellow",
 };
 
 const styleHide = {
     strokeWidth: 9,
-    stroke: "#ffaa00",
+    stroke: "yellow",
 }
 const styleBallSmall = {
     strokeWidth: 2,
@@ -221,16 +221,16 @@ export const edgeZOVC = [
             ...styleLine,
         },
     }, 
-    {
-        id: "PSV_None04-PSV01",
-        source: "PSV_None04",
-        target: "PSV01",
-        // animated: true,
-        type: "smoothstep",
+    // {
+    //     id: "PSV_None04-PSV01",
+    //     source: "PSV_None04",
+    //     target: "PSV01",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    }, 
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // }, 
      {
         id: "FIQ_none11-data1",
         source: "FIQ_none11",
@@ -243,26 +243,6 @@ export const edgeZOVC = [
     },
 
    
-    {
-        id: "PCV_none1-PCV_NUM01",
-        source: "PCV_none1",
-        target: "PCV_NUM01",
-        // animated: true,
-        type: "smoothstep",
-
-        strokeWidth: 1,
-        stroke: "gray",
-    },
-    {
-        id: "PCV_none2-PCV_NUM02",
-        source: "PCV_none2",
-        target: "PCV_NUM02",
-        // animated: true,
-        type: "smoothstep",
-
-        strokeWidth: 1,
-        stroke: "gray",
-    },
 
     {
         id: "FIQ_none22-FIQ_1902",
@@ -275,26 +255,26 @@ export const edgeZOVC = [
         stroke: "gray",
     },
    
-    {
-        id: "PCV_none1-PCV_NUM01",
-        source: "PCV_none1",
-        target: "PCV_NUM01",
-        // animated: true,
-        type: "smoothstep",
+    // {
+    //     id: "PCV_none1-PCV_NUM01",
+    //     source: "PCV_none1",
+    //     target: "PCV_NUM01",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
-    {
-        id: "PCV_none2-PCV_NUM02",
-        source: "PCV_none2",
-        target: "PCV_NUM02",
-        // animated: true,
-        type: "smoothstep",
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
+    // {
+    //     id: "PCV_none2-PCV_NUM02",
+    //     source: "PCV_none2",
+    //     target: "PCV_NUM02",
+    //     // animated: true,
+    //     type: "smoothstep",
 
-        strokeWidth: 1,
-        stroke: "gray",
-    },
+    //     strokeWidth: 1,
+    //     stroke: "gray",
+    // },
 
     {
         id: "GD_none1-GD1_Value1901",

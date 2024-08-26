@@ -72,13 +72,13 @@ interface ValueStateMap {
 }
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "yellow";
 
 export default function GraphicVREC() {
     const [visible, setVisible] = useState(false);
@@ -817,12 +817,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -878,12 +878,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -939,12 +939,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1001,12 +1001,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     background:
@@ -1064,12 +1064,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1126,12 +1126,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1188,12 +1188,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1250,12 +1250,12 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 7,
+                                    
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1314,8 +1314,8 @@ export default function GraphicVREC() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1375,8 +1375,8 @@ export default function GraphicVREC() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1437,8 +1437,8 @@ export default function GraphicVREC() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1541,7 +1541,7 @@ export default function GraphicVREC() {
                                                         color: "#25d125",
                                                     }}
                                                 >
-                                                    Active
+                                                    Online
                                                 </span>
                                             ) : (
                                                 <span
@@ -1549,7 +1549,7 @@ export default function GraphicVREC() {
                                                         color: "#ff5656",
                                                     }}
                                                 >
-                                                    Un Active
+                                                    Offline
                                                 </span>
                                             )}
                                         </p>
@@ -1567,7 +1567,7 @@ export default function GraphicVREC() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Disconnect
+                                                Disconnected
                                             </span>
                                         )}
                                     </p>
@@ -1587,7 +1587,7 @@ export default function GraphicVREC() {
                                                     color: "#ff5656",
                                                 }}
                                             >
-                                                Disconnect
+                                                Disconnected
                                             </span>
                                         )}
                                     </p>
@@ -1596,13 +1596,14 @@ export default function GraphicVREC() {
                                 <div>
                                     <p
                                         style={{
-                                            color: background,
+                                            color: 'white',
 
                                             fontSize: 15,
                                             marginLeft: 15,
                                         }}
                                     >
-                                        null
+                                                                               {Conn_STTValue}
+
                                     </p>
                                     <p
                                         style={{
@@ -1612,7 +1613,6 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_Conn_STTValue}
                                     </p>
                                     <p
                                         style={{
@@ -1622,7 +1622,6 @@ export default function GraphicVREC() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Conn_STTValue}
                                     </p>
                                 </div>
                             </div>
@@ -1766,8 +1765,8 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 27,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -1800,8 +1799,8 @@ export default function GraphicVREC() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 27,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -1837,15 +1836,15 @@ export default function GraphicVREC() {
     //     ? JSON.parse(storedPositionString)
     //     : {
     const initialPositions = {
-        AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-        ArrowRight: { x: 503.1381419284244, y: 1023.694783335719 },
+        AlarmCenter: { x: 482.05200728443185, y: 413.3377226840123 },
+        ArrowRight: { x: 600.6812903546922, y: 1023.2137288625802 },
         ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
         BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
-        BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
+        BallValue02: { x: -930.1995649132355, y: 1134.349598926105 },
         BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
         BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
         BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
-        BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
+        BallValue06: { x: 68.14677001999206, y: 1130.2445342820436 },
         BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
         BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
         BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
@@ -1863,13 +1862,14 @@ export default function GraphicVREC() {
             x: -458.43233108676895,
             y: 1047.9161594286932,
         },
-        BallValueFirst: { x: 419.65262421132076, y: 1009.5430441067174 },
-        BallValueLast: { x: -1236.4348814622088, y: 1015.5065165529766 },
-        BallValuePSV: { x: 290.22148707331525, y: 959.6157106130481 },
-        BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
+        BallValueFirst: { x: 540.6382414025647, y: 1009.8554479041943 },
+        BallValueLast: { x: -1235.1015481288755, y: 1014.1731832196431 },
+        BallValuePSV: { x: 365.7214870733153, y: 969.1157106130481 },
+        BallValuePSVNone: { x: 384.29818356393537, y: 983.3599694543407 },
+        BallValueSDV_2: { x: 460.0534879934596, y: 1126.0467878081538 },
         ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-        FIQ_1901: { x: -600.2178332288872, y: 530.5500772634006 },
-        FIQ_1902: { x: -600.782593545606, y: 1307.348642657379 },
+        FIQ_1901: { x: -650.6050171712068, y: 419.4180175567138 },
+        FIQ_1902: { x: -650.7978554063068, y: 1302.7206372374262 },
         FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
         FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
         FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
@@ -1889,14 +1889,14 @@ export default function GraphicVREC() {
         GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
         GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
         HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-        Header: { x: -1151.6437416275705, y: 451.3479861495938 },
+        Header: { x: -1155.522229109229, y: 412.1166791425992 },
         Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
         Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
         LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
         PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
         PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
-        PCV_NUM01: { x: -200.90249819080248, y: 779.1363564017703 },
-        PCV_NUM02: { x: -202.05990690632876, y: 1214.5509375649663 },
+        PCV_NUM01: { x: -170.86428983603884, y: 814.1809328156613 },
+        PCV_NUM02: { x: -182.4241890018547, y: 1192.3540390642565 },
         PCV_ballVavle_Small1: {
             x: -9.97812688216436,
             y: 890.3528829879407,
@@ -1923,47 +1923,49 @@ export default function GraphicVREC() {
         },
         PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
         PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
-        PSV01: { x: 164.5653138749226, y: 709.1940849015447 },
-        PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
-        PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
-        PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-        PSV_None01: { x: 436.98718383080245, y: 1040.7984512500652 },
-        PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
-        PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
-        PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
-        PT1: { x: 210.29089216580826, y: 944.8215389633342 },
-        PT2: { x: -708.258294622871, y: 1154.2084571677146 },
-        PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-        PT_col1: { x: 243.09758907436128, y: 1006.995256464112 },
-        PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
-        PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-        PT_none1: { x: 246.97093596247453, y: 1035.3795085307177 },
-        PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
-        PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
+        PSV01: { x: 375.16283692916215, y: 850.6784784974753 },
+        PSV_01: { x: 363.01399102294744, y: 918.1847523730952 },
+        PSV_02: { x: 343.50657410430927, y: 898.8234351782597 },
+        PSV_03: { x: 336.37235462546346, y: 853.2472414915732 },
+        PSV_None01: { x: 443.9871838308024, y: 1041.2984512500652 },
+        PSV_None02: { x: 384.4148444470081, y: 944.3475775498915 },
+        PSV_None03: { x: 362.95828329018167, y: 922.9843066623179 },
+        PSV_None04: { x: 359.78841525116593, y: 873.6633118651833 },
+        PT1: { x: 212.46666801628896, y: 967.0006757895978 },
+        PT2: { x: -714.758294622871, y: 1169.7084571677146 },
+        PT3: { x: -724.0493263648187, y: 765.418717530157 },
+        PT_col1: { x: 244.93092240769465, y: 1029.6619231307786 },
+        PT_col2: { x: -691.4134359761592, y: 827.2156614482261 },
+        PT_col3: { x: -682.6744823539359, y: 1232.1938517905614 },
+        PT_none1: { x: 244.47093596247453, y: 1035.3795085307177 },
+        PT_none2: { x: -691.2272311787543, y: 799.8737796553648 },
+        PT_none3: { x: -681.713304101358, y: 1200.4279572443495 },
         PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
         PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-        Pressure_Trans01: {
-            x: 123.01439682372097,
-            y: 1214.0304333064828,
-        },
+        Pressure_Trans01: { x: 89.44115443547344, y: 744.1939817620072 },
         Pressure_Trans02: {
-            x: -1019.4423849427775,
-            y: 706.6585420699575,
+            x: -1062.2957790075757,
+            y: 715.1286867309525,
         },
         Pressure_Trans03: {
-            x: -1022.6221979715284,
-            y: 1306.0599379762566,
+            x: -1063.1765921652548,
+            y: 1304.9210038322592,
         },
-        SDV: { x: -1127.2804525595525, y: 948.8166088808405 },
+        SDV: { x: -1127.1765475311256, y: 950.9074671488377 },
+        SDV2: { x: 428.80808378008487, y: 947.7631672170489 },
         SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
+        SDV_Ball2: { x: 476.86464803916624, y: 1155.8236963022298 },
         SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
+        SDV_IMG2: { x: 452.64818322228166, y: 990.890204545138 },
         SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+        SDV_Name_none2: { x: -535.6461839977737, y: 897.8410000476873 },
         SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
+        SDV_None2: { x: 479.4466067147644, y: 1040.4900272412854 },
         T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
         T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-        Tank: { x: -952.0719666857922, y: 984.2988432580569 },
-        Tank_Ball: { x: -918.0480270305792, y: 1165.3460365617266 },
-        Tank_None: { x: -929.420575058274, y: 1045.859003360467 },
+        Tank: { x: -948.2826352307409, y: 978.1950517663572 },
+        Tank_Ball: { x: -912.3215564493197, y: 1165.3460365617266 },
+        Tank_None: { x: -921.0872417249408, y: 1047.5256700271339 },
         Temperature_Trans01: {
             x: -607.828356494313,
             y: 562.8487535527242,
@@ -1997,19 +1999,19 @@ export default function GraphicVREC() {
             y: 1249.8269450159223,
         },
         animation_line15: {
-            x: -300.41801361805697,
+            x: -300.41401361805697,
             y: 1249.8955661985747,
         },
-        borderWhite: { x: -1267.4241384555676, y: 447.0015279974359 },
-        data1: { x: -600.2396652303086, y: 733.0298552462513 },
-        data2: { x: -600.6538263836953, y: 682.3968450603423 },
-        data3: { x: -600.4792235982375, y: 631.8178888851007 },
-        data4: { x: -600.1016616532435, y: 580.9222883481272 },
-        data5: { x: -600.9941090494707, y: 1357.5928722234303 },
-        data6: { x: -600.8317496942007, y: 1408.2027063708313 },
-        data7: { x: -600.8761635213684, y: 1458.4550015900893 },
-        data8: { x: -600.4659556614379, y: 1508.8491719032568 },
-        line1: { x: -1219.4244277428284, y: 1046.4109300929706 },
+        borderWhite: { x: -1297.214163674923, y: 409.37223471887046 },
+        data1: { x: -651.6400825086595, y: 713.9244953651255 },
+        data2: { x: -651.9488814472836, y: 632.5798654521193 },
+        data3: { x: -651.6999350711712, y: 551.1437463452924 },
+        data4: { x: -651.1845372665591, y: 470.1543746383694 },
+        data5: { x: -651.0957995367963, y: 1353.5548802685278 },
+        data6: { x: -651.0202138003872, y: 1434.493187346574 },
+        data7: { x: -650.5805679457492, y: 1514.910450348262 },
+        data8: { x: -650.0546506070804, y: 1595.5292310859375 },
+        line1: { x: -1217.4244277428284, y: 1046.0775967596373 },
         line2: { x: -759.1307313177314, y: 1046.097424130381 },
         line3: { x: -743.0134159304, y: 844.6163804041859 },
         line4: { x: -743.9949690251686, y: 1249.172245093845 },
@@ -2021,8 +2023,8 @@ export default function GraphicVREC() {
         line10: { x: 86.69745659087829, y: 930.5099856332267 },
         line11: { x: 86.19431979613125, y: 1161.0153295862324 },
         line12: { x: 116.83816603164496, y: 1040.345253330986 },
-        line13: { x: 437.3312960971492, y: 1041.4713896720348 },
-        lineBall_13_1: { x: 519.8312960971493, y: 1041.4713896720348 },
+        line13: { x: 557.9496069421656, y: 1041.1289059139096 },
+        lineBall_13_1: { x: 615.3267333790442, y: 1041.1289059139096 },
         overlay_SmallVavle1: {
             x: -593.2918361488164,
             y: 1011.397327575481,
@@ -2033,11 +2035,11 @@ export default function GraphicVREC() {
         },
         overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
         overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-        timeUpdate3: { x: -1243.9518053811212, y: 516.6560931085854 },
+        timeUpdate3: { x: -1276.0365639809172, y: 474.3014149576477 },
     };
     const [positions, setPositions] = useState(initialPositions);
 
-    const lineColor = "#ffaa00";
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -2067,7 +2069,7 @@ export default function GraphicVREC() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2076,7 +2078,7 @@ export default function GraphicVREC() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke: isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -2085,7 +2087,7 @@ export default function GraphicVREC() {
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2428,7 +2430,7 @@ export default function GraphicVREC() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 35, height: 5, background: line },
+            style: { border: "none", width: 35, height: 5, background: 'yellow' },
         },
         {
             id: "line8",
@@ -2557,7 +2559,8 @@ export default function GraphicVREC() {
             zIndex: 99999,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 45,
@@ -2909,8 +2912,8 @@ export default function GraphicVREC() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#ffaa00",
-                background: "#ffaa00",
+                border: "yellow",
+                background: "yellow",
                 width: 55,
                 height: 1,
             },
@@ -3130,9 +3133,9 @@ export default function GraphicVREC() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: 'none',
                 width: 260,
-                background: borderBox,
+                background: 'none',
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3152,10 +3155,9 @@ export default function GraphicVREC() {
             sourcePosition: Position.Right,
             targetPosition: Position.Top,
             style: {
-                border: background,
+                border: 'none',
                 width: 260,
-
-                background: borderBox,
+                background: 'none',
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3213,7 +3215,7 @@ export default function GraphicVREC() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
+                width: 400,
                 height: 50,
             },
             targetPosition: Position.Bottom,
@@ -3239,7 +3241,7 @@ export default function GraphicVREC() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
+                width: 400,
                 height: 50,
             },
             targetPosition: Position.Top,
@@ -3450,8 +3452,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Bottom,
         },
@@ -3475,8 +3477,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Bottom,
         },
@@ -3501,8 +3503,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Bottom,
         },
@@ -3527,8 +3529,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Bottom,
         },
@@ -3554,8 +3556,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Top,
         },
@@ -3580,8 +3582,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Left,
         },
@@ -3606,8 +3608,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Top,
         },
@@ -3632,8 +3634,8 @@ export default function GraphicVREC() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
+                
             },
             targetPosition: Position.Top,
         },
@@ -3780,9 +3782,9 @@ export default function GraphicVREC() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: 'none',
                 width: 260,
-                background: borderBox,
+                background: 'none',
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3807,12 +3809,12 @@ export default function GraphicVREC() {
             position: positions.Pressure_Trans01,
 
             style: {
-                border: background,
-                width: 260,
+                border: 'none',
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
         {
             id: "Pressure_Trans02",
@@ -3830,8 +3832,8 @@ export default function GraphicVREC() {
             position: positions.Pressure_Trans02,
 
             style: {
-                border: background,
-                width: 260,
+                border: 'none',
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3855,8 +3857,8 @@ export default function GraphicVREC() {
             position: positions.Pressure_Trans03,
 
             style: {
-                border: background,
-                width: 260,
+                border: 'none',
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3980,7 +3982,7 @@ export default function GraphicVREC() {
                 border: line,
                 background: line,
                 width: 0,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -3999,7 +4001,7 @@ export default function GraphicVREC() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -4018,7 +4020,7 @@ export default function GraphicVREC() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -4045,7 +4047,7 @@ export default function GraphicVREC() {
                                 style={{
                                     fontSize: 45,
                                     fontWeight: 600,
-                                    color: "#ffaa00",
+                                    color: "orange",
                                 }}
                             >
                                 VREC
@@ -4126,7 +4128,7 @@ export default function GraphicVREC() {
                                 style={{
                                     fontSize: 60,
                                     fontWeight: 500,
-                                    color: "#ffaa00",
+                                    color: "yellow",
                                 }}
                             ></p>
                         </div>
@@ -4316,7 +4318,8 @@ export default function GraphicVREC() {
             position: positions.GD1_Name1901,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4342,7 +4345,8 @@ export default function GraphicVREC() {
             position: positions.GD2_Name1902,
 
             style: {
-                background: "yellow",
+                color:'white',
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4384,7 +4388,7 @@ export default function GraphicVREC() {
             position: positions.GD1_Value1901,
 
             style: {
-                background: borderBox,
+                background: 'white',
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4409,7 +4413,8 @@ export default function GraphicVREC() {
             position: positions.GD2_Value1902,
 
             style: {
-                background: borderBox,
+                background: 'white',
+
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -5429,10 +5434,9 @@ export default function GraphicVREC() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
 
                     <Controls />
                 </ReactFlow>
