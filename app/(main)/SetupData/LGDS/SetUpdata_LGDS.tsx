@@ -4217,6 +4217,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 const newMaintainFC_02_Yesterday_Values_Volume = checked;
                 const newMaintainFC_02_Yesterday_Values_Uncorrected_Volume = checked;
                 const newMaintainFC_Conn_STT = checked;
+                const newMaintainPT_1003 = checked;
         
         
                 await httpApi.post(
@@ -4256,6 +4257,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                        FC_02_Yesterday_Values_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Volume,
                        FC_02_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Uncorrected_Volume,
         
+                       PT_1003_Maintain: newMaintainPT_1003,
         
                  
         
@@ -4290,6 +4292,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 setMaintainFC_02_Yesterday_Values_Volume(newMaintainFC_02_Yesterday_Values_Volume);
                 setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newMaintainFC_02_Yesterday_Values_Uncorrected_Volume);
                 setMaintainFC_Conn_STT(newMaintainFC_Conn_STT);
+                setMaintainPT_1003(newMaintainPT_1003);
                 
         
               
@@ -4332,9 +4335,56 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         maintainFC_02_Today_Values_Uncorrected_Volume === true &&
         maintainFC_02_Yesterday_Values_Volume === true &&
         maintainFC_02_Yesterday_Values_Uncorrected_Volume === true &&
+        maintainPT_1003 === true &&
         maintainFC_Conn_STT === true;
 
+        const maintainHeader = (
+            <div>
+    
+                {AuthInput ? " "  :
+                    <Checkbox
+                        style={{ marginRight: 5 }}
+                        onChange={handleCheckboxChangeFC}
+                        checked={checkMaintainingFC}
+                    />
+                } 
+                Maintain
+    
+            </div>
+        );
 
+
+//=====================================================================================
+        const handleMainTainPT_1003 = async (checked:any) => {
+            try {
+    
+        
+                const newMaintainPT_1003 = checked;
+             
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
+                    { 
+                 
+                       PT_1003_Maintain: newMaintainPT_1003,
+                     }
+                );
+                setMaintainPT_1003(newMaintainPT_1003);
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+
+
+        
+        const handleCheckboxChangePT_1003 = (e:any) => {
+            const isChecked = e.checked;
+            handleMainTainPT_1003(isChecked);
+        };
+        const checkMaintainingPT_1003 = 
+   
+        maintainPT_1003 === true
+ 
         
     const combineCss = {
 
@@ -4836,6 +4886,17 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             checked={checkMaintainingFC}
         />
     <p style={{fontSize:15}}>Maintain FC</p>  </div> )}  </span>,
+
+PT1003: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}>PT-1003 -  Parameters & Configurations
+{!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+      <Checkbox
+          style={{ marginRight: 5 }}
+          onChange={handleCheckboxChangePT_1003}
+          checked={checkMaintainingPT_1003}
+      />
+  <p style={{fontSize:15}}>Maintain PT-1003</p>  </div> )}  </span> 
+
+,
     FC02: 'FC-1002 -  Parameters & Configurations',
     PLC: 'PLC -  Parameters & Configurations',
     FC: 'FC -  Parameters & Configurations',
@@ -4955,7 +5016,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>47625	 </span> ,
+       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>	 47627 </span> ,
 
       value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
@@ -4976,7 +5037,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
         timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
-      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>47627	 </span> ,
+      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>	47625 </span> ,
 
      value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
@@ -5174,7 +5235,7 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
  name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>48625	 </span> ,
+ modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>	48627 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
@@ -5195,7 +5256,7 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > 
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>48627	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>	48625 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume} {nameValue.Sm3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
@@ -5385,7 +5446,28 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         ]
 
        
-    
+        const PT_1103_Parameter = [
+            {
+                mainCategory: mainCategoryFC.PT1003,
+            
+            timeUpdate: <span style={combineCss.CSSPT_1003} >{EVC_STT01Value}</span>,
+            name: <span style={combineCss.CSSPT_1003}>Output Pressure PT-1003</span> ,
+            
+            modbus: <span style={combineCss.CSSPT_1003}>AI1</span> ,
+            
+            value: <span style={combineCss.CSSPT_1003} > {PT_1003} {nameValue.BARG}</span> , 
+            high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
+            low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
+            Maintain:   <Checkbox
+            style={{ marginRight: 20, }}
+            onChange={ChangeMaintainPT_1003}
+            checked={maintainPT_1003}
+            ></Checkbox>
+            
+            },
+            
+        ]
       //=========================================================================
 
 
@@ -5492,12 +5574,11 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         },
        
         {
-            Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
+            Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
 
             Value: (
                 <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputGetwayPhone}
@@ -5521,7 +5602,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     ];
 
        //=========================================================================
-       const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC];
+       const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC,...PT_1103_Parameter];
 
        const mainCategoryTemplate = (data: any) => {
            return (
@@ -5560,8 +5641,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
   <Column field="value" header="Value" />
   <Column  field="high" header="High" />
   <Column field="low" header="Low" />
-  <Column field="Maintain" header="Maintain" />
-  <Column field="update" header="Update" />
+  {AuthInput ? " " :  <Column field="Maintain" header={maintainHeader} />
+}
+      {AuthInput ? " " : <Column field="update" header="Update" />}
 
 </DataTable>
 <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
@@ -5570,8 +5652,10 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                     <Column field="Name" header="Name" />
 
                     <Column field="Value" header="Value" />
+                    {AuthInput ? " " : 
+                         <Column field="Update" header="Update" />  
 
-                    <Column   field="Update" header="Update" />
+}
                 </DataTable>
             </div>
 </div>
