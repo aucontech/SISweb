@@ -11,6 +11,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
 import { PLC_LGDS, TagName, namePCV_PSV, nameValue } from '../namValue';
+import { UserOperator, UserTechnican } from '../../userID/UserID';
 
 interface StateMap {
 
@@ -49,6 +50,48 @@ export default function SetUpdata_LGDS() {
 
     const [PSV_01,setPSV_01] = useState<any>()
     const [inputPSV_01, setInputPSV_01] = useState<any>();
+
+
+
+    const Authorization = localStorage.getItem('user');
+    const userData = Authorization ? JSON.parse(Authorization) : '';
+     const userId = userData?.id?.id;
+    
+    const AuthUpdate = userId === UserTechnican.A  ||
+    userId === UserTechnican.Q ||
+     userId ===  UserTechnican.N ||
+      userId === UserTechnican.T  ||    
+       userId === UserTechnican.TN ||
+        userId === UserTechnican.DT ||
+        userId === UserTechnican.KL ; 
+    
+    
+    const AuthInput = userId !== UserTechnican.A  && 
+    userId !== UserTechnican.Q &&
+    userId !==  UserTechnican.N &&
+     userId !== UserTechnican.T  &&
+      userId !== UserTechnican.TN &&
+        userId !== UserTechnican.DT &&
+        userId !== UserTechnican.KL &&
+        userId !== UserOperator.VHPM3 &&
+        userId !== UserOperator.TTVHpm3 ; 
+
+        const AuthUpdatePCV = userId !== UserTechnican.A  &&
+        userId !== UserTechnican.Q &&
+         userId !==  UserTechnican.N &&
+          userId !== UserTechnican.T  &&
+           userId !== UserTechnican.TN &&
+            userId !== UserTechnican.DT &&
+            userId !== UserTechnican.KL ;
+
+
+            const AuthInputHighLow = userId !== UserTechnican.A  && 
+            userId !== UserTechnican.Q &&
+            userId !==  UserTechnican.N &&
+             userId !== UserTechnican.T  &&
+              userId !== UserTechnican.TN &&
+                userId !== UserTechnican.DT &&
+                userId !== UserTechnican.KL ;
 
     useEffect(() => {
 
@@ -230,6 +273,7 @@ export default function SetUpdata_LGDS() {
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
 
+                        FC_Conn_STT:setFC_Conn_STT,
 
                   
                     };
@@ -862,9 +906,7 @@ export default function SetUpdata_LGDS() {
         };
 
  // =================================================================================================================== 
-
-    const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
-const [audioPlayingFC_Lithium_Battery_Status, setAudioPlayingFC_Lithium_Battery_Status] = useState(false);
+ const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
 const [inputValueFC_Lithium_Battery_Status, setInputValueFC_Lithium_Battery_Status] = useState<any>();
 const [inputValue2FC_Lithium_Battery_Status, setInputValue2FC_Lithium_Battery_Status] = useState<any>();
 const [FC_Lithium_Battery_Status_High, setFC_Lithium_Battery_Status_High] = useState<number | null>(null);
@@ -874,39 +916,16 @@ const [exceedThresholdFC_Lithium_Battery_Status, setExceedThresholdFC_Lithium_Ba
 const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_Lithium_Battery_Status_High === 'string' && typeof FC_Lithium_Battery_Status_Low === 'string' && FC_Lithium_Battery_Status !== null && maintainFC_Lithium_Battery_Status === false
-        ) {
-            const highValue = parseFloat(FC_Lithium_Battery_Status_High);
-            const lowValue = parseFloat(FC_Lithium_Battery_Status_Low);
-            const FC_Lithium_Battery_StatusValue = parseFloat(FC_Lithium_Battery_Status);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Lithium_Battery_StatusValue)) {
-                if (highValue <= FC_Lithium_Battery_StatusValue || FC_Lithium_Battery_StatusValue <= lowValue) {
-                    if (!audioPlayingFC_Lithium_Battery_Status) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_Lithium_Battery_Status(true);
-                        setExceedThresholdFC_Lithium_Battery_Status(true);
-                    }
-                } else {
-                    setAudioPlayingFC_Lithium_Battery_Status(false);
-                    setExceedThresholdFC_Lithium_Battery_Status(false);
-                }
-            } 
-        } 
-    }, [FC_Lithium_Battery_Status_High, FC_Lithium_Battery_Status, audioPlayingFC_Lithium_Battery_Status, FC_Lithium_Battery_Status_Low,maintainFC_Lithium_Battery_Status]);
+useEffect(() => {
+    const FC_Lithium_Battery_StatusValue = parseFloat(FC_Lithium_Battery_Status as any);
+    const highValue = FC_Lithium_Battery_Status_High ?? NaN;
+    const lowValue = FC_Lithium_Battery_Status_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_Lithium_Battery_Status) {
-            const audioEnded = () => {
-                setAudioPlayingFC_Lithium_Battery_Status(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_Lithium_Battery_Status]);
+    if (!isNaN(FC_Lithium_Battery_StatusValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Lithium_Battery_Status) {
+        setExceedThresholdFC_Lithium_Battery_Status(FC_Lithium_Battery_StatusValue >= highValue || FC_Lithium_Battery_StatusValue <= lowValue);
+    }
+}, [FC_Lithium_Battery_Status, FC_Lithium_Battery_Status_High, FC_Lithium_Battery_Status_Low, maintainFC_Lithium_Battery_Status]);
+
 
     const handleInputChangeFC_Lithium_Battery_Status = (event: any) => {
         const newValue = event.target.value;
@@ -933,49 +952,25 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
      // =================================================================================================================== 
 
      const [FC_Battery_Voltage, setFC_Battery_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_Battery_Voltage, setAudioPlayingFC_Battery_Voltage] = useState(false);
      const [inputValueFC_Battery_Voltage, setInputValueFC_Battery_Voltage] = useState<any>();
      const [inputValue2FC_Battery_Voltage, setInputValue2FC_Battery_Voltage] = useState<any>();
      const [FC_Battery_Voltage_High, setFC_Battery_Voltage_High] = useState<number | null>(null);
      const [FC_Battery_Voltage_Low, setFC_Battery_Voltage_Low] = useState<number | null>(null);
-     const [exceedThresholdTemperature, setExceedThresholdTemperature] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+     const [exceedThresholdFC_Battery_Voltage, setExceedThresholdFC_Battery_Voltage] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
      
      const [maintainFC_Battery_Voltage, setMaintainFC_Battery_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_Battery_Voltage_High === 'string' && typeof FC_Battery_Voltage_Low === 'string' && FC_Battery_Voltage !== null && maintainFC_Battery_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_Battery_Voltage_High);
-                 const lowValue = parseFloat(FC_Battery_Voltage_Low);
-                 const FC_Battery_VoltageValue = parseFloat(FC_Battery_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Battery_VoltageValue)) {
-                     if (highValue <= FC_Battery_VoltageValue || FC_Battery_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_Battery_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_Battery_Voltage(true);
-                             setExceedThresholdTemperature(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_Battery_Voltage(false);
-                         setExceedThresholdTemperature(false);
-                     }
-                 } 
-             } 
-         }, [FC_Battery_Voltage_High, FC_Battery_Voltage, audioPlayingFC_Battery_Voltage, FC_Battery_Voltage_Low,maintainFC_Battery_Voltage]);
-     
-         useEffect(() => {
-             if (audioPlayingFC_Battery_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_Battery_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_Battery_Voltage]);
+     useEffect(() => {
+        const FC_Battery_VoltageValue = parseFloat(FC_Battery_Voltage as any);
+        const highValue = FC_Battery_Voltage_High ?? NaN;
+        const lowValue = FC_Battery_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_Battery_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Battery_Voltage) {
+            setExceedThresholdFC_Battery_Voltage(FC_Battery_VoltageValue >= highValue || FC_Battery_VoltageValue <= lowValue);
+        }
+    }, [FC_Battery_Voltage, FC_Battery_Voltage_High, FC_Battery_Voltage_Low, maintainFC_Battery_Voltage]);
+
      
          const handleInputChangeFC_Battery_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -1003,7 +998,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
      const [FC_System_Voltage, setFC_System_Voltage] = useState<string | null>(null);
-     const [audioPlayingFC_System_Voltage, setAudioPlayingFC_System_Voltage] = useState(false);
      const [inputValueFC_System_Voltage, setInputValueFC_System_Voltage] = useState<any>();
      const [inputValue2FC_System_Voltage, setInputValue2FC_System_Voltage] = useState<any>();
      const [FC_System_Voltage_High, setFC_System_Voltage_High] = useState<number | null>(null);
@@ -1013,39 +1007,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
      const [maintainFC_System_Voltage, setMaintainFC_System_Voltage] = useState<boolean>(false);
      
      
-         useEffect(() => {
-             if (typeof FC_System_Voltage_High === 'string' && typeof FC_System_Voltage_Low === 'string' && FC_System_Voltage !== null && maintainFC_System_Voltage === false
-             ) {
-                 const highValue = parseFloat(FC_System_Voltage_High);
-                 const lowValue = parseFloat(FC_System_Voltage_Low);
-                 const FC_System_VoltageValue = parseFloat(FC_System_Voltage);
-         
-                 if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_System_VoltageValue)) {
-                     if (highValue <= FC_System_VoltageValue || FC_System_VoltageValue <= lowValue) {
-                         if (!audioPlayingFC_System_Voltage) {
-                             audioRef.current?.play();
-                             setAudioPlayingFC_System_Voltage(true);
-                             setExceedThresholdFC_System_Voltage(true);
-                         }
-                     } else {
-                        setAudioPlayingFC_System_Voltage(false);
-                        setExceedThresholdFC_System_Voltage(false);
-                     }
-                 } 
-             } 
-         }, [FC_System_Voltage_High, FC_System_Voltage, audioPlayingFC_System_Voltage, FC_System_Voltage_Low,maintainFC_System_Voltage]);
+     useEffect(() => {
+        const FC_System_VoltageValue = parseFloat(FC_System_Voltage as any);
+        const highValue = FC_System_Voltage_High ?? NaN;
+        const lowValue = FC_System_Voltage_Low ?? NaN;
+    
+        if (!isNaN(FC_System_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_System_Voltage) {
+            setExceedThresholdFC_System_Voltage(FC_System_VoltageValue >= highValue || FC_System_VoltageValue <= lowValue);
+        }
+    }, [FC_System_Voltage, FC_System_Voltage_High, FC_System_Voltage_Low, maintainFC_System_Voltage]);
      
-         useEffect(() => {
-             if (audioPlayingFC_System_Voltage) {
-                 const audioEnded = () => {
-                    setAudioPlayingFC_System_Voltage(false);
-                 };
-                 audioRef.current?.addEventListener('ended', audioEnded);
-                 return () => {
-                     audioRef.current?.removeEventListener('ended', audioEnded);
-                 };
-             }
-         }, [audioPlayingFC_System_Voltage]);
+
      
          const handleInputChangeFC_System_Voltage = (event: any) => {
              const newValue = event.target.value;
@@ -1074,7 +1046,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
           const [FC_Charger_Voltage, setFC_Charger_Voltage] = useState<string | null>(null);
-          const [audioPlayingFC_Charger_Voltage, setAudioPlayingFC_Charger_Voltage] = useState(false);
           const [inputValueFC_Charger_Voltage, setInputValueFC_Charger_Voltage] = useState<any>();
           const [inputValue2FC_Charger_Voltage, setInputValue2FC_Charger_Voltage] = useState<any>();
           const [FC_Charger_Voltage_High, setFC_Charger_Voltage_High] = useState<number | null>(null);
@@ -1084,39 +1055,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_Charger_Voltage, setMaintainFC_Charger_Voltage] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_Charger_Voltage_High === 'string' && typeof FC_Charger_Voltage_Low === 'string' && FC_Charger_Voltage !== null && maintainFC_Charger_Voltage === false
-                  ) {
-                      const highValue = parseFloat(FC_Charger_Voltage_High);
-                      const lowValue = parseFloat(FC_Charger_Voltage_Low);
-                      const FC_Charger_VoltageValue = parseFloat(FC_Charger_Voltage);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_Charger_VoltageValue)) {
-                          if (highValue <= FC_Charger_VoltageValue || FC_Charger_VoltageValue <= lowValue) {
-                              if (!audioPlayingFC_Charger_Voltage) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_Charger_Voltage(true);
-                                  setExceedThresholdFC_Charger_Voltage(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_Charger_Voltage(false);
-                             setExceedThresholdFC_Charger_Voltage(false);
-                          }
-                      } 
-                  } 
-              }, [FC_Charger_Voltage_High, FC_Charger_Voltage, audioPlayingFC_Charger_Voltage, FC_Charger_Voltage_Low,maintainFC_Charger_Voltage]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_Charger_Voltage) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_Charger_Voltage(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_Charger_Voltage]);
+          useEffect(() => {
+            const FC_Charger_VoltageValue = parseFloat(FC_Charger_Voltage as any);
+            const highValue = FC_Charger_Voltage_High ?? NaN;
+            const lowValue = FC_Charger_Voltage_Low ?? NaN;
+        
+            if (!isNaN(FC_Charger_VoltageValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Charger_Voltage) {
+                setExceedThresholdFC_Charger_Voltage(FC_Charger_VoltageValue >= highValue || FC_Charger_VoltageValue <= lowValue);
+            }
+        }, [FC_Charger_Voltage, FC_Charger_Voltage_High, FC_Charger_Voltage_Low, maintainFC_Charger_Voltage]);
+   
           
               const handleInputChangeFC_Charger_Voltage = (event: any) => {
                   const newValue = event.target.value;
@@ -1144,7 +1092,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
           const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-          const [audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume, setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume] = useState(false);
           const [inputValueFC_01_Accumulated_Values_Uncorrected_Volume, setInputValueFC_01_Accumulated_Values_Uncorrected_Volume] = useState<any>();
           const [inputValue2FC_01_Accumulated_Values_Uncorrected_Volume, setInputValue2FC_01_Accumulated_Values_Uncorrected_Volume] = useState<any>();
           const [FC_01_Accumulated_Values_Uncorrected_Volume_High, setFC_01_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1154,39 +1101,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Accumulated_Values_Uncorrected_Volume, setMaintainFC_01_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Accumulated_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Accumulated_Values_Uncorrected_Volume_Low === 'string' && FC_01_Accumulated_Values_Uncorrected_Volume !== null && maintainFC_01_Accumulated_Values_Uncorrected_Volume === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume_High);
-                      const lowValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume_Low);
-                      const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue)) {
-                          if (highValue <= FC_01_Accumulated_Values_Uncorrected_VolumeValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue) {
-                              if (!audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(true);
-                                  setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                             setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume, audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume , FC_01_Accumulated_Values_Uncorrected_Volume_Low,maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
+          useEffect(() => {
+            const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume as any);
+            const highValue = FC_01_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+            const lowValue = FC_01_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) {
+                setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Accumulated_Values_Uncorrected_Volume, FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Accumulated_Values_Uncorrected_Volume(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Accumulated_Values_Uncorrected_Volume]);
+         
           
               const handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume = (event: any) => {
                   const newValue = event.target.value;
@@ -1213,7 +1138,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<string | null>(null);
-          const [audioPlayingFC_01_Accumulated_Values_Volume, setAudioPlayingFC_01_Accumulated_Values_Volume] = useState(false);
           const [inputValueFC_01_Accumulated_Values_Volume, setInputValueFC_01_Accumulated_Values_Volume] = useState<any>();
           const [inputValue2FC_01_Accumulated_Values_Volume, setInputValue2FC_01_Accumulated_Values_Volume] = useState<any>();
           const [FC_01_Accumulated_Values_Volume_High, setFC_01_Accumulated_Values_Volume_High] = useState<number | null>(null);
@@ -1223,39 +1147,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Accumulated_Values_Volume, setMaintainFC_01_Accumulated_Values_Volume] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Accumulated_Values_Volume_High === 'string' && typeof FC_01_Accumulated_Values_Volume_Low === 'string' && FC_01_Accumulated_Values_Volume !== null && maintainFC_01_Accumulated_Values_Volume === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Accumulated_Values_Volume_High);
-                      const lowValue = parseFloat(FC_01_Accumulated_Values_Volume_Low);
-                      const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Accumulated_Values_VolumeValue)) {
-                          if (highValue <= FC_01_Accumulated_Values_VolumeValue || FC_01_Accumulated_Values_VolumeValue <= lowValue) {
-                              if (!audioPlayingFC_01_Accumulated_Values_Volume) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Accumulated_Values_Volume(true);
-                                  setExceedThresholdFC_01_Accumulated_Values_Volume(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Accumulated_Values_Volume(false);
-                             setExceedThresholdFC_01_Accumulated_Values_Volume(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume, audioPlayingFC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_Low,maintainFC_01_Accumulated_Values_Volume]);
+          useEffect(() => {
+            const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume as any);
+            const highValue = FC_01_Accumulated_Values_Volume_High ?? NaN;
+            const lowValue = FC_01_Accumulated_Values_Volume_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Volume) {
+                setExceedThresholdFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_VolumeValue >= highValue || FC_01_Accumulated_Values_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume_Low, maintainFC_01_Accumulated_Values_Volume]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Accumulated_Values_Volume) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Accumulated_Values_Volume(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Accumulated_Values_Volume]);
+      
           
               const handleInputChangeFC_01_Accumulated_Values_Volume = (event: any) => {
                   const newValue = event.target.value;
@@ -1283,7 +1185,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
           const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Flow_Rate, setAudioPlayingFC_01_Current_Values_Flow_Rate] = useState(false);
           const [inputValueFC_01_Current_Values_Flow_Rate, setInputValueFC_01_Current_Values_Flow_Rate] = useState<any>();
           const [inputValue2FC_01_Current_Values_Flow_Rate, setInputValue2FC_01_Current_Values_Flow_Rate] = useState<any>();
           const [FC_01_Current_Values_Flow_Rate_High, setFC_01_Current_Values_Flow_Rate_High] = useState<number | null>(null);
@@ -1293,39 +1194,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Flow_Rate, setMaintainFC_01_Current_Values_Flow_Rate] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Flow_Rate_High === 'string' && typeof FC_01_Current_Values_Flow_Rate_Low === 'string' && FC_01_Current_Values_Flow_Rate !== null && maintainFC_01_Current_Values_Flow_Rate === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Flow_Rate_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Flow_Rate_Low);
-                      const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Flow_RateValue)) {
-                          if (highValue <= FC_01_Current_Values_Flow_RateValue || FC_01_Current_Values_Flow_RateValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Flow_Rate) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Flow_Rate(true);
-                                  setExceedThresholdFC_01_Current_Values_Flow_Rate(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Flow_Rate(false);
-                             setExceedThresholdFC_01_Current_Values_Flow_Rate(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate, audioPlayingFC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_Low,maintainFC_01_Current_Values_Flow_Rate]);
+          useEffect(() => {
+            const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate as any);
+            const highValue = FC_01_Current_Values_Flow_Rate_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Flow_Rate_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Flow_Rate) {
+                setExceedThresholdFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_RateValue >= highValue || FC_01_Current_Values_Flow_RateValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate_Low, maintainFC_01_Current_Values_Flow_Rate]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Flow_Rate) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Flow_Rate(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Flow_Rate]);
+           
           
               const handleInputChangeFC_01_Current_Values_Flow_Rate = (event: any) => {
                   const newValue = event.target.value;
@@ -1352,7 +1231,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Temperature, setFC_01_Current_Values_Temperature] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Temperature, setAudioPlayingFC_01_Current_Values_Temperature] = useState(false);
           const [inputValueFC_01_Current_Values_Temperature, setInputValueFC_01_Current_Values_Temperature] = useState<any>();
           const [inputValue2FC_01_Current_Values_Temperature, setInputValue2FC_01_Current_Values_Temperature] = useState<any>();
           const [FC_01_Current_Values_Temperature_High, setFC_01_Current_Values_Temperature_High] = useState<number | null>(null);
@@ -1362,39 +1240,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Temperature, setMaintainFC_01_Current_Values_Temperature] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Temperature_High === 'string' && typeof FC_01_Current_Values_Temperature_Low === 'string' && FC_01_Current_Values_Temperature !== null && maintainFC_01_Current_Values_Temperature === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Temperature_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Temperature_Low);
-                      const FC_01_Current_Values_TemperatureValue = parseFloat(FC_01_Current_Values_Temperature);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_TemperatureValue)) {
-                          if (highValue <= FC_01_Current_Values_TemperatureValue || FC_01_Current_Values_TemperatureValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Temperature) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Temperature(true);
-                                  setExceedThresholdFC_01_Current_Values_Temperature(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Temperature(false);
-                             setExceedThresholdFC_01_Current_Values_Temperature(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Temperature_High, FC_01_Current_Values_Temperature, audioPlayingFC_01_Current_Values_Temperature, FC_01_Current_Values_Temperature_Low,maintainFC_01_Current_Values_Temperature]);
+          useEffect(() => {
+            const FC_01_Current_Values_TemperatureValue = parseFloat(FC_01_Current_Values_Temperature as any);
+            const highValue = FC_01_Current_Values_Temperature_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Temperature_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Temperature) {
+                setExceedThresholdFC_01_Current_Values_Temperature(FC_01_Current_Values_TemperatureValue >= highValue || FC_01_Current_Values_TemperatureValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Temperature, FC_01_Current_Values_Temperature_High, FC_01_Current_Values_Temperature_Low, maintainFC_01_Current_Values_Temperature]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Temperature) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Temperature(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Temperature]);
+        
           
               const handleInputChangeFC_01_Current_Values_Temperature = (event: any) => {
                   const newValue = event.target.value;
@@ -1421,7 +1277,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Static_Pressure, setAudioPlayingFC_01_Current_Values_Static_Pressure] = useState(false);
           const [inputValueFC_01_Current_Values_Static_Pressure, setInputValueFC_01_Current_Values_Static_Pressure] = useState<any>();
           const [inputValue2FC_01_Current_Values_Static_Pressure, setInputValue2FC_01_Current_Values_Static_Pressure] = useState<any>();
           const [FC_01_Current_Values_Static_Pressure_High, setFC_01_Current_Values_Static_Pressure_High] = useState<number | null>(null);
@@ -1431,39 +1286,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           const [maintainFC_01_Current_Values_Static_Pressure, setMaintainFC_01_Current_Values_Static_Pressure] = useState<boolean>(false);
           
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Static_Pressure_High === 'string' && typeof FC_01_Current_Values_Static_Pressure_Low === 'string' && FC_01_Current_Values_Static_Pressure !== null && maintainFC_01_Current_Values_Static_Pressure === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Static_Pressure_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Static_Pressure_Low);
-                      const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Static_PressureValue)) {
-                          if (highValue <= FC_01_Current_Values_Static_PressureValue || FC_01_Current_Values_Static_PressureValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Static_Pressure) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Static_Pressure(true);
-                                  setExceedThresholdFC_01_Current_Values_Static_Pressure(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Static_Pressure(false);
-                             setExceedThresholdFC_01_Current_Values_Static_Pressure(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure, audioPlayingFC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_Low,maintainFC_01_Current_Values_Static_Pressure]);
+          useEffect(() => {
+            const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure as any);
+            const highValue = FC_01_Current_Values_Static_Pressure_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Static_Pressure_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Static_Pressure) {
+                setExceedThresholdFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_PressureValue >= highValue || FC_01_Current_Values_Static_PressureValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure_Low, maintainFC_01_Current_Values_Static_Pressure]);
           
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Static_Pressure) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Static_Pressure(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Static_Pressure]);
           
               const handleInputChangeFC_01_Current_Values_Static_Pressure = (event: any) => {
                   const newValue = event.target.value;
@@ -1490,7 +1322,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           // =================================================================================================================== 
 
           const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-          const [audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate, setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate] = useState(false);
           const [inputValueFC_01_Current_Values_Uncorrected_Flow_Rate, setInputValueFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
           const [inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate, setInputValue2FC_01_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
           const [FC_01_Current_Values_Uncorrected_Flow_Rate_High, setFC_01_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
@@ -1499,40 +1330,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
           
           const [maintainFC_01_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
           
+          useEffect(() => {
+            const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate as any);
+            const highValue = FC_01_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+            const lowValue = FC_01_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
+        
+            if (!isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) {
+                setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
+            }
+        }, [FC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
           
-              useEffect(() => {
-                  if (typeof FC_01_Current_Values_Uncorrected_Flow_Rate_High === 'string' && typeof FC_01_Current_Values_Uncorrected_Flow_Rate_Low === 'string' && FC_01_Current_Values_Uncorrected_Flow_Rate !== null && maintainFC_01_Current_Values_Uncorrected_Flow_Rate === false
-                  ) {
-                      const highValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate_High);
-                      const lowValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate_Low);
-                      const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate);
-              
-                      if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue)) {
-                          if (highValue <= FC_01_Current_Values_Uncorrected_Flow_RateValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue) {
-                              if (!audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate) {
-                                  audioRef.current?.play();
-                                  setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(true);
-                                  setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(true);
-                              }
-                          } else {
-                             setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                             setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                          }
-                      } 
-                  } 
-              }, [FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate, audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_Low,maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
-          
-              useEffect(() => {
-                  if (audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate) {
-                      const audioEnded = () => {
-                         setAudioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate(false);
-                      };
-                      audioRef.current?.addEventListener('ended', audioEnded);
-                      return () => {
-                          audioRef.current?.removeEventListener('ended', audioEnded);
-                      };
-                  }
-              }, [audioPlayingFC_01_Current_Values_Uncorrected_Flow_Rate]);
           
               const handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate = (event: any) => {
                   const newValue = event.target.value;
@@ -1561,7 +1368,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     // =================================================================================================================== 
 
     const [FC_01_Today_Values_Volume, setFC_01_Today_Values_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Today_Values_Volume, setAudioPlayingFC_01_Today_Values_Volume] = useState(false);
     const [inputValueFC_01_Today_Values_Volume, setInputValueFC_01_Today_Values_Volume] = useState<any>();
     const [inputValue2FC_01_Today_Values_Volume, setInputValue2FC_01_Today_Values_Volume] = useState<any>();
     const [FC_01_Today_Values_Volume_High, setFC_01_Today_Values_Volume_High] = useState<number | null>(null);
@@ -1571,40 +1377,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Today_Values_Volume, setMaintainFC_01_Today_Values_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Today_Values_Volume_High === 'string' && typeof FC_01_Today_Values_Volume_Low === 'string' && FC_01_Today_Values_Volume !== null && maintainFC_01_Today_Values_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Today_Values_Volume_High);
-                const lowValue = parseFloat(FC_01_Today_Values_Volume_Low);
-                const FC_01_Today_Values_VolumeValue = parseFloat(FC_01_Today_Values_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Today_Values_VolumeValue)) {
-                    if (highValue <= FC_01_Today_Values_VolumeValue || FC_01_Today_Values_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Today_Values_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Today_Values_Volume(true);
-                            setExceedThresholdFC_01_Today_Values_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Today_Values_Volume(false);
-                       setExceedThresholdFC_01_Today_Values_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Today_Values_Volume_High, FC_01_Today_Values_Volume, audioPlayingFC_01_Today_Values_Volume, FC_01_Today_Values_Volume_Low,maintainFC_01_Today_Values_Volume]);
+    useEffect(() => {
+        const FC_01_Today_Values_VolumeValue = parseFloat(FC_01_Today_Values_Volume as any);
+        const highValue = FC_01_Today_Values_Volume_High ?? NaN;
+        const lowValue = FC_01_Today_Values_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Today_Values_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Today_Values_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Today_Values_Volume]);
-    
+        if (!isNaN(FC_01_Today_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Today_Values_Volume) {
+            setExceedThresholdFC_01_Today_Values_Volume(FC_01_Today_Values_VolumeValue >= highValue || FC_01_Today_Values_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Today_Values_Volume, FC_01_Today_Values_Volume_High, FC_01_Today_Values_Volume_Low, maintainFC_01_Today_Values_Volume]);
+   
         const handleInputChangeFC_01_Today_Values_Volume = (event: any) => {
             const newValue = event.target.value;
             setInputValueFC_01_Today_Values_Volume(newValue);
@@ -1632,7 +1414,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         // =================================================================================================================== 
 
         const [FC_01_Today_Values_Uncorrected_Volume, setFC_01_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
-        const [audioPlayingFC_01_Today_Values_Uncorrected_Volume, setAudioPlayingFC_01_Today_Values_Uncorrected_Volume] = useState(false);
         const [inputValueFC_01_Today_Values_Uncorrected_Volume, setInputValueFC_01_Today_Values_Uncorrected_Volume] = useState<any>();
         const [inputValue2FC_01_Today_Values_Uncorrected_Volume, setInputValue2FC_01_Today_Values_Uncorrected_Volume] = useState<any>();
         const [FC_01_Today_Values_Uncorrected_Volume_High, setFC_01_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1642,40 +1423,16 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         const [maintainFC_01_Today_Values_Uncorrected_Volume, setMaintainFC_01_Today_Values_Uncorrected_Volume] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_01_Today_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Today_Values_Uncorrected_Volume_Low === 'string' && FC_01_Today_Values_Uncorrected_Volume !== null && maintainFC_01_Today_Values_Uncorrected_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume_High);
-                    const lowValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume_Low);
-                    const FC_01_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Today_Values_Uncorrected_VolumeValue)) {
-                        if (highValue <= FC_01_Today_Values_Uncorrected_VolumeValue || FC_01_Today_Values_Uncorrected_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_01_Today_Values_Uncorrected_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(true);
-                                setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(false);
-                           setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_01_Today_Values_Uncorrected_Volume_High, FC_01_Today_Values_Uncorrected_Volume, audioPlayingFC_01_Today_Values_Uncorrected_Volume, FC_01_Today_Values_Uncorrected_Volume_Low,maintainFC_01_Today_Values_Uncorrected_Volume]);
+        useEffect(() => {
+            const FC_01_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Today_Values_Uncorrected_Volume as any);
+            const highValue = FC_01_Today_Values_Uncorrected_Volume_High ?? NaN;
+            const lowValue = FC_01_Today_Values_Uncorrected_Volume_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingFC_01_Today_Values_Uncorrected_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_01_Today_Values_Uncorrected_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingFC_01_Today_Values_Uncorrected_Volume]);
-        
+            if (!isNaN(FC_01_Today_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Today_Values_Uncorrected_Volume) {
+                setExceedThresholdFC_01_Today_Values_Uncorrected_Volume(FC_01_Today_Values_Uncorrected_VolumeValue >= highValue || FC_01_Today_Values_Uncorrected_VolumeValue <= lowValue);
+            }
+        }, [FC_01_Today_Values_Uncorrected_Volume, FC_01_Today_Values_Uncorrected_Volume_High, FC_01_Today_Values_Uncorrected_Volume_Low, maintainFC_01_Today_Values_Uncorrected_Volume]);
+         
             const handleInputChangeFC_01_Today_Values_Uncorrected_Volume = (event: any) => {
                 const newValue = event.target.value;
                 setInputValueFC_01_Today_Values_Uncorrected_Volume(newValue);
@@ -1703,7 +1460,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
             // =================================================================================================================== 
 
     const [FC_01_Yesterday_Values_Volume, setFC_01_Yesterday_Values_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Yesterday_Values_Volume, setAudioPlayingFC_01_Yesterday_Values_Volume] = useState(false);
     const [inputValueFC_01_Yesterday_Values_Volume, setInputValueFC_01_Yesterday_Values_Volume] = useState<any>();
     const [inputValue2FC_01_Yesterday_Values_Volume, setInputValue2FC_01_Yesterday_Values_Volume] = useState<any>();
     const [FC_01_Yesterday_Values_Volume_High, setFC_01_Yesterday_Values_Volume_High] = useState<number | null>(null);
@@ -1713,39 +1469,17 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Yesterday_Values_Volume, setMaintainFC_01_Yesterday_Values_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Yesterday_Values_Volume_High === 'string' && typeof FC_01_Yesterday_Values_Volume_Low === 'string' && FC_01_Yesterday_Values_Volume !== null && maintainFC_01_Yesterday_Values_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Yesterday_Values_Volume_High);
-                const lowValue = parseFloat(FC_01_Yesterday_Values_Volume_Low);
-                const FC_01_Yesterday_Values_VolumeValue = parseFloat(FC_01_Yesterday_Values_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Yesterday_Values_VolumeValue)) {
-                    if (highValue <= FC_01_Yesterday_Values_VolumeValue || FC_01_Yesterday_Values_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Yesterday_Values_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Yesterday_Values_Volume(true);
-                            setExceedThresholdFC_01_Yesterday_Values_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Yesterday_Values_Volume(false);
-                       setExceedThresholdFC_01_Yesterday_Values_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Yesterday_Values_Volume_High, FC_01_Yesterday_Values_Volume, audioPlayingFC_01_Yesterday_Values_Volume, FC_01_Yesterday_Values_Volume_Low,maintainFC_01_Yesterday_Values_Volume]);
+    useEffect(() => {
+        const FC_01_Yesterday_Values_VolumeValue = parseFloat(FC_01_Yesterday_Values_Volume as any);
+        const highValue = FC_01_Yesterday_Values_Volume_High ?? NaN;
+        const lowValue = FC_01_Yesterday_Values_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Yesterday_Values_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Yesterday_Values_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Yesterday_Values_Volume]);
+        if (!isNaN(FC_01_Yesterday_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Yesterday_Values_Volume) {
+            setExceedThresholdFC_01_Yesterday_Values_Volume(FC_01_Yesterday_Values_VolumeValue >= highValue || FC_01_Yesterday_Values_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Yesterday_Values_Volume, FC_01_Yesterday_Values_Volume_High, FC_01_Yesterday_Values_Volume_Low, maintainFC_01_Yesterday_Values_Volume]);
+     
+ 
     
         const handleInputChangeFC_01_Yesterday_Values_Volume = (event: any) => {
             const newValue = event.target.value;
@@ -1773,7 +1507,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
 
 
     const [FC_01_Yesterday_Values_Uncorrected_Volume, setFC_01_Yesterday_Values_Uncorrected_Volume] = useState<string | null>(null);
-    const [audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume, setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume] = useState(false);
     const [inputValueFC_01_Yesterday_Values_Uncorrected_Volume, setInputValueFC_01_Yesterday_Values_Uncorrected_Volume] = useState<any>();
     const [inputValue2FC_01_Yesterday_Values_Uncorrected_Volume, setInputValue2FC_01_Yesterday_Values_Uncorrected_Volume] = useState<any>();
     const [FC_01_Yesterday_Values_Uncorrected_Volume_High, setFC_01_Yesterday_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1783,39 +1516,18 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
     const [maintainFC_01_Yesterday_Values_Uncorrected_Volume, setMaintainFC_01_Yesterday_Values_Uncorrected_Volume] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Yesterday_Values_Uncorrected_Volume_High === 'string' && typeof FC_01_Yesterday_Values_Uncorrected_Volume_Low === 'string' && FC_01_Yesterday_Values_Uncorrected_Volume !== null && maintainFC_01_Yesterday_Values_Uncorrected_Volume === false
-            ) {
-                const highValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume_High);
-                const lowValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume_Low);
-                const FC_01_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Yesterday_Values_Uncorrected_VolumeValue)) {
-                    if (highValue <= FC_01_Yesterday_Values_Uncorrected_VolumeValue || FC_01_Yesterday_Values_Uncorrected_VolumeValue <= lowValue) {
-                        if (!audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(true);
-                            setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                       setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Yesterday_Values_Uncorrected_Volume_High, FC_01_Yesterday_Values_Uncorrected_Volume, audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume, FC_01_Yesterday_Values_Uncorrected_Volume_Low,maintainFC_01_Yesterday_Values_Uncorrected_Volume]);
+    useEffect(() => {
+        const FC_01_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Yesterday_Values_Uncorrected_Volume as any);
+        const highValue = FC_01_Yesterday_Values_Uncorrected_Volume_High ?? NaN;
+        const lowValue = FC_01_Yesterday_Values_Uncorrected_Volume_Low ?? NaN;
     
-        useEffect(() => {
-            if (audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_01_Yesterday_Values_Uncorrected_Volume(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
-            }
-        }, [audioPlayingFC_01_Yesterday_Values_Uncorrected_Volume]);
+        if (!isNaN(FC_01_Yesterday_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Yesterday_Values_Uncorrected_Volume) {
+            setExceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume(FC_01_Yesterday_Values_Uncorrected_VolumeValue >= highValue || FC_01_Yesterday_Values_Uncorrected_VolumeValue <= lowValue);
+        }
+    }, [FC_01_Yesterday_Values_Uncorrected_Volume, FC_01_Yesterday_Values_Uncorrected_Volume_High, FC_01_Yesterday_Values_Uncorrected_Volume_Low, maintainFC_01_Yesterday_Values_Uncorrected_Volume]);
+     
+ 
+
     
         const handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume = (event: any) => {
             const newValue = event.target.value;
@@ -1844,7 +1556,6 @@ const [maintainFC_Lithium_Battery_Status, setMaintainFC_Lithium_Battery_Status] 
         // =================================================================================================================== 
 
 const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-const [audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume, setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume] = useState(false);
 const [inputValueFC_02_Accumulated_Values_Uncorrected_Volume, setInputValueFC_02_Accumulated_Values_Uncorrected_Volume] = useState<any>();
 const [inputValue2FC_02_Accumulated_Values_Uncorrected_Volume, setInputValue2FC_02_Accumulated_Values_Uncorrected_Volume] = useState<any>();
 const [FC_02_Accumulated_Values_Uncorrected_Volume_High, setFC_02_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -1854,39 +1565,17 @@ const [exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume, setExceedThre
 const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_02_Accumulated_Values_Uncorrected_Volume_High === 'string' && typeof FC_02_Accumulated_Values_Uncorrected_Volume_Low === 'string' && FC_02_Accumulated_Values_Uncorrected_Volume !== null && maintainFC_02_Accumulated_Values_Uncorrected_Volume === false
-        ) {
-            const highValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume_High);
-            const lowValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume_Low);
-            const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue)) {
-                if (highValue <= FC_02_Accumulated_Values_Uncorrected_VolumeValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue) {
-                    if (!audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(true);
-                        setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(true);
-                    }
-                } else {
-                   setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(false);
-                   setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(false);
-                }
-            } 
-        } 
-    }, [FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume, audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_Low,maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
+useEffect(() => {
+    const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume as any);
+    const highValue = FC_02_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+    const lowValue = FC_02_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume) {
-            const audioEnded = () => {
-               setAudioPlayingFC_02_Accumulated_Values_Uncorrected_Volume(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_02_Accumulated_Values_Uncorrected_Volume]);
+    if (!isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) {
+        setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+    }
+}, [FC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
+ 
+
 
     const handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume = (event: any) => {
         const newValue = event.target.value;
@@ -1914,7 +1603,6 @@ const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Acc
 
 
 const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<string | null>(null);
-const [audioPlayingFC_02_Accumulated_Values_Volume, setAudioPlayingFC_02_Accumulated_Values_Volume] = useState(false);
 const [inputValueFC_02_Accumulated_Values_Volume, setInputValueFC_02_Accumulated_Values_Volume] = useState<any>();
 const [inputValue2FC_02_Accumulated_Values_Volume, setInputValue2FC_02_Accumulated_Values_Volume] = useState<any>();
 const [FC_02_Accumulated_Values_Volume_High, setFC_02_Accumulated_Values_Volume_High] = useState<number | null>(null);
@@ -1924,39 +1612,17 @@ const [exceedThresholdFC_02_Accumulated_Values_Volume, setExceedThresholdFC_02_A
 const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Values_Volume] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (typeof FC_02_Accumulated_Values_Volume_High === 'string' && typeof FC_02_Accumulated_Values_Volume_Low === 'string' && FC_02_Accumulated_Values_Volume !== null && maintainFC_02_Accumulated_Values_Volume === false
-        ) {
-            const highValue = parseFloat(FC_02_Accumulated_Values_Volume_High);
-            const lowValue = parseFloat(FC_02_Accumulated_Values_Volume_Low);
-            const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Accumulated_Values_VolumeValue)) {
-                if (highValue <= FC_02_Accumulated_Values_VolumeValue || FC_02_Accumulated_Values_VolumeValue <= lowValue) {
-                    if (!audioPlayingFC_02_Accumulated_Values_Volume) {
-                        audioRef.current?.play();
-                        setAudioPlayingFC_02_Accumulated_Values_Volume(true);
-                        setExceedThresholdFC_02_Accumulated_Values_Volume(true);
-                    }
-                } else {
-                   setAudioPlayingFC_02_Accumulated_Values_Volume(false);
-                   setExceedThresholdFC_02_Accumulated_Values_Volume(false);
-                }
-            } 
-        } 
-    }, [FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume, audioPlayingFC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_Low,maintainFC_02_Accumulated_Values_Volume]);
+useEffect(() => {
+    const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume as any);
+    const highValue = FC_02_Accumulated_Values_Volume_High ?? NaN;
+    const lowValue = FC_02_Accumulated_Values_Volume_Low ?? NaN;
 
-    useEffect(() => {
-        if (audioPlayingFC_02_Accumulated_Values_Volume) {
-            const audioEnded = () => {
-               setAudioPlayingFC_02_Accumulated_Values_Volume(false);
-            };
-            audioRef.current?.addEventListener('ended', audioEnded);
-            return () => {
-                audioRef.current?.removeEventListener('ended', audioEnded);
-            };
-        }
-    }, [audioPlayingFC_02_Accumulated_Values_Volume]);
+    if (!isNaN(FC_02_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Volume) {
+        setExceedThresholdFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_VolumeValue >= highValue || FC_02_Accumulated_Values_VolumeValue <= lowValue);
+    }
+}, [FC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume_Low, maintainFC_02_Accumulated_Values_Volume]);
+ 
+
 
     const handleInputChangeFC_02_Accumulated_Values_Volume = (event: any) => {
         const newValue = event.target.value;
@@ -1985,7 +1651,6 @@ const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Val
     // =================================================================================================================== 
 
 const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<string | null>(null);
-const [audioPlayingFC_02_Current_Values_Static_Pressure, setAudioPlayingFC_02_Current_Values_Static_Pressure] = useState(false);
 const [inputValueFC_02_Current_Values_Static_Pressure, setInputValueFC_02_Current_Values_Static_Pressure] = useState<any>();
 const [inputValue2FC_02_Current_Values_Static_Pressure, setInputValue2FC_02_Current_Values_Static_Pressure] = useState<any>();
 const [FC_02_Current_Values_Static_Pressure_High, setFC_02_Current_Values_Static_Pressure_High] = useState<number | null>(null);
@@ -1995,39 +1660,18 @@ const [exceedThresholdFC_02_Current_Values_Static_Pressure, setExceedThresholdFC
 const [maintainFC_02_Current_Values_Static_Pressure, setMaintainFC_02_Current_Values_Static_Pressure] = useState<boolean>(false);
 
 
-useEffect(() => {
-    if (typeof FC_02_Current_Values_Static_Pressure_High === 'string' && typeof FC_02_Current_Values_Static_Pressure_Low === 'string' && FC_02_Current_Values_Static_Pressure !== null && maintainFC_02_Current_Values_Static_Pressure === false
-    ) {
-        const highValue = parseFloat(FC_02_Current_Values_Static_Pressure_High);
-        const lowValue = parseFloat(FC_02_Current_Values_Static_Pressure_Low);
-        const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure);
-
-        if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Static_PressureValue)) {
-            if (highValue <= FC_02_Current_Values_Static_PressureValue || FC_02_Current_Values_Static_PressureValue <= lowValue) {
-                if (!audioPlayingFC_02_Current_Values_Static_Pressure) {
-                    audioRef.current?.play();
-                    setAudioPlayingFC_02_Current_Values_Static_Pressure(true);
-                    setExceedThresholdFC_02_Current_Values_Static_Pressure(true);
-                }
-            } else {
-               setAudioPlayingFC_02_Current_Values_Static_Pressure(false);
-               setExceedThresholdFC_02_Current_Values_Static_Pressure(false);
-            }
-        } 
-    } 
-}, [FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure, audioPlayingFC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_Low,maintainFC_02_Current_Values_Static_Pressure]);
 
 useEffect(() => {
-    if (audioPlayingFC_02_Current_Values_Static_Pressure) {
-        const audioEnded = () => {
-           setAudioPlayingFC_02_Current_Values_Static_Pressure(false);
-        };
-        audioRef.current?.addEventListener('ended', audioEnded);
-        return () => {
-            audioRef.current?.removeEventListener('ended', audioEnded);
-        };
+    const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure as any);
+    const highValue = FC_02_Current_Values_Static_Pressure_High ?? NaN;
+    const lowValue = FC_02_Current_Values_Static_Pressure_Low ?? NaN;
+
+    if (!isNaN(FC_02_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Static_Pressure) {
+        setExceedThresholdFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_PressureValue >= highValue || FC_02_Current_Values_Static_PressureValue <= lowValue);
     }
-}, [audioPlayingFC_02_Current_Values_Static_Pressure]);
+}, [FC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure_Low, maintainFC_02_Current_Values_Static_Pressure]);
+ 
+
 
 const handleInputChangeFC_02_Current_Values_Static_Pressure = (event: any) => {
     const newValue = event.target.value;
@@ -2057,7 +1701,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         // =================================================================================================================== 
 
         const [FC_02_Current_Values_Temperature, setFC_02_Current_Values_Temperature] = useState<string | null>(null);
-        const [audioPlayingFC_02_Current_Values_Temperature, setAudioPlayingFC_02_Current_Values_Temperature] = useState(false);
         const [inputValueFC_02_Current_Values_Temperature, setInputValueFC_02_Current_Values_Temperature] = useState<any>();
         const [inputValue2FC_02_Current_Values_Temperature, setInputValue2FC_02_Current_Values_Temperature] = useState<any>();
         const [FC_02_Current_Values_Temperature_High, setFC_02_Current_Values_Temperature_High] = useState<number | null>(null);
@@ -2067,39 +1710,17 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         const [maintainFC_02_Current_Values_Temperature, setMaintainFC_02_Current_Values_Temperature] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_02_Current_Values_Temperature_High === 'string' && typeof FC_02_Current_Values_Temperature_Low === 'string' && FC_02_Current_Values_Temperature !== null && maintainFC_02_Current_Values_Temperature === false
-                ) {
-                    const highValue = parseFloat(FC_02_Current_Values_Temperature_High);
-                    const lowValue = parseFloat(FC_02_Current_Values_Temperature_Low);
-                    const FC_02_Current_Values_TemperatureValue = parseFloat(FC_02_Current_Values_Temperature);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_TemperatureValue)) {
-                        if (highValue <= FC_02_Current_Values_TemperatureValue || FC_02_Current_Values_TemperatureValue <= lowValue) {
-                            if (!audioPlayingFC_02_Current_Values_Temperature) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Current_Values_Temperature(true);
-                                setExceedThresholdFC_02_Current_Values_Temperature(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Current_Values_Temperature(false);
-                           setExceedThresholdFC_02_Current_Values_Temperature(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Current_Values_Temperature_High, FC_02_Current_Values_Temperature, audioPlayingFC_02_Current_Values_Temperature, FC_02_Current_Values_Temperature_Low,maintainFC_02_Current_Values_Temperature]);
+        useEffect(() => {
+            const FC_02_Current_Values_TemperatureValue = parseFloat(FC_02_Current_Values_Temperature as any);
+            const highValue = FC_02_Current_Values_Temperature_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Temperature_Low ?? NaN;
         
-            useEffect(() => {
-                if (audioPlayingFC_02_Current_Values_Temperature) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Current_Values_Temperature(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
-                }
-            }, [audioPlayingFC_02_Current_Values_Temperature]);
+            if (!isNaN(FC_02_Current_Values_TemperatureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Temperature) {
+                setExceedThresholdFC_02_Current_Values_Temperature(FC_02_Current_Values_TemperatureValue >= highValue || FC_02_Current_Values_TemperatureValue <= lowValue);
+            }
+        }, [FC_02_Current_Values_Temperature, FC_02_Current_Values_Temperature_High, FC_02_Current_Values_Temperature_Low, maintainFC_02_Current_Values_Temperature]);
+         
+      
         
             const handleInputChangeFC_02_Current_Values_Temperature = (event: any) => {
                 const newValue = event.target.value;
@@ -2137,28 +1758,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         const [maintainFC_02_Current_Values_Flow_Rate, setMaintainFC_02_Current_Values_Flow_Rate] = useState<boolean>(false);
         
         
-            useEffect(() => {
-                if (typeof FC_02_Current_Values_Flow_Rate_High === 'string' && typeof FC_02_Current_Values_Flow_Rate_Low === 'string' && FC_02_Current_Values_Flow_Rate !== null && maintainFC_02_Current_Values_Flow_Rate === false
-                ) {
-                    const highValue = parseFloat(FC_02_Current_Values_Flow_Rate_High);
-                    const lowValue = parseFloat(FC_02_Current_Values_Flow_Rate_Low);
-                    const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate);
-            
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Flow_RateValue)) {
-                        if (highValue <= FC_02_Current_Values_Flow_RateValue || FC_02_Current_Values_Flow_RateValue <= lowValue) {
-                            if (!audioPlayingFC_02_Current_Values_Flow_Rate) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Current_Values_Flow_Rate(true);
-                                setExceedThresholdFC_02_Current_Values_Flow_Rate(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Current_Values_Flow_Rate(false);
-                           setExceedThresholdFC_02_Current_Values_Flow_Rate(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate, audioPlayingFC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_Low,maintainFC_02_Current_Values_Flow_Rate]);
+        useEffect(() => {
+            const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate as any);
+            const highValue = FC_02_Current_Values_Flow_Rate_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Flow_Rate_Low ?? NaN;
         
+            if (!isNaN(FC_02_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Flow_Rate) {
+                setExceedThresholdFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_RateValue >= highValue || FC_02_Current_Values_Flow_RateValue <= lowValue);
+            }
+        }, [FC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate_Low, maintainFC_02_Current_Values_Flow_Rate]);
+         
             useEffect(() => {
                 if (audioPlayingFC_02_Current_Values_Flow_Rate) {
                     const audioEnded = () => {
@@ -2198,7 +1807,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
         const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-        const [audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate, setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate] = useState(false);
         const [inputValueFC_02_Current_Values_Uncorrected_Flow_Rate, setInputValueFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
         const [inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate, setInputValue2FC_02_Current_Values_Uncorrected_Flow_Rate] = useState<any>();
         const [FC_02_Current_Values_Uncorrected_Flow_Rate_High, setFC_02_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
@@ -2209,38 +1817,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         
         
         useEffect(() => {
-            if (typeof FC_02_Current_Values_Uncorrected_Flow_Rate_High === 'string' && typeof FC_02_Current_Values_Uncorrected_Flow_Rate_Low === 'string' && FC_02_Current_Values_Uncorrected_Flow_Rate !== null && maintainFC_02_Current_Values_Uncorrected_Flow_Rate === false
-            ) {
-                const highValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate_High);
-                const lowValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate_Low);
-                const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate);
+            const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate as any);
+            const highValue = FC_02_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+            const lowValue = FC_02_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
         
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue)) {
-                    if (highValue <= FC_02_Current_Values_Uncorrected_Flow_RateValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue) {
-                        if (!audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate) {
-                            audioRef.current?.play();
-                            setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(true);
-                            setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(true);
-                        }
-                    } else {
-                       setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                       setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                    }
-                } 
-            } 
-        }, [FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate, audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_Low,maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
-        
-        useEffect(() => {
-            if (audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate) {
-                const audioEnded = () => {
-                   setAudioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate(false);
-                };
-                audioRef.current?.addEventListener('ended', audioEnded);
-                return () => {
-                    audioRef.current?.removeEventListener('ended', audioEnded);
-                };
+            if (!isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) {
+                setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
             }
-        }, [audioPlayingFC_02_Current_Values_Uncorrected_Flow_Rate]);
+        }, [FC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
+         
+    
         
         const handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate = (event: any) => {
             const newValue = event.target.value;
@@ -2270,7 +1856,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
             const [FC_02_Today_Values_Volume, setFC_02_Today_Values_Volume] = useState<string | null>(null);
-            const [audioPlayingFC_02_Today_Values_Volume, setAudioPlayingFC_02_Today_Values_Volume] = useState(false);
             const [inputValueFC_02_Today_Values_Volume, setInputValueFC_02_Today_Values_Volume] = useState<any>();
             const [inputValue2FC_02_Today_Values_Volume, setInputValue2FC_02_Today_Values_Volume] = useState<any>();
             const [FC_02_Today_Values_Volume_High, setFC_02_Today_Values_Volume_High] = useState<number | null>(null);
@@ -2281,38 +1866,17 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             
             
             useEffect(() => {
-                if (typeof FC_02_Today_Values_Volume_High === 'string' && typeof FC_02_Today_Values_Volume_Low === 'string' && FC_02_Today_Values_Volume !== null && maintainFC_02_Today_Values_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_02_Today_Values_Volume_High);
-                    const lowValue = parseFloat(FC_02_Today_Values_Volume_Low);
-                    const FC_02_Today_Values_VolumeValue = parseFloat(FC_02_Today_Values_Volume);
+                const FC_02_Today_Values_VolumeValue = parseFloat(FC_02_Today_Values_Volume as any);
+                const highValue = FC_02_Today_Values_Volume_High ?? NaN;
+                const lowValue = FC_02_Today_Values_Volume_Low ?? NaN;
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Today_Values_VolumeValue)) {
-                        if (highValue <= FC_02_Today_Values_VolumeValue || FC_02_Today_Values_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_02_Today_Values_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Today_Values_Volume(true);
-                                setExceedThresholdFC_02_Today_Values_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Today_Values_Volume(false);
-                           setExceedThresholdFC_02_Today_Values_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Today_Values_Volume_High, FC_02_Today_Values_Volume, audioPlayingFC_02_Today_Values_Volume, FC_02_Today_Values_Volume_Low,maintainFC_02_Today_Values_Volume]);
-            
-            useEffect(() => {
-                if (audioPlayingFC_02_Today_Values_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Today_Values_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
+                if (!isNaN(FC_02_Today_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Today_Values_Volume) {
+                    setExceedThresholdFC_02_Today_Values_Volume(FC_02_Today_Values_VolumeValue >= highValue || FC_02_Today_Values_VolumeValue <= lowValue);
                 }
-            }, [audioPlayingFC_02_Today_Values_Volume]);
+            }, [FC_02_Today_Values_Volume, FC_02_Today_Values_Volume_High, FC_02_Today_Values_Volume_Low, maintainFC_02_Today_Values_Volume]);
+             
+        
+    
             
             const handleInputChangeFC_02_Today_Values_Volume = (event: any) => {
                 const newValue = event.target.value;
@@ -2343,7 +1907,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             // =================================================================================================================== 
         
             const [FC_02_Today_Values_Uncorrected_Volume, setFC_02_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
-            const [audioPlayingFC_02_Today_Values_Uncorrected_Volume, setAudioPlayingFC_02_Today_Values_Uncorrected_Volume] = useState(false);
             const [inputValueFC_02_Today_Values_Uncorrected_Volume, setInputValueFC_02_Today_Values_Uncorrected_Volume] = useState<any>();
             const [inputValue2FC_02_Today_Values_Uncorrected_Volume, setInputValue2FC_02_Today_Values_Uncorrected_Volume] = useState<any>();
             const [FC_02_Today_Values_Uncorrected_Volume_High, setFC_02_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
@@ -2354,38 +1917,16 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             
             
             useEffect(() => {
-                if (typeof FC_02_Today_Values_Uncorrected_Volume_High === 'string' && typeof FC_02_Today_Values_Uncorrected_Volume_Low === 'string' && FC_02_Today_Values_Uncorrected_Volume !== null && maintainFC_02_Today_Values_Uncorrected_Volume === false
-                ) {
-                    const highValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume_High);
-                    const lowValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume_Low);
-                    const FC_02_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume);
+                const FC_02_Today_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Today_Values_Uncorrected_Volume as any);
+                const highValue = FC_02_Today_Values_Uncorrected_Volume_High ?? NaN;
+                const lowValue = FC_02_Today_Values_Uncorrected_Volume_Low ?? NaN;
             
-                    if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Today_Values_Uncorrected_VolumeValue)) {
-                        if (highValue <= FC_02_Today_Values_Uncorrected_VolumeValue || FC_02_Today_Values_Uncorrected_VolumeValue <= lowValue) {
-                            if (!audioPlayingFC_02_Today_Values_Uncorrected_Volume) {
-                                audioRef.current?.play();
-                                setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(true);
-                                setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(true);
-                            }
-                        } else {
-                           setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(false);
-                           setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(false);
-                        }
-                    } 
-                } 
-            }, [FC_02_Today_Values_Uncorrected_Volume_High, FC_02_Today_Values_Uncorrected_Volume, audioPlayingFC_02_Today_Values_Uncorrected_Volume, FC_02_Today_Values_Uncorrected_Volume_Low,maintainFC_02_Today_Values_Uncorrected_Volume]);
-            
-            useEffect(() => {
-                if (audioPlayingFC_02_Today_Values_Uncorrected_Volume) {
-                    const audioEnded = () => {
-                       setAudioPlayingFC_02_Today_Values_Uncorrected_Volume(false);
-                    };
-                    audioRef.current?.addEventListener('ended', audioEnded);
-                    return () => {
-                        audioRef.current?.removeEventListener('ended', audioEnded);
-                    };
+                if (!isNaN(FC_02_Today_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Today_Values_Uncorrected_Volume) {
+                    setExceedThresholdFC_02_Today_Values_Uncorrected_Volume(FC_02_Today_Values_Uncorrected_VolumeValue >= highValue || FC_02_Today_Values_Uncorrected_VolumeValue <= lowValue);
                 }
-            }, [audioPlayingFC_02_Today_Values_Uncorrected_Volume]);
+            }, [FC_02_Today_Values_Uncorrected_Volume, FC_02_Today_Values_Uncorrected_Volume_High, FC_02_Today_Values_Uncorrected_Volume_Low, maintainFC_02_Today_Values_Uncorrected_Volume]);
+             
+     
             
             const handleInputChangeFC_02_Today_Values_Uncorrected_Volume = (event: any) => {
                 const newValue = event.target.value;
@@ -2414,7 +1955,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  // =================================================================================================================== 
 
  const [FC_02_Yesterday_Values_Volume, setFC_02_Yesterday_Values_Volume] = useState<string | null>(null);
- const [audioPlayingFC_02_Yesterday_Values_Volume, setAudioPlayingFC_02_Yesterday_Values_Volume] = useState(false);
  const [inputValueFC_02_Yesterday_Values_Volume, setInputValueFC_02_Yesterday_Values_Volume] = useState<any>();
  const [inputValue2FC_02_Yesterday_Values_Volume, setInputValue2FC_02_Yesterday_Values_Volume] = useState<any>();
  const [FC_02_Yesterday_Values_Volume_High, setFC_02_Yesterday_Values_Volume_High] = useState<number | null>(null);
@@ -2423,47 +1963,25 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
  
  const [maintainFC_02_Yesterday_Values_Volume, setMaintainFC_02_Yesterday_Values_Volume] = useState<boolean>(false);
  
+ useEffect(() => {
+    const FC_02_Yesterday_Values_VolumeValue = parseFloat(FC_02_Yesterday_Values_Volume as any);
+    const highValue = FC_02_Yesterday_Values_Volume_High ?? NaN;
+    const lowValue = FC_02_Yesterday_Values_Volume_Low ?? NaN;
+
+    if (!isNaN(FC_02_Yesterday_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Yesterday_Values_Volume) {
+        setExceedThresholdFC_02_Yesterday_Values_Volume(FC_02_Yesterday_Values_VolumeValue >= highValue || FC_02_Yesterday_Values_VolumeValue <= lowValue);
+    }
+
+}, [FC_02_Yesterday_Values_Volume, FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume_Low, maintainFC_02_Yesterday_Values_Volume]);
  
-     useEffect(() => {
-         if (typeof FC_02_Yesterday_Values_Volume_High === 'string' && typeof FC_02_Yesterday_Values_Volume_Low === 'string' && FC_02_Yesterday_Values_Volume !== null && maintainFC_02_Yesterday_Values_Volume === false
-         ) {
-             const highValue = parseFloat(FC_02_Yesterday_Values_Volume_High);
-             const lowValue = parseFloat(FC_02_Yesterday_Values_Volume_Low);
-             const FC_02_Yesterday_Values_VolumeValue = parseFloat(FC_02_Yesterday_Values_Volume);
-     
-             if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Yesterday_Values_VolumeValue)) {
-                 if (highValue <= FC_02_Yesterday_Values_VolumeValue || FC_02_Yesterday_Values_VolumeValue <= lowValue) {
-                     if (!audioPlayingFC_02_Yesterday_Values_Volume) {
-                         audioRef.current?.play();
-                         setAudioPlayingFC_02_Yesterday_Values_Volume(true);
-                         setExceedThresholdFC_02_Yesterday_Values_Volume(true);
-                     }
-                 } else {
-                     setAudioPlayingFC_02_Yesterday_Values_Volume(false);
-                     setExceedThresholdFC_02_Yesterday_Values_Volume(false);
-                 }
-             } 
-         } 
-     }, [FC_02_Yesterday_Values_Volume_High, FC_02_Yesterday_Values_Volume, audioPlayingFC_02_Yesterday_Values_Volume, FC_02_Yesterday_Values_Volume_Low,maintainFC_02_Yesterday_Values_Volume]);
- 
-     useEffect(() => {
-         if (audioPlayingFC_02_Yesterday_Values_Volume) {
-             const audioEnded = () => {
-                 setAudioPlayingFC_02_Yesterday_Values_Volume(false);
-             };
-             audioRef.current?.addEventListener('ended', audioEnded);
-             return () => {
-                 audioRef.current?.removeEventListener('ended', audioEnded);
-             };
-         }
-     }, [audioPlayingFC_02_Yesterday_Values_Volume]);
+
  
      const handleInputChangeFC_02_Yesterday_Values_Volume = (event: any) => {
          const newValue = event.target.value;
          setInputValueFC_02_Yesterday_Values_Volume(newValue);
      };
  
-     const handleInputChange2VP303 = (event: any) => {
+     const handleInputChange2FC_02_Yesterday_Values_Volume = (event: any) => {
          const newValue2 = event.target.value;
          setInputValue2FC_02_Yesterday_Values_Volume(newValue2);
      };
@@ -2488,44 +2006,23 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
       const [inputValue2FC_02_Yesterday_Values_Uncorrected_Volume, setInputValue2FC_02_Yesterday_Values_Uncorrected_Volume] = useState<any>();
       const [FC_02_Yesterday_Values_Uncorrected_Volume_High, setFC_02_Yesterday_Values_Uncorrected_Volume_High] = useState<number | null>(null);
       const [FC_02_Yesterday_Values_Uncorrected_Volume_Low, setFC_02_Yesterday_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
-      const [exceedThreshold302, setExceedThreshold302] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+      const [exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume, setExceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
       
       const [maintainFC_02_Yesterday_Values_Uncorrected_Volume, setMaintainFC_02_Yesterday_Values_Uncorrected_Volume] = useState<boolean>(false);
       
       
-          useEffect(() => {
-              if (typeof FC_02_Yesterday_Values_Uncorrected_Volume_High === 'string' && typeof FC_02_Yesterday_Values_Uncorrected_Volume_Low === 'string' && FC_02_Yesterday_Values_Uncorrected_Volume !== null && maintainFC_02_Yesterday_Values_Uncorrected_Volume === false
-              ) {
-                  const highValue = parseFloat(FC_02_Yesterday_Values_Uncorrected_Volume_High);
-                  const lowValue = parseFloat(FC_02_Yesterday_Values_Uncorrected_Volume_Low);
-                  const FC_02_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Yesterday_Values_Uncorrected_Volume);
-          
-                  if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_02_Yesterday_Values_Uncorrected_VolumeValue)) {
-                      if (highValue <= FC_02_Yesterday_Values_Uncorrected_VolumeValue || FC_02_Yesterday_Values_Uncorrected_VolumeValue <= lowValue) {
-                          if (!audioPlayingFC_02_Yesterday_Values_Uncorrected_Volume) {
-                              audioRef.current?.play();
-                              setAudioPlayingFC_02_Yesterday_Values_Uncorrected_Volume(true);
-                              setExceedThreshold302(true);
-                          }
-                      } else {
-                         setAudioPlayingFC_02_Yesterday_Values_Uncorrected_Volume(false);
-                          setExceedThreshold302(false);
-                      }
-                  } 
-              } 
-          }, [FC_02_Yesterday_Values_Uncorrected_Volume_High, FC_02_Yesterday_Values_Uncorrected_Volume, audioPlayingFC_02_Yesterday_Values_Uncorrected_Volume, FC_02_Yesterday_Values_Uncorrected_Volume_Low,maintainFC_02_Yesterday_Values_Uncorrected_Volume]);
-      
-          useEffect(() => {
-              if (audioPlayingFC_02_Yesterday_Values_Uncorrected_Volume) {
-                  const audioEnded = () => {
-                     setAudioPlayingFC_02_Yesterday_Values_Uncorrected_Volume(false);
-                  };
-                  audioRef.current?.addEventListener('ended', audioEnded);
-                  return () => {
-                      audioRef.current?.removeEventListener('ended', audioEnded);
-                  };
-              }
-          }, [audioPlayingFC_02_Yesterday_Values_Uncorrected_Volume]);
+      useEffect(() => {
+        const FC_02_Yesterday_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Yesterday_Values_Uncorrected_Volume as any);
+        const highValue = FC_02_Yesterday_Values_Uncorrected_Volume_High ?? NaN;
+        const lowValue = FC_02_Yesterday_Values_Uncorrected_Volume_Low ?? NaN;
+    
+        if (!isNaN(FC_02_Yesterday_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Yesterday_Values_Uncorrected_Volume) {
+            setExceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume(FC_02_Yesterday_Values_Uncorrected_VolumeValue >= highValue || FC_02_Yesterday_Values_Uncorrected_VolumeValue <= lowValue);
+        }
+    
+    }, [FC_02_Yesterday_Values_Uncorrected_Volume, FC_02_Yesterday_Values_Uncorrected_Volume_High, FC_02_Yesterday_Values_Uncorrected_Volume_Low, maintainFC_02_Yesterday_Values_Uncorrected_Volume]);
+     
+    
       
           const handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume = (event: any) => {
               const newValue = event.target.value;
@@ -4097,7 +3594,54 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
               // =================================================================================================================== 
          
+           // =================================================================================================================== 
+    
+    
+           const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
+           const [audioPlayingFC_Conn_STT, setAudioPlayingFC_Conn_STT] = useState(false);
+           const [inputValueFC_Conn_STT, setInputValueFC_Conn_STT] = useState<any>();
+           const [inputValue2FC_Conn_STT, setInputValue2FC_Conn_STT] = useState<any>();
+           const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(null);
+           const [FC_Conn_STT_Low, setFC_Conn_STT_Low] = useState<number | null>(null);
+           const [exceedThresholdFC_Conn_STT, setExceedThresholdFC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+           
+           const [maintainFC_Conn_STT, setMaintainFC_Conn_STT] = useState<boolean>(false);
+           
+           
+           useEffect(() => {
+             const FC_Conn_STTValue = parseFloat(FC_Conn_STT as any);
+             const highValue = FC_Conn_STT_High ?? NaN;
+             const lowValue = FC_Conn_STT_Low ?? NaN;
          
+             if (!isNaN(FC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Conn_STT) {
+                 setExceedThresholdFC_Conn_STT(FC_Conn_STTValue >= highValue || FC_Conn_STTValue <= lowValue);
+             }
+         
+         }, [FC_Conn_STT, FC_Conn_STT_High, FC_Conn_STT_Low, maintainFC_Conn_STT]);
+           
+               const handleInputChangFC_Conn_STT = (event: any) => {
+                   const newValue = event.target.value;
+                   setInputValueFC_Conn_STT(newValue);
+               };
+           
+               const handleInputChange2FC_Conn_STT = (event: any) => {
+                   const newValue2 = event.target.value;
+                   setInputValue2FC_Conn_STT(newValue2);
+               };
+               const ChangeMaintainFC_Conn_STT = async () => {
+                   try {
+                       const newValue = !maintainFC_Conn_STT;
+                       await httpApi.post(
+                           `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
+                           { FC_Conn_STT_Maintain: newValue }
+                       );
+                       setMaintainFC_Conn_STT(newValue);
+                       
+                   } catch (error) {}
+               };
+      
+      
+           // =================================================================================================================== 
          // =================================================================================================================== 
          
 
@@ -4112,6 +3656,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
                 {
+                    FC_Conn_STT_High: inputValueFC_Conn_STT,FC_Conn_STT_Low:inputValue2FC_Conn_STT,
                     
                     DO_HR_01_High: inputValueDO_HR_01,DO_HR_01_Low:inputValue2DO_HR_01,
                     SD_High: inputValueSD,SD_Low:inputValue2SD,
@@ -4206,7 +3751,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             setPCV_01(inputPCV_01)
      
             setGetWayPhoneOTSUKA(inputGetwayPhone);
-
+            setFC_Conn_STT_High(inputValueFC_Conn_STT);
+            setFC_Conn_STT_Low(inputValue2FC_Conn_STT);
             setDO_HR_01_High(inputValueDO_HR_01);
             setDO_HR_01_Low(inputValue2DO_HR_01);
 
@@ -4384,6 +3930,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputPCV_02(PCV_02)
         setInputPSV_01(PSV_01)
 
+
+        setInputValueFC_Conn_STT(FC_Conn_STT_High); 
+        setInputValue2FC_Conn_STT(FC_Conn_STT_Low); 
    
         setInputValueDO_HR_01(DO_HR_01_High); 
         setInputValue2DO_HR_01(DO_HR_01_Low); 
@@ -4554,6 +4103,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         DO_HR_01_High, DO_HR_01_Low 
         ,SD_High, SD_Low ,
 
+        FC_Conn_STT_High,FC_Conn_STT_Low,
 
         DO_SV_01_High,DO_SV_01_Low,
          DO_SV_02_High,DO_SV_02_Low ,
@@ -4633,6 +4183,158 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         ]);
 
 
+
+
+        const handleMainTainFC = async (checked:any) => {
+            try {
+
+                const newMaintainFC_Lithium_Battery_Status = checked;
+                const newMaintainFC_Battery_Voltage = checked;
+                const newMaintainFC_System_Voltage = checked;
+                const newMaintainFC_Charger_Voltage = checked;
+
+
+
+                const newMaintainFC_01_Accumulated_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_01_Accumulated_Values_Volume = checked;
+                const newMaintainFC_01_Current_Values_Static_Pressure = checked;
+                const newMaintainFC_01_Current_Values_Temperature = checked;
+                const newMaintainFC_01_Current_Values_Flow_Rate = checked;
+                const newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate = checked;
+                const newMaintainFC_01_Today_Values_Volume = checked;
+                const newMaintainFC_01_Today_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_01_Yesterday_Values_Volume = checked;
+                const newMaintainFC_01_Yesterday_Values_Uncorrected_Volume = checked;
+
+                const newMaintainFC_02_Accumulated_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_02_Accumulated_Values_Volume = checked;
+                const newMaintainFC_02_Current_Values_Static_Pressure = checked;
+                const newMaintainFC_02_Current_Values_Temperature = checked;
+                const newMaintainFC_02_Current_Values_Flow_Rate = checked;
+                const newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate = checked;
+                const newMaintainFC_02_Today_Values_Volume = checked;
+                const newMaintainFC_02_Today_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_02_Yesterday_Values_Volume = checked;
+                const newMaintainFC_02_Yesterday_Values_Uncorrected_Volume = checked;
+                const newMaintainFC_Conn_STT = checked;
+        
+        
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_LGDS}/SERVER_SCOPE`,
+
+
+
+
+                    {
+                        FC_Conn_STT_Maintain: newMaintainFC_Conn_STT,
+                        
+                    FC_Lithium_Battery_Status_Maintain: newMaintainFC_Lithium_Battery_Status,
+                    FC_Battery_Voltage_Maintain: newMaintainFC_Battery_Voltage,
+
+                     FC_System_Voltage_Maintain: newMaintainFC_System_Voltage,
+                     FC_Charger_Voltage_Maintain: newMaintainFC_Charger_Voltage,
+                        
+                        FC_01_Accumulated_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Accumulated_Values_Uncorrected_Volume,
+                       FC_01_Accumulated_Values_Volume_Maintain: newMaintainFC_01_Accumulated_Values_Volume,
+                       FC_01_Current_Values_Static_Pressure_Maintain: newMaintainFC_01_Current_Values_Static_Pressure,
+                       FC_01_Current_Values_Temperature_Maintain: newMaintainFC_01_Current_Values_Temperature,
+                       FC_01_Current_Values_Flow_Rate_Maintain: newMaintainFC_01_Current_Values_Flow_Rate,
+                       FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain: newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+                       FC_01_Today_Values_Volume_Maintain: newMaintainFC_01_Today_Values_Volume,
+                       FC_01_Today_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Today_Values_Uncorrected_Volume,
+                       FC_01_Yesterday_Values_Volume_Maintain: newMaintainFC_01_Yesterday_Values_Volume,
+                       FC_01_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_01_Yesterday_Values_Uncorrected_Volume,
+
+                       FC_02_Accumulated_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Accumulated_Values_Uncorrected_Volume,
+                       FC_02_Accumulated_Values_Volume_Maintain: newMaintainFC_02_Accumulated_Values_Volume,
+                       FC_02_Current_Values_Static_Pressure_Maintain: newMaintainFC_02_Current_Values_Static_Pressure,
+                       FC_02_Current_Values_Temperature_Maintain: newMaintainFC_02_Current_Values_Temperature,
+                       FC_02_Current_Values_Flow_Rate_Maintain: newMaintainFC_02_Current_Values_Flow_Rate,
+                       FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain: newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+                       FC_02_Today_Values_Volume_Maintain: newMaintainFC_02_Today_Values_Volume,
+                       FC_02_Today_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Today_Values_Uncorrected_Volume,
+                       FC_02_Yesterday_Values_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Volume,
+                       FC_02_Yesterday_Values_Uncorrected_Volume_Maintain: newMaintainFC_02_Yesterday_Values_Uncorrected_Volume,
+        
+        
+                 
+        
+                     }
+                );
+
+                setMaintainFC_Lithium_Battery_Status(newMaintainFC_Lithium_Battery_Status);
+                setMaintainFC_Battery_Voltage(newMaintainFC_Battery_Voltage);
+
+                setMaintainFC_System_Voltage(newMaintainFC_System_Voltage);
+                setMaintainFC_Charger_Voltage(newMaintainFC_Charger_Voltage);
+
+                setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(newMaintainFC_01_Accumulated_Values_Uncorrected_Volume);
+                setMaintainFC_01_Accumulated_Values_Volume(newMaintainFC_01_Accumulated_Values_Volume);
+                setMaintainFC_01_Current_Values_Static_Pressure(newMaintainFC_01_Current_Values_Static_Pressure);
+                setMaintainFC_01_Current_Values_Temperature(newMaintainFC_01_Current_Values_Temperature);
+                setMaintainFC_01_Current_Values_Flow_Rate(newMaintainFC_01_Current_Values_Flow_Rate);
+                setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(newMaintainFC_01_Current_Values_Uncorrected_Flow_Rate);
+                setMaintainFC_01_Today_Values_Volume(newMaintainFC_01_Today_Values_Volume);
+                setMaintainFC_01_Today_Values_Uncorrected_Volume(newMaintainFC_01_Today_Values_Uncorrected_Volume);
+                setMaintainFC_01_Yesterday_Values_Volume(newMaintainFC_01_Yesterday_Values_Volume);
+                setMaintainFC_01_Yesterday_Values_Uncorrected_Volume(newMaintainFC_01_Yesterday_Values_Uncorrected_Volume);
+        
+                setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(newMaintainFC_02_Accumulated_Values_Uncorrected_Volume);
+                setMaintainFC_02_Accumulated_Values_Volume(newMaintainFC_02_Accumulated_Values_Volume);
+                setMaintainFC_02_Current_Values_Static_Pressure(newMaintainFC_02_Current_Values_Static_Pressure);
+                setMaintainFC_02_Current_Values_Temperature(newMaintainFC_02_Current_Values_Temperature);
+                setMaintainFC_02_Current_Values_Flow_Rate(newMaintainFC_02_Current_Values_Flow_Rate);
+                setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(newMaintainFC_02_Current_Values_Uncorrected_Flow_Rate);
+                setMaintainFC_02_Today_Values_Volume(newMaintainFC_02_Today_Values_Volume);
+                setMaintainFC_02_Today_Values_Uncorrected_Volume(newMaintainFC_02_Today_Values_Uncorrected_Volume);
+                setMaintainFC_02_Yesterday_Values_Volume(newMaintainFC_02_Yesterday_Values_Volume);
+                setMaintainFC_02_Yesterday_Values_Uncorrected_Volume(newMaintainFC_02_Yesterday_Values_Uncorrected_Volume);
+                setMaintainFC_Conn_STT(newMaintainFC_Conn_STT);
+                
+        
+              
+        
+        
+            } catch (error) {
+                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
+            }
+        };
+        
+        const handleCheckboxChangeFC = (e:any) => {
+            const isChecked = e.checked;
+        
+            handleMainTainFC(isChecked);
+        };
+
+        const checkMaintainingFC = 
+        maintainFC_Lithium_Battery_Status === true &&
+        maintainFC_Battery_Voltage === true &&
+        maintainFC_System_Voltage === true &&
+        maintainFC_Charger_Voltage === true &&
+        maintainFC_Conn_STT === true &&
+        maintainFC_01_Accumulated_Values_Uncorrected_Volume === true &&
+        maintainFC_01_Accumulated_Values_Volume === true &&
+        maintainFC_01_Current_Values_Static_Pressure === true &&
+        maintainFC_01_Current_Values_Temperature === true &&
+        maintainFC_01_Current_Values_Flow_Rate === true &&
+        maintainFC_01_Current_Values_Uncorrected_Flow_Rate === true &&
+        maintainFC_01_Today_Values_Volume === true &&
+        maintainFC_01_Today_Values_Uncorrected_Volume === true &&
+        maintainFC_01_Yesterday_Values_Volume === true &&
+        maintainFC_01_Yesterday_Values_Uncorrected_Volume === true &&
+        maintainFC_02_Accumulated_Values_Uncorrected_Volume === true &&
+        maintainFC_02_Accumulated_Values_Volume === true &&
+        maintainFC_02_Current_Values_Static_Pressure === true &&
+        maintainFC_02_Current_Values_Temperature === true &&
+        maintainFC_02_Current_Values_Flow_Rate === true &&
+        maintainFC_02_Current_Values_Uncorrected_Flow_Rate === true &&
+        maintainFC_02_Today_Values_Volume === true &&
+        maintainFC_02_Today_Values_Uncorrected_Volume === true &&
+        maintainFC_02_Yesterday_Values_Volume === true &&
+        maintainFC_02_Yesterday_Values_Uncorrected_Volume === true &&
+        maintainFC_Conn_STT === true;
+
+
         
     const combineCss = {
 
@@ -4700,7 +4402,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             fontWeight:400,
         },
         CSSFC_Battery_Voltage : {
-            color:exceedThresholdTemperature && !maintainFC_Battery_Voltage
+            color:exceedThresholdFC_Battery_Voltage && !maintainFC_Battery_Voltage
             ? "#ff5656"
             : maintainFC_Battery_Voltage
             ? "orange"
@@ -4936,7 +4638,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             fontWeight:400,
         },
         CSSFC_02_Yesterday_Values_Uncorrected_Volume : {
-            color:exceedThreshold302 && !maintainFC_02_Yesterday_Values_Uncorrected_Volume
+            color:exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume && !maintainFC_02_Yesterday_Values_Uncorrected_Volume
             ? "#ff5656"
             : maintainFC_02_Yesterday_Values_Uncorrected_Volume
             ? "orange"
@@ -5127,7 +4829,13 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
          
     
   const mainCategoryFC = {
-    FC01: 'FC-1001 -  Parameters & Configurations',
+    FC01:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> FC-1001 -  Parameters & Configurations  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+        <Checkbox
+            style={{ marginRight: 5 }}
+            onChange={handleCheckboxChangeFC}
+            checked={checkMaintainingFC}
+        />
+    <p style={{fontSize:15}}>Maintain FC</p>  </div> )}  </span>,
     FC02: 'FC-1002 -  Parameters & Configurations',
     PLC: 'PLC -  Parameters & Configurations',
     FC: 'FC -  Parameters & Configurations',
@@ -5137,6 +4845,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
 
 
   
+const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" : FC_Lithium_Battery_Status === "1" ? "No" : null;
 
         const dataFC01 =  [
             {
@@ -5145,12 +4854,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{TagName.Input_Pressure}</span> ,
    
-           modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>7619	 </span> ,
+           modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>47619	 </span> ,
    
           value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
-           high: <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
+           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
            Maintain:   <Checkbox
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainFC_01_Current_Values_Static_Pressure}
@@ -5164,12 +4873,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Temperature} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{TagName.EVC_01_Temperature}</span> ,
    
-          modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>7621	 </span> ,
+          modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>47621	 </span> ,
    
          value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
-          high: <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
-          low:  <InputText style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
-          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
+          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
           Maintain:   <Checkbox
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainFC_01_Current_Values_Temperature}
@@ -5183,12 +4892,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
           name: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{TagName.GVA}</span> ,
  
-          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>7615	 </span> ,
+          modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>47615	 </span> ,
  
          value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-          high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
-          low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
-          update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
+          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
           Maintain:   <Checkbox
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainFC_01_Accumulated_Values_Uncorrected_Volume}
@@ -5202,12 +4911,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             timeUpdate: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{TagName.SVA}</span> ,
 
-         modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>7617	 </span> ,
+         modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>47617	 </span> ,
 
         value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
-         high: <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
-         update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
+         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainFC_01_Accumulated_Values_Volume}
@@ -5225,12 +4934,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
         name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{TagName.SVF}</span> ,
 
-        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>7623	 </span> ,
+        modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>47623	 </span> ,
 
        value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
-        high: <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
-        update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
+        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainFC_01_Current_Values_Flow_Rate}
@@ -5246,12 +4955,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
        name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
-       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>7625	 </span> ,
+       modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>47625	 </span> ,
 
       value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
-       high: <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
-       update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
+       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
+       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainFC_01_Current_Values_Uncorrected_Flow_Rate}
@@ -5267,12 +4976,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Volume} >{EVC_STT01Value}</span>,
       name: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
-      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>7627	 </span> ,
+      modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>47627	 </span> ,
 
      value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
-      high: <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Volume} onChange={handleInputChange2FC_01_Today_Values_Volume} inputMode="decimal" />,
-      update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
+      low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Volume} onChange={handleInputChange2FC_01_Today_Values_Volume} inputMode="decimal" />,
+      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainFC_01_Today_Values_Volume}
@@ -5289,12 +4998,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                 timeUpdate: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{TagName.Vm_Today}</span> ,
        
-            modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>7629	 </span> ,
+            modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>47629	 </span> ,
        
            value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-            high: <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainFC_01_Today_Values_Uncorrected_Volume}
@@ -5314,12 +5023,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{TagName.Vb_Yesterday}</span> ,
 
-    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>7631	 </span> ,
+    modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>47631	 </span> ,
 
    value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
-    high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Volume} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
+    low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Volume} inputMode="decimal" />,
+    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainFC_01_Yesterday_Values_Volume}
@@ -5335,12 +5044,12 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     timeUpdate: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
    name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{TagName.Vm_Yesterday}</span> ,
 
-   modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>7633	 </span> ,
+   modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>47633	 </span> ,
 
   value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-   high: <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainFC_01_Yesterday_Values_Uncorrected_Volume}
@@ -5360,12 +5069,12 @@ const dataFC02 = [
        timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} >{EVC_STT01Value}</span>,
      name: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{TagName.Input_Pressure}</span> ,
    
-     modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>8619	 </span> ,
+     modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>48619	 </span> ,
    
     value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
-     high: <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
-     update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
+     low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
+     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainFC_02_Current_Values_Static_Pressure}
@@ -5383,12 +5092,12 @@ const dataFC02 = [
        timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Temperature} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{TagName.EVC_01_Temperature}</span> ,
    
-    modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>8621	 </span> ,
+    modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>48621	 </span> ,
    
    value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
-    high: <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
-    update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
+    low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
+    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainFC_02_Current_Values_Temperature}
@@ -5402,12 +5111,12 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{TagName.GVA}</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>8615	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>48615	 </span> ,
 
  value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-  high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainFC_02_Accumulated_Values_Uncorrected_Volume}
@@ -5422,12 +5131,12 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} >{EVC_STT01Value}</span>,
    name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{TagName.SVA}</span> ,
 
-   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>8617	 </span> ,
+   modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>48617	 </span> ,
 
   value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
-   high: <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Volume} inputMode="decimal" />,
-   update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Volume} inputMode="decimal" />,
+   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainFC_02_Accumulated_Values_Volume}
@@ -5444,12 +5153,12 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
   name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{TagName.SVF}</span> ,
 
-  modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>8623	 </span> ,
+  modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>48623	 </span> ,
 
  value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
-  high: <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
-  update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
+  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainFC_02_Current_Values_Flow_Rate}
@@ -5465,12 +5174,12 @@ const dataFC02 = [
     timeUpdate: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
  name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
 
- modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>8625	 </span> ,
+ modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>48625	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
- high: <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
- update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+ high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
+ low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
+ update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainFC_02_Current_Values_Uncorrected_Flow_Rate}
@@ -5486,12 +5195,12 @@ value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > 
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{TagName.Vb_Today}</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>8627	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>48627	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume} {nameValue.Sm3}</span> , 
-high: <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Volume} onChange={handleInputChange2FC_02_Today_Values_Volume} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Volume} onChange={handleInputChange2FC_02_Today_Values_Volume} inputMode="decimal" />,
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainFC_02_Today_Values_Volume}
@@ -5507,12 +5216,12 @@ checked={maintainFC_02_Today_Values_Volume}
     timeUpdate: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
 name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{TagName.Vm_Today}</span> ,
 
-modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>8629	 </span> ,
+modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>48629	 </span> ,
 
 value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-high: <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
-update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
+update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainFC_02_Today_Values_Uncorrected_Volume}
@@ -5532,12 +5241,12 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{TagName.Vb_Yesterday}</span> ,
     
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>8631	 </span> ,
+             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>48631	 </span> ,
     
             value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
-             high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2VP303} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Volume} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainFC_02_Yesterday_Values_Volume}
@@ -5553,12 +5262,12 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{TagName.Vm_Yesterday}</span> ,
     
-             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>8633	 </span> ,
+             modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>48633	 </span> ,
     
             value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
-             high: <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainFC_02_Yesterday_Values_Uncorrected_Volume}
@@ -5580,9 +5289,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
              modbus: <span style={combineCss.CSSPT_1003}>40002</span> ,
     
             value: <span style={combineCss.CSSPT_1003} > {PT_1003} {nameValue.Bara}</span> , 
-             high: <InputText style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPT_1003}
@@ -5603,10 +5312,10 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
              modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status}</span> , 
-             high: <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span> , 
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainFC_Lithium_Battery_Status}
@@ -5621,12 +5330,12 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_Battery_Voltage} >{EVC_STT01Value}</span>,
              name: <span style={combineCss.CSSFC_Battery_Voltage}>Battery Voltage</span> ,
     
-             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>6615	 </span> ,
+             modbus: <span style={combineCss.CSSFC_Battery_Voltage}>46615	 </span> ,
     
             value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
-             high: <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
-             update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainFC_Battery_Voltage}
@@ -5640,12 +5349,12 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 timeUpdate: <span style={combineCss.CSSFC_System_Voltage} >{EVC_STT01Value}</span>,
             name: <span style={combineCss.CSSFC_System_Voltage}>System Voltage</span> ,
    
-            modbus: <span style={combineCss.CSSFC_System_Voltage}>6617	 </span> ,
+            modbus: <span style={combineCss.CSSFC_System_Voltage}>46617	 </span> ,
    
            value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
-            high: <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
-            update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainFC_System_Voltage}
@@ -5659,12 +5368,12 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             timeUpdate: <span style={combineCss.CSSFC_Charger_Voltage} >{EVC_STT01Value}</span>,
            name: <span style={combineCss.CSSFC_Charger_Voltage}>Charger Voltage</span> ,
   
-           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>6619	 </span> ,
+           modbus: <span style={combineCss.CSSFC_Charger_Voltage}>46619	 </span> ,
   
           value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
-           high: <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
-           update:  <button className='buttonUpdateSetData' onClick={confirmUpData} > Update </button>,
+           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
+           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
            Maintain:   <Checkbox
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainFC_Charger_Voltage}
@@ -5715,10 +5424,8 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1001) (BarG)</span>,
 
             Value: (
-                <InputText
+                <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
-                    step="0.1"
                     type="Name"
                     value={inputPCV_01}
                     onChange={handleInputPCV_01}
@@ -5728,9 +5435,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
             Update: (
                 <Button
-                    className="buttonUpdateSetData"
-                    style={{ marginTop: 5 }}
+                    className="buttonUpdateSetData " style={{ marginTop: 5 }}
                     label="Update"
+                     disabled={AuthUpdatePCV}
                     onClick={confirmUpData}
                 />
             ),
@@ -5740,9 +5447,8 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1002) (BarG)</span>,
 
             Value: (
-                <InputText
+                <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputPCV_02}
@@ -5753,9 +5459,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
             Update: (
                 <Button
-                    className="buttonUpdateSetData"
-                    style={{ marginTop: 5 }}
+                    className="buttonUpdateSetData " style={{ marginTop: 5 }}
                     label="Update"
+                     disabled={AuthUpdatePCV}
                     onClick={confirmUpData}
                 />
             ),
@@ -5765,9 +5471,8 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety}  (PSV-1001) (BarG)</span>,
 
             Value: (
-                <InputText
+                <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
-                    placeholder="High"
                     step="0.1"
                     type="Name"
                     value={inputPSV_01}
@@ -5778,9 +5483,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
             Update: (
                 <Button
-                    className="buttonUpdateSetData"
-                    style={{ marginTop: 5 }}
+                    className="buttonUpdateSetData " style={{ marginTop: 5 }}
                     label="Update"
+                     disabled={AuthUpdatePCV}
                     onClick={confirmUpData}
                 />
             ),
@@ -5790,7 +5495,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
 
             Value: (
-                <InputText
+                <InputText disabled={AuthInputHighLow}
                     style={combineCssAttribute.PCV}
                     placeholder="High"
                     step="0.1"
@@ -5803,11 +5508,11 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
             Update: (
                 <Button
-                    className="buttonUpdateSetData"
-                    style={{ marginTop: 5 }}
-                    label="Update"
-                    onClick={confirmUpData}
-                />
+                className="buttonUpdateSetData " style={{ marginTop: 5 }}
+                label="Update"
+                 disabled={AuthUpdatePCV}
+                onClick={confirmUpData}
+            />
             ),
         },
 
@@ -5816,7 +5521,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
     ];
 
        //=========================================================================
-       const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC, ...PLC];
+       const combinedData = [ ...dataFC01, ...dataFC02 ,...dataFC];
 
        const mainCategoryTemplate = (data: any) => {
            return (

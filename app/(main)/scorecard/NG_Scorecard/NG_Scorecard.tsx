@@ -10,12 +10,14 @@ import ScoreCard_IGUACU from '../components/ScoreCard_IGUACU'
 import ScoreCard_ZOCV from '../components/ScoreCard_ZOCV'
 
 import  "./NG_Scorecard.css"
+import ScoreCard_LGDS from '../components/ScoreCard_LGDS'
 
 export default function NG_Scorecard() {
   return (
 
     <div className='responsive' > 
-
+    <ScoreCard_LGDS/>
+  
 
     <ScoreCard_ZOCV/>
         <ScoreCard_KOA/>

@@ -72,13 +72,13 @@ interface ValueStateMap {
 }
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "yellow";
 
 export default function GraphicYOSHINO() {
     const [visible, setVisible] = useState(false);
@@ -90,8 +90,6 @@ export default function GraphicYOSHINO() {
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
-
-
 
     const [NC, setNC] = useState<string | null>(null);
     const [NO, setNO] = useState<string | null>(null);
@@ -207,23 +205,30 @@ export default function GraphicYOSHINO() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setFC_01_Current_Values_Uncorrected_Flow_Rate,
+                        FC_01_Current_Values_Flow_Rate:
+                            setFC_01_Current_Values_Flow_Rate,
+                        FC_01_Current_Values_Uncorrected_Flow_Rate:
+                            setFC_01_Current_Values_Uncorrected_Flow_Rate,
 
-                        FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
+                        FC_01_Accumulated_Values_Volume:
+                            setFC_01_Accumulated_Values_Volume,
+                        FC_01_Accumulated_Values_Uncorrected_Volume:
+                            setFC_01_Accumulated_Values_Uncorrected_Volume,
 
-                        FC_02_Current_Values_Flow_Rate: setFC_02_Current_Values_Flow_Rate,
-                        FC_02_Current_Values_Uncorrected_Flow_Rate: setFC_02_Current_Values_Uncorrected_Flow_Rate,
-                        FC_02_Accumulated_Values_Volume: setFC_02_Accumulated_Values_Volume,
-                        FC_02_Accumulated_Values_Uncorrected_Volume: setFC_02_Accumulated_Values_Uncorrected_Volume,
+                        FC_02_Current_Values_Flow_Rate:
+                            setFC_02_Current_Values_Flow_Rate,
+                        FC_02_Current_Values_Uncorrected_Flow_Rate:
+                            setFC_02_Current_Values_Uncorrected_Flow_Rate,
+                        FC_02_Accumulated_Values_Volume:
+                            setFC_02_Accumulated_Values_Volume,
+                        FC_02_Accumulated_Values_Uncorrected_Volume:
+                            setFC_02_Accumulated_Values_Uncorrected_Volume,
 
-                        FC_02_Current_Values_Static_Pressure: setFC_02_Current_Values_Static_Pressure,
+                        FC_02_Current_Values_Static_Pressure:
+                            setFC_02_Current_Values_Static_Pressure,
 
-
-
-                        FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
-
+                        FC_01_Current_Values_Static_Pressure:
+                            setFC_01_Current_Values_Static_Pressure,
 
                         GD1: setGD1,
                         GD2: setGD2,
@@ -295,44 +300,99 @@ export default function GraphicYOSHINO() {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     //============================GD =============================
 
+    const [
+        FC_01_Current_Values_Static_Pressure,
+        setFC_01_Current_Values_Static_Pressure,
+    ] = useState<string | null>(null);
+    const [
+        FC_01_Current_Values_Static_Pressure_High,
+        setFC_01_Current_Values_Static_Pressure_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_01_Current_Values_Static_Pressure_Low,
+        setFC_01_Current_Values_Static_Pressure_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_01_Current_Values_Static_Pressure,
+        setExceedThresholdFC_01_Current_Values_Static_Pressure,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_01_Current_Values_Static_Pressure,
+        setMaintainFC_01_Current_Values_Static_Pressure,
+    ] = useState<boolean>(false);
 
-    const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<string | null>(null);
-    const [FC_01_Current_Values_Static_Pressure_High, setFC_01_Current_Values_Static_Pressure_High] = useState<number | null>(null);
-    const [FC_01_Current_Values_Static_Pressure_Low, setFC_01_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_01_Current_Values_Static_Pressure, setExceedThresholdFC_01_Current_Values_Static_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_01_Current_Values_Static_Pressure, setMaintainFC_01_Current_Values_Static_Pressure] = useState<boolean>(false);
-    
-    
     useEffect(() => {
-      const FC_01_Current_Values_Static_PressureValue = parseFloat(FC_01_Current_Values_Static_Pressure as any);
-      const highValue = FC_01_Current_Values_Static_Pressure_High ?? NaN;
-      const lowValue = FC_01_Current_Values_Static_Pressure_Low ?? NaN;
-  
-      if (!isNaN(FC_01_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Static_Pressure) {
-          setExceedThresholdFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_PressureValue >= highValue || FC_01_Current_Values_Static_PressureValue <= lowValue);
-      }
-  }, [FC_01_Current_Values_Static_Pressure, FC_01_Current_Values_Static_Pressure_High, FC_01_Current_Values_Static_Pressure_Low, maintainFC_01_Current_Values_Static_Pressure]);
-  
-    
+        const FC_01_Current_Values_Static_PressureValue = parseFloat(
+            FC_01_Current_Values_Static_Pressure as any
+        );
+        const highValue = FC_01_Current_Values_Static_Pressure_High ?? NaN;
+        const lowValue = FC_01_Current_Values_Static_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(FC_01_Current_Values_Static_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_01_Current_Values_Static_Pressure
+        ) {
+            setExceedThresholdFC_01_Current_Values_Static_Pressure(
+                FC_01_Current_Values_Static_PressureValue >= highValue ||
+                    FC_01_Current_Values_Static_PressureValue <= lowValue
+            );
+        }
+    }, [
+        FC_01_Current_Values_Static_Pressure,
+        FC_01_Current_Values_Static_Pressure_High,
+        FC_01_Current_Values_Static_Pressure_Low,
+        maintainFC_01_Current_Values_Static_Pressure,
+    ]);
+
     //================================ PT 1902======================================================
 
-    const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<string | null>(null);
-    const [FC_02_Current_Values_Static_Pressure_High, setFC_02_Current_Values_Static_Pressure_High] = useState<number | null>(null);
-    const [FC_02_Current_Values_Static_Pressure_Low, setFC_02_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_02_Current_Values_Static_Pressure, setExceedThresholdFC_02_Current_Values_Static_Pressure] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_02_Current_Values_Static_Pressure, setMaintainFC_02_Current_Values_Static_Pressure] = useState<boolean>(false);
-    
-    
+    const [
+        FC_02_Current_Values_Static_Pressure,
+        setFC_02_Current_Values_Static_Pressure,
+    ] = useState<string | null>(null);
+    const [
+        FC_02_Current_Values_Static_Pressure_High,
+        setFC_02_Current_Values_Static_Pressure_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_02_Current_Values_Static_Pressure_Low,
+        setFC_02_Current_Values_Static_Pressure_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_02_Current_Values_Static_Pressure,
+        setExceedThresholdFC_02_Current_Values_Static_Pressure,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_02_Current_Values_Static_Pressure,
+        setMaintainFC_02_Current_Values_Static_Pressure,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const FC_02_Current_Values_Static_PressureValue = parseFloat(FC_02_Current_Values_Static_Pressure as any);
-      const highValue = FC_02_Current_Values_Static_Pressure_High ?? NaN;
-      const lowValue = FC_02_Current_Values_Static_Pressure_Low ?? NaN;
-  
-      if (!isNaN(FC_02_Current_Values_Static_PressureValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Static_Pressure) {
-          setExceedThresholdFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_PressureValue >= highValue || FC_02_Current_Values_Static_PressureValue <= lowValue);
-      }
-  }, [FC_02_Current_Values_Static_Pressure, FC_02_Current_Values_Static_Pressure_High, FC_02_Current_Values_Static_Pressure_Low, maintainFC_02_Current_Values_Static_Pressure]);
-  
+        const FC_02_Current_Values_Static_PressureValue = parseFloat(
+            FC_02_Current_Values_Static_Pressure as any
+        );
+        const highValue = FC_02_Current_Values_Static_Pressure_High ?? NaN;
+        const lowValue = FC_02_Current_Values_Static_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(FC_02_Current_Values_Static_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_02_Current_Values_Static_Pressure
+        ) {
+            setExceedThresholdFC_02_Current_Values_Static_Pressure(
+                FC_02_Current_Values_Static_PressureValue >= highValue ||
+                    FC_02_Current_Values_Static_PressureValue <= lowValue
+            );
+        }
+    }, [
+        FC_02_Current_Values_Static_Pressure,
+        FC_02_Current_Values_Static_Pressure_High,
+        FC_02_Current_Values_Static_Pressure_Low,
+        maintainFC_02_Current_Values_Static_Pressure,
+    ]);
 
     //================================ PT 1903======================================================
     const [PT1, setPT1] = useState<string | null>(null);
@@ -340,18 +400,23 @@ export default function GraphicYOSHINO() {
     const [PT1_Low, setPT1_Low] = useState<number | null>(null);
     const [exceedThresholdPT1, setExceedThresholdPT1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     const [maintainPT1, setMaintainPT1] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-      const PT1Value = parseFloat(PT1 as any);
-      const highValue = PT1_High ?? NaN;
-      const lowValue = PT1_Low ?? NaN;
-  
-      if (!isNaN(PT1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPT1) {
-          setExceedThresholdPT1(PT1Value >= highValue || PT1Value <= lowValue);
-      }
-  }, [PT1, PT1_High, PT1_Low, maintainPT1]);
-  
+        const PT1Value = parseFloat(PT1 as any);
+        const highValue = PT1_High ?? NaN;
+        const lowValue = PT1_Low ?? NaN;
+
+        if (
+            !isNaN(PT1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT1
+        ) {
+            setExceedThresholdPT1(
+                PT1Value >= highValue || PT1Value <= lowValue
+            );
+        }
+    }, [PT1, PT1_High, PT1_Low, maintainPT1]);
 
     //================================ GD 1901 ======================================================
     const [GD1, setGD1] = useState<string | null>(null);
@@ -359,18 +424,23 @@ export default function GraphicYOSHINO() {
     const [GD1_Low, setGD1_Low] = useState<number | null>(null);
     const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     const [maintainGD1, setMaintainGD1] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-      const GD1Value = parseFloat(GD1 as any);
-      const highValue = GD1_High ?? NaN;
-      const lowValue = GD1_Low ?? NaN;
-  
-      if (!isNaN(GD1Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD1) {
-          setExceedThresholdGD1(GD1Value >= highValue || GD1Value <= lowValue);
-      }
-  }, [GD1, GD1_High, GD1_Low, maintainGD1]);
-  
+        const GD1Value = parseFloat(GD1 as any);
+        const highValue = GD1_High ?? NaN;
+        const lowValue = GD1_Low ?? NaN;
+
+        if (
+            !isNaN(GD1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD1
+        ) {
+            setExceedThresholdGD1(
+                GD1Value >= highValue || GD1Value <= lowValue
+            );
+        }
+    }, [GD1, GD1_High, GD1_Low, maintainGD1]);
 
     //================================ GD 1902 ======================================================
     const [GD2, setGD2] = useState<string | null>(null);
@@ -378,197 +448,411 @@ export default function GraphicYOSHINO() {
     const [GD2_Low, setGD2_Low] = useState<number | null>(null);
     const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
     const [maintainGD2, setMaintainGD2] = useState<boolean>(false);
-    
-    
+
     useEffect(() => {
-      const GD2Value = parseFloat(GD2 as any);
-      const highValue = GD2_High ?? NaN;
-      const lowValue = GD2_Low ?? NaN;
-  
-      if (!isNaN(GD2Value) && !isNaN(highValue) && !isNaN(lowValue) && !maintainGD2) {
-          setExceedThresholdGD2(GD2Value >= highValue || GD2Value <= lowValue);
-      }
-  }, [GD2, GD2_High, GD2_Low, maintainGD2]);
-  
+        const GD2Value = parseFloat(GD2 as any);
+        const highValue = GD2_High ?? NaN;
+        const lowValue = GD2_Low ?? NaN;
+
+        if (
+            !isNaN(GD2Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD2
+        ) {
+            setExceedThresholdGD2(
+                GD2Value >= highValue || GD2Value <= lowValue
+            );
+        }
+    }, [GD2, GD2_High, GD2_Low, maintainGD2]);
 
     //================================ GD 1902 ======================================================
 
+    const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] =
+        useState<string | null>(null);
+    const [
+        FC_01_Current_Values_Flow_Rate_High,
+        setFC_01_Current_Values_Flow_Rate_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_01_Current_Values_Flow_Rate_Low,
+        setFC_01_Current_Values_Flow_Rate_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_01_Current_Values_Flow_Rate,
+        setExceedThresholdFC_01_Current_Values_Flow_Rate,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_01_Current_Values_Flow_Rate,
+        setMaintainFC_01_Current_Values_Flow_Rate,
+    ] = useState<boolean>(false);
 
-    const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] = useState<string | null>(null);
-    const [FC_01_Current_Values_Flow_Rate_High, setFC_01_Current_Values_Flow_Rate_High] = useState<number | null>(null);
-    const [FC_01_Current_Values_Flow_Rate_Low, setFC_01_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_01_Current_Values_Flow_Rate, setExceedThresholdFC_01_Current_Values_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_01_Current_Values_Flow_Rate, setMaintainFC_01_Current_Values_Flow_Rate] = useState<boolean>(false);
-    
-    
     useEffect(() => {
-      const FC_01_Current_Values_Flow_RateValue = parseFloat(FC_01_Current_Values_Flow_Rate as any);
-      const highValue = FC_01_Current_Values_Flow_Rate_High ?? NaN;
-      const lowValue = FC_01_Current_Values_Flow_Rate_Low ?? NaN;
-  
-      if (!isNaN(FC_01_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Flow_Rate) {
-          setExceedThresholdFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_RateValue >= highValue || FC_01_Current_Values_Flow_RateValue <= lowValue);
-      }
-  }, [FC_01_Current_Values_Flow_Rate, FC_01_Current_Values_Flow_Rate_High, FC_01_Current_Values_Flow_Rate_Low, maintainFC_01_Current_Values_Flow_Rate]);
-  
+        const FC_01_Current_Values_Flow_RateValue = parseFloat(
+            FC_01_Current_Values_Flow_Rate as any
+        );
+        const highValue = FC_01_Current_Values_Flow_Rate_High ?? NaN;
+        const lowValue = FC_01_Current_Values_Flow_Rate_Low ?? NaN;
+
+        if (
+            !isNaN(FC_01_Current_Values_Flow_RateValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_01_Current_Values_Flow_Rate
+        ) {
+            setExceedThresholdFC_01_Current_Values_Flow_Rate(
+                FC_01_Current_Values_Flow_RateValue >= highValue ||
+                    FC_01_Current_Values_Flow_RateValue <= lowValue
+            );
+        }
+    }, [
+        FC_01_Current_Values_Flow_Rate,
+        FC_01_Current_Values_Flow_Rate_High,
+        FC_01_Current_Values_Flow_Rate_Low,
+        maintainFC_01_Current_Values_Flow_Rate,
+    ]);
 
     //================================ GVF1 FIQ 1901 ======================================================
-  
-    const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-    const [FC_01_Current_Values_Uncorrected_Flow_Rate_High, setFC_01_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
-    const [FC_01_Current_Values_Uncorrected_Flow_Rate_Low, setFC_01_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate, setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_01_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
-    
-    
+
+    const [
+        FC_01_Current_Values_Uncorrected_Flow_Rate,
+        setFC_01_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState<string | null>(null);
+    const [
+        FC_01_Current_Values_Uncorrected_Flow_Rate_High,
+        setFC_01_Current_Values_Uncorrected_Flow_Rate_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_01_Current_Values_Uncorrected_Flow_Rate_Low,
+        setFC_01_Current_Values_Uncorrected_Flow_Rate_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
+        setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+        setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState<boolean>(false);
+
     useEffect(() => {
-      const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate as any);
-      const highValue = FC_01_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
-      const lowValue = FC_01_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
-  
-      if (!isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) {
-          setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
-      }
-  }, [FC_01_Current_Values_Uncorrected_Flow_Rate, FC_01_Current_Values_Uncorrected_Flow_Rate_High, FC_01_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_01_Current_Values_Uncorrected_Flow_Rate]);
-  
+        const FC_01_Current_Values_Uncorrected_Flow_RateValue = parseFloat(
+            FC_01_Current_Values_Uncorrected_Flow_Rate as any
+        );
+        const highValue =
+            FC_01_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+        const lowValue = FC_01_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
 
-
-    //================================ SVA1 FIQ 1901 ======================================================
-  
-    const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<string | null>(null);
-    const [FC_01_Accumulated_Values_Volume_High, setFC_01_Accumulated_Values_Volume_High] = useState<number | null>(null);
-    const [FC_01_Accumulated_Values_Volume_Low, setFC_01_Accumulated_Values_Volume_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_01_Accumulated_Values_Volume, setExceedThresholdFC_01_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_01_Accumulated_Values_Volume, setMaintainFC_01_Accumulated_Values_Volume] = useState<boolean>(false);
-    
-    
-    useEffect(() => {
-      const FC_01_Accumulated_Values_VolumeValue = parseFloat(FC_01_Accumulated_Values_Volume as any);
-      const highValue = FC_01_Accumulated_Values_Volume_High ?? NaN;
-      const lowValue = FC_01_Accumulated_Values_Volume_Low ?? NaN;
-  
-      if (!isNaN(FC_01_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Volume) {
-          setExceedThresholdFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_VolumeValue >= highValue || FC_01_Accumulated_Values_VolumeValue <= lowValue);
-      }
-  }, [FC_01_Accumulated_Values_Volume, FC_01_Accumulated_Values_Volume_High, FC_01_Accumulated_Values_Volume_Low, maintainFC_01_Accumulated_Values_Volume]);
-  
-
-
-    //================================ SVA1 FIQ 1901 ======================================================
-
-    const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-    const [FC_01_Accumulated_Values_Uncorrected_Volume_High, setFC_01_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
-    const [FC_01_Accumulated_Values_Uncorrected_Volume_Low, setFC_01_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
-    const [exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume, setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainFC_01_Accumulated_Values_Uncorrected_Volume, setMaintainFC_01_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
-    
-    
-    useEffect(() => {
-      const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume as any);
-      const highValue = FC_01_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
-      const lowValue = FC_01_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
-  
-      if (!isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) {
-          setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
-      }
-  }, [FC_01_Accumulated_Values_Uncorrected_Volume, FC_01_Accumulated_Values_Uncorrected_Volume_High, FC_01_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_01_Accumulated_Values_Uncorrected_Volume]);
-  
-
+        if (
+            !isNaN(FC_01_Current_Values_Uncorrected_Flow_RateValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_01_Current_Values_Uncorrected_Flow_Rate
+        ) {
+            setExceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate(
+                FC_01_Current_Values_Uncorrected_Flow_RateValue >= highValue ||
+                    FC_01_Current_Values_Uncorrected_Flow_RateValue <= lowValue
+            );
+        }
+    }, [
+        FC_01_Current_Values_Uncorrected_Flow_Rate,
+        FC_01_Current_Values_Uncorrected_Flow_Rate_High,
+        FC_01_Current_Values_Uncorrected_Flow_Rate_Low,
+        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+    ]);
 
     //================================ SVA1 FIQ 1901 ======================================================
 
+    const [
+        FC_01_Accumulated_Values_Volume,
+        setFC_01_Accumulated_Values_Volume,
+    ] = useState<string | null>(null);
+    const [
+        FC_01_Accumulated_Values_Volume_High,
+        setFC_01_Accumulated_Values_Volume_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_01_Accumulated_Values_Volume_Low,
+        setFC_01_Accumulated_Values_Volume_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_01_Accumulated_Values_Volume,
+        setExceedThresholdFC_01_Accumulated_Values_Volume,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_01_Accumulated_Values_Volume,
+        setMaintainFC_01_Accumulated_Values_Volume,
+    ] = useState<boolean>(false);
 
+    useEffect(() => {
+        const FC_01_Accumulated_Values_VolumeValue = parseFloat(
+            FC_01_Accumulated_Values_Volume as any
+        );
+        const highValue = FC_01_Accumulated_Values_Volume_High ?? NaN;
+        const lowValue = FC_01_Accumulated_Values_Volume_Low ?? NaN;
 
+        if (
+            !isNaN(FC_01_Accumulated_Values_VolumeValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_01_Accumulated_Values_Volume
+        ) {
+            setExceedThresholdFC_01_Accumulated_Values_Volume(
+                FC_01_Accumulated_Values_VolumeValue >= highValue ||
+                    FC_01_Accumulated_Values_VolumeValue <= lowValue
+            );
+        }
+    }, [
+        FC_01_Accumulated_Values_Volume,
+        FC_01_Accumulated_Values_Volume_High,
+        FC_01_Accumulated_Values_Volume_Low,
+        maintainFC_01_Accumulated_Values_Volume,
+    ]);
 
+    //================================ SVA1 FIQ 1901 ======================================================
 
+    const [
+        FC_01_Accumulated_Values_Uncorrected_Volume,
+        setFC_01_Accumulated_Values_Uncorrected_Volume,
+    ] = useState<string | null>(null);
+    const [
+        FC_01_Accumulated_Values_Uncorrected_Volume_High,
+        setFC_01_Accumulated_Values_Uncorrected_Volume_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_01_Accumulated_Values_Uncorrected_Volume_Low,
+        setFC_01_Accumulated_Values_Uncorrected_Volume_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
+        setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
+        setMaintainFC_01_Accumulated_Values_Uncorrected_Volume,
+    ] = useState<boolean>(false);
 
+    useEffect(() => {
+        const FC_01_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(
+            FC_01_Accumulated_Values_Uncorrected_Volume as any
+        );
+        const highValue =
+            FC_01_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+        const lowValue = FC_01_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
 
+        if (
+            !isNaN(FC_01_Accumulated_Values_Uncorrected_VolumeValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_01_Accumulated_Values_Uncorrected_Volume
+        ) {
+            setExceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume(
+                FC_01_Accumulated_Values_Uncorrected_VolumeValue >= highValue ||
+                    FC_01_Accumulated_Values_Uncorrected_VolumeValue <= lowValue
+            );
+        }
+    }, [
+        FC_01_Accumulated_Values_Uncorrected_Volume,
+        FC_01_Accumulated_Values_Uncorrected_Volume_High,
+        FC_01_Accumulated_Values_Uncorrected_Volume_Low,
+        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
+    ]);
 
-      //================================ GD 1902 ======================================================
+    //================================ SVA1 FIQ 1901 ======================================================
 
+    //================================ GD 1902 ======================================================
 
-      const [FC_02_Current_Values_Flow_Rate, setFC_02_Current_Values_Flow_Rate] = useState<string | null>(null);
-      const [FC_02_Current_Values_Flow_Rate_High, setFC_02_Current_Values_Flow_Rate_High] = useState<number | null>(null);
-      const [FC_02_Current_Values_Flow_Rate_Low, setFC_02_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
-      const [exceedThresholdFC_02_Current_Values_Flow_Rate, setExceedThresholdFC_02_Current_Values_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-      const [maintainFC_02_Current_Values_Flow_Rate, setMaintainFC_02_Current_Values_Flow_Rate] = useState<boolean>(false);
-      
-      
-      useEffect(() => {
-        const FC_02_Current_Values_Flow_RateValue = parseFloat(FC_02_Current_Values_Flow_Rate as any);
+    const [FC_02_Current_Values_Flow_Rate, setFC_02_Current_Values_Flow_Rate] =
+        useState<string | null>(null);
+    const [
+        FC_02_Current_Values_Flow_Rate_High,
+        setFC_02_Current_Values_Flow_Rate_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_02_Current_Values_Flow_Rate_Low,
+        setFC_02_Current_Values_Flow_Rate_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_02_Current_Values_Flow_Rate,
+        setExceedThresholdFC_02_Current_Values_Flow_Rate,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_02_Current_Values_Flow_Rate,
+        setMaintainFC_02_Current_Values_Flow_Rate,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const FC_02_Current_Values_Flow_RateValue = parseFloat(
+            FC_02_Current_Values_Flow_Rate as any
+        );
         const highValue = FC_02_Current_Values_Flow_Rate_High ?? NaN;
         const lowValue = FC_02_Current_Values_Flow_Rate_Low ?? NaN;
-    
-        if (!isNaN(FC_02_Current_Values_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Flow_Rate) {
-            setExceedThresholdFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_RateValue >= highValue || FC_02_Current_Values_Flow_RateValue <= lowValue);
+
+        if (
+            !isNaN(FC_02_Current_Values_Flow_RateValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_02_Current_Values_Flow_Rate
+        ) {
+            setExceedThresholdFC_02_Current_Values_Flow_Rate(
+                FC_02_Current_Values_Flow_RateValue >= highValue ||
+                    FC_02_Current_Values_Flow_RateValue <= lowValue
+            );
         }
-    }, [FC_02_Current_Values_Flow_Rate, FC_02_Current_Values_Flow_Rate_High, FC_02_Current_Values_Flow_Rate_Low, maintainFC_02_Current_Values_Flow_Rate]);
-    
-  
-      //================================ GVF1 FIQ 1901 ======================================================
-    
-      const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
-      const [FC_02_Current_Values_Uncorrected_Flow_Rate_High, setFC_02_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
-      const [FC_02_Current_Values_Uncorrected_Flow_Rate_Low, setFC_02_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
-      const [exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate, setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-      const [maintainFC_02_Current_Values_Uncorrected_Flow_Rate, setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<boolean>(false);
-      
-      
-      useEffect(() => {
-        const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate as any);
-        const highValue = FC_02_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
+    }, [
+        FC_02_Current_Values_Flow_Rate,
+        FC_02_Current_Values_Flow_Rate_High,
+        FC_02_Current_Values_Flow_Rate_Low,
+        maintainFC_02_Current_Values_Flow_Rate,
+    ]);
+
+    //================================ GVF1 FIQ 1901 ======================================================
+
+    const [
+        FC_02_Current_Values_Uncorrected_Flow_Rate,
+        setFC_02_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState<string | null>(null);
+    const [
+        FC_02_Current_Values_Uncorrected_Flow_Rate_High,
+        setFC_02_Current_Values_Uncorrected_Flow_Rate_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_02_Current_Values_Uncorrected_Flow_Rate_Low,
+        setFC_02_Current_Values_Uncorrected_Flow_Rate_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
+        setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+        setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const FC_02_Current_Values_Uncorrected_Flow_RateValue = parseFloat(
+            FC_02_Current_Values_Uncorrected_Flow_Rate as any
+        );
+        const highValue =
+            FC_02_Current_Values_Uncorrected_Flow_Rate_High ?? NaN;
         const lowValue = FC_02_Current_Values_Uncorrected_Flow_Rate_Low ?? NaN;
-    
-        if (!isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) {
-            setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_RateValue >= highValue || FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue);
+
+        if (
+            !isNaN(FC_02_Current_Values_Uncorrected_Flow_RateValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_02_Current_Values_Uncorrected_Flow_Rate
+        ) {
+            setExceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate(
+                FC_02_Current_Values_Uncorrected_Flow_RateValue >= highValue ||
+                    FC_02_Current_Values_Uncorrected_Flow_RateValue <= lowValue
+            );
         }
-    }, [FC_02_Current_Values_Uncorrected_Flow_Rate, FC_02_Current_Values_Uncorrected_Flow_Rate_High, FC_02_Current_Values_Uncorrected_Flow_Rate_Low, maintainFC_02_Current_Values_Uncorrected_Flow_Rate]);
-    
-  
-  
-      //================================ SVA1 FIQ 1901 ======================================================
-    
-      const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<string | null>(null);
-      const [FC_02_Accumulated_Values_Volume_High, setFC_02_Accumulated_Values_Volume_High] = useState<number | null>(null);
-      const [FC_02_Accumulated_Values_Volume_Low, setFC_02_Accumulated_Values_Volume_Low] = useState<number | null>(null);
-      const [exceedThresholdFC_02_Accumulated_Values_Volume, setExceedThresholdFC_02_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-      const [maintainFC_02_Accumulated_Values_Volume, setMaintainFC_02_Accumulated_Values_Volume] = useState<boolean>(false);
-      
-      
-      useEffect(() => {
-        const FC_02_Accumulated_Values_VolumeValue = parseFloat(FC_02_Accumulated_Values_Volume as any);
+    }, [
+        FC_02_Current_Values_Uncorrected_Flow_Rate,
+        FC_02_Current_Values_Uncorrected_Flow_Rate_High,
+        FC_02_Current_Values_Uncorrected_Flow_Rate_Low,
+        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+    ]);
+
+    //================================ SVA1 FIQ 1901 ======================================================
+
+    const [
+        FC_02_Accumulated_Values_Volume,
+        setFC_02_Accumulated_Values_Volume,
+    ] = useState<string | null>(null);
+    const [
+        FC_02_Accumulated_Values_Volume_High,
+        setFC_02_Accumulated_Values_Volume_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_02_Accumulated_Values_Volume_Low,
+        setFC_02_Accumulated_Values_Volume_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_02_Accumulated_Values_Volume,
+        setExceedThresholdFC_02_Accumulated_Values_Volume,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_02_Accumulated_Values_Volume,
+        setMaintainFC_02_Accumulated_Values_Volume,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const FC_02_Accumulated_Values_VolumeValue = parseFloat(
+            FC_02_Accumulated_Values_Volume as any
+        );
         const highValue = FC_02_Accumulated_Values_Volume_High ?? NaN;
         const lowValue = FC_02_Accumulated_Values_Volume_Low ?? NaN;
-    
-        if (!isNaN(FC_02_Accumulated_Values_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Volume) {
-            setExceedThresholdFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_VolumeValue >= highValue || FC_02_Accumulated_Values_VolumeValue <= lowValue);
+
+        if (
+            !isNaN(FC_02_Accumulated_Values_VolumeValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_02_Accumulated_Values_Volume
+        ) {
+            setExceedThresholdFC_02_Accumulated_Values_Volume(
+                FC_02_Accumulated_Values_VolumeValue >= highValue ||
+                    FC_02_Accumulated_Values_VolumeValue <= lowValue
+            );
         }
-    }, [FC_02_Accumulated_Values_Volume, FC_02_Accumulated_Values_Volume_High, FC_02_Accumulated_Values_Volume_Low, maintainFC_02_Accumulated_Values_Volume]);
-    
-  
-  
-      //================================ SVA1 FIQ 1901 ======================================================
-  
-      const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
-      const [FC_02_Accumulated_Values_Uncorrected_Volume_High, setFC_02_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
-      const [FC_02_Accumulated_Values_Uncorrected_Volume_Low, setFC_02_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
-      const [exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume, setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-      const [maintainFC_02_Accumulated_Values_Uncorrected_Volume, setMaintainFC_02_Accumulated_Values_Uncorrected_Volume] = useState<boolean>(false);
-      
-      
-      useEffect(() => {
-        const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume as any);
-        const highValue = FC_02_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
+    }, [
+        FC_02_Accumulated_Values_Volume,
+        FC_02_Accumulated_Values_Volume_High,
+        FC_02_Accumulated_Values_Volume_Low,
+        maintainFC_02_Accumulated_Values_Volume,
+    ]);
+
+    //================================ SVA1 FIQ 1901 ======================================================
+
+    const [
+        FC_02_Accumulated_Values_Uncorrected_Volume,
+        setFC_02_Accumulated_Values_Uncorrected_Volume,
+    ] = useState<string | null>(null);
+    const [
+        FC_02_Accumulated_Values_Uncorrected_Volume_High,
+        setFC_02_Accumulated_Values_Uncorrected_Volume_High,
+    ] = useState<number | null>(null);
+    const [
+        FC_02_Accumulated_Values_Uncorrected_Volume_Low,
+        setFC_02_Accumulated_Values_Uncorrected_Volume_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
+        setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
+    ] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [
+        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
+        setMaintainFC_02_Accumulated_Values_Uncorrected_Volume,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const FC_02_Accumulated_Values_Uncorrected_VolumeValue = parseFloat(
+            FC_02_Accumulated_Values_Uncorrected_Volume as any
+        );
+        const highValue =
+            FC_02_Accumulated_Values_Uncorrected_Volume_High ?? NaN;
         const lowValue = FC_02_Accumulated_Values_Uncorrected_Volume_Low ?? NaN;
-    
-        if (!isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) {
-            setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_VolumeValue >= highValue || FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue);
+
+        if (
+            !isNaN(FC_02_Accumulated_Values_Uncorrected_VolumeValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainFC_02_Accumulated_Values_Uncorrected_Volume
+        ) {
+            setExceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume(
+                FC_02_Accumulated_Values_Uncorrected_VolumeValue >= highValue ||
+                    FC_02_Accumulated_Values_Uncorrected_VolumeValue <= lowValue
+            );
         }
-    }, [FC_02_Accumulated_Values_Uncorrected_Volume, FC_02_Accumulated_Values_Uncorrected_Volume_High, FC_02_Accumulated_Values_Uncorrected_Volume_Low, maintainFC_02_Accumulated_Values_Uncorrected_Volume]);
-    
-  
-  
-      //================================ SVA1 FIQ 1901 ======================================================
+    }, [
+        FC_02_Accumulated_Values_Uncorrected_Volume,
+        FC_02_Accumulated_Values_Uncorrected_Volume_High,
+        FC_02_Accumulated_Values_Uncorrected_Volume_Low,
+        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
+    ]);
+
+    //================================ SVA1 FIQ 1901 ======================================================
     //================================ GVA1 FIQ 1901 ======================================================
 
     const [lineDuty1901, setLineduty1901] = useState<any>();
@@ -606,32 +890,61 @@ export default function GraphicYOSHINO() {
         try {
             const res = await httpApi.get(GetTelemetry_ZOVC);
 
-            const FC_01_Current_Values_Static_Pressure_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Static_Pressure_High");
-            setFC_01_Current_Values_Static_Pressure_High(FC_01_Current_Values_Static_Pressure_High?.value || null);
-            const FC_01_Current_Values_Static_Pressure_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Low");
-            setFC_01_Current_Values_Static_Pressure_Low(FC_01_Current_Values_Static_Pressure_Low?.value || null);
+            const FC_01_Current_Values_Static_Pressure_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_High"
+            );
+            setFC_01_Current_Values_Static_Pressure_High(
+                FC_01_Current_Values_Static_Pressure_High?.value || null
+            );
+            const FC_01_Current_Values_Static_Pressure_Low = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_Low"
+            );
+            setFC_01_Current_Values_Static_Pressure_Low(
+                FC_01_Current_Values_Static_Pressure_Low?.value || null
+            );
             const FC_01_Current_Values_Static_Pressure_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Static_Pressure_Maintain"
             );
-            setMaintainFC_01_Current_Values_Static_Pressure(FC_01_Current_Values_Static_Pressure_Maintain?.value || false);
+            setMaintainFC_01_Current_Values_Static_Pressure(
+                FC_01_Current_Values_Static_Pressure_Maintain?.value || false
+            );
 
             //======================================================================================================
-            
 
-            const FC_02_Current_Values_Static_Pressure_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Static_Pressure_High");
-            setFC_02_Current_Values_Static_Pressure_High(FC_02_Current_Values_Static_Pressure_High?.value || null);
-            const FC_02_Current_Values_Static_Pressure_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Static_Pressure_Low");
-            setFC_02_Current_Values_Static_Pressure_Low(FC_02_Current_Values_Static_Pressure_Low?.value || null);
+            const FC_02_Current_Values_Static_Pressure_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_High"
+            );
+            setFC_02_Current_Values_Static_Pressure_High(
+                FC_02_Current_Values_Static_Pressure_High?.value || null
+            );
+            const FC_02_Current_Values_Static_Pressure_Low = res.data.find(
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_Low"
+            );
+            setFC_02_Current_Values_Static_Pressure_Low(
+                FC_02_Current_Values_Static_Pressure_Low?.value || null
+            );
             const FC_02_Current_Values_Static_Pressure_Maintain = res.data.find(
-                (item: any) => item.key === "FC_02_Current_Values_Static_Pressure_Maintain"
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Static_Pressure_Maintain"
             );
-            setMaintainFC_02_Current_Values_Static_Pressure(FC_02_Current_Values_Static_Pressure_Maintain?.value || false);
+            setMaintainFC_02_Current_Values_Static_Pressure(
+                FC_02_Current_Values_Static_Pressure_Maintain?.value || false
+            );
 
             //======================================================================================================
-         
-            const PT1_High = res.data.find((item: any) => item.key === "PT1_High");
+
+            const PT1_High = res.data.find(
+                (item: any) => item.key === "PT1_High"
+            );
             setPT1_High(PT1_High?.value || null);
-            const PT1_Low = res.data.find((item: any) => item.key === "PT1_Low");
+            const PT1_Low = res.data.find(
+                (item: any) => item.key === "PT1_Low"
+            );
             setPT1_Low(PT1_Low?.value || null);
             const PT1_Maintain = res.data.find(
                 (item: any) => item.key === "PT1_Maintain"
@@ -639,10 +952,14 @@ export default function GraphicYOSHINO() {
             setMaintainPT1(PT1_Maintain?.value || false);
 
             //======================================================================================================
-  
-            const GD1_High = res.data.find((item: any) => item.key === "GD1_High");
+
+            const GD1_High = res.data.find(
+                (item: any) => item.key === "GD1_High"
+            );
             setGD1_High(GD1_High?.value || null);
-            const GD1_Low = res.data.find((item: any) => item.key === "GD1_Low");
+            const GD1_Low = res.data.find(
+                (item: any) => item.key === "GD1_Low"
+            );
             setGD1_Low(GD1_Low?.value || null);
             const GD1_Maintain = res.data.find(
                 (item: any) => item.key === "GD1_Maintain"
@@ -651,9 +968,13 @@ export default function GraphicYOSHINO() {
 
             //======================================================================================================
 
-            const GD2_High = res.data.find((item: any) => item.key === "GD2_High");
+            const GD2_High = res.data.find(
+                (item: any) => item.key === "GD2_High"
+            );
             setGD2_High(GD2_High?.value || null);
-            const GD2_Low = res.data.find((item: any) => item.key === "GD2_Low");
+            const GD2_Low = res.data.find(
+                (item: any) => item.key === "GD2_Low"
+            );
             setGD2_Low(GD2_Low?.value || null);
             const GD2_Maintain = res.data.find(
                 (item: any) => item.key === "GD2_Maintain"
@@ -662,95 +983,221 @@ export default function GraphicYOSHINO() {
 
             //======================================================================================================
 
-
-            
-            const FC_01_Current_Values_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Flow_Rate_High");
-            setFC_01_Current_Values_Flow_Rate_High(FC_01_Current_Values_Flow_Rate_High?.value || null);
-            const FC_01_Current_Values_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Flow_Rate_Low");
-            setFC_01_Current_Values_Flow_Rate_Low(FC_01_Current_Values_Flow_Rate_Low?.value || null);
+            const FC_01_Current_Values_Flow_Rate_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Flow_Rate_High"
+            );
+            setFC_01_Current_Values_Flow_Rate_High(
+                FC_01_Current_Values_Flow_Rate_High?.value || null
+            );
+            const FC_01_Current_Values_Flow_Rate_Low = res.data.find(
+                (item: any) => item.key === "FC_01_Current_Values_Flow_Rate_Low"
+            );
+            setFC_01_Current_Values_Flow_Rate_Low(
+                FC_01_Current_Values_Flow_Rate_Low?.value || null
+            );
             const FC_01_Current_Values_Flow_Rate_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Current_Values_Flow_Rate_Maintain"
+                (item: any) =>
+                    item.key === "FC_01_Current_Values_Flow_Rate_Maintain"
             );
-            setMaintainFC_01_Current_Values_Flow_Rate(FC_01_Current_Values_Flow_Rate_Maintain?.value || false);
+            setMaintainFC_01_Current_Values_Flow_Rate(
+                FC_01_Current_Values_Flow_Rate_Maintain?.value || false
+            );
 
             //======================================================================================================
 
-            const FC_01_Current_Values_Uncorrected_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_High");
-            setFC_01_Current_Values_Uncorrected_Flow_Rate_High(FC_01_Current_Values_Uncorrected_Flow_Rate_High?.value || null);
-            const FC_01_Current_Values_Uncorrected_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_Low");
-            setFC_01_Current_Values_Uncorrected_Flow_Rate_Low(FC_01_Current_Values_Uncorrected_Flow_Rate_Low?.value || null);
-            const FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain"
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_High =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Current_Values_Uncorrected_Flow_Rate_High"
+                );
+            setFC_01_Current_Values_Uncorrected_Flow_Rate_High(
+                FC_01_Current_Values_Uncorrected_Flow_Rate_High?.value || null
             );
-            setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain?.value || false);
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_Low =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Current_Values_Uncorrected_Flow_Rate_Low"
+                );
+            setFC_01_Current_Values_Uncorrected_Flow_Rate_Low(
+                FC_01_Current_Values_Uncorrected_Flow_Rate_Low?.value || null
+            );
+            const FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain"
+                );
+            setMaintainFC_01_Current_Values_Uncorrected_Flow_Rate(
+                FC_01_Current_Values_Uncorrected_Flow_Rate_Maintain?.value ||
+                    false
+            );
 
             //======================================================================================================
-         
-            const FC_01_Accumulated_Values_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Volume_High");
-            setFC_01_Accumulated_Values_Volume_High(FC_01_Accumulated_Values_Volume_High?.value || null);
-            const FC_01_Accumulated_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Volume_Low");
-            setFC_01_Accumulated_Values_Volume_Low(FC_01_Accumulated_Values_Volume_Low?.value || null);
+
+            const FC_01_Accumulated_Values_Volume_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Accumulated_Values_Volume_High"
+            );
+            setFC_01_Accumulated_Values_Volume_High(
+                FC_01_Accumulated_Values_Volume_High?.value || null
+            );
+            const FC_01_Accumulated_Values_Volume_Low = res.data.find(
+                (item: any) =>
+                    item.key === "FC_01_Accumulated_Values_Volume_Low"
+            );
+            setFC_01_Accumulated_Values_Volume_Low(
+                FC_01_Accumulated_Values_Volume_Low?.value || null
+            );
             const FC_01_Accumulated_Values_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Accumulated_Values_Volume_Maintain"
+                (item: any) =>
+                    item.key === "FC_01_Accumulated_Values_Volume_Maintain"
             );
-            setMaintainFC_01_Accumulated_Values_Volume(FC_01_Accumulated_Values_Volume_Maintain?.value || false);
-
-            //======================================================================================================
-        
-            const FC_01_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_High");
-            setFC_01_Accumulated_Values_Uncorrected_Volume_High(FC_01_Accumulated_Values_Uncorrected_Volume_High?.value || null);
-            const FC_01_Accumulated_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_Low");
-            setFC_01_Accumulated_Values_Uncorrected_Volume_Low(FC_01_Accumulated_Values_Uncorrected_Volume_Low?.value || null);
-            const FC_01_Accumulated_Values_Uncorrected_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_01_Accumulated_Values_Uncorrected_Volume_Maintain"
+            setMaintainFC_01_Accumulated_Values_Volume(
+                FC_01_Accumulated_Values_Volume_Maintain?.value || false
             );
-            setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(FC_01_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
 
             //======================================================================================================
 
+            const FC_01_Accumulated_Values_Uncorrected_Volume_High =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Accumulated_Values_Uncorrected_Volume_High"
+                );
+            setFC_01_Accumulated_Values_Uncorrected_Volume_High(
+                FC_01_Accumulated_Values_Uncorrected_Volume_High?.value || null
+            );
+            const FC_01_Accumulated_Values_Uncorrected_Volume_Low =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Accumulated_Values_Uncorrected_Volume_Low"
+                );
+            setFC_01_Accumulated_Values_Uncorrected_Volume_Low(
+                FC_01_Accumulated_Values_Uncorrected_Volume_Low?.value || null
+            );
+            const FC_01_Accumulated_Values_Uncorrected_Volume_Maintain =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_01_Accumulated_Values_Uncorrected_Volume_Maintain"
+                );
+            setMaintainFC_01_Accumulated_Values_Uncorrected_Volume(
+                FC_01_Accumulated_Values_Uncorrected_Volume_Maintain?.value ||
+                    false
+            );
 
-     
-            const FC_02_Current_Values_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Flow_Rate_High");
-            setFC_02_Current_Values_Flow_Rate_High(FC_02_Current_Values_Flow_Rate_High?.value || null);
-            const FC_02_Current_Values_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Flow_Rate_Low");
-            setFC_02_Current_Values_Flow_Rate_Low(FC_02_Current_Values_Flow_Rate_Low?.value || null);
+            //======================================================================================================
+
+            const FC_02_Current_Values_Flow_Rate_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Flow_Rate_High"
+            );
+            setFC_02_Current_Values_Flow_Rate_High(
+                FC_02_Current_Values_Flow_Rate_High?.value || null
+            );
+            const FC_02_Current_Values_Flow_Rate_Low = res.data.find(
+                (item: any) => item.key === "FC_02_Current_Values_Flow_Rate_Low"
+            );
+            setFC_02_Current_Values_Flow_Rate_Low(
+                FC_02_Current_Values_Flow_Rate_Low?.value || null
+            );
             const FC_02_Current_Values_Flow_Rate_Maintain = res.data.find(
-                (item: any) => item.key === "FC_02_Current_Values_Flow_Rate_Maintain"
+                (item: any) =>
+                    item.key === "FC_02_Current_Values_Flow_Rate_Maintain"
             );
-            setMaintainFC_02_Current_Values_Flow_Rate(FC_02_Current_Values_Flow_Rate_Maintain?.value || false);
+            setMaintainFC_02_Current_Values_Flow_Rate(
+                FC_02_Current_Values_Flow_Rate_Maintain?.value || false
+            );
 
             //======================================================================================================
 
-            const FC_02_Current_Values_Uncorrected_Flow_Rate_High = res.data.find((item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_High");
-            setFC_02_Current_Values_Uncorrected_Flow_Rate_High(FC_02_Current_Values_Uncorrected_Flow_Rate_High?.value || null);
-            const FC_02_Current_Values_Uncorrected_Flow_Rate_Low = res.data.find((item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_Low");
-            setFC_02_Current_Values_Uncorrected_Flow_Rate_Low(FC_02_Current_Values_Uncorrected_Flow_Rate_Low?.value || null);
-            const FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain = res.data.find(
-                (item: any) => item.key === "FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain"
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_High =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Current_Values_Uncorrected_Flow_Rate_High"
+                );
+            setFC_02_Current_Values_Uncorrected_Flow_Rate_High(
+                FC_02_Current_Values_Uncorrected_Flow_Rate_High?.value || null
             );
-            setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain?.value || false);
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_Low =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Current_Values_Uncorrected_Flow_Rate_Low"
+                );
+            setFC_02_Current_Values_Uncorrected_Flow_Rate_Low(
+                FC_02_Current_Values_Uncorrected_Flow_Rate_Low?.value || null
+            );
+            const FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain"
+                );
+            setMaintainFC_02_Current_Values_Uncorrected_Flow_Rate(
+                FC_02_Current_Values_Uncorrected_Flow_Rate_Maintain?.value ||
+                    false
+            );
 
             //======================================================================================================
-         
-            const FC_02_Accumulated_Values_Volume_High = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_High");
-            setFC_02_Accumulated_Values_Volume_High(FC_02_Accumulated_Values_Volume_High?.value || null);
-            const FC_02_Accumulated_Values_Volume_Low = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Volume_Low");
-            setFC_02_Accumulated_Values_Volume_Low(FC_02_Accumulated_Values_Volume_Low?.value || null);
+
+            const FC_02_Accumulated_Values_Volume_High = res.data.find(
+                (item: any) =>
+                    item.key === "FC_02_Accumulated_Values_Volume_High"
+            );
+            setFC_02_Accumulated_Values_Volume_High(
+                FC_02_Accumulated_Values_Volume_High?.value || null
+            );
+            const FC_02_Accumulated_Values_Volume_Low = res.data.find(
+                (item: any) =>
+                    item.key === "FC_02_Accumulated_Values_Volume_Low"
+            );
+            setFC_02_Accumulated_Values_Volume_Low(
+                FC_02_Accumulated_Values_Volume_Low?.value || null
+            );
             const FC_02_Accumulated_Values_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_02_Accumulated_Values_Volume_Maintain"
+                (item: any) =>
+                    item.key === "FC_02_Accumulated_Values_Volume_Maintain"
             );
-            setMaintainFC_02_Accumulated_Values_Volume(FC_02_Accumulated_Values_Volume_Maintain?.value || false);
+            setMaintainFC_02_Accumulated_Values_Volume(
+                FC_02_Accumulated_Values_Volume_Maintain?.value || false
+            );
 
             //======================================================================================================
-        
-            const FC_02_Accumulated_Values_Uncorrected_Volume_High = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_High");
-            setFC_02_Accumulated_Values_Uncorrected_Volume_High(FC_02_Accumulated_Values_Uncorrected_Volume_High?.value || null);
-            const FC_02_Accumulated_Values_Uncorrected_Volume_Low = res.data.find((item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_Low");
-            setFC_02_Accumulated_Values_Uncorrected_Volume_Low(FC_02_Accumulated_Values_Uncorrected_Volume_Low?.value || null);
-            const FC_02_Accumulated_Values_Uncorrected_Volume_Maintain = res.data.find(
-                (item: any) => item.key === "FC_02_Accumulated_Values_Uncorrected_Volume_Maintain"
+
+            const FC_02_Accumulated_Values_Uncorrected_Volume_High =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Accumulated_Values_Uncorrected_Volume_High"
+                );
+            setFC_02_Accumulated_Values_Uncorrected_Volume_High(
+                FC_02_Accumulated_Values_Uncorrected_Volume_High?.value || null
             );
-            setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(FC_02_Accumulated_Values_Uncorrected_Volume_Maintain?.value || false);
+            const FC_02_Accumulated_Values_Uncorrected_Volume_Low =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Accumulated_Values_Uncorrected_Volume_Low"
+                );
+            setFC_02_Accumulated_Values_Uncorrected_Volume_Low(
+                FC_02_Accumulated_Values_Uncorrected_Volume_Low?.value || null
+            );
+            const FC_02_Accumulated_Values_Uncorrected_Volume_Maintain =
+                res.data.find(
+                    (item: any) =>
+                        item.key ===
+                        "FC_02_Accumulated_Values_Uncorrected_Volume_Maintain"
+                );
+            setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(
+                FC_02_Accumulated_Values_Uncorrected_Volume_Maintain?.value ||
+                    false
+            );
 
             //======================================================================================================
             const LineDuty1901 = res.data.find(
@@ -809,7 +1256,9 @@ export default function GraphicYOSHINO() {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
                 const roundedFC_01_Current_Values_Flow_Rate =
-                    FC_01_Current_Values_Flow_Rate !== null ? parseFloat(FC_01_Current_Values_Flow_Rate).toFixed(2) : "";
+                    FC_01_Current_Values_Flow_Rate !== null
+                        ? parseFloat(FC_01_Current_Values_Flow_Rate).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -817,8 +1266,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -826,7 +1275,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_01_Current_Values_Flow_Rate && !maintainFC_01_Current_Values_Flow_Rate
+                                        exceedThresholdFC_01_Current_Values_Flow_Rate &&
+                                        !maintainFC_01_Current_Values_Flow_Rate
                                             ? "#ff5656"
                                             : maintainFC_01_Current_Values_Flow_Rate
                                             ? "orange"
@@ -870,7 +1320,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data3") {
                 const roundedFC_01_Current_Values_Uncorrected_Flow_Rate =
-                    FC_01_Current_Values_Uncorrected_Flow_Rate !== null ? parseFloat(FC_01_Current_Values_Uncorrected_Flow_Rate).toFixed(2) : "";
+                    FC_01_Current_Values_Uncorrected_Flow_Rate !== null
+                        ? parseFloat(
+                              FC_01_Current_Values_Uncorrected_Flow_Rate
+                          ).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -878,8 +1332,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -887,7 +1341,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate
+                                        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate &&
+                                        !maintainFC_01_Current_Values_Uncorrected_Flow_Rate
                                             ? "#ff5656"
                                             : maintainFC_01_Current_Values_Uncorrected_Flow_Rate
                                             ? "orange"
@@ -912,7 +1367,9 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedFC_01_Current_Values_Uncorrected_Flow_Rate}
+                                        {
+                                            roundedFC_01_Current_Values_Uncorrected_Flow_Rate
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -931,7 +1388,9 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data2") {
                 const roundedFC_01_Accumulated_Values_Volume =
-                    FC_01_Accumulated_Values_Volume !== null ? parseFloat(FC_01_Accumulated_Values_Volume).toFixed(2) : "";
+                    FC_01_Accumulated_Values_Volume !== null
+                        ? parseFloat(FC_01_Accumulated_Values_Volume).toFixed(2)
+                        : "";
                 return {
                     ...node,
                     data: {
@@ -939,8 +1398,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -948,7 +1407,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_01_Accumulated_Values_Volume && !maintainFC_01_Accumulated_Values_Volume
+                                        exceedThresholdFC_01_Accumulated_Values_Volume &&
+                                        !maintainFC_01_Accumulated_Values_Volume
                                             ? "#ff5656"
                                             : maintainFC_01_Accumulated_Values_Volume
                                             ? "orange"
@@ -992,7 +1452,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data1") {
                 const roundedFC_01_Accumulated_Values_Uncorrected_Volume =
-                    FC_01_Accumulated_Values_Uncorrected_Volume !== null ? parseFloat(FC_01_Accumulated_Values_Uncorrected_Volume).toFixed(2) : "";
+                    FC_01_Accumulated_Values_Uncorrected_Volume !== null
+                        ? parseFloat(
+                              FC_01_Accumulated_Values_Uncorrected_Volume
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1001,8 +1465,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1010,7 +1474,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     background:
-                                        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume && !maintainFC_01_Accumulated_Values_Uncorrected_Volume
+                                        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume &&
+                                        !maintainFC_01_Accumulated_Values_Uncorrected_Volume
                                             ? "#ff5656"
                                             : maintainFC_01_Accumulated_Values_Uncorrected_Volume
                                             ? "orange"
@@ -1036,7 +1501,9 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedFC_01_Accumulated_Values_Uncorrected_Volume}
+                                        {
+                                            roundedFC_01_Accumulated_Values_Uncorrected_Volume
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1055,7 +1522,9 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data5") {
                 const roundedFC_02_Current_Values_Flow_Rate =
-                    FC_02_Current_Values_Flow_Rate !== null ? parseFloat(FC_02_Current_Values_Flow_Rate).toFixed(2) : "";
+                    FC_02_Current_Values_Flow_Rate !== null
+                        ? parseFloat(FC_02_Current_Values_Flow_Rate).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1064,8 +1533,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1073,7 +1542,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_02_Current_Values_Flow_Rate && !maintainFC_02_Current_Values_Flow_Rate
+                                        exceedThresholdFC_02_Current_Values_Flow_Rate &&
+                                        !maintainFC_02_Current_Values_Flow_Rate
                                             ? "#ff5656"
                                             : maintainFC_02_Current_Values_Flow_Rate
                                             ? "orange"
@@ -1117,7 +1587,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data6") {
                 const roundedFC_02_Current_Values_Uncorrected_Flow_Rate =
-                    FC_02_Current_Values_Uncorrected_Flow_Rate !== null ? parseFloat(FC_02_Current_Values_Uncorrected_Flow_Rate).toFixed(2) : "";
+                    FC_02_Current_Values_Uncorrected_Flow_Rate !== null
+                        ? parseFloat(
+                              FC_02_Current_Values_Uncorrected_Flow_Rate
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1126,8 +1600,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1135,7 +1609,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate
+                                        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate &&
+                                        !maintainFC_02_Current_Values_Uncorrected_Flow_Rate
                                             ? "#ff5656"
                                             : maintainFC_02_Current_Values_Uncorrected_Flow_Rate
                                             ? "orange"
@@ -1160,7 +1635,9 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedFC_02_Current_Values_Uncorrected_Flow_Rate}
+                                        {
+                                            roundedFC_02_Current_Values_Uncorrected_Flow_Rate
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1179,7 +1656,9 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data7") {
                 const roundedFC_02_Accumulated_Values_Volume =
-                    FC_02_Accumulated_Values_Volume !== null ? parseFloat(FC_02_Accumulated_Values_Volume).toFixed(2) : "";
+                    FC_02_Accumulated_Values_Volume !== null
+                        ? parseFloat(FC_02_Accumulated_Values_Volume).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1188,8 +1667,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1197,7 +1676,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_02_Accumulated_Values_Volume && !maintainFC_02_Accumulated_Values_Volume
+                                        exceedThresholdFC_02_Accumulated_Values_Volume &&
+                                        !maintainFC_02_Accumulated_Values_Volume
                                             ? "#ff5656"
                                             : maintainFC_02_Accumulated_Values_Volume
                                             ? "orange"
@@ -1241,7 +1721,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "data8") {
                 const roundedFC_02_Accumulated_Values_Uncorrected_Volume =
-                    FC_02_Accumulated_Values_Uncorrected_Volume !== null ? parseFloat(FC_02_Accumulated_Values_Uncorrected_Volume).toFixed(2) : "";
+                    FC_02_Accumulated_Values_Uncorrected_Volume !== null
+                        ? parseFloat(
+                              FC_02_Accumulated_Values_Uncorrected_Volume
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1250,8 +1734,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1259,7 +1743,8 @@ export default function GraphicYOSHINO() {
                                     // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
-                                        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume && !maintainFC_02_Accumulated_Values_Uncorrected_Volume
+                                        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume &&
+                                        !maintainFC_02_Accumulated_Values_Uncorrected_Volume
                                             ? "#ff5656"
                                             : maintainFC_02_Accumulated_Values_Uncorrected_Volume
                                             ? "orange"
@@ -1284,7 +1769,9 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedFC_02_Accumulated_Values_Uncorrected_Volume}
+                                        {
+                                            roundedFC_02_Accumulated_Values_Uncorrected_Volume
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1314,8 +1801,8 @@ export default function GraphicYOSHINO() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -1364,7 +1851,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "Pressure_Trans02") {
                 const roundedFC_01_Current_Values_Static_Pressure =
-                    FC_01_Current_Values_Static_Pressure !== null ? parseFloat(FC_01_Current_Values_Static_Pressure).toFixed(2) : "";
+                    FC_01_Current_Values_Static_Pressure !== null
+                        ? parseFloat(
+                              FC_01_Current_Values_Static_Pressure
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1375,13 +1866,14 @@ export default function GraphicYOSHINO() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdFC_01_Current_Values_Static_Pressure && !maintainFC_01_Current_Values_Static_Pressure
+                                        exceedThresholdFC_01_Current_Values_Static_Pressure &&
+                                        !maintainFC_01_Current_Values_Static_Pressure
                                             ? "#ff5656"
                                             : maintainFC_01_Current_Values_Static_Pressure
                                             ? "orange"
@@ -1407,7 +1899,9 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {/* {roundedFC_01_Current_Values_Static_Pressure} */}
-                                        {roundedFC_01_Current_Values_Static_Pressure}
+                                        {
+                                            roundedFC_01_Current_Values_Static_Pressure
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1426,7 +1920,11 @@ export default function GraphicYOSHINO() {
             }
             if (node.id === "Pressure_Trans03") {
                 const roundedFC_02_Current_Values_Static_Pressure =
-                    FC_02_Current_Values_Static_Pressure !== null ? parseFloat(FC_02_Current_Values_Static_Pressure).toFixed(2) : "";
+                    FC_02_Current_Values_Static_Pressure !== null
+                        ? parseFloat(
+                              FC_02_Current_Values_Static_Pressure
+                          ).toFixed(2)
+                        : "";
 
                 return {
                     ...node,
@@ -1437,13 +1935,14 @@ export default function GraphicYOSHINO() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 30,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                    exceedThresholdFC_02_Current_Values_Static_Pressure && !maintainFC_02_Current_Values_Static_Pressure
+                                        exceedThresholdFC_02_Current_Values_Static_Pressure &&
+                                        !maintainFC_02_Current_Values_Static_Pressure
                                             ? "#ff5656"
                                             : maintainFC_02_Current_Values_Static_Pressure
                                             ? "orange"
@@ -1469,7 +1968,9 @@ export default function GraphicYOSHINO() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedFC_02_Current_Values_Static_Pressure}
+                                        {
+                                            roundedFC_02_Current_Values_Static_Pressure
+                                        }
                                     </p>
                                 </div>
                                 <p
@@ -1509,7 +2010,7 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        Gateway :{" "}
+                                        Gateway:{" "}
                                     </p>
                                     <p
                                         style={{
@@ -1518,7 +2019,7 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        FC :{" "}
+                                        FC:{" "}
                                     </p>
 
                                     <p
@@ -1528,7 +2029,7 @@ export default function GraphicYOSHINO() {
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        PLC:{" "}
                                     </p>
                                 </div>
 
@@ -1596,26 +2097,6 @@ export default function GraphicYOSHINO() {
                                 <div>
                                     <p
                                         style={{
-                                            color: background,
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        null
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {FC_Conn_STTValue}
-                                    </p>
-                                    <p
-                                        style={{
                                             color: "white",
 
                                             fontSize: 15,
@@ -1624,6 +2105,22 @@ export default function GraphicYOSHINO() {
                                     >
                                         {Conn_STTValue}
                                     </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    ></p>
+                                    <p
+                                        style={{
+                                            color: "white",
+
+                                            fontSize: 15,
+                                            marginLeft: 15,
+                                        }}
+                                    ></p>
                                 </div>
                             </div>
                         ),
@@ -1766,8 +2263,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 27,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -1800,8 +2297,8 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: 500,
+                                    fontSize: 27,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
@@ -1831,213 +2328,217 @@ export default function GraphicYOSHINO() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsYOSHINO");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-    const initialPositions = {
-        AlarmCenter: { x: -141.93537908754035, y: 551.5742065897153 },
-        ArrowRight: { x: 503.1381419284244, y: 1023.694783335719 },
-        ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
-        BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
-        BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
-        BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
-        BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
-        BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
-        BallValue06: { x: 68.4817333577081, y: 1129.366264933931 },
-        BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
-        BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
-        BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
-        BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
-        BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
-        BallValueCenter_Check: {
-            x: 90.96636981528951,
-            y: 1084.2937921267353,
-        },
-        BallValueCenter_None: {
-            x: -474.0480962199408,
-            y: 1047.4658048132944,
-        },
-        BallValueCenter_None2: {
-            x: -458.43233108676895,
-            y: 1047.9161594286932,
-        },
-        BallValueFirst: { x: 419.65262421132076, y: 1009.5430441067174 },
-        BallValueLast: { x: -1236.4348814622088, y: 1015.5065165529766 },
-        BallValuePSV: { x: 290.22148707331525, y: 959.6157106130481 },
-        BallValuePSVNone: { x: 307.79818356393537, y: 974.3599694543407 },
-        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-        FIQ_1901: { x: -600.2178332288872, y: 530.5500772634006 },
-        FIQ_1902: { x: -600.782593545606, y: 1307.348642657379 },
-        FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
-        FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
-        FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
-        FIQ_none22: { x: -461.411272356637, y: 1246.8432149457044 },
-        Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-        Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-        GD1: { x: -721.106774380396, y: 1036.124815356864 },
-        GD1_Name1901: { x: -750.5717919879045, y: 963.6033250363372 },
-        GD1_Value1901: { x: -750.6929582767964, y: 998.3450746708818 },
-        GD2: { x: -108.63790203727399, y: 1034.2608683363853 },
-        GD2_Name1902: { x: -138.3576747080346, y: 962.2555967945655 },
-        GD2_Value1902: { x: -138.105199084697, y: 996.9067838824453 },
-        GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
-        GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
-        GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
-        GD_none1: { x: -695.6714460801703, y: 1055.524751466512 },
-        GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
-        GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
-        HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-        Header: { x: -1151.6437416275705, y: 451.3479861495938 },
-        Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
-        Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
-        LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
-        PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
-        PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
-        PCV_NUM01: { x: -200.90249819080248, y: 779.1363564017703 },
-        PCV_NUM02: { x: -202.05990690632876, y: 1214.5509375649663 },
-        PCV_ballVavle_Small1: {
-            x: -9.97812688216436,
-            y: 890.3528829879407,
-        },
-        PCV_ballVavle_Small1_none1: {
-            x: -85.98048131286686,
-            y: 906.7535606409883,
-        },
-        PCV_ballVavle_Small1_none2: {
-            x: -87.01319099046559,
-            y: 1140.2927546567473,
-        },
-        PCV_ballVavle_Small2: {
-            x: -10.924423457684213,
-            y: 1121.8809236143888,
-        },
-        PCV_ballVavle_Small2_none1: {
-            x: -3.980775175783833,
-            y: 937.8135634050248,
-        },
-        PCV_ballVavle_Small2_none2: {
-            x: -4.242106929766209,
-            y: 1168.0979210360842,
-        },
-        PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
-        PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
-        PSV01: { x: 164.5653138749226, y: 709.1940849015447 },
-        PSV_01: { x: 286.01399102294744, y: 901.1847523730952 },
-        PSV_02: { x: 268.17221043298656, y: 881.9653957553064 },
-        PSV_03: { x: 262.0916184180753, y: 802.6731232227132 },
-        PSV_None01: { x: 436.98718383080245, y: 1040.7984512500652 },
-        PSV_None02: { x: 308.4148444470081, y: 926.8475775498915 },
-        PSV_None03: { x: 286.04347842295704, y: 903.492198579528 },
-        PSV_None04: { x: 284.45405157984317, y: 822.562379864356 },
-        PT1: { x: 210.29089216580826, y: 944.8215389633342 },
-        PT2: { x: -708.258294622871, y: 1154.2084571677146 },
-        PT3: { x: -714.6813595253996, y: 749.7451241622731 },
-        PT_col1: { x: 243.09758907436128, y: 1006.995256464112 },
-        PT_col2: { x: -682.0454691367402, y: 812.7156614482261 },
-        PT_col3: { x: -676.1744823539359, y: 1217.1938517905614 },
-        PT_none1: { x: 246.97093596247453, y: 1035.3795085307177 },
-        PT_none2: { x: -681.8592643393351, y: 782.4202415551159 },
-        PT_none3: { x: -675.213304101358, y: 1184.4279572443495 },
-        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-        Pressure_Trans01: {
-            x: 123.01439682372097,
-            y: 1214.0304333064828,
-        },
-        Pressure_Trans02: {
-            x: -1019.4423849427775,
-            y: 706.6585420699575,
-        },
-        Pressure_Trans03: {
-            x: -1022.6221979715284,
-            y: 1306.0599379762566,
-        },
-        SDV: { x: -1127.2804525595525, y: 948.8166088808405 },
-        SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
-        SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
-        SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-        SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
-        T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
-        T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-        Tank: { x: -952.0719666857922, y: 984.2988432580569 },
-        Tank_Ball: { x: -918.0480270305792, y: 1165.3460365617266 },
-        Tank_None: { x: -929.420575058274, y: 1045.859003360467 },
-        Temperature_Trans01: {
-            x: -607.828356494313,
-            y: 562.8487535527242,
-        },
-        Temperature_Trans02: {
-            x: -796.1166124474211,
-            y: 1445.5258186779024,
-        },
-        VavleWay: { x: -548.7343955645046, y: 1023.9896019770438 },
-        animation_line7: { x: -726.8677999585877, y: 845.0411827415849 },
-        animation_line8: { x: -302.1278181476729, y: 845.0900138040361 },
-        animation_line9: { x: -735.8615775891575, y: 1250.0032163426715 },
-        animation_line10: {
-            x: -302.52565055103537,
-            y: 1250.145137738511,
-        },
-        animation_line11: {
-            x: -379.70039074752606,
-            y: 845.4885740100881,
-        },
-        animation_line12: {
-            x: -456.7744720087678,
-            y: 1047.6913485484115,
-        },
-        animation_line13: {
-            x: -471.36187766507726,
-            y: 1047.0994790430639,
-        },
-        animation_line14: {
-            x: -601.6773380252566,
-            y: 1249.8269450159223,
-        },
-        animation_line15: {
-            x: -300.41401361805697,
-            y: 1249.8955661985747,
-        },
-        borderWhite: { x: -1267.4241384555676, y: 447.0015279974359 },
-        data1: { x: -600.2396652303086, y: 733.0298552462513 },
-        data2: { x: -600.6538263836953, y: 682.3968450603423 },
-        data3: { x: -600.4792235982375, y: 631.8178888851007 },
-        data4: { x: -600.1016616532435, y: 580.9222883481272 },
-        data5: { x: -600.9941090494707, y: 1357.5928722234303 },
-        data6: { x: -600.8317496942007, y: 1408.2027063708313 },
-        data7: { x: -600.8761635213684, y: 1458.4550015900893 },
-        data8: { x: -600.4659556614379, y: 1508.8491719032568 },
-        line1: { x: -1219.4244277428284, y: 1046.4109300929706 },
-        line2: { x: -759.1307313177314, y: 1046.097424130381 },
-        line3: { x: -743.0134159304, y: 844.6163804041859 },
-        line4: { x: -743.9949690251686, y: 1249.172245093845 },
-        line5: { x: -300.65784806763253, y: 844.3342440262651 },
-        line6: { x: -300.98065704991916, y: 1249.1529639630187 },
-        line7: { x: -241.6382268189932, y: 1041.7359796478943 },
-        line8: { x: -178.3476951217882, y: 930.3833450683701 },
-        line9: { x: -178.37038145875272, y: 1161.2417569105805 },
-        line10: { x: 86.69745659087829, y: 930.5099856332267 },
-        line11: { x: 86.19431979613125, y: 1161.0153295862324 },
-        line12: { x: 116.83816603164496, y: 1040.345253330986 },
-        line13: { x: 437.3312960971492, y: 1041.4713896720348 },
-        lineBall_13_1: { x: 519.8312960971493, y: 1041.4713896720348 },
-        overlay_SmallVavle1: {
-            x: -593.2918361488164,
-            y: 1011.397327575481,
-        },
-        overlay_SmallVavle2: {
-            x: -1263.7593947324417,
-            y: 1290.7025144885476,
-        },
-        overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-        overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-        timeUpdate3: { x: -1243.9518053811212, y: 516.6560931085854 },
-    };
+              const initialPositions = {
+              AlarmCenter: { x: 482.05200728443185, y: 413.3377226840123 },
+              ArrowRight: { x: 600.6812903546922, y: 1023.2137288625802 },
+              ArrowRight1: { x: -1309.5952585721552, y: 1028.6160429390827 },
+              BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
+              BallValue02: { x: -930.1995649132355, y: 1134.349598926105 },
+              BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
+              BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
+              BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
+              BallValue06: { x: 68.14677001999206, y: 1130.2445342820436 },
+              BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
+              BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
+              BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
+              BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
+              BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
+              BallValueCenter_Check: {
+                  x: 90.96636981528951,
+                  y: 1084.2937921267353,
+              },
+              BallValueCenter_None: {
+                  x: -474.0480962199408,
+                  y: 1047.4658048132944,
+              },
+              BallValueCenter_None2: {
+                  x: -458.43233108676895,
+                  y: 1047.9161594286932,
+              },
+              BallValueFirst: { x: 540.6382414025647, y: 1009.8554479041943 },
+              BallValueLast: { x: -1235.1015481288755, y: 1014.1731832196431 },
+              BallValuePSV: { x: 365.7214870733153, y: 969.1157106130481 },
+              BallValuePSVNone: { x: 384.29818356393537, y: 983.3599694543407 },
+              BallValueSDV_2: { x: 460.0534879934596, y: 1126.0467878081538 },
+              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+              FIQ_1901: { x: -650.6050171712068, y: 419.4180175567138 },
+              FIQ_1902: { x: -650.7978554063068, y: 1302.7206372374262 },
+              FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
+              FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
+              FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
+              FIQ_none22: { x: -461.411272356637, y: 1246.8432149457044 },
+              Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
+              Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
+              GD1: { x: -721.106774380396, y: 1036.124815356864 },
+              GD1_Name1901: { x: -750.5717919879045, y: 963.6033250363372 },
+              GD1_Value1901: { x: -750.6929582767964, y: 998.3450746708818 },
+              GD2: { x: -108.63790203727399, y: 1034.2608683363853 },
+              GD2_Name1902: { x: -138.3576747080346, y: 962.2555967945655 },
+              GD2_Value1902: { x: -138.105199084697, y: 996.9067838824453 },
+              GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
+              GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
+              GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
+              GD_none1: { x: -695.6714460801703, y: 1055.524751466512 },
+              GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
+              GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
+              HELP: { x: 750.7851455025582, y: 336.66019515746984 },
+              Header: { x: -1200.522229109229, y: 412.1166791425992 },
+              Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
+              Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
+              LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
+              PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
+              PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
+              PCV_NUM01: { x: -170.86428983603884, y: 814.1809328156613 },
+              PCV_NUM02: { x: -182.4241890018547, y: 1192.3540390642565 },
+              PCV_ballVavle_Small1: {
+                  x: -9.97812688216436,
+                  y: 890.3528829879407,
+              },
+              PCV_ballVavle_Small1_none1: {
+                  x: -85.98048131286686,
+                  y: 906.7535606409883,
+              },
+              PCV_ballVavle_Small1_none2: {
+                  x: -87.01319099046559,
+                  y: 1140.2927546567473,
+              },
+              PCV_ballVavle_Small2: {
+                  x: -10.924423457684213,
+                  y: 1121.8809236143888,
+              },
+              PCV_ballVavle_Small2_none1: {
+                  x: -3.980775175783833,
+                  y: 937.8135634050248,
+              },
+              PCV_ballVavle_Small2_none2: {
+                  x: -4.242106929766209,
+                  y: 1168.0979210360842,
+              },
+              PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
+              PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
+              PSV01: { x: 375.16283692916215, y: 850.6784784974753 },
+              PSV_01: { x: 363.01399102294744, y: 918.1847523730952 },
+              PSV_02: { x: 343.50657410430927, y: 898.8234351782597 },
+              PSV_03: { x: 336.37235462546346, y: 853.2472414915732 },
+              PSV_None01: { x: 443.9871838308024, y: 1041.2984512500652 },
+              PSV_None02: { x: 384.4148444470081, y: 944.3475775498915 },
+              PSV_None03: { x: 362.95828329018167, y: 922.9843066623179 },
+              PSV_None04: { x: 359.78841525116593, y: 873.6633118651833 },
+              PT1: { x: 212.46666801628896, y: 967.0006757895978 },
+              PT2: { x: -714.758294622871, y: 1169.7084571677146 },
+              PT3: { x: -724.0493263648187, y: 765.418717530157 },
+              PT_col1: { x: 244.93092240769465, y: 1029.6619231307786 },
+              PT_col2: { x: -691.4134359761592, y: 827.2156614482261 },
+              PT_col3: { x: -682.6744823539359, y: 1232.1938517905614 },
+              PT_none1: { x: 244.47093596247453, y: 1035.3795085307177 },
+              PT_none2: { x: -691.2272311787543, y: 799.8737796553648 },
+              PT_none3: { x: -681.713304101358, y: 1200.4279572443495 },
+              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+              Pressure_Trans01: { x: 89.44115443547344, y: 744.1939817620072 },
+              Pressure_Trans02: {
+                  x: -1062.2957790075757,
+                  y: 715.1286867309525,
+              },
+              Pressure_Trans03: {
+                  x: -1063.1765921652548,
+                  y: 1304.9210038322592,
+              },
+              SDV: { x: -1130.2804525595525, y: 949.2231976259577 },
+
+              SDV2: { x: 428.80808378008487, y: 947.7631672170489 },
+              SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
+              SDV_Ball2: { x: 476.86464803916624, y: 1155.8236963022298 },
+              SDV_IMG: { x: -1105.7858651854403, y: 995.2834321094119 },
+              SDV_IMG2: { x: 452.64818322228166, y: 990.890204545138 },
+              SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+              SDV_Name_none2: { x: -535.6461839977737, y: 897.8410000476873 },
+              SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
+              SDV_None2: { x: 479.4466067147644, y: 1040.4900272412854 },
+              T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
+              T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
+              Tank: { x: -948.2826352307409, y: 978.1950517663572 },
+              Tank_Ball: { x: -912.3215564493197, y: 1165.3460365617266 },
+              Tank_None: { x: -921.0872417249408, y: 1047.5256700271339 },
+              Temperature_Trans01: {
+                  x: -607.828356494313,
+                  y: 562.8487535527242,
+              },
+              Temperature_Trans02: {
+                  x: -796.1166124474211,
+                  y: 1445.5258186779024,
+              },
+              VavleWay: { x: -548.7343955645046, y: 1023.9896019770438 },
+              animation_line7: { x: -726.8677999585877, y: 845.0411827415849 },
+              animation_line8: { x: -302.1278181476729, y: 845.0900138040361 },
+              animation_line9: { x: -735.8615775891575, y: 1250.0032163426715 },
+              animation_line10: {
+                  x: -302.52565055103537,
+                  y: 1250.145137738511,
+              },
+              animation_line11: {
+                  x: -379.70039074752606,
+                  y: 845.4885740100881,
+              },
+              animation_line12: {
+                  x: -456.7744720087678,
+                  y: 1047.6913485484115,
+              },
+              animation_line13: {
+                  x: -471.36187766507726,
+                  y: 1047.0994790430639,
+              },
+              animation_line14: {
+                  x: -601.6773380252566,
+                  y: 1249.8269450159223,
+              },
+              animation_line15: {
+                  x: -300.41401361805697,
+                  y: 1249.8955661985747,
+              },
+              borderWhite: { x: -1297.214163674923, y: 409.37223471887046 },
+              data1: { x: -651.6400825086595, y: 713.9244953651255 },
+              data2: { x: -651.9488814472836, y: 632.5798654521193 },
+              data3: { x: -651.6999350711712, y: 551.1437463452924 },
+              data4: { x: -651.1845372665591, y: 470.1543746383694 },
+              data5: { x: -651.0957995367963, y: 1353.5548802685278 },
+              data6: { x: -651.0202138003872, y: 1434.493187346574 },
+              data7: { x: -650.5805679457492, y: 1514.910450348262 },
+              data8: { x: -650.0546506070804, y: 1595.5292310859375 },
+              line1: { x: -1217.4244277428284, y: 1046.0775967596373 },
+              line2: { x: -759.1307313177314, y: 1046.097424130381 },
+              line3: { x: -743.0134159304, y: 844.6163804041859 },
+              line4: { x: -743.9949690251686, y: 1249.172245093845 },
+              line5: { x: -300.65784806763253, y: 844.3342440262651 },
+              line6: { x: -300.98065704991916, y: 1249.1529639630187 },
+              line7: { x: -241.6382268189932, y: 1041.7359796478943 },
+              line8: { x: -178.3476951217882, y: 930.3833450683701 },
+              line9: { x: -178.37038145875272, y: 1161.2417569105805 },
+              line10: { x: 86.69745659087829, y: 930.5099856332267 },
+              line11: { x: 86.19431979613125, y: 1161.0153295862324 },
+              line12: { x: 116.83816603164496, y: 1040.345253330986 },
+              line13: { x: 557.9496069421656, y: 1041.1289059139096 },
+              lineBall_13_1: { x: 615.3267333790442, y: 1041.1289059139096 },
+              overlay_SmallVavle1: {
+                  x: -593.2918361488164,
+                  y: 1011.397327575481,
+              },
+              overlay_SmallVavle2: {
+                  x: -1263.7593947324417,
+                  y: 1290.7025144885476,
+              },
+              overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
+              overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
+              timeUpdate3: { x: -1276.0365639809172, y: 474.3014149576477 },
+          };
     const [positions, setPositions] = useState(initialPositions);
 
-    const lineColor = "#ffaa00";
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -2067,7 +2568,8 @@ export default function GraphicYOSHINO() {
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke:
+                    isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2076,7 +2578,8 @@ export default function GraphicYOSHINO() {
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke:
+                    isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -2085,7 +2588,7 @@ export default function GraphicYOSHINO() {
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2557,7 +3060,8 @@ export default function GraphicYOSHINO() {
             zIndex: 99999,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 45,
@@ -3130,9 +3634,9 @@ export default function GraphicYOSHINO() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3152,10 +3656,10 @@ export default function GraphicYOSHINO() {
             sourcePosition: Position.Right,
             targetPosition: Position.Top,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
 
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3201,11 +3705,7 @@ export default function GraphicYOSHINO() {
                             fontWeight: 500,
                         }}
                         onClick={confirmLineDuty}
-                    >
-                        {/* FIQ-1901
-                        {lineDuty1901 && <span>1901</span>} */}
-                        Not used
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.FIQ_1901,
@@ -3213,7 +3713,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
+                width: 400,
                 height: 50,
             },
             targetPosition: Position.Bottom,
@@ -3228,10 +3728,7 @@ export default function GraphicYOSHINO() {
                             fontWeight: 500,
                         }}
                         onClick={confirmLineDuty}
-                    >
-                        FC-1902
-                        {lineDuty1902 && <span>1902</span>}
-                    </div>
+                    ></div>
                 ),
             },
             position: positions.FIQ_1902,
@@ -3239,7 +3736,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: "#ffffaa",
                 border: "1px solid white",
-                width: 300,
+                width: 400,
                 height: 50,
             },
             targetPosition: Position.Top,
@@ -3450,8 +3947,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3475,8 +3971,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3501,8 +3996,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3527,8 +4021,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Bottom,
         },
@@ -3554,8 +4047,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3580,8 +4072,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Left,
         },
@@ -3606,8 +4097,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3632,8 +4122,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: borderBox,
                 border: "1px solid white",
-                width: 300,
-                height: 50,
+                width: 400,
             },
             targetPosition: Position.Top,
         },
@@ -3780,9 +4269,9 @@ export default function GraphicYOSHINO() {
             sourcePosition: Position.Right,
             targetPosition: Position.Bottom,
             style: {
-                border: background,
+                border: "none",
                 width: 260,
-                background: borderBox,
+                background: "none",
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
@@ -3807,12 +4296,12 @@ export default function GraphicYOSHINO() {
             position: positions.Pressure_Trans01,
 
             style: {
-                border: background,
-                width: 260,
+                border: "none",
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
         },
         {
             id: "Pressure_Trans02",
@@ -3830,8 +4319,8 @@ export default function GraphicYOSHINO() {
             position: positions.Pressure_Trans02,
 
             style: {
-                border: background,
-                width: 260,
+                border: "none",
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3855,8 +4344,8 @@ export default function GraphicYOSHINO() {
             position: positions.Pressure_Trans03,
 
             style: {
-                border: background,
-                width: 260,
+                border: "none",
+                width: 330,
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
@@ -3927,7 +4416,7 @@ export default function GraphicYOSHINO() {
             targetPosition: Position.Right,
             style: {
                 border: "none",
-                background: 'none',
+                background: "none",
                 width: 10,
                 height: 1,
             },
@@ -3980,7 +4469,7 @@ export default function GraphicYOSHINO() {
                 border: line,
                 background: line,
                 width: 0,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -3999,7 +4488,7 @@ export default function GraphicYOSHINO() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -4018,7 +4507,7 @@ export default function GraphicYOSHINO() {
                 border: line,
                 background: line,
                 width: 10,
-                height: 40,
+                height: 25,
 
                 borderRadius: "none",
             },
@@ -4316,7 +4805,8 @@ export default function GraphicYOSHINO() {
             position: positions.GD1_Name1901,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -4342,7 +4832,8 @@ export default function GraphicYOSHINO() {
             position: positions.GD2_Name1902,
 
             style: {
-                background: "yellow",
+                color: "white",
+                background: "green",
                 border: "1px solid white",
                 width: 130,
                 height: 35,
@@ -5350,18 +5841,12 @@ export default function GraphicYOSHINO() {
         setEditingEnabled(!editingEnabled);
     };
     // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    //     localStorage.setItem("positionsYOSHINO", JSON.stringify(positions));
     // }, [positions]);
 
     return (
         <>
-            {/* <audio ref={audioRef}>
-                <source
-                    src="/audios/mixkit-police-siren-us-1643-_1_.mp3"
-                    type="audio/mpeg"
-                />
-            </audio>
-            <Button onClick={toggleEditing}>
+            {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
 
@@ -5429,11 +5914,9 @@ export default function GraphicYOSHINO() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
-                    <Controls style={{ position: "absolute", top: 0 }} />
-
                     <Controls />
                 </ReactFlow>
             </div>
