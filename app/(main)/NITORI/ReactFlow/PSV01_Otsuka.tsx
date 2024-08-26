@@ -167,9 +167,9 @@ export default function PSV01_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PSV-1301 : </p>
-                <p style={{ marginLeft: 20, color: colorData }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+                <p style={{color: 'black'}}>PSV-1301 : </p>
+                <p style={{ marginLeft: 20,color: 'black'}}> {upData} </p>
+                <p style={{ marginLeft: 10,color: 'black' }}>BarG</p>
             </div>
 
             {/* <OverlayPanel ref={op}>

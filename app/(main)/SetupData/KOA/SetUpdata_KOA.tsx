@@ -4821,7 +4821,6 @@ const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ?
 const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null
 
         const dataFC01 =  [
-
           {
             
             mainCategory: mainCategoryFC.FC01 ,
