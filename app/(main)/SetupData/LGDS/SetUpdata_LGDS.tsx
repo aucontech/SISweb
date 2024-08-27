@@ -51,7 +51,8 @@ export default function SetUpdata_LGDS() {
     const [PSV_01,setPSV_01] = useState<any>()
     const [inputPSV_01, setInputPSV_01] = useState<any>();
 
-
+    const [PSV_02,setPSV_02] = useState<any>()
+    const [inputPSV_02, setInputPSV_02] = useState<any>();
 
     const Authorization = localStorage.getItem('user');
     const userData = Authorization ? JSON.parse(Authorization) : '';
@@ -129,6 +130,12 @@ export default function SetUpdata_LGDS() {
                                 type: "ATTRIBUTE",
                                 key: "PSV_01",
                             },
+
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_02",
+                            },
+                           
                            
                         ],
                     },
@@ -182,6 +189,11 @@ export default function SetUpdata_LGDS() {
                                 type: "ATTRIBUTE",
                                 key: "PSV_01",
                             },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_02",
+                            },
+                           
                            
                         ],
                     },
@@ -368,6 +380,21 @@ export default function SetUpdata_LGDS() {
                         dataReceived.update[0].latest.ATTRIBUTE.PSV_01?.value;
                     setPSV_01(updatedData);
                 }
+
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_02?.value;
+                    setPSV_02(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_02?.value;
+                    setPSV_02(updatedData);
+                }
+
 
                 fetchData()
             };
@@ -3743,12 +3770,15 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
                     PCV_01: inputPCV_01,
                     PCV_02: inputPCV_02,
                     PSV_01: inputPSV_01,
+                    PSV_02: inputPSV_02,
+
                 }
             );
-
+            setPSV_02(inputPSV_02)
             setPSV_01(inputPSV_01)
             setPCV_02(inputPCV_02)
             setPCV_01(inputPCV_01)
+            
      
             setGetWayPhoneOTSUKA(inputGetwayPhone);
             setFC_Conn_STT_High(inputValueFC_Conn_STT);
@@ -3929,6 +3959,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputPCV_01(PCV_01)
         setInputPCV_02(PCV_02)
         setInputPSV_01(PSV_01)
+        setInputPSV_02(PSV_02)
 
 
         setInputValueFC_Conn_STT(FC_Conn_STT_High); 
@@ -4178,7 +4209,9 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            getWayPhoneOTSUKA,
            PCV_01,
            PCV_02,
-           PSV_01
+           PSV_01,
+           PSV_02
+
 
         ]);
 
@@ -5500,6 +5533,11 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         const newValue : any = event.target.value;
         setInputPSV_01(newValue);
     };
+
+    const handleInputPSV_02 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue : any = event.target.value;
+        setInputPSV_02(newValue);
+    };
     const configurations = [
 
         {
@@ -5548,9 +5586,31 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 />
             ),
         },
-
         {
             Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety}  (PSV-1001) (BarG)</span>,
+
+            Value: (
+                <InputText disabled={AuthInputHighLow}
+                    style={combineCssAttribute.PCV}
+                    step="0.1"
+                    type="Name"
+                    value={inputPSV_02}
+                    onChange={handleInputPSV_02}
+                    inputMode="decimal"
+                />
+            ),
+
+            Update: (
+                <Button
+                    className="buttonUpdateSetData " style={{ marginTop: 5 }}
+                    label="Update"
+                     disabled={AuthUpdatePCV}
+                    onClick={confirmUpData}
+                />
+            ),
+        },
+        {
+            Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety}  (PSV-1002) (BarG)</span>,
 
             Value: (
                 <InputText disabled={AuthInputHighLow}
@@ -5572,6 +5632,9 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
                 />
             ),
         },
+
+
+   
        
         {
             Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
