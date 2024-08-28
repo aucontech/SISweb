@@ -25,6 +25,7 @@ import GraphicIGUACU from "../IGUACU/GraphicIGUACU/graphicIGUACU";
 import Graphic_SNG_BINHDUONG from "../SNG/SNG_BINHDUONG/Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG";
 import Graphic_SNG_HUNGYEN from "../SNG/SNG_HUNGYEN/Graphic_SNG_HUNGYEN/Graphic_SNG_HUNGYEN";
 import TestGraphicSogec from "./TestGraphicSogec";
+import Graphic_SNG_BD from "../SNG/SNG_BD/Graphic_SNG_HUNGYEN/Graphic_SNG_BD";
 
 export default function GraphicSogec() {
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -204,7 +205,7 @@ export default function GraphicSogec() {
                                 label: " SNG BINH DUONG",
                                 command: () =>
                                     SNG_Click(
-                                        <Graphic_SNG_BINHDUONG />,
+                                        <Graphic_SNG_BD />,
                                         " SNG BINH DUONG"
                                     ),
                             },
@@ -291,7 +292,7 @@ export default function GraphicSogec() {
                     className=""
                     style={{
                         position: "absolute",
-                        top: "105px",
+                        top: "100px",
                         right: "40px",
                         cursor: "pointer",
                         width: 40,
@@ -322,6 +323,7 @@ export default function GraphicSogec() {
                     ></button>
                 )}
             </div>
+
         </>
     );
 }

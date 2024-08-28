@@ -1,5 +1,7 @@
 .layout-topbar {
-    margin-bottom: 2rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,6 +10,22 @@
     top: 0;
     z-index: 99;
     background: var(--surface-ground); // trang thêm
+
+    .p-megamenu {
+        padding: 0.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        background: var(--surface-ground); // trang thêm
+    
+    
+    }
 
     .topbar-start {
         display: flex;
@@ -46,6 +64,7 @@
         margin: 0;
         padding: 0;
         list-style: none;
+        
 
         li {
             &.topbar-profile {

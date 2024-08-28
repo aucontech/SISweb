@@ -2042,15 +2042,7 @@ export default function GraphicLGDS() {
                                         FC{" "}
                                     </p>
 
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        PLC{" "}
-                                    </p>
+                               
                                 </div>
 
                                 <div style={{ marginLeft: 5 }}>
@@ -2073,15 +2065,6 @@ export default function GraphicLGDS() {
                                         :
                                     </p>
 
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        :
-                                    </p>
                                 </div>
 
                                 <div style={{}}>
@@ -2123,26 +2106,6 @@ export default function GraphicLGDS() {
                                             </span>
                                         )}
                                     </p>
-
-                                    <p style={{ marginLeft: 5 }}>
-                                        {Conn_STT === "1" ? (
-                                            <span
-                                                style={{
-                                                    color: "#25d125",
-                                                }}
-                                            >
-                                                Connected
-                                            </span>
-                                        ) : (
-                                            <span
-                                                style={{
-                                                    color: "#ff5656",
-                                                }}
-                                            >
-                                                Disconnect
-                                            </span>
-                                        )}
-                                    </p>
                                 </div>
 
                                 <div>
@@ -2164,14 +2127,7 @@ export default function GraphicLGDS() {
                                             marginLeft: 15,
                                         }}
                                     ></p>
-                                    <p
-                                        style={{
-                                            color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
-                                        }}
-                                    ></p>
+                                   
                                 </div>
                             </div>
                         ),
@@ -5553,7 +5509,7 @@ export default function GraphicLGDS() {
                 background: background,
                 border: "1px solid white",
                 width: 420,
-                height: 200,
+                height: 180,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
