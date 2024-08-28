@@ -13,8 +13,8 @@ const ScoreCard = () => {
     return (
         
 
-        <div>
-            <TabView>
+        < > 
+            <TabView   >
                 <TabPanel header="NG">
                     <NG_Scorecard />
                 </TabPanel>
@@ -29,7 +29,7 @@ const ScoreCard = () => {
             </TabView>
 
         
-            </div>
+            </>
     );
 };
 

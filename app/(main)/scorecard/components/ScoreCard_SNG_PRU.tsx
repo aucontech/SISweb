@@ -2851,12 +2851,12 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                             field="PLC"
                             header={TD_4072_Conn_STT === "1" ? (
                                 <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>Calorimeter Value</p>
+                                <p style={{marginLeft:5}}>Calorimeter</p>
                                </div>
                                 
                             ) : (
                                 <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                  <p style={{marginLeft:5}}>Calorimeter Value</p>
+                                  <p style={{marginLeft:5}}>Calorimeter</p>
                              </div>
                             )}
                         ></Column>
