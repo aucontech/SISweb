@@ -42,7 +42,7 @@ import "./ForCssGraphic.css";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
-import { id_SNG_HungYen } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
+import { id_SNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 import { BlackTriangleRight } from "@/app/(main)/PRU/GraphicPRU/iconSVG";
 import AlarmMeiko from "@/layout/AlarmBell/AlarmMeiko";
 import BallValue01 from "../BallValueSNG_HUNGYEN/BallValue01";
@@ -74,7 +74,7 @@ export const line = "#ff7f00";
 export const line2 = "#ffaa00";
 export const line3 = "#ffe900";
 
-export default function Graphic_SNG_HUNGYEN() {
+export default function Graphic_SNG_BD() {
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const token = readToken();
@@ -107,7 +107,7 @@ export default function Graphic_SNG_HUNGYEN() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_SNG_HungYen,
+                    entityId: id_SNG_BinhDuong,
                     scope: "LATEST_TELEMETRY",
                     cmdId: 1,
                 },
@@ -130,7 +130,7 @@ export default function Graphic_SNG_HUNGYEN() {
                             type: "singleEntity",
                             singleEntity: {
                                 entityType: "DEVICE",
-                                id: id_SNG_HungYen,
+                                id: id_SNG_BinhDuong,
                             },
                         },
                         pageLink: {
@@ -198,21 +198,21 @@ export default function Graphic_SNG_HUNGYEN() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        PT_3005: setPT_3005,
-                        PT_3006: setPT_3006,
-                        TM_3002_SNG: setTM_3002_SNG,
-                        TM_3003_SNG: setTM_3003_SNG,
-                        TT_3003: setTT_3003,
-                        TT_3004: setTT_3004,
+                        PT_2004: setPT_2004,
+                        PT_2005: setPT_2005,
+                        TM_2002_SNG: setTM_2002_SNG,
+                        TM_2003_SNG: setTM_2003_SNG,
+                        TT_2003: setTT_2003,
+                        TT_2004: setTT_2004,
 
-                        FCV_3001: setFCV_3001,
+                        FCV_2001: setFCV_1001,
 
-                        SDV_3004: setSDV,
+                        SDV_2004: setSDV,
 
-                        WB_3001: setWB_3001,
+                        WB_1001: setWB_1001,
 
                         WB_Setpoint: setWB_Setpoint,
-                        HV_3001: setHV_3001,
+                        HV_1001: setHV_1001,
 
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
@@ -279,11 +279,11 @@ export default function Graphic_SNG_HUNGYEN() {
         SVA: "SVA",
         GVA: "GVA",
         PT: "PT",
-        PT_3005: " Tank 01",
-        PT_3006: "Volume",
-        TM_3002_SNG: "TM-3002",
-        TM_3003_SNG: "TM-3003",
-        TT_3003: "TT 301",
+        PT_2004: " Tank 01",
+        PT_2005: "Volume",
+        TM_2002_SNG: "TM-2002",
+        TM_2003_SNG: "TM-2003",
+        TT_2003: "TT 301",
         VP_301: "EVC 02 Pressure",
 
         EVC_01_Temperature: "EVC 01 Temperature",
@@ -299,136 +299,136 @@ export default function Graphic_SNG_HUNGYEN() {
         CC: "°C",
         BARG: "%",
     };
-    //================================ PT_3005================================
+    //================================ PT_2004================================
 
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_SNG_HungYen}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_SNG_BinhDuong}/values/attributes/SERVER_SCOPE`
             );
 
-            const PT_3005_High = res.data.find(
-                (item: any) => item.key === "PT_3005_High"
+            const PT_2004_High = res.data.find(
+                (item: any) => item.key === "PT_2004_High"
             );
-            setPT_3005_High(PT_3005_High?.value || null);
-            const PT_3005_Low = res.data.find(
-                (item: any) => item.key === "PT_3005_Low"
+            setPT_2004_High(PT_2004_High?.value || null);
+            const PT_2004_Low = res.data.find(
+                (item: any) => item.key === "PT_2004_Low"
             );
-            setPT_3005_Low(PT_3005_Low?.value || null);
+            setPT_2004_Low(PT_2004_Low?.value || null);
 
-            const maintainPT_3005 = res.data.find(
-                (item: any) => item.key === "PT_3005_Maintain"
+            const maintainPT_2004 = res.data.find(
+                (item: any) => item.key === "PT_2004_Maintain"
             );
-            setMaintainPT_3005(maintainPT_3005?.value || false);
+            setMaintainPT_2004(maintainPT_2004?.value || false);
             //===========================================================================================
 
-            const PT_3006_High = res.data.find(
-                (item: any) => item.key === "PT_3006_High"
+            const PT_2005_High = res.data.find(
+                (item: any) => item.key === "PT_2005_High"
             );
-            setPT_3006_High(PT_3006_High?.value || null);
-            const PT_3006_Low = res.data.find(
-                (item: any) => item.key === "PT_3006_Low"
+            setPT_2005_High(PT_2005_High?.value || null);
+            const PT_2005_Low = res.data.find(
+                (item: any) => item.key === "PT_2005_Low"
             );
-            setPT_3006_Low(PT_3006_Low?.value || null);
+            setPT_2005_Low(PT_2005_Low?.value || null);
 
-            const MaintainPT_3006 = res.data.find(
-                (item: any) => item.key === "PT_3006_Maintain"
+            const MaintainPT_2005 = res.data.find(
+                (item: any) => item.key === "PT_2005_Maintain"
             );
-            setMaintainPT_3006(MaintainPT_3006?.value || false);
+            setMaintainPT_2005(MaintainPT_2005?.value || false);
             //===========================================================================================
 
-            const HighTM_3002_SNG = res.data.find(
-                (item: any) => item.key === "TM_3002_SNG_High"
+            const HighTM_2002_SNG = res.data.find(
+                (item: any) => item.key === "TM_2002_SNG_High"
             );
-            setTM_3002_SNG_High(HighTM_3002_SNG?.value || null);
-            const LowTM_3002_SNG = res.data.find(
-                (item: any) => item.key === "TM_3002_SNG_Low"
+            setTM_2002_SNG_High(HighTM_2002_SNG?.value || null);
+            const LowTM_2002_SNG = res.data.find(
+                (item: any) => item.key === "TM_2002_SNG_Low"
             );
-            setTM_3002_SNG_Low(LowTM_3002_SNG?.value || null);
+            setTM_2002_SNG_Low(LowTM_2002_SNG?.value || null);
 
-            const TM_3002_SNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM_3002_SNG_Maintain"
+            const TM_2002_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2002_SNG_Maintain"
             );
-            setMaintainTM_3002_SNG(TM_3002_SNG_Maintain?.value || false);
-
-            //===========================================================================================
-
-            const HighTM_3003_SNG = res.data.find(
-                (item: any) => item.key === "TM_3003_SNG_High"
-            );
-            setTM_3003_SNG_High(HighTM_3003_SNG?.value || null);
-
-            const LowTM_3003_SNG = res.data.find(
-                (item: any) => item.key === "TM_3003_SNG_Low"
-            );
-            setTM_3003_SNG_Low(LowTM_3003_SNG?.value || null);
-
-            const TM_3003_SNG_Maintain = res.data.find(
-                (item: any) => item.key === "TM_3003_SNG_Maintain"
-            );
-            setMaintainTM_3003_SNG(TM_3003_SNG_Maintain?.value || false);
-            //===========================================================================================
-
-            const TT_3003_High = res.data.find(
-                (item: any) => item.key === "TT_3003_High"
-            );
-            setTT_3003_High(TT_3003_High?.value || null);
-
-            const LowTT_3003 = res.data.find(
-                (item: any) => item.key === "TT_3003_Low"
-            );
-            setTT_3003_Low(LowTT_3003?.value || null);
-
-            const TT_3003_Maintain = res.data.find(
-                (item: any) => item.key === "TT_3003_Maintain"
-            );
-            setMaintainTT_3003(TT_3003_Maintain?.value || false);
+            setMaintainTM_2002_SNG(TM_2002_SNG_Maintain?.value || false);
 
             //===========================================================================================
 
-            const TT_3004_High = res.data.find(
-                (item: any) => item.key === "TT_3004_High"
+            const HighTM_2003_SNG = res.data.find(
+                (item: any) => item.key === "TM_2003_SNG_High"
             );
-            setTT_3004_High(TT_3004_High?.value || null);
-            const TT_3004_Low = res.data.find(
-                (item: any) => item.key === "TT_3004_Low"
-            );
-            setTT_3004_Low(TT_3004_Low?.value || null);
+            setTM_2003_SNG_High(HighTM_2003_SNG?.value || null);
 
-            const MaintainTT_3004 = res.data.find(
-                (item: any) => item.key === "TT_3004_Maintain"
+            const LowTM_2003_SNG = res.data.find(
+                (item: any) => item.key === "TM_2003_SNG_Low"
             );
-            setMaintainTT_3004(MaintainTT_3004?.value || false);
+            setTM_2003_SNG_Low(LowTM_2003_SNG?.value || null);
+
+            const TM_2003_SNG_Maintain = res.data.find(
+                (item: any) => item.key === "TM_2003_SNG_Maintain"
+            );
+            setMaintainTM_2003_SNG(TM_2003_SNG_Maintain?.value || false);
             //===========================================================================================
 
-            const HighFCV_3001 = res.data.find(
-                (item: any) => item.key === "FCV_3001_High"
+            const TT_2003_High = res.data.find(
+                (item: any) => item.key === "TT_2003_High"
             );
-            setFCV_3001_High(HighFCV_3001?.value || null);
-            const LowFCV_3001 = res.data.find(
-                (item: any) => item.key === "FCV_3001_Low"
-            );
-            setFCV_3001_Low(LowFCV_3001?.value || null);
+            setTT_2003_High(TT_2003_High?.value || null);
 
-            const MaintainFCV_3001 = res.data.find(
-                (item: any) => item.key === "FCV_3001_Maintain"
+            const LowTT_2003 = res.data.find(
+                (item: any) => item.key === "TT_2003_Low"
             );
-            setMaintainFCV_3001(MaintainFCV_3001?.value || false);
+            setTT_2003_Low(LowTT_2003?.value || null);
+
+            const TT_2003_Maintain = res.data.find(
+                (item: any) => item.key === "TT_2003_Maintain"
+            );
+            setMaintainTT_2003(TT_2003_Maintain?.value || false);
+
             //===========================================================================================
 
-            const HighWB_3001 = res.data.find(
-                (item: any) => item.key === "WB_3001_High"
+            const TT_2004_High = res.data.find(
+                (item: any) => item.key === "TT_2004_High"
             );
-            setWB_3001_High(HighWB_3001?.value || null);
-            const LowWB_3001 = res.data.find(
-                (item: any) => item.key === "WB_3001_Low"
+            setTT_2004_High(TT_2004_High?.value || null);
+            const TT_2004_Low = res.data.find(
+                (item: any) => item.key === "TT_2004_Low"
             );
-            setWB_3001_Low(LowWB_3001?.value || null);
+            setTT_2004_Low(TT_2004_Low?.value || null);
 
-            const MaintainWB_3001 = res.data.find(
-                (item: any) => item.key === "WB_3001_Maintain"
+            const MaintainTT_2004 = res.data.find(
+                (item: any) => item.key === "TT_2004_Maintain"
             );
-            setMaintainWB_3001(MaintainWB_3001?.value || false);
+            setMaintainTT_2004(MaintainTT_2004?.value || false);
+            //===========================================================================================
+
+            const HighFCV_1001 = res.data.find(
+                (item: any) => item.key === "FCV_1001_High"
+            );
+            setFCV_1001_High(HighFCV_1001?.value || null);
+            const LowFCV_1001 = res.data.find(
+                (item: any) => item.key === "FCV_1001_Low"
+            );
+            setFCV_1001_Low(LowFCV_1001?.value || null);
+
+            const MaintainFCV_1001 = res.data.find(
+                (item: any) => item.key === "FCV_1001_Maintain"
+            );
+            setMaintainFCV_1001(MaintainFCV_1001?.value || false);
+            //===========================================================================================
+
+            const HighWB_1001 = res.data.find(
+                (item: any) => item.key === "WB_1001_High"
+            );
+            setWB_1001_High(HighWB_1001?.value || null);
+            const LowWB_1001 = res.data.find(
+                (item: any) => item.key === "WB_1001_Low"
+            );
+            setWB_1001_Low(LowWB_1001?.value || null);
+
+            const MaintainWB_1001 = res.data.find(
+                (item: any) => item.key === "WB_1001_Maintain"
+            );
+            setMaintainWB_1001(MaintainWB_1001?.value || false);
             //===========================================================================================
             const HighWB_Setpoint = res.data.find(
                 (item: any) => item.key === "WB_Setpoint_High"
@@ -445,19 +445,19 @@ export default function Graphic_SNG_HUNGYEN() {
             setMaintainWB_Setpoint(MaintainWB_Setpoint?.value || false);
             //===========================================================================================
 
-            const HighHV_3001 = res.data.find(
-                (item: any) => item.key === "HV_3001_High"
+            const HighHV_1001 = res.data.find(
+                (item: any) => item.key === "HV_1001_High"
             );
-            setHV_3001_High(HighHV_3001?.value || null);
-            const LowHV_3001 = res.data.find(
-                (item: any) => item.key === "HV_3001_Low"
+            setHV_1001_High(HighHV_1001?.value || null);
+            const LowHV_1001 = res.data.find(
+                (item: any) => item.key === "HV_1001_Low"
             );
-            setHV_3001_Low(LowHV_3001?.value || null);
+            setHV_1001_Low(LowHV_1001?.value || null);
 
-            const MaintainHV_3001 = res.data.find(
-                (item: any) => item.key === "HV_3001_Maintain"
+            const MaintainHV_1001 = res.data.find(
+                (item: any) => item.key === "HV_1001_Maintain"
             );
-            setMaintainHV_3001(MaintainHV_3001?.value || false);
+            setMaintainHV_1001(MaintainHV_1001?.value || false);
             //===========================================================================================
 
             const HighRATIO_MODE = res.data.find(
@@ -509,217 +509,217 @@ export default function Graphic_SNG_HUNGYEN() {
         }
     };
 
-    const [PT_3005, setPT_3005] = useState<string | null>(null);
-    const [PT_3005_High, setPT_3005_High] = useState<number | null>(null);
-    const [PT_3005_Low, setPT_3005_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3005, setExceedThresholdPT_3005] = useState(false);
-    const [maintainPT_3005, setMaintainPT_3005] = useState<boolean>(false);
+    const [PT_2004, setPT_2004] = useState<string | null>(null);
+    const [PT_2004_High, setPT_2004_High] = useState<number | null>(null);
+    const [PT_2004_Low, setPT_2004_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2004, setExceedThresholdPT_2004] = useState(false);
+    const [maintainPT_2004, setMaintainPT_2004] = useState<boolean>(false);
 
     useEffect(() => {
-        const PT_3005Value = parseFloat(PT_3005 as any);
-        const highValue = PT_3005_High ?? NaN;
-        const lowValue = PT_3005_Low ?? NaN;
+        const PT_2004Value = parseFloat(PT_2004 as any);
+        const highValue = PT_2004_High ?? NaN;
+        const lowValue = PT_2004_Low ?? NaN;
 
         if (
-            !isNaN(PT_3005Value) &&
+            !isNaN(PT_2004Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainPT_3005
+            !maintainPT_2004
         ) {
-            setExceedThresholdPT_3005(
-                PT_3005Value >= highValue || PT_3005Value <= lowValue
+            setExceedThresholdPT_2004(
+                PT_2004Value >= highValue || PT_2004Value <= lowValue
             );
         }
-    }, [PT_3005, PT_3005_High, PT_3005_Low, maintainPT_3005]);
+    }, [PT_2004, PT_2004_High, PT_2004_Low, maintainPT_2004]);
 
     //======================================================================================
 
-    const [PT_3006, setPT_3006] = useState<string | null>(null);
-    const [PT_3006_High, setPT_3006_High] = useState<number | null>(null);
-    const [PT_3006_Low, setPT_3006_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3006, setExceedThresholdPT_3006] = useState(false);
-    const [maintainPT_3006, setMaintainPT_3006] = useState<boolean>(false);
+    const [PT_2005, setPT_2005] = useState<string | null>(null);
+    const [PT_2005_High, setPT_2005_High] = useState<number | null>(null);
+    const [PT_2005_Low, setPT_2005_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_2005, setExceedThresholdPT_2005] = useState(false);
+    const [maintainPT_2005, setMaintainPT_2005] = useState<boolean>(false);
 
     useEffect(() => {
-        const PT_3006Value = parseFloat(PT_3006 as any);
-        const highValue = PT_3006_High ?? NaN;
-        const lowValue = PT_3006_Low ?? NaN;
+        const PT_2005Value = parseFloat(PT_2005 as any);
+        const highValue = PT_2005_High ?? NaN;
+        const lowValue = PT_2005_Low ?? NaN;
 
         if (
-            !isNaN(PT_3006Value) &&
+            !isNaN(PT_2005Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainPT_3006
+            !maintainPT_2005
         ) {
-            setExceedThresholdPT_3006(
-                PT_3006Value >= highValue || PT_3006Value <= lowValue
+            setExceedThresholdPT_2005(
+                PT_2005Value >= highValue || PT_2005Value <= lowValue
             );
         }
-    }, [PT_3006, PT_3006_High, PT_3006_Low, maintainPT_3006]);
-    //================================ TT_3003================================
+    }, [PT_2005, PT_2005_High, PT_2005_Low, maintainPT_2005]);
+    //================================ TT_2003================================
 
-    const [TT_3003, setTT_3003] = useState<string | null>(null);
-    const [TT_3003_High, setTT_3003_High] = useState<number | null>(null);
-    const [TT_3003_Low, setTT_3003_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_3003, setExceedThresholdTT_3003] = useState(false);
-    const [maintainTT_3003, setMaintainTT_3003] = useState<boolean>(false);
+    const [TT_2003, setTT_2003] = useState<string | null>(null);
+    const [TT_2003_High, setTT_2003_High] = useState<number | null>(null);
+    const [TT_2003_Low, setTT_2003_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_2003, setExceedThresholdTT_2003] = useState(false);
+    const [maintainTT_2003, setMaintainTT_2003] = useState<boolean>(false);
 
     useEffect(() => {
-        const TT_3003Value = parseFloat(TT_3003 as any);
-        const highValue = TT_3003_High ?? NaN;
-        const lowValue = TT_3003_Low ?? NaN;
+        const TT_2003Value = parseFloat(TT_2003 as any);
+        const highValue = TT_2003_High ?? NaN;
+        const lowValue = TT_2003_Low ?? NaN;
 
         if (
-            !isNaN(TT_3003Value) &&
+            !isNaN(TT_2003Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainTT_3003
+            !maintainTT_2003
         ) {
-            setExceedThresholdTT_3003(
-                TT_3003Value >= highValue || TT_3003Value <= lowValue
+            setExceedThresholdTT_2003(
+                TT_2003Value >= highValue || TT_2003Value <= lowValue
             );
         }
-    }, [TT_3003, TT_3003_High, TT_3003_Low, maintainTT_3003]);
+    }, [TT_2003, TT_2003_High, TT_2003_Low, maintainTT_2003]);
 
     //================================ Flow_Meter_Total ======================================================
 
-    const [TT_3004, setTT_3004] = useState<string | null>(null);
-    const [TT_3004_High, setTT_3004_High] = useState<number | null>(null);
-    const [TT_3004_Low, setTT_3004_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_3004, setExceedThresholdTT_3004] = useState(false);
-    const [maintainTT_3004, setMaintainTT_3004] = useState<boolean>(false);
+    const [TT_2004, setTT_2004] = useState<string | null>(null);
+    const [TT_2004_High, setTT_2004_High] = useState<number | null>(null);
+    const [TT_2004_Low, setTT_2004_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_2004, setExceedThresholdTT_2004] = useState(false);
+    const [maintainTT_2004, setMaintainTT_2004] = useState<boolean>(false);
 
     useEffect(() => {
-        const TT_3004Value = parseFloat(TT_3004 as any);
-        const highValue = TT_3004_High ?? NaN;
-        const lowValue = TT_3004_Low ?? NaN;
+        const TT_2004Value = parseFloat(TT_2004 as any);
+        const highValue = TT_2004_High ?? NaN;
+        const lowValue = TT_2004_Low ?? NaN;
 
         if (
-            !isNaN(TT_3004Value) &&
+            !isNaN(TT_2004Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainTT_3004
+            !maintainTT_2004
         ) {
-            setExceedThresholdTT_3004(
-                TT_3004Value >= highValue || TT_3004Value <= lowValue
+            setExceedThresholdTT_2004(
+                TT_2004Value >= highValue || TT_2004Value <= lowValue
             );
         }
-    }, [TT_3004, TT_3004_High, TT_3004_Low, maintainTT_3004]);
+    }, [TT_2004, TT_2004_High, TT_2004_Low, maintainTT_2004]);
 
     //======================================================================================
 
     // ===================================================================================================================
 
-    const [TM_3002_SNG, setTM_3002_SNG] = useState<string | null>(null);
-    const [TM_3002_SNG_High, setTM_3002_SNG_High] = useState<number | null>(
+    const [TM_2002_SNG, setTM_2002_SNG] = useState<string | null>(null);
+    const [TM_2002_SNG_High, setTM_2002_SNG_High] = useState<number | null>(
         null
     );
-    const [TM_3002_SNG_Low, setTM_3002_SNG_Low] = useState<number | null>(null);
-    const [exceedThresholdTM_3002_SNG, setExceedThresholdTM_3002_SNG] =
+    const [TM_2002_SNG_Low, setTM_2002_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_2002_SNG, setExceedThresholdTM_2002_SNG] =
         useState(false);
-    const [maintainTM_3002_SNG, setMaintainTM_3002_SNG] =
+    const [maintainTM_2002_SNG, setMaintainTM_2002_SNG] =
         useState<boolean>(false);
 
     useEffect(() => {
-        const TM_3002_SNGValue = parseFloat(TM_3002_SNG as any);
-        const highValue = TM_3002_SNG_High ?? NaN;
-        const lowValue = TM_3002_SNG_Low ?? NaN;
+        const TM_2002_SNGValue = parseFloat(TM_2002_SNG as any);
+        const highValue = TM_2002_SNG_High ?? NaN;
+        const lowValue = TM_2002_SNG_Low ?? NaN;
 
         if (
-            !isNaN(TM_3002_SNGValue) &&
+            !isNaN(TM_2002_SNGValue) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainTM_3002_SNG
+            !maintainTM_2002_SNG
         ) {
-            setExceedThresholdTM_3002_SNG(
-                TM_3002_SNGValue >= highValue || TM_3002_SNGValue <= lowValue
+            setExceedThresholdTM_2002_SNG(
+                TM_2002_SNGValue >= highValue || TM_2002_SNGValue <= lowValue
             );
         }
-    }, [TM_3002_SNG, TM_3002_SNG_High, TM_3002_SNG_Low, maintainTM_3002_SNG]);
+    }, [TM_2002_SNG, TM_2002_SNG_High, TM_2002_SNG_Low, maintainTM_2002_SNG]);
 
     // ===================================================================================================================
 
     // ===================================================================================================================
 
-    const [TM_3003_SNG, setTM_3003_SNG] = useState<string | null>(null);
-    const [TM_3003_SNG_High, setTM_3003_SNG_High] = useState<number | null>(
+    const [TM_2003_SNG, setTM_2003_SNG] = useState<string | null>(null);
+    const [TM_2003_SNG_High, setTM_2003_SNG_High] = useState<number | null>(
         null
     );
-    const [TM_3003_SNG_Low, setTM_3003_SNG_Low] = useState<number | null>(null);
-    const [exceedThresholdTM_3003_SNG, setExceedThresholdTM_3003_SNG] =
+    const [TM_2003_SNG_Low, setTM_2003_SNG_Low] = useState<number | null>(null);
+    const [exceedThresholdTM_2003_SNG, setExceedThresholdTM_2003_SNG] =
         useState(false);
-    const [maintainTM_3003_SNG, setMaintainTM_3003_SNG] =
+    const [maintainTM_2003_SNG, setMaintainTM_2003_SNG] =
         useState<boolean>(false);
 
     useEffect(() => {
-        const TM_3003_SNGValue = parseFloat(TM_3003_SNG as any);
-        const highValue = TM_3003_SNG_High ?? NaN;
-        const lowValue = TM_3003_SNG_Low ?? NaN;
+        const TM_2003_SNGValue = parseFloat(TM_2003_SNG as any);
+        const highValue = TM_2003_SNG_High ?? NaN;
+        const lowValue = TM_2003_SNG_Low ?? NaN;
 
         if (
-            !isNaN(TM_3003_SNGValue) &&
+            !isNaN(TM_2003_SNGValue) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainTM_3003_SNG
+            !maintainTM_2003_SNG
         ) {
-            setExceedThresholdTM_3003_SNG(
-                TM_3003_SNGValue >= highValue || TM_3003_SNGValue <= lowValue
+            setExceedThresholdTM_2003_SNG(
+                TM_2003_SNGValue >= highValue || TM_2003_SNGValue <= lowValue
             );
         }
-    }, [TM_3003_SNG, TM_3003_SNG_High, TM_3003_SNG_Low, maintainTM_3003_SNG]);
+    }, [TM_2003_SNG, TM_2003_SNG_High, TM_2003_SNG_Low, maintainTM_2003_SNG]);
 
-    //================================ TT_3004======================================================
-    const [FCV_3001, setFCV_3001] = useState<string | null>(null);
-    const [FCV_3001_High, setFCV_3001_High] = useState<number | null>(null);
-    const [FCV_3001_Low, setFCV_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdFCV_3001, setExceedThresholdFCV_3001] =
+    //================================ TT_2004======================================================
+    const [FCV_1001, setFCV_1001] = useState<string | null>(null);
+    const [FCV_1001_High, setFCV_1001_High] = useState<number | null>(null);
+    const [FCV_1001_Low, setFCV_1001_Low] = useState<number | null>(null);
+    const [exceedThresholdFCV_1001, setExceedThresholdFCV_1001] =
         useState(false);
-    const [maintainFCV_3001, setMaintainFCV_3001] = useState<boolean>(false);
+    const [maintainFCV_1001, setMaintainFCV_1001] = useState<boolean>(false);
 
     useEffect(() => {
-        const FCV_3001Value = parseFloat(FCV_3001 as any);
-        const highValue = FCV_3001_High ?? NaN;
-        const lowValue = FCV_3001_Low ?? NaN;
+        const FCV_1001Value = parseFloat(FCV_1001 as any);
+        const highValue = FCV_1001_High ?? NaN;
+        const lowValue = FCV_1001_Low ?? NaN;
 
         if (
-            !isNaN(FCV_3001Value) &&
+            !isNaN(FCV_1001Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainFCV_3001
+            !maintainFCV_1001
         ) {
-            setExceedThresholdFCV_3001(
-                FCV_3001Value >= highValue || FCV_3001Value <= lowValue
+            setExceedThresholdFCV_1001(
+                FCV_1001Value >= highValue || FCV_1001Value <= lowValue
             );
         }
-    }, [FCV_3001, FCV_3001_High, FCV_3001_Low, maintainFCV_3001]);
+    }, [FCV_1001, FCV_1001_High, FCV_1001_Low, maintainFCV_1001]);
 
-    //================================ FCV_3001======================================================
+    //================================ FCV_1001======================================================
 
-    //================================ WB_3001================================
-    const [WB_3001, setWB_3001] = useState<string | null>(null);
-    const [WB_3001_High, setWB_3001_High] = useState<number | null>(null);
-    const [WB_3001_Low, setWB_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdWB_3001, setExceedThresholdWB_3001] = useState(false);
-    const [maintainWB_3001, setMaintainWB_3001] = useState<boolean>(false);
+    //================================ WB_1001================================
+    const [WB_1001, setWB_1001] = useState<string | null>(null);
+    const [WB_1001_High, setWB_1001_High] = useState<number | null>(null);
+    const [WB_1001_Low, setWB_1001_Low] = useState<number | null>(null);
+    const [exceedThresholdWB_1001, setExceedThresholdWB_1001] = useState(false);
+    const [maintainWB_1001, setMaintainWB_1001] = useState<boolean>(false);
 
     useEffect(() => {
-        const WB_3001Value = parseFloat(WB_3001 as any);
-        const highValue = WB_3001_High ?? NaN;
-        const lowValue = WB_3001_Low ?? NaN;
+        const WB_1001Value = parseFloat(WB_1001 as any);
+        const highValue = WB_1001_High ?? NaN;
+        const lowValue = WB_1001_Low ?? NaN;
 
         if (
-            !isNaN(WB_3001Value) &&
+            !isNaN(WB_1001Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainWB_3001
+            !maintainWB_1001
         ) {
-            setExceedThresholdWB_3001(
-                WB_3001Value >= highValue || WB_3001Value <= lowValue
+            setExceedThresholdWB_1001(
+                WB_1001Value >= highValue || WB_1001Value <= lowValue
             );
         }
-    }, [WB_3001, WB_3001_High, WB_3001_Low, maintainWB_3001]);
+    }, [WB_1001, WB_1001_High, WB_1001_Low, maintainWB_1001]);
 
-    //================================ WB_3001 ======================================================
+    //================================ WB_1001 ======================================================
 
     const [WB_Setpoint, setWB_Setpoint] = useState<string | null>(null);
     const [WB_Setpoint_High, setWB_Setpoint_High] = useState<number | null>(
@@ -749,30 +749,30 @@ export default function Graphic_SNG_HUNGYEN() {
     }, [WB_Setpoint, WB_Setpoint_High, WB_Setpoint_Low, maintainWB_Setpoint]);
 
     //================================ WB_Setpoint======================================================
-    const [HV_3001, setHV_3001] = useState<string | null>(null);
-    const [HV_3001_High, setHV_3001_High] = useState<number | null>(null);
-    const [HV_3001_Low, setHV_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdHV_3001, setExceedThresholdHV_3001] = useState(false);
-    const [maintainHV_3001, setMaintainHV_3001] = useState<boolean>(false);
+    const [HV_1001, setHV_1001] = useState<string | null>(null);
+    const [HV_1001_High, setHV_1001_High] = useState<number | null>(null);
+    const [HV_1001_Low, setHV_1001_Low] = useState<number | null>(null);
+    const [exceedThresholdHV_1001, setExceedThresholdHV_1001] = useState(false);
+    const [maintainHV_1001, setMaintainHV_1001] = useState<boolean>(false);
 
     useEffect(() => {
-        const HV_3001Value = parseFloat(HV_3001 as any);
-        const highValue = HV_3001_High ?? NaN;
-        const lowValue = HV_3001_Low ?? NaN;
+        const HV_1001Value = parseFloat(HV_1001 as any);
+        const highValue = HV_1001_High ?? NaN;
+        const lowValue = HV_1001_Low ?? NaN;
 
         if (
-            !isNaN(HV_3001Value) &&
+            !isNaN(HV_1001Value) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainHV_3001
+            !maintainHV_1001
         ) {
-            setExceedThresholdHV_3001(
-                HV_3001Value >= highValue || HV_3001Value <= lowValue
+            setExceedThresholdHV_1001(
+                HV_1001Value >= highValue || HV_1001Value <= lowValue
             );
         }
-    }, [HV_3001, HV_3001_High, HV_3001_Low, maintainHV_3001]);
+    }, [HV_1001, HV_1001_High, HV_1001_Low, maintainHV_1001]);
 
-    //================================ HV_3001======================================================
+    //================================ HV_1001======================================================
     const [RATIO_MODE, setRATIO_MODE] = useState<string | null>(null);
     const [RATIO_MODE_High, setRATIO_MODE_High] = useState<number | null>(null);
     const [RATIO_MODE_Low, setRATIO_MODE_Low] = useState<number | null>(null);
@@ -917,9 +917,9 @@ export default function Graphic_SNG_HUNGYEN() {
             //         },
             //     };
             // }
-            if (node.id === "PT_3005") {
+            if (node.id === "PT_2004") {
                 const roundedPT02 =
-                    PT_3005 !== null ? parseFloat(PT_3005).toFixed(2) : "";
+                    PT_2004 !== null ? parseFloat(PT_2004).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -936,10 +936,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT_3005 &&
-                                        !maintainPT_3005
+                                        exceedThresholdPT_2004 &&
+                                        !maintainPT_2004
                                             ? "#ff5656"
-                                            : maintainPT_3005
+                                            : maintainPT_2004
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -955,7 +955,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3005:
+                                        PT-2004:
                                     </p>
                                     <p
                                         style={{
@@ -980,9 +980,9 @@ export default function Graphic_SNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "PT_3006") {
+            if (node.id === "PT_2005") {
                 const roundedPT02 =
-                    PT_3006 !== null ? parseFloat(PT_3006).toFixed(2) : "";
+                    PT_2005 !== null ? parseFloat(PT_2005).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -999,10 +999,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT_3006 &&
-                                        !maintainPT_3006
+                                        exceedThresholdPT_2005 &&
+                                        !maintainPT_2005
                                             ? "#ff5656"
-                                            : maintainPT_3006
+                                            : maintainPT_2005
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1018,7 +1018,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-3006:
+                                        PT-2005:
                                     </p>
                                     <p
                                         style={{
@@ -1043,10 +1043,10 @@ export default function Graphic_SNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "TM_3002_SNG") {
+            if (node.id === "TM_2002_SNG") {
                 const roundedPT02 =
-                    TM_3002_SNG !== null
-                        ? parseFloat(TM_3002_SNG).toFixed(2)
+                    TM_2002_SNG !== null
+                        ? parseFloat(TM_2002_SNG).toFixed(2)
                         : "";
 
                 return {
@@ -1064,10 +1064,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTM_3002_SNG &&
-                                        !maintainTM_3002_SNG
+                                        exceedThresholdTM_2002_SNG &&
+                                        !maintainTM_2002_SNG
                                             ? "#ff5656"
-                                            : maintainTM_3002_SNG
+                                            : maintainTM_2002_SNG
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1083,7 +1083,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.TM_3002_SNG}:
+                                        {ValueGas.TM_2002_SNG}:
                                     </p>
                                     <p
                                         style={{
@@ -1108,10 +1108,10 @@ export default function Graphic_SNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "TM_3003_SNG") {
+            if (node.id === "TM_2003_SNG") {
                 const roundedPT02 =
-                    TM_3003_SNG !== null
-                        ? parseFloat(TM_3003_SNG).toFixed(2)
+                    TM_2003_SNG !== null
+                        ? parseFloat(TM_2003_SNG).toFixed(2)
                         : "";
 
                 return {
@@ -1129,10 +1129,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTM_3003_SNG &&
-                                        !maintainTM_3003_SNG
+                                        exceedThresholdTM_2003_SNG &&
+                                        !maintainTM_2003_SNG
                                             ? "#ff5656"
-                                            : maintainTM_3003_SNG
+                                            : maintainTM_2003_SNG
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1148,7 +1148,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        {ValueGas.TM_3003_SNG}:
+                                        {ValueGas.TM_2003_SNG}:
                                     </p>
                                     <p
                                         style={{
@@ -1173,9 +1173,9 @@ export default function Graphic_SNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "TT_3003") {
+            if (node.id === "TT_2003") {
                 const roundedPT02 =
-                    TT_3003 !== null ? parseFloat(TT_3003).toFixed(2) : "";
+                    TT_2003 !== null ? parseFloat(TT_2003).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1192,10 +1192,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTT_3003 &&
-                                        !maintainTT_3003
+                                        exceedThresholdTT_2003 &&
+                                        !maintainTT_2003
                                             ? "#ff5656"
-                                            : maintainTT_3003
+                                            : maintainTT_2003
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1211,7 +1211,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-3003:
+                                        TT-2003:
                                     </p>
                                     <p
                                         style={{
@@ -1236,9 +1236,9 @@ export default function Graphic_SNG_HUNGYEN() {
                     },
                 };
             }
-            if (node.id === "TT_3004") {
+            if (node.id === "TT_2004") {
                 const roundedPT02 =
-                    TT_3004 !== null ? parseFloat(TT_3004).toFixed(2) : "";
+                    TT_2004 !== null ? parseFloat(TT_2004).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1255,10 +1255,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdTT_3004 &&
-                                        !maintainTT_3004
+                                        exceedThresholdTT_2004 &&
+                                        !maintainTT_2004
                                             ? "#ff5656"
-                                            : maintainTT_3004
+                                            : maintainTT_2004
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1274,7 +1274,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        TT-3004:
+                                        TT-2004:
                                     </p>
                                     <p
                                         style={{
@@ -1318,9 +1318,9 @@ export default function Graphic_SNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "FCV_3001") {
+            if (node.id === "FCV_1001") {
                 const roundedPT02 =
-                    FCV_3001 !== null ? parseFloat(FCV_3001).toFixed(2) : "";
+                    FCV_1001 !== null ? parseFloat(FCV_1001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1337,10 +1337,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdFCV_3001 &&
-                                        !maintainFCV_3001
+                                        exceedThresholdFCV_1001 &&
+                                        !maintainFCV_1001
                                             ? "#ff5656"
-                                            : maintainFCV_3001
+                                            : maintainFCV_1001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1356,7 +1356,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        FCV-3001:
+                                        FCV-2001:
                                     </p>
                                     <p
                                         style={{
@@ -1382,9 +1382,9 @@ export default function Graphic_SNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "WB_3001") {
+            if (node.id === "WB_1001") {
                 const roundedPT02 =
-                    WB_3001 !== null ? parseFloat(WB_3001).toFixed(2) : "";
+                    WB_1001 !== null ? parseFloat(WB_1001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1401,10 +1401,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdWB_3001 &&
-                                        !maintainWB_3001
+                                        exceedThresholdWB_1001 &&
+                                        !maintainWB_1001
                                             ? "#ff5656"
-                                            : maintainWB_3001
+                                            : maintainWB_1001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -1420,7 +1420,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        WB-3001:
+                                        WB-1001:
                                     </p>
                                     <p
                                         style={{
@@ -1590,9 +1590,9 @@ export default function Graphic_SNG_HUNGYEN() {
                 };
             }
 
-            if (node.id === "HV_3001") {
+            if (node.id === "HV_1001") {
                 const roundedPT02 =
-                    HV_3001 !== null ? parseFloat(HV_3001).toFixed(2) : "";
+                    HV_1001 !== null ? parseFloat(HV_1001).toFixed(2) : "";
 
                 return {
                     ...node,
@@ -1608,10 +1608,10 @@ export default function Graphic_SNG_HUNGYEN() {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdHV_3001 &&
-                                        !maintainHV_3001
+                                        exceedThresholdHV_1001 &&
+                                        !maintainHV_1001
                                             ? "#ff5656"
-                                            : maintainHV_3001
+                                            : maintainHV_1001
                                             ? "orange"
                                             : "transparent",
                                     cursor: "pointer",
@@ -2021,12 +2021,12 @@ export default function Graphic_SNG_HUNGYEN() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionSNG_HUNGYEN");
+    // const storedPositionString = localStorage.getItem("positionSNG_BINHDUONG");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AIR_INLET: { x: -2721.4692108086797, y: 2176.2834278407945 },
               AlarmCenter: { x: -800.5294119726459, y: 1246.647867192829 },
               Arrow1: { x: -1239.020658935167, y: 1537.2353073134132 },
@@ -2051,11 +2051,11 @@ export default function Graphic_SNG_HUNGYEN() {
               BallValue33: { x: -2565.343560648521, y: 2151.586409954696 },
               DATA_AIR: { x: -787.1794744946745, y: 2214.105613896207 },
               DATA_LPG: { x: -794.9699574379098, y: 1440.04907533999 },
-              FCV_3001: { x: -1265.380278411609, y: 2033.0134255077428 },
+              FCV_1001: { x: -1265.380278411609, y: 2033.0134255077428 },
               FCV_BOTTOM: { x: -1177.3958179076185, y: 2125.64217446725 },
               FCV_MODE: { x: -1132.3050547590105, y: 1256.5220916366088 },
               FCV_TOP: { x: -1308.5150887771715, y: 1507.9011102989418 },
-              HV_3001: { x: -1962.3798384027098, y: 1257.7884339657485 },
+              HV_1001: { x: -1962.3798384027098, y: 1257.7884339657485 },
               LPG_INLET: { x: -2718.540224197164, y: 1549.9092777776768 },
               LineTankLeft1: { x: -2526.8297727250642, y: 1895.1957023502964 },
               LineTankLeft2: { x: -1903.8600266450999, y: 1826.842413014107 },
@@ -2072,24 +2072,23 @@ export default function Graphic_SNG_HUNGYEN() {
               PTV_BOTTOM_COL: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_TOP: { x: -2434.736534286145, y: 2280.792696466395 },
               PTV_TOP_COL: { x: -2434.736534286145, y: 2280.792696466395 },
-              PT_3005: { x: -2471.664063337078, y: 2033.0814204854948 },
-              PT_3006: { x: -2470.3667157991454, y: 1407.7312703661125 },
-              PT_3006_BOTTOM: { x: -2357.4070589613248, y: 1480.1899240725122 },
-              PT_3006_BOTTOM_COL: {
+              PT_2004: { x: -2480.2392939296374, y: 1407.796594422074 },
+              PT_2005: { x: -2480.317936019082, y: 2036.2394099748572 },
+              PT_2005_BOTTOM: { x: -2357.4070589613248, y: 1480.1899240725122 },
+              PT_2005_BOTTOM_COL: {
                   x: -2324.228242946996,
                   y: 2168.551405587348,
               },
-              PT_3006_TOP: { x: -2356.699804151609, y: 2105.8388943507994 },
-              PT_3006_TOP_COL: { x: -2324.8299824844635, y: 1543.359650359493 },
+              PT_2005_TOP: { x: -2356.699804151609, y: 2105.8388943507994 },
+              PT_2005_TOP_COL: { x: -2324.8299824844635, y: 1543.359650359493 },
               RATIO_MODE: { x: -1410.6416464768204, y: 1256.368255138329 },
               SDV: { x: -1401.52488436053, y: 1832.5718544031654 },
               SDV_Name: { x: -1427.3255910567475, y: 1786.4718259796846 },
-
-              TM_3002_SNG: { x: -2095.417756376634, y: 2033.3833726505547 },
-              TM_3003_SNG: { x: -2095.502746920485, y: 1408.4757791779782 },
+              TM_2002_SNG: { x: -2096.4760401360563, y: 1408.0985465871338 },
+              TM_2003_SNG: { x: -2095.502746920485, y: 2035.6383374517998 },
               TOTAL_VOLUME: { x: -1687.4440455409626, y: 1257.580931640653 },
-              TT_3003: { x: -1637.8195582649814, y: 2033.1515562141199 },
-              TT_3004: { x: -1637.7114602399151, y: 1408.0071147369952 },
+              TT_2003: { x: -1637.8195582649814, y: 1408.1810519664027 },
+              TT_2004: { x: -1636.8980297804706, y: 2034.5786123806129 },
               Temperature_BOTTOM: {
                   x: -1509.910977255419,
                   y: 2122.0227411020805,
@@ -2103,7 +2102,7 @@ export default function Graphic_SNG_HUNGYEN() {
                   x: -1487.5658780437623,
                   y: 2171.0198173738618,
               },
-              WB_3001: { x: -1919.4385466492083, y: 1728.2615884419017 },
+              WB_1001: { x: -1919.4385466492083, y: 1728.2615884419017 },
               WB_Setpoint: { x: -2236.7052623296595, y: 1258.7416601549014 },
               borderWhite: { x: -2857.034393780186, y: 1153.4381617663353 },
               line1: { x: -2520.638664749054, y: 1563.7956401030622 },
@@ -2458,8 +2457,8 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3006_BOTTOM",
-            position: positions.PT_3006_BOTTOM,
+            id: "PT_2005_BOTTOM",
+            position: positions.PT_2005_BOTTOM,
             type: "custom",
             data: {
                 label: <div>{PTV}</div>,
@@ -2471,8 +2470,8 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3006_TOP",
-            position: positions.PT_3006_TOP,
+            id: "PT_2005_TOP",
+            position: positions.PT_2005_TOP,
             type: "custom",
             data: {
                 label: <div>{PTV}</div>,
@@ -2484,8 +2483,8 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3006_BOTTOM_COL",
-            position: positions.PT_3006_BOTTOM_COL,
+            id: "PT_2005_BOTTOM_COL",
+            position: positions.PT_2005_BOTTOM_COL,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -2498,8 +2497,8 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3006_TOP_COL",
-            position: positions.PT_3006_TOP_COL,
+            id: "PT_2005_TOP_COL",
+            position: positions.PT_2005_TOP_COL,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -2663,7 +2662,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3005",
+            id: "PT_2004",
             data: {
                 label: (
                     <div
@@ -2677,7 +2676,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3005,
+            position: positions.PT_2004,
 
             style: {
                 border: background,
@@ -2690,7 +2689,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "PT_3006",
+            id: "PT_2005",
             data: {
                 label: (
                     <div
@@ -2704,7 +2703,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.PT_3006,
+            position: positions.PT_2005,
 
             style: {
                 border: background,
@@ -2717,7 +2716,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "TM_3002_SNG",
+            id: "TM_2002_SNG",
             data: {
                 label: (
                     <div
@@ -2731,7 +2730,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.TM_3002_SNG,
+            position: positions.TM_2002_SNG,
 
             style: {
                 border: background,
@@ -2744,7 +2743,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "TM_3003_SNG",
+            id: "TM_2003_SNG",
             data: {
                 label: (
                     <div
@@ -2758,7 +2757,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.TM_3003_SNG,
+            position: positions.TM_2003_SNG,
 
             style: {
                 border: background,
@@ -2771,7 +2770,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "TT_3004",
+            id: "TT_2004",
             data: {
                 label: (
                     <div
@@ -2785,7 +2784,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.TT_3004,
+            position: positions.TT_2004,
 
             style: {
                 border: background,
@@ -2798,7 +2797,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "TT_3003",
+            id: "TT_2003",
             data: {
                 label: (
                     <div
@@ -2812,7 +2811,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.TT_3003,
+            position: positions.TT_2003,
 
             style: {
                 border: background,
@@ -2825,7 +2824,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "FCV_3001",
+            id: "FCV_1001",
             data: {
                 label: (
                     <div
@@ -2839,7 +2838,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.FCV_3001,
+            position: positions.FCV_1001,
 
             style: {
                 border: background,
@@ -2852,7 +2851,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "WB_3001",
+            id: "WB_1001",
             data: {
                 label: (
                     <div
@@ -2866,7 +2865,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.WB_3001,
+            position: positions.WB_1001,
             zIndex: 999999,
             style: {
                 border: background,
@@ -2883,7 +2882,7 @@ export default function Graphic_SNG_HUNGYEN() {
             position: positions.SDV_Name,
             type: "custom",
             data: {
-                label: <div>SDV-3004</div>,
+                label: <div>SDV-2004</div>,
             },
 
             sourcePosition: Position.Right,
@@ -2892,8 +2891,8 @@ export default function Graphic_SNG_HUNGYEN() {
                 fontSize: 25,
                 fontWeight: 600,
                 padding: 5,
-                border:'none',
-                color:'white',
+                border: "none",
+                color: "white",
                 background: "green",
                 borderRadius: 5,
             },
@@ -3091,7 +3090,7 @@ export default function Graphic_SNG_HUNGYEN() {
         },
 
         {
-            id: "HV_3001",
+            id: "HV_1001",
             data: {
                 label: (
                     <div
@@ -3105,7 +3104,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     </div>
                 ),
             },
-            position: positions.HV_3001,
+            position: positions.HV_1001,
 
             style: {
                 border: background,
@@ -3209,7 +3208,7 @@ export default function Graphic_SNG_HUNGYEN() {
                             fontWeight: 600,
                         }}
                     >
-                        SNG HUNG YEN
+                        SNG BINH DUONG
                     </div>
                 ),
             },
@@ -3484,25 +3483,25 @@ export default function Graphic_SNG_HUNGYEN() {
                         ...prevPositions,
                         BUFFER_TANK_NAME: position,
                     }));
-                } else if (id === "PT_3006_BOTTOM") {
+                } else if (id === "PT_2005_BOTTOM") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3006_BOTTOM: position,
+                        PT_2005_BOTTOM: position,
                     }));
-                } else if (id === "PT_3006_TOP") {
+                } else if (id === "PT_2005_TOP") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3006_TOP: position,
+                        PT_2005_TOP: position,
                     }));
-                } else if (id === "PT_3006_BOTTOM_COL") {
+                } else if (id === "PT_2005_BOTTOM_COL") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3006_BOTTOM_COL: position,
+                        PT_2005_BOTTOM_COL: position,
                     }));
-                } else if (id === "PT_3006_TOP_COL") {
+                } else if (id === "PT_2005_TOP_COL") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3006_TOP_COL: position,
+                        PT_2005_TOP_COL: position,
                     }));
                 } else if (id === "Temperature_TOP") {
                     setPositions((prevPositions: any) => ({
@@ -3559,40 +3558,40 @@ export default function Graphic_SNG_HUNGYEN() {
                         ...prevPositions,
                         BallValue33: position,
                     }));
-                } else if (id === "PT_3005") {
+                } else if (id === "PT_2004") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3005: position,
+                        PT_2004: position,
                     }));
-                } else if (id === "PT_3006") {
+                } else if (id === "PT_2005") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_3006: position,
+                        PT_2005: position,
                     }));
-                } else if (id === "TM_3002_SNG") {
+                } else if (id === "TM_2002_SNG") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TM_3002_SNG: position,
+                        TM_2002_SNG: position,
                     }));
-                } else if (id === "TM_3003_SNG") {
+                } else if (id === "TM_2003_SNG") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TM_3003_SNG: position,
+                        TM_2003_SNG: position,
                     }));
-                } else if (id === "TT_3003") {
+                } else if (id === "TT_2003") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TT_3003: position,
+                        TT_2003: position,
                     }));
-                } else if (id === "TT_3004") {
+                } else if (id === "TT_2004") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        TT_3004: position,
+                        TT_2004: position,
                     }));
-                } else if (id === "FCV_3001") {
+                } else if (id === "FCV_1001") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FCV_3001: position,
+                        FCV_1001: position,
                     }));
                 } else if (id === "SDV_Name") {
                     setPositions((prevPositions: any) => ({
@@ -3604,10 +3603,10 @@ export default function Graphic_SNG_HUNGYEN() {
                         ...prevPositions,
                         SDV: position,
                     }));
-                } else if (id === "WB_3001") {
+                } else if (id === "WB_1001") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        WB_3001: position,
+                        WB_1001: position,
                     }));
                 } else if (id === "PSV01") {
                     setPositions((prevPositions: any) => ({
@@ -3634,10 +3633,10 @@ export default function Graphic_SNG_HUNGYEN() {
                         ...prevPositions,
                         WB_Setpoint: position,
                     }));
-                } else if (id === "HV_3001") {
+                } else if (id === "HV_1001") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        HV_3001: position,
+                        HV_1001: position,
                     }));
                 } else if (id === "RATIO_MODE") {
                     setPositions((prevPositions: any) => ({
@@ -3711,7 +3710,10 @@ export default function Graphic_SNG_HUNGYEN() {
     // };
 
     // useEffect(() => {
-    //     localStorage.setItem("positionSNG_HUNGYEN", JSON.stringify(positions));
+    //     localStorage.setItem(
+    //         "positionSNG_BINHDUONG",
+    //         JSON.stringify(positions)
+    //     );
     // }, [positions]);
 
     return (

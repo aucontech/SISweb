@@ -7,6 +7,7 @@ import { MegaMenu } from 'primereact/megamenu';
 import React, { useState } from 'react'
 import Graphic_SNG_BINHDUONG from '../../SNG/SNG_BINHDUONG/Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG';
 import Graphic_CNG_BINHDUONG from '../../CNG_BINHDUONG/GraphicPRU/Graphic_CNG_BINHDUONG';
+import Graphic_SNG_BD from '../../SNG/SNG_BD/Graphic_SNG_HUNGYEN/Graphic_SNG_BD';
 
 export default function Page() {
     const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<Graphic_CNG_BINHDUONG />);
@@ -43,7 +44,7 @@ export default function Page() {
     
                   { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<Graphic_CNG_BINHDUONG
                   />, 'CNG BINH DUONG') },
-                  { label: 'SNG BINH DUONG', command: () => CNG_CLICK(<Graphic_SNG_BINHDUONG/>, 'SNG BINH DUONG') },
+                  { label: 'SNG BINH DUONG', command: () => CNG_CLICK(<Graphic_SNG_BD/>, 'SNG BINH DUONG') },
                 
                 ]
               }
