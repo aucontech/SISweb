@@ -21,6 +21,9 @@ import SetUpdata_VREC from './VREC/SetUpdata_VREC';
 import SetUpdata_LGDS from './LGDS/SetUpdata_LGDS';
 import SetUpdata_LGDSTest from './LGDS/SetUpdata_LGDSTest';
 import SetUpdata_SNG_PRU from './SNG_PRU/SetUpdata_SNG_PRU';
+import SetupDataTest from '../setupdatatest/page';
+import SetupData_Test from '../TestFullScreen/page';
+import LowHighDataTestAlarm from './LowHigTestAlarm/LowHighData';
 
 
           
@@ -120,9 +123,9 @@ export default function GraphicSogec() {
 
               { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
 
-              // { label: 'CNG PRU', command: () => handleItemClick(<GraphicPRU />, 'PCN PRU') },
+              { label: 'Test', command: () => NG_Click(<SetupData_Test />, 'Test') },
 
-              // { label: 'LGDS-Test', command: () => NG_Click(<SetUpdata_LGDSTest/>, 'LGDS-Test') },
+              { label: 'Test-Setup', command: () => NG_Click(<LowHighDataTestAlarm/>, 'Test-Setup') },
 
 
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }

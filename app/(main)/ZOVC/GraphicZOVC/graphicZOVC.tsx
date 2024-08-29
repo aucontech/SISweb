@@ -257,7 +257,7 @@ export default function GraphicZOCV() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -267,7 +267,7 @@ export default function GraphicZOCV() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
@@ -1858,7 +1858,7 @@ export default function GraphicZOCV() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 25,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -1961,8 +1961,7 @@ export default function GraphicZOCV() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
+                                      
                                         }}
                                     >
                                         {Conn_STTValue}
@@ -1971,16 +1970,12 @@ export default function GraphicZOCV() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     ></p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     ></p>
                                 </div>
@@ -2138,7 +2133,7 @@ export default function GraphicZOCV() {
               GD_none2: { x: -311.4848030174507, y: 1042.5915840896632 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1140.982952877127, y: 418.9855378563634 },
+              Header: { x: -1070.982952877127, y: 418.9855378563634 },
               Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
               Line2_NONE1: { x: -766.4885863058424, y: 1046.097424130381 },
               LineBall_1_1: { x: -1291.5317402818896, y: 1045.9869361614612 },
@@ -2279,7 +2274,7 @@ export default function GraphicZOCV() {
               },
               overlay_line7: { x: -359.506514204806, y: 1091.8202658573925 },
               overlay_line13: { x: 305.0008480217779, y: 1098.180980141821 },
-              timeUpdate3: { x: -1256.5918369525343, y: 480.00871223251704 },
+              timeUpdate3: { x: -1256.5918369525343, y: 500.00871223251704 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -2537,7 +2532,7 @@ export default function GraphicZOCV() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: background,
+                background: 'none',
                 width: 1,
                 height: 1,
             },
@@ -4289,7 +4284,7 @@ export default function GraphicZOCV() {
                         <div>
                             <p
                                 style={{
-                                    fontSize: 45,
+                                    fontSize: 55,
                                     fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
@@ -4386,8 +4381,7 @@ export default function GraphicZOCV() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
-
+                width: 500,
                 height: 10,
             },
             targetPosition: Position.Bottom,
@@ -4761,8 +4755,8 @@ export default function GraphicZOCV() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 420,
-                height: 190,
+                width: 580,
+                height: 270,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -4806,43 +4800,43 @@ export default function GraphicZOCV() {
 
         //============================ T_JUNTION ==========================
 
-        {
-            id: "T_juntion_11",
-            position: positions.T_juntion_11,
-            type: "custom",
-            data: {
-                label: <div>{juntionBottom}</div>,
-            },
+        // {
+        //     id: "T_juntion_11",
+        //     position: positions.T_juntion_11,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionBottom}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "T_juntion_14",
-            position: positions.T_juntion_14,
-            type: "custom",
-            data: {
-                label: <div>{juntionTop}</div>,
-            },
+        // {
+        //     id: "T_juntion_14",
+        //     position: positions.T_juntion_14,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionTop}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
         //===============================  Alarm center ===========================
 
