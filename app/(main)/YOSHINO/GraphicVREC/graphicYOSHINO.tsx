@@ -265,7 +265,7 @@ export default function GraphicYOSHINO() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -275,7 +275,7 @@ export default function GraphicYOSHINO() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
@@ -1996,7 +1996,7 @@ export default function GraphicYOSHINO() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 25,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -2099,8 +2099,6 @@ export default function GraphicYOSHINO() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     >
                                         {Conn_STTValue}
@@ -2109,16 +2107,13 @@ export default function GraphicYOSHINO() {
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
+                                        
                                         }}
                                     ></p>
                                     <p
                                         style={{
                                             color: "white",
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     ></p>
                                 </div>
@@ -2387,7 +2382,8 @@ export default function GraphicYOSHINO() {
               GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1200.522229109229, y: 412.1166791425992 },
+              Header: { x: -1120.982952877127, y: 418.9855378563634 },
+
               Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
               Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
               LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
@@ -2501,7 +2497,8 @@ export default function GraphicYOSHINO() {
                   x: -300.41401361805697,
                   y: 1249.8955661985747,
               },
-              borderWhite: { x: -1297.214163674923, y: 409.37223471887046 },
+              borderWhite: { x: -1277.3840968192662, y: 415.6555633656558 },
+
               data1: { x: -651.6400825086595, y: 713.9244953651255 },
               data2: { x: -651.9488814472836, y: 632.5798654521193 },
               data3: { x: -651.6999350711712, y: 551.1437463452924 },
@@ -2534,7 +2531,8 @@ export default function GraphicYOSHINO() {
               },
               overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
               overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-              timeUpdate3: { x: -1276.0365639809172, y: 474.3014149576477 },
+              timeUpdate3: { x: -1256.5918369525343, y: 500.00871223251704 },
+
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -2792,7 +2790,7 @@ export default function GraphicYOSHINO() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: background,
+                background: 'none',
                 width: 1,
                 height: 1,
             },
@@ -4532,7 +4530,7 @@ export default function GraphicYOSHINO() {
                         <div>
                             <p
                                 style={{
-                                    fontSize: 45,
+                                    fontSize: 55,
                                     fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
@@ -4629,8 +4627,7 @@ export default function GraphicYOSHINO() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
-
+                width: 500,
                 height: 10,
             },
             targetPosition: Position.Bottom,
@@ -5006,8 +5003,8 @@ export default function GraphicYOSHINO() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 420,
-                height: 190,
+                width: 580,
+                height: 270,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -5051,43 +5048,43 @@ export default function GraphicYOSHINO() {
 
         //============================ T_JUNTION ==========================
 
-        {
-            id: "T_juntion_11",
-            position: positions.T_juntion_11,
-            type: "custom",
-            data: {
-                label: <div>{juntionBottom}</div>,
-            },
+        // {
+        //     id: "T_juntion_11",
+        //     position: positions.T_juntion_11,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionBottom}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "T_juntion_14",
-            position: positions.T_juntion_14,
-            type: "custom",
-            data: {
-                label: <div>{juntionTop}</div>,
-            },
+        // {
+        //     id: "T_juntion_14",
+        //     position: positions.T_juntion_14,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionTop}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
         //===============================  Alarm center ===========================
 

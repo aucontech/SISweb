@@ -48,7 +48,7 @@ interface ValueStateMap {
 const background = "#036E9B";
 export const colorNameValue = "black";
 export const colorData = "green";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
@@ -318,7 +318,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -328,7 +328,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
@@ -1588,12 +1588,12 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     borderRadius: 5,
-                                    bottom: 4,
+                                    
                                     backgroundColor:
                                         exceedThresholdEVC_01_Flow_at_Base_Condition &&
                                         !maintainEVC_01_Flow_at_Base_Condition
@@ -1655,11 +1655,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1722,11 +1722,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1790,11 +1790,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     background:
@@ -1859,11 +1859,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1927,11 +1927,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -1995,11 +1995,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -2063,11 +2063,11 @@ export default function Graphic_CNG_BINHDUONG() {
                             <div
                                 style={{
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    bottom: 4,
+                                    
 
                                     borderRadius: 5,
                                     backgroundColor:
@@ -2130,7 +2130,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2193,7 +2193,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2257,7 +2257,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2320,7 +2320,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2385,7 +2385,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2450,7 +2450,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2517,7 +2517,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2582,7 +2582,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2645,7 +2645,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
@@ -2669,7 +2669,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
@@ -2691,7 +2691,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     fontSize: 18,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: "black" }}>
@@ -2713,7 +2713,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     fontSize: 18,
 
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: "black" }}>
@@ -2798,7 +2798,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2862,7 +2862,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2926,7 +2926,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                 style={{
                                     borderRadius: 5,
                                     fontSize: 22,
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -2990,7 +2990,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
@@ -3014,7 +3014,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
@@ -3038,7 +3038,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
@@ -3062,7 +3062,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                     color: "white",
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
@@ -3081,7 +3081,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 20,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -3095,7 +3095,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         }}
                                     >
                                         {" "}
-                                        EVC 01 :{" "}
+                                        EVC 01 
                                     </p>
                                     <p
                                         style={{
@@ -3104,7 +3104,7 @@ export default function Graphic_CNG_BINHDUONG() {
                                         }}
                                     >
                                         {" "}
-                                        EVC 02 :{" "}
+                                        EVC 02 
                                     </p>
 
                                     <p
@@ -3114,9 +3114,42 @@ export default function Graphic_CNG_BINHDUONG() {
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        PLC 
                                     </p>
                                 </div>
+
+
+                                <div>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :{" "}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :{" "}
+                                    </p>
+
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :{" "}
+                                    </p>
+                                </div>
+
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
@@ -3182,9 +3215,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
                                             marginLeft: 15,
+
+                                           
                                         }}
                                     >
                                         {EVC_01_Conn_STTValue}
@@ -3192,9 +3225,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
                                             marginLeft: 15,
+
                                         }}
                                     >
                                         {EVC_02_Conn_STTValue}
@@ -3202,9 +3234,8 @@ export default function Graphic_CNG_BINHDUONG() {
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
                                             marginLeft: 15,
+
                                         }}
                                     >
                                         {PLC_Conn_STT}
@@ -3422,7 +3453,7 @@ export default function Graphic_CNG_BINHDUONG() {
               FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
               GD_2001: { x: -989.3020106788827, y: 1318.7155007722488 },
               GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
-              Header: { x: -2332.820092483261, y: 648.7682137524797 },
+              Header: { x: -2332.820092483261, y: 618.7682137524797 },
               PCV_2001A: { x: -1673.1177611019, y: 1384.1107119962714 },
               PCV_2001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
               PCV_2001A_SmallBallVavle: {
@@ -3587,12 +3618,16 @@ export default function Graphic_CNG_BINHDUONG() {
               PT_2003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
               PT_2003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
               PT_2003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
-              SDV_2001A: { x: -2375.7904529874913, y: 1046.6822941858263 },
-              SDV_2001A_Name: { x: -2408.757431714083, y: 1018.4506281074462 },
-              SDV_2001B: { x: -2377.0898761861, y: 1379.0178060073683 },
-              SDV_2001B_Name: { x: -2411.6354714981053, y: 1348.6127064386965 },
-              SDV_2002: { x: -653.7026272334658, y: 1210.1260672163446 },
-              SDV_2002_Name: { x: -694.8783133128501, y: 1178.06997145104 },
+
+              SDV_2001A: { x: -2366.3636954964386, y: 1046.6978648787797 },
+              SDV_2001A_Name:  { x: -2383.319090652285, y: 1021.7959995852489 },
+              SDV_2001B: { x: -2364.216934032177, y: 1378.662715302721 },
+              SDV_2001B_Name:{ x: -2383.0887467126913, y: 1353.984343990213 },
+              SDV_2002: { x: -654.0856743065801, y: 1208.5938789238871 },
+              SDV_2002_Name: { x: -674.9837678308808, y: 1182.0376431738848 },
+
+
+
               TT_2001: { x: -1024.6693805861637, y: 1196.2161585621343 },
               TT_2001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
               TT_2001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
@@ -3601,7 +3636,7 @@ export default function Graphic_CNG_BINHDUONG() {
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
               bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
               bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
-              borderWhite: { x: -2378.220025932068, y: 632.5724848353368 },
+              borderWhite: { x: -2351.6807146248475, y: 607.5943094873642 },
               line1: { x: -2410.5925492337, y: 1618.373867274551 },
               line2: { x: -2410.891552880127, y: 1598.1196367183622 },
               line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
@@ -3615,7 +3650,8 @@ export default function Graphic_CNG_BINHDUONG() {
               line10: { x: -531.9035836581911, y: 1260.593609780011 },
               line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
               percent: { x: -405.6683476271253, y: 1298.7587875755169 },
-              timeUpdate3: { x: -2336.2287424299593, y: 709.0412944066101 },
+              timeUpdate3: { x: -2305.9237339446345, y: 702.7171281735419 },
+
           };
 
     const [positions, setPositions] = useState(initialPositions);
@@ -3641,7 +3677,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         <div>
                             <p
                                 style={{
-                                    fontSize: 35,
+                                    fontSize: 50,
                                     fontWeight: 600,
                                     color: "#ffaa00",
                                 }}
@@ -3659,7 +3695,7 @@ export default function Graphic_CNG_BINHDUONG() {
             style: {
                 background: background,
                 border: background,
-                width: 330,
+                width: 480,
 
                 height: 10,
             },
@@ -3759,7 +3795,7 @@ export default function Graphic_CNG_BINHDUONG() {
             targetPosition: Position.Bottom,
             style: {
                 fontSize: 18,
-                fontWeight: 500,
+                fontWeight: 600,
                 padding: 5,
 
                 background: "white",
@@ -3778,7 +3814,7 @@ export default function Graphic_CNG_BINHDUONG() {
             targetPosition: Position.Bottom,
             style: {
                 fontSize: 18,
-                fontWeight: 500,
+                fontWeight: 600,
                 padding: 5,
 
                 background: "white",
@@ -3794,7 +3830,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         style={{
                             color: "green",
                             fontSize: 18,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         {" "}
@@ -3820,7 +3856,7 @@ export default function Graphic_CNG_BINHDUONG() {
                         style={{
                             color: "green",
                             fontSize: 18,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         {" "}
@@ -5990,7 +6026,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             fontSize: 13,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         SDV_2001B
@@ -6015,7 +6051,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             fontSize: 13,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         SDV_2002
@@ -6046,10 +6082,12 @@ export default function Graphic_CNG_BINHDUONG() {
             zIndex: 999999,
             style: {
                 fontSize: 18,
-                fontWeight: 500,
-                padding: 5,
+                fontWeight: 600,
                 color: "white",
-                background: "none",
+                background: "green",
+                width: 120,
+                padding: 2,
+
                 border: "none",
                 borderRadius: 5,
             },
@@ -6063,7 +6101,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             fontSize: 18,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         SDV-2001B
@@ -6075,10 +6113,12 @@ export default function Graphic_CNG_BINHDUONG() {
             zIndex: 999999,
             style: {
                 fontSize: 18,
-                fontWeight: 500,
-                padding: 5,
+                fontWeight: 600,
                 color: "white",
-                background: "none",
+                background: "green",
+                width: 120,
+                padding: 2,
+
                 border: "none",
                 borderRadius: 5,
             },
@@ -6092,7 +6132,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     <div
                         style={{
                             fontSize: 18,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }}
                     >
                         SDV-2002
@@ -6103,10 +6143,12 @@ export default function Graphic_CNG_BINHDUONG() {
             targetPosition: Position.Bottom,
             style: {
                 fontSize: 18,
-                fontWeight: 500,
-                padding: 5,
+                fontWeight: 600,
                 color: "white",
-                background: "none",
+                background: "green",
+                width: 120,
+                padding: 2,
+
                 border: "none",
                 borderRadius: 5,
             },
@@ -6288,12 +6330,12 @@ export default function Graphic_CNG_BINHDUONG() {
                 ),
             },
             position: positions.borderWhite,
-
+zIndex:99999,
             style: {
-                background: background,
+                background: 'none',
                 border: "1px solid white",
-                width: 420,
-                height: 190,
+                width: 500,
+                height: 250,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -6357,7 +6399,7 @@ export default function Graphic_CNG_BINHDUONG() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
+                width: 430,
 
                 height: 10,
             },
@@ -7176,8 +7218,8 @@ export default function Graphic_CNG_BINHDUONG() {
                     // onNodeDragStop={onNodeDragStop}
                     nodesDraggable={false} // Cho phép kéo thả các nút
                     fitView
-                    minZoom={0.5}
-                    maxZoom={2}
+                    minZoom={0.3}
+                    maxZoom={3}
                 >
                     <Controls />
                 </ReactFlow>
