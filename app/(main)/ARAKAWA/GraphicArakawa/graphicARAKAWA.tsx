@@ -291,7 +291,7 @@ export default function GraphicARAKAWA() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -301,7 +301,7 @@ export default function GraphicARAKAWA() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
@@ -2609,7 +2609,7 @@ export default function GraphicARAKAWA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 25,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -2741,9 +2741,6 @@ export default function GraphicARAKAWA() {
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     >
                                         {EVC_01_Conn_STTValue}
@@ -2751,17 +2748,11 @@ export default function GraphicARAKAWA() {
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     ></p>
                                     <p
                                         style={{
                                             color: "white",
-
-                                            fontSize: 15,
-                                            marginLeft: 15,
                                         }}
                                     ></p>
                                 </div>
@@ -2977,23 +2968,23 @@ export default function GraphicARAKAWA() {
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsDemo");
+    // const storedPositionString = localStorage.getItem("positionsArakawa");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: 283.59624370081974, y: 372.1544066615297 },
-              ArrowRight: { x: 422.75899760122815, y: 1019.765255321493 },
+              ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
               ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
               BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
               BallValue02: { x: -941.3988306125451, y: 1132.519440708925 },
               BallValue03: { x: -774.8687072979039, y: 894.71316658712 },
               BallValue04: { x: -774.5658025383268, y: 1135.4678560265843 },
-              BallValue05: { x: -506.64507277013274, y: 894.2651254012783 },
-              BallValue06: { x: -512.5165840307116, y: 1135.4253608380895 },
+              BallValue05: { x: -509.0847877474188, y: 893.9668677890605 },
+              BallValue06: { x: -513.2960507700657, y: 1135.5047245440524 },
               BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
-              BallValue08: { x: 47.91740872558438, y: 814.7518107766351 },
+              BallValue08: { x: 50.570087938376275, y: 814.4837375610233 },
               BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
               BallValue10: { x: 45.36832776035493, y: 1204.8259588420058 },
               BallValueCenter: {
@@ -3012,58 +3003,58 @@ export default function GraphicARAKAWA() {
                   x: -136.78263324371193,
                   y: 1039.1243048935844,
               },
-              BallValueFirst: { x: 326.9180574625822, y: 1004.910327481087 },
+              BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
               BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
-              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
-              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
+              BallValuePSV: { x: 203.67357075539667, y: 959.1191332071851 },
+              BallValuePSVNone: { x: 223.62015442173225, y: 974.0164290314665 },
               ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
               EVC_01_Flow_at_Base_Condition: {
-                  x: -303.8322378682054,
-                  y: 443.25697939342206,
+                  x: -376.97542980491426,
+                  y: 417.24652675562265,
               },
               EVC_01_Flow_at_Measurement_Condition: {
-                  x: -303.38116960325505,
-                  y: 524.3957326841464,
+                  x: -377.2199453794234,
+                  y: 497.87274583044757,
               },
               EVC_01_Temperature: {
                   x: -1397.4430569167453,
                   y: 1160.0348765205,
               },
               EVC_01_Volume_at_Base_Condition: {
-                  x: -303.37259617210265,
-                  y: 605.4804983117981,
+                  x: -376.7902338698629,
+                  y: 578.7562142826833,
               },
               EVC_01_Volume_at_Measurement_Condition: {
-                  x: -303.0596710316421,
-                  y: 686.6244579208425,
+                  x: -376.5135698793857,
+                  y: 659.5115253024958,
               },
               EVC_02_Temperature: {
                   x: -508.4032164626999,
                   y: 1502.617581291104,
               },
-              FIQ_1901: { x: -303.76959449876404, y: 387.0964584868316 },
-              FIQ_1902: { x: -300.3731832948809, y: 1291.9351796213175 },
-              FIQ_none: { x: -142.4069292713505, y: 797.7725764198564 },
-              FIQ_none2: { x: -140.45882559365475, y: 1187.796149615632 },
-              FIQ_none11: { x: -113.54560233855409, y: 842.6885101213705 },
-              FIQ_none22: { x: -110.8783864969942, y: 1231.9355735307763 },
+              FIQ_1901: { x: -376.7990973971664, y: 361.591656819135 },
+              FIQ_1902: { x: -378.87479945539656, y: 1289.7747070359603 },
+              FIQ_none: { x: -216.373913367841, y: 798.1456910291513 },
+              FIQ_none2: { x: -219.38711961000132, y: 1187.2683013135133 },
+              FIQ_none11: { x: -187.27078106781747, y: 837.68091951101 },
+              FIQ_none22: { x: -189.44080519906746, y: 1231.3610095531735 },
               Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
               Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
               FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
               GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
               GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
               GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
-              GD2: { x: 14.352240295564371, y: 1036.215094699595 },
-              GD2_Name1902: { x: -16.195635233570172, y: 964.6138317045766 },
-              GD2_Value1902: { x: -15.806553587925947, y: 1000.2949872149165 },
-              GD3: { x: 16.04134176178286, y: 1035.243511740587 },
-              GD3_Name1903: { x: -14.745770942269019, y: 963.1634625787311 },
-              GD3_Value1903: { x: -14.401337483820612, y: 998.7295202130439 },
+              GD2: { x: -340.2800293943576, y: 1036.2021439643406 },
+              GD2_Name1902: { x: -369.7973952262454, y: 962.8403828448106 },
+              GD2_Value1902: { x: -369.7416469139345, y: 997.1904549653616 },
+              GD3: { x: 13.374675095116203, y: 1037.243511740587 },
+              GD3_Name1903: { x: -16.079104275602333, y: 963.1634625787311 },
+              GD3_Value1903: { x: -16.401337483820626, y: 998.7295202130439 },
               GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
-              GD_none2: { x: 39.42936374662085, y: 1054.0619416332215 },
-              GD_none3: { x: 40.93067084862969, y: 1056.6594300401225 },
+              GD_none2: { x: -314.7114440042691, y: 1057.0316583224167 },
+              GD_none3: { x: 38.597337515296346, y: 1056.6594300401225 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1278.609399218668, y: 390.03106398167836 },
+              Header: { x: -1238.0252315688263, y: 405.3003492753461 },
               Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
               Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
               LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
@@ -3097,31 +3088,28 @@ export default function GraphicARAKAWA() {
               },
               PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
               PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
-              PSV01: { x: 213.77852426794328, y: 808.706711387803 },
-              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
-              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
-              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
-              PSV_None01: { x: 266.8503515537115, y: 1037.307138448062 },
-              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
-              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
-              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
+              PSV01: { x: 207.11185760127665, y: 811.0400447211364 },
+              PSV_01: { x: 200.98653008354864, y: 895.8399919722908 },
+              PSV_02: { x: 180.98895788876345, y: 876.1112955712117 },
+              PSV_03: { x: 173.24045238769793, y: 808.8513210996118 },
+              PSV_None01: { x: 257.0621581962799, y: 1036.7984512500655 },
+              PSV_None02: { x: 222.36692812908956, y: 920.8510001440285 },
+              PSV_None03: { x: 199.8008032630833, y: 898.0000593013505 },
+              PSV_None04: { x: 196.9168269507448, y: 827.4266363399756 },
               PT1: { x: -1248.552773720958, y: 969.1291015417314 },
-              PT2: { x: -355.7700965043326, y: 1157.411777601272 },
-              PT3: { x: -355.19155879585895, y: 764.6788518659513 },
+              PT2: { x: -0.8878436466131916, y: 1153.060016586797 },
+              PT3: { x: -1.361413707790149, y: 762.4414610609027 },
               PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
-              PT_col2: { x: -322.8377042319204, y: 827.8997160548171 },
-              PT_col3: { x: -323.3980884194193, y: 1220.1882162336972 },
+              PT_col2: { x: 31.255842776130976, y: 825.1751567166594 },
+              PT_col3: { x: 31.542019688165198, y: 1216.1843897830795 },
               PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
-              PT_none2: { x: -322.9912537671802, y: 797.674918261915 },
-              PT_none3: { x: -323.07402304506405, y: 1188.209044624158 },
+              PT_none2: { x: 30.727111036710014, y: 792.2682647427301 },
+              PT_none3: { x: 30.869967141627455, y: 1184.3070444322354 },
               PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
               PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
               Pressure_Trans01: { x: -1370.178598844617, y: 809.4634279335849 },
-              Pressure_Trans02: { x: -714.6393417001174, y: 683.530944025318 },
-              Pressure_Trans03: {
-                  x: -712.0732444985409,
-                  y: 1294.1236870746352,
-              },
+              Pressure_Trans02: { x: 115.09741172932343, y: 656.4198989710571 },
+              Pressure_Trans03: { x: 116.12349758016171, y: 1288.418537187422 },
               SDV: { x: -1140.086396422953, y: 946.7196538271689 },
               SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
               SDV_IMG: { x: -1115.4963861998212, y: 994.274284574213 },
@@ -3165,25 +3153,25 @@ export default function GraphicARAKAWA() {
                   x: 61.881522019472186,
                   y: 1235.5350090951665,
               },
-              borderWhite: { x: -1364.8389453770394, y: 386.2211894520615 },
-              data5: { x: -300.3532394344717, y: 1348.2148594394282 },
-              data6: { x: -300.7144582875339, y: 1429.43381798634 },
-              data7: { x: -300.91705728550136, y: 1510.4363877474143 },
-              data8: { x: -301.18109812908483, y: 1591.3481702772997 },
+              borderWhite: { x: -1370.4376313140192, y: 389.9536467433811 },
+              data5: { x: -378.8925103452375, y: 1345.6321747105403 },
+              data6: { x: -378.5744303511996, y: 1426.4830888584006 },
+              data7: { x: -378.13724965362826, y: 1507.423813422966 },
+              data8: { x: -377.54215501476085, y: 1588.4049539814343 },
               line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
               line2: { x: -842.576582460349, y: 1046.3496174211396 },
               line3: { x: -757.3073258645178, y: 924.8718460504479 },
               line4: { x: -757.4999146099806, y: 1165.8382016355595 },
-              line5: { x: -489.03309071473825, y: 924.9296337167925 },
-              line6: { x: -494.4305602315913, y: 1165.5862868598924 },
-              line7: { x: -431.86459394413737, y: 1039.3455886441188 },
+              line5: { x: -491.51843245307396, y: 924.6826669400624 },
+              line6: { x: -495.2528544333276, y: 1165.9228054364569 },
+              line7: { x: -431.12640487944697, y: 1040.1356866297433 },
               line8: { x: -374.1947990352617, y: 845.1255935069244 },
               line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-              line10: { x: 62.822981890622714, y: 845.1595827580492 },
+              line10: { x: 62.71542285024981, y: 845.1457838268836 },
               line11: { x: 62.86985056843554, y: 1234.683954724923 },
-              line12: { x: 148.8088449083921, y: 1036.4053009106972 },
-              line13: { x: 343.9979627638159, y: 1037.304723005368 },
-              lineBall_13_1: { x: 437.16462943048253, y: 1037.3047230053683 },
+              line12: { x: 149.47997183329176, y: 1035.9323508670825 },
+              line13: { x: 343.3312960971492, y: 1036.9713896720348 },
+              lineBall_13_1: { x: 429.8312960971493, y: 1036.9713896720348 },
               overlay_SmallVavle1: {
                   x: -863.2358516386571,
                   y: 1208.6706191298017,
@@ -3193,8 +3181,8 @@ export default function GraphicARAKAWA() {
                   y: 1046.4815751188462,
               },
               overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
-              overlay_line13: { x: 137.00200473980067, y: 1034.4543574634988 },
-              timeUpdate3: { x: -1337.6290616173037, y: 449.2718388310818 },
+              overlay_line13: { x: 129.352809676908, y: 1033.9170911378842 },
+              timeUpdate3: { x: -1324.5654610976844, y: 503.3924695552174 },
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -3452,7 +3440,7 @@ export default function GraphicARAKAWA() {
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: background,
+                background: 'none',
                 width: 1,
                 height: 1,
             },
@@ -4988,7 +4976,7 @@ export default function GraphicARAKAWA() {
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
         },
         {
             id: "Pressure_Trans03",
@@ -5013,7 +5001,7 @@ export default function GraphicARAKAWA() {
                 background: borderBox,
                 // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
         },
         {
             id: "PT1",
@@ -5196,7 +5184,7 @@ export default function GraphicARAKAWA() {
                         <div>
                             <p
                                 style={{
-                                    fontSize: 45,
+                                    fontSize: 55,
                                     fontWeight: 600,
                                     color: "orange",
                                 }}
@@ -5293,7 +5281,7 @@ export default function GraphicARAKAWA() {
             style: {
                 background: background,
                 border: "none",
-                width: 370,
+                width: 500,
 
                 height: 10,
             },
@@ -5668,8 +5656,8 @@ export default function GraphicARAKAWA() {
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 420,
-                height: 190,
+                width: 580,
+                height: 320,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -5746,43 +5734,43 @@ export default function GraphicARAKAWA() {
         },
         //============================ T_JUNTION ==========================
 
-        {
-            id: "T_juntion_11",
-            position: positions.T_juntion_11,
-            type: "custom",
-            data: {
-                label: <div>{juntionBottom}</div>,
-            },
+        // {
+        //     id: "T_juntion_11",
+        //     position: positions.T_juntion_11,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionBottom}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "T_juntion_14",
-            position: positions.T_juntion_14,
-            type: "custom",
-            data: {
-                label: <div>{juntionTop}</div>,
-            },
+        // {
+        //     id: "T_juntion_14",
+        //     position: positions.T_juntion_14,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionTop}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
         //===============================  Alarm center ===========================
 
@@ -6605,7 +6593,7 @@ export default function GraphicARAKAWA() {
     //     setEditingEnabled(!editingEnabled);
     // };
     // useEffect(() => {
-    //     localStorage.setItem("positionsDemo", JSON.stringify(positions));
+    //     localStorage.setItem("positionsArakawa", JSON.stringify(positions));
     // }, [positions]);
 
     return (

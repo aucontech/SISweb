@@ -1,0 +1,17 @@
+
+.buttonUpdateSetData{
+    height: 25px;
+    border-radius: 5px;
+    border:none;
+    color: white;
+    background:#036E9B ;
+    cursor: pointer;
+    width: 100px;
+    transition: ease-in-out 0.3s;
+    text-align: center;
+
+}
+.buttonUpdateSetData:hover{
+
+    background: #72c0e2;
+  }

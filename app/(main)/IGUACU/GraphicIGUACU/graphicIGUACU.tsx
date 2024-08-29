@@ -273,7 +273,7 @@ export default function GraphicIGUACU() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -283,7 +283,7 @@ export default function GraphicIGUACU() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
@@ -809,9 +809,9 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
     };
 
     const KeyGas = {
-        SM3H: "sm³/h",
+        SM3H: "Sm³/h",
         M3H: "m³/h",
-        SM3: "sm³",
+        SM3: "Sm³",
         M3: "m³",
         BAR: "Bara",
         CC: "°C",
@@ -1442,7 +1442,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1504,7 +1504,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         top: 5,
                                     }}
                                 >
-                                    Bara
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -1520,7 +1520,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                         label: (
                             <div
                                 style={{
-                                    fontSize: 15,
+                                    fontSize: 25,
                                     fontWeight: 500,
 
                                     display: "flex",
@@ -1534,7 +1534,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         }}
                                     >
                                         {" "}
-                                        Gateway :{" "}
+                                        Gateway 
                                     </p>
                                     <p
                                         style={{
@@ -1543,7 +1543,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         }}
                                     >
                                         {" "}
-                                        PLC :{" "}
+                                        PLC 
                                     </p>
 
                                     <p
@@ -1553,7 +1553,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         }}
                                     >
                                         {" "}
-                                        EVC 01 :{" "}
+                                        EVC 01
                                     </p>
                                     <p
                                         style={{
@@ -1562,7 +1562,43 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         }}
                                     >
                                         {" "}
-                                        EVC 02 :{" "}
+                                        EVC 02
+                                    </p>
+                                </div>
+
+
+                                <div>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                       :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                       :
+                                    </p>
+
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >:
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                       :
                                     </p>
                                 </div>
 
@@ -1650,8 +1686,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                                         style={{
                                             color: 'white',
 
-                                            fontSize: 15,
-                                            marginLeft: 15,
+                                        
                                         }}
                                     >
                                        {EVC_01_Conn_STTValue}
@@ -1915,7 +1950,8 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                     GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
                     GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
                     HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-                    Header: { x: -1200.522229109229, y: 412.1166791425992 },
+                    Header: { x: -1100.982952877127, y: 418.9855378563634 },
+
                     Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
                     Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
                     LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
@@ -2028,7 +2064,8 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                         x: -300.41401361805697,
                         y: 1249.8955661985747,
                     },
-                    borderWhite: { x: -1297.214163674923, y: 409.37223471887046 },
+                    borderWhite: { x: -1277.3840968192662, y: 415.6555633656558 },
+
                     data1: { x: -651.6400825086595, y: 713.9244953651255 },
                     data2: { x: -651.9488814472836, y: 632.5798654521193 },
                     data3: { x: -651.6999350711712, y: 551.1437463452924 },
@@ -2061,7 +2098,8 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                     },
                     overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
                     overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-                    timeUpdate3: { x: -1276.0365639809172, y: 474.3014149576477 },
+                    timeUpdate3: { x: -1256.5918369525343, y: 490.00871223251704 },
+
           };
     const [positions, setPositions] = useState(initialPositions);
 
@@ -2095,7 +2133,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             animated: isAnimated07,
             style: {
                 strokeWidth: isAnimated07 && !isAnimatedCenter ? 3 : 10,
-                stroke: isAnimated07 && !isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimated07 && !isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2104,7 +2142,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             animated: isAnimated09 && !isAnimatedCenter, // Bổ sung điều kiện !isAnimatedCenter ở đây
             style: {
                 strokeWidth: isAnimated09 && !isAnimatedCenter ? 3 : 10, // Thêm điều kiện ở đây
-                stroke: isAnimated09 && !isAnimatedCenter ? "white" : lineColor, // Thêm điều kiện ở đây
+                stroke: isAnimated09 && !isAnimatedCenter ? "orange" : lineColor, // Thêm điều kiện ở đây
             },
         }));
 
@@ -2113,7 +2151,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             animated: isAnimatedCenter,
             style: {
                 strokeWidth: isAnimatedCenter ? 3 : 10,
-                stroke: isAnimatedCenter ? "white" : lineColor,
+                stroke: isAnimatedCenter ? "orange" : lineColor,
             },
         }));
 
@@ -2317,7 +2355,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             targetPosition: Position.Top,
             style: {
                 border: "#333333",
-                background: background,
+                background: 'none',
                 width: 1,
                 height: 1,
             },
@@ -4074,7 +4112,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
                         <div>
                             <p
                                 style={{
-                                    fontSize: 45,
+                                    fontSize: 55,
                                     fontWeight: 600,
                                     color: "orange",
                                 }}
@@ -4171,8 +4209,7 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             style: {
                 background: background,
                 border: "none",
-                width: 390,
-
+                width: 500,
                 height: 10,
             },
             targetPosition: Position.Bottom,
@@ -4550,8 +4587,8 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
             style: {
                 background: background,
                 border: "1px solid white",
-                width: 440,
-                height: 220,
+                width: 580,
+                height: 290,
                 borderRadius: 50,
             },
             targetPosition: Position.Bottom,
@@ -4595,43 +4632,43 @@ setMaintainEVC_02_Volume_at_Measurement_Condition(EVC_02_Volume_at_Measurement_C
 
         //============================ T_JUNTION ==========================
 
-        {
-            id: "T_juntion_11",
-            position: positions.T_juntion_11,
-            type: "custom",
-            data: {
-                label: <div>{juntionBottom}</div>,
-            },
+        // {
+        //     id: "T_juntion_11",
+        //     position: positions.T_juntion_11,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionBottom}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "T_juntion_14",
-            position: positions.T_juntion_14,
-            type: "custom",
-            data: {
-                label: <div>{juntionTop}</div>,
-            },
+        // {
+        //     id: "T_juntion_14",
+        //     position: positions.T_juntion_14,
+        //     type: "custom",
+        //     data: {
+        //         label: <div>{juntionTop}</div>,
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
         //===============================  Alarm center ===========================
 

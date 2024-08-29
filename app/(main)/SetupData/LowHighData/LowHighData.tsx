@@ -146,13 +146,8 @@ export default function LowHighData() {
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        EVC_01_Pressure: setEVC_01_Pressure,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-                        PT1:setPT1,
-
-                        GD1:setGD1,
-                        GD2:setGD2,
-                        GD3:setGD3,
+                 
+                      
 
                         EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
                         EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
@@ -168,6 +163,16 @@ export default function LowHighData() {
 
                         EVC_01_Temperature:setEVC_01_Temperature,
                         EVC_02_Temperature:setEVC_02_Temperature,
+
+                        EVC_01_Pressure: setEVC_01_Pressure,
+                        EVC_02_Pressure: setEVC_02_Pressure,
+
+                        GD1:setGD1,
+                        GD2:setGD2,
+                        GD3:setGD3,
+
+                        PT1:setPT1,
+
 
                         EVC_01_Remain_Battery_Service_Life:setEVC_01_Remain_Battery_Service_Life,
                         EVC_02_Remain_Battery_Service_Life:setEVC_02_Remain_Battery_Service_Life,

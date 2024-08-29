@@ -761,10 +761,11 @@ export default function Alarmbell() {
 }
 
 
+// import TestAlarmFull from '@/app/(main)/TestFullScreen/page'
 // import React from 'react'
 
 // export default function Alarmbell() {
 //   return (
-//     <div>Alarmbell</div>
+//     <div>1</div>
 //   )
 // }
