@@ -123,9 +123,9 @@ export default function GraphicSogec() {
 
               { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
 
-              { label: 'Test', command: () => NG_Click(<SetupData_Test />, 'Test') },
+              // { label: 'Test', command: () => NG_Click(<SetupData_Test />, 'Test') },
 
-              { label: 'Test-Setup', command: () => NG_Click(<LowHighDataTestAlarm/>, 'Test-Setup') },
+              // { label: 'Test-Setup', command: () => NG_Click(<LowHighDataTestAlarm/>, 'Test-Setup') },
 
 
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
