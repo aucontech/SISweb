@@ -270,12 +270,12 @@ export default function DemoFlowOTS() {
 
                         EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        PLC_Conn_STT: setPLC_STT,
+                        PLC_Conn_STT:  setPLC_Conn_STT,
                     };
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
                         EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
-                        PLC_Conn_STT: setPLC_Conn_STT,
+                        PLC_Conn_STT:setPLC_STT ,
                     };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
@@ -3857,7 +3857,7 @@ export default function DemoFlowOTS() {
                                         )}
                                     </p>
                                     <p style={{ marginLeft: 5 }}>
-                                        {PLC_STT === "1" ? (
+                                        {PLC_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -4174,19 +4174,21 @@ export default function DemoFlowOTS() {
                                 }}
                                 // onClick={confirmLineDuty}
                             >
-                              {alarmMessage && (
+                             {/* {alarmMessage && (
     <div className="alarm-message">
         {alarmMessage === "ALARM" ? (
-            <span style={{ background: 'red', color: 'white', padding: '10px', borderRadius: '5px',}}>
+            <span style={{ background: 'red', color: 'white', padding: '5px', borderRadius: '3px' }}>
                 {alarmMessage}
             </span>
         ) : alarmMessage === "Maintaining" ? (
-            <span style={{ background: 'orange', color: 'white', padding: '10x', borderRadius: '5px',  }}>
+            <span style={{ background: 'orange', color: 'white', padding: '5px', borderRadius: '3px' }}>
                 {alarmMessage}
             </span>
         ) : null}
     </div>
-)}
+)} */}
+
+{alarmMessage}
 
                             </div>
                         ),
@@ -4791,9 +4793,9 @@ export default function DemoFlowOTS() {
         (exceedThresholdDO_BC_01 && !maintainDO_BC_01)  || 
         (exceedThresholdDO_SV1 && !maintainDO_SV1)  ||
 
-        (exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT)   || 
-        (exceedThresholdEVC_02_Conn_STT && !maintainEVC_02_Conn_STT)  || 
-        (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT) || null
+        (exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT)  ||
+        (exceedThresholdEVC_02_Conn_STT && !maintainEVC_02_Conn_STT)  ||
+        (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT) 
 
 
 
@@ -4855,9 +4857,9 @@ export default function DemoFlowOTS() {
             maintainDO_BC_01  || 
            maintainDO_SV1  ||
     
-        maintainEVC_01_Conn_STT   || 
-            maintainEVC_02_Conn_STT  || 
-           maintainPLC_Conn_STT || null
+            maintainEVC_01_Conn_STT  ||
+            maintainEVC_02_Conn_STT ||
+           maintainPLC_Conn_STT
 
         ) {
             setAlarmMessage("Maintaining");
