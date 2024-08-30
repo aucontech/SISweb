@@ -23,8 +23,6 @@ export const readUser = (): any | null => {
     return userStr ? JSON.parse(userStr) : null;
 };
 
-
-
 export const deleteToken = (): void => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

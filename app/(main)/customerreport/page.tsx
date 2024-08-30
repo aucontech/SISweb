@@ -1,13 +1,14 @@
 "use client";
 import { Button } from "primereact/button";
 import { useCallback, useEffect, useState, useRef } from "react";
-import { InputText } from "primereact/inputtext";
+import { ProgressSpinner } from "primereact/progressspinner";
 import FilterReport from "./components/FilterReport";
 import { ReportRequest, getReport } from "@/api/report.api";
 import { exportReport } from "@/api/report.api";
 import { saveAs } from "file-saver";
 import { UIUtils, Utils } from "@/service/Utils";
 import { Checkbox } from "primereact/checkbox";
+import { InputText } from "primereact/inputtext";
 import {
     OTSUKA_DEVICE_ID,
     CNGHY_DEVICE_ID,
@@ -52,6 +53,7 @@ const CustomerReport = () => {
     const [reportData, setReportData] = useState<any>({});
     const [isLine1Selected, setIsLine1Selected] = useState<boolean>(false);
     const [isLine2Selected, setIsLine2Selected] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(false);
     const toast = useRef<Toast>(null);
     const _onFilterChange = (evt: any) => {
         setFilters(evt);
@@ -60,6 +62,7 @@ const CustomerReport = () => {
         setIsClient(true);
     }, []);
     const _fetchDateReport = useCallback((filters: any) => {
+        setIsLoading(true);
         let reqParams: ReportRequest = {
             deviceId: filters?.device?.id?.id,
             date: filters?.date.getTime(),
@@ -73,6 +76,8 @@ const CustomerReport = () => {
                     heatingValueLine2: resp.heatingValue,
                     deviceInfo: filters.device,
                 });
+                setIsLine1Selected(false);
+                setIsLine2Selected(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -80,10 +85,12 @@ const CustomerReport = () => {
                     toast: toast.current,
                     error: error?.response?.data?.message
                         ? error.response.data.message
-                        : "Soomething went wrong, please try again later",
+                        : "Something went wrong, please try again later",
                 });
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-        //console.log(filters);
     }, []);
 
     useEffect(() => {
@@ -95,123 +102,27 @@ const CustomerReport = () => {
         }
     }, [filters, _fetchDateReport]);
 
-    //     let newReportData = { ...reportData };
-    //     switch (duty) {
-    //         case "grossVolumeVmB1":
-    //             newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "grossVolumeVmB2":
-    //             newReportData.grossVolumeVmCon = newReportData.grossVolumeVmB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "standardVolumeVbB1":
-    //             newReportData.standardVolumeVbCon =
-    //                 newReportData.standardVolumeVbB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "standardVolumeVbB2":
-    //             newReportData.standardVolumeVbCon =
-    //                 newReportData.standardVolumeVbB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "heatingValueLine1":
-    //             newReportData.heatingValueCon = newReportData.heatingValueLine1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "heatingValueLine2":
-    //             newReportData.heatingValueCon = newReportData.heatingValueLine2;
-    //             setReportData(newReportData);
-    //             break;
-
-    //         case "energyQB1":
-    //             newReportData.energyCon = newReportData.energyQB1;
-    //             setReportData(newReportData);
-    //             break;
-
-    //         case "energyQB2":
-    //             newReportData.energyCon = newReportData.energyQB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "avgTemperatureB1":
-    //             console.log("avgTemperatureB1");
-    //             newReportData.avgTemperatureCon =
-    //                 newReportData.avgTemperatureB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "avgTemperatureB2":
-    //             console.log("avgTemperatureB2");
-    //             newReportData.avgTemperatureCon =
-    //                 newReportData.avgTemperatureB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "avgPressureB1":
-    //             console.log("avgPressureB1");
-    //             newReportData.avgPressureCon = newReportData.avgPressureB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "avgPressureB2":
-    //             newReportData.avgPressureCon = newReportData.avgPressureB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "grossVolumeAccumulatedB1":
-    //             newReportData.grossVolumeAccumulatedCon =
-    //                 newReportData.grossVolumeAccumulatedB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "grossVolumeAccumulatedB2":
-    //             newReportData.grossVolumeAccumulatedCon =
-    //                 newReportData.grossVolumeAccumulatedB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "standardVolumeAccumulatedB1":
-    //             newReportData.standardVolumeAccumulatedCon =
-    //                 newReportData.standardVolumeAccumulatedB1;
-    //             setReportData(newReportData);
-    //             break;
-    //         case "standardVolumeAccumulatedB2":
-    //             newReportData.standardVolumeAccumulatedCon =
-    //                 newReportData.standardVolumeAccumulatedB2;
-    //             setReportData(newReportData);
-    //             break;
-    //         default:
-    //             console.log("default");
-    //             break;
-    //     }
-    // };
-
     const handleExportReport = () => {
         exportReport(reportData)
             .then((response: any) => {
-                // const contentDisposition = response.headers.get('content-disposition');
                 const contentDisposition =
                     response.headers["content-disposition"];
                 let fileName = "report.xlsx";
-                // In giá trị của Content-Disposition
-                console.log(contentDisposition);
                 if (contentDisposition) {
-                    // Sử dụng Regular Expression để tìm filename
                     const filenameMatch =
                         contentDisposition.match(/filename="([^"]+)"/);
 
-                    // Kiểm tra xem có tìm thấy kết quả phù hợp không
                     if (filenameMatch) {
                         fileName = filenameMatch[1];
-                        console.log("Tên file:", fileName);
                     } else {
-                        console.log(
-                            "Không tìm thấy tên file trong Content-Disposition"
+                        console.error(
+                            "Can't get filename from header content-disposition"
                         );
                     }
                 } else {
                     console.log("Header Content-Disposition không tồn tại");
                 }
-                // if (contentDisposition) {
-                //     const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-                //     if (filenameMatch && filenameMatch[1]) {
-                //         filename = filenameMatch[1].replace(/['"]/g, '');  // Clean up the filename string
-                //     }
-                // }
+
                 saveAs(response.data, fileName);
             })
             .catch((err) => {
@@ -775,297 +686,318 @@ const CustomerReport = () => {
                     </div>
                 </div>
             </div>
-            {reportData.device && <h2>{reportData.device.name} CUSTOMER</h2>}
 
-            {isClient && (
-                <table>
-                    <tr>
-                        <th>Daily report</th>
-                        <th>
-                            {_renderLineName(1)} <br />
-                        </th>
-                        <th>
-                            {_renderLineName(2)} <br />
-                        </th>
-                        <th>Consumption</th>
-                    </tr>
-                    <tr>
-                        <td>Gross Volume Vm (m³)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.grossVolumeVmB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    console.log("value", e);
-                                    onChangeValue(
-                                        e.target.value,
-                                        "grossVolumeVmB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.grossVolumeVmB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "grossVolumeVmB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.grossVolumeVmCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Standard Volume Vb (Sm³)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.standardVolumeVbB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "standardVolumeVbB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.standardVolumeVbB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "standardVolumeVbB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.standardVolumeVbCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Gross Heating Value (MJ/Sm³)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.heatingValueLine1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "heatingValueLine1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.heatingValueLine2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "heatingValueLine2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.heatingValueCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Energy Q (MMBTU)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.energyQB1}
-                                className="w-full text-center mt-2"
-                                disabled={true}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.energyQB2}
-                                className="w-full text-center mt-2"
-                                disabled={true}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.energyCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Average Temperature (℃)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.avgTemperatureB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "avgTemperatureB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.avgTemperatureB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "avgTemperatureB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.avgTemperatureCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Average Pressure (Bara)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.avgPressureB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "avgPressureB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.avgPressureB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "avgPressureB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={reportData?.avgPressureCon ?? ""}
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Gross Volume Accumulated (m³)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.grossVolumeAccumulatedB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "grossVolumeAccumulatedB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.grossVolumeAccumulatedB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "grossVolumeAccumulatedB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={
-                                    reportData?.grossVolumeAccumulatedCon ?? ""
-                                }
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Standard Volume Accumulated (Sm³)</td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.standardVolumeAccumulatedB1}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "standardVolumeAccumulatedB1"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                type="number"
-                                value={reportData.standardVolumeAccumulatedB2}
-                                className="w-full text-center mt-2"
-                                onChange={(e) => {
-                                    onChangeValue(
-                                        e.target.value,
-                                        "standardVolumeAccumulatedB2"
-                                    );
-                                }}
-                            />
-                        </td>
-                        <td>
-                            <InputText
-                                value={
-                                    reportData?.standardVolumeAccumulatedCon ??
-                                    ""
-                                }
-                                className="w-full text-center mt-2"
-                            />
-                        </td>
-                    </tr>
-                </table>
+            {isLoading ? (
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100vh",
+                    }}
+                >
+                    <ProgressSpinner
+                        style={{ width: "50px", height: "50px" }}
+                    />
+                </div>
+            ) : (
+                isClient && (
+                    <table>
+                        <tr>
+                            <th>Daily report</th>
+                            <th>
+                                {_renderLineName(1)} <br />
+                            </th>
+                            <th>
+                                {_renderLineName(2)} <br />
+                            </th>
+                            <th>Consumption</th>
+                        </tr>
+                        <tr>
+                            <td>Gross Volume Vm (m³)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.grossVolumeVmB1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        console.log("value", e);
+                                        onChangeValue(
+                                            e.target.value,
+                                            "grossVolumeVmB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.grossVolumeVmB2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "grossVolumeVmB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={reportData?.grossVolumeVmCon ?? ""}
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Standard Volume Vb (Sm³)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.standardVolumeVbB1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "standardVolumeVbB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.standardVolumeVbB2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "standardVolumeVbB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={
+                                        reportData?.standardVolumeVbCon ?? ""
+                                    }
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gross Heating Value (MJ/Sm³)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.heatingValueLine1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "heatingValueLine1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.heatingValueLine2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "heatingValueLine2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={reportData?.heatingValueCon ?? ""}
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Energy Q (MMBTU)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.energyQB1}
+                                    className="w-full text-center mt-2"
+                                    disabled={true}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.energyQB2}
+                                    className="w-full text-center mt-2"
+                                    disabled={true}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={reportData?.energyCon ?? ""}
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Average Temperature (℃)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.avgTemperatureB1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "avgTemperatureB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.avgTemperatureB2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "avgTemperatureB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={reportData?.avgTemperatureCon ?? ""}
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Average Pressure (Bara)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.avgPressureB1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "avgPressureB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.avgPressureB2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "avgPressureB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={reportData?.avgPressureCon ?? ""}
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gross Volume Accumulated (m³)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.grossVolumeAccumulatedB1}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "grossVolumeAccumulatedB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={reportData.grossVolumeAccumulatedB2}
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "grossVolumeAccumulatedB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={
+                                        reportData?.grossVolumeAccumulatedCon ??
+                                        ""
+                                    }
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Standard Volume Accumulated (Sm³)</td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={
+                                        reportData.standardVolumeAccumulatedB1
+                                    }
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "standardVolumeAccumulatedB1"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    type="number"
+                                    value={
+                                        reportData.standardVolumeAccumulatedB2
+                                    }
+                                    className="w-full text-center mt-2"
+                                    onChange={(e) => {
+                                        onChangeValue(
+                                            e.target.value,
+                                            "standardVolumeAccumulatedB2"
+                                        );
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <InputText
+                                    value={
+                                        reportData?.standardVolumeAccumulatedCon ??
+                                        ""
+                                    }
+                                    className="w-full text-center mt-2"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                )
             )}
         </>
     );

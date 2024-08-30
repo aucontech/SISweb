@@ -15,6 +15,7 @@ import { MultiSelect } from "primereact/multiselect";
 import dayjs from "dayjs"; // Import dayjs
 
 import { DatePicker } from "antd"; // Import DatePicker from Ant Design
+import { s } from "@fullcalendar/core/internal-common";
 
 const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
 
@@ -50,18 +51,8 @@ const FilterDataTableReport: React.FC<Props> = ({
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
     const [unitSuggestions, setUnitSuggestions] = useState<any[]>([]);
     const [unitAttribute, setUnitAttribute] = useState<any>({});
-
-    // useEffect(() => {
-    //     if (editFilter.dates) {
-    //         setDateRange([
-    //             dayjs(editFilter.dates[0]),
-    //             dayjs(editFilter.dates[1]),
-    //         ]);
-    //     }
-    // }, [editFilter.dates]);
-
+    const [suggFullNames, setSuggFullNames] = useState<any>([]);
     const handleDateRangeChange = (dates: any) => {
-        console.log(dates);
         if (dates !== null) {
             const startDate = dates[0] ? dates[0] : null;
             const endDate = dates[1] ? dates[1] : null;
@@ -199,7 +190,7 @@ const FilterDataTableReport: React.FC<Props> = ({
                 updatedTags[index] = {
                     ...updatedTags[index],
                     [field]: value,
-                    name: value,
+                    name: suggFullNames[value] ? suggFullNames[value] : value,
                     unit: {
                         label: unitAttribute[value] ? unitAttribute[value] : "",
                         value: unitAttribute[value] ? unitAttribute[value] : "",
@@ -308,7 +299,6 @@ const FilterDataTableReport: React.FC<Props> = ({
         }));
     };
     const handleDateRangeOk = (dates: any) => {
-        console.log(dates);
         if (dates && dates.length === 2 && dates[0] && dates[1]) {
             const [start, end] = dates;
             const dateRange = [start, end];
@@ -323,14 +313,25 @@ const FilterDataTableReport: React.FC<Props> = ({
                 editFilter.device.id.id,
                 "Units"
             );
-            Promise.all([pm1, pm2])
+            let pm3 = getSeverAttributesByDeviceandKeys(
+                editFilter.device.id.id,
+                "FullNames"
+            );
+            Promise.all([pm1, pm2, pm3])
                 .then((resp) => {
                     let keys = resp[0].data;
                     let units = resp[1].data;
+                    let fullNames = resp[2].data;
+
                     if (units && units.length > 0) {
                         let unitObj = units[0]["value"];
                         setUnitAttribute(unitObj);
                     }
+                    if (fullNames && fullNames.length > 0) {
+                        let fullNamesObj = fullNames[0]["value"];
+                        setSuggFullNames(fullNamesObj);
+                    }
+
                     setSuggAllTags(keys);
                     setSuggTags(keys);
                 })

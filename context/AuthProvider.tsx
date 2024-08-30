@@ -67,12 +67,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 }
             }
         } catch (error: any) {
+            console.log("error", error);
             if (error?.response?.data?.errorCode === 10) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             }
         } finally {
-           // setIsLoading(() => false);
+            // setIsLoading(() => false);
         }
     }, []);
 

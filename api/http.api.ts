@@ -14,6 +14,14 @@ export const httpApi = axios.create({
     timeout: 100000,
 });
 
+export const api = axios.create({
+    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_API}`,
+    headers: {
+        "Content-Type": "application/json",
+    },
+    timeout: 100000,
+});
+
 httpApi.interceptors.request.use(
     (config) => {
         const token = readToken();
@@ -34,7 +42,6 @@ httpApi.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
-        console.log(error);
         // Check if the error is due to a token expiration and we haven't already retried
         if (
             error?.response?.data?.errorCode === 11 &&
@@ -59,7 +66,6 @@ httpApi.interceptors.response.use(
                     return httpApi(originalRequest);
                 } catch (refreshError) {
                     console.log(refreshError);
-                    //deleteToken();
                     return Promise.reject(refreshError); // If token refresh fails, reject the promise
                 }
             } else {

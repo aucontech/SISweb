@@ -33,7 +33,6 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
     }, [data]);
     useEffect(() => {
         if (editFilter && editFilter.asset && editFilter.asset.id) {
-            console.log(editFilter.asset);
             let reqParams = {
                 fromId: editFilter.asset.id.id,
                 fromType: "ASSET",
@@ -121,8 +120,10 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
                         onChange={(e) => handleChangeValue(e)}
                         mode="decimal"
                         minFractionDigits={2}
+                        style={{ width: "40%" }}
                         maxFractionDigits={5}
                     />
+                    <span> MJ/m³</span>
                 </div>
 
                 <div className="col">

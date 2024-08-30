@@ -1,4 +1,4 @@
-import { httpApi } from "./http.api";
+import { httpApi, api } from "./http.api";
 
 export interface LoginRequest {
     username: string;
@@ -18,7 +18,7 @@ export const login = (loginPayload: LoginRequest): Promise<LoginResponse> => {
 export const refreshToken = (
     tokenPayload: RefreshTokenRequest
 ): Promise<any> => {
-    return httpApi.post<any>("/auth/token", { ...tokenPayload });
+    return api.post<any>("/auth/token", { ...tokenPayload });
 };
 
 export const getCurrentUser = (): Promise<any> => {
