@@ -59,7 +59,8 @@ export default function Alarmbell() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
-    const [notificationsQueue, setNotificationsQueue] = useState<any[]>([]); // Hàng đợi thông báo
+    // const [notificationsQueue, setNotificationsQueue] = useState<any[]>([]); // Hàng đợi thông báo
+    const notificationsQueue = useRef<Notification[]>([]); // Hàng đợi thông báo
     useEffect(() => {
         const user = readUser();
         if (user) {
@@ -204,39 +205,19 @@ export default function Alarmbell() {
                         dataReceive.data.data.length > 0 &&
                         dataReceive.update === null
                     ) {
-                        console.log(dataReceive.data.data);
-                        setNotificationsQueue(() => [...dataReceive.data.data]);
+                        //let keys = majorAlarms.map((alarm: any) => alarm.id.id);
+                        // let notifications = [...criticalAlarms, .
+
+                        processNotification(dataReceive.data.data).then(
+                            (processedAlarms) => {
+                                setNotifications(processedAlarms);
+                                setAlarmCount(dataReceive.data.totalElements);
+                            }
+                        );
+
                         setLoading(false);
-                        let alarmsCount = dataReceive.data.totalElements;
-                        setAlarmCount(alarmsCount);
-                        // let alarms = dataReceive.data.data;
-                        //
-                        // let criticalAlarm = alarms.filter(
-                        //     (alarm: any) => alarm.severity === "CRITICAL"
-                        // );
-                        // let majorAlarm = alarms.filter(
-                        //     (alarm: any) => alarm.severity === "MAJOR"
-                        // );
-                        // if (criticalAlarm.length > majorAlarm.length) {
-                        //     const promise = audioRef.current?.play();
-                        //     if (promise !== undefined) {
-                        //         promise
-                        //             .then(() => {
-                        //                 // Autoplay started!
-                        //             })
-                        //             .catch((error) => {
-                        //                 console.error(
-                        //                     "Autoplay was prevented.",
-                        //                     error
-                        //                 );
-                        //             });
-                        //     }
-                        // } else {
-                        //     handleStopAudio();
-                        // }
-                        // setNotifications(alarms);
-                        //
-                        // setLoading(false);
+                        // let alarmsCount = dataReceive.data.totalElements;
+                        // // setAlarmCount(alarmsCount);
                     } else if (
                         dataReceive.data &&
                         dataReceive.data.data &&
@@ -293,11 +274,11 @@ export default function Alarmbell() {
         }
     };
 
-    const processNotification = async (dataAlarm: any[]) => {
+    const processNotification = useCallback(async (dataAlarm: any[]) => {
         console.log("Processing notification:", dataAlarm);
         let updatedAlarms = await Promise.all(
-            [...dataAlarm].map(async (alarm: any) => {
-                let shouldPlaySound = true; // Mặc định là true
+            dataAlarm.map(async (alarm: any) => {
+                let shouldPlaySound = true;
 
                 if (alarm.severity === "MAJOR") {
                     return { ...alarm };
@@ -311,12 +292,13 @@ export default function Alarmbell() {
                             alarm.entityId.id,
                             tag
                         );
+                        console.log(maintained);
                         shouldPlaySound = !maintained;
                     } catch (error) {
                         console.error(
                             `Failed to fetch attribute data for ${tag} after multiple attempts`
                         );
-                        // Không thay đổi shouldPlaySound, giữ nguyên là true
+                        return { ...alarm, shouldPlaySound: true };
                     }
                 }
 
@@ -327,13 +309,52 @@ export default function Alarmbell() {
             })
         );
 
-        setNotifications([...updatedAlarms]);
-    };
+        return updatedAlarms;
+    }, []);
 
     console.log("not", notifications);
+    // useEffect(() => {
+    //     processNotification(notificationsQueue);
+    // }, [notificationsQueue]);
+    // useEffect(() => {
+    //     const intervalId = setInterval(async () => {
+    //         if (notificationsQueue.current.length > 0) {
+    //             const dataAlarm = notificationsQueue.current.shift(); // Lấy một thông báo từ hàng đợi
+    //             if (
+    //                 dataAlarm &&
+    //                 dataAlarm.alarms &&
+    //                 dataAlarm.alarms.length > 0
+    //             ) {
+    //                 console.log("dataAlarm", dataAlarm);
+    //                 const processedNotification = await processNotification(
+    //                     dataAlarm.alarms
+    //                 ); // Xử lý thông báo
+    //                 setAlarmCount(dataAlarm.alarmCount);
+    //                 setNotifications([...processedNotification]); // Thêm vào danh sách notifications hiện tại
+    //             }
+    //         }
+    //     }, 1000); // Kiểm tra và xử lý hàng đợi mỗi giây
+
+    //     return () => clearInterval(intervalId); // Xóa interval khi component bị unmount
+    // }, []);
+
     useEffect(() => {
-        processNotification(notificationsQueue);
-    }, [notificationsQueue]);
+        notifications.forEach((notif) => {
+            const audioEl = audioRefs.current[notif.id.id];
+            if (audioEl) {
+                if (notif.shouldPlaySound) {
+                    audioEl
+                        .play()
+                        .catch((error) =>
+                            console.error("Audio playback failed:", error)
+                        );
+                } else {
+                    audioEl.pause();
+                    audioEl.currentTime = 0;
+                }
+            }
+        });
+    }, [notifications]);
 
     useEffect(() => {
         if (token) {
@@ -346,36 +367,6 @@ export default function Alarmbell() {
         };
     }, [connectWebSocket, token]);
 
-    useEffect(() => {
-        console.log("notifications", notifications);
-        notifications.forEach((notif: any, index) => {
-            if (notif.shouldPlaySound === true) {
-                const audioEl = audioRefs.current[notif.id.id];
-                console.log("audioEl", audioEl);
-                if (audioEl) {
-                    const playPromise = audioEl.play();
-                    if (playPromise !== undefined) {
-                        playPromise
-                            .catch((error) => {
-                                // Auto-play was prevented
-                                // Show a UI element to let the user manually start playback
-                            })
-                            .then(() => {
-                                // Auto-play started
-                            });
-                    }
-                }
-            } else {
-                console.log("turn alarm off");
-                const audioEl = audioRefs.current[notif.id.id];
-                console.log("audioEl", audioEl);
-                if (audioEl) {
-                    audioEl.pause();
-                    audioEl.currentTime = 0; // Đặt thời gian trở về đầu để chuẩn bị cho lần phát tiếp theo nếu cần
-                }
-            }
-        });
-    }, [notifications]);
     // useEffect(() => {
     //     if (
     //         notifications.length > 0 &&
@@ -563,16 +554,14 @@ export default function Alarmbell() {
     const totalCount =
         subjectCount > 0 ? { totalSubjects: totalSubjectDisplay } : null;
 
-    const handleStopAudio = () => {
-        notifications.forEach((notif: any, index) => {
-            const audioEl = audioRefs.current[notif.id.id];
-            console.log("audioEl", audioEl);
-            if (audioEl) {
-                audioEl.pause();
-                audioEl.currentTime = 0; // Đặt thời gian trở về đầu để chuẩn bị cho lần phát tiếp theo nếu cần
+    const handleStopAudio = useCallback(() => {
+        Object.values(audioRefs.current).forEach((audio) => {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
             }
         });
-    };
+    }, []);
 
     return (
         <div>
@@ -642,7 +631,10 @@ export default function Alarmbell() {
                     </div>
                 )}
             </div>
-            <OverlayPanel style={{ marginLeft: 10, minWidth: 450 }} ref={op}>
+            <OverlayPanel
+                style={{ marginLeft: 10, minWidth: 450, minHeight: 200 }}
+                ref={op}
+            >
                 {loading ? ( // Hiển thị loading spinner khi loading = true
                     <div
                         className="flex justify-content-center align-items-center"
