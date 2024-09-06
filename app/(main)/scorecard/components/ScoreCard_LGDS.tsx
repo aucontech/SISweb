@@ -35,6 +35,7 @@ export default function ScoreCard_LGDS() {
         null
     );
     const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
+    const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -594,6 +595,9 @@ export default function ScoreCard_LGDS() {
             const DI_SD_1_Maintain = res.data.find(
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
+
+
+            
  // =================================================================================================================== 
 
 
@@ -731,6 +735,9 @@ export default function ScoreCard_LGDS() {
         };
 
 // =================================================================================================================== 
+
+
+
 // =================================================================================================================== 
 
 const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
@@ -1972,6 +1979,108 @@ useEffect(() => {
     }, [PT_1003, PT_1003_High, PT_1003_Low, maintainPT_1003]);
     
     // =================================================================================================================== 
+ 
+
+    const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
+
+    const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(null);
+    const [FC_Conn_STT_Low, setFC_Conn_STT_Low] = useState<number | null>(null);
+    const [exceedThresholdFC_Conn_STT, setExceedThresholdFC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainFC_Conn_STT, setMaintainFC_Conn_STT] = useState<boolean>(false);
+    
+    
+    useEffect(() => {
+        const FC_Conn_STTValue = parseFloat(FC_Conn_STT as any);
+        const highValue = FC_Conn_STT_High ?? NaN;
+        const lowValue = FC_Conn_STT_Low ?? NaN;
+    
+        if (!isNaN(FC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Conn_STT) {
+            setExceedThresholdFC_Conn_STT(FC_Conn_STTValue >= highValue || FC_Conn_STTValue <= lowValue);
+        }
+    }, [FC_Conn_STT, FC_Conn_STT_High, FC_Conn_STT_Low, maintainFC_Conn_STT]);
+    
+    // =================================================================================================================== 
+ 
+ 
+    useEffect(() => {
+        if (
+            (exceedThresholdFC_Lithium_Battery_Status && !maintainFC_Lithium_Battery_Status) ||
+            (exceedThresholdFC_Battery_Voltage && !maintainFC_Battery_Voltage) ||
+            (exceedThresholdFC_System_Voltage && !maintainFC_System_Voltage) ||
+            (exceedThresholdFC_Charger_Voltage && !maintainFC_Charger_Voltage) ||
+            (exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT) ||
+            (exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Accumulated_Values_Volume && !maintainFC_01_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_01_Current_Values_Static_Pressure && !maintainFC_01_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_01_Current_Values_Temperature && !maintainFC_01_Current_Values_Temperature) ||
+            (exceedThresholdFC_01_Current_Values_Flow_Rate && !maintainFC_01_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_01_Today_Values_Volume && !maintainFC_01_Today_Values_Volume) ||
+            (exceedThresholdFC_01_Today_Values_Uncorrected_Volume && !maintainFC_01_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Volume && !maintainFC_01_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume && !maintainFC_01_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Volume && !maintainFC_02_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_02_Current_Values_Static_Pressure && !maintainFC_02_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_02_Current_Values_Temperature && !maintainFC_02_Current_Values_Temperature) ||
+            (exceedThresholdFC_02_Current_Values_Flow_Rate && !maintainFC_02_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_02_Today_Values_Volume && !maintainFC_02_Today_Values_Volume) ||
+            (exceedThresholdFC_02_Today_Values_Uncorrected_Volume && !maintainFC_02_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Volume && !maintainFC_02_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume && !maintainFC_02_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdPT_1003 && !maintainPT_1003)
+        ) {
+            setAlarmMessage("ALARM");
+        } else if (
+            maintainFC_Lithium_Battery_Status || maintainFC_Battery_Voltage ||
+            maintainFC_System_Voltage || maintainFC_Charger_Voltage ||
+            maintainFC_Conn_STT || maintainFC_01_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_01_Accumulated_Values_Volume || maintainFC_01_Current_Values_Static_Pressure ||
+            maintainFC_01_Current_Values_Temperature || maintainFC_01_Current_Values_Flow_Rate ||
+            maintainFC_01_Current_Values_Uncorrected_Flow_Rate || maintainFC_01_Today_Values_Volume ||
+            maintainFC_01_Today_Values_Uncorrected_Volume || maintainFC_01_Yesterday_Values_Volume ||
+            maintainFC_01_Yesterday_Values_Uncorrected_Volume || maintainFC_02_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_02_Accumulated_Values_Volume || maintainFC_02_Current_Values_Static_Pressure ||
+            maintainFC_02_Current_Values_Temperature || maintainFC_02_Current_Values_Flow_Rate ||
+            maintainFC_02_Current_Values_Uncorrected_Flow_Rate || maintainFC_02_Today_Values_Volume ||
+            maintainFC_02_Today_Values_Uncorrected_Volume || maintainFC_02_Yesterday_Values_Volume ||
+            maintainFC_02_Yesterday_Values_Uncorrected_Volume || maintainPT_1003
+        ) {
+            setAlarmMessage("Maintaining");
+        } else {
+            setAlarmMessage(null);
+        }
+    }, [
+        exceedThresholdFC_Lithium_Battery_Status, maintainFC_Lithium_Battery_Status,
+        exceedThresholdFC_Battery_Voltage, maintainFC_Battery_Voltage,
+        exceedThresholdFC_System_Voltage, maintainFC_System_Voltage,
+        exceedThresholdFC_Charger_Voltage, maintainFC_Charger_Voltage,
+        exceedThresholdFC_Conn_STT, maintainFC_Conn_STT,
+        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume, maintainFC_01_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Accumulated_Values_Volume, maintainFC_01_Accumulated_Values_Volume,
+        exceedThresholdFC_01_Current_Values_Static_Pressure, maintainFC_01_Current_Values_Static_Pressure,
+        exceedThresholdFC_01_Current_Values_Temperature, maintainFC_01_Current_Values_Temperature,
+        exceedThresholdFC_01_Current_Values_Flow_Rate, maintainFC_01_Current_Values_Flow_Rate,
+        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate, maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_01_Today_Values_Volume, maintainFC_01_Today_Values_Volume,
+        exceedThresholdFC_01_Today_Values_Uncorrected_Volume, maintainFC_01_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Volume, maintainFC_01_Yesterday_Values_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume, maintainFC_01_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume, maintainFC_02_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Volume, maintainFC_02_Accumulated_Values_Volume,
+        exceedThresholdFC_02_Current_Values_Static_Pressure, maintainFC_02_Current_Values_Static_Pressure,
+        exceedThresholdFC_02_Current_Values_Temperature, maintainFC_02_Current_Values_Temperature,
+        exceedThresholdFC_02_Current_Values_Flow_Rate, maintainFC_02_Current_Values_Flow_Rate,
+        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate, maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_02_Today_Values_Volume, maintainFC_02_Today_Values_Volume,
+        exceedThresholdFC_02_Today_Values_Uncorrected_Volume, maintainFC_02_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Volume, maintainFC_02_Yesterday_Values_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume, maintainFC_02_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdPT_1003, maintainPT_1003
+    ]);
+    
+ 
     const tagNameFC = {
 
         FC_Lithium_Battery_Status: "Lithium Battery Status (0: Yes - 1: No)",
@@ -2886,6 +2995,7 @@ useEffect(() => {
             
           
         ];
+//=================================================================================
 
     const dataFC = [
         {

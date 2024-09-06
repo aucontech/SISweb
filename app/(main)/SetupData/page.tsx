@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from 'react';
-import DemoFlowOTS from '../OTSUKA/demoGraphicOtsuka/demoFlowOTS';
+import React, { useEffect, useState } from 'react';
 import { MegaMenu } from 'primereact/megamenu';
 
 import SetUpdata_Meiko from '../SetupData/Meiko/SetUpdata_Meiko';
@@ -19,86 +18,201 @@ import SetUpdata_ARAKAWA from './ARAKAWA/SetUpdata_ARAKAWA';
 import SetUpdata_SPMCV from './SPMCV/SetUpdata_SPMCV';
 import SetUpdata_VREC from './VREC/SetUpdata_VREC';
 import SetUpdata_LGDS from './LGDS/SetUpdata_LGDS';
-import SetUpdata_LGDSTest from './LGDS/SetUpdata_LGDSTest';
 import SetUpdata_SNG_PRU from './SNG_PRU/SetUpdata_SNG_PRU';
-import SetupDataTest from '../setupdatatest/page';
-import SetupData_Test from '../TestFullScreen/page';
+
 import LowHighDataTestAlarm from './LowHigTestAlarm/LowHighData';
-
-
-          
+import { InputText } from 'primereact/inputtext';
 
 export default function GraphicSogec() {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<SetUpdata_LGDS />);
-  const [NG, setNG] = useState<string>('LGDS');
+  const [NG, setNG] = useState<string>('NG');
   const [SNG, setSNG] = useState<string>('SNG');
 
   const [CNG, setCNG] = useState<string>('CNG');
   const [LPG, setLPG] = useState<string>('LPG');
 
-  const stationList ={ 
-    stationList :'Station list'
-  }
+  const [searchItem,setSearchItem] = useState<any>()
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const NG_Click = (component: React.ReactNode, newLabel?: string) => {
-    if (component === null && newLabel) {
-      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
-    } else {
-      setActiveComponent(component);
+  useEffect(() => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
     }
-    if (newLabel) {
-      setNG(newLabel);
-    }
-    setCNG('CNG');
-    setSNG('SNG');
-    setLPG('LPG')
-  };
 
-  const CNG_CLICK = (component: React.ReactNode, newLabel?: string) => {
-    if (component === null && newLabel) {
-      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
-    } else {
-      setActiveComponent(component);
-    }
-    if (newLabel) {
-      setCNG(newLabel);
-    }
-    setNG('NG');
-    setSNG('SNG');
-    setLPG('LPG')
+    const stationList = {
+      'LGDS': <SetUpdata_LGDS />,
+      'ZOCV': <SetUpdata_ZOVC />,
+      'KOA': <SetUpdata_KOA />,
+      'NITORI': <SetUpdata_NITORI />,
+      'YOSHINO': <SetUpdata_YOSHINO />,
+      'IGUACU': <SetUpdata_IGUACU />,
+      'ARAKAWA': <SetUpdata_ARAKAWA />,
+      'SPMCV': <SetUpdata_SPMCV />,
+      'VREC': <SetUpdata_VREC />,
+      'OTSUKA': <LowHighData />,
+
+      
+      'MEIKO': <SetUpdata_Meiko />,
 
 
-  };
+      'SNG': <SetUpdata_SNG_PRU />,
 
-  const SNG_Click = (component: React.ReactNode, newLabel?: string) => {
-    if (component === null && newLabel) {
-      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
-    } else {
-      setActiveComponent(component);
-    }
-    if (newLabel) {
-      setSNG(newLabel);
-    }
-    setNG('NG');
-    setCNG('CNG');
-    setLPG('LPG')
+      'SNG BINH DUONG': <SetUpdata_SNG_BINHDUONG />,
+      'SNG HUNG YEN': <SetUpdata_HUNGYEN_SNG />,
+      'CNG PHU MY 3': <SetUpdata_PRU />,
+      'CNG BINH DUONG': <SetUpdata_CNG_BINHDUONG />,
+      'CNG HUNG YEN': <SetUpdata_HUNGYEN />,
+    };
+    const stationGroup = {
+      NG: ['LGDS', 'ZOCV', 'KOA', 'NITORI', 'YOSHINO', 'IGUACU', 'ARAKAWA', 'SPMCV', 'VREC', 'OTSUKA'],
+      LPG: ['MEIKO'],
+      SNG : ['SNG BINH DUONG','SNG HUNG YEN',"SNG"],
+      CNG:["CNG PHU MY 3",'CNG BINH DUONG','CNG HUNG YEN']
+    };
+    const newTimeoutId = setTimeout(() => {
+      const normalizedSearchTerm = searchItem.replace(/\s+/g, '').toUpperCase();
+    
+      const filteredList = Object.keys(stationList).filter(key => {
+        const normalizedKey = key.replace(/\s+/g, '').toUpperCase();
+        return normalizedKey.includes(normalizedSearchTerm);
+      });
+    
+      if (searchItem === '') {
+        setActiveComponent(<SetUpdata_LGDS />);
+        setNG('LGDS');
+        setLPG("LPG")
+        setCNG("CNG")
+        setSNG("SNG")
 
-  };
+      } else if (filteredList.length === 1) {
+        const selectedKey = filteredList[0] as keyof typeof stationList;
+        setActiveComponent(stationList[selectedKey]);
+    
+        let groupName: string | undefined;
+        for (const [group, stations] of Object.entries(stationGroup)) {
+          if (stations.includes(selectedKey)) {
+            groupName = group;
+            break;
+          }
+        }
+    
+        if (groupName === 'SNG') {
+          setSNG(selectedKey);
+          setNG('NG');
+          setCNG('CNG');
+          setLPG('LPG');
+        } else if (groupName === 'CNG') {
+          setCNG(selectedKey);
+          setNG('NG');
+          setSNG('SNG');
+          setLPG('LPG');
+        } else if (groupName === 'NG') {
+          setNG(selectedKey);
+          setCNG('CNG');
+          setSNG('SNG');
+          setLPG('LPG');
+        } else if (groupName === 'LPG') {
+          setLPG(selectedKey);
+          setNG("NG");
+          setCNG('CNG');
+          setSNG("SNG");
+        } 
+      } else if (normalizedSearchTerm === 'SNG' || normalizedSearchTerm === "SNG ") {
+        setActiveComponent(stationList['SNG']);
+        setSNG('SNG');
+      } else if (filteredList.length === 0) {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>No matching component found.</h2>);
+      } else {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>Multiple matches found. Refine your search.</h2>);
+      }
+    }, 1000);
+    
+  
+    
+    setTimeoutId(newTimeoutId);
+  }, [searchItem]);
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchItem(e.target.value);
+    };
+  
+    const NG_Click = (component: React.ReactNode, newLabel?: string) => {
+      if (component === null && newLabel) {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>{newLabel} Updating...</h2>);
+      } else {
+        setActiveComponent(component);
+      }
+      if (newLabel) {
+        setNG(newLabel);
+        setSearchItem(newLabel); 
+      }
+      setCNG('CNG');
+      setSNG('SNG');
+      setLPG('LPG');
 
-  const LPG_Click = (component: React.ReactNode, newLabel?: string) => {
-    if (component === null && newLabel) {
-      setActiveComponent(<h2 style={{textAlign:'center', }}> {newLabel} Updating...</h2>);
-    } else {
-      setActiveComponent(component);
-    }
-    if (newLabel) {
-      setLPG(newLabel);
-    }
-    setNG('NG');
-    setCNG('CNG');
-    setSNG('SNG')
-  };
+    };
+    
+    const CNG_CLICK = (component: React.ReactNode, newLabel?: string) => {
+      if (component === null && newLabel) {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>{newLabel} Updating...</h2>);
+      } else {
+        setActiveComponent(component);
+      }
+      if (newLabel) {
+        setCNG(newLabel);
+        setSearchItem(newLabel); 
+      }
+      setNG('NG');
+      setSNG('SNG');
+      setLPG('LPG');
+
+    };
+    
+    const SNG_Click = (component: React.ReactNode, newLabel?: string) => {
+      if (component === null && newLabel) {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>{newLabel} Updating...</h2>);
+      } else {
+        setActiveComponent(component);
+      }
+      if (newLabel) {
+        setSNG(newLabel);
+        setSearchItem(newLabel); 
+      }
+      setNG('NG');
+      setCNG('CNG');
+      setLPG('LPG');
+
+    };
+    
+    const LPG_Click = (component: React.ReactNode, newLabel?: string) => {
+      if (component === null && newLabel) {
+        setActiveComponent(<h2 style={{ textAlign: 'center' }}>{newLabel} Updating...</h2>);
+      } else {
+        setActiveComponent(component);
+      }
+      if (newLabel) {
+        setLPG(newLabel);
+        setSearchItem(newLabel); 
+      }
+      setNG('NG');
+      setCNG('CNG');
+      setSNG('SNG');
+
+    };
+    
+
+const InputSearch = () => {
+  return <div>
+  <InputText
+        type="text"
+        value={searchItem}
+        onChange={handleSearchChange}
+        placeholder="Search..."
+        style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
+      />
+  </div>
+}
+
 
   const items = [
     {
@@ -107,7 +221,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: stationList.stationList,
+            label:  "Station List" ,
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
 
@@ -123,11 +237,7 @@ export default function GraphicSogec() {
 
               { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
 
-              // { label: 'Test', command: () => NG_Click(<SetupData_Test />, 'Test') },
-
               // { label: 'Test-Setup', command: () => NG_Click(<LowHighDataTestAlarm/>, 'Test-Setup') },
-
-
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
             ]
           }
@@ -141,7 +251,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: stationList.stationList,
+            label: "Station List",
             items: [
               { label:  'SNG ', command: () => SNG_Click(<SetUpdata_SNG_PRU/> , ' SNG ') },
 
@@ -162,7 +272,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: stationList.stationList,
+            label: "Station List",
             items: [
 
               { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
@@ -182,7 +292,7 @@ export default function GraphicSogec() {
       items: [
         [
           {
-            label: stationList.stationList,
+            label: "Station List",
             items: [
          
               { label: 'MEIKO', command: () => LPG_Click(<SetUpdata_Meiko/> , 'MEIKO ') },
@@ -197,8 +307,24 @@ export default function GraphicSogec() {
     },
   ];
 
+
+
   return (
     <>
+      <div
+                    className=""
+                    style={{
+                        position: "absolute",
+                        top: "100px",
+                        right: "40px",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        justifyContent: "center",
+                        borderRadius: "5px",
+                    }}
+                >
+                   {InputSearch()}
+                </div>
       <MegaMenu model={items} style={{ borderRadius: 5 }} />
       {activeComponent}
     </>

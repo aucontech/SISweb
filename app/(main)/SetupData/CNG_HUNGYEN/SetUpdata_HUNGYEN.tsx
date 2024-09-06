@@ -4919,9 +4919,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
              modbus: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>40002	 </span> ,
     
             value: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month}</span> , 
-             high: <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainEVC_01_Remain_Battery_Service_Life}
@@ -4940,9 +4940,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
              modbus: <span style={combineCss.CSSEVC_01_Temperature}>40851	 </span> ,
     
             value: <span style={combineCss.CSSEVC_01_Temperature} > {EVC_01_Temperature}  {nameValue.C}</span> , 
-             high: <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSEVC_01_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainEVC_01_Temperature}
@@ -4960,9 +4960,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
             modbus: <span style={combineCss.CSSEVC_01_Pressure}>40853	 </span> ,
    
            value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure} {nameValue.Bara}</span> , 
-            high: <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
-            update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
+            update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
             onChange={ChangemaintainEVC_01_Pressure}
@@ -4980,9 +4980,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
            modbus: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>40855	 </span> ,
   
           value: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition} > {EVC_01_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
-           high: <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
-           update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
+           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
+           update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
            Maintain:   <Checkbox
            style={{ marginRight: 20, }}
            onChange={ChangemaintainEVC_01_Volume_at_Base_Condition}
@@ -5000,9 +5000,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
           modbus: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>40857	 </span> ,
  
          value: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
-          high: <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
-          low:  <InputText style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
-          update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
+          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
+          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
           Maintain:   <Checkbox
           style={{ marginRight: 20, }}
           onChange={ChangemaintainEVC_01_Volume_at_Measurement_Condition}
@@ -5019,9 +5019,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
          modbus: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>40859	 </span> ,
 
         value: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
-         high: <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
-         update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
+         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
+         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_01_Flow_at_Base_Condition}
@@ -5040,9 +5040,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
         modbus: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>40861	 </span> ,
 
        value: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Condition} {nameValue.m3h} </span> , 
-        high: <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
-        update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
+        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
+        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Flow_at_Measurement_Condition}
@@ -5059,9 +5059,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>40863	 </span> ,
 
       value: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day} > {EVC_01_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
-       high: <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
-       update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
+       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
+       update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
        onChange={ChangemaintainEVC_01_Vb_of_Current_Day}
@@ -5079,9 +5079,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
         modbus: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>40865	 </span> ,
 
        value: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day} > {EVC_01_Vm_of_Current_Day} {nameValue.m3}</span> , 
-        high: <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
-        update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
+        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
+        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Vm_of_Current_Day}
@@ -5100,9 +5100,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
        modbus: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>40867	 </span> ,
 
       value: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day} > {EVC_01_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
-       high: <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
-       update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
+       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
+       update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
        onChange={ChangemaintainEVC_01_Vb_of_Last_Day}
@@ -5121,9 +5121,9 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
       modbus: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>40869	 </span> ,
 
      value: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day} > {EVC_01_Vm_of_Last_Day} {nameValue.m3}</span> , 
-      high: <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
-      update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
+      low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_01_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
+      update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangemaintainEVC_01_Vm_of_Last_Day}
@@ -5142,12 +5142,10 @@ const DataPLC_Conn_STT = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1
     name: <span style={combineCss.CSS_EVC_01_Conn_STT}> EVC Connection Status</span> ,
 
     value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {EVC_01_Conn_STT} {DataEVC_01_Conn_STT}</span>, 
-    high: <InputText  
-disabled={AuthInputHighLow}
+    high: <InputText disabled={AuthInputHighLow}  
     
     style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Conn_STT} onChange={handleInputChangeEVC_01_Conn_STT} inputMode="decimal" />, 
-    low:  <InputText  
-disabled={AuthInputHighLow}
+    low:  <InputText disabled={AuthInputHighLow}  
     
     style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Conn_STT} onChange={handleInputChange2EVC_01_Conn_STT} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
@@ -5175,9 +5173,9 @@ disabled={AuthInputHighLow}
             modbus: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>40002	 </span> ,
        
            value: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life} {nameValue.month}</span> , 
-            high: <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
-            update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
+            update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
             onChange={ChangemaintainEVC_02_Remain_Battery_Service_Life}
@@ -5200,9 +5198,9 @@ disabled={AuthInputHighLow}
     modbus: <span style={combineCss.CSSEVC_02_Temperature}>40851	 </span> ,
 
    value: <span style={combineCss.CSSEVC_02_Temperature} > {EVC_02_Temperature} {nameValue.C}</span> , 
-    high: <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSEVC_02_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
-    update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
+    low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
+    update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
     onChange={ChangemaintainEVC_02_Temperature}
@@ -5221,9 +5219,9 @@ disabled={AuthInputHighLow}
    modbus: <span style={combineCss.CSSEVC_02_Pressure}>40853	 </span> ,
 
   value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure} {nameValue.Bara}</span> , 
-   high: <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSEVC_02_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
-   update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
+   update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangemaintainEVC_02_Pressure}
@@ -5242,9 +5240,9 @@ disabled={AuthInputHighLow}
   modbus: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>40855	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Condition} {nameValue.Sm3}</span> , 
-  high: <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainEVC_02_Volume_at_Base_Condition}
@@ -5262,9 +5260,9 @@ disabled={AuthInputHighLow}
    modbus: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>40857	 </span> ,
 
   value: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Condition} {nameValue.m3}</span> , 
-   high: <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
-   update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
+   update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangemaintainEVC_02_Volume_at_Measurement_Condition}
@@ -5283,9 +5281,9 @@ disabled={AuthInputHighLow}
   modbus: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>40859	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Condition} {nameValue.Sm3h}</span> , 
-  high: <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainEVC_02_Flow_at_Base_Condition}
@@ -5306,9 +5304,9 @@ disabled={AuthInputHighLow}
  modbus: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>40861	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Condition} {nameValue.m3h}</span> , 
- high: <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
- update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+ high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
+ low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
+ update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
  onChange={ChangemaintainEVC_02_Flow_at_Measurement_Condition}
@@ -5326,9 +5324,9 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
   modbus: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>40863	 </span> ,
 
  value: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day} > {EVC_02_Vb_of_Current_Day} {nameValue.Sm3}</span> , 
-  high: <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vb_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainEVC_02_Vb_of_Current_Day}
@@ -5347,9 +5345,9 @@ value: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition} > {EVC_0
  modbus: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>40865	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day} > {EVC_02_Vm_of_Current_Day} {nameValue.m3}</span> , 
- high: <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
- update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+ high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
+ low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vm_of_Current_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
+ update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
  onChange={ChangemaintainEVC_02_Vm_of_Current_Day}
@@ -5368,9 +5366,9 @@ name: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>Standard Volume Vb Yeste
 modbus: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>40867	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day} > {EVC_02_Vb_of_Last_Day} {nameValue.Sm3}</span> , 
-high: <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vb_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainEVC_02_Vb_of_Last_Day}
@@ -5389,9 +5387,9 @@ name: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>Gross Volume Vm Yesterda
 modbus: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>40869	 </span> ,
 
 value: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day} > {EVC_02_Vm_of_Last_Day} {nameValue.m3}</span> , 
-high: <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSEVC_02_Vm_of_Last_Day}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainEVC_02_Vm_of_Last_Day}
@@ -5408,12 +5406,10 @@ modbus: <span style={combineCss.CSS_EVC_02_Conn_STT}>Status</span> ,
 name: <span style={combineCss.CSS_EVC_02_Conn_STT}> EVC Connection Status </span> ,
 
 value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {EVC_02_Conn_STT} {DataEVC_02_Conn_STT}</span>, 
-high: <InputText  
-disabled={AuthInputHighLow}
+high: <InputText disabled={AuthInputHighLow}  
 
 style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Conn_STT} onChange={handleInputChangeEVC_02_Conn_STT} inputMode="decimal" />, 
-low:  <InputText  
-disabled={AuthInputHighLow}
+low:  <InputText disabled={AuthInputHighLow}  
 
 style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Conn_STT} onChange={handleInputChange2EVC_02_Conn_STT} inputMode="decimal" />,
 update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
@@ -5443,9 +5439,9 @@ checked={maintainEVC_02_Conn_STT}
              modbus: <span style={combineCss.CSSPIT_3001A}>40001	 </span> ,
     
             value: <span style={combineCss.CSSPIT_3001A} > {PIT_3001A} {nameValue.BARG}</span> , 
-             high: <InputText style={combineCss.CSSPIT_3001A}   placeholder='High' step="0.1" type='number' value={inputValuePIT_3001A} onChange={handleInputChangePIT_3001A} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSPIT_3001A}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_3001A} onChange={handleInputChange2PIT_3001A} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPIT_3001A}   placeholder='High' step="0.1" type='number' value={inputValuePIT_3001A} onChange={handleInputChangePIT_3001A} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPIT_3001A}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_3001A} onChange={handleInputChange2PIT_3001A} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainPIT_3001A}
@@ -5464,9 +5460,9 @@ checked={maintainEVC_02_Conn_STT}
              modbus: <span style={combineCss.CSSPIT_3001B}>40003	 </span> ,
     
             value: <span style={combineCss.CSSPIT_3001B} > {PIT_3001B} {nameValue.BARG}</span> , 
-             high: <InputText style={combineCss.CSSPIT_3001B}   placeholder='High' step="0.1" type='number' value={inputValuePIT_3001B} onChange={handleInputChangePIT_3001B} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSPIT_3001B}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_3001B} onChange={handleInputChange2PIT_3001B} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPIT_3001B}   placeholder='High' step="0.1" type='number' value={inputValuePIT_3001B} onChange={handleInputChangePIT_3001B} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPIT_3001B}   placeholder='Low' step="0.1" type='number' value={inputValue2PIT_3001B} onChange={handleInputChange2PIT_3001B} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainPIT_3001B}
@@ -5484,9 +5480,9 @@ checked={maintainEVC_02_Conn_STT}
              modbus: <span style={combineCss.CSSPT_3001}>40005</span> ,
     
             value: <span style={combineCss.CSSPT_3001} > {PT_3001} {nameValue.BARG}</span> , 
-             high: <InputText style={combineCss.CSSPT_3001}   placeholder='High' step="0.1" type='number' value={inputValuePT_3001} onChange={handleInputChangePT_3001} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSPT_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3001} onChange={handleInputChange2PT_3001} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3001}   placeholder='High' step="0.1" type='number' value={inputValuePT_3001} onChange={handleInputChangePT_3001} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3001} onChange={handleInputChange2PT_3001} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainPT_3001}
@@ -5505,9 +5501,9 @@ checked={maintainEVC_02_Conn_STT}
              modbus: <span style={combineCss.CSSPT_3002}>40007	 </span> ,
     
             value: <span style={combineCss.CSSPT_3002} > {PT_3002}  {nameValue.BARG}</span> , 
-             high: <InputText style={combineCss.CSSPT_3002}   placeholder='High' step="0.1" type='number' value={inputValuePT_3002} onChange={handleInputChangePT_3002} inputMode="decimal" />, 
-             low:  <InputText style={combineCss.CSSPT_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3002} onChange={handleInputChange2PT_3002} inputMode="decimal" />,
-             update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3002}   placeholder='High' step="0.1" type='number' value={inputValuePT_3002} onChange={handleInputChangePT_3002} inputMode="decimal" />, 
+             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3002} onChange={handleInputChange2PT_3002} inputMode="decimal" />,
+             update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
              Maintain:   <Checkbox
              style={{ marginRight: 20, }}
              onChange={ChangemaintainPT_3002}
@@ -5525,9 +5521,9 @@ checked={maintainEVC_02_Conn_STT}
             modbus: <span style={combineCss.CSSPT_3003}>40009	 </span> ,
    
            value: <span style={combineCss.CSSPT_3003} > {PT_3003}  {nameValue.BARG}</span> , 
-            high: <InputText style={combineCss.CSSPT_3003}   placeholder='High' step="0.1" type='number' value={inputValuePT_3003} onChange={handleInputChangePT_3003} inputMode="decimal" />, 
-            low:  <InputText style={combineCss.CSSPT_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3003} onChange={handleInputChange2PT_3003} inputMode="decimal" />,
-            update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3003}   placeholder='High' step="0.1" type='number' value={inputValuePT_3003} onChange={handleInputChangePT_3003} inputMode="decimal" />, 
+            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_3003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_3003} onChange={handleInputChange2PT_3003} inputMode="decimal" />,
+            update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
             Maintain:   <Checkbox
             style={{ marginRight: 20, }}
             onChange={ChangemaintainPT_3003}
@@ -5546,9 +5542,9 @@ checked={maintainEVC_02_Conn_STT}
            modbus: <span style={combineCss.CSSTT_3001}>40011	 </span> ,
   
           value: <span style={combineCss.CSSTT_3001} > {TT_3001} {nameValue.C}</span> , 
-           high: <InputText style={combineCss.CSSTT_3001}   placeholder='High' step="0.1" type='number' value={inputValueTT_3001} onChange={handleInputChangeTT_3001} inputMode="decimal" />, 
-           low:  <InputText style={combineCss.CSSTT_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3001} onChange={handleInputChange2TT_3001} inputMode="decimal" />,
-           update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTT_3001}   placeholder='High' step="0.1" type='number' value={inputValueTT_3001} onChange={handleInputChangeTT_3001} inputMode="decimal" />, 
+           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTT_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3001} onChange={handleInputChange2TT_3001} inputMode="decimal" />,
+           update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
            Maintain:   <Checkbox
            style={{ marginRight: 20, }}
            onChange={ChangemaintainTT_3001}
@@ -5570,9 +5566,9 @@ checked={maintainEVC_02_Conn_STT}
          modbus: <span style={combineCss.CSSTT_3002}>40013	 </span> ,
 
         value: <span style={combineCss.CSSTT_3002} > {TT_3002} {nameValue.C}</span> , 
-         high: <InputText style={combineCss.CSSTT_3002}   placeholder='High' step="0.1" type='number' value={inputValueTT_3002} onChange={handleInputChangeTT_3002} inputMode="decimal" />, 
-         low:  <InputText style={combineCss.CSSTT_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3002} onChange={handleInputChange2TT_3002} inputMode="decimal" />,
-         update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTT_3002}   placeholder='High' step="0.1" type='number' value={inputValueTT_3002} onChange={handleInputChangeTT_3002} inputMode="decimal" />, 
+         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTT_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_3002} onChange={handleInputChange2TT_3002} inputMode="decimal" />,
+         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
          Maintain:   <Checkbox
          style={{ marginRight: 20, }}
          onChange={ChangemaintainTT_3002}
@@ -5591,9 +5587,9 @@ checked={maintainEVC_02_Conn_STT}
         modbus: <span style={combineCss.CSSGD_3001}>40015	 </span> ,
 
        value: <span style={combineCss.CSSGD_3001} > {GD_3001} {nameValue.LEL}</span> , 
-        high: <InputText style={combineCss.CSSGD_3001}   placeholder='High' step="0.1" type='number' value={inputValueGD_3001} onChange={handleInputChangeGD_3001} inputMode="decimal" />, 
-        low:  <InputText style={combineCss.CSSGD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3001} onChange={handleInputChange2GD_3001} inputMode="decimal" />,
-        update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_3001}   placeholder='High' step="0.1" type='number' value={inputValueGD_3001} onChange={handleInputChangeGD_3001} inputMode="decimal" />, 
+        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_3001} onChange={handleInputChange2GD_3001} inputMode="decimal" />,
+        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
         Maintain:   <Checkbox
         style={{ marginRight: 20, }}
         onChange={ChangemaintainGD_3001}
@@ -5613,9 +5609,9 @@ checked={maintainEVC_02_Conn_STT}
        modbus: <span style={combineCss.CSSSDV_3001A}>40017	 </span> ,
 
       value: <span style={combineCss.CSSSDV_3001A} > {SDV_3001A} {dataSDV_3001A}</span> , 
-       high: <InputText style={combineCss.CSSSDV_3001A}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3001A} onChange={handleInputChangeSDV_3001A} inputMode="decimal" />, 
-       low:  <InputText style={combineCss.CSSSDV_3001A}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3001A} onChange={handleInputChange2SDV_3001A} inputMode="decimal" />,
-       update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3001A}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3001A} onChange={handleInputChangeSDV_3001A} inputMode="decimal" />, 
+       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3001A}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3001A} onChange={handleInputChange2SDV_3001A} inputMode="decimal" />,
+       update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
        Maintain:   <Checkbox
        style={{ marginRight: 20, }}
        onChange={ChangemaintainSDV_3001A}
@@ -5634,9 +5630,9 @@ checked={maintainEVC_02_Conn_STT}
       modbus: <span style={combineCss.CSSSDV_3001B}>40019	 </span> ,
 
      value: <span style={combineCss.CSSSDV_3001B} > {SDV_3001B} {dataSDV_3001B}</span> , 
-      high: <InputText style={combineCss.CSSSDV_3001B}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3001B} onChange={handleInputChangeSDV_3001B} inputMode="decimal" />, 
-      low:  <InputText style={combineCss.CSSSDV_3001B}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3001B} onChange={handleInputChange2SDV_3001B} inputMode="decimal" />,
-      update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3001B}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3001B} onChange={handleInputChangeSDV_3001B} inputMode="decimal" />, 
+      low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3001B}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3001B} onChange={handleInputChange2SDV_3001B} inputMode="decimal" />,
+      update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
       Maintain:   <Checkbox
       style={{ marginRight: 20, }}
       onChange={ChangemaintainSDV_3001B}
@@ -5653,9 +5649,9 @@ checked={maintainEVC_02_Conn_STT}
      modbus: <span style={combineCss.CSSSDV_3002}>40021	 </span> ,
     
     value: <span style={combineCss.CSSSDV_3002} > {SDV_3002} {dataSDV_3002}</span> , 
-     high: <InputText style={combineCss.CSSSDV_3002}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3002} onChange={handleInputChangeSDV_3002} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSSDV_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3002} onChange={handleInputChange2SDV_3002} inputMode="decimal" />,
-     update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3002}   placeholder='High' step="0.1" type='number' value={inputValueSDV_3002} onChange={handleInputChangeSDV_3002} inputMode="decimal" />, 
+     low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_3002} onChange={handleInputChange2SDV_3002} inputMode="decimal" />,
+     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
      onChange={ChangemaintainSDV_3002}
@@ -5674,9 +5670,9 @@ checked={maintainEVC_02_Conn_STT}
      modbus: <span style={combineCss.CSSWater_PG}>40023	 </span> ,
 
     value: <span style={combineCss.CSSWater_PG} > {Water_PG} {dataWater_PG}</span> , 
-     high: <InputText style={combineCss.CSSWater_PG}   placeholder='High' step="0.1" type='number' value={inputValueWater_PG} onChange={handleInputChangeWater_PG} inputMode="decimal" />, 
-     low:  <InputText style={combineCss.CSSWater_PG}   placeholder='Low' step="0.1" type='number' value={inputValue2Water_PG} onChange={handleInputChange2Water_PG} inputMode="decimal" />,
-     update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSWater_PG}   placeholder='High' step="0.1" type='number' value={inputValueWater_PG} onChange={handleInputChangeWater_PG} inputMode="decimal" />, 
+     low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSWater_PG}   placeholder='Low' step="0.1" type='number' value={inputValue2Water_PG} onChange={handleInputChange2Water_PG} inputMode="decimal" />,
+     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
      Maintain:   <Checkbox
      style={{ marginRight: 20, }}
      onChange={ChangemaintainWater_PG}
@@ -5695,9 +5691,9 @@ checked={maintainEVC_02_Conn_STT}
     modbus: <span style={combineCss.CSSWater_LSW}>40025	 </span> ,
 
    value: <span style={combineCss.CSSWater_LSW} > {Water_LSW} {dataWater_LSW}</span> , 
-    high: <InputText style={combineCss.CSSWater_LSW}   placeholder='High' step="0.1" type='number' value={inputValueWater_LSW} onChange={handleInputChangeWater_LSW} inputMode="decimal" />, 
-    low:  <InputText style={combineCss.CSSWater_LSW}   placeholder='Low' step="0.1" type='number' value={inputValue2Water_LSW} onChange={handleInputChange2Water_LSW} inputMode="decimal" />,
-    update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSWater_LSW}   placeholder='High' step="0.1" type='number' value={inputValueWater_LSW} onChange={handleInputChangeWater_LSW} inputMode="decimal" />, 
+    low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSWater_LSW}   placeholder='Low' step="0.1" type='number' value={inputValue2Water_LSW} onChange={handleInputChange2Water_LSW} inputMode="decimal" />,
+    update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
     Maintain:   <Checkbox
     style={{ marginRight: 20, }}
     onChange={ChangemaintainWater_LSW}
@@ -5716,9 +5712,9 @@ checked={maintainEVC_02_Conn_STT}
    modbus: <span style={combineCss.CSSPUMP_1}>40027	 </span> ,
 
   value: <span style={combineCss.CSSPUMP_1} > {PUMP_1} {dataPUMP_1}</span> , 
-   high: <InputText style={combineCss.CSSPUMP_1}   placeholder='High' step="0.1" type='number' value={inputValuePUMP_1} onChange={handleInputChangePUMP_1} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSPUMP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2PUMP_1} onChange={handleInputChange2PUMP_1} inputMode="decimal" />,
-   update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPUMP_1}   placeholder='High' step="0.1" type='number' value={inputValuePUMP_1} onChange={handleInputChangePUMP_1} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPUMP_1}   placeholder='Low' step="0.1" type='number' value={inputValue2PUMP_1} onChange={handleInputChange2PUMP_1} inputMode="decimal" />,
+   update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangemaintainPUMP_1}
@@ -5737,9 +5733,9 @@ checked={maintainEVC_02_Conn_STT}
   modbus: <span style={combineCss.CSSPUMP_2}>40029	 </span> ,
 
  value: <span style={combineCss.CSSPUMP_2} > {PUMP_2} {dataPUMP_2}</span> , 
-  high: <InputText style={combineCss.CSSPUMP_2}   placeholder='High' step="0.1" type='number' value={inputValuePUMP_2} onChange={handleInputChangePUMP_2} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSPUMP_2}   placeholder='Low' step="0.1" type='number' value={inputValue2PUMP_2} onChange={handleInputChange2PUMP_2} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPUMP_2}   placeholder='High' step="0.1" type='number' value={inputValuePUMP_2} onChange={handleInputChangePUMP_2} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPUMP_2}   placeholder='Low' step="0.1" type='number' value={inputValue2PUMP_2} onChange={handleInputChange2PUMP_2} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainPUMP_2}
@@ -5757,9 +5753,9 @@ checked={maintainEVC_02_Conn_STT}
    modbus: <span style={combineCss.CSSHEATER_1}>40031	 </span> ,
 
   value: <span style={combineCss.CSSHEATER_1} > {HEATER_1} {dataHEATER_1}</span> , 
-   high: <InputText style={combineCss.CSSHEATER_1}   placeholder='High' step="0.1" type='number' value={inputValueHEATER_1} onChange={handleInputChangeHEATER_1} inputMode="decimal" />, 
-   low:  <InputText style={combineCss.CSSHEATER_1}   placeholder='Low' step="0.1" type='number' value={inputValue2HEATER_1} onChange={handleInputChange2HEATER_1} inputMode="decimal" />,
-   update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSHEATER_1}   placeholder='High' step="0.1" type='number' value={inputValueHEATER_1} onChange={handleInputChangeHEATER_1} inputMode="decimal" />, 
+   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSHEATER_1}   placeholder='Low' step="0.1" type='number' value={inputValue2HEATER_1} onChange={handleInputChange2HEATER_1} inputMode="decimal" />,
+   update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
    Maintain:   <Checkbox
    style={{ marginRight: 20, }}
    onChange={ChangemaintainHEATER_1}
@@ -5778,9 +5774,9 @@ checked={maintainEVC_02_Conn_STT}
   modbus: <span style={combineCss.CSSHEATER_2}>40033</span> ,
 
  value: <span style={combineCss.CSSHEATER_2} > {HEATER_2} {dataHEATER_2}</span> , 
-  high: <InputText style={combineCss.CSSHEATER_2}   placeholder='High' step="0.1" type='number' value={inputValueHEATER_2} onChange={handleInputChangeHEATER_2} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSHEATER_2}   placeholder='Low' step="0.1" type='number' value={inputValue2HEATER_2} onChange={handleInputChange2HEATER_2} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSHEATER_2}   placeholder='High' step="0.1" type='number' value={inputValueHEATER_2} onChange={handleInputChangeHEATER_2} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSHEATER_2}   placeholder='Low' step="0.1" type='number' value={inputValue2HEATER_2} onChange={handleInputChange2HEATER_2} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainHEATER_2}
@@ -5803,9 +5799,9 @@ checked={maintainEVC_02_Conn_STT}
   modbus: <span style={combineCss.CSSBOILER}>40035	 </span> ,
 
  value: <span style={combineCss.CSSBOILER} > {BOILER} {dataBOILER}</span> , 
-  high: <InputText style={combineCss.CSSBOILER}   placeholder='High' step="0.1" type='number' value={inputValueBOILER} onChange={handleInputChangeBOILER} inputMode="decimal" />, 
-  low:  <InputText style={combineCss.CSSBOILER}   placeholder='Low' step="0.1" type='number' value={inputValue2BOILER} onChange={handleInputChange2BOILER} inputMode="decimal" />,
-  update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSBOILER}   placeholder='High' step="0.1" type='number' value={inputValueBOILER} onChange={handleInputChangeBOILER} inputMode="decimal" />, 
+  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSBOILER}   placeholder='Low' step="0.1" type='number' value={inputValue2BOILER} onChange={handleInputChange2BOILER} inputMode="decimal" />,
+  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
   Maintain:   <Checkbox
   style={{ marginRight: 20, }}
   onChange={ChangemaintainBOILER}
@@ -5824,9 +5820,9 @@ checked={maintainEVC_02_Conn_STT}
  modbus: <span style={combineCss.CSSGD_STATUS}>40037	 </span> ,
 
 value: <span style={combineCss.CSSGD_STATUS} > {GD_STATUS} {dataGD_STATUS}</span> , 
- high: <InputText style={combineCss.CSSGD_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD_STATUS} onChange={handleInputChangeGD_STATUS} inputMode="decimal" />, 
- low:  <InputText style={combineCss.CSSGD_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_STATUS} onChange={handleInputChange2GD_STATUS} inputMode="decimal" />,
- update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+ high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD_STATUS} onChange={handleInputChangeGD_STATUS} inputMode="decimal" />, 
+ low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_STATUS} onChange={handleInputChange2GD_STATUS} inputMode="decimal" />,
+ update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
  Maintain:   <Checkbox
  style={{ marginRight: 20, }}
  onChange={ChangemaintainGD_STATUS}
@@ -5844,9 +5840,9 @@ name: <span style={combineCss.CSSESD_3001}> Emergency Shut ESD-3001</span> ,
 modbus: <span style={combineCss.CSSESD_3001}>40039	 </span> ,
 
 value: <span style={combineCss.CSSESD_3001} > {ESD_3001} {dataESD_3001}</span> , 
-high: <InputText style={combineCss.CSSESD_3001}   placeholder='High' step="0.1" type='number' value={inputValueESD_3001} onChange={handleInputChangeESD_3001} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSESD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2ESD_3001} onChange={handleInputChange2ESD_3001} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSESD_3001}   placeholder='High' step="0.1" type='number' value={inputValueESD_3001} onChange={handleInputChangeESD_3001} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSESD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2ESD_3001} onChange={handleInputChange2ESD_3001} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainESD_3001}
@@ -5867,9 +5863,9 @@ name: <span style={combineCss.CSSHR_BC}>Horn And Beacon</span> ,
 modbus: <span style={combineCss.CSSHR_BC}>40041	 </span> ,
 
 value: <span style={combineCss.CSSHR_BC} > {HR_BC} {dataHR_BC}</span> , 
-high: <InputText style={combineCss.CSSHR_BC}   placeholder='High' step="0.1" type='number' value={inputValueHR_BC} onChange={handleInputChangeHR_BC} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSHR_BC}   placeholder='Low' step="0.1" type='number' value={inputValue2HR_BC} onChange={handleInputChange2HR_BC} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSHR_BC}   placeholder='High' step="0.1" type='number' value={inputValueHR_BC} onChange={handleInputChangeHR_BC} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSHR_BC}   placeholder='Low' step="0.1" type='number' value={inputValue2HR_BC} onChange={handleInputChange2HR_BC} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainHR_BC}
@@ -5891,9 +5887,9 @@ name: <span style={combineCss.CSSSD_3001}>Smoker Detector SD-3001</span> ,
 modbus: <span style={combineCss.CSSSD_3001}>40043	 </span> ,
 
 value: <span style={combineCss.CSSSD_3001} > {SD_3001} {dataSD_3001}</span> , 
-high: <InputText style={combineCss.CSSSD_3001}   placeholder='High' step="0.1" type='number' value={inputValueSD_3001} onChange={handleInputChangeSD_3001} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSSD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2SD_3001} onChange={handleInputChange2SD_3001} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSD_3001}   placeholder='High' step="0.1" type='number' value={inputValueSD_3001} onChange={handleInputChangeSD_3001} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSD_3001}   placeholder='Low' step="0.1" type='number' value={inputValue2SD_3001} onChange={handleInputChange2SD_3001} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainSD_3001}
@@ -5911,9 +5907,9 @@ name: <span style={combineCss.CSSSD_3002}> Smoker Detector SD-3002</span> ,
 modbus: <span style={combineCss.CSSSD_3002}>40045	 </span> ,
 
 value: <span style={combineCss.CSSSD_3002} > {SD_3002} {dataSD_3002}</span> , 
-high: <InputText style={combineCss.CSSSD_3002}   placeholder='High' step="0.1" type='number' value={inputValueSD_3002} onChange={handleInputChangeSD_3002} inputMode="decimal" />, 
-low:  <InputText style={combineCss.CSSSD_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2SD_3002} onChange={handleInputChange2SD_3002} inputMode="decimal" />,
-update:  <Button disabled={AuthInput} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
+high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSD_3002}   placeholder='High' step="0.1" type='number' value={inputValueSD_3002} onChange={handleInputChangeSD_3002} inputMode="decimal" />, 
+low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSD_3002}   placeholder='Low' step="0.1" type='number' value={inputValue2SD_3002} onChange={handleInputChange2SD_3002} inputMode="decimal" />,
+update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData} label='Update' />,
 Maintain:   <Checkbox
 style={{ marginRight: 20, }}
 onChange={ChangemaintainSD_3002}
@@ -5931,12 +5927,10 @@ modbus: <span style={combineCss.CSS_PLC_Conn_STT}>Status</span> ,
 name: <span style={combineCss.CSS_PLC_Conn_STT}>PLC Connection Status</span> ,
 
 value: <span style={combineCss.CSS_PLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span>, 
-high: <InputText  
-disabled={AuthInputHighLow}
+high: <InputText disabled={AuthInputHighLow}  
 
 style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
-low:  <InputText  
-disabled={AuthInputHighLow}
+low:  <InputText disabled={AuthInputHighLow}  
 
 style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
 update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
@@ -6075,7 +6069,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-3001A)  {nameValue.BARG} </span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6087,6 +6081,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6099,7 +6095,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-3001B)  {nameValue.BARG} </span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6111,6 +6107,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6122,7 +6120,7 @@ checked={maintainPLC_Conn_STT}
             {
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-3002A)  {nameValue.BARG} </span>,
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6134,6 +6132,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6147,7 +6147,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-3002B)  {nameValue.BARG} </span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6159,6 +6159,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6175,7 +6177,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-3001A)  {nameValue.BARG}</span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6187,6 +6189,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6199,7 +6203,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-3001B)  {nameValue.BARG}</span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6211,6 +6215,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6225,7 +6231,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-3002A)  {nameValue.BARG}</span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6237,6 +6243,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6250,7 +6258,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PSV-3002B)  {nameValue.BARG}</span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6262,6 +6270,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6274,7 +6284,7 @@ checked={maintainPLC_Conn_STT}
                 Name: <span style={combineCssAttribute.PCV}>IOT gateway phone number </span>,
     
                 Value: (
-                    <InputText
+                    <InputText disabled={AuthInputHighLow}
                         style={combineCssAttribute.PCV}
                         step="0.1"
                         type="Name"
@@ -6286,6 +6296,8 @@ checked={maintainPLC_Conn_STT}
     
                 Update: (
                     <Button
+                    disabled={AuthUpdatePCV}
+
                         className="buttonUpdateSetData"
                         style={{ marginTop: 5 }}
                         label="Update"
@@ -6473,7 +6485,7 @@ checked={maintainPLC_Conn_STT}
 
                     <Column field="Value" header="Value" />
 
-                    {AuthUpdate ?  <Column field="Update" header="Update" />  : " "}
+                    {AuthUpdate ? " " :  <Column field="Update" header="Update" /> }
                 </DataTable>
             </div>
 <br />

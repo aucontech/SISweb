@@ -680,8 +680,9 @@ export default function SetAttribute() {
 
                     {AuthInput ? " " : 
                          <Column field="Update" header="Update" />  
+                    }
 
-}
+                    
                 </DataTable>
             </div>
 
