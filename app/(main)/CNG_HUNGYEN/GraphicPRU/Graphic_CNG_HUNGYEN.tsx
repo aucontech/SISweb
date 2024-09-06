@@ -43,6 +43,12 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 const background = "#036E9B";
 export const colorNameValue = "black";
 export const colorData = "green";
@@ -75,29 +81,15 @@ export default function Graphic_CNG_HUNGYEN() {
     const [PSV_3002A, setPSV_3002A] = useState();
     const [PSV_3002B, setPSV_3002B] = useState();
 
-    const [SDV_3001A, setSDV_3001A] = useState<any>();
-    const [SDV_3001B, setSDV_3001B] = useState<string | null>(null);
-    const [SDV_3002, setSDV_3002] = useState<string | null>(null);
-
-    const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
     const [EVC_01_Conn_STTValue, setEVC_01_Conn_STTValue] = useState<
         string | null
     >(null);
-    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
     const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<
         string | null
     >(null);
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+    const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
-    const [LPG, setLPG] = useState<any>();
-    const [AIR, setAIR] = useState<any>();
-
-    const totalHeight = 500;
-    const totalWidth = 50;
-
-    const DataLPG = (totalHeight * LPG) / 100;
-    const DataAir = (totalHeight * AIR) / 100;
     useEffect(() => {
         ws.current = new WebSocket(url);
 
@@ -253,26 +245,17 @@ export default function Graphic_CNG_HUNGYEN() {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                    const formatValue = (value: any) => {
+                        return value !== null
+                            ? new Intl.NumberFormat("en-US", {
+                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
+                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
+                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
+                              }).format(parseFloat(value))
+                            : "";
+                    };
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                        PIT_3001A: setPIT_3001A,
-                        PIT_3001B: setPIT_3001B,
-                        PT_3001: setPT_3001,
-                        PT_3002: setPT_3002,
-
-                        EVC_01_Pressure: setEVC_01_Pressure,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-                        EVC_01_Temperature: setEVC_01_Temperature,
-                        EVC_02_Temperature: setEVC_02_Temperature,
-
-                        SDV_3001A: setSDV_3001A,
-                        SDV_3001B: setSDV_3001B,
-                        SDV_3002: setSDV_3002,
-                        TT_3001: setTT_3001,
-                        PT_3003: setPT_3003,
-                        GD_3001: setGD_3001,
-
                         EVC_01_Flow_at_Base_Condition:
                             setEVC_01_Flow_at_Base_Condition,
                         EVC_01_Flow_at_Measurement_Condition:
@@ -281,6 +264,16 @@ export default function Graphic_CNG_HUNGYEN() {
                             setEVC_01_Volume_at_Base_Condition,
                         EVC_01_Volume_at_Measurement_Condition:
                             setEVC_01_Volume_at_Measurement_Condition,
+                        EVC_01_Pressure: setEVC_01_Pressure,
+
+                        EVC_01_Temperature: setEVC_01_Temperature,
+                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
+                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
+                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
+                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+
+                        EVC_01_Remain_Battery_Service_Life:
+                            setEVC_01_Remain_Battery_Service_Life,
 
                         EVC_02_Flow_at_Base_Condition:
                             setEVC_02_Flow_at_Base_Condition,
@@ -290,23 +283,68 @@ export default function Graphic_CNG_HUNGYEN() {
                             setEVC_02_Volume_at_Base_Condition,
                         EVC_02_Volume_at_Measurement_Condition:
                             setEVC_02_Volume_at_Measurement_Condition,
+                        EVC_02_Pressure: setEVC_02_Pressure,
 
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        PLC_Conn_STT: setPLC_STT,
+                        EVC_02_Temperature: setEVC_02_Temperature,
+                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+
+                        EVC_02_Remain_Battery_Service_Life:
+                            setEVC_02_Remain_Battery_Service_Life,
+
+                        PIT_3001A: setPIT_3001A,
+
+                        PIT_3001B: setPIT_3001B,
+                        PT_3001: setPT_3001,
+                        PT_3002: setPT_3002,
+                        PT_3003: setPT_3003,
+
+                        TT_3002: setTT_3002,
+                        TT_3001: setTT_3001,
+
+                        GD_3001: setGD_3001,
+
+                        Water_PG: setWater_PG,
+                        Water_LSW: setWater_LSW,
+                        PUMP_1: setPUMP_1,
+                        PUMP_2: setPUMP_2,
+                        HEATER_1: setHEATER_1,
+                        HEATER_2: setHEATER_2,
+
+                        BOILER: setBOILER,
+
+                        GD_STATUS: setGD_STATUS,
+
+                        HR_BC: setHR_BC,
+                        ESD_3001: setESD_3001,
+                        SD_3001: setSD_3001,
+                        SD_3002: setSD_3002,
                     };
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                       
+                    };
+                    const stateMap2: StateMap2 = {
+                        SDV_3001A: setSDV_3001A,
+                        SDV_3001B: setSDV_3001B,
+                        SDV_3002: setSDV_3002,
                         PLC_Conn_STT: setPLC_Conn_STT,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
                     };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
+                            const formattedValue = formatValue(value);
+                            stateMap[key]?.(formattedValue);
                         }
-
+                        if (stateMap2[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            const slicedValue = value;
+                            stateMap2[key]?.(slicedValue);
+                        }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -409,405 +447,790 @@ export default function Graphic_CNG_HUNGYEN() {
                 `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/values/attributes/SERVER_SCOPE`
             );
 
-            const HighPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_High"
+            const EVC_01_Remain_Battery_Service_Life_High = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_01_Remain_Battery_Service_Life_High"
             );
-            setPIT_3001A_High(HighPIT_3001A?.value || null);
-            const LowPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_Low"
+            setEVC_01_Remain_Battery_Service_Life_High(
+                EVC_01_Remain_Battery_Service_Life_High?.value || null
             );
-            setPIT_3001A_Low(LowPIT_3001A?.value || null);
-
-            const MaintainPIT_3001A = res.data.find(
-                (item: any) => item.key === "PIT_3001A_Maintain"
+            const EVC_01_Remain_Battery_Service_Life_Low = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_01_Remain_Battery_Service_Life_Low"
             );
-            setmaintainPIT_3001A(MaintainPIT_3001A?.value || false);
-            //===========================================================================================
-
-            const HighPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_High"
+            setEVC_01_Remain_Battery_Service_Life_Low(
+                EVC_01_Remain_Battery_Service_Life_Low?.value || null
             );
-            setPIT_3001B_High(HighPIT_3001B?.value || null);
-            const LowPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_Low"
-            );
-            setPIT_3001B_Low(LowPIT_3001B?.value || null);
-
-            const MaintainPIT_3001B = res.data.find(
-                (item: any) => item.key === "PIT_3001B_Maintain"
-            );
-            setmaintainPIT_3001B(MaintainPIT_3001B?.value || false);
-            //===========================================================================================
-
-            const HighPT_3001 = res.data.find(
-                (item: any) => item.key === "PT_3001_High"
-            );
-            setPT_3001_High(HighPT_3001?.value || null);
-            const LowPT_3001 = res.data.find(
-                (item: any) => item.key === "PT_3001_Low"
-            );
-            setPT_3001_Low(LowPT_3001?.value || null);
-
-            const PT_3001_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3001_Maintain"
-            );
-            setmaintainPT_3001(PT_3001_Maintain?.value || false);
-
-            //===========================================================================================
-
-            const HighPT_3002 = res.data.find(
-                (item: any) => item.key === "PT_3002_High"
-            );
-            setPT_3002_High(HighPT_3002?.value || null);
-
-            const LowPT_3002 = res.data.find(
-                (item: any) => item.key === "PT_3002_Low"
-            );
-            setPT_3002_Low(LowPT_3002?.value || null);
-
-            const PT_3002_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3002_Maintain"
-            );
-            setmaintainPT_3002(PT_3002_Maintain?.value || false);
-            //===========================================================================================
-
-            const HighEVC_01_Pressure = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_High"
-            );
-            setEVC_01_Pressure_High(HighEVC_01_Pressure?.value || null);
-
-            const LowEVC_01_Pressure = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_Low"
-            );
-            setEVC_01_Pressure_Low(LowEVC_01_Pressure?.value || null);
-
-            const EVC_01_Pressure_Maintain = res.data.find(
-                (item: any) => item.key === "EVC_01_Pressure_Maintain"
-            );
-            setmaintainEVC_01_Pressure(
-                EVC_01_Pressure_Maintain?.value || false
+            const EVC_01_Remain_Battery_Service_Life_Maintain = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_01_Remain_Battery_Service_Life_Maintain"
             );
 
-            //===========================================================================================
-
-            const HighEVC_02_Pressure = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_High"
-            );
-            setEVC_02_Pressure_High(HighEVC_02_Pressure?.value || null);
-
-            const LowEVC_02_Pressure = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_Low"
-            );
-            setEVC_02_Pressure_Low(LowEVC_02_Pressure?.value || null);
-            const EVC_02_Pressure_Maintain = res.data.find(
-                (item: any) => item.key === "EVC_02_Pressure_Maintain"
-            );
-            setmaintainEVC_02_Pressure(
-                EVC_02_Pressure_Maintain?.value || false
-            );
-
-            //===========================================================================================
-
-            const HighEVC_01_Temperature = res.data.find(
+            const EVC_01_Temperature_High = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_High"
             );
-            setEVC_01_Temperature_High(HighEVC_01_Temperature?.value || null);
-
-            const LowEVC_01_Temperature = res.data.find(
+            setEVC_01_Temperature_High(EVC_01_Temperature_High?.value || null);
+            const EVC_01_Temperature_Low = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Low"
             );
-            setEVC_01_Temperature_Low(LowEVC_01_Temperature?.value || null);
+            setEVC_01_Temperature_Low(EVC_01_Temperature_Low?.value || null);
             const EVC_01_Temperature_Maintain = res.data.find(
                 (item: any) => item.key === "EVC_01_Temperature_Maintain"
             );
-            setmaintainEVC_01_Temperature(
-                EVC_01_Temperature_Maintain?.value || false
+
+            const EVC_01_Pressure_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Pressure_High"
+            );
+            setEVC_01_Pressure_High(EVC_01_Pressure_High?.value || null);
+            const EVC_01_Pressure_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Pressure_Low"
+            );
+            setEVC_01_Pressure_Low(EVC_01_Pressure_Low?.value || null);
+            const EVC_01_Pressure_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Pressure_Maintain"
             );
 
-            //===========================================================================================
-
-            const HighEVC_02_Temperature = res.data.find(
-                (item: any) => item.key === "EVC_02_Temperature_High"
-            );
-            setEVC_02_Temperature_High(HighEVC_02_Temperature?.value || null);
-
-            const LowEVC_02_Temperature = res.data.find(
-                (item: any) => item.key === "EVC_02_Temperature_Low"
-            );
-            setEVC_02_Temperature_Low(LowEVC_02_Temperature?.value || null);
-
-            const EVC_02_Temperature_Maintain = res.data.find(
-                (item: any) => item.key === "EVC_02_Temperature_Maintain"
-            );
-            setmaintainEVC_02_Temperature(
-                EVC_02_Temperature_Maintain?.value || false
-            );
-            //===========================================================================================
-
-            //===========================================================================================
-
-            const HighTT_3001 = res.data.find(
-                (item: any) => item.key === "TT_3001_High"
-            );
-            setTT_3001_High(HighTT_3001?.value || null);
-
-            const LowTT_3001 = res.data.find(
-                (item: any) => item.key === "TT_3001_Low"
-            );
-            setTT_3001_Low(LowTT_3001?.value || null);
-
-            const TT_3001_Maintain = res.data.find(
-                (item: any) => item.key === "TT_3001_Maintain"
-            );
-            setmaintainTT_3001(TT_3001_Maintain?.value || false);
-            //===========================================================================================
-            //===========================================================================================
-
-            const HighPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_High"
-            );
-            setPT_3003_High(HighPT_3003?.value || null);
-
-            const LowPT_3003 = res.data.find(
-                (item: any) => item.key === "PT_3003_Low"
-            );
-            setPT_3003_Low(LowPT_3003?.value || null);
-
-            const PT_3003_Maintain = res.data.find(
-                (item: any) => item.key === "PT_3003_Maintain"
-            );
-            setmaintainPT_3003(PT_3003_Maintain?.value || false);
-            //===========================================================================================
-            //===========================================================================================
-
-            const HighGD_3001 = res.data.find(
-                (item: any) => item.key === "GD_3001_High"
-            );
-            setGD_3001_High(HighGD_3001?.value || null);
-
-            const LowGD_3001 = res.data.find(
-                (item: any) => item.key === "GD_3001_Low"
-            );
-            setGD_3001_Low(LowGD_3001?.value || null);
-
-            const GD_3001_Maintain = res.data.find(
-                (item: any) => item.key === "GD_3001_Maintain"
-            );
-            setmaintainGD_3001(GD_3001_Maintain?.value || false);
-            //===========================================================================================
-            //===========================================================================================
-
-            const HighEVC_01_Flow_at_Base_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
-            );
-            setEVC_01_Flow_at_Base_Condition_High(
-                HighEVC_01_Flow_at_Base_Condition?.value || null
-            );
-
-            const LowEVC_01_Flow_at_Base_Condition = res.data.find(
-                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
-            );
-            setEVC_01_Flow_at_Base_Condition_Low(
-                LowEVC_01_Flow_at_Base_Condition?.value || null
-            );
-
-            const EVC_01_Flow_at_Base_Condition_Maintain = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
-            );
-            setmaintainEVC_01_Flow_at_Base_Condition(
-                EVC_01_Flow_at_Base_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
-
-            //===========================================================================================
-
-            const HighEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
-            );
-            setEVC_01_Flow_at_Measurement_Condition_High(
-                HighEVC_01_Flow_at_Measurement_Condition?.value || null
-            );
-
-            const LowEVC_01_Flow_at_Measurement_Condition = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
-            );
-            setEVC_01_Flow_at_Measurement_Condition_Low(
-                LowEVC_01_Flow_at_Measurement_Condition?.value || null
-            );
-
-            const EVC_01_Flow_at_Measurement_Condition_Maintain = res.data.find(
-                (item: any) =>
-                    item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
-            );
-            setmaintainEVC_01_Flow_at_Measurement_Condition(
-                EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
-
-            //===========================================================================================
-
-            const HighEVC_01_Volume_at_Base_Condition = res.data.find(
+            const EVC_01_Volume_at_Base_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_High"
             );
             setEVC_01_Volume_at_Base_Condition_High(
-                HighEVC_01_Volume_at_Base_Condition?.value || null
+                EVC_01_Volume_at_Base_Condition_High?.value || null
             );
-
-            const LowEVC_01_Volume_at_Base_Condition = res.data.find(
+            const EVC_01_Volume_at_Base_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Low"
             );
             setEVC_01_Volume_at_Base_Condition_Low(
-                LowEVC_01_Volume_at_Base_Condition?.value || null
+                EVC_01_Volume_at_Base_Condition_Low?.value || null
             );
-
             const EVC_01_Volume_at_Base_Condition_Maintain = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_01_Volume_at_Base_Condition(
-                EVC_01_Volume_at_Base_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
 
-            //===========================================================================================
-
-            const HighEVC_01_Volume_at_Measurement_Condition = res.data.find(
+            const EVC_01_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_High"
             );
             setEVC_01_Volume_at_Measurement_Condition_High(
-                HighEVC_01_Volume_at_Measurement_Condition?.value || null
+                EVC_01_Volume_at_Measurement_Condition_High?.value || null
             );
-
-            const LowEVC_01_Volume_at_Measurement_Condition = res.data.find(
+            const EVC_01_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_01_Volume_at_Measurement_Condition_Low"
             );
             setEVC_01_Volume_at_Measurement_Condition_Low(
-                LowEVC_01_Volume_at_Measurement_Condition?.value || null
+                EVC_01_Volume_at_Measurement_Condition_Low?.value || null
             );
-
             const EVC_01_Volume_at_Measurement_Condition_Maintain =
                 res.data.find(
                     (item: any) =>
                         item.key ===
                         "EVC_01_Volume_at_Measurement_Condition_Maintain"
                 );
-            setmaintainEVC_01_Volume_at_Measurement_Condition(
-                EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
-            //===========================================================================================
 
-            const HighEVC_02_Flow_at_Base_Condition = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
+            const EVC_01_Flow_at_Base_Condition_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_High"
             );
-            setEVC_02_Flow_at_Base_Condition_High(
-                HighEVC_02_Flow_at_Base_Condition?.value || null
+            setEVC_01_Flow_at_Base_Condition_High(
+                EVC_01_Flow_at_Base_Condition_High?.value || null
             );
-
-            const LowEVC_02_Flow_at_Base_Condition = res.data.find(
-                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
+            const EVC_01_Flow_at_Base_Condition_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Flow_at_Base_Condition_Low"
             );
-            setEVC_02_Flow_at_Base_Condition_Low(
-                LowEVC_02_Flow_at_Base_Condition?.value || null
+            setEVC_01_Flow_at_Base_Condition_Low(
+                EVC_01_Flow_at_Base_Condition_Low?.value || null
             );
-
-            const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
+            const EVC_01_Flow_at_Base_Condition_Maintain = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
+                    item.key === "EVC_01_Flow_at_Base_Condition_Maintain"
             );
-            setmaintainEVC_02_Flow_at_Base_Condition(
-                EVC_02_Flow_at_Base_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
 
-            //===========================================================================================
-
-            const HighEVC_02_Flow_at_Measurement_Condition = res.data.find(
+            const EVC_01_Flow_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_High"
             );
-            setEVC_02_Flow_at_Measurement_Condition_High(
-                HighEVC_02_Flow_at_Measurement_Condition?.value || null
+            setEVC_01_Flow_at_Measurement_Condition_High(
+                EVC_01_Flow_at_Measurement_Condition_High?.value || null
             );
-
-            const LowEVC_02_Flow_at_Measurement_Condition = res.data.find(
+            const EVC_01_Flow_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Low"
             );
-            setEVC_02_Flow_at_Measurement_Condition_Low(
-                LowEVC_02_Flow_at_Measurement_Condition?.value || null
+            setEVC_01_Flow_at_Measurement_Condition_Low(
+                EVC_01_Flow_at_Measurement_Condition_Low?.value || null
             );
-
-            const EVC_02_Flow_at_Measurement_Condition_Maintain = res.data.find(
+            const EVC_01_Flow_at_Measurement_Condition_Maintain = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
+                    item.key === "EVC_01_Flow_at_Measurement_Condition_Maintain"
             );
-            setmaintainEVC_02_Flow_at_Measurement_Condition(
-                EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false
-            );
-            //===========================================================================================
-            //===========================================================================================
 
-            const HighEVC_02_Volume_at_Base_Condition = res.data.find(
+            const EVC_01_Vb_of_Current_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Current_Day_High"
+            );
+            setEVC_01_Vb_of_Current_Day_High(
+                EVC_01_Vb_of_Current_Day_High?.value || null
+            );
+            const EVC_01_Vb_of_Current_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Current_Day_Low"
+            );
+            setEVC_01_Vb_of_Current_Day_Low(
+                EVC_01_Vb_of_Current_Day_Low?.value || null
+            );
+            const EVC_01_Vb_of_Current_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Current_Day_Maintain"
+            );
+
+            const EVC_01_Vm_of_Current_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Current_Day_High"
+            );
+            setEVC_01_Vm_of_Current_Day_High(
+                EVC_01_Vm_of_Current_Day_High?.value || null
+            );
+            const EVC_01_Vm_of_Current_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Current_Day_Low"
+            );
+            setEVC_01_Vm_of_Current_Day_Low(
+                EVC_01_Vm_of_Current_Day_Low?.value || null
+            );
+            const EVC_01_Vm_of_Current_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Current_Day_Maintain"
+            );
+
+            const EVC_01_Vb_of_Last_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Last_Day_High"
+            );
+            setEVC_01_Vb_of_Last_Day_High(
+                EVC_01_Vb_of_Last_Day_High?.value || null
+            );
+            const EVC_01_Vb_of_Last_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Last_Day_Low"
+            );
+            setEVC_01_Vb_of_Last_Day_Low(
+                EVC_01_Vb_of_Last_Day_Low?.value || null
+            );
+            const EVC_01_Vb_of_Last_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Vb_of_Last_Day_Maintain"
+            );
+
+            const EVC_02_Vm_of_Last_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Last_Day_High"
+            );
+            setEVC_02_Vm_of_Last_Day_High(
+                EVC_02_Vm_of_Last_Day_High?.value || null
+            );
+            const EVC_02_Vm_of_Last_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Low"
+            );
+            setEVC_02_Vm_of_Last_Day_Low(
+                EVC_02_Vm_of_Last_Day_Low?.value || null
+            );
+            const EVC_02_Vm_of_Last_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Last_Day_Maintain"
+            );
+
+            const EVC_01_Vm_of_Last_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Last_Day_High"
+            );
+            setEVC_01_Vm_of_Last_Day_High(
+                EVC_01_Vm_of_Last_Day_High?.value || null
+            );
+            const EVC_01_Vm_of_Last_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Last_Day_Low"
+            );
+            setEVC_01_Vm_of_Last_Day_Low(
+                EVC_01_Vm_of_Last_Day_Low?.value || null
+            );
+            const EVC_01_Vm_of_Last_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Vm_of_Last_Day_Maintain"
+            );
+
+            const EVC_02_Remain_Battery_Service_Life_High = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Volume_at_Base_Condition_High"
+                    item.key === "EVC_02_Remain_Battery_Service_Life_High"
             );
-            setEVC_02_Volume_at_Base_Condition_High(
-                HighEVC_02_Volume_at_Base_Condition?.value || null
+            setEVC_02_Remain_Battery_Service_Life_High(
+                EVC_02_Remain_Battery_Service_Life_High?.value || null
             );
-
-            const LowEVC_02_Volume_at_Base_Condition = res.data.find(
+            const EVC_02_Remain_Battery_Service_Life_Low = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Volume_at_Base_Condition_Low"
+                    item.key === "EVC_02_Remain_Battery_Service_Life_Low"
             );
-            setEVC_02_Volume_at_Base_Condition_Low(
-                LowEVC_02_Volume_at_Base_Condition?.value || null
+            setEVC_02_Remain_Battery_Service_Life_Low(
+                EVC_02_Remain_Battery_Service_Life_Low?.value || null
             );
-
-            const EVC_02_Volume_at_Base_Condition_Maintain = res.data.find(
+            const EVC_02_Remain_Battery_Service_Life_Maintain = res.data.find(
                 (item: any) =>
-                    item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
+                    item.key === "EVC_02_Remain_Battery_Service_Life_Maintain"
             );
-            setmaintainEVC_02_Volume_at_Base_Condition(
-                EVC_02_Volume_at_Base_Condition_Maintain?.value || false
+
+            const EVC_02_Temperature_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_High"
             );
-            //===========================================================================================
+            setEVC_02_Temperature_High(EVC_02_Temperature_High?.value || null);
+            const EVC_02_Temperature_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_Low"
+            );
+            setEVC_02_Temperature_Low(EVC_02_Temperature_Low?.value || null);
+            const EVC_02_Temperature_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Temperature_Maintain"
+            );
 
-            //===========================================================================================
+            const EVC_02_Pressure_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Pressure_High"
+            );
+            setEVC_02_Pressure_High(EVC_02_Pressure_High?.value || null);
+            const EVC_02_Pressure_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Pressure_Low"
+            );
+            setEVC_02_Pressure_Low(EVC_02_Pressure_Low?.value || null);
+            const EVC_02_Pressure_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Pressure_Maintain"
+            );
 
-            const HighEVC_02_Volume_at_Measurement_Condition = res.data.find(
+            const EVC_02_Volume_at_Measurement_Condition_High = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_High"
             );
             setEVC_02_Volume_at_Measurement_Condition_High(
-                HighEVC_02_Volume_at_Measurement_Condition?.value || null
+                EVC_02_Volume_at_Measurement_Condition_High?.value || null
             );
-
-            const LowEVC_02_Volume_at_Measurement_Condition = res.data.find(
+            const EVC_02_Volume_at_Measurement_Condition_Low = res.data.find(
                 (item: any) =>
                     item.key === "EVC_02_Volume_at_Measurement_Condition_Low"
             );
             setEVC_02_Volume_at_Measurement_Condition_Low(
-                LowEVC_02_Volume_at_Measurement_Condition?.value || null
+                EVC_02_Volume_at_Measurement_Condition_Low?.value || null
             );
-
             const EVC_02_Volume_at_Measurement_Condition_Maintain =
                 res.data.find(
                     (item: any) =>
                         item.key ===
                         "EVC_02_Volume_at_Measurement_Condition_Maintain"
                 );
+
+            const EVC_02_Flow_at_Base_Condition_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_High"
+            );
+            setEVC_02_Flow_at_Base_Condition_High(
+                EVC_02_Flow_at_Base_Condition_High?.value || null
+            );
+            const EVC_02_Flow_at_Base_Condition_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Low"
+            );
+            setEVC_02_Flow_at_Base_Condition_Low(
+                EVC_02_Flow_at_Base_Condition_Low?.value || null
+            );
+            const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
+            );
+
+            const EVC_02_Flow_at_Measurement_Condition_High = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_High"
+            );
+            setEVC_02_Flow_at_Measurement_Condition_High(
+                EVC_02_Flow_at_Measurement_Condition_High?.value || null
+            );
+            const EVC_02_Flow_at_Measurement_Condition_Low = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Low"
+            );
+            setEVC_02_Flow_at_Measurement_Condition_Low(
+                EVC_02_Flow_at_Measurement_Condition_Low?.value || null
+            );
+            const EVC_02_Flow_at_Measurement_Condition_Maintain = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Flow_at_Measurement_Condition_Maintain"
+            );
+
+            const EVC_02_Vb_of_Current_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Current_Day_High"
+            );
+            setEVC_02_Vb_of_Current_Day_High(
+                EVC_02_Vb_of_Current_Day_High?.value || null
+            );
+            const EVC_02_Vb_of_Current_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Current_Day_Low"
+            );
+            setEVC_02_Vb_of_Current_Day_Low(
+                EVC_02_Vb_of_Current_Day_Low?.value || null
+            );
+            const EVC_02_Vb_of_Current_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Current_Day_Maintain"
+            );
+
+            const EVC_02_Vm_of_Current_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Current_Day_High"
+            );
+            setEVC_02_Vm_of_Current_Day_High(
+                EVC_02_Vm_of_Current_Day_High?.value || null
+            );
+            const EVC_02_Vm_of_Current_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Current_Day_Low"
+            );
+            setEVC_02_Vm_of_Current_Day_Low(
+                EVC_02_Vm_of_Current_Day_Low?.value || null
+            );
+            const EVC_02_Vm_of_Current_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Vm_of_Current_Day_Maintain"
+            );
+
+            const EVC_02_Vb_of_Last_Day_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Last_Day_High"
+            );
+            setEVC_02_Vb_of_Last_Day_High(
+                EVC_02_Vb_of_Last_Day_High?.value || null
+            );
+            const EVC_02_Vb_of_Last_Day_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Last_Day_Low"
+            );
+            setEVC_02_Vb_of_Last_Day_Low(
+                EVC_02_Vb_of_Last_Day_Low?.value || null
+            );
+            const EVC_02_Vb_of_Last_Day_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Vb_of_Last_Day_Maintain"
+            );
+
+            const EVC_02_Volume_at_Base_Condition_High = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Base_Condition_High"
+            );
+            setEVC_02_Volume_at_Base_Condition_High(
+                EVC_02_Volume_at_Base_Condition_High?.value || null
+            );
+            const EVC_02_Volume_at_Base_Condition_Low = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Base_Condition_Low"
+            );
+            setEVC_02_Volume_at_Base_Condition_Low(
+                EVC_02_Volume_at_Base_Condition_Low?.value || null
+            );
+            const EVC_02_Volume_at_Base_Condition_Maintain = res.data.find(
+                (item: any) =>
+                    item.key === "EVC_02_Volume_at_Base_Condition_Maintain"
+            );
+
+            const PIT_3001A_High = res.data.find(
+                (item: any) => item.key === "PIT_3001A_High"
+            );
+            setPIT_3001A_High(PIT_3001A_High?.value || null);
+            const PIT_3001A_Low = res.data.find(
+                (item: any) => item.key === "PIT_3001B_Low"
+            );
+            setPIT_3001A_Low(PIT_3001A_Low?.value || null);
+            const MaintainPIT_3001A = res.data.find(
+                (item: any) => item.key === "PIT_3001A_Maintain"
+            );
+
+            const PIT_3001B_High = res.data.find(
+                (item: any) => item.key === "PIT_3001B_High"
+            );
+            setPIT_3001B_High(PIT_3001B_High?.value || null);
+            const PIT_3001B_Low = res.data.find(
+                (item: any) => item.key === "PIT_3001B_Low"
+            );
+            setPIT_3001B_Low(PIT_3001B_Low?.value || null);
+            const PIT_3001B_Maintain = res.data.find(
+                (item: any) => item.key === "PIT_3001B_Maintain"
+            );
+
+            const PT_3001_High = res.data.find(
+                (item: any) => item.key === "PT_3001_High"
+            );
+            setPT_3001_High(PT_3001_High?.value || null);
+            const PT_3001_Low = res.data.find(
+                (item: any) => item.key === "PT_3001_Low"
+            );
+            setPT_3001_Low(PT_3001_Low?.value || null);
+            const PT_3001_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3001_Maintain"
+            );
+
+            const PT_3002_High = res.data.find(
+                (item: any) => item.key === "PT_3002_High"
+            );
+            setPT_3002_High(PT_3002_High?.value || null);
+            const PT_3002_Low = res.data.find(
+                (item: any) => item.key === "PT_3002_Low"
+            );
+            setPT_3002_Low(PT_3002_Low?.value || null);
+            const PT_3002_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3002_Maintain"
+            );
+
+            const PT_3003_High = res.data.find(
+                (item: any) => item.key === "PT_3003_High"
+            );
+            setPT_3003_High(PT_3003_High?.value || null);
+            const PT_3003_Low = res.data.find(
+                (item: any) => item.key === "PT_3003_Low"
+            );
+            setPT_3003_Low(PT_3003_Low?.value || null);
+            const PT_3003_Maintain = res.data.find(
+                (item: any) => item.key === "PT_3003_Maintain"
+            );
+
+            const TT_3001_High = res.data.find(
+                (item: any) => item.key === "TT_3001_High"
+            );
+            setTT_3001_High(TT_3001_High?.value || null);
+            const TT_3001_Low = res.data.find(
+                (item: any) => item.key === "TT_3001_Low"
+            );
+            setTT_3001_Low(TT_3001_Low?.value || null);
+            const TT_3001_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3001_Maintain"
+            );
+
+            const TT_3002_High = res.data.find(
+                (item: any) => item.key === "TT_3002_High"
+            );
+            setTT_3002_High(TT_3002_High?.value || null);
+            const TT_3002_Low = res.data.find(
+                (item: any) => item.key === "TT_3002_Low"
+            );
+            setTT_3002_Low(TT_3002_Low?.value || null);
+            const TT_3002_Maintain = res.data.find(
+                (item: any) => item.key === "TT_3002_Maintain"
+            );
+
+            const GD_3001_High = res.data.find(
+                (item: any) => item.key === "GD_3001_High"
+            );
+            setGD_3001_High(GD_3001_High?.value || null);
+            const GD_3001_Low = res.data.find(
+                (item: any) => item.key === "GD_3001_Low"
+            );
+            setGD_3001_Low(GD_3001_Low?.value || null);
+            const GD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "GD_3001_Maintain"
+            );
+
+            const SDV_3001A_High = res.data.find(
+                (item: any) => item.key === "SDV_3001A_High"
+            );
+            setSDV_3001A_High(SDV_3001A_High?.value || null);
+            const SDV_3001A_Low = res.data.find(
+                (item: any) => item.key === "SDV_3001A_Low"
+            );
+            setSDV_3001A_Low(SDV_3001A_Low?.value || null);
+            const SDV_3001A_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3001A_Maintain"
+            );
+
+            const SDV_3001B_High = res.data.find(
+                (item: any) => item.key === "SDV_3001B_High"
+            );
+            setSDV_3001B_High(SDV_3001B_High?.value || null);
+            const SDV_3001B_Low = res.data.find(
+                (item: any) => item.key === "SDV_3001B_Low"
+            );
+            setSDV_3001B_Low(SDV_3001B_Low?.value || null);
+            const SDV_3001B_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3001B_Maintain"
+            );
+            const SDV_3002_High = res.data.find(
+                (item: any) => item.key === "SDV_3002_High"
+            );
+            setSDV_3002_High(SDV_3002_High?.value || null);
+            const SDV_3002_Low = res.data.find(
+                (item: any) => item.key === "SDV_3002_Low"
+            );
+            setSDV_3002_Low(SDV_3002_Low?.value || null);
+            const SDV_3002_Maintain = res.data.find(
+                (item: any) => item.key === "SDV_3002_Maintain"
+            );
+
+            const Water_PG_High = res.data.find(
+                (item: any) => item.key === "Water_PG_High"
+            );
+            setWater_PG_High(Water_PG_High?.value || null);
+            const Water_PG_Low = res.data.find(
+                (item: any) => item.key === "Water_PG_Low"
+            );
+            setWater_PG_Low(Water_PG_Low?.value || null);
+            const Water_PG_Maintain = res.data.find(
+                (item: any) => item.key === "Water_PG_Maintain"
+            );
+
+            const Water_LSW_High = res.data.find(
+                (item: any) => item.key === "Water_LSW_High"
+            );
+            setWater_LSW_High(Water_LSW_High?.value || null);
+            const Water_LSW_Low = res.data.find(
+                (item: any) => item.key === "Water_LSW_Low"
+            );
+            setWater_LSW_Low(Water_LSW_Low?.value || null);
+            const Water_LSW_Maintain = res.data.find(
+                (item: any) => item.key === "Water_LSW_Maintain"
+            );
+
+            const PUMP_1_High = res.data.find(
+                (item: any) => item.key === "PUMP_1_High"
+            );
+            setPUMP_1_High(PUMP_1_High?.value || null);
+            const PUMP_1_Low = res.data.find(
+                (item: any) => item.key === "PUMP_1_Low"
+            );
+            setPUMP_1_Low(PUMP_1_Low?.value || null);
+            const PUMP_1_Maintain = res.data.find(
+                (item: any) => item.key === "PUMP_1_Maintain"
+            );
+
+            const PUMP_2_High = res.data.find(
+                (item: any) => item.key === "PUMP_2_High"
+            );
+            setPUMP_2_High(PUMP_2_High?.value || null);
+            const PUMP_2_Low = res.data.find(
+                (item: any) => item.key === "PUMP_2_Low"
+            );
+            setPUMP_2_Low(PUMP_2_Low?.value || null);
+            const PUMP_2_Maintain = res.data.find(
+                (item: any) => item.key === "PUMP_2_Maintain"
+            );
+
+            const HEATER_1_High = res.data.find(
+                (item: any) => item.key === "HEATER_1_High"
+            );
+            setHEATER_1_High(HEATER_1_High?.value || null);
+            const HEATER_1_Low = res.data.find(
+                (item: any) => item.key === "HEATER_1_Low"
+            );
+            setHEATER_1_Low(HEATER_1_Low?.value || null);
+            const HEATER_1_Maintain = res.data.find(
+                (item: any) => item.key === "HEATER_1_Maintain"
+            );
+
+            const HEATER_2_High = res.data.find(
+                (item: any) => item.key === "HEATER_2_High"
+            );
+            setHEATER_2_High(HEATER_2_High?.value || null);
+            const HEATER_2_Low = res.data.find(
+                (item: any) => item.key === "HEATER_2_Low"
+            );
+            setHEATER_2_Low(HEATER_2_Low?.value || null);
+            const HEATER_2_Maintain = res.data.find(
+                (item: any) => item.key === "HEATER_2_Maintain"
+            );
+
+            const BOILER_High = res.data.find(
+                (item: any) => item.key === "BOILER_High"
+            );
+            setBOILER_High(BOILER_High?.value || null);
+            const BOILER_Low = res.data.find(
+                (item: any) => item.key === "BOILER_Low"
+            );
+            setBOILER_Low(BOILER_Low?.value || null);
+            const BOILER_Maintain = res.data.find(
+                (item: any) => item.key === "BOILER_Maintain"
+            );
+
+            const GD_STATUS_High = res.data.find(
+                (item: any) => item.key === "GD_STATUS_High"
+            );
+            setGD_STATUS_High(GD_STATUS_High?.value || null);
+            const GD_STATUS_Low = res.data.find(
+                (item: any) => item.key === "GD_STATUS_Low"
+            );
+            setGD_STATUS_Low(GD_STATUS_Low?.value || null);
+            const GD_STATUS_Maintain = res.data.find(
+                (item: any) => item.key === "GD_STATUS_Maintain"
+            );
+
+            const HR_BC_High = res.data.find(
+                (item: any) => item.key === "HR_BC_High"
+            );
+            setHR_BC_High(HR_BC_High?.value || null);
+            const HR_BC_Low = res.data.find(
+                (item: any) => item.key === "HR_BC_Low"
+            );
+            setHR_BC_Low(HR_BC_Low?.value || null);
+            const HR_BC_Maintain = res.data.find(
+                (item: any) => item.key === "HR_BC_Maintain"
+            );
+
+            const ESD_3001_High = res.data.find(
+                (item: any) => item.key === "ESD_3001_High"
+            );
+            setESD_3001_High(ESD_3001_High?.value || null);
+            const ESD_3001_Low = res.data.find(
+                (item: any) => item.key === "ESD_3001_Low"
+            );
+            setESD_3001_Low(ESD_3001_Low?.value || null);
+            const ESD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "ESD_3001_Maintain"
+            );
+
+            const SD_3001_High = res.data.find(
+                (item: any) => item.key === "SD_3001_High"
+            );
+            setSD_3001_High(SD_3001_High?.value || null);
+            const SD_3001_Low = res.data.find(
+                (item: any) => item.key === "SD_3001_Low"
+            );
+            setSD_3001_Low(SD_3001_Low?.value || null);
+            const SD_3001_Maintain = res.data.find(
+                (item: any) => item.key === "SD_3001_Maintain"
+            );
+
+            const SD_3002_High = res.data.find(
+                (item: any) => item.key === "SD_3002_High"
+            );
+            setSD_3002_High(SD_3002_High?.value || null);
+            const SD_3002_Low = res.data.find(
+                (item: any) => item.key === "SD_3002_Low"
+            );
+            setSD_3002_Low(SD_3002_Low?.value || null);
+            const SD_3002_Maintain = res.data.find(
+                (item: any) => item.key === "SD_3002_Maintain"
+            );
+
+            const EVC_01_Conn_STT_High = res.data.find(
+                (item: any) => item.key === "EVC_01_Conn_STT_High"
+            );
+            setEVC_01_Conn_STT_High(EVC_01_Conn_STT_High?.value || null);
+            const EVC_01_Conn_STT_Low = res.data.find(
+                (item: any) => item.key === "EVC_01_Conn_STT_Low"
+            );
+            setEVC_01_Conn_STT_Low(EVC_01_Conn_STT_Low?.value || null);
+            const EVC_01_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Conn_STT_Maintain"
+            );
+
+            const EVC_02_Conn_STT_High = res.data.find(
+                (item: any) => item.key === "EVC_02_Conn_STT_High"
+            );
+            setEVC_02_Conn_STT_High(EVC_02_Conn_STT_High?.value || null);
+            const EVC_02_Conn_STT_Low = res.data.find(
+                (item: any) => item.key === "EVC_02_Conn_STT_Low"
+            );
+            setEVC_02_Conn_STT_Low(EVC_02_Conn_STT_Low?.value || null);
+            const EVC_02_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_02_Conn_STT_Maintain"
+            );
+
+            const PLC_Conn_STT_High = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_High"
+            );
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Low"
+            );
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
+            // ===================================================================================================================
+
+            setmaintainEVC_01_Conn_STT(
+                EVC_01_Conn_STT_Maintain?.value || false
+            );
+            setmaintainEVC_02_Conn_STT(
+                EVC_02_Conn_STT_Maintain?.value || false
+            );
+            setmaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
+
+            setmaintainEVC_02_Vm_of_Last_Day(
+                EVC_02_Vm_of_Last_Day_Maintain?.value || false
+            );
+            setmaintainEVC_02_Vb_of_Last_Day(
+                EVC_02_Vb_of_Last_Day_Maintain?.value || false
+            );
+            setmaintainEVC_02_Vm_of_Current_Day(
+                EVC_02_Vm_of_Current_Day_Maintain?.value || false
+            );
+            setmaintainEVC_02_Vb_of_Current_Day(
+                EVC_02_Vb_of_Current_Day_Maintain?.value || false
+            );
+
+            setmaintainEVC_02_Flow_at_Measurement_Condition(
+                EVC_02_Flow_at_Measurement_Condition_Maintain?.value || false
+            );
+            setmaintainEVC_02_Flow_at_Base_Condition(
+                EVC_02_Flow_at_Base_Condition_Maintain?.value || false
+            );
             setmaintainEVC_02_Volume_at_Measurement_Condition(
                 EVC_02_Volume_at_Measurement_Condition_Maintain?.value || false
             );
-            //===========================================================================================
+            setmaintainEVC_02_Volume_at_Base_Condition(
+                EVC_02_Volume_at_Base_Condition_Maintain?.value || false
+            );
+
+            setmaintainEVC_02_Pressure(
+                EVC_02_Pressure_Maintain?.value || false
+            );
+            setmaintainEVC_02_Temperature(
+                EVC_02_Temperature_Maintain?.value || false
+            );
+
+            setmaintainEVC_02_Remain_Battery_Service_Life(
+                EVC_02_Remain_Battery_Service_Life_Maintain?.value || false
+            );
+
+            setmaintainEVC_01_Vm_of_Last_Day(
+                EVC_01_Vm_of_Last_Day_Maintain?.value || false
+            );
+            setmaintainEVC_01_Vb_of_Last_Day(
+                EVC_01_Vb_of_Last_Day_Maintain?.value || false
+            );
+            setmaintainEVC_01_Vm_of_Current_Day(
+                EVC_01_Vm_of_Current_Day_Maintain?.value || false
+            );
+            setmaintainEVC_01_Vb_of_Current_Day(
+                EVC_01_Vb_of_Current_Day_Maintain?.value || false
+            );
+
+            setmaintainEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_Condition_Maintain?.value || false
+            );
+            setmaintainEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_Condition_Maintain?.value || false
+            );
+            setmaintainEVC_01_Volume_at_Measurement_Condition(
+                EVC_01_Volume_at_Measurement_Condition_Maintain?.value || false
+            );
+            setmaintainEVC_01_Volume_at_Base_Condition(
+                EVC_01_Volume_at_Base_Condition_Maintain?.value || false
+            );
+
+            setmaintainEVC_01_Pressure(
+                EVC_01_Pressure_Maintain?.value || false
+            );
+            setmaintainEVC_01_Temperature(
+                EVC_01_Temperature_Maintain?.value || false
+            );
+
+            setmaintainEVC_01_Remain_Battery_Service_Life(
+                EVC_01_Remain_Battery_Service_Life_Maintain?.value || false
+            );
+
+            setmaintainPIT_3001A(MaintainPIT_3001A?.value || false);
+            setmaintainPIT_3001B(PIT_3001B_Maintain?.value || false);
+            setmaintainPT_3001(PT_3001_Maintain?.value || false);
+            setmaintainPT_3002(PT_3002_Maintain?.value || false);
+            setmaintainPT_3003(PT_3003_Maintain?.value || false);
+            setmaintainTT_3001(TT_3001_Maintain?.value || false);
+            setmaintainTT_3002(TT_3002_Maintain?.value || false);
+            setmaintainGD_3001(GD_3001_Maintain?.value || false);
+            setmaintainSDV_3001A(SDV_3001A_Maintain?.value || false);
+            setmaintainSDV_3001B(SDV_3001B_Maintain?.value || false);
+            setmaintainSDV_3002(SDV_3002_Maintain?.value || false);
+            setmaintainWater_LSW(Water_LSW_Maintain?.value || false);
+            setmaintainWater_PG(Water_PG_Maintain?.value || false);
+            setmaintainPUMP_2(PUMP_2_Maintain?.value || false);
+            setmaintainPUMP_1(PUMP_1_Maintain?.value || false);
+            setmaintainHEATER_2(HEATER_2_Maintain?.value || false);
+            setmaintainHEATER_1(HEATER_1_Maintain?.value || false);
+            setmaintainBOILER(BOILER_Maintain?.value || false);
+            setmaintainGD_STATUS(GD_STATUS_Maintain?.value || false);
+            setmaintainHR_BC(HR_BC_Maintain?.value || false);
+            setmaintainESD_3001(ESD_3001_Maintain?.value || false);
+            setmaintainSD_3001(SD_3001_Maintain?.value || false);
+            setmaintainSD_3002(SD_3002_Maintain?.value || false);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -841,184 +1264,53 @@ export default function Graphic_CNG_HUNGYEN() {
     };
     //================================ PIT_3001A================================
 
-    const [PIT_3001A, setPIT_3001A] = useState<string | null>(null);
-
-    const [PIT_3001A_High, setPIT_3001A_High] = useState<number | null>(null);
-    const [PIT_3001A_Low, setPIT_3001A_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_3001A, setexceedThresholdPIT_3001A] =
-        useState(false);
-
-    const [maintainPIT_3001A, setmaintainPIT_3001A] = useState<boolean>(false);
-
-    useEffect(() => {
-        const PIT_3001AValue = parseFloat(PIT_3001A as any);
-        const highValue = PIT_3001A_High ?? NaN;
-        const lowValue = PIT_3001A_Low ?? NaN;
-
-        if (
-            !isNaN(PIT_3001AValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPIT_3001A
-        ) {
-            setexceedThresholdPIT_3001A(
-                PIT_3001AValue >= highValue || PIT_3001AValue <= lowValue
-            );
-        }
-    }, [PIT_3001A, PIT_3001A_High, PIT_3001A_Low, maintainPIT_3001A]);
-
-    //================================ PIT_3001B================================
-
-    const [PIT_3001B, setPIT_3001B] = useState<string | null>(null);
-    const [PIT_3001B_High, setPIT_3001B_High] = useState<number | null>(null);
-    const [PIT_3001B_Low, setPIT_3001B_Low] = useState<number | null>(null);
-    const [exceedThresholdPIT_3001B, setexceedThresholdPIT_3001B] =
-        useState(false);
-    const [maintainPIT_3001B, setmaintainPIT_3001B] = useState<boolean>(false);
+    const [
+        EVC_01_Remain_Battery_Service_Life,
+        setEVC_01_Remain_Battery_Service_Life,
+    ] = useState<string | null>(null);
+    const [
+        EVC_01_Remain_Battery_Service_Life_High,
+        setEVC_01_Remain_Battery_Service_Life_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Remain_Battery_Service_Life_Low,
+        setEVC_01_Remain_Battery_Service_Life_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Remain_Battery_Service_Life,
+        setexceedThresholdEVC_01_Remain_Battery_Service_Life,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Remain_Battery_Service_Life,
+        setmaintainEVC_01_Remain_Battery_Service_Life,
+    ] = useState<boolean>(false);
 
     useEffect(() => {
-        const PIT_3001BValue = parseFloat(PIT_3001B as any);
-        const highValue = PIT_3001B_High ?? NaN;
-        const lowValue = PIT_3001B_Low ?? NaN;
+        const EVC_01_Remain_Battery_Service_LifeValue = parseFloat(
+            EVC_01_Remain_Battery_Service_Life as any
+        );
+        const highValue = EVC_01_Remain_Battery_Service_Life_High ?? NaN;
+        const lowValue = EVC_01_Remain_Battery_Service_Life_Low ?? NaN;
 
         if (
-            !isNaN(PIT_3001BValue) &&
+            !isNaN(EVC_01_Remain_Battery_Service_LifeValue) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainPIT_3001B
+            !maintainEVC_01_Remain_Battery_Service_Life
         ) {
-            setexceedThresholdPIT_3001B(
-                PIT_3001BValue >= highValue || PIT_3001BValue <= lowValue
-            );
-        }
-    }, [PIT_3001B, PIT_3001B_High, PIT_3001B_Low, maintainPIT_3001B]);
-    //================================ PT_3001================================
-
-    const [PT_3001, setPT_3001] = useState<string | null>(null);
-    const [PT_3001_High, setPT_3001_High] = useState<number | null>(null);
-    const [PT_3001_Low, setPT_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3001, setexceedThresholdPT_3001] = useState(false);
-    const [maintainPT_3001, setmaintainPT_3001] = useState<boolean>(false);
-
-    useEffect(() => {
-        const PT_3001Value = parseFloat(PT_3001 as any);
-        const highValue = PT_3001_High ?? NaN;
-        const lowValue = PT_3001_Low ?? NaN;
-
-        if (
-            !isNaN(PT_3001Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_3001
-        ) {
-            setexceedThresholdPT_3001(
-                PT_3001Value >= highValue || PT_3001Value <= lowValue
-            );
-        }
-    }, [PT_3001, PT_3001_High, PT_3001_Low, maintainPT_3001]);
-
-    //================================ PT_3002================================
-
-    const [PT_3002, setPT_3002] = useState<string | null>(null);
-    const [PT_3002_High, setPT_3002_High] = useState<number | null>(null);
-    const [PT_3002_Low, setPT_3002_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3002, setexceedThresholdPT_3002] = useState(false);
-    const [maintainPT_3002, setmaintainPT_3002] = useState<boolean>(false);
-
-    useEffect(() => {
-        const PT_3002Value = parseFloat(PT_3002 as any);
-        const highValue = PT_3002_High ?? NaN;
-        const lowValue = PT_3002_Low ?? NaN;
-
-        if (
-            !isNaN(PT_3002Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_3002
-        ) {
-            setexceedThresholdPT_3002(
-                PT_3002Value >= highValue || PT_3002Value <= lowValue
-            );
-        }
-    }, [PT_3002, PT_3002_High, PT_3002_Low, maintainPT_3002]);
-
-    //================================ EVC_02_Pressure================================
-    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
-
-    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
-        number | null
-    >(null);
-    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
-        number | null
-    >(null);
-    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] =
-        useState(false);
-
-    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
-        const highValue = EVC_02_Pressure_High ?? NaN;
-        const lowValue = EVC_02_Pressure_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_02_PressureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_02_Pressure
-        ) {
-            setexceedThresholdEVC_02_Pressure(
-                EVC_02_PressureValue >= highValue ||
-                    EVC_02_PressureValue <= lowValue
+            setexceedThresholdEVC_01_Remain_Battery_Service_Life(
+                EVC_01_Remain_Battery_Service_LifeValue >= highValue ||
+                    EVC_01_Remain_Battery_Service_LifeValue <= lowValue
             );
         }
     }, [
-        EVC_02_Pressure,
-        EVC_02_Pressure_High,
-        EVC_02_Pressure_Low,
-        maintainEVC_02_Pressure,
+        EVC_01_Remain_Battery_Service_Life,
+        EVC_01_Remain_Battery_Service_Life_High,
+        EVC_01_Remain_Battery_Service_Life_Low,
+        maintainEVC_01_Remain_Battery_Service_Life,
     ]);
 
-    //================================ EVC_01_Pressure================================
-
-    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
-
-    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
-        number | null
-    >(null);
-    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
-        number | null
-    >(null);
-    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] =
-        useState(false);
-
-    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
-        const highValue = EVC_01_Pressure_High ?? NaN;
-        const lowValue = EVC_01_Pressure_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_PressureValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Pressure
-        ) {
-            setexceedThresholdEVC_01_Pressure(
-                EVC_01_PressureValue >= highValue ||
-                    EVC_01_PressureValue <= lowValue
-            );
-        }
-    }, [
-        EVC_01_Pressure,
-        EVC_01_Pressure_High,
-        EVC_01_Pressure_Low,
-        maintainEVC_01_Pressure,
-    ]);
-    //================================ EVC_01_Temperature================================
+    // ===================================================================================================================
 
     const [EVC_01_Temperature, setEVC_01_Temperature] = useState<string | null>(
         null
@@ -1061,221 +1353,46 @@ export default function Graphic_CNG_HUNGYEN() {
         maintainEVC_01_Temperature,
     ]);
 
-    //================================ EVC_02_Temperature================================
+    // ===================================================================================================================
 
-    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
-        null
-    );
+    const [EVC_01_Pressure, setEVC_01_Pressure] = useState<string | null>(null);
 
-    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
+    const [EVC_01_Pressure_High, setEVC_01_Pressure_High] = useState<
         number | null
     >(null);
-    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
+    const [EVC_01_Pressure_Low, setEVC_01_Pressure_Low] = useState<
         number | null
     >(null);
-    const [
-        exceedThresholdEVC_02_Temperature,
-        setexceedThresholdEVC_02_Temperature,
-    ] = useState(false);
+    const [exceedThresholdEVC_01_Pressure, setexceedThresholdEVC_01_Pressure] =
+        useState(false);
 
-    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] =
+    const [maintainEVC_01_Pressure, setmaintainEVC_01_Pressure] =
         useState<boolean>(false);
 
     useEffect(() => {
-        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
-        const highValue = EVC_02_Temperature_High ?? NaN;
-        const lowValue = EVC_02_Temperature_Low ?? NaN;
+        const EVC_01_PressureValue = parseFloat(EVC_01_Pressure as any);
+        const highValue = EVC_01_Pressure_High ?? NaN;
+        const lowValue = EVC_01_Pressure_Low ?? NaN;
 
         if (
-            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(EVC_01_PressureValue) &&
             !isNaN(highValue) &&
             !isNaN(lowValue) &&
-            !maintainEVC_02_Temperature
+            !maintainEVC_01_Pressure
         ) {
-            setexceedThresholdEVC_02_Temperature(
-                EVC_02_TemperatureValue >= highValue ||
-                    EVC_02_TemperatureValue <= lowValue
+            setexceedThresholdEVC_01_Pressure(
+                EVC_01_PressureValue >= highValue ||
+                    EVC_01_PressureValue <= lowValue
             );
         }
     }, [
-        EVC_02_Temperature,
-        EVC_02_Temperature_High,
-        EVC_02_Temperature_Low,
-        maintainEVC_02_Temperature,
+        EVC_01_Pressure,
+        EVC_01_Pressure_High,
+        EVC_01_Pressure_Low,
+        maintainEVC_01_Pressure,
     ]);
 
-    //================================ EVC_02_Temperature================================
-
-    const [TT_3001, setTT_3001] = useState<string | null>(null);
-    const [TT_3001_High, setTT_3001_High] = useState<number | null>(null);
-    const [TT_3001_Low, setTT_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdTT_3001, setexceedThresholdTT_3001] = useState(false);
-    const [maintainTT_3001, setmaintainTT_3001] = useState<boolean>(false);
-
-    useEffect(() => {
-        const TT_3001Value = parseFloat(TT_3001 as any);
-        const highValue = TT_3001_High ?? NaN;
-        const lowValue = TT_3001_Low ?? NaN;
-
-        if (
-            !isNaN(TT_3001Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainTT_3001
-        ) {
-            setexceedThresholdTT_3001(
-                TT_3001Value >= highValue || TT_3001Value <= lowValue
-            );
-        }
-    }, [TT_3001, TT_3001_High, TT_3001_Low, maintainTT_3001]);
-
-    //================================ EVC_02_Temperature================================
-
-    const [PT_3003, setPT_3003] = useState<string | null>(null);
-
-    const [PT_3003_High, setPT_3003_High] = useState<number | null>(null);
-    const [PT_3003_Low, setPT_3003_Low] = useState<number | null>(null);
-    const [exceedThresholdPT_3003, setexceedThresholdPT_3003] = useState(false);
-
-    const [maintainPT_3003, setmaintainPT_3003] = useState<boolean>(false);
-
-    useEffect(() => {
-        const PT_3003Value = parseFloat(PT_3003 as any);
-        const highValue = PT_3003_High ?? NaN;
-        const lowValue = PT_3003_Low ?? NaN;
-
-        if (
-            !isNaN(PT_3003Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPT_3003
-        ) {
-            setexceedThresholdPT_3003(
-                PT_3003Value >= highValue || PT_3003Value <= lowValue
-            );
-        }
-    }, [PT_3003, PT_3003_High, PT_3003_Low, maintainPT_3003]);
-
-    //================================ EVC_02_Temperature ======================================================
-
-    const [GD_3001, setGD_3001] = useState<string | null>(null);
-    const [GD_3001_High, setGD_3001_High] = useState<number | null>(null);
-    const [GD_3001_Low, setGD_3001_Low] = useState<number | null>(null);
-    const [exceedThresholdGD_3001, setExceedThresholdGD_3001] = useState(false);
-    const [maintainGD_3001, setmaintainGD_3001] = useState<boolean>(false);
-    useEffect(() => {
-        const GD_3001Value = parseFloat(GD_3001 as any);
-        const highValue = GD_3001_High ?? NaN;
-        const lowValue = GD_3001_Low ?? NaN;
-
-        if (
-            !isNaN(GD_3001Value) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainGD_3001
-        ) {
-            setExceedThresholdGD_3001(
-                GD_3001Value >= highValue || GD_3001Value <= lowValue
-            );
-        }
-    }, [GD_3001, GD_3001_High, GD_3001_Low, maintainGD_3001]);
-
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
-
-    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
-        useState<string | null>(null);
-
-    const [
-        EVC_01_Flow_at_Base_Condition_High,
-        setEVC_01_Flow_at_Base_Condition_High,
-    ] = useState<number | null>(null);
-    const [
-        EVC_01_Flow_at_Base_Condition_Low,
-        setEVC_01_Flow_at_Base_Condition_Low,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Flow_at_Base_Condition,
-        setexceedThresholdEVC_01_Flow_at_Base_Condition,
-    ] = useState(false);
-
-    const [
-        maintainEVC_01_Flow_at_Base_Condition,
-        setmaintainEVC_01_Flow_at_Base_Condition,
-    ] = useState<boolean>(false);
-    useEffect(() => {
-        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
-            EVC_01_Flow_at_Base_Condition as any
-        );
-        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
-        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Flow_at_Base_Condition
-        ) {
-            setexceedThresholdEVC_01_Flow_at_Base_Condition(
-                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
-                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
-            );
-        }
-    }, [
-        EVC_01_Flow_at_Base_Condition,
-        EVC_01_Flow_at_Base_Condition_High,
-        EVC_01_Flow_at_Base_Condition_Low,
-        maintainEVC_01_Flow_at_Base_Condition,
-    ]);
-
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
-
-    const [
-        EVC_01_Flow_at_Measurement_Condition,
-        setEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<string | null>(null);
-    const [
-        EVC_01_Flow_at_Measurement_Condition_High,
-        setEVC_01_Flow_at_Measurement_Condition_High,
-    ] = useState<number | null>(null);
-    const [
-        EVC_01_Flow_at_Measurement_Condition_Low,
-        setEVC_01_Flow_at_Measurement_Condition_Low,
-    ] = useState<number | null>(null);
-    const [
-        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
-        setexceedThresholdEVC_01_Flow_at_Measurement_Condition,
-    ] = useState(false);
-    const [
-        maintainEVC_01_Flow_at_Measurement_Condition,
-        setmaintainEVC_01_Flow_at_Measurement_Condition,
-    ] = useState<boolean>(false);
-
-    useEffect(() => {
-        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
-            EVC_01_Flow_at_Measurement_Condition as any
-        );
-        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
-        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
-
-        if (
-            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainEVC_01_Flow_at_Measurement_Condition
-        ) {
-            setexceedThresholdEVC_01_Flow_at_Measurement_Condition(
-                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
-                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
-            );
-        }
-    }, [
-        EVC_01_Flow_at_Measurement_Condition,
-        EVC_01_Flow_at_Measurement_Condition_High,
-        EVC_01_Flow_at_Measurement_Condition_Low,
-        maintainEVC_01_Flow_at_Measurement_Condition,
-    ]);
-
-    //================================ EVC_01_Volume_at_Base_Condition FIQ 1901 ======================================================
+    // ===================================================================================================================
 
     const [
         EVC_01_Volume_at_Base_Condition,
@@ -1324,7 +1441,7 @@ export default function Graphic_CNG_HUNGYEN() {
         maintainEVC_01_Volume_at_Base_Condition,
     ]);
 
-    //================================ EVC_01_Volume_at_Measurement_Condition FIQ 1901 ======================================================
+    // ===================================================================================================================
 
     const [
         EVC_01_Volume_at_Measurement_Condition,
@@ -1372,7 +1489,895 @@ export default function Graphic_CNG_HUNGYEN() {
         maintainEVC_01_Volume_at_Measurement_Condition,
     ]);
 
-    //================================ EVC_01_Flow_at_Base_Condition FIQ 1901 ======================================================
+    // ===================================================================================================================
+
+    const [EVC_01_Flow_at_Base_Condition, setEVC_01_Flow_at_Base_Condition] =
+        useState<string | null>(null);
+
+    const [
+        EVC_01_Flow_at_Base_Condition_High,
+        setEVC_01_Flow_at_Base_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Base_Condition_Low,
+        setEVC_01_Flow_at_Base_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        setexceedThresholdEVC_01_Flow_at_Base_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_01_Flow_at_Base_Condition,
+        setmaintainEVC_01_Flow_at_Base_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Flow_at_Base_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Base_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Base_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Base_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Base_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Base_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Base_Condition(
+                EVC_01_Flow_at_Base_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Base_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Base_Condition,
+        EVC_01_Flow_at_Base_Condition_High,
+        EVC_01_Flow_at_Base_Condition_Low,
+        maintainEVC_01_Flow_at_Base_Condition,
+    ]);
+
+    // ===================================================================================================================
+
+    const [
+        EVC_01_Flow_at_Measurement_Condition,
+        setEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<string | null>(null);
+
+    const [
+        EVC_01_Flow_at_Measurement_Condition_High,
+        setEVC_01_Flow_at_Measurement_Condition_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        setEVC_01_Flow_at_Measurement_Condition_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        setexceedThresholdEVC_01_Flow_at_Measurement_Condition,
+    ] = useState(false);
+
+    const [
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        setmaintainEVC_01_Flow_at_Measurement_Condition,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Flow_at_Measurement_ConditionValue = parseFloat(
+            EVC_01_Flow_at_Measurement_Condition as any
+        );
+        const highValue = EVC_01_Flow_at_Measurement_Condition_High ?? NaN;
+        const lowValue = EVC_01_Flow_at_Measurement_Condition_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Flow_at_Measurement_ConditionValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Flow_at_Measurement_Condition
+        ) {
+            setexceedThresholdEVC_01_Flow_at_Measurement_Condition(
+                EVC_01_Flow_at_Measurement_ConditionValue >= highValue ||
+                    EVC_01_Flow_at_Measurement_ConditionValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Flow_at_Measurement_Condition,
+        EVC_01_Flow_at_Measurement_Condition_High,
+        EVC_01_Flow_at_Measurement_Condition_Low,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_01_Vm_of_Current_Day, setEVC_01_Vm_of_Current_Day] = useState<
+        string | null
+    >(null);
+    const [EVC_01_Vm_of_Current_Day_High, setEVC_01_Vm_of_Current_Day_High] =
+        useState<number | null>(null);
+    const [EVC_01_Vm_of_Current_Day_Low, setEVC_01_Vm_of_Current_Day_Low] =
+        useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Vm_of_Current_Day,
+        setexceedThresholdEVC_01_Vm_of_Current_Day,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Vm_of_Current_Day,
+        setmaintainEVC_01_Vm_of_Current_Day,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Vm_of_Current_DayValue = parseFloat(
+            EVC_01_Vm_of_Current_Day as any
+        );
+        const highValue = EVC_01_Vm_of_Current_Day_High ?? NaN;
+        const lowValue = EVC_01_Vm_of_Current_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Vm_of_Current_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Vm_of_Current_Day
+        ) {
+            setexceedThresholdEVC_01_Vm_of_Current_Day(
+                EVC_01_Vm_of_Current_DayValue >= highValue ||
+                    EVC_01_Vm_of_Current_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Vm_of_Current_Day,
+        EVC_01_Vm_of_Current_Day_High,
+        EVC_01_Vm_of_Current_Day_Low,
+        maintainEVC_01_Vm_of_Current_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_01_Vb_of_Current_Day, setEVC_01_Vb_of_Current_Day] = useState<
+        string | null
+    >(null);
+    const [EVC_01_Vb_of_Current_Day_High, setEVC_01_Vb_of_Current_Day_High] =
+        useState<number | null>(null);
+    const [EVC_01_Vb_of_Current_Day_Low, setEVC_01_Vb_of_Current_Day_Low] =
+        useState<number | null>(null);
+    const [
+        exceedThresholdEVC_01_Vb_of_Current_Day,
+        setexceedThresholdEVC_01_Vb_of_Current_Day,
+    ] = useState(false);
+    const [
+        maintainEVC_01_Vb_of_Current_Day,
+        setmaintainEVC_01_Vb_of_Current_Day,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Vb_of_Current_DayValue = parseFloat(
+            EVC_01_Vb_of_Current_Day as any
+        );
+        const highValue = EVC_01_Vb_of_Current_Day_High ?? NaN;
+        const lowValue = EVC_01_Vb_of_Current_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Vb_of_Current_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Vb_of_Current_Day
+        ) {
+            setexceedThresholdEVC_01_Vb_of_Current_Day(
+                EVC_01_Vb_of_Current_DayValue >= highValue ||
+                    EVC_01_Vb_of_Current_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Vb_of_Current_Day,
+        EVC_01_Vb_of_Current_Day_High,
+        EVC_01_Vb_of_Current_Day_Low,
+        maintainEVC_01_Vb_of_Current_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_01_Vb_of_Last_Day, setEVC_01_Vb_of_Last_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_01_Vb_of_Last_Day_High, setEVC_01_Vb_of_Last_Day_High] =
+        useState<number | null>(null);
+    const [EVC_01_Vb_of_Last_Day_Low, setEVC_01_Vb_of_Last_Day_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_01_Vb_of_Last_Day,
+        setexceedThresholdEVC_01_Vb_of_Last_Day,
+    ] = useState(false);
+
+    const [maintainEVC_01_Vb_of_Last_Day, setmaintainEVC_01_Vb_of_Last_Day] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Vb_of_Last_DayValue = parseFloat(
+            EVC_01_Vb_of_Last_Day as any
+        );
+        const highValue = EVC_01_Vb_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_01_Vb_of_Last_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Vb_of_Last_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Vb_of_Last_Day
+        ) {
+            setexceedThresholdEVC_01_Vb_of_Last_Day(
+                EVC_01_Vb_of_Last_DayValue >= highValue ||
+                    EVC_01_Vb_of_Last_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Vb_of_Last_Day,
+        EVC_01_Vb_of_Last_Day_High,
+        EVC_01_Vb_of_Last_Day_Low,
+        maintainEVC_01_Vb_of_Last_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_01_Vm_of_Last_Day, setEVC_01_Vm_of_Last_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_01_Vm_of_Last_Day_High, setEVC_01_Vm_of_Last_Day_High] =
+        useState<number | null>(null);
+    const [EVC_01_Vm_of_Last_Day_Low, setEVC_01_Vm_of_Last_Day_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_01_Vm_of_Last_Day,
+        setexceedThresholdEVC_01_Vm_of_Last_Day,
+    ] = useState(false);
+    const [maintainEVC_01_Vm_of_Last_Day, setmaintainEVC_01_Vm_of_Last_Day] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Vm_of_Last_DayValue = parseFloat(
+            EVC_01_Vm_of_Last_Day as any
+        );
+        const highValue = EVC_01_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_01_Vm_of_Last_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Vm_of_Last_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Vm_of_Last_Day
+        ) {
+            setexceedThresholdEVC_01_Vm_of_Last_Day(
+                EVC_01_Vm_of_Last_DayValue >= highValue ||
+                    EVC_01_Vm_of_Last_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Vm_of_Last_Day,
+        EVC_01_Vm_of_Last_Day_High,
+        EVC_01_Vm_of_Last_Day_Low,
+        maintainEVC_01_Vm_of_Last_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [PIT_3001B, setPIT_3001B] = useState<string | null>(null);
+    const [PIT_3001B_High, setPIT_3001B_High] = useState<number | null>(null);
+    const [PIT_3001B_Low, setPIT_3001B_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_3001B, setexceedThresholdPIT_3001B] =
+        useState(false);
+    const [maintainPIT_3001B, setmaintainPIT_3001B] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PIT_3001BValue = parseFloat(PIT_3001B as any);
+        const highValue = PIT_3001B_High ?? NaN;
+        const lowValue = PIT_3001B_Low ?? NaN;
+
+        if (
+            !isNaN(PIT_3001BValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_3001B
+        ) {
+            setexceedThresholdPIT_3001B(
+                PIT_3001BValue >= highValue || PIT_3001BValue <= lowValue
+            );
+        }
+    }, [PIT_3001B, PIT_3001B_High, PIT_3001B_Low, maintainPIT_3001B]);
+
+    // ===================================================================================================================
+
+    const [PT_3001, setPT_3001] = useState<string | null>(null);
+    const [PT_3001_High, setPT_3001_High] = useState<number | null>(null);
+    const [PT_3001_Low, setPT_3001_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_3001, setexceedThresholdPT_3001] = useState(false);
+    const [maintainPT_3001, setmaintainPT_3001] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PT_3001Value = parseFloat(PT_3001 as any);
+        const highValue = PT_3001_High ?? NaN;
+        const lowValue = PT_3001_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3001
+        ) {
+            setexceedThresholdPT_3001(
+                PT_3001Value >= highValue || PT_3001Value <= lowValue
+            );
+        }
+    }, [PT_3001, PT_3001_High, PT_3001_Low, maintainPT_3001]);
+
+    // ===================================================================================================================
+
+    const [PT_3002, setPT_3002] = useState<string | null>(null);
+    const [PT_3002_High, setPT_3002_High] = useState<number | null>(null);
+    const [PT_3002_Low, setPT_3002_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_3002, setexceedThresholdPT_3002] = useState(false);
+    const [maintainPT_3002, setmaintainPT_3002] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PT_3002Value = parseFloat(PT_3002 as any);
+        const highValue = PT_3002_High ?? NaN;
+        const lowValue = PT_3002_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3002
+        ) {
+            setexceedThresholdPT_3002(
+                PT_3002Value >= highValue || PT_3002Value <= lowValue
+            );
+        }
+    }, [PT_3002, PT_3002_High, PT_3002_Low, maintainPT_3002]);
+
+    // ===================================================================================================================
+
+    const [PIT_3001A, setPIT_3001A] = useState<string | null>(null);
+
+    const [PIT_3001A_High, setPIT_3001A_High] = useState<number | null>(null);
+    const [PIT_3001A_Low, setPIT_3001A_Low] = useState<number | null>(null);
+    const [exceedThresholdPIT_3001A, setexceedThresholdPIT_3001A] =
+        useState(false);
+
+    const [maintainPIT_3001A, setmaintainPIT_3001A] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PIT_3001AValue = parseFloat(PIT_3001A as any);
+        const highValue = PIT_3001A_High ?? NaN;
+        const lowValue = PIT_3001A_Low ?? NaN;
+
+        if (
+            !isNaN(PIT_3001AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPIT_3001A
+        ) {
+            setexceedThresholdPIT_3001A(
+                PIT_3001AValue >= highValue || PIT_3001AValue <= lowValue
+            );
+        }
+    }, [PIT_3001A, PIT_3001A_High, PIT_3001A_Low, maintainPIT_3001A]);
+
+    // ===================================================================================================================
+
+    const [TT_3002, setTT_3002] = useState<string | null>(null);
+    const [TT_3002_High, setTT_3002_High] = useState<number | null>(null);
+    const [TT_3002_Low, setTT_3002_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_3002, setexceedThresholdTT_3002] = useState(false);
+    const [maintainTT_3002, setmaintainTT_3002] = useState<boolean>(false);
+
+    useEffect(() => {
+        const TT_3002Value = parseFloat(TT_3002 as any);
+        const highValue = TT_3002_High ?? NaN;
+        const lowValue = TT_3002_Low ?? NaN;
+
+        if (
+            !isNaN(TT_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3002
+        ) {
+            setexceedThresholdTT_3002(
+                TT_3002Value >= highValue || TT_3002Value <= lowValue
+            );
+        }
+    }, [TT_3002, TT_3002_High, TT_3002_Low, maintainTT_3002]);
+
+    // ===================================================================================================================
+
+    const [TT_3001, setTT_3001] = useState<string | null>(null);
+    const [TT_3001_High, setTT_3001_High] = useState<number | null>(null);
+    const [TT_3001_Low, setTT_3001_Low] = useState<number | null>(null);
+    const [exceedThresholdTT_3001, setexceedThresholdTT_3001] = useState(false);
+    const [maintainTT_3001, setmaintainTT_3001] = useState<boolean>(false);
+
+    useEffect(() => {
+        const TT_3001Value = parseFloat(TT_3001 as any);
+        const highValue = TT_3001_High ?? NaN;
+        const lowValue = TT_3001_Low ?? NaN;
+
+        if (
+            !isNaN(TT_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainTT_3001
+        ) {
+            setexceedThresholdTT_3001(
+                TT_3001Value >= highValue || TT_3001Value <= lowValue
+            );
+        }
+    }, [TT_3001, TT_3001_High, TT_3001_Low, maintainTT_3001]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [BOILER, setBOILER] = useState<string | null>(null);
+    const [BOILER_High, setBOILER_High] = useState<number | null>(null);
+    const [BOILER_Low, setBOILER_Low] = useState<number | null>(null);
+    const [exceedThresholdBOILER, setexceedThresholdBOILER] = useState(false);
+    const [maintainBOILER, setmaintainBOILER] = useState<boolean>(false);
+
+    useEffect(() => {
+        const BOILERValue = parseFloat(BOILER as any);
+        const highValue = BOILER_High ?? NaN;
+        const lowValue = BOILER_Low ?? NaN;
+
+        if (
+            !isNaN(BOILERValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainBOILER
+        ) {
+            setexceedThresholdBOILER(
+                BOILERValue >= highValue || BOILERValue <= lowValue
+            );
+        }
+    }, [BOILER, BOILER_High, BOILER_Low, maintainBOILER]);
+
+    // ===================================================================================================================
+
+    const [SDV_3001A, setSDV_3001A] = useState<string | null>(null);
+    const [SDV_3001A_High, setSDV_3001A_High] = useState<number | null>(null);
+    const [SDV_3001A_Low, setSDV_3001A_Low] = useState<number | null>(null);
+    const [exceedThresholdSDV_3001A, setexceedThresholdSDV_3001A] =
+        useState(false);
+    const [maintainSDV_3001A, setmaintainSDV_3001A] = useState<boolean>(false);
+
+    useEffect(() => {
+        const SDV_3001AValue = parseFloat(SDV_3001A as any);
+        const highValue = SDV_3001A_High ?? NaN;
+        const lowValue = SDV_3001A_Low ?? NaN;
+
+        if (
+            !isNaN(SDV_3001AValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainSDV_3001A
+        ) {
+            setexceedThresholdSDV_3001A(
+                SDV_3001AValue >= highValue || SDV_3001AValue <= lowValue
+            );
+        }
+    }, [SDV_3001A, SDV_3001A_High, SDV_3001A_Low, maintainSDV_3001A]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [SDV_3001B, setSDV_3001B] = useState<string | null>(null);
+
+    const [SDV_3001B_High, setSDV_3001B_High] = useState<number | null>(null);
+    const [SDV_3001B_Low, setSDV_3001B_Low] = useState<number | null>(null);
+    const [exceedThresholdSDV_3001B, setexceedThresholdSDV_3001B] =
+        useState(false);
+    const [maintainSDV_3001B, setmaintainSDV_3001B] = useState<boolean>(false);
+
+    useEffect(() => {
+        const SDV_3001BValue = parseFloat(SDV_3001B as any);
+        const highValue = SDV_3001B_High ?? NaN;
+        const lowValue = SDV_3001B_Low ?? NaN;
+
+        if (
+            !isNaN(SDV_3001BValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainSDV_3001B
+        ) {
+            setexceedThresholdSDV_3001B(
+                SDV_3001BValue >= highValue || SDV_3001BValue <= lowValue
+            );
+        }
+    }, [SDV_3001B, SDV_3001B_High, SDV_3001B_Low, maintainSDV_3001B]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [Water_PG, setWater_PG] = useState<string | null>(null);
+
+    const [Water_PG_High, setWater_PG_High] = useState<number | null>(null);
+    const [Water_PG_Low, setWater_PG_Low] = useState<number | null>(null);
+    const [exceedThresholdWater_PG, setexceedThresholdWater_PG] =
+        useState(false);
+
+    const [maintainWater_PG, setmaintainWater_PG] = useState<boolean>(false);
+
+    useEffect(() => {
+        const Water_PGValue = parseFloat(Water_PG as any);
+        const highValue = Water_PG_High ?? NaN;
+        const lowValue = Water_PG_Low ?? NaN;
+
+        if (
+            !isNaN(Water_PGValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainWater_PG
+        ) {
+            setexceedThresholdWater_PG(
+                Water_PGValue >= highValue || Water_PGValue <= lowValue
+            );
+        }
+    }, [Water_PG, Water_PG_High, Water_PG_Low, maintainWater_PG]);
+
+    // ===================================================================================================================
+
+    const [PUMP_2, setPUMP_2] = useState<string | null>(null);
+
+    const [PUMP_2_High, setPUMP_2_High] = useState<number | null>(null);
+    const [PUMP_2_Low, setPUMP_2_Low] = useState<number | null>(null);
+    const [exceedThresholdPUMP_2, setexceedThresholdPUMP_2] = useState(false);
+    const [maintainPUMP_2, setmaintainPUMP_2] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PUMP_2Value = parseFloat(PUMP_2 as any);
+        const highValue = PUMP_2_High ?? NaN;
+        const lowValue = PUMP_2_Low ?? NaN;
+
+        if (
+            !isNaN(PUMP_2Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPUMP_2
+        ) {
+            setexceedThresholdPUMP_2(
+                PUMP_2Value >= highValue || PUMP_2Value <= lowValue
+            );
+        }
+    }, [PUMP_2, PUMP_2_High, PUMP_2_Low, maintainPUMP_2]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [GD_3001, setGD_3001] = useState<string | null>(null);
+
+    const [GD_3001_High, setGD_3001_High] = useState<number | null>(null);
+    const [GD_3001_Low, setGD_3001_Low] = useState<number | null>(null);
+    const [exceedThresholdGD_3001, setexceedThresholdGD_3001] = useState(false);
+
+    const [maintainGD_3001, setmaintainGD_3001] = useState<boolean>(false);
+
+    useEffect(() => {
+        const GD_3001Value = parseFloat(GD_3001 as any);
+        const highValue = GD_3001_High ?? NaN;
+        const lowValue = GD_3001_Low ?? NaN;
+
+        if (
+            !isNaN(GD_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD_3001
+        ) {
+            setexceedThresholdGD_3001(
+                GD_3001Value >= highValue || GD_3001Value <= lowValue
+            );
+        }
+    }, [GD_3001, GD_3001_High, GD_3001_Low, maintainGD_3001]);
+
+    // ===================================================================================================================
+
+    const [PUMP_1, setPUMP_1] = useState<string | null>(null);
+    const [PUMP_1_High, setPUMP_1_High] = useState<number | null>(null);
+    const [PUMP_1_Low, setPUMP_1_Low] = useState<number | null>(null);
+    const [exceedThresholdPUMP_1, setexceedThresholdPUMP_1] = useState(false);
+    const [maintainPUMP_1, setmaintainPUMP_1] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PUMP_1Value = parseFloat(PUMP_1 as any);
+        const highValue = PUMP_1_High ?? NaN;
+        const lowValue = PUMP_1_Low ?? NaN;
+
+        if (
+            !isNaN(PUMP_1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPUMP_1
+        ) {
+            setexceedThresholdPUMP_1(
+                PUMP_1Value >= highValue || PUMP_1Value <= lowValue
+            );
+        }
+    }, [PUMP_1, PUMP_1_High, PUMP_1_Low, maintainPUMP_1]);
+
+    // ===================================================================================================================
+
+    const [SDV_3002, setSDV_3002] = useState<string | null>(null);
+    const [SDV_3002_High, setSDV_3002_High] = useState<number | null>(null);
+    const [SDV_3002_Low, setSDV_3002_Low] = useState<number | null>(null);
+    const [exceedThresholdSDV_3002, setexceedThresholdSDV_3002] =
+        useState(false);
+
+    const [maintainSDV_3002, setmaintainSDV_3002] = useState<boolean>(false);
+
+    useEffect(() => {
+        const SDV_3002Value = parseFloat(SDV_3002 as any);
+        const highValue = SDV_3002_High ?? NaN;
+        const lowValue = SDV_3002_Low ?? NaN;
+
+        if (
+            !isNaN(SDV_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainSDV_3002
+        ) {
+            setexceedThresholdSDV_3002(
+                SDV_3002Value >= highValue || SDV_3002Value <= lowValue
+            );
+        }
+    }, [SDV_3002, SDV_3002_High, SDV_3002_Low, maintainSDV_3002]);
+
+    // ===================================================================================================================
+
+    const [HEATER_2, setHEATER_2] = useState<string | null>(null);
+
+    const [HEATER_2_High, setHEATER_2_High] = useState<number | null>(null);
+    const [HEATER_2_Low, setHEATER_2_Low] = useState<number | null>(null);
+    const [exceedThresholdHEATER_2, setexceedThresholdHEATER_2] =
+        useState(false);
+
+    const [maintainHEATER_2, setmaintainHEATER_2] = useState<boolean>(false);
+
+    useEffect(() => {
+        const HEATER_2Value = parseFloat(HEATER_2 as any);
+        const highValue = HEATER_2_High ?? NaN;
+        const lowValue = HEATER_2_Low ?? NaN;
+
+        if (
+            !isNaN(HEATER_2Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainHEATER_2
+        ) {
+            setexceedThresholdHEATER_2(
+                HEATER_2Value >= highValue || HEATER_2Value <= lowValue
+            );
+        }
+    }, [HEATER_2, HEATER_2_High, HEATER_2_Low, maintainHEATER_2]);
+
+    // ===================================================================================================================
+
+    const [Water_LSW, setWater_LSW] = useState<string | null>(null);
+
+    const [Water_LSW_High, setWater_LSW_High] = useState<number | null>(null);
+    const [Water_LSW_Low, setWater_LSW_Low] = useState<number | null>(null);
+    const [exceedThresholdWater_LSW, setexceedThresholdWater_LSW] =
+        useState(false);
+
+    const [maintainWater_LSW, setmaintainWater_LSW] = useState<boolean>(false);
+
+    useEffect(() => {
+        const Water_LSWValue = parseFloat(Water_LSW as any);
+        const highValue = Water_LSW_High ?? NaN;
+        const lowValue = Water_LSW_Low ?? NaN;
+
+        if (
+            !isNaN(Water_LSWValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainWater_LSW
+        ) {
+            setexceedThresholdWater_LSW(
+                Water_LSWValue >= highValue || Water_LSWValue <= lowValue
+            );
+        }
+    }, [Water_LSW, Water_LSW_High, Water_LSW_Low, maintainWater_LSW]);
+
+    // ===================================================================================================================
+
+    const [HEATER_1, setHEATER_1] = useState<string | null>(null);
+
+    const [HEATER_1_High, setHEATER_1_High] = useState<number | null>(null);
+    const [HEATER_1_Low, setHEATER_1_Low] = useState<number | null>(null);
+    const [exceedThresholdHEATER_1, setexceedThresholdHEATER_1] =
+        useState(false);
+    const [maintainHEATER_1, setmaintainHEATER_1] = useState<boolean>(false);
+
+    useEffect(() => {
+        const HEATER_1Value = parseFloat(HEATER_1 as any);
+        const highValue = HEATER_1_High ?? NaN;
+        const lowValue = HEATER_1_Low ?? NaN;
+
+        if (
+            !isNaN(HEATER_1Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainHEATER_1
+        ) {
+            setexceedThresholdHEATER_1(
+                HEATER_1Value >= highValue || HEATER_1Value <= lowValue
+            );
+        }
+    }, [HEATER_1, HEATER_1_High, HEATER_1_Low, maintainHEATER_1]);
+
+    // ===================================================================================================================
+
+    const [PT_3003, setPT_3003] = useState<string | null>(null);
+
+    const [PT_3003_High, setPT_3003_High] = useState<number | null>(null);
+    const [PT_3003_Low, setPT_3003_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_3003, setexceedThresholdPT_3003] = useState(false);
+
+    const [maintainPT_3003, setmaintainPT_3003] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PT_3003Value = parseFloat(PT_3003 as any);
+        const highValue = PT_3003_High ?? NaN;
+        const lowValue = PT_3003_Low ?? NaN;
+
+        if (
+            !isNaN(PT_3003Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_3003
+        ) {
+            setexceedThresholdPT_3003(
+                PT_3003Value >= highValue || PT_3003Value <= lowValue
+            );
+        }
+    }, [PT_3003, PT_3003_High, PT_3003_Low, maintainPT_3003]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [
+        EVC_02_Remain_Battery_Service_Life,
+        setEVC_02_Remain_Battery_Service_Life,
+    ] = useState<string | null>(null);
+
+    const [
+        EVC_02_Remain_Battery_Service_Life_High,
+        setEVC_02_Remain_Battery_Service_Life_High,
+    ] = useState<number | null>(null);
+    const [
+        EVC_02_Remain_Battery_Service_Life_Low,
+        setEVC_02_Remain_Battery_Service_Life_Low,
+    ] = useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Remain_Battery_Service_Life,
+        setexceedThresholdEVC_02_Remain_Battery_Service_Life,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Remain_Battery_Service_Life,
+        setmaintainEVC_02_Remain_Battery_Service_Life,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Remain_Battery_Service_LifeValue = parseFloat(
+            EVC_02_Remain_Battery_Service_Life as any
+        );
+        const highValue = EVC_02_Remain_Battery_Service_Life_High ?? NaN;
+        const lowValue = EVC_02_Remain_Battery_Service_Life_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Remain_Battery_Service_LifeValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Remain_Battery_Service_Life
+        ) {
+            setexceedThresholdEVC_02_Remain_Battery_Service_Life(
+                EVC_02_Remain_Battery_Service_LifeValue >= highValue ||
+                    EVC_02_Remain_Battery_Service_LifeValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Remain_Battery_Service_Life,
+        EVC_02_Remain_Battery_Service_Life_High,
+        EVC_02_Remain_Battery_Service_Life_Low,
+        maintainEVC_02_Remain_Battery_Service_Life,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Temperature, setEVC_02_Temperature] = useState<string | null>(
+        null
+    );
+
+    const [EVC_02_Temperature_High, setEVC_02_Temperature_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Temperature_Low, setEVC_02_Temperature_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Temperature,
+        setexceedThresholdEVC_02_Temperature,
+    ] = useState(false);
+
+    const [maintainEVC_02_Temperature, setmaintainEVC_02_Temperature] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_TemperatureValue = parseFloat(EVC_02_Temperature as any);
+        const highValue = EVC_02_Temperature_High ?? NaN;
+        const lowValue = EVC_02_Temperature_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_TemperatureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Temperature
+        ) {
+            setexceedThresholdEVC_02_Temperature(
+                EVC_02_TemperatureValue >= highValue ||
+                    EVC_02_TemperatureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Temperature,
+        EVC_02_Temperature_High,
+        EVC_02_Temperature_Low,
+        maintainEVC_02_Temperature,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
+
+    const [EVC_02_Pressure_High, setEVC_02_Pressure_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Pressure_Low, setEVC_02_Pressure_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Pressure, setexceedThresholdEVC_02_Pressure] =
+        useState(false);
+
+    const [maintainEVC_02_Pressure, setmaintainEVC_02_Pressure] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_PressureValue = parseFloat(EVC_02_Pressure as any);
+        const highValue = EVC_02_Pressure_High ?? NaN;
+        const lowValue = EVC_02_Pressure_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_PressureValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Pressure
+        ) {
+            setexceedThresholdEVC_02_Pressure(
+                EVC_02_PressureValue >= highValue ||
+                    EVC_02_PressureValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Pressure,
+        EVC_02_Pressure_High,
+        EVC_02_Pressure_Low,
+        maintainEVC_02_Pressure,
+    ]);
 
     // ===================================================================================================================
     const [
@@ -1569,6 +2574,439 @@ export default function Graphic_CNG_HUNGYEN() {
         maintainEVC_02_Flow_at_Measurement_Condition,
     ]);
 
+    // ===================================================================================================================
+
+    const [EVC_02_Vm_of_Current_Day, setEVC_02_Vm_of_Current_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_02_Vm_of_Current_Day_High, setEVC_02_Vm_of_Current_Day_High] =
+        useState<number | null>(null);
+    const [EVC_02_Vm_of_Current_Day_Low, setEVC_02_Vm_of_Current_Day_Low] =
+        useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Vm_of_Current_Day,
+        setexceedThresholdEVC_02_Vm_of_Current_Day,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Vm_of_Current_Day,
+        setmaintainEVC_02_Vm_of_Current_Day,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Vm_of_Current_DayValue = parseFloat(
+            EVC_02_Vm_of_Current_Day as any
+        );
+        const highValue = EVC_02_Vm_of_Current_Day_High ?? NaN;
+        const lowValue = EVC_02_Vm_of_Current_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Vm_of_Current_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Vm_of_Current_Day
+        ) {
+            setexceedThresholdEVC_02_Vm_of_Current_Day(
+                EVC_02_Vm_of_Current_DayValue >= highValue ||
+                    EVC_02_Vm_of_Current_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Vm_of_Current_Day,
+        EVC_02_Vm_of_Current_Day_High,
+        EVC_02_Vm_of_Current_Day_Low,
+        maintainEVC_02_Vm_of_Current_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Vb_of_Current_Day, setEVC_02_Vb_of_Current_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_02_Vb_of_Current_Day_High, setEVC_02_Vb_of_Current_Day_High] =
+        useState<number | null>(null);
+    const [EVC_02_Vb_of_Current_Day_Low, setEVC_02_Vb_of_Current_Day_Low] =
+        useState<number | null>(null);
+    const [
+        exceedThresholdEVC_02_Vb_of_Current_Day,
+        setexceedThresholdEVC_02_Vb_of_Current_Day,
+    ] = useState(false);
+
+    const [
+        maintainEVC_02_Vb_of_Current_Day,
+        setmaintainEVC_02_Vb_of_Current_Day,
+    ] = useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Vb_of_Current_DayValue = parseFloat(
+            EVC_02_Vb_of_Current_Day as any
+        );
+        const highValue = EVC_02_Vb_of_Current_Day_High ?? NaN;
+        const lowValue = EVC_02_Vb_of_Current_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Vb_of_Current_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Vb_of_Current_Day
+        ) {
+            setexceedThresholdEVC_02_Vb_of_Current_Day(
+                EVC_02_Vb_of_Current_DayValue >= highValue ||
+                    EVC_02_Vb_of_Current_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Vb_of_Current_Day,
+        EVC_02_Vb_of_Current_Day_High,
+        EVC_02_Vb_of_Current_Day_Low,
+        maintainEVC_02_Vb_of_Current_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Vb_of_Last_Day, setEVC_02_Vb_of_Last_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_02_Vb_of_Last_Day_High, setEVC_02_Vb_of_Last_Day_High] =
+        useState<number | null>(null);
+    const [EVC_02_Vb_of_Last_Day_Low, setEVC_02_Vb_of_Last_Day_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Vb_of_Last_Day,
+        setexceedThresholdEVC_02_Vb_of_Last_Day,
+    ] = useState(false);
+
+    const [maintainEVC_02_Vb_of_Last_Day, setmaintainEVC_02_Vb_of_Last_Day] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Vb_of_Last_DayValue = parseFloat(
+            EVC_02_Vb_of_Last_Day as any
+        );
+        const highValue = EVC_02_Vb_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_02_Vb_of_Last_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Vb_of_Last_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Vb_of_Last_Day
+        ) {
+            setexceedThresholdEVC_02_Vb_of_Last_Day(
+                EVC_02_Vb_of_Last_DayValue >= highValue ||
+                    EVC_02_Vb_of_Last_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Vb_of_Last_Day,
+        EVC_02_Vb_of_Last_Day_High,
+        EVC_02_Vb_of_Last_Day_Low,
+        maintainEVC_02_Vb_of_Last_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [EVC_02_Vm_of_Last_Day, setEVC_02_Vm_of_Last_Day] = useState<
+        string | null
+    >(null);
+
+    const [EVC_02_Vm_of_Last_Day_High, setEVC_02_Vm_of_Last_Day_High] =
+        useState<number | null>(null);
+    const [EVC_02_Vm_of_Last_Day_Low, setEVC_02_Vm_of_Last_Day_Low] = useState<
+        number | null
+    >(null);
+    const [
+        exceedThresholdEVC_02_Vm_of_Last_Day,
+        setexceedThresholdEVC_02_Vm_of_Last_Day,
+    ] = useState(false);
+
+    const [maintainEVC_02_Vm_of_Last_Day, setmaintainEVC_02_Vm_of_Last_Day] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Vm_of_Last_DayValue = parseFloat(
+            EVC_02_Vm_of_Last_Day as any
+        );
+        const highValue = EVC_02_Vm_of_Last_Day_High ?? NaN;
+        const lowValue = EVC_02_Vm_of_Last_Day_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Vm_of_Last_DayValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Vm_of_Last_Day
+        ) {
+            setexceedThresholdEVC_02_Vm_of_Last_Day(
+                EVC_02_Vm_of_Last_DayValue >= highValue ||
+                    EVC_02_Vm_of_Last_DayValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Vm_of_Last_Day,
+        EVC_02_Vm_of_Last_Day_High,
+        EVC_02_Vm_of_Last_Day_Low,
+        maintainEVC_02_Vm_of_Last_Day,
+    ]);
+
+    // ===================================================================================================================
+
+    const [GD_STATUS, setGD_STATUS] = useState<string | null>(null);
+
+    const [GD_STATUS_High, setGD_STATUS_High] = useState<number | null>(null);
+    const [GD_STATUS_Low, setGD_STATUS_Low] = useState<number | null>(null);
+    const [exceedThresholdGD_STATUS, setexceedThresholdGD_STATUS] =
+        useState(false);
+
+    const [maintainGD_STATUS, setmaintainGD_STATUS] = useState<boolean>(false);
+
+    useEffect(() => {
+        const GD_STATUSValue = parseFloat(GD_STATUS as any);
+        const highValue = GD_STATUS_High ?? NaN;
+        const lowValue = GD_STATUS_Low ?? NaN;
+
+        if (
+            !isNaN(GD_STATUSValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainGD_STATUS
+        ) {
+            setexceedThresholdGD_STATUS(
+                GD_STATUSValue >= highValue || GD_STATUSValue <= lowValue
+            );
+        }
+    }, [GD_STATUS, GD_STATUS_High, GD_STATUS_Low, maintainGD_STATUS]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+    const [HR_BC, setHR_BC] = useState<string | null>(null);
+
+    const [HR_BC_High, setHR_BC_High] = useState<number | null>(null);
+    const [HR_BC_Low, setHR_BC_Low] = useState<number | null>(null);
+    const [exceedThresholdHR_BC, setexceedThresholdHR_BC] = useState(false);
+
+    const [maintainHR_BC, setmaintainHR_BC] = useState<boolean>(false);
+
+    useEffect(() => {
+        const HR_BCValue = parseFloat(HR_BC as any);
+        const highValue = HR_BC_High ?? NaN;
+        const lowValue = HR_BC_Low ?? NaN;
+
+        if (
+            !isNaN(HR_BCValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainHR_BC
+        ) {
+            setexceedThresholdHR_BC(
+                HR_BCValue >= highValue || HR_BCValue <= lowValue
+            );
+        }
+    }, [HR_BC, HR_BC_High, HR_BC_Low, maintainHR_BC]);
+
+    // ===================================================================================================================
+
+    const [ESD_3001, setESD_3001] = useState<string | null>(null);
+
+    const [ESD_3001_High, setESD_3001_High] = useState<number | null>(null);
+    const [ESD_3001_Low, setESD_3001_Low] = useState<number | null>(null);
+    const [exceedThresholdESD_3001, setexceedThresholdESD_3001] =
+        useState(false);
+
+    const [maintainESD_3001, setmaintainESD_3001] = useState<boolean>(false);
+
+    useEffect(() => {
+        const ESD_3001Value = parseFloat(ESD_3001 as any);
+        const highValue = ESD_3001_High ?? NaN;
+        const lowValue = ESD_3001_Low ?? NaN;
+
+        if (
+            !isNaN(ESD_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainESD_3001
+        ) {
+            setexceedThresholdESD_3001(
+                ESD_3001Value >= highValue || ESD_3001Value <= lowValue
+            );
+        }
+    }, [ESD_3001, ESD_3001_High, ESD_3001_Low, maintainESD_3001]);
+
+    // ===================================================================================================================
+    const [SD_3001, setSD_3001] = useState<string | null>(null);
+
+    const [SD_3001_High, setSD_3001_High] = useState<number | null>(null);
+    const [SD_3001_Low, setSD_3001_Low] = useState<number | null>(null);
+    const [exceedThresholdSD_3001, setexceedThresholdSD_3001] = useState(false);
+
+    const [maintainSD_3001, setmaintainSD_3001] = useState<boolean>(false);
+
+    useEffect(() => {
+        const SD_3001Value = parseFloat(SD_3001 as any);
+        const highValue = SD_3001_High ?? NaN;
+        const lowValue = SD_3001_Low ?? NaN;
+
+        if (
+            !isNaN(SD_3001Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainSD_3001
+        ) {
+            setexceedThresholdSD_3001(
+                SD_3001Value >= highValue || SD_3001Value <= lowValue
+            );
+        }
+    }, [SD_3001, SD_3001_High, SD_3001_Low, maintainSD_3001]);
+
+    // ===================================================================================================================
+
+    const [SD_3002, setSD_3002] = useState<string | null>(null);
+
+    const [SD_3002_High, setSD_3002_High] = useState<number | null>(null);
+    const [SD_3002_Low, setSD_3002_Low] = useState<number | null>(null);
+    const [exceedThresholdSD_3002, setexceedThresholdSD_3002] = useState(false);
+
+    const [maintainSD_3002, setmaintainSD_3002] = useState<boolean>(false);
+
+    useEffect(() => {
+        const SD_3002Value = parseFloat(SD_3002 as any);
+        const highValue = SD_3002_High ?? NaN;
+        const lowValue = SD_3002_Low ?? NaN;
+
+        if (
+            !isNaN(SD_3002Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainSD_3002
+        ) {
+            setexceedThresholdSD_3002(
+                SD_3002Value >= highValue || SD_3002Value <= lowValue
+            );
+        }
+    }, [SD_3002, SD_3002_High, SD_3002_Low, maintainSD_3002]);
+
+    // ===================================================================================================================
+
+    // ===================================================================================================================
+
+    const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+
+    const [EVC_01_Conn_STT_High, setEVC_01_Conn_STT_High] = useState<
+        number | null
+    >(null);
+    const [EVC_01_Conn_STT_Low, setEVC_01_Conn_STT_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_01_Conn_STT, setexceedThresholdEVC_01_Conn_STT] =
+        useState(false);
+
+    const [maintainEVC_01_Conn_STT, setmaintainEVC_01_Conn_STT] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT as any);
+        const highValue = EVC_01_Conn_STT_High ?? NaN;
+        const lowValue = EVC_01_Conn_STT_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_01_Conn_STTValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_01_Conn_STT
+        ) {
+            setexceedThresholdEVC_01_Conn_STT(
+                EVC_01_Conn_STTValue >= highValue ||
+                    EVC_01_Conn_STTValue <= lowValue
+            );
+        }
+    }, [
+        EVC_01_Conn_STT,
+        EVC_01_Conn_STT_High,
+        EVC_01_Conn_STT_Low,
+        maintainEVC_01_Conn_STT,
+    ]);
+
+    // ===================================================================================================================
+    const [EVC_02_Conn_STT, setEVC_02_Conn_STT] = useState<string | null>(null);
+
+    const [EVC_02_Conn_STT_High, setEVC_02_Conn_STT_High] = useState<
+        number | null
+    >(null);
+    const [EVC_02_Conn_STT_Low, setEVC_02_Conn_STT_Low] = useState<
+        number | null
+    >(null);
+    const [exceedThresholdEVC_02_Conn_STT, setexceedThresholdEVC_02_Conn_STT] =
+        useState(false);
+
+    const [maintainEVC_02_Conn_STT, setmaintainEVC_02_Conn_STT] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT as any);
+        const highValue = EVC_02_Conn_STT_High ?? NaN;
+        const lowValue = EVC_02_Conn_STT_Low ?? NaN;
+
+        if (
+            !isNaN(EVC_02_Conn_STTValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainEVC_02_Conn_STT
+        ) {
+            setexceedThresholdEVC_02_Conn_STT(
+                EVC_02_Conn_STTValue >= highValue ||
+                    EVC_02_Conn_STTValue <= lowValue
+            );
+        }
+    }, [
+        EVC_02_Conn_STT,
+        EVC_02_Conn_STT_High,
+        EVC_02_Conn_STT_Low,
+        maintainEVC_02_Conn_STT,
+    ]);
+
+    // ===================================================================================================================
+
+    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+    const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(
+        null
+    );
+    const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(
+        null
+    );
+    const [exceedThresholdPLC_Conn_STT, setexceedThresholdPLC_Conn_STT] =
+        useState(false);
+
+    const [maintainPLC_Conn_STT, setmaintainPLC_Conn_STT] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+        const highValue = PLC_Conn_STT_High ?? NaN;
+        const lowValue = PLC_Conn_STT_Low ?? NaN;
+
+        if (
+            !isNaN(PLC_Conn_STTValue) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPLC_Conn_STT
+        ) {
+            setexceedThresholdPLC_Conn_STT(
+                PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue
+            );
+        }
+    }, [
+        PLC_Conn_STT,
+        PLC_Conn_STT_High,
+        PLC_Conn_STT_Low,
+        maintainPLC_Conn_STT,
+    ]);
+
+    // ===================================================================================================================
     //====================================================================
 
     useEffect(() => {
@@ -1619,7 +3057,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_01_Flow_at_Base_Condition}
+                                        {EVC_01_Flow_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1686,9 +3124,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            roundedEVC_01_Flow_at_Measurement_Condition
-                                        }
+                                        {EVC_01_Flow_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1752,7 +3188,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_01_Volume_at_Base_Condition}
+                                        {EVC_01_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1820,9 +3256,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            roundedEVC_01_Volume_at_Measurement_Condition
-                                        }
+                                        {EVC_01_Volume_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1887,7 +3321,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_02_Flow_at_Base_Condition}
+                                        {EVC_02_Flow_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -1954,9 +3388,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            roundedEVC_02_Flow_at_Measurement_Condition
-                                        }
+                                        {EVC_02_Flow_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2021,7 +3453,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedEVC_02_Volume_at_Base_Condition}
+                                        {EVC_02_Volume_at_Base_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2088,9 +3520,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            roundedEVC_02_Volume_at_Measurement_Condition
-                                        }
+                                        {EVC_02_Volume_at_Measurement_Condition}
                                     </p>
                                 </div>
                                 <p
@@ -2153,7 +3583,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {PIT_3001A}
                                     </p>
                                 </div>
                                 <p
@@ -2216,7 +3646,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {PIT_3001B}
                                     </p>
                                 </div>
                                 <p
@@ -2280,7 +3710,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {PT_3001}
                                     </p>
                                 </div>
                                 <p
@@ -2343,7 +3773,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {PT_3002}
                                     </p>
                                 </div>
                                 <p
@@ -2408,7 +3838,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {EVC_02_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2474,7 +3904,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {EVC_01_Pressure}
                                     </p>
                                 </div>
                                 <p
@@ -2540,7 +3970,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {EVC_01_Temperature}
                                     </p>
                                 </div>
                                 <p
@@ -2605,7 +4035,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {EVC_02_Temperature}
                                     </p>
                                 </div>
                                 <p
@@ -3180,7 +4610,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                         )}
                                     </p>
                                     <p style={{ marginLeft: 5 }}>
-                                        {PLC_STT === "1" ? (
+                                        {PLC_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -3217,7 +4647,8 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {EVC_02_Conn_STTValue}
+                                                                             {EVC_01_Conn_STTValue}
+
                                     </p>
                                     <p
                                         style={{
@@ -3226,7 +4657,9 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PLC_Conn_STT}
+                                                                               {EVC_01_Conn_STTValue}
+
+
                                     </p>
                                 </div>
                             </div>
@@ -3234,412 +4667,624 @@ export default function Graphic_CNG_HUNGYEN() {
                     },
                 };
             }
-
-            if (node.id === "percent") {
+            if (node.id === "AlarmCenter") {
                 return {
                     ...node,
-
                     data: {
                         ...node.data,
                         label: (
                             <div
-                                className="column-chart"
                                 style={{
-                                    height: `${totalHeight}px`,
+                                    fontSize: 40,
+                                    fontWeight: 600,
                                     display: "flex",
                                     justifyContent: "center",
-                                    alignItems: "flex-end",
-                                    width: "50px",
-                                    border: "1px solid red",
-                                    position: "relative",
+                                    alignItems: "center",
                                 }}
+                                // onClick={confirmLineDuty}
                             >
-                                <div
-                                    style={{
-                                        width: "100%",
-                                        display: "flex",
-                                        flexDirection: "column-reverse",
-                                    }}
-                                    className="column"
-                                >
-                                    <div
-                                        className="id"
-                                        style={{
-                                            height: `${DataLPG}px`,
-                                            width: "100%",
-                                            textAlign: "center",
-                                            color: "white",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            backgroundColor: "yellow",
-                                            position: "absolute",
-                                            top: "0",
-                                        }}
-                                    ></div>
-                                    <div
-                                        className="name"
-                                        style={{
-                                            height: `${DataAir}px`,
-                                            width: "100%",
-                                            textAlign: "center",
-                                            color: "white",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            backgroundColor: "blue",
-                                        }}
-                                    ></div>
-                                </div>
+                                {alarmMessage && (
+                                    <div className="alarm-message">
+                                        {alarmMessage === "ALARM" ? (
+                                            <span
+                                                style={{
+                                                    background: "red",
+                                                    color: "white",
+                                                    padding: "5px",
+                                                    borderRadius: "3px",
+                                                }}
+                                            >
+                                                {alarmMessage}
+                                            </span>
+                                        ) : alarmMessage === "Maintaining" ? (
+                                            <span
+                                                style={{
+                                                    background: "orange",
+                                                    color: "white",
+                                                    padding: "5px",
+                                                    borderRadius: "3px",
+                                                }}
+                                            >
+                                                {alarmMessage}
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                )}
+
+                                {/* {alarmMessage} */}
                             </div>
                         ),
                     },
                 };
             }
+
             return node;
         });
         setNodes(updatedNodes);
     }, [data]);
-
+    useEffect(() => {
+        if (
+            (exceedThresholdEVC_01_Remain_Battery_Service_Life &&
+                !maintainEVC_01_Remain_Battery_Service_Life) ||
+            (exceedThresholdEVC_01_Temperature &&
+                !maintainEVC_01_Temperature) ||
+            (exceedThresholdEVC_01_Pressure && !maintainEVC_01_Pressure) ||
+            (exceedThresholdEVC_01_Volume_at_Base_Condition &&
+                !maintainEVC_01_Volume_at_Base_Condition) ||
+            (exceedThresholdEVC_01_Volume_at_Measurement_Condition &&
+                !maintainEVC_01_Volume_at_Measurement_Condition) ||
+            (exceedThresholdEVC_01_Flow_at_Base_Condition &&
+                !maintainEVC_01_Flow_at_Base_Condition) ||
+            (exceedThresholdEVC_01_Flow_at_Measurement_Condition &&
+                !maintainEVC_01_Flow_at_Measurement_Condition) ||
+            (exceedThresholdEVC_01_Vb_of_Current_Day &&
+                !maintainEVC_01_Vb_of_Current_Day) ||
+            (exceedThresholdEVC_01_Vm_of_Current_Day &&
+                !maintainEVC_01_Vm_of_Current_Day) ||
+            (exceedThresholdEVC_01_Vb_of_Last_Day &&
+                !maintainEVC_01_Vb_of_Last_Day) ||
+            (exceedThresholdEVC_01_Vm_of_Last_Day &&
+                !maintainEVC_01_Vm_of_Last_Day) ||
+            (exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT) ||
+            (exceedThresholdEVC_02_Remain_Battery_Service_Life &&
+                !maintainEVC_02_Remain_Battery_Service_Life) ||
+            (exceedThresholdEVC_02_Temperature &&
+                !maintainEVC_02_Temperature) ||
+            (exceedThresholdEVC_02_Pressure && !maintainEVC_02_Pressure) ||
+            (exceedThresholdEVC_02_Volume_at_Base_Condition &&
+                !maintainEVC_02_Volume_at_Base_Condition) ||
+            (exceedThresholdEVC_02_Volume_at_Measurement_Condition &&
+                !maintainEVC_02_Volume_at_Measurement_Condition) ||
+            (exceedThresholdEVC_02_Flow_at_Base_Condition &&
+                !maintainEVC_02_Flow_at_Base_Condition) ||
+            (exceedThresholdEVC_02_Flow_at_Measurement_Condition &&
+                !maintainEVC_02_Flow_at_Measurement_Condition) ||
+            (exceedThresholdEVC_02_Vb_of_Current_Day &&
+                !maintainEVC_02_Vb_of_Current_Day) ||
+            (exceedThresholdEVC_02_Vm_of_Current_Day &&
+                !maintainEVC_02_Vm_of_Current_Day) ||
+            (exceedThresholdEVC_02_Vb_of_Last_Day &&
+                !maintainEVC_02_Vb_of_Last_Day) ||
+            (exceedThresholdEVC_02_Vm_of_Last_Day &&
+                !maintainEVC_02_Vm_of_Last_Day) ||
+            (exceedThresholdEVC_02_Conn_STT && !maintainEVC_02_Conn_STT) ||
+            (exceedThresholdPIT_3001A && !maintainPIT_3001A) ||
+            (exceedThresholdPIT_3001B && !maintainPIT_3001B) ||
+            (exceedThresholdPT_3001 && !maintainPT_3001) ||
+            (exceedThresholdPT_3002 && !maintainPT_3002) ||
+            (exceedThresholdPT_3003 && !maintainPT_3003) ||
+            (exceedThresholdTT_3001 && !maintainTT_3001) ||
+            (exceedThresholdTT_3002 && !maintainTT_3002) ||
+            (exceedThresholdGD_3001 && !maintainGD_3001) ||
+            (exceedThresholdSDV_3001A && !maintainSDV_3001A) ||
+            (exceedThresholdSDV_3001B && !maintainSDV_3001B) ||
+            (exceedThresholdSDV_3002 && !maintainSDV_3002) ||
+            (exceedThresholdWater_PG && !maintainWater_PG) ||
+            (exceedThresholdWater_LSW && !maintainWater_LSW) ||
+            (exceedThresholdPUMP_1 && !maintainPUMP_1) ||
+            (exceedThresholdPUMP_2 && !maintainPUMP_2) ||
+            (exceedThresholdHEATER_1 && !maintainHEATER_1) ||
+            (exceedThresholdHEATER_2 && !maintainHEATER_2) ||
+            (exceedThresholdBOILER && !maintainBOILER) ||
+            (exceedThresholdGD_STATUS && !maintainGD_STATUS) ||
+            (exceedThresholdESD_3001 && !maintainESD_3001) ||
+            (exceedThresholdHR_BC && !maintainHR_BC) ||
+            (exceedThresholdSD_3001 && !maintainSD_3001) ||
+            (exceedThresholdSD_3002 && !maintainSD_3002) ||
+            (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT)
+        ) {
+            setAlarmMessage("ALARM");
+        } else if (
+            maintainEVC_01_Remain_Battery_Service_Life ||
+            maintainEVC_01_Temperature ||
+            maintainEVC_01_Pressure ||
+            maintainEVC_01_Volume_at_Base_Condition ||
+            maintainEVC_01_Volume_at_Measurement_Condition ||
+            maintainEVC_01_Flow_at_Base_Condition ||
+            maintainEVC_01_Flow_at_Measurement_Condition ||
+            maintainEVC_01_Vb_of_Current_Day ||
+            maintainEVC_01_Vm_of_Current_Day ||
+            maintainEVC_01_Vb_of_Last_Day ||
+            maintainEVC_01_Vm_of_Last_Day ||
+            maintainEVC_01_Conn_STT ||
+            maintainEVC_02_Remain_Battery_Service_Life ||
+            maintainEVC_02_Temperature ||
+            maintainEVC_02_Pressure ||
+            maintainEVC_02_Volume_at_Base_Condition ||
+            maintainEVC_02_Volume_at_Measurement_Condition ||
+            maintainEVC_02_Flow_at_Base_Condition ||
+            maintainEVC_02_Flow_at_Measurement_Condition ||
+            maintainEVC_02_Vb_of_Current_Day ||
+            maintainEVC_02_Vm_of_Current_Day ||
+            maintainEVC_02_Vb_of_Last_Day ||
+            maintainEVC_02_Vm_of_Last_Day ||
+            maintainEVC_02_Conn_STT ||
+            maintainPIT_3001A ||
+            maintainPIT_3001B ||
+            maintainPT_3001 ||
+            maintainPT_3002 ||
+            maintainPT_3003 ||
+            maintainTT_3001 ||
+            maintainTT_3002 ||
+            maintainGD_3001 ||
+            maintainSDV_3001A ||
+            maintainSDV_3001B ||
+            maintainSDV_3002 ||
+            maintainWater_PG ||
+            maintainWater_LSW ||
+            maintainPUMP_1 ||
+            maintainPUMP_2 ||
+            maintainHEATER_1 ||
+            maintainHEATER_2 ||
+            maintainBOILER ||
+            maintainGD_STATUS ||
+            maintainESD_3001 ||
+            maintainHR_BC ||
+            maintainSD_3001 ||
+            maintainSD_3002 ||
+            maintainPLC_Conn_STT
+        ) {
+            setAlarmMessage("Maintaining");
+        } else {
+            setAlarmMessage(null);
+        }
+    }, [
+        exceedThresholdEVC_01_Remain_Battery_Service_Life,
+        exceedThresholdEVC_01_Temperature,
+        exceedThresholdEVC_01_Pressure,
+        exceedThresholdEVC_01_Volume_at_Base_Condition,
+        exceedThresholdEVC_01_Volume_at_Measurement_Condition,
+        exceedThresholdEVC_01_Flow_at_Base_Condition,
+        exceedThresholdEVC_01_Flow_at_Measurement_Condition,
+        exceedThresholdEVC_01_Vb_of_Current_Day,
+        exceedThresholdEVC_01_Vm_of_Current_Day,
+        exceedThresholdEVC_01_Vb_of_Last_Day,
+        exceedThresholdEVC_01_Vm_of_Last_Day,
+        exceedThresholdEVC_01_Conn_STT,
+        exceedThresholdEVC_02_Remain_Battery_Service_Life,
+        exceedThresholdEVC_02_Temperature,
+        exceedThresholdEVC_02_Pressure,
+        exceedThresholdEVC_02_Volume_at_Base_Condition,
+        exceedThresholdEVC_02_Volume_at_Measurement_Condition,
+        exceedThresholdEVC_02_Flow_at_Base_Condition,
+        exceedThresholdEVC_02_Flow_at_Measurement_Condition,
+        exceedThresholdEVC_02_Vb_of_Current_Day,
+        exceedThresholdEVC_02_Vm_of_Current_Day,
+        exceedThresholdEVC_02_Vb_of_Last_Day,
+        exceedThresholdEVC_02_Vm_of_Last_Day,
+        exceedThresholdEVC_02_Conn_STT,
+        exceedThresholdPIT_3001A,
+        exceedThresholdPIT_3001B,
+        exceedThresholdPT_3001,
+        exceedThresholdPT_3002,
+        exceedThresholdPT_3003,
+        exceedThresholdTT_3001,
+        exceedThresholdTT_3002,
+        exceedThresholdGD_3001,
+        exceedThresholdSDV_3001A,
+        exceedThresholdSDV_3001B,
+        exceedThresholdSDV_3002,
+        exceedThresholdWater_PG,
+        exceedThresholdWater_LSW,
+        exceedThresholdPUMP_1,
+        exceedThresholdPUMP_2,
+        exceedThresholdHEATER_1,
+        exceedThresholdHEATER_2,
+        exceedThresholdBOILER,
+        exceedThresholdGD_STATUS,
+        exceedThresholdESD_3001,
+        exceedThresholdHR_BC,
+        exceedThresholdSD_3001,
+        exceedThresholdSD_3002,
+        exceedThresholdPLC_Conn_STT,
+        maintainEVC_01_Remain_Battery_Service_Life,
+        maintainEVC_01_Temperature,
+        maintainEVC_01_Pressure,
+        maintainEVC_01_Volume_at_Base_Condition,
+        maintainEVC_01_Volume_at_Measurement_Condition,
+        maintainEVC_01_Flow_at_Base_Condition,
+        maintainEVC_01_Flow_at_Measurement_Condition,
+        maintainEVC_01_Vb_of_Current_Day,
+        maintainEVC_01_Vm_of_Current_Day,
+        maintainEVC_01_Vb_of_Last_Day,
+        maintainEVC_01_Vm_of_Last_Day,
+        maintainEVC_01_Conn_STT,
+        maintainEVC_02_Remain_Battery_Service_Life,
+        maintainEVC_02_Temperature,
+        maintainEVC_02_Pressure,
+        maintainEVC_02_Volume_at_Base_Condition,
+        maintainEVC_02_Volume_at_Measurement_Condition,
+        maintainEVC_02_Flow_at_Base_Condition,
+        maintainEVC_02_Flow_at_Measurement_Condition,
+        maintainEVC_02_Vb_of_Current_Day,
+        maintainEVC_02_Vm_of_Current_Day,
+        maintainEVC_02_Vb_of_Last_Day,
+        maintainEVC_02_Vm_of_Last_Day,
+        maintainEVC_02_Conn_STT,
+        maintainPIT_3001A,
+        maintainPIT_3001B,
+        maintainPT_3001,
+        maintainPT_3002,
+        maintainPT_3003,
+        maintainTT_3001,
+        maintainTT_3002,
+        maintainGD_3001,
+        maintainSDV_3001A,
+        maintainSDV_3001B,
+        maintainSDV_3002,
+        maintainWater_PG,
+        maintainWater_LSW,
+        maintainPUMP_1,
+        maintainPUMP_2,
+        maintainHEATER_1,
+        maintainHEATER_2,
+        maintainBOILER,
+        maintainGD_STATUS,
+        maintainESD_3001,
+        maintainHR_BC,
+        maintainSD_3001,
+        maintainSD_3002,
+        maintainPLC_Conn_STT,
+    ]);
     // const storedPositionString = localStorage.getItem("positionCNG_HUNGYEN");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-              const initialPositions = {
-              AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
-              Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
-              BallVavleLine2_Bottom: {
-                  x: -1752.748552461399,
-                  y: 1398.7809179318454,
-              },
-              BallVavleLine2_Bottom_none: {
-                  x: -1739.1152406034073,
-                  y: 1430.2199359776428,
-              },
-              BallVavleLine2_Top: {
-                  x: -1754.9752547260307,
-                  y: 1066.3945634448808,
-              },
-              BallVavleLine2_Top_none: {
-                  x: -1740.7857064948557,
-                  y: 1097.0254070197795,
-              },
-              BallVavleLine3_Bottom_none: {
-                  x: -1188.6007658649082,
-                  y: 1430.7062254963867,
-              },
-              BallVavleLine3_Top_none: {
-                  x: -1190.3857919153643,
-                  y: 1097.999896447289,
-              },
-              BallVavle_Line3_Bottom: {
-                  x: -1203.020965699144,
-                  y: 1399.2185849353757,
-              },
-              BallVavle_Line3_Top: {
-                  x: -1204.4484013514104,
-                  y: 1066.748043368249,
-              },
-              DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
-              EVC_01_Flow_at_Base_Condition: {
-                  x: -1300.2117083264288,
-                  y: 751.5293893652726,
-              },
-              EVC_01_Flow_at_Measurement_Condition: {
-                  x: -1300.4747755822623,
-                  y: 812.9342555162998,
-              },
-              EVC_01_Pressure_COL: {
-                  x: -1422.6213132405162,
-                  y: 1463.468095326561,
-              },
-              EVC_01_Pressure_DATA: {
-                  x: -1300.5518647911813,
-                  y: 874.307982790011,
-              },
-              EVC_01_Pressure_IMG: {
-                  x: -1455.2210748964526,
-                  y: 1400.4111483146833,
-              },
-              EVC_01_Pressure_NONE: {
-                  x: -1424.2458626037571,
-                  y: 1021.7335838041611,
-              },
-              EVC_01_Temperature: {
-                  x: -1384.3876204395422,
-                  y: 1377.3823609961598,
-              },
-              EVC_01_Temperature_COL: {
-                  x: -1360.9590194746786,
-                  y: 1427.2945127887838,
-              },
-              EVC_01_Temperature_DATA: {
-                  x: -1651.9839445793107,
-                  y: 873.7849536634603,
-              },
-              EVC_01_Temperature_NONE: {
-                  x: -1362.8266325377226,
-                  y: 977.2539852046791,
-              },
-              EVC_01_Volume_at_Base_Condition: {
-                  x: -1651.3638601651735,
-                  y: 751.2185853413771,
-              },
-              EVC_01_Volume_at_Measurement_Condition: {
-                  x: -1651.889586160885,
-                  y: 812.6874699639815,
-              },
-              EVC_02_Flow_at_Base_Condition: {
-                  x: -1304.5045612961057,
-                  y: 1526.246568287584,
-              },
-              EVC_02_Flow_at_Measurement_Condition: {
-                  x: -1304.6902205234626,
-                  y: 1587.58097045636,
-              },
-              EVC_02_Pressure_COL: {
-                  x: -1425.0343776799361,
-                  y: 1050.2965580409796,
-              },
-              EVC_02_Pressure_DATA: {
-                  x: -1304.6862397428831,
-                  y: 1648.7497951092391,
-              },
-              EVC_02_Pressure_IMG: {
-                  x: -1457.3119231476958,
-                  y: 987.4972191813588,
-              },
-              EVC_02_Pressure_NONE: {
-                  x: -1422.6407988495287,
-                  y: 1424.3535206118927,
-              },
-              EVC_02_Temperature: {
-                  x: -1385.8650633329748,
-                  y: 960.1049085729308,
-              },
-              EVC_02_Temperature_COL: {
-                  x: -1362.8971911342087,
-                  y: 1007.3441734368228,
-              },
-              EVC_02_Temperature_DATA: {
-                  x: -1655.6231376798764,
-                  y: 1649.0182904812473,
-              },
-              EVC_02_Temperature_NONE: {
-                  x: -1361.3563019384721,
-                  y: 1396.8762550311894,
-              },
-              EVC_02_Volume_at_Base_Condition: {
-                  x: -1655.441578959918,
-                  y: 1526.3262726240537,
-              },
-              EVC_02_Volume_at_Measurement_Condition: {
-                  x: -1655.518638620903,
-                  y: 1587.742152328961,
-              },
-              FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
-              FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
-              GD_3001: { x: -989.3020106788827, y: 1318.7155007722488 },
-              GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
-              Header: { x: -2306.77566619973, y: 628.2068245812715 },
-              PCV_3001A: { x: -1673.1177611019, y: 1384.1107119962714 },
-              PCV_3001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
-              PCV_3001A_SmallBallVavle: {
-                  x: -1590.1177892854255,
-                  y: 1391.8848130414924,
-              },
-              PCV_3001A_none: { x: -1578.8253266041704, y: 1437.998001843855 },
-              PCV_3001A_none2: {
-                  x: -1644.8538756176888,
-                  y: 1406.5995698502961,
-              },
-              PCV_3001B: { x: -1677.3656150260101, y: 1052.000421403267 },
-              PCV_3001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
-              PCV_3001B_SmallBallVavle: {
-                  x: -1589.286173260068,
-                  y: 1060.1713499375644,
-              },
-              PCV_3001B_none: { x: -1648.0670889230703, y: 1076.0206445548827 },
-              PCV_3001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
-              PCV_3002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
-              PCV_3002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
-              PCV_line1_Bottom: {
-                  x: -2111.3678672845463,
-                  y: 1052.190596866844,
-              },
-              PCV_line1_Bottom_SmallBallVavle: {
-                  x: -2021.0842967435187,
-                  y: 1392.2146663154426,
-              },
-              PCV_line1_Bottom_none: {
-                  x: -2082.0447320338617,
-                  y: 1406.8642014517307,
-              },
-              PCV_line1_Bottom_none2: {
-                  x: -2009.774232806013,
-                  y: 1437.5474817836612,
-              },
-              PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
-              PCV_line1_Top_SmallBallVavle: {
-                  x: -2020.758188887233,
-                  y: 1058.572245211475,
-              },
-              PCV_line1_Top_none: {
-                  x: -2079.1641412034114,
-                  y: 1073.0229180707613,
-              },
-              PCV_line1_Top_none2: {
-                  x: -2009.2581888872328,
-                  y: 1105.293210440453,
-              },
-              PIT_3001A_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
-              PIT_3001A_DATA: { x: -2355.6186513642347, y: 871.9225639134092 },
-              PIT_3001A_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
-              PIT_3001A_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
-              PIT_3001B_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
-              PIT_3001B_DATA: { x: -2353.582676764463, y: 1526.1450580595135 },
-              PIT_3001B_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
-              PIT_3001B_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
-              PSV_3001A: { x: -1806.4495698232004, y: 966.4171746665486 },
-              PSV_3001B: { x: -1799.9019866867252, y: 1297.6141788823015 },
-              PSV_3002A: { x: -1500.6943362170002, y: 969.58257364993 },
-              PSV_3002B: { x: -1493.6020428530078, y: 1296.9325533391168 },
-              PSV_LINE2_BOTTOM: {
-                  x: -1822.5499935425808,
-                  y: 1022.9152979362718,
-              },
-              PSV_LINE2_BOTTOM_HALFCIRCLE: {
-                  x: -1537.0489668387918,
-                  y: 962.2028750034647,
-              },
-              PSV_LINE2_BOTTOM_NONE: {
-                  x: -1800.2748765223484,
-                  y: 1071.4335361920557,
-              },
-              PSV_LINE2_BOTTOM_NONE1: {
-                  x: -1823.0693694333604,
-                  y: 1360.4020119665827,
-              },
-              PSV_LINE2_BOTTOM_NONE2: {
-                  x: -1823.263852446076,
-                  y: 1315.6438506423797,
-              },
-              PSV_LINE2_BOTTOM_RIGHT: {
-                  x: -1841.9793816682281,
-                  y: 1003.5894848459614,
-              },
-              PSV_LINE2_TOP: { x: -1824.621004682478, y: 1357.2168795688774 },
-              PSV_LINE2_TOP_HALFCIRCLE: {
-                  x: -1846.419275542719,
-                  y: 961.8665937984044,
-              },
-              PSV_LINE2_TOP_NONE: {
-                  x: -1802.2062318196358,
-                  y: 1404.2787700504089,
-              },
-              PSV_LINE2_TOP_NONE1: {
-                  x: -1822.49563729746,
-                  y: 1025.4738191234321,
-              },
-              PSV_LINE2_TOP_NONE2: {
-                  x: -1820.713980893797,
-                  y: 982.7946809276918,
-              },
-              PSV_LINE2_TOP_RIGHT: {
-                  x: -1843.7363814733678,
-                  y: 1337.2167064142152,
-              },
-              PSV_LINE3_BOTTOM: {
-                  x: -1513.9276090762096,
-                  y: 1023.2929663757193,
-              },
-              PSV_LINE3_BOTTOM_HALFCIRCLE: {
-                  x: -1847.8476607451094,
-                  y: 1294.5969973308625,
-              },
-              PSV_LINE3_BOTTOM_NONE: {
-                  x: -1491.5458949259623,
-                  y: 1402.9749944793095,
-              },
-              PSV_LINE3_BOTTOM_NONE1: {
-                  x: -1513.9942216185614,
-                  y: 1359.7067206930428,
-              },
-              PSV_LINE3_BOTTOM_NONE2: {
-                  x: -1512.9767227486302,
-                  y: 1314.4270541042574,
-              },
-              PSV_LINE3_BOTTOM_RIGHT: {
-                  x: -1533.4478790692137,
-                  y: 1003.5774869187717,
-              },
-              PSV_LINE3_TOP: { x: -1514.7416075320712, y: 1357.7240669142898 },
-              PSV_LINE3_TOP_HALFCIRCLE: {
-                  x: -1537.643267778939,
-                  y: 1294.1557057434507,
-              },
-              PSV_LINE3_TOP_NONE: {
-                  x: -1491.4345428387423,
-                  y: 1068.5155162952701,
-              },
-              PSV_LINE3_TOP_NONE1: {
-                  x: -1514.2952576203431,
-                  y: 1026.4316416628542,
-              },
-              PSV_LINE3_TOP_NONE2: {
-                  x: -1512.9987054998287,
-                  y: 983.159710586679,
-              },
-              PSV_LINE3_TOP_RIGHT: {
-                  x: -1533.786401000067,
-                  y: 1337.8006420545576,
-              },
-              PT_3001_COL: { x: -1944.126211137847, y: 1414.8743710777078 },
-              PT_3001_DATA: { x: -2062.9474286701056, y: 871.9588473450049 },
-              PT_3001_IMG: { x: -1976.3967429262366, y: 1351.9634634096726 },
-              PT_3001_NONE: { x: -1938.0753232184695, y: 1045.530553967972 },
-              PT_3002_COL: { x: -1939.3531774900025, y: 1082.027958478726 },
-              PT_3002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
-              PT_3002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
-              PT_3002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
-              PT_3003: { x: -804.9838255763632, y: 1193.6908985163677 },
-              PT_3003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
-              PT_3003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
-              PT_3003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
+    const initialPositions = {
+        AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
+        Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
+        BallVavleLine2_Bottom: {
+            x: -1752.748552461399,
+            y: 1398.7809179318454,
+        },
+        BallVavleLine2_Bottom_none: {
+            x: -1739.1152406034073,
+            y: 1430.2199359776428,
+        },
+        BallVavleLine2_Top: {
+            x: -1754.9752547260307,
+            y: 1066.3945634448808,
+        },
+        BallVavleLine2_Top_none: {
+            x: -1740.7857064948557,
+            y: 1097.0254070197795,
+        },
+        BallVavleLine3_Bottom_none: {
+            x: -1188.6007658649082,
+            y: 1430.7062254963867,
+        },
+        BallVavleLine3_Top_none: {
+            x: -1190.3857919153643,
+            y: 1097.999896447289,
+        },
+        BallVavle_Line3_Bottom: {
+            x: -1203.020965699144,
+            y: 1399.2185849353757,
+        },
+        BallVavle_Line3_Top: {
+            x: -1204.4484013514104,
+            y: 1066.748043368249,
+        },
+        DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
+        EVC_01_Flow_at_Base_Condition: {
+            x: -1300.2117083264288,
+            y: 751.5293893652726,
+        },
+        EVC_01_Flow_at_Measurement_Condition: {
+            x: -1300.4747755822623,
+            y: 812.9342555162998,
+        },
+        EVC_01_Pressure_COL: {
+            x: -1422.6213132405162,
+            y: 1463.468095326561,
+        },
+        EVC_01_Pressure_DATA: {
+            x: -1300.5518647911813,
+            y: 874.307982790011,
+        },
+        EVC_01_Pressure_IMG: {
+            x: -1455.2210748964526,
+            y: 1400.4111483146833,
+        },
+        EVC_01_Pressure_NONE: {
+            x: -1424.2458626037571,
+            y: 1021.7335838041611,
+        },
+        EVC_01_Temperature: {
+            x: -1384.3876204395422,
+            y: 1377.3823609961598,
+        },
+        EVC_01_Temperature_COL: {
+            x: -1360.9590194746786,
+            y: 1427.2945127887838,
+        },
+        EVC_01_Temperature_DATA: {
+            x: -1651.9839445793107,
+            y: 873.7849536634603,
+        },
+        EVC_01_Temperature_NONE: {
+            x: -1362.8266325377226,
+            y: 977.2539852046791,
+        },
+        EVC_01_Volume_at_Base_Condition: {
+            x: -1651.3638601651735,
+            y: 751.2185853413771,
+        },
+        EVC_01_Volume_at_Measurement_Condition: {
+            x: -1651.889586160885,
+            y: 812.6874699639815,
+        },
+        EVC_02_Flow_at_Base_Condition: {
+            x: -1304.5045612961057,
+            y: 1526.246568287584,
+        },
+        EVC_02_Flow_at_Measurement_Condition: {
+            x: -1304.6902205234626,
+            y: 1587.58097045636,
+        },
+        EVC_02_Pressure_COL: {
+            x: -1425.0343776799361,
+            y: 1050.2965580409796,
+        },
+        EVC_02_Pressure_DATA: {
+            x: -1304.6862397428831,
+            y: 1648.7497951092391,
+        },
+        EVC_02_Pressure_IMG: {
+            x: -1457.3119231476958,
+            y: 987.4972191813588,
+        },
+        EVC_02_Pressure_NONE: {
+            x: -1422.6407988495287,
+            y: 1424.3535206118927,
+        },
+        EVC_02_Temperature: {
+            x: -1385.8650633329748,
+            y: 960.1049085729308,
+        },
+        EVC_02_Temperature_COL: {
+            x: -1362.8971911342087,
+            y: 1007.3441734368228,
+        },
+        EVC_02_Temperature_DATA: {
+            x: -1655.6231376798764,
+            y: 1649.0182904812473,
+        },
+        EVC_02_Temperature_NONE: {
+            x: -1361.3563019384721,
+            y: 1396.8762550311894,
+        },
+        EVC_02_Volume_at_Base_Condition: {
+            x: -1655.441578959918,
+            y: 1526.3262726240537,
+        },
+        EVC_02_Volume_at_Measurement_Condition: {
+            x: -1655.518638620903,
+            y: 1587.742152328961,
+        },
+        FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
+        FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
+        GD_3001: { x: -989.3020106788827, y: 1318.7155007722488 },
+        GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+        Header: { x: -2306.77566619973, y: 628.2068245812715 },
+        PCV_3001A: { x: -1673.1177611019, y: 1384.1107119962714 },
+        PCV_3001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
+        PCV_3001A_SmallBallVavle: {
+            x: -1590.1177892854255,
+            y: 1391.8848130414924,
+        },
+        PCV_3001A_none: { x: -1578.8253266041704, y: 1437.998001843855 },
+        PCV_3001A_none2: {
+            x: -1644.8538756176888,
+            y: 1406.5995698502961,
+        },
+        PCV_3001B: { x: -1677.3656150260101, y: 1052.000421403267 },
+        PCV_3001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
+        PCV_3001B_SmallBallVavle: {
+            x: -1589.286173260068,
+            y: 1060.1713499375644,
+        },
+        PCV_3001B_none: { x: -1648.0670889230703, y: 1076.0206445548827 },
+        PCV_3001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
+        PCV_3002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
+        PCV_3002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
+        PCV_line1_Bottom: {
+            x: -2111.3678672845463,
+            y: 1052.190596866844,
+        },
+        PCV_line1_Bottom_SmallBallVavle: {
+            x: -2021.0842967435187,
+            y: 1392.2146663154426,
+        },
+        PCV_line1_Bottom_none: {
+            x: -2082.0447320338617,
+            y: 1406.8642014517307,
+        },
+        PCV_line1_Bottom_none2: {
+            x: -2009.774232806013,
+            y: 1437.5474817836612,
+        },
+        PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
+        PCV_line1_Top_SmallBallVavle: {
+            x: -2020.758188887233,
+            y: 1058.572245211475,
+        },
+        PCV_line1_Top_none: {
+            x: -2079.1641412034114,
+            y: 1073.0229180707613,
+        },
+        PCV_line1_Top_none2: {
+            x: -2009.2581888872328,
+            y: 1105.293210440453,
+        },
+        PIT_3001A_COL: { x: -2223.7823195244755, y: 1413.1118233040602 },
+        PIT_3001A_DATA: { x: -2355.6186513642347, y: 871.9225639134092 },
+        PIT_3001A_IMG: { x: -2256.3886863103135, y: 1350.0078011634216 },
+        PIT_3001A_NONE: { x: -2223.5907768540847, y: 1035.0138867797907 },
+        PIT_3001B_COL: { x: -2225.3219072376414, y: 1080.2834482527587 },
+        PIT_3001B_DATA: { x: -2353.582676764463, y: 1526.1450580595135 },
+        PIT_3001B_IMG: { x: -2258.0017870023357, y: 1017.8084631612446 },
+        PIT_3001B_NONE: { x: -2223.5238297655524, y: 1390.9192962280708 },
+        PSV_3001A: { x: -1806.4495698232004, y: 966.4171746665486 },
+        PSV_3001B: { x: -1799.9019866867252, y: 1297.6141788823015 },
+        PSV_3002A: { x: -1500.6943362170002, y: 969.58257364993 },
+        PSV_3002B: { x: -1493.6020428530078, y: 1296.9325533391168 },
+        PSV_LINE2_BOTTOM: {
+            x: -1822.5499935425808,
+            y: 1022.9152979362718,
+        },
+        PSV_LINE2_BOTTOM_HALFCIRCLE: {
+            x: -1537.0489668387918,
+            y: 962.2028750034647,
+        },
+        PSV_LINE2_BOTTOM_NONE: {
+            x: -1800.2748765223484,
+            y: 1071.4335361920557,
+        },
+        PSV_LINE2_BOTTOM_NONE1: {
+            x: -1823.0693694333604,
+            y: 1360.4020119665827,
+        },
+        PSV_LINE2_BOTTOM_NONE2: {
+            x: -1823.263852446076,
+            y: 1315.6438506423797,
+        },
+        PSV_LINE2_BOTTOM_RIGHT: {
+            x: -1841.9793816682281,
+            y: 1003.5894848459614,
+        },
+        PSV_LINE2_TOP: { x: -1824.621004682478, y: 1357.2168795688774 },
+        PSV_LINE2_TOP_HALFCIRCLE: {
+            x: -1846.419275542719,
+            y: 961.8665937984044,
+        },
+        PSV_LINE2_TOP_NONE: {
+            x: -1802.2062318196358,
+            y: 1404.2787700504089,
+        },
+        PSV_LINE2_TOP_NONE1: {
+            x: -1822.49563729746,
+            y: 1025.4738191234321,
+        },
+        PSV_LINE2_TOP_NONE2: {
+            x: -1820.713980893797,
+            y: 982.7946809276918,
+        },
+        PSV_LINE2_TOP_RIGHT: {
+            x: -1843.7363814733678,
+            y: 1337.2167064142152,
+        },
+        PSV_LINE3_BOTTOM: {
+            x: -1513.9276090762096,
+            y: 1023.2929663757193,
+        },
+        PSV_LINE3_BOTTOM_HALFCIRCLE: {
+            x: -1847.8476607451094,
+            y: 1294.5969973308625,
+        },
+        PSV_LINE3_BOTTOM_NONE: {
+            x: -1491.5458949259623,
+            y: 1402.9749944793095,
+        },
+        PSV_LINE3_BOTTOM_NONE1: {
+            x: -1513.9942216185614,
+            y: 1359.7067206930428,
+        },
+        PSV_LINE3_BOTTOM_NONE2: {
+            x: -1512.9767227486302,
+            y: 1314.4270541042574,
+        },
+        PSV_LINE3_BOTTOM_RIGHT: {
+            x: -1533.4478790692137,
+            y: 1003.5774869187717,
+        },
+        PSV_LINE3_TOP: { x: -1514.7416075320712, y: 1357.7240669142898 },
+        PSV_LINE3_TOP_HALFCIRCLE: {
+            x: -1537.643267778939,
+            y: 1294.1557057434507,
+        },
+        PSV_LINE3_TOP_NONE: {
+            x: -1491.4345428387423,
+            y: 1068.5155162952701,
+        },
+        PSV_LINE3_TOP_NONE1: {
+            x: -1514.2952576203431,
+            y: 1026.4316416628542,
+        },
+        PSV_LINE3_TOP_NONE2: {
+            x: -1512.9987054998287,
+            y: 983.159710586679,
+        },
+        PSV_LINE3_TOP_RIGHT: {
+            x: -1533.786401000067,
+            y: 1337.8006420545576,
+        },
+        PT_3001_COL: { x: -1944.126211137847, y: 1414.8743710777078 },
+        PT_3001_DATA: { x: -2062.9474286701056, y: 871.9588473450049 },
+        PT_3001_IMG: { x: -1976.3967429262366, y: 1351.9634634096726 },
+        PT_3001_NONE: { x: -1938.0753232184695, y: 1045.530553967972 },
+        PT_3002_COL: { x: -1939.3531774900025, y: 1082.027958478726 },
+        PT_3002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
+        PT_3002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
+        PT_3002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
+        PT_3003: { x: -804.9838255763632, y: 1193.6908985163677 },
+        PT_3003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
+        PT_3003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+        PT_3003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
 
-              SDV_3001A: { x: -2366.3636954964386, y: 1046.6978648787797 },
-              SDV_3001A_Name: { x: -2383.319090652285, y: 1021.7959995852489 },
-              SDV_3001B: { x: -2364.216934032177, y: 1378.662715302721 },
-              SDV_3001B_Name: { x: -2383.0887467126913, y: 1353.984343990213 },
-              SDV_3002: { x: -654.0856743065801, y: 1208.5938789238871 },
-              SDV_3002_Name: { x: -674.9837678308808, y: 1182.0376431738848 },
+        SDV_3001A: { x: -2366.3636954964386, y: 1046.6978648787797 },
+        SDV_3001A_Name: { x: -2383.319090652285, y: 1021.7959995852489 },
+        SDV_3001B: { x: -2364.216934032177, y: 1378.662715302721 },
+        SDV_3001B_Name: { x: -2383.0887467126913, y: 1353.984343990213 },
+        SDV_3002: { x: -654.0856743065801, y: 1208.5938789238871 },
+        SDV_3002_Name: { x: -674.9837678308808, y: 1182.0376431738848 },
 
-              
-              TT_3001: { x: -1024.6693805861637, y: 1196.2161585621343 },
-              TT_3001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
-              TT_3001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
-              TT_3001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
-              bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
-              bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
-              bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
-              bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
-              borderWhite: { x: -2351.6807146248475, y: 607.5943094873642 },
+        TT_3001: { x: -1024.6693805861637, y: 1196.2161585621343 },
+        TT_3001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
+        TT_3001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
+        TT_3001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
+        bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
+        bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
+        bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
+        bor4: { x: -950.4329469573597, y: 1583.0590100592938 },
+        borderWhite: { x: -2351.6807146248475, y: 607.5943094873642 },
 
-              line1: { x: -2410.5925492337, y: 1618.373867274551 },
-              line2: { x: -2410.891552880127, y: 1598.1196367183622 },
-              line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
-              line4: { x: -2082.153208656881, y: 1430.8103326059108 },
-              line5: { x: -1647.2085647611, y: 1098.3740496757796 },
-              line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
-              line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
-              line8: { x: -1334.9498607206287, y: 1430.742252363529 },
-              line9: { x: -925.9976477005001, y: 1260.4714803086474 },
-              line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
-              line10: { x: -531.9035836581911, y: 1260.593609780011 },
-              line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
-              percent: { x: -405.6683476271253, y: 1298.7587875755169 },
-              timeUpdate3: { x: -2305.9237339446345, y: 702.7171281735419 },
-
-          };
+        line1: { x: -2410.5925492337, y: 1618.373867274551 },
+        line2: { x: -2410.891552880127, y: 1598.1196367183622 },
+        line3: { x: -2081.3904520635083, y: 1098.5296705520232 },
+        line4: { x: -2082.153208656881, y: 1430.8103326059108 },
+        line5: { x: -1647.2085647611, y: 1098.3740496757796 },
+        line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
+        line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
+        line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+        line9: { x: -925.9976477005001, y: 1260.4714803086474 },
+        line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
+        line10: { x: -531.9035836581911, y: 1260.593609780011 },
+        line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
+        percent: { x: -405.6683476271253, y: 1298.7587875755169 },
+        timeUpdate3: { x: -2305.9237339446345, y: 702.7171281735419 },
+    };
 
     const [positions, setPositions] = useState(initialPositions);
 

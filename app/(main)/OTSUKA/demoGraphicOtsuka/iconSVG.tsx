@@ -298,37 +298,157 @@ const tankGas = (
 //     </svg>
 // );
 
+// const PCV = (
+//     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 49.11 64" width="64px" height="64px">
+//     <defs>
+//       <clipPath id="clip-path">
+//         <rect x="17.62" width="31.49" height="4.48" style={{fill: "none"}}/>
+//       </clipPath>
+//       <linearGradient id="linear-gradient" x1="-199.38" y1="255.56" x2="-198.38" y2="255.56" gradientTransform="translate(1178.28 893.21) rotate(90) scale(4.48)" gradientUnits="userSpaceOnUse">
+//         <stop offset="0" stopColor="#b9b900"/>
+//         <stop offset="0.45" stopColor="#ffffd6"/>
+//         <stop offset="0.57" stopColor="#ffffb1"/>
+//         <stop offset="0.77" stopColor="#ffff65"/>
+//         <stop offset="1" stopColor="#b9b900"/>
+//       </linearGradient>
+//       <clipPath id="clip-path-2">
+//         <path d="M44.63,27.65l-.5.47L46.6,32s.93-.81,1.31-1.25a6.28,6.28,0,0,0,.66-1.05,5.61,5.61,0,0,0,.54-1.9v-.58l-4.48-.08v.51Z" style={{fill: "none"}}/>
+//       </clipPath>
+//       <radialGradient id="radial-gradient" cx="-198.9" cy="358.04" r="1" gradientTransform="matrix(4.46, 2.18, -2.18, 4.46, 1711.97, -1137.72)" gradientUnits="userSpaceOnUse">
+//         <stop offset="0" stopColor="#990"/>
+//         <stop offset="0.09" stopColor="#990"/>
+//         <stop offset="0.13" stopColor="#c7c700"/>
+//         <stop offset="0.23" stopColor="#ffff25"/>
+//         <stop offset="0.28" stopColor="#ffff49"/>
+//         <stop offset="0.42" stopColor="#ffffab"/>
+//         <stop offset="0.49" stopColor="#ffffb9"/>
+//         <stop offset="0.55" stopColor="#ffffca"/>
+//         <stop offset="0.61" stopColor="#ffffc1"/>
+//         <stop offset="0.68" stopColor="#ffffa1"/>
+//         <stop offset="0.77" stopColor="#ffff6f"/>
+//         <stop offset="0.86" stopColor="#ffff29"/>
+//         <stop offset="0.95" stopColor="#cfcf00"/>
+//         <stop offset="1" stopColor="#990"/>
+//       </radialGradient>
+//       <clipPath id="clip-path-3">
+//         <rect x="16.32" y="39.36" width="35.01" height="4.48" transform="translate(-19.51 36.1) rotate(-45)" style={{fill: "none"}}/>
+//       </clipPath>
+//       <linearGradient id="linear-gradient-2" x1="-180.02" y1="336.58" x2="-179.02" y2="336.58" gradientTransform="translate(1357.99 -145.05) rotate(45) scale(4.48 3.17)" href="#linear-gradient"/>
+//       <clipPath id="clip-path-4">
+//         <polygon points="17.62 0 17.62 18.86 22.1 18.86 22.1 4.48 17.62 0" style={{fill: "none"}}/>
+//       </clipPath>
+//       <linearGradient id="linear-gradient-3" x1="-219.47" y1="397.53" x2="-218.47" y2="397.53" gradientTransform="translate(1000.83 -1771.5) scale(4.48)" href="#linear-gradient"/>
+//       <clipPath id="clip-path-5">
+//         <polygon points="49.11 0 44.63 4.48 44.63 27.77 49.11 27.77 49.11 0" style={{fill: "none"}}/>
+//       </clipPath>
+//       <linearGradient id="linear-gradient-4" x1="-219.47" y1="397.53" x2="-218.47" y2="397.53" gradientTransform="translate(1027.84 -1767.04) scale(4.48)" href="#linear-gradient"/>
+//       <clipPath id="clip-path-6">
+//         <rect x="17.62" y="18.86" width="4.48" height="35.43" style={{fill: "none"}}/>
+//       </clipPath>
+//       <linearGradient id="linear-gradient-5" x1="-219.47" y1="397.53" x2="-218.47" y2="397.53" gradientTransform="translate(1000.83 -1744.35) scale(4.48)" href="#linear-gradient"/>
+//       <clipPath id="clip-path-7">
+//         <path d="M4.05,22.09,20.51,22l0-16A16.28,16.28,0,0,0,4.05,22.09" style={{fill: "none"}}/>
+//       </clipPath>
+//       <radialGradient id="radial-gradient-2" cx="-270.33" cy="330.32" r="1" gradientTransform="translate(7345.96 -8649.93) scale(27.07 26.27)" gradientUnits="userSpaceOnUse">
+//         <stop offset="0" stopColor="#dbdb00"/>
+//         <stop offset="0.04" stopColor="#ffff15"/>
+//         <stop offset="0.09" stopColor="#ff5"/>
+//         <stop offset="0.15" stopColor="#ffff89"/>
+//         <stop offset="0.21" stopColor="#ffffaf"/>
+//         <stop offset="0.28" stopColor="#ffffca"/>
+//         <stop offset="0.36" stopColor="#ffd"/>
+//         <stop offset="0.5" stopColor="#ffffe0"/>
+//         <stop offset="0.57" stopColor="#ffffd4"/>
+//         <stop offset="0.67" stopColor="#ffffb3"/>
+//         <stop offset="0.78" stopColor="#ffff7b"/>
+//         <stop offset="0.9" stopColor="#ffff2b"/>
+//         <stop offset="1" stopColor="#dbdb00"/>
+//       </radialGradient>
+//       <clipPath id="clip-path-8">
+//         <path d="M20,22l16.07,0a16.06,16.06,0,0,0-16-16Z" style={{fill: "none"}}/>
+//       </clipPath>
+//       <radialGradient id="radial-gradient-3" cx="-290.73" cy="330.34" r="1" gradientTransform="matrix(-26.43, 0, 0, 26.23, -7672.76, -8636.52)" href="#radial-gradient-2"/>
+//       <linearGradient id="linear-gradient-6" x1="216.8" y1="-321.5" x2="216.8" y2="-287.47" gradientTransform="matrix(0.57, 0, 0, -0.57, -113.4, -118.95)" gradientUnits="userSpaceOnUse">
+//         <stop offset="0" stopColor="#ffff64"/>
+//         <stop offset="0.5" stopColor="#ffff4f"/>
+//         <stop offset="1" stopColor="#ff0"/>
+//       </linearGradient>
+//       <linearGradient id="linear-gradient-7" x1="251.21" y1="-321.23" x2="251.21" y2="-287.6" gradientTransform="matrix(0.57, 0, 0, -0.57, -113.4, -118.95)" gradientUnits="userSpaceOnUse">
+//         <stop offset="0" stopColor="#ff0"/>
+//         <stop offset="0.53" stopColor="#ffff64"/>
+//         <stop offset="1" stopColor="#ff0"/>
+//       </linearGradient>
+//     </defs>
+//     <g id="Group_Pipe2" data-name="Group Pipe2">
+//       <g style={{clipPath:"url(#clip-path)"}}>
+//         <rect x="17.62" width="31.49" height="4.48" style={{fill:" url(#linear-gradient)"}}/>
+//       </g>
+//       <g style= {{ clipPath:"url(#clip-path-2)" }}>
+//         <polygon points="45.09 25.18 51.02 28.08 48.15 33.96 42.22 31.07 45.09 25.18" style={{fill:" url(#radial-gradient)"}}/>
+//       </g>
+//       <g style= {{ clipPath:"url(#clip-path-3)" }}>
+//         <polygon points="33.82 13.68 61.75 41.6 33.82 69.52 5.9 41.6 33.82 13.68" style={{fill:" url(#linear-gradient-2)"}}/>
+//       </g>
+//       <g style= {{ clipPath:"url(#clip-path-4)" }}>
+//         <rect x="17.62" width="4.48" height="18.86" style={{fill:" url(#linear-gradient-3)"}}/>
+//       </g>
+//       <g style= {{ clipPath:"url(#clip-path-5)" }}>
+//         <rect x="44.63" width="4.48" height="27.77" style={{fill:" url(#linear-gradient-4)"}}/>
+//       </g>
+//     </g>
+//     <g id="Group_Pipe" data-name="Group Pipe">
+//       <g style= {{ clipPath:"url(#clip-path-6)" }}>
+//         <rect x="17.62" y="18.86" width="4.48" height="35.43" style={{fill:" url(#linear-gradient-5)"}}/>
+//       </g>
+//     </g>
+//     <g id="Group_Valve" data-name="Group Valve">
+//       <g style= {{ clipPath:"url(#clip-path-7)" }}>
+//         <rect x="4.05" y="6.04" width="16.46" height="16.04" style={{fill:" url(#radial-gradient-2)"}}/>
+//       </g>
+//       <g style= {{ clipPath:"url(#clip-path-8)" }}>
+//         <rect x="20.03" y="6.04" width="16.08" height="16.02" style={{fill:" url(#radial-gradient-3)"}}/>
+//       </g>
+//     </g>
+//     <g id="Group_Port2" data-name="Group Port2">
+//       <path d="M.08,44.59,19.79,54.2.08,64V44.59" style={{fill:" url(#linear-gradient-6)"}}/>
+//     </g>
+//     <g id="Group_Port1" data-name="Group Port1">
+//       <path d="M39.23,44.66l-19.44,9.5L39.23,63.8V44.66" style={{fill:" url(#linear-gradient-7)"}}/>
+//     </g>
+//   </svg>
+  
+// );
 const PCV = (
-    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 49.11 64" width="64px" height="64px">
+    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 49.11 64" width="53px" height="53px">
     <defs>
       <clipPath id="clip-path">
         <rect x="17.62" width="31.49" height="4.48" style={{fill: "none"}}/>
       </clipPath>
       <linearGradient id="linear-gradient" x1="-199.38" y1="255.56" x2="-198.38" y2="255.56" gradientTransform="translate(1178.28 893.21) rotate(90) scale(4.48)" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#b9b900"/>
-        <stop offset="0.45" stopColor="#ffffd6"/>
-        <stop offset="0.57" stopColor="#ffffb1"/>
-        <stop offset="0.77" stopColor="#ffff65"/>
-        <stop offset="1" stopColor="#b9b900"/>
+        <stop offset="0" stopColor="orange"/>
+        <stop offset="0.45" stopColor="orange"/>
+        <stop offset="0.57" stopColor="orange"/>
+        <stop offset="0.77" stopColor="#FF9966"/>
+        <stop offset="1" stopColor="orange"/>
       </linearGradient>
       <clipPath id="clip-path-2">
         <path d="M44.63,27.65l-.5.47L46.6,32s.93-.81,1.31-1.25a6.28,6.28,0,0,0,.66-1.05,5.61,5.61,0,0,0,.54-1.9v-.58l-4.48-.08v.51Z" style={{fill: "none"}}/>
       </clipPath>
       <radialGradient id="radial-gradient" cx="-198.9" cy="358.04" r="1" gradientTransform="matrix(4.46, 2.18, -2.18, 4.46, 1711.97, -1137.72)" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#990"/>
-        <stop offset="0.09" stopColor="#990"/>
-        <stop offset="0.13" stopColor="#c7c700"/>
-        <stop offset="0.23" stopColor="#ffff25"/>
-        <stop offset="0.28" stopColor="#ffff49"/>
-        <stop offset="0.42" stopColor="#ffffab"/>
-        <stop offset="0.49" stopColor="#ffffb9"/>
-        <stop offset="0.55" stopColor="#ffffca"/>
-        <stop offset="0.61" stopColor="#ffffc1"/>
-        <stop offset="0.68" stopColor="#ffffa1"/>
-        <stop offset="0.77" stopColor="#ffff6f"/>
-        <stop offset="0.86" stopColor="#ffff29"/>
-        <stop offset="0.95" stopColor="#cfcf00"/>
-        <stop offset="1" stopColor="#990"/>
+        <stop offset="0" stopColor="orange"/>
+        <stop offset="0.09" stopColor="orange"/>
+        <stop offset="0.13" stopColor="orange"/>
+        <stop offset="0.23" stopColor="orange"/>
+        <stop offset="0.28" stopColor="orange"/>
+        <stop offset="0.42" stopColor="#FF9966"/>
+        <stop offset="0.49" stopColor="#FF9966"/>
+        <stop offset="0.55" stopColor="#FF9966"/>
+        <stop offset="0.61" stopColor="#FF9966"/>
+        <stop offset="0.68" stopColor="#FF9966"/>
+        <stop offset="0.77" stopColor="#FF9966"/>
+        <stop offset="0.86" stopColor="orange"/>
+        <stop offset="0.95" stopColor="orange"/>
+        <stop offset="1" stopColor="orange"/>
       </radialGradient>
       <clipPath id="clip-path-3">
         <rect x="16.32" y="39.36" width="35.01" height="4.48" transform="translate(-19.51 36.1) rotate(-45)" style={{fill: "none"}}/>
@@ -350,33 +470,33 @@ const PCV = (
         <path d="M4.05,22.09,20.51,22l0-16A16.28,16.28,0,0,0,4.05,22.09" style={{fill: "none"}}/>
       </clipPath>
       <radialGradient id="radial-gradient-2" cx="-270.33" cy="330.32" r="1" gradientTransform="translate(7345.96 -8649.93) scale(27.07 26.27)" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#dbdb00"/>
-        <stop offset="0.04" stopColor="#ffff15"/>
-        <stop offset="0.09" stopColor="#ff5"/>
-        <stop offset="0.15" stopColor="#ffff89"/>
-        <stop offset="0.21" stopColor="#ffffaf"/>
-        <stop offset="0.28" stopColor="#ffffca"/>
-        <stop offset="0.36" stopColor="#ffd"/>
-        <stop offset="0.5" stopColor="#ffffe0"/>
-        <stop offset="0.57" stopColor="#ffffd4"/>
-        <stop offset="0.67" stopColor="#ffffb3"/>
-        <stop offset="0.78" stopColor="#ffff7b"/>
-        <stop offset="0.9" stopColor="#ffff2b"/>
-        <stop offset="1" stopColor="#dbdb00"/>
+        <stop offset="0" stopColor="orange"/>
+        <stop offset="0.04" stopColor="orange"/>
+        <stop offset="0.09" stopColor="orange"/>
+        <stop offset="0.15" stopColor="orange"/>
+        <stop offset="0.21" stopColor="orange"/>
+        <stop offset="0.28" stopColor="orange"/>
+        <stop offset="0.36" stopColor="orange"/>
+        <stop offset="0.5" stopColor="#FF9966"/>
+        <stop offset="0.57" stopColor="#FF9966"/>
+        <stop offset="0.67" stopColor="#FF9966"/>
+        <stop offset="0.78" stopColor="orange"/>
+        <stop offset="0.9" stopColor="orange"/>
+        <stop offset="1" stopColor="orange"/>
       </radialGradient>
       <clipPath id="clip-path-8">
         <path d="M20,22l16.07,0a16.06,16.06,0,0,0-16-16Z" style={{fill: "none"}}/>
       </clipPath>
       <radialGradient id="radial-gradient-3" cx="-290.73" cy="330.34" r="1" gradientTransform="matrix(-26.43, 0, 0, 26.23, -7672.76, -8636.52)" href="#radial-gradient-2"/>
       <linearGradient id="linear-gradient-6" x1="216.8" y1="-321.5" x2="216.8" y2="-287.47" gradientTransform="matrix(0.57, 0, 0, -0.57, -113.4, -118.95)" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#ffff64"/>
-        <stop offset="0.5" stopColor="#ffff4f"/>
-        <stop offset="1" stopColor="#ff0"/>
+        <stop offset="0" stopColor="orange"/>
+        <stop offset="0.5" stopColor="orange"/>
+        <stop offset="1" stopColor="orange"/>
       </linearGradient>
       <linearGradient id="linear-gradient-7" x1="251.21" y1="-321.23" x2="251.21" y2="-287.6" gradientTransform="matrix(0.57, 0, 0, -0.57, -113.4, -118.95)" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#ff0"/>
-        <stop offset="0.53" stopColor="#ffff64"/>
-        <stop offset="1" stopColor="#ff0"/>
+        <stop offset="0" stopColor="orange"/>
+        <stop offset="0.53" stopColor="orange"/>
+        <stop offset="1" stopColor="orange"/>
       </linearGradient>
     </defs>
     <g id="Group_Pipe2" data-name="Group Pipe2">
@@ -418,7 +538,6 @@ const PCV = (
   </svg>
   
 );
-
 const BlackTriangle = (
     <svg
         fill="#bc74d6"

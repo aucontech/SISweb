@@ -5,12 +5,16 @@ import ScoreCard_CNG_PRU from '../components/ScoreCard_CNG_PRU'
 
 export default function CNG_Scorecard() {
   return (
+    
     <div style={{display:'grid', gridTemplateColumns:'auto auto', gap:"1.25rem"}}>
 
       <ScoreCard_CNG_PRU/>
+
       <ScoreCard_CNG_BINHDUONG/>
+
       <ScoreCard_CNG_HUNGYEN/>
 
     </div>
   )
+
 }

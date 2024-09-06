@@ -4215,12 +4215,9 @@ checked={maintainUPS_Mode}
  mainCategory: mainCategoryFC.PLC ,
 timeUpdate: <span style={combineCss.CSSDO_BC_01} >{PLC_STTValue}</span>,
 name: <span style={combineCss.CSSDO_BC_01}>  BEACON</span> ,
-
 modbus: <span style={combineCss.CSSDO_BC_01}>	DB5W52 </span> ,
-
 value: <span style={combineCss.CSSDO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
 high: <InputText 
-
 disabled={AuthInput} 
 style={combineCss.CSSDO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
 low:  <InputText 

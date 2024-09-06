@@ -1,7 +1,7 @@
 import { MarkerType } from "reactflow";
 
 const styleLine = {
-    strokeWidth: 20,
+    strokeWidth: 25,
     stroke: "yellow",
 };
 

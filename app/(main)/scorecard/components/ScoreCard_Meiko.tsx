@@ -1520,7 +1520,7 @@ useEffect(() => {
     ];
 
     return (
-        <div style={{width:'60%'}} >
+        <div style={{width:'100%'}} >
                 <div
                     style={{
                         background: "#64758B",
@@ -1582,7 +1582,7 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable>
-                
+                <br /><br />
             </div>
 
         
