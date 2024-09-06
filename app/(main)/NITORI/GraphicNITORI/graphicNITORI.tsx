@@ -1575,7 +1575,7 @@ export default function GraphicNITORI() {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
     };
 
@@ -2202,7 +2202,7 @@ export default function GraphicNITORI() {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),

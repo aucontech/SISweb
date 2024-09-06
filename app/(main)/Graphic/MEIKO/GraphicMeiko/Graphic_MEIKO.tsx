@@ -172,6 +172,7 @@ export default function Graphic_MEIKO() {
                         VP_301: setVP_301,
                         VP_302: setVP_302,
                         VP_303: setVP_303,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                     };
 
                     const valueStateMap: ValueStateMap = {
@@ -239,7 +240,7 @@ export default function Graphic_MEIKO() {
         M3H: "m³/h",
         SM3: "sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarG",
         CC: "°C",
         BARG: "%",
     };
@@ -2197,7 +2198,7 @@ useEffect(() => {
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
-                                        {PLC_STT == "1" ? (
+                                        {PLC_Conn_STT == "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",

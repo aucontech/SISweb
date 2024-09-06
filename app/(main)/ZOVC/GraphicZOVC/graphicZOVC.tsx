@@ -94,14 +94,10 @@ export default function GraphicZOCV() {
     const [data, setData] = useState<any[]>([]);
 
     const [NC, setNC] = useState<string | null>(null);
-    const [NO, setNO] = useState<string | null>(null);
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
-    const [EVC_02_Conn_STTValue, setEVC_02_Conn_STTValue] = useState<
-        string | null
-    >(null);
+ 
     const [Conn_STT, setConn_STT] = useState<string | null>(null);
-    const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
 
@@ -253,13 +249,16 @@ export default function GraphicZOCV() {
                     };
 
                     const valueStateMap: ValueStateMap = {
-                        FC_01_Conn_STT: setFC_01_Conn_STT,
+                        FC_01_Conn_STT: setConn_STT,
+
                     };
                     const stateMap2: StateMap2 = {
                         SSV_1101: setNC,
                 
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        FC_01_Conn_STT: setConn_STT,
+
+                        FC_01_Conn_STT: setFC_01_Conn_STT,
+
                     };
 
                     keys.forEach((key) => {
@@ -958,23 +957,15 @@ useEffect(() => {
     const [maintainEVC_02_Conn_STT, setMaintainEVC_02_Conn_STT] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof EVC_02_Conn_STT_High === 'string' && typeof EVC_02_Conn_STT_Low === 'string' && EVC_02_Conn_STT !== null && maintainEVC_02_Conn_STT === false
-            ) {
-                const highValue = parseFloat(EVC_02_Conn_STT_High);
-                const lowValue = parseFloat(EVC_02_Conn_STT_Low);
-                const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_02_Conn_STTValue)) {
-                    if (highValue <= EVC_02_Conn_STTValue || EVC_02_Conn_STTValue <= lowValue) {
-                            setExceedThresholdEVC_02_Conn_STT(true);
-                    } else {
-                       setExceedThresholdEVC_02_Conn_STT(false);
-                    }
-                } 
-            } 
-        }, [EVC_02_Conn_STT_High, EVC_02_Conn_STT, EVC_02_Conn_STT_Low,maintainEVC_02_Conn_STT]);
-
+    useEffect(() => {
+        const EVC_02_Conn_STTValue = parseFloat(EVC_02_Conn_STT as any);
+        const highValue = EVC_02_Conn_STT_High ?? NaN;
+        const lowValue = EVC_02_Conn_STT_Low ?? NaN;
+    
+        if (!isNaN(EVC_02_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_02_Conn_STT) {
+            setExceedThresholdEVC_02_Conn_STT(EVC_02_Conn_STTValue >= highValue || EVC_02_Conn_STTValue <= lowValue);
+        }
+    }, [EVC_02_Conn_STT, EVC_02_Conn_STT_High, EVC_02_Conn_STT_Low, maintainEVC_02_Conn_STT]);
                     // =================================================================================================================== 
     const [FC_01_Conn_STT, setFC_01_Conn_STT] = useState<string | null>(null);
 
@@ -984,23 +975,15 @@ useEffect(() => {
     const [maintainFC_01_Conn_STT, setMaintainFC_01_Conn_STT] = useState<boolean>(false);
     
     
-        useEffect(() => {
-            if (typeof FC_01_Conn_STT_High === 'string' && typeof FC_01_Conn_STT_Low === 'string' && FC_01_Conn_STT !== null && maintainFC_01_Conn_STT === false
-            ) {
-                const highValue = parseFloat(FC_01_Conn_STT_High);
-                const lowValue = parseFloat(FC_01_Conn_STT_Low);
-                const FC_01_Conn_STTValue = parseFloat(FC_01_Conn_STT);
-        
-                if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(FC_01_Conn_STTValue)) {
-                    if (highValue <= FC_01_Conn_STTValue || FC_01_Conn_STTValue <= lowValue) {
-                            setExceedThresholdFC_01_Conn_STT(true);
-                    } else {
-                       setExceedThresholdFC_01_Conn_STT(false);
-                    }
-                } 
-            } 
-        }, [FC_01_Conn_STT_High, FC_01_Conn_STT, FC_01_Conn_STT_Low,maintainFC_01_Conn_STT]);
+    useEffect(() => {
+        const FC_01_Conn_STTValue = parseFloat(FC_01_Conn_STT as any);
+        const highValue = FC_01_Conn_STT_High ?? NaN;
+        const lowValue = FC_01_Conn_STT_Low ?? NaN;
     
+        if (!isNaN(FC_01_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_01_Conn_STT) {
+            setExceedThresholdFC_01_Conn_STT(FC_01_Conn_STTValue >= highValue || FC_01_Conn_STTValue <= lowValue);
+        }
+    }, [FC_01_Conn_STT, FC_01_Conn_STT_High, FC_01_Conn_STT_Low, maintainFC_01_Conn_STT]);
     // =================================================================================================================== 
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
@@ -1483,7 +1466,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
     };
 
@@ -2159,7 +2142,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -2224,7 +2207,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -2298,7 +2281,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
                                                 </span>
                                             )}
                                         </p>
-                                        {Conn_STT === "1" ? (
+                                        {FC_01_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
@@ -2346,7 +2329,7 @@ const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
                                       
                                         }}
                                     >
-                                        {Conn_STTValue}
+                                        {Conn_STT}
                                     </p>
                                     <p
                                         style={{

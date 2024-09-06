@@ -70,7 +70,7 @@ export default function GraphicSogec() {
       CNG:["CNG PHU MY 3",'CNG BINH DUONG','CNG HUNG YEN']
     };
     const newTimeoutId = setTimeout(() => {
-      const normalizedSearchTerm = searchItem.replace(/\s+/g, '').toUpperCase();
+      const normalizedSearchTerm = searchItem?.replace(/\s+/g, '').toUpperCase();
     
       const filteredList = Object.keys(stationList).filter(key => {
         const normalizedKey = key.replace(/\s+/g, '').toUpperCase();

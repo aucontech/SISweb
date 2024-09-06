@@ -1819,9 +1819,7 @@ const dataFC = [
             FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
             FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{EVC_02_Volume_at_Measurement_Condition}</span>,
 
-
         },
-       
      
         {
             name: <span>{tagNameFC.VbToday}</span>,
@@ -1911,6 +1909,41 @@ const dataFC = [
       
     ];
 
+
+    const dataFC111 = [
+
+      
+        {
+            name: <span>{tagNameFC.InputPressure}</span>,
+            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{EVC_02_Pressure}</span>,
+    
+        },
+            {
+                name: <span>{tagNameFC.Temperature}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
+                FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{EVC_02_Temperature}</span>,
+    
+            },
+            {
+                name: <span>{tagNameFC.SVF}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
+                FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
+    
+            },
+       
+           
+         
+        ];
+    
+        
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
+
+
     return (
         <div >
             <div  >
@@ -1946,14 +1979,16 @@ const dataFC = [
                         }}
                     >
                      
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
+                        <div style={{  fontWeight: 500 , display:'flex',paddingRight:20}}>
                         {Conn_STTValue}
                         </div>
+                        <button onClick={handleShowMore} >
+                    {ShowMore ? <i  style={{fontSize:'1.5rem', cursor:'pointer'}} className="pi pi-arrow-up"></i>  : <i style={{fontSize:'1.5rem',cursor:'pointer'}} className="pi pi-arrow-down"></i>}
+                    </button>
                     </div>
-                    
                 </div>
 
-
+                {ShowMore ?    <div > 
 
 
 
@@ -1966,13 +2001,13 @@ const dataFC = [
                             header={FC_Conn_STTValue === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
    
                                </div>
                                
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1401</p>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1101</p>
                              </div>
                             )}
                         ></Column>
@@ -1982,13 +2017,13 @@ const dataFC = [
                             field="FC1902"
                             header={EVC_02_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1402</p>
+                                {DotGreen} <p style={{marginLeft:5}}>EVC-1102</p>
    
                                </div>
                                 
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>EVC-1402</p>
+                                {DotRed}  <p style={{marginLeft:5}}>EVC-1102</p>
                              </div>
                             )}
                         ></Column>
@@ -2059,9 +2094,55 @@ const dataFC = [
                             )}
                         ></Column>
                     </DataTable>
+
+                            
+                </div> 
+                
+                : 
+                <div>
+                
+                <DataTable value={dataFC} size="small" selectionMode="single"> 
+                <Column field="name" header="FC Parameter"></Column>
+
+ 
+                <Column
+                        field="FC1901"
+                        header={FC_Conn_STTValue === "1" ? (
+
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                            {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
+
+                           </div>
+                           
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                            {DotRed}  <p style={{marginLeft:5}}>FC-1101</p>
+                         </div>
+                        )}
+                    ></Column>
+                <Column
+                    style={{display:'flex', justifyContent:'flex-end'}}
+
+                        field="FC1902"
+                        header={EVC_02_Conn_STT === "1" ? (
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                            {DotGreen} <p style={{marginLeft:5}}>EVC-1102</p>
+
+                           </div>
+                            
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                            {DotRed}  <p style={{marginLeft:5}}>EVC-1102</p>
+                         </div>
+                        )}
+                    ></Column>
+
+            </DataTable>
             </div>
 
-        
+                    }
+
+        </div>
 
         </div>
     );

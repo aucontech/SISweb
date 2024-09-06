@@ -1433,7 +1433,7 @@ useEffect(() => {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
     };
 

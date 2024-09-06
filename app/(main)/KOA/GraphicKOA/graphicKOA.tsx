@@ -3555,7 +3555,7 @@ export default function GraphicKOA() {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
     };
 
@@ -4223,7 +4223,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -4292,7 +4292,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -4417,7 +4417,7 @@ export default function GraphicKOA() {
                                     </p>
 
                                     <p style={{ marginLeft: 5 }}>
-                                        {Conn_STT === "1" ? (
+                                        {PLC_Conn_STT === "1" ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",

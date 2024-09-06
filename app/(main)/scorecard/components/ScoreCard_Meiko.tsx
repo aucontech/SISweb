@@ -1558,7 +1558,7 @@ useEffect(() => {
                     >
                        
                         <div style={{  fontWeight: 500 , display:'flex'}}>
-                           <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
+                          {Conn_STTValue}
                         </div>
                     </div>
                 </div>

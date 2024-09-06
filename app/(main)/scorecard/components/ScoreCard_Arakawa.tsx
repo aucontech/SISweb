@@ -7,6 +7,7 @@ import "./ScoreCard.css";
 import SetAttribute1 from "../../OTSUKA/title-OTK";
 import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
+import 'primeicons/primeicons.css';
 
 import "./ScoreCard.css"
 
@@ -98,8 +99,6 @@ export default function ScoreCard_Arakawa() {
                         EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
 
                         EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
-
-
 
                         GD1: setGD1,
                         GD2: setGD2,
@@ -2067,9 +2066,17 @@ useEffect(() => {
         },
     ];
 
+
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
+
+
+
     return (
-        <div >
-            <div  >
+        <div style={{width:'100%'}} >
                 <div
                     style={{
                         background: "#64758B",
@@ -2092,26 +2099,51 @@ useEffect(() => {
                             ARAKAWA
                         </div>
 
-                        
+                    
                        
                     </div>
                     <div
                         style={{
+                            display:'flex',
+
                             alignItems: "center",
                             padding:5
 
                         }}
                     >
-                      
-                        <div style={{  fontWeight: 500,display:'flex' }}>
-                           <p style={{fontWeight:700}}>EVC</p> : {FC_Conn_STTValue}
+                        
+                        <div style={{  fontWeight: 500,display:'flex',paddingRight:20 }}>
+                           {FC_Conn_STTValue}
                         </div>
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
-                           <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
-                        </div>
+                        <button onClick={handleShowMore} >
+                    {ShowMore ? <i  style={{fontSize:'1.5rem', cursor:'pointer'}} className="pi pi-sort-amount-up"></i>  : <i style={{fontSize:'1.5rem',cursor:'pointer'}} className="pi pi-sort-amount-down"></i>}
+                    </button>
                     </div>
                  
                 </div>
+
+
+                {ShowMore ?    <div> 
+                    
+                    
+                <DataTable value={dataEVC} size="small" selectionMode="single"> 
+                    <Column field="name" header="EVC Parameter"></Column>
+                    <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+                        field="evc1901"
+                        header={EVC_STT01 === "1" ? (
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                            {DotGreen} <p>EVC-1601</p>
+                           </div>
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                               {DotRed} <p>EVC-1601</p>
+                            </div>
+                        )}
+                    ></Column>
+
+                </DataTable>
+
                 <DataTable value={dataEVC} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
@@ -2149,12 +2181,36 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable>
+                   
+                </div> 
                 
-            </div>
+                : 
+                
+                
+                <div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+                       
+                <DataTable value={dataEVC} size="small" selectionMode="single"> 
+                    <Column field="name" header="EVC Parameter"></Column>
+                    <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+                        field="evc1901"
+                        header={EVC_STT01 === "1" ? (
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                            {DotGreen} <p>EVC-1601</p>
+                           </div>
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                               {DotRed} <p>EVC-1601</p>
+                            </div>
+                        )}
+                    ></Column>
+
+                </DataTable>
+                </div> }
+
+            
+       
 
         </div>
     );

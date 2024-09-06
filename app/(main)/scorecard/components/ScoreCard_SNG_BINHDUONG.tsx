@@ -2854,6 +2854,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                         justifyContent:'space-between'
                     }}
                 >
+                    
                     <div
                         style={{
                             display: "flex",
@@ -2866,28 +2867,19 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                             {" "}
                             SNG BINH DUONG
                         </div>
-
-                        
-                       
                     </div>
-            
                     <div
                         style={{
-                            alignItems: "center",
-                            padding: "0px 5px 5px 5px",
+                            display:'flex',
 
+                            alignItems: "center",
+                           padding:5
                         }}
                     >
-                        <div style={{  fontWeight: 500 , display:'flex', justifyContent:'flex-end'}}>
-                           <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
-
+                     
+                        <div style={{  fontWeight: 500 , display:'flex'}}>
+                        {Conn_STTValue}
                         </div>
-                        <div style={{  fontWeight: 500 , display:'flex',justifyContent:'flex-end'}}>
-                           <p style={{fontWeight:700}}>Calorimeter</p> : {FC_Conn_STTValue}
-
-                        </div>
-
-                      
                     </div>
 
                 </div>
@@ -2931,9 +2923,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     </DataTable>
             </div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+        
         </div>
     );
 }
