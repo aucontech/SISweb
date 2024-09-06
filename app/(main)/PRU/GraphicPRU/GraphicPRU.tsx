@@ -334,7 +334,6 @@ export default function GraphicPRU() {
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
                         EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
-                        PLC_Conn_STT: setPLC_Conn_STT,
                     };
 
                     const stateMap2: StateMap2 = {
@@ -987,7 +986,7 @@ export default function GraphicPRU() {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
         BARG: "BarG",
     };
@@ -3019,7 +3018,7 @@ export default function GraphicPRU() {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -3085,7 +3084,7 @@ export default function GraphicPRU() {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -3828,7 +3827,8 @@ export default function GraphicPRU() {
                                           
                                         }}
                                     >
-                                        {PLC_Conn_STT}
+                                                                               {EVC_01_Conn_STTValue}
+
 
                                     </p>
                                 </div>

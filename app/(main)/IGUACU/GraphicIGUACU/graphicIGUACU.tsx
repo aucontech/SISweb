@@ -289,11 +289,11 @@ export default function GraphicIGUACU() {
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
                         EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
-                        PLC_Conn_STT: setPLC_Conn_STT,
                     };
                     const stateMap2: StateMap2 = { 
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                      
                         EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
@@ -1891,7 +1891,7 @@ useEffect(() => {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarG",
         CC: "°C",
     };
 
@@ -2520,7 +2520,7 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -2582,7 +2582,7 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),

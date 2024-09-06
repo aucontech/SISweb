@@ -3008,6 +3008,12 @@ useEffect(() => {
         },
     ];
 
+    
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
     return (
         <div >
             <div  >
@@ -3039,17 +3045,16 @@ useEffect(() => {
                     <div
                         style={{
                             alignItems: "center",
-                           padding:5
+                           padding:5,
+                           display:'flex' 
 
                         }}
                     >
                        
                         <div style={{  fontWeight: 500,display:'flex' }}>
-                           <p style={{fontWeight:700}}>FC</p> : {FC_Conn_STTValue}
+                     {FC_Conn_STTValue}
                         </div>
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
-                           <p style={{fontWeight:700}}>PLC</p> : {Conn_STTValue}
-                        </div>
+                    
                     </div>
                     
                 </div>

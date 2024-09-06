@@ -1902,7 +1902,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "BarA",
+        BAR: "BarG",
         CC: "°C",
     };
 
@@ -2531,7 +2531,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),
@@ -2593,7 +2593,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    BarG
                                 </p>
                             </div>
                         ),

@@ -4737,7 +4737,7 @@ disabled={AuthInputHighLow}
                 timeUpdate: <span style={combineCss.CSSTM_3002_SNG} >{PLC_STTValue}</span>,
             name: <span style={combineCss.CSSTM_3002_SNG}>Tubine Meter TM3002-SNG </span> ,
        
-            modbus: <span style={combineCss.CSSTM_3002_SNG}>40023	 </span> ,
+            modbus: <span style={combineCss.CSSTM_3002_SNG}>40025	 </span> ,
        
            value: <span style={combineCss.CSSTM_3002_SNG} > {TM_3002_SNG} (Sm³/h)</span> , 
             high: <InputText 
@@ -4770,7 +4770,7 @@ disabled={AuthInputHighLow}
         timeUpdate: <span style={combineCss.CSSTM_3003_SNG} >{PLC_STTValue}</span>,
     name: <span style={combineCss.CSSTM_3003_SNG}>Tubine Meter TM3003-SNG </span> ,
 
-    modbus: <span style={combineCss.CSSTM_3003_SNG}>40025	 </span> ,
+    modbus: <span style={combineCss.CSSTM_3003_SNG}>40023	 </span> ,
 
    value: <span style={combineCss.CSSTM_3003_SNG} > {TM_3003_SNG} (Sm³/h)</span> , 
     high: <InputText 

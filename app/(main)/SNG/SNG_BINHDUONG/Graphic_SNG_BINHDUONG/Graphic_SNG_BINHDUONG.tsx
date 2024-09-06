@@ -354,7 +354,7 @@ export default function Graphic_SNG_BD() {
         M3H: "m³/h",
         SM3: "Sm³",
         M3: "m³",
-        BAR: "Bara",
+        BAR: "BarG",
         CC: "°C",
         BARG: "%",
     };

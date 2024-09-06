@@ -3178,6 +3178,12 @@ useEffect(() => {
     //         PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
     //     },
     // ];
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
+
 
     return (
         <div >
@@ -3208,21 +3214,26 @@ useEffect(() => {
                     <div
                         style={{
                             display:'flex',
+
                             alignItems: "center",
-                           padding:5
+                            padding:5
+
                         }}
                     >
-                        <div style={{  fontWeight: 500,display:'flex' }}>
-                           <p style={{fontWeight:700}}>FC</p> : {FC_Conn_STTValue}
+                        
+                        <div style={{  fontWeight: 500,display:'flex',paddingRight:20 }}>
+                           {FC_Conn_STTValue}
                         </div>
-                       
+                        <button onClick={handleShowMore} >
+                    {ShowMore ? <i  style={{fontSize:'1.5rem', cursor:'pointer'}} className="pi pi-arrow-up"></i>  : <i style={{fontSize:'1.5rem',cursor:'pointer'}} className="pi pi-arrow-down"></i>}
+                    </button>
                     </div>
                     
                 </div>
 
 
 
-
+                {ShowMore ?    <div> 
 
 
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
@@ -3315,20 +3326,62 @@ useEffect(() => {
                             ) : (
                                 
 
-<div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-{DotRed}  <p style={{marginLeft:5}}>FC</p>
-</div>
+                        <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC</p>
+                                    </div>
                             )}
                         ></Column>
 
                     
                     </DataTable>
-
+                    </div> 
+                
+                : 
+                
+                
+                <div>
                    
+                <DataTable value={dataFC} size="small" selectionMode="single"> 
+                    <Column field="name" header="FC Parameter"></Column>
+
+                    <Column
+                            field="FC1901"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1001</p>
+                                </div>
+                            )}
+                        ></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+                            field="FC1902"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
+   
+                               </div>
+                              
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1002</p>
+                             </div>
+                            )}
+                        ></Column>
+                </DataTable>
 
             </div>
 
-        
+                        }
+
+        </div>
 
         </div>
     );
