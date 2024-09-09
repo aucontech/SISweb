@@ -65,7 +65,6 @@ httpApi.interceptors.response.use(
 
                     return httpApi(originalRequest);
                 } catch (refreshError) {
-                    console.log(refreshError);
                     return Promise.reject(refreshError); // If token refresh fails, reject the promise
                 }
             } else {

@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setUser(() => resp.data);
             }
         } catch (error: any) {
-            if (error?.response?.data?.errorCode === 10) {
+            if (error?.response?.status === 401) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             }
@@ -67,13 +67,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 }
             }
         } catch (error: any) {
-            console.log("error", error);
-            if (error?.response?.data?.errorCode === 10) {
+            if (error?.response?.status === 401) {
                 setIsAuthenticated(() => false);
                 setIsRedirectToLogin(() => true);
             }
         } finally {
-            // setIsLoading(() => false);
+            setIsLoading(() => false);
         }
     }, []);
 
@@ -81,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // _checkSession();
         const intervalId = setInterval(async () => {
             await _checkSession();
-        }, 2000);
+        }, 5000);
         return () => clearInterval(intervalId);
     }, [_checkSession]);
 
@@ -104,7 +103,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 };
 
-// Tạo một custom hook để sử dụng context
 export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) {

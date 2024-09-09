@@ -2,14 +2,10 @@
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { getDevices } from "@/api/device.api";
-import { Utils } from "@/service/Utils";
-import { Calendar } from "primereact/calendar";
 import { getTimeseriesKeys } from "@/api/telemetry.api";
-import { set } from "lodash";
 import { DatePicker } from "antd"; // Import DatePicker from Ant Design
 import styles from "./FilterDataTableReport.module.css";
 
-import { MultiSelect } from "primereact/multiselect";
 import dayjs from "dayjs"; // Import dayjs
 
 const { RangePicker } = DatePicker; // Destructure RangePicker from DatePicker
@@ -80,6 +76,9 @@ const FilterDataChartReport: React.FC<Props> = ({
         value: any
     ) => {
         let newFil = { ...editFilter };
+        if (field === "device" && value.id.id !== editFilter.device?.id?.id) {
+            newFil["tags"] = [];
+        }
         newFil[field] = value;
         setEditFilter(newFil);
         onAction(newFil);
@@ -112,7 +111,6 @@ const FilterDataChartReport: React.FC<Props> = ({
         ]);
     };
     const handleDateRangeChange = (dates: any) => {
-
         if (dates) {
             const startDate = dates[0] ? dates[0].toDate() : null;
             const endDate = dates[1] ? dates[1].toDate() : null;
@@ -181,7 +179,7 @@ const FilterDataChartReport: React.FC<Props> = ({
                 )}
                 {showDate && (
                     <div className="col-12 lg:col-3">
-                           <div className={styles.dateRangeWrapper}>
+                        <div className={styles.dateRangeWrapper}>
                             <div className={styles.floatLabel}>
                                 <RangePicker
                                     showTime

@@ -95,9 +95,6 @@ const CustomerReport = () => {
 
     useEffect(() => {
         if (filters.date && filters.device) {
-            //setReportData({ ...defaultValue, deviceInfo: filters.device });
-
-            //setSelectedDevice(filters.device);
             _fetchDateReport(filters);
         }
     }, [filters, _fetchDateReport]);
@@ -120,17 +117,42 @@ const CustomerReport = () => {
                         );
                     }
                 } else {
-                    console.log("Header Content-Disposition không tồn tại");
+                    console.log("Header Content-Disposition not found.");
                 }
 
                 saveAs(response.data, fileName);
             })
-            .catch((err) => {
-                console.error("Error exporting report:", err);
-                UIUtils.showError({
-                    toast: toast.current,
-                    error: err?.message,
-                });
+            .catch((error) => {
+                console.error("Error exporting report:", error);
+                if (error.response && error.response.data) {
+                    // Khi response là Blob, ta cần chuyển đổi Blob thành JSON hoặc text để đọc lỗi
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        try {
+                            const errorMessage = JSON.parse(
+                                reader.result as string
+                            ).message;
+                            console.error("Error message:", errorMessage);
+
+                            UIUtils.showError({
+                                toast: toast.current,
+                                error: errorMessage,
+                            });
+                        } catch (e) {
+                            console.error(
+                                "Error reading the blob response:",
+                                e
+                            );
+                        }
+                    };
+                    reader.onerror = () => {
+                        console.error("Error reading the blob response.");
+                    };
+                    reader.readAsText(error.response.data);
+                } else {
+                    console.error("Request failed:", error);
+                    alert("Failed to generate or save the file.");
+                }
             });
     };
     const _renderLineName = (line: number) => {
