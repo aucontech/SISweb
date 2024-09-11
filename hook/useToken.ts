@@ -1,4 +1,5 @@
 // src/hooks/useToken.ts
+
 import { useState, useEffect } from "react";
 import { readToken } from "@/service/localStorage";
 export const useToken = (): string | null => {
@@ -14,6 +15,7 @@ export const useToken = (): string | null => {
         // Function to handle storage event
         const handleStorageChange = () => {
             const newToken = readToken();
+            console.log("New token", newToken);
             setToken(newToken);
         };
 

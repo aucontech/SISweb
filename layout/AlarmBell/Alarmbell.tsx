@@ -230,9 +230,6 @@ export default function Alarmbell() {
                         setAlarmCount(0);
                     }
                 } else if (dataReceive && dataReceive["cmdId"] === 2) {
-                    //console.log(dataReceive.count);
-                    //  setAlarmCount(dataReceive.count);
-                    // setLoading(false);
                 }
             };
             ws.current.onclose = () => {
@@ -283,9 +280,7 @@ export default function Alarmbell() {
                 if (alarm.severity === "MAJOR") {
                     return { ...alarm };
                 }
-
                 let tag = alarm?.details?.data?.split(",")[0];
-
                 if (tag !== null && tag !== undefined) {
                     try {
                         const maintained = await fetchWithRetry(
@@ -339,7 +334,7 @@ export default function Alarmbell() {
     // }, []);
 
     useEffect(() => {
-        notifications.forEach((notif) => {
+        notifications.forEach((notif: any) => {
             const audioEl = audioRefs.current[notif.id.id];
             if (audioEl) {
                 if (notif.shouldPlaySound) {
@@ -529,7 +524,6 @@ export default function Alarmbell() {
             );
         }
     };
-
 
     const subjectCount = notifications.length;
     let totalSubjectDisplay: string | number = subjectCount;
@@ -751,7 +745,6 @@ export default function Alarmbell() {
                 )}
             </div> */
 }
-
 
 // import TestAlarmFull from '@/app/(main)/TestFullScreen/page'
 // import React from 'react'
