@@ -14,6 +14,7 @@ import { Utils } from "@/service/Utils";
 import { Chart } from "primereact/chart";
 import dynamic from "next/dynamic";
 import { Card } from "primereact/card";
+import { set } from "lodash";
 
 interface Props {
     filters: any;
@@ -84,13 +85,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 },
             },
         },
-        // datasets: [
-        //     {
-        //         // ... dữ liệu của bạn ...
-        //         pointRadius: 0, // Ẩn mặc định
-        //         hoverRadius: 5, // Hiển thị khi di chuột với bán kính 5px
-        //     },
-        // ],
     });
     const [loading, setLoading] = useState(false);
     const [data, setChartData] = useState<any>({});
@@ -131,6 +125,11 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 orderBy: "ASC",
                 limit: 50000,
             };
+            if (tags && tags.length === 0) {
+                setLoading(false);
+                setChartData({});
+                return;
+            }
 
             if (agg && agg.value !== "NONE" && interval) {
                 reqParams = {
@@ -148,7 +147,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             getTimesSeriesData("DEVICE", device.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    console.log(res);
                     let keys = Object.keys(res);
                     let labels = res[keys[0]].map((dt: any) =>
                         Utils.formatUnixTimeToString(dt.ts, "dd-MM HH:mm")
@@ -182,7 +180,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     setLoading(false);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     setLoading(false);
                 });
         } else {
