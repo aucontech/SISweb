@@ -10,14 +10,12 @@ import { saveOrUpdateTimeseriesData } from "@/api/telemetry.api";
 import { Utils, UIUtils } from "@/service/Utils";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import { InputText } from "primereact/inputtext";
+
 interface Props {}
 
 const Page: React.FC<Props> = () => {
     const [filters, setFilters] = useState<any>({});
     const [globalValue, setGlobalValue] = useState<number | null>(null); // Global value for "Update All"
-    const [searchTerm, setSearchTerm] = useState<string>(""); // State for search term
-    const [filteredDatas, setFilteredDatas] = useState<any[]>([]); // State for filtered data
     const [datas, setDatas] = useState<any[]>([]);
     const [reload, setReload] = useState<boolean>(false);
     const toast = useRef<any>(null);
@@ -53,7 +51,7 @@ const Page: React.FC<Props> = () => {
                 console.log(results);
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
             });
     };
 
@@ -92,7 +90,6 @@ const Page: React.FC<Props> = () => {
     };
 
     const _handleSave = (rowData: any) => {
-        console.log(rowData);
         let params = {
             ts: rowData.date,
             values: {
@@ -113,16 +110,9 @@ const Page: React.FC<Props> = () => {
                 }
             })
             .catch((err) => {
-                // UIUtils.showError({
-                //     error: err.resp,
-                //     summary: "Error",
-                //     detail: "Failed to save data",
-                //     toast: toast.current,
-                // });
+                console.error(err);
             });
     };
-    console.log(datas);
-
     const _handleSaveAll = () => {
         console.log(globalValue);
         if (globalValue !== null) {
@@ -164,20 +154,9 @@ const Page: React.FC<Props> = () => {
                 setReload(!reload);
             })
             .catch((err) => {
-                // UIUtils.showError({
-                //     summary: "Error",
-                //     detail: "Failed to save data",
-                //     toast: toast.current,
-                // });
+                console.error(err);
             });
     };
-    useEffect(() => {
-        const filtered = datas.filter((rowData) =>
-            rowData.device.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        console.log(filtered);
-        setFilteredDatas(filtered);
-    }, [searchTerm, datas]);
 
     return (
         <>
@@ -188,7 +167,7 @@ const Page: React.FC<Props> = () => {
                 showAsset={true}
                 showDate={true}
             />
-            <div className="flex flex-row-reverse gap-4">
+            <div className="flex flex-row-reverse gap-4 mb-3">
                 <Button label="Update All" onClick={_handleSaveAll} />
                 <InputNumber
                     value={globalValue}
@@ -198,16 +177,11 @@ const Page: React.FC<Props> = () => {
                     minFractionDigits={2}
                     maxFractionDigits={5}
                 />
-                <InputText
-                    value={searchTerm}
-                    onChange={(e) => console.log(e)}
-                    placeholder="Search by device name"
-                />
             </div>
 
             <div className="datatable-responsive">
                 <DataTable
-                    value={filteredDatas}
+                    value={datas}
                     rows={100}
                     className="p-datatable-gridlines"
                 >
@@ -221,7 +195,7 @@ const Page: React.FC<Props> = () => {
                         header="Heating Value (MJ/Sm³)"
                         body={valueTemplate}
                     ></Column>
-                    <Column header="Action" body={updateTemplate}></Column>
+                    <Column header="Update" body={updateTemplate}></Column>
                 </DataTable>
             </div>
         </>
