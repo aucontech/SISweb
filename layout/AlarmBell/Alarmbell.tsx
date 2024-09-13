@@ -231,15 +231,11 @@ export default function Alarmbell() {
         };
         ws.current.onclose = () => {
             setTimeout(() => {
-                connectWebSocket;
-            }, 10000);
+                connectWebSocket();
+            }, 5000);
         };
         ws.current.onerror = (error) => {
-            console.error("WebSocket error:", error);
-            setLoading(true);
-            setTimeout(() => {
-                connectWebSocket;
-            }, 10000);
+            ws.current?.close();
         };
     }, [sendData]);
 
@@ -283,17 +279,27 @@ export default function Alarmbell() {
             isProcessing.current = false;
             return;
         }
-        isProcessing.current = true;
-        const item = notificationsQueue.current.shift();
 
-        if (item) {
-            const processedAlarms = await processNotification(item.alarms);
-            setNotifications(processedAlarms);
-            setAlarmCount(item.alarmCount);
+        isProcessing.current = true;
+
+        while (notificationsQueue.current.length > 0) {
+            // Duyệt từng phần tử trong hàng đợi
+            const item = notificationsQueue.current.shift(); // Lấy phần tử đầu tiên
+
+            if (item) {
+                const processedAlarms = await processNotification(item.alarms);
+                setNotifications(processedAlarms);
+                setAlarmCount(item.alarmCount);
+            }
+
+            // Tạm dừng 1 giây trước khi xử lý phần tử tiếp theo
+            await new Promise((resolve) => setTimeout(resolve, 1000));
         }
-        // Tiếp tục xử lý phần tử tiếp theo trong hàng đợi
-        setTimeout(processQueue, 1000); // Đợi 1 giây trước khi xử lý phần tử tiếp theo
+
+        // Khi hàng đợi đã được xử lý hết
+        isProcessing.current = false;
     }, [processNotification]);
+
     const fetchWithRetry = async (
         entityId: string,
         tag: string,
@@ -317,7 +323,8 @@ export default function Alarmbell() {
                 `Max retries reached for ${tag}. Final error:`,
                 error
             );
-            throw error;
+            // Trả về true nếu không fetch được sau nhiều lần retry
+            return true;
         }
     };
 
