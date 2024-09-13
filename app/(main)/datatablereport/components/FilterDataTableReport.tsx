@@ -288,7 +288,7 @@ const FilterDataTableReport: React.FC<Props> = ({
     const _handleAddMultiTagSetting = (values: any) => {
         let newTags = values.map((key: string) => ({
             key,
-            name: key,
+            name: suggFullNames[key] ? suggFullNames[key] : key,
             unit: {
                 label: unitAttribute[key] ? unitAttribute[key] : "",
                 value: unitAttribute[key] ? unitAttribute[key] : "",

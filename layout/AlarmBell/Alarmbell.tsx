@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
 //import { readToken } from "@/service/localStorage";
-import { readUser } from "@/service/localStorage";
+import { readToken, readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { PiBellRingingBold } from "react-icons/pi";
@@ -34,7 +34,6 @@ import {
     SNG_PM3_DEVICEC_ID,
     SNG_ACECOOK_DEVICE_ID,
 } from "@/constants/constans";
-import { useToken } from "@/hook/useToken";
 
 interface Notification {
     subject: string;
@@ -49,7 +48,6 @@ interface WebSocketMessage {
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 2000;
 export default function Alarmbell() {
-    const token = useToken();
     const audioRef = useRef<HTMLAudioElement>(null);
     const router = useRouter();
     const audioRefs = useRef<HTMLAudioElement[]>([]);
@@ -59,8 +57,10 @@ export default function Alarmbell() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [alarmCount, setAlarmCount] = useState<number>(0);
-    // const [notificationsQueue, setNotificationsQueue] = useState<any[]>([]); // Hàng đợi thông báo
-    const notificationsQueue = useRef<Notification[]>([]); // Hàng đợi thông báo
+    const notificationsQueue = useRef<{ alarms: any[]; alarmCount: number }[]>(
+        []
+    );
+    const isProcessing = useRef(false);
     useEffect(() => {
         const user = readUser();
         if (user) {
@@ -88,162 +88,212 @@ export default function Alarmbell() {
         },
         []
     );
-    const connectWebSocket = useCallback(
-        (token: string) => {
-            ws.current = new WebSocket(
-                `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${token}`
-            );
-            ws.current.onopen = () => {
-                console.log("WebSocket connection opened.");
+    const connectWebSocket = useCallback(() => {
+        let currentToken = readToken();
+        ws.current = new WebSocket(
+            `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET}/telemetry?token=${currentToken}`
+        );
+        ws.current.onopen = () => {
+            console.log("WebSocket connection opened.");
 
-                let data = {
-                    alarmCountCmds: [
-                        {
-                            query: {
+            let data = {
+                alarmCountCmds: [
+                    {
+                        query: {
+                            severityList: ["CRITICAL", "MAJOR"],
+                            statusList: ["ACTIVE"],
+                            searchPropagatedAlarms: false,
+                            assigneeId: null,
+                            entityFilter: {
+                                type: "entityList",
+                                resolveMultiple: true,
+                                entityType: "DEVICE",
+                                entityList: [OTSUKA_DEVICE_ID],
+                            },
+                        },
+
+                        cmdId: 2,
+                    },
+                ],
+                alarmDataCmds: [
+                    {
+                        query: {
+                            entityFilter: {
+                                type: "entityList",
+                                resolveMultiple: true,
+                                entityType: "DEVICE",
+                                entityList: [
+                                    OTSUKA_DEVICE_ID,
+                                    MEIKO_DEVICE_ID,
+                                    YOSHINO_DEVICE_ID,
+                                    CNGHY_DEVICE_ID,
+                                    CNGBD_DEVICE_ID,
+                                    NITORI_DEVICE_ID,
+                                    ARAKAWA_DEVICE_ID,
+                                    VREC_DEVICE_ID,
+                                    KOA_DEVICE_ID,
+                                    SPMCV_DEVICE_ID,
+                                    IGUACU_DEVICE_ID,
+                                    ZOCV_DEVICE_ID,
+                                    LGDS_DEVICE_ID,
+                                    CNGPM3_DEVICE_ID,
+                                    SNGHY_DEVICE_ID,
+                                    SNG_PM3_DEVICEC_ID,
+                                    SNG_ACECOOK_DEVICE_ID,
+                                ],
+                            },
+                            pageLink: {
+                                page: 0,
+                                pageSize: 100,
+                                textSearch: null,
+                                typeList: [],
                                 severityList: ["CRITICAL", "MAJOR"],
                                 statusList: ["ACTIVE"],
                                 searchPropagatedAlarms: false,
-                                assigneeId: null,
-                                entityFilter: {
-                                    type: "entityList",
-                                    resolveMultiple: true,
-                                    entityType: "DEVICE",
-                                    entityList: [OTSUKA_DEVICE_ID],
-                                },
-                            },
-
-                            cmdId: 2,
-                        },
-                    ],
-                    alarmDataCmds: [
-                        {
-                            query: {
-                                entityFilter: {
-                                    type: "entityList",
-                                    resolveMultiple: true,
-                                    entityType: "DEVICE",
-                                    entityList: [
-                                        OTSUKA_DEVICE_ID,
-                                        MEIKO_DEVICE_ID,
-                                        YOSHINO_DEVICE_ID,
-                                        CNGHY_DEVICE_ID,
-                                        CNGBD_DEVICE_ID,
-                                        NITORI_DEVICE_ID,
-                                        ARAKAWA_DEVICE_ID,
-                                        VREC_DEVICE_ID,
-                                        KOA_DEVICE_ID,
-                                        SPMCV_DEVICE_ID,
-                                        IGUACU_DEVICE_ID,
-                                        ZOCV_DEVICE_ID,
-                                        LGDS_DEVICE_ID,
-                                        CNGPM3_DEVICE_ID,
-                                        SNGHY_DEVICE_ID,
-                                        SNG_PM3_DEVICEC_ID,
-                                        SNG_ACECOOK_DEVICE_ID,
-                                    ],
-                                },
-                                pageLink: {
-                                    page: 0,
-                                    pageSize: 100,
-                                    textSearch: null,
-                                    typeList: [],
-                                    severityList: ["CRITICAL", "MAJOR"],
-                                    statusList: ["ACTIVE"],
-                                    searchPropagatedAlarms: false,
-                                    sortOrder: {
-                                        key: {
-                                            key: "createdTime",
-                                            type: "ALARM_FIELD",
-                                        },
-                                        direction: "DESC",
-                                    },
-                                    timeWindow: 60480000 * 2 * 2 * 2,
-                                },
-                                alarmFields: [
-                                    {
-                                        type: "ALARM_FIELD",
+                                sortOrder: {
+                                    key: {
                                         key: "createdTime",
-                                    },
-                                    {
                                         type: "ALARM_FIELD",
-                                        key: "originator",
                                     },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "type",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "severity",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "status",
-                                    },
-                                    {
-                                        type: "ALARM_FIELD",
-                                        key: "assignee",
-                                    },
-                                ],
-                                entityFields: [],
-                                latestValues: [],
+                                    direction: "DESC",
+                                },
+                                timeWindow: 60480000 * 2 * 2 * 2,
                             },
-                            cmdId: 1,
+                            alarmFields: [
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "createdTime",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "originator",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "type",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "severity",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "status",
+                                },
+                                {
+                                    type: "ALARM_FIELD",
+                                    key: "assignee",
+                                },
+                            ],
+                            entityFields: [],
+                            latestValues: [],
                         },
-                    ],
-                };
-
-                sendData(JSON.stringify(data));
+                        cmdId: 1,
+                    },
+                ],
             };
 
-            ws.current.onmessage = (evt: any) => {
-                const dataReceive: any = JSON.parse(evt.data);
-                if (dataReceive && dataReceive["cmdId"] === 1) {
-                    if (
-                        dataReceive.data &&
-                        dataReceive.data.data &&
-                        dataReceive.data.data.length > 0 &&
-                        dataReceive.update === null
-                    ) {
-                        //let keys = majorAlarms.map((alarm: any) => alarm.id.id);
-                        // let notifications = [...criticalAlarms, .
+            sendData(JSON.stringify(data));
+        };
 
-                        processNotification(dataReceive.data.data).then(
-                            (processedAlarms) => {
-                                setNotifications(processedAlarms);
-                                setAlarmCount(dataReceive.data.totalElements);
-                            }
+        ws.current.onmessage = (evt: any) => {
+            const dataReceive: any = JSON.parse(evt.data);
+            if (dataReceive && dataReceive["cmdId"] === 1) {
+                if (
+                    dataReceive.data &&
+                    dataReceive.data.data &&
+                    dataReceive.data.data.length > 0 &&
+                    dataReceive.update === null
+                ) {
+                    setLoading(false);
+                    console.log("dataReceive", dataReceive.data.data);
+                    notificationsQueue.current.push({
+                        alarms: dataReceive.data.data,
+                        alarmCount: dataReceive.data.totalElements,
+                    });
+
+                    if (!isProcessing.current) {
+                        processQueue();
+                    }
+                } else if (
+                    dataReceive.data &&
+                    dataReceive.data.data &&
+                    dataReceive.data.data.length === 0 &&
+                    dataReceive.update === null
+                ) {
+                    handleStopAudio();
+                    setNotifications([]);
+                    setLoading(false);
+                    setAlarmCount(0);
+                }
+            } else if (dataReceive && dataReceive["cmdId"] === 2) {
+            }
+        };
+        ws.current.onclose = () => {
+            setTimeout(() => {
+                connectWebSocket;
+            }, 10000);
+        };
+        ws.current.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            setLoading(true);
+            setTimeout(() => {
+                connectWebSocket;
+            }, 10000);
+        };
+    }, [sendData]);
+
+    const processNotification = useCallback(async (dataAlarm: any[]) => {
+        console.log("Processing notification:", dataAlarm);
+        let updatedAlarms = await Promise.all(
+            dataAlarm.map(async (alarm: any) => {
+                let shouldPlaySound = true;
+
+                if (alarm.severity === "MAJOR") {
+                    return { ...alarm };
+                }
+                let tag = alarm?.details?.data?.split(",")[0];
+                if (tag !== null && tag !== undefined) {
+                    try {
+                        const maintained = await fetchWithRetry(
+                            alarm.entityId.id,
+                            tag
                         );
 
-                        setLoading(false);
-                        // let alarmsCount = dataReceive.data.totalElements;
-                        // // setAlarmCount(alarmsCount);
-                    } else if (
-                        dataReceive.data &&
-                        dataReceive.data.data &&
-                        dataReceive.data.data.length === 0 &&
-                        dataReceive.update === null
-                    ) {
-                        handleStopAudio();
-                        setNotifications([]);
-                        setLoading(false);
-                        setAlarmCount(0);
+                        shouldPlaySound = !maintained;
+                    } catch (error) {
+                        console.error(
+                            `Failed to fetch attribute data for ${tag} after multiple attempts`
+                        );
+                        return { ...alarm, shouldPlaySound: true };
                     }
-                } else if (dataReceive && dataReceive["cmdId"] === 2) {
                 }
-            };
-            ws.current.onclose = () => {
-                setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
-            };
-            ws.current.onerror = (error) => {
-                console.error("WebSocket error:", error);
-                setLoading(true);
-                setTimeout(() => connectWebSocket, 10000); // Thử kết nối lại sau 5 giây
-            };
-        },
-        [sendData]
-    );
 
+                return {
+                    ...alarm,
+                    shouldPlaySound,
+                };
+            })
+        );
+
+        return updatedAlarms;
+    }, []);
+    const processQueue = useCallback(async () => {
+        if (notificationsQueue.current.length === 0) {
+            isProcessing.current = false;
+            return;
+        }
+        isProcessing.current = true;
+        const item = notificationsQueue.current.shift();
+
+        if (item) {
+            const processedAlarms = await processNotification(item.alarms);
+            setNotifications(processedAlarms);
+            setAlarmCount(item.alarmCount);
+        }
+        // Tiếp tục xử lý phần tử tiếp theo trong hàng đợi
+        setTimeout(processQueue, 1000); // Đợi 1 giây trước khi xử lý phần tử tiếp theo
+    }, [processNotification]);
     const fetchWithRetry = async (
         entityId: string,
         tag: string,
@@ -271,68 +321,7 @@ export default function Alarmbell() {
         }
     };
 
-    const processNotification = useCallback(async (dataAlarm: any[]) => {
-        console.log("Processing notification:", dataAlarm);
-        let updatedAlarms = await Promise.all(
-            dataAlarm.map(async (alarm: any) => {
-                let shouldPlaySound = true;
-
-                if (alarm.severity === "MAJOR") {
-                    return { ...alarm };
-                }
-                let tag = alarm?.details?.data?.split(",")[0];
-                if (tag !== null && tag !== undefined) {
-                    try {
-                        const maintained = await fetchWithRetry(
-                            alarm.entityId.id,
-                            tag
-                        );
-                        console.log(maintained);
-                        shouldPlaySound = !maintained;
-                    } catch (error) {
-                        console.error(
-                            `Failed to fetch attribute data for ${tag} after multiple attempts`
-                        );
-                        return { ...alarm, shouldPlaySound: true };
-                    }
-                }
-
-                return {
-                    ...alarm,
-                    shouldPlaySound,
-                };
-            })
-        );
-
-        return updatedAlarms;
-    }, []);
-
     console.log("not", notifications);
-    // useEffect(() => {
-    //     processNotification(notificationsQueue);
-    // }, [notificationsQueue]);
-    // useEffect(() => {
-    //     const intervalId = setInterval(async () => {
-    //         if (notificationsQueue.current.length > 0) {
-    //             const dataAlarm = notificationsQueue.current.shift(); // Lấy một thông báo từ hàng đợi
-    //             if (
-    //                 dataAlarm &&
-    //                 dataAlarm.alarms &&
-    //                 dataAlarm.alarms.length > 0
-    //             ) {
-    //                 console.log("dataAlarm", dataAlarm);
-    //                 const processedNotification = await processNotification(
-    //                     dataAlarm.alarms
-    //                 ); // Xử lý thông báo
-    //                 setAlarmCount(dataAlarm.alarmCount);
-    //                 setNotifications([...processedNotification]); // Thêm vào danh sách notifications hiện tại
-    //             }
-    //         }
-    //     }, 1000); // Kiểm tra và xử lý hàng đợi mỗi giây
-
-    //     return () => clearInterval(intervalId); // Xóa interval khi component bị unmount
-    // }, []);
-
     useEffect(() => {
         notifications.forEach((notif: any) => {
             const audioEl = audioRefs.current[notif.id.id];
@@ -352,95 +341,15 @@ export default function Alarmbell() {
     }, [notifications]);
 
     useEffect(() => {
-        if (token) {
-            connectWebSocket(token);
+        if (typeof window !== "undefined") {
+            connectWebSocket();
         }
         return () => {
             if (ws.current) {
-                ws.current.close();
+                ws.current?.close();
             }
         };
-    }, [connectWebSocket, token]);
-
-    // useEffect(() => {
-    //     if (
-    //         notifications.length > 0 &&
-    //         previousNotificationsLength.current < notifications.length
-    //     ) {
-    //         // console.log(
-    //         //     previousNotificationsLength.current,
-    //         //     notifications.length
-    //         // );
-    //         const promise = audioRef.current?.play();
-    //         if (promise !== undefined) {
-    //             promise
-    //                 .then(() => {
-    //                     // Autoplay started!
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error("Autoplay was prevented.");
-    //                 });
-    //         }
-    //     }
-    //     previousNotificationsLength.current = notifications.length; // Cập nhật giá trị trước đó
-    // }, [notifications]);
-
-    //     if (obj1Processed) {
-    //         ws.current?.send(JSON.stringify(obj3));
-    //         ws.current?.send(JSON.stringify(obj2));
-    //     }
-    // }, [totalUnreadCount, obj1Processed]);
-
-    // const dataAlarm = notifications.slice(0, 6).map((item: any, index: any) => {
-    //     const isAlarm = item.subject.includes("New alarm");
-    //     const subjectStyle = {};
-
-    //     const createTime = new Date(item.createdTime);
-    //     const formattedTime = `${createTime.getDate()}/${
-    //         createTime.getMonth() + 1
-    //     }/${createTime.getFullYear()}, ${("0" + createTime.getHours()).slice(
-    //         -2
-    //     )}:${("0" + createTime.getMinutes()).slice(-2)}:${(
-    //         "0" + createTime.getSeconds()
-    //     ).slice(-2)}`;
-
-    //     return (
-    //         <div key={index} style={{ padding: "0px 10px" }}>
-    //             <div
-    //                 style={{
-    //                     border: isAlarm ? "2px solid orange" : "2px solid blue",
-    //                     padding: 20,
-    //                     borderRadius: 5,
-    //                 }}
-    //             >
-    //                 <div style={{ display: "flex" }}>
-    //                     <PiBellRingingBold size={50} />
-    //                     <div style={{ marginLeft: 20 }}>
-    //                         <p className={styles.subject} style={{}}>
-    //                             {item.info.alarmOriginatorName}{" "}
-    //                             {item.info.alarmType}
-    //                         </p>
-    //                         <p>{formattedTime}</p>
-    //                     </div>
-    //                 </div>
-    //                 <div style={{ marginTop: 10 }}>
-    //                     <Button
-    //                         onClick={() => router.push("/notifications")}
-    //                         style={{
-    //                             width: "100%",
-    //                             textAlign: "center",
-    //                             justifyContent: "center",
-    //                         }}
-    //                     >
-    //                         View More
-    //                     </Button>
-    //                 </div>
-    //             </div>
-
-    //             <hr />
-    //         </div>
-    //     );
-    // });
+    }, [connectWebSocket]);
 
     const _renderAlarmBell = () => {
         return notifications.map((item: any, index: any) => {
@@ -469,18 +378,6 @@ export default function Alarmbell() {
                                         item.startTs,
                                         "dd-MM-yyyy , HH:mm:ss"
                                     )}
-                                    {/* <br />
-                                    {item.shouldPlaySound == true ? (
-                                        <i
-                                            className="pi pi-volume-up"
-                                            style={{ fontSize: "1rem" }}
-                                        ></i>
-                                    ) : (
-                                        <i
-                                            className="pi pi-volume-off"
-                                            style={{ fontSize: "1rem" }}
-                                        ></i>
-                                    )} */}
                                 </div>
                             </div>
                             <div style={{ marginTop: 10 }}>
