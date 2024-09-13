@@ -204,7 +204,7 @@ const FilterGcValue: React.FC<Props> = ({
                                     _processFilterChange("asset", e.value)
                                 }
                             />
-                            <label>Assets</label>
+                            <label>Type</label>
                         </span>
                     </div>
                 )}

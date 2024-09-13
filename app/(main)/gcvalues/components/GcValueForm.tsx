@@ -115,7 +115,6 @@ const GcValueForm: React.FC<Props> = ({ data }) => {
                     <h3>{gcData?.device?.name}</h3>
                     Heating Value :{" "}
                     <InputNumber
-                        // check if gcData.data.heat_value[0] is not null
                         value={gcData.heating_value}
                         onChange={(e) => handleChangeValue(e)}
                         mode="decimal"

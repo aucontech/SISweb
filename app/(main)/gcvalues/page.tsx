@@ -1,54 +1,32 @@
 "use client";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import FilterGcValue from "./components/FilterGcValue";
 import { getTimesSeriesData } from "@/api/telemetry.api";
 import { Toast } from "primereact/toast";
-
-import GcValueForm from "./components/GcValueForm";
-
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { saveOrUpdateTimeseriesData } from "@/api/telemetry.api";
+import { Utils, UIUtils } from "@/service/Utils";
+import { Button } from "primereact/button";
+import { InputNumber } from "primereact/inputnumber";
+import { InputText } from "primereact/inputtext";
 interface Props {}
 
 const Page: React.FC<Props> = () => {
     const [filters, setFilters] = useState<any>({});
-
-    const [seletetedData, setSeletetedData] = useState<any>([]);
+    const [globalValue, setGlobalValue] = useState<number | null>(null); // Global value for "Update All"
+    const [searchTerm, setSearchTerm] = useState<string>(""); // State for search term
+    const [filteredDatas, setFilteredDatas] = useState<any[]>([]); // State for filtered data
     const [datas, setDatas] = useState<any[]>([]);
+    const [reload, setReload] = useState<boolean>(false);
     const toast = useRef<any>(null);
     const _onFilterChange = (evt: any) => {
         console.log(evt);
         setFilters({ ...evt });
     };
 
-    const _fetchSeverAttributesByDevice = useCallback((filters: any) => {
-        let { device, date } = filters;
-
-        if (device && device.id && date) {
-            let params = {
-                keys: "heat_value",
-                startTs: date.getTime(),
-                endTs: date.getTime() + 86400000,
-            };
-            getTimesSeriesData("DEVICE", device.id.id, params)
-                .then((resp) => resp.data)
-                .then((resp) => {
-                    let data = resp["heat_value"] || [];
-                    if (data.length > 0) {
-                        setSeletetedData({
-                            heatValue: data[data.length - 1].value,
-                        });
-                    } else {
-                        setSeletetedData({
-                            heatValue: 0,
-                        });
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    }, []);
-    const _fetchSeverAttributesByDevice1 = useCallback((filters: any) => {
+    const _fetchSeverAttributesByDevice = (filters: any) => {
         let { devices, date } = filters;
 
         let params = {
@@ -56,10 +34,10 @@ const Page: React.FC<Props> = () => {
             startTs: date.getTime(),
             endTs: date.getTime() + 86400000,
         };
+
         let promises = devices.map((device: any) => {
             return getTimesSeriesData("DEVICE", device.id.id, params).then(
                 (data) => {
-                    console.log(data);
                     return {
                         device: device,
                         data: data.data,
@@ -72,44 +50,179 @@ const Page: React.FC<Props> = () => {
         Promise.all(promises)
             .then((results) => {
                 setDatas(results);
+                console.log(results);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
-
-    useEffect(() => {
-        if (filters.date && filters.device && filters.device.id) {
-            _fetchSeverAttributesByDevice(filters);
-        }
-    }, [filters, _fetchSeverAttributesByDevice]);
+    };
 
     useEffect(() => {
         if (filters.date && filters.devices && filters.devices.length > 0) {
-            _fetchSeverAttributesByDevice1(filters);
+            _fetchSeverAttributesByDevice(filters);
         }
-    }, [filters, _fetchSeverAttributesByDevice1]);
+    }, [filters, reload]);
+
+    const valueTemplate = (rowData: any, options: any) => {
+        const inputValue = rowData.data["heating_value"]?.[0]?.value || 0;
+
+        const onValueChange = (e: any) => {
+            const newDatas = [...datas];
+            newDatas[options.rowIndex].data["heating_value"][0].value = e.value;
+            setDatas(newDatas);
+        };
+        return (
+            <InputNumber
+                value={inputValue}
+                onValueChange={onValueChange}
+                mode="decimal"
+                minFractionDigits={2}
+                maxFractionDigits={5}
+            />
+        );
+    };
+
+    const dateTemplate = (rowData: any) => {
+        let { date } = rowData;
+        return date ? Utils.formatUnixTimeToString(date, "dd-MM-yyyy") : "";
+    };
+
+    const updateTemplate = (rowData: any) => {
+        return <Button label="Update" onClick={() => _handleSave(rowData)} />;
+    };
+
+    const _handleSave = (rowData: any) => {
+        console.log(rowData);
+        let params = {
+            ts: rowData.date,
+            values: {
+                heating_value: Number(
+                    rowData.data["heating_value"][0].value
+                ).toFixed(2),
+            },
+        };
+        saveOrUpdateTimeseriesData(rowData.device.id.id, params)
+            .then((resp) => {
+                if (resp.status === 200) {
+                    UIUtils.showInfo({
+                        summary: "Success",
+                        detail: "Save data success",
+                        toast: toast.current,
+                    });
+                    setReload(!reload);
+                }
+            })
+            .catch((err) => {
+                // UIUtils.showError({
+                //     error: err.resp,
+                //     summary: "Error",
+                //     detail: "Failed to save data",
+                //     toast: toast.current,
+                // });
+            });
+    };
+    console.log(datas);
+
+    const _handleSaveAll = () => {
+        console.log(globalValue);
+        if (globalValue !== null) {
+            const updatedDatas = datas.map((rowData) => {
+                if (!rowData.data) {
+                    rowData.data = {};
+                }
+
+                rowData.data["heating_value"] = [
+                    { value: globalValue, ts: rowData.date },
+                ];
+
+                return rowData;
+            });
+            setDatas(updatedDatas);
+        } else {
+            return;
+        }
+
+        const promises = datas.map((rowData: any) => {
+            let params = {
+                ts: rowData.date,
+                values: {
+                    heating_value: Number(
+                        rowData.data["heating_value"][0].value
+                    ).toFixed(2),
+                },
+            };
+            return saveOrUpdateTimeseriesData(rowData.device.id.id, params);
+        });
+
+        Promise.all(promises)
+            .then(() => {
+                UIUtils.showInfo({
+                    summary: "Success",
+                    detail: "All values updated successfully",
+                    toast: toast.current,
+                });
+                setReload(!reload);
+            })
+            .catch((err) => {
+                // UIUtils.showError({
+                //     summary: "Error",
+                //     detail: "Failed to save data",
+                //     toast: toast.current,
+                // });
+            });
+    };
+    useEffect(() => {
+        const filtered = datas.filter((rowData) =>
+            rowData.device.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        console.log(filtered);
+        setFilteredDatas(filtered);
+    }, [searchTerm, datas]);
 
     return (
         <>
             <Toast ref={toast} />
+
             <FilterGcValue
                 onAction={_onFilterChange}
                 showAsset={true}
                 showDate={true}
             />
+            <div className="flex flex-row-reverse gap-4">
+                <Button label="Update All" onClick={_handleSaveAll} />
+                <InputNumber
+                    value={globalValue}
+                    onValueChange={(e: any) => setGlobalValue(e.value)}
+                    placeholder="Enter value for all"
+                    mode="decimal"
+                    minFractionDigits={2}
+                    maxFractionDigits={5}
+                />
+                <InputText
+                    value={searchTerm}
+                    onChange={(e) => console.log(e)}
+                    placeholder="Search by device name"
+                />
+            </div>
 
-            <div className="grid">
-                {datas &&
-                    datas.length > 0 &&
-                    datas.map((data, index) => (
-                        <div
-                            className="lg:col-4 sm:col-12 md:col-6"
-                            key={index}
-                        >
-                            <GcValueForm data={data} />
-                        </div>
-                    ))}
+            <div className="datatable-responsive">
+                <DataTable
+                    value={filteredDatas}
+                    rows={100}
+                    className="p-datatable-gridlines"
+                >
+                    <Column
+                        field="date"
+                        header="Time Update"
+                        body={dateTemplate}
+                    ></Column>
+                    <Column field="device.name" header="Station Name"></Column>
+                    <Column
+                        header="Heating Value (MJ/Sm³)"
+                        body={valueTemplate}
+                    ></Column>
+                    <Column header="Action" body={updateTemplate}></Column>
+                </DataTable>
             </div>
         </>
     );
