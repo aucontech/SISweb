@@ -182,6 +182,7 @@ const FilterGcValue: React.FC<Props> = ({
                     <div className="col-12 lg:col-3">
                         <span className="p-float-label">
                             <Calendar
+                                dateFormat="dd/mm/yy"
                                 value={editFilter.date}
                                 onChange={(e) => {
                                     _processFilterChange("date", e.value);
